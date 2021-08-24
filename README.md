@@ -1,4 +1,4 @@
-# app_name
+# compass
 
 This is a template repository used for creating Django-Vue applications. Use this template to create a new project repository.
 
@@ -29,10 +29,10 @@ After cloning this repo, find and replace the following instances to match your 
 
         'axdd-django-vue' with <new-repo>
 
-Find and replace the following instance of the new Django app_name.
+Find and replace the following instance of the new Django compass.
 
-        'app_name' with <new_app>
-        'app_name_vue' with <new_app_vue>
+        'compass' with <new_app>
+        'compass_vue' with <new_app_vue>
 
 Copy the sample .env file so that your environment can be run.
 

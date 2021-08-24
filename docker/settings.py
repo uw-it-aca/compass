@@ -4,11 +4,11 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS += [
     'webpack_bridge',
-    'app_name'
+    'compass'
 ]
 
 STATICFILES_DIRS = [
-    '/static/app_name/',
+    '/static/compass/',
 ]
 
 STATICFILES_FINDERS = (
@@ -16,7 +16,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 
-DATA_ROOT = os.path.join(BASE_DIR, "app_name/data")
+DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default=" ")
 
@@ -31,8 +31,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'app_name.context_processors.google_analytics',
-                'app_name.context_processors.django_debug',
+                'compass.context_processors.google_analytics',
+                'compass.context_processors.django_debug',
             ],
         }
     }

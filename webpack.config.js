@@ -16,7 +16,7 @@ module.exports = (_env, options) => {
     //context: __dirname,
 
     entry: {
-      main: './app_name_vue/main.js'
+      main: './compass_vue/main.js'
     },
 
     optimization: {
@@ -27,7 +27,7 @@ module.exports = (_env, options) => {
     },
 
     output: {
-      path: '/static/app_name/',
+      path: '/static/compass/',
       filename: "[name]-[contenthash].js",
       publicPath: '',
     },

@@ -1,4 +1,4 @@
-# app_name
+# compass
 
 Replace this description for your new application... lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas eget pulvinar est.
 

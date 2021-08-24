@@ -1,21 +1,21 @@
 {
-  "name": "app_name",
+  "name": "compass",
   "version": "1.0.0",
-  "description": "app_name some description text",
+  "description": "compass some description text",
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/uw-it-aca/app_name.git"
+    "url": "git+https://github.com/uw-it-aca/compass.git"
   },
   "author": "Your Name Here",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/uw-it-aca/app_name/issues"
+    "url": "https://github.com/uw-it-aca/compass/issues"
   },
-  "homepage": "https://github.com/uw-it-aca/app_name#readme",
+  "homepage": "https://github.com/uw-it-aca/compass#readme",
   "dependencies": {
     "@popperjs/core": "^2.9.2",
     "axdd-components": "git+https://github.com/uw-it-aca/axdd-components.git#develop",
