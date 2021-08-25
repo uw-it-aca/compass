@@ -18,6 +18,9 @@ $utilities-colors: map-merge($utilities-colors, $theme-colors-rgb);
 $utilities-text-colors: map-loop($utilities-colors, rgba-css-var, "$key", "text");
 $utilities-bg-colors: map-loop($utilities-colors, rgba-css-var, "$key", "bg");
 
+// override max width of containers
+$container-max-widths: map.merge($container-max-widths, (xl: 1400px, xxl: 1600px));
+
 // import bootstrap and bootstrap-icons
 @import "bootstrap/scss/bootstrap";
 
