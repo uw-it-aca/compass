@@ -24,8 +24,11 @@ setup(
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires = [
-        "django~=3.2",
-        "django-webpack-bridge"
+        'django~=3.2',
+        'django-webpack-bridge',
+        'UW-Django-SAML2~=1.5',
+        'urllib3~=1.25',
+        'pymssql==2.2.2',
     ],
     license="Apache License, Version 2.0",
     description="A application for managing student advising information.",
