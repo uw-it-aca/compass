@@ -52,25 +52,6 @@ export default {
       // automatically set year
       currentYear: new Date().getFullYear(),
 
-      // example: dynamic navigation menu
-      navItems: [
-        {
-          title: 'Home',
-          href: '#',
-        },
-        {
-          title: 'First',
-          href: '#',
-        },
-        {
-          title: 'Second',
-          href: '#',
-        },
-        {
-          title: 'Third',
-          href: '#',
-        },
-      ],
     };
   },
 };
