@@ -26,6 +26,7 @@ setup(
     install_requires = [
         'django~=3.2',
         'django-webpack-bridge',
+        'UW-RestClients-SWS==2.3.14',
         'UW-Django-SAML2~=1.5',
         'urllib3~=1.25',
         'pymssql==2.2.2',
