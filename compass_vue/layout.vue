@@ -11,11 +11,7 @@
     <template #bar></template>
     <template #main>
       <!-- main section override -->
-      <h1>
-        <slot name="title">
-          {{ pageTitle }}
-        </slot>
-      </h1>
+      <slot name="title"><h1>{{ pageTitle }}</h1></slot>
       <slot name="content"></slot>
     </template>
     <template #footer>
