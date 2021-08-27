@@ -25,5 +25,6 @@ $container-max-widths: map.merge($container-max-widths, (xl: 1400px, xxl: 1600px
 @import "bootstrap/scss/bootstrap";
 
 // additional non-bootstrap styles
+body { font-family: "Open Sans", sans-serif !important; }
 
 .blah { color: purple; }
