@@ -8,7 +8,13 @@
     :sign-out-url="signOutUrl"
   >
     <template #header></template>
-    <template #bar></template>
+    <template #bar v-if="true">
+      <div class="bg-gray">
+        <div class="container-xl px-0 py-2">
+          <div class="col text-center">Table contains 1282 students: get e-mail addresses or download results</div>
+        </div>
+      </div>
+    </template>
     <template #main>
       <!-- main section override -->
       <slot name="title"><h1>{{ pageTitle }}</h1></slot>
@@ -16,13 +22,12 @@
     </template>
     <template #footer>
       <div class="bg-dark">
-          <div class="container-xl py-3 small">
-            <div class="text-white font-weight-light">
-              Copyright &copy; {{ new Date().getFullYear() }} University of
-              Washington
-            </div>
+        <div class="container-xl py-3 small">
+          <div class="text-white font-weight-light">
+            Copyright &copy; {{ new Date().getFullYear() }} University of Washington
           </div>
         </div>
+      </div>
     </template>
   </topbar>
 </template>
@@ -33,7 +38,7 @@ import { Topbar } from 'axdd-components';
 export default {
   name: 'Compass',
   components: {
-    'topbar': Topbar,
+    topbar: Topbar,
   },
   props: {
     pageTitle: {
@@ -51,11 +56,9 @@ export default {
 
       // automatically set year
       currentYear: new Date().getFullYear(),
-
     };
   },
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
