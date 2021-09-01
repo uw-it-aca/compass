@@ -10,8 +10,11 @@
     <template #header></template>
     <template #bar v-if="true">
       <div class="bg-gray">
-        <div class="container-xl px-0 py-2">
-          <div class="col text-center">Table contains 1282 students: get e-mail addresses or download results</div>
+        <div class="container-xl py-2">
+          <div class="row">
+            <div class="col">OMAD, ISS, Atheletics</div>
+            <div class="col text-end"><a href="#">Retention Dashboard</a></div>
+          </div>
         </div>
       </div>
     </template>
