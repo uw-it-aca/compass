@@ -36,9 +36,9 @@
           <div class="small">Select advisor caseload:</div>
           <select class="form-select form-select-sm" aria-label="Default select example">
             <option selected>All advisers</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+            <option value="1">Jon Average</option>
+            <option value="2">April Foolery</option>
+            <option value="3">Bob Samsonite</option>
           </select>
         </div>
       </div>
@@ -54,20 +54,20 @@
                   <th scope="col">Class</th>
                   <th scope="col">Major</th>
                   <th scope="col">Enroll Status</th>
-                  <th scope="col">Pronouns</th>
+                  <th scope="col">Gender/Pronouns</th>
                   <th scope="col">Adviser</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Average, Jon</td>
+                  <td>Anderson, Andy</td>
                   <td><router-link to="/student/28376465">28376465</router-link></td>
                   <td>afdas</td>
                   <td>afdas</td>
                   <td>asdfads</td>
                   <td>asdfads</td>
                   <td>asdfads</td>
-                  <td>asdfads</td>
+                  <td>Jon Average</td>
                 </tr>
                 <tr>
                   <td>Thompson, Timmy</td>
@@ -77,7 +77,7 @@
                   <td>afdas</td>
                   <td>asdfsadfads</td>
                   <td>asdfads</td>
-                  <td>asdfads</td>
+                  <td>April Foolery</td>
                 </tr>
                 <tr>
                   <td>Johnson, Jill</td>
@@ -87,7 +87,7 @@
                   <td>afdas</td>
                   <td>asfd</td>
                   <td>asdfads</td>
-                  <td>asdfads</td>
+                  <td>Bob Samsonite</td>
                 </tr>
               </tbody>
             </table>
