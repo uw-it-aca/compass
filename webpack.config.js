@@ -28,7 +28,7 @@ module.exports = (_env, options) => {
     },
 
     output: {
-      path: path.resolve('./static/'),
+      path: path.resolve('../static/compass/'),
       filename: "[name]-[contenthash].js",
       publicPath: '',
     },
@@ -81,11 +81,7 @@ module.exports = (_env, options) => {
         },
         {
           test: /\.(png|jpe?g|gif)$/i,
-          use: [
-            {
-              loader: 'file-loader',
-            },
-          ],
+          type: 'asset/resource',
         },
       ]
     },

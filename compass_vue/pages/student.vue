@@ -4,15 +4,21 @@
   <layout :page-title="pageTitle">
     <!-- page content -->
     <template #title>
-      {{ pageTitle }}
+      <h1 v-if="$route.params.id">
+      {{ $route.params.id }}
+      </h1>
+      <h1 v-else>Student</h1>
     </template>
 
     <template #content>
       <div class="row">
         <div class="col">
+          <div v-if="$route.params.id">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis, ipsa officia.
           Tempore, laborum. Minima dolorum vero expedita saepe libero fuga quidem, tempore numquam
           eveniet, modi tenetur fugiat dolorem dignissimos ipsam.
+          </div>
+          <div v-else>No student</div>
         </div>
       </div>
     </template>

@@ -8,20 +8,28 @@
     :sign-out-url="signOutUrl"
   >
     <template #header></template>
+    <template #bar v-if="true">
+      <div class="bg-gray">
+        <div class="container-xl py-2">
+          <div class="row">
+            <div class="col">Admin, OMAD, ISS, Atheletics</div>
+            <div class="col text-end"><a href="#">Retention Dashboard</a></div>
+          </div>
+        </div>
+      </div>
+    </template>
     <template #main>
       <!-- main section override -->
-      <h1>
-        <slot name="title">
-          {{ pageTitle }}
-        </slot>
-      </h1>
+      <slot name="title"><h1>{{ pageTitle }}</h1></slot>
       <slot name="content"></slot>
     </template>
     <template #footer>
-      <!-- footer section overrixe -->
-      <div class="text-light fw-light">
-        this is my custom footer<br />
-        Copyright &copy; {{ new Date().getFullYear() }} University of Washington
+      <div class="bg-dark">
+        <div class="container-xl py-3 small">
+          <div class="text-white font-weight-light">
+            Copyright &copy; {{ new Date().getFullYear() }} University of Washington
+          </div>
+        </div>
       </div>
     </template>
   </topbar>
@@ -33,7 +41,7 @@ import { Topbar } from 'axdd-components';
 export default {
   name: 'Compass',
   components: {
-    'topbar': Topbar,
+    topbar: Topbar,
   },
   props: {
     pageTitle: {
@@ -51,11 +59,9 @@ export default {
 
       // automatically set year
       currentYear: new Date().getFullYear(),
-
     };
   },
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
