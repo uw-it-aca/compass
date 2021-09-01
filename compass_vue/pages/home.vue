@@ -10,42 +10,39 @@
     <template #content>
       <div class="row">
         <div class="col">
+          <span>Find student by:</span>
+          <div class="form-check form-check-inline" v-for="option in searchOptions" :key="option.value">
+            <input class="form-check-input" type="radio" :id="option.id" :value="option.value">
+            <label class="form-check-label" :for="option.id">{{option.label}}</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
 
           <table class="table">
             <thead>
               <tr>
                 <th scope="col">Student Name</th>
                 <th scope="col">Student Number</th>
-                <th scope="col">Data</th>
-                <th scope="col">Data</th>
-                <th scope="col">Data</th>
-                <th scope="col">Data</th>
+                <th scope="col">UW NetID</th>
+                <th scope="col">Class</th>
+                <th scope="col">Major</th>
+                <th scope="col">Enroll Status</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Adviser</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Average, Jon</td>
-                <td><router-link to="/student">28376465</router-link></td>
-                <td>afdas</td>
-                <td>afdas</td>
-                <td>asdfads</td>
-                <td>asdfads</td>
-              </tr>
-              <tr>
-                <td>Thompson, Timmy</td>
-                <td><router-link to="/student">87634323</router-link></td>
-                <td>asdfads</td>
-                <td>asdfadsf</td>
-                <td>afdas</td>
-                <td>asdfsadfads</td>
-              </tr>
-              <tr>
-                <td>Johnson, Jill</td>
-                <td><router-link to="/student">29579067</router-link></td>
-                <td>asdf</td>
-                <td>asda</td>
-                <td>afdas</td>
-                <td>asfd</td>
+              <tr v-for="(item,) in enrolledStudents" :key="item.SystemKey">
+                <td>{{item.StudentName}}</td>
+                <td><router-link to="/student">{{item.StudentNumber}}</router-link></td>
+                <td>{{item.UWNetID}}</td>
+                <td>{{item.ClassDesc}}</td>
+                <td>{{item.MajorFullName}}</td>
+                <td>{{item.EnrollStatusCode}}</td>
+                <td>{{item.Gender}}</td>
+                <td></td>
               </tr>
             </tbody>
           </table>
@@ -57,17 +54,49 @@
 
 <script>
 import Layout from '../layout.vue';
+import dataMixin from '../mixins/data_mixin.js';
 
 export default {
+  mixins: [dataMixin],
   components: {
     layout: Layout,
   },
   data() {
     return {
       pageTitle: 'Home',
+      enrolledStudents: [],
+      searchOptions: [
+        {
+          id: "student_number_radio",
+          value: false,
+          label: "Number"
+        },
+        {
+          id: "student_name_radio",
+          value: false,
+          label: "Name"
+        },
+        {
+          id: "student_email_radio",
+          value: false,
+          label: "Email"
+        },
+      ]
     };
   },
-  methods: {},
+  created: function() {
+    this.loadEnrolledStudents();
+  },
+  methods: {
+    loadEnrolledStudents: function() {
+      let _this = this;
+      this.getEnrolledStudentsList().then(response => {
+        if (response.data) {
+          _this.enrolledStudents = response.data;
+        }
+      });
+    }
+  },
 };
 </script>
 

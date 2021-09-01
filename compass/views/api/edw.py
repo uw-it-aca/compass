@@ -5,11 +5,11 @@ from compass.dao import EdwDAO
 from compass.views.api import RESTDispatch
 
 
-class UserListView(RESTDispatch):
+class EnrolledStudentsListView(RESTDispatch):
     '''
     API endpoint returning a list of users from the EDW
 
-    /api/internal/edw/user/
+    /api/internal/edw/enrolled-students/
 
     HTTP POST accepts the following dictionary parameters:
     * filters: dictionary of request filters

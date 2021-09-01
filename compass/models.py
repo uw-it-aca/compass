@@ -1,6 +1,7 @@
 # Copyright 2021 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+from compass import utilities
 from datetime import datetime, date
 from django.db import models
 from django.utils import timezone

@@ -2,8 +2,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from django.urls import include, path, re_path
-from django.views.generic.base import RedirectView
 from compass.views.pages import PageView
+from compass.views.api.edw import EnrolledStudentsListView
 
 
-urlpatterns = [re_path(r"^.*$", PageView.as_view(), name="index")]
+urlpatterns = [
+    re_path(r"^$", PageView.as_view(), name="index"),
+    re_path(r'^api/internal/edw/enrolled-students/$',
+            EnrolledStudentsListView.as_view()),
+]
