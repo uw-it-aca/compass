@@ -22,4 +22,3 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         sis_term_id = options["sis_term_id"]
         SwsDAO().create_terms(sis_term_id=sis_term_id)
-        

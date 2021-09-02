@@ -1,7 +1,6 @@
 # Copyright 2021 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-import datetime
 import logging
 import pandas as pd
 import pymssql
@@ -133,9 +132,11 @@ class EdwDAO():
             if filter_type == "student-number":
                 query += f" AND enr.StudentNumber LIKE '%{filter_text}%'"
             elif filter_type == "student-name":
-                query += f" AND UPPER(enr.StudentName) LIKE UPPER('%{filter_text}%')"
+                query += (f" AND UPPER(enr.StudentName) LIKE "
+                          f"UPPER('%{filter_text}%')")
             elif filter_type == "student-email":
-                query += f" AND UPPER(enr.StudentEmail) LIKE UPPER('%{filter_text}%')"
+                query += (f" AND UPPER(enr.StudentEmail) LIKE "
+                          f"UPPER('%{filter_text}%')")
 
         conn = self.get_connection("EDWPresentation")
         enrolled_df = pd.read_sql(query, conn)
