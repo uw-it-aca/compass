@@ -11,25 +11,17 @@
       <div class="row justify-content-between mt-5 mb-2">
         <div class="col-sm-4">
           <div class="small">
-            <div class="d-inline me-3 text-nowrap">Find student by:</div>
+            <div class="d-inline me-3 text-nowrap">Find student by here:</div>
             <div class="d-inline text-nowrap">
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" checked type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                <label class="form-check-label" for="inlineRadio1">Number</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                <label class="form-check-label" for="inlineRadio2">Name</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-                <label class="form-check-label" for="inlineRadio3">Email</label>
+              <div class="form-check form-check-inline" v-for="option in searchOptions" :key="option.id">
+                <input class="form-check-input" type="radio" name="searchRadioOptions" :id="option.id" :value="option" v-model="searchOption">
+                <label class="form-check-label" :for="option.id">{{option.label}}</label>
               </div>
             </div>
           </div>
           <div class="input-group input-group-sm mb-3">
-            <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2">GO</button>
+            <input type="text" class="form-control" :placeholder="'Student ' + searchOption.label + ' Contains...'" :aria-label="'Student ' + searchOption.label + ' Contains...'" v-model="searchText" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" v-on:click="filterEnrolledStudents">GO</button>
           </div>
         </div>
         <div class="col-sm-4">
@@ -81,9 +73,7 @@
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="">1</a></li>
               <li class="page-item">
                 <a class="page-link" href="#" aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
@@ -106,19 +96,55 @@ export default {
   components: {
     layout: Layout,
   },
+  created: function() {
+    this.loadEnrolledStudents({});
+    this.searchOption = this.searchOptions[0];
+  },
   data() {
     return {
-      pageTitle: 'Home',
+      pageTitle: "Home",
       enrolledStudents: [],
+      searchOption: null,
+      searchText: "",
+      searchOptions: [
+        {
+          id: "student-number",
+          label: "Number"
+        },
+        {
+          id: "student-name",
+          label: "Name"
+        },
+        {
+          id: "student-email",
+          label: "Email"
+        },
+      ]
     };
   },
-  created: function() {
-    this.loadEnrolledStudents();
+  computed: {
+    searchFilters: function() {
+      let searchFilterType = null;
+      let searchFilterText = null;
+      if (this.searchOption) {
+        searchFilterType = this.searchOption.id;
+        searchFilterText = this.searchText;
+      }
+      return {
+        searchFilter: {
+          filterType: searchFilterType,
+          filterText: searchFilterText
+        }
+      };
+    }
   },
   methods: {
-    loadEnrolledStudents: function() {
+    filterEnrolledStudents: function() {
+      this.loadEnrolledStudents(this.searchFilters);
+    },
+    loadEnrolledStudents: function(filters) {
       let _this = this;
-      this.getEnrolledStudentsList().then(response => {
+      this.getEnrolledStudentsList(filters).then(response => {
         if (response.data) {
           _this.enrolledStudents = response.data;
         }

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const dataMixin = {
   methods: {
-    getEnrolledStudentsList: async function () {
+    getEnrolledStudentsList: async function (filters) {
       const csrfToken = this.$store.state.csrfToken;
       const axiosConfig = {
         headers: {
@@ -14,7 +14,7 @@ const dataMixin = {
       };
       return axios.post(
         `/api/internal/edw/enrolled-students/`,
-        [],
+        filters,
         axiosConfig
       );
     },
