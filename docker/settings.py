@@ -41,3 +41,6 @@ TEMPLATES = [
 if os.getenv("ENV") == "localdev":
     DEBUG = True
     COMPASS_USERS_GROUP = 'u_test_group'
+    EDW_USER = ''
+    EDW_PASSWORD = ''
+    EDW_SERVER = ''
