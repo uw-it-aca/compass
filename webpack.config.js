@@ -28,7 +28,6 @@ module.exports = (_env, options) => {
     },
 
     output: {
-      //path: path.resolve('../static/compass/'),
       path: path.resolve('static/compass/'),
       filename: "[name]-[contenthash].js",
       publicPath: '',

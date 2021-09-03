@@ -10,7 +10,7 @@ from django.views import View
 from uw_saml.decorators import group_required
 
 
-@method_decorator(group_required(settings.DATA_AGGREGATOR_ACCESS_GROUP),
+@method_decorator(group_required(settings.COMPASS_USERS_GROUP),
                   name='dispatch')
 class RESTDispatch(View):
     @staticmethod
