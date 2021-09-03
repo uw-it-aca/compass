@@ -12,8 +12,8 @@
       <div class="bg-gray">
         <div class="container-xl py-2">
           <div class="row">
-            <div class="col">Admin, OMAD, ISS, Atheletics</div>
-            <div class="col text-end"><a href="#">Retention Dashboard</a></div>
+            <div class="col">Admin, OMAD, ISS, Athletics</div>
+            <div class="col text-end"><a href="#">Compass</a></div>
           </div>
         </div>
       </div>

@@ -137,6 +137,8 @@ class EdwDAO():
             elif filter_type == "student-email":
                 query += (f" AND UPPER(enr.StudentEmail) LIKE "
                           f"UPPER('%{filter_text}%')")
+        
+        query += " ORDER BY enr.StudentName"
 
         conn = self.get_connection("EDWPresentation")
         enrolled_df = pd.read_sql(query, conn)
