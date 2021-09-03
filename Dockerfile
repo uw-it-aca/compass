@@ -29,12 +29,10 @@ RUN npx webpack --mode=production
 
 FROM app-prewebpack-container as app-container
 
-COPY --chown=acait:acait --from=wpack /static /static
+COPY --chown=acait:acait --from=wpack /app/static/ /static/
 
 ADD --chown=acait:acait . /app/
 ADD --chown=acait:acait docker/ project/
-
-RUN . /app/bin/activate && python manage.py collectstatic --noinput
 
 FROM gcr.io/uwit-mci-axdd/django-test-container:1.3.1 as app-test-container
 
