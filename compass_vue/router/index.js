@@ -3,7 +3,7 @@ import { createWebHistory, createRouter } from "vue-router";
 // page components
 import Home from '../pages/home.vue';
 import Student from '../pages/student.vue';
-import NotFound from '../pages/not-found.vue';
+import NotFound from '../pages/404.vue';
 
 const routes = [
   { path: '/:pathMatch(.*)*', component: NotFound },
