@@ -10,7 +10,7 @@
     <template #content>
       <div class="row">
         <div class="col">
-          page not found
+          page not found asldfj asdflkj
         </div>
       </div>
     </template>
