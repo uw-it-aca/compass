@@ -2,8 +2,9 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import json
-from compass.dao import EdwDAO
+from compass.models import Term
 from compass.views.api import RESTDispatch
+from edw_clients.compass.dao import CompassDAO
 
 
 class EnrolledStudentsListView(RESTDispatch):
@@ -17,6 +18,9 @@ class EnrolledStudentsListView(RESTDispatch):
     '''
     def post(self, request, *args, **kwargs):
         filters = json.loads(request.body.decode('utf-8'))
-        edw_dao = EdwDAO()
-        df = edw_dao.get_enrolled_students_df(filters=filters)
-        return self.json_response(content=df.to_dict('records'))
+        compass_dao = CompassDAO()
+        curr_term, _ = Term.objects.get_or_create_term_from_sis_term_id()
+        enrolled_students_df = compass_dao.get_enrolled_students_df(
+            curr_term.sis_term_id, filters=filters)
+        return self.json_response(
+            content=enrolled_students_df.to_dict('records'))

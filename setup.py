@@ -29,7 +29,6 @@ setup(
         'UW-RestClients-SWS==2.3.14',
         'UW-Django-SAML2~=1.5',
         'urllib3~=1.25',
-        'pymssql==2.2.2',
         'pandas~=1.1',
     ],
     license="Apache License, Version 2.0",

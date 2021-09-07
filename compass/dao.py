@@ -2,12 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import logging
-import pandas as pd
-import pymssql
 from compass.models import Term
-from compass.utilities import get_term_number
-from datetime import datetime, timezone
-from django.conf import settings
 from restclients_core.exceptions import DataFailureException
 from restclients_core.util.retry import retry
 from uw_sws.term import get_current_term, get_term_after, \
@@ -59,87 +54,3 @@ class SwsDAO():
                 Term.objects.get_or_create_from_sws_term(sws_term)
             if created:
                 logging.info(f"Created term {term.sis_term_id}")
-
-
-class EdwDAO():
-
-    def __init__(self, *args, **kwargs):
-        self.configure_pandas()
-
-    def configure_pandas(self):
-        """
-        Configure global pandas options
-        """
-        pd.options.mode.use_inf_as_na = True
-        pd.options.display.max_rows = 500
-        pd.options.display.precision = 3
-        pd.options.display.float_format = '{:.3f}'.format
-
-    def get_connection(self, database):
-        password = getattr(settings, "EDW_PASSWORD")
-        user = getattr(settings, "EDW_USER")
-        server = getattr(settings, "EDW_SERVER")
-        conn = pymssql.connect(server, user, password, database)
-        logging.debug(f"Connected to {server}.{database} with user {user}")
-        return conn
-
-    def get_enrolled_students_df(self, filters=None, sis_term_id=None):
-        year = None
-        quarter_num = None
-        if sis_term_id is not None:
-            parts = sis_term_id.split("-")
-            year = parts[0]
-            quarter_num = str(get_term_number(parts[1]))
-        if year is None:
-            year = datetime.now(timezone.utc).year
-        if quarter_num is None:
-            curr_term, _ = Term.objects.get_or_create_term_from_sis_term_id()
-            quarter_num = curr_term.term_number
-        yrq = "".join([str(year), str(quarter_num)])
-
-        query = (
-            f"""
-            SELECT DISTINCT TOP(250)
-                enr.SystemKey,
-                enr.StudentNumber,
-                stu1.uw_netid as UWNetID,
-                enr.StudentName,
-                enr.StudentNamePreferredFirst,
-                enr.StudentNamePreferredMiddle,
-                enr.StudentNamePreferredLast,
-                enr.BirthDate,
-                enr.StudentEmail,
-                enr.ExternalEmail,
-                enr.LocalPhoneNumber,
-                enr.Gender,
-                enr.GPA,
-                enr.TotalCredits,
-                dm.MajorFullName,
-                enr.CampusDesc,
-                enr.ClassDesc,
-                enr.EnrollStatusCode
-            FROM EDWPresentation.sec.EnrolledStudent AS enr
-            LEFT JOIN UWSDBDataStore.sec.student_1 AS stu1 ON enr.SystemKey = stu1.system_key
-            LEFT JOIN EDWPresentation.sec.factStudentProgramEnrollment AS fspe ON fspe.StudentKeyId = enr.SystemKey
-            LEFT JOIN EDWPresentation.sec.dimMajor AS dm ON dm.MajorKeyId = fspe.MajorKeyId 
-            WHERE AcademicYrQtr = '{yrq}'
-            """  # noqa
-        )
-
-        if filters and filters.get("searchFilter"):
-            filter_text = filters["searchFilter"]["filterText"]
-            filter_type = filters["searchFilter"]["filterType"]
-            if filter_type == "student-number":
-                query += f" AND enr.StudentNumber LIKE '%{filter_text}%'"
-            elif filter_type == "student-name":
-                query += (f" AND UPPER(enr.StudentName) LIKE "
-                          f"UPPER('%{filter_text}%')")
-            elif filter_type == "student-email":
-                query += (f" AND UPPER(enr.StudentEmail) LIKE "
-                          f"UPPER('%{filter_text}%')")
-        
-        query += " ORDER BY enr.StudentName"
-
-        conn = self.get_connection("EDWPresentation")
-        enrolled_df = pd.read_sql(query, conn)
-        return enrolled_df
