@@ -11,10 +11,10 @@
     <template #bar v-if="true">
       <div class="bg-gray">
         <div class="container-xl py-2">
-          <div class="row">
-            <div class="col">Admin, OMAD, ISS, Athletics</div>
-            <div class="col text-end">
-              <a href="#">Compass</a>
+          <div class="d-flex">
+            <div class="flex-fill">Admin, OMAD, ISS, Athletics</div>
+            <div class="flex-fill text-end">
+              <a href="#">RAD</a>
             </div>
           </div>
         </div>
