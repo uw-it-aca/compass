@@ -12,11 +12,7 @@ const dataMixin = {
           'X-CSRFToken': csrfToken,
         },
       };
-      return axios.post(
-        `/api/internal/edw/enrolled-students/`,
-        filters,
-        axiosConfig
-      );
+      return axios.post(`/api/internal/edw/enrolled-students/`, filters, axiosConfig);
     },
   },
 };

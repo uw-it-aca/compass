@@ -13,15 +13,38 @@
           <div class="small">
             <div class="d-inline me-3 text-nowrap">Find student by here:</div>
             <div class="d-inline text-nowrap">
-              <div class="form-check form-check-inline" v-for="option in searchOptions" :key="option.id">
-                <input class="form-check-input" type="radio" name="searchRadioOptions" :id="option.id" :value="option" v-model="searchOption">
-                <label class="form-check-label" :for="option.id">{{option.label}}</label>
+              <div
+                class="form-check form-check-inline"
+                v-for="option in searchOptions"
+                :key="option.id"
+              >
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="searchRadioOptions"
+                  :id="option.id"
+                  :value="option"
+                  v-model="searchOption"
+                />
+                <label class="form-check-label" :for="option.id">{{ option.label }}</label>
               </div>
             </div>
           </div>
           <div class="input-group input-group-sm mb-3">
-            <input type="text" class="form-control" :placeholder="'Student ' + searchOption.label + ' Contains...'" :aria-label="'Student ' + searchOption.label + ' Contains...'" v-model="searchText" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2" v-on:click="filterEnrolledStudents">GO</button>
+            <input
+              type="text"
+              class="form-control"
+              :placeholder="'Student ' + searchOption.label + ' Contains...'"
+              :aria-label="'Student ' + searchOption.label + ' Contains...'"
+              v-model="searchText"
+              aria-describedby="button-addon2"
+            />
+            <button
+              class="btn btn-outline-secondary"
+              type="button"
+              id="button-addon2"
+              v-on:click="filterEnrolledStudents"
+            >GO</button>
           </div>
         </div>
         <div class="col-sm-4">
@@ -51,13 +74,15 @@
             </thead>
             <tbody>
               <tr v-for="(item,) in enrolledStudents" :key="item.SystemKey">
-                <td>{{item.StudentName}}</td>
-                <td><router-link to="/student">{{item.StudentNumber}}</router-link></td>
-                <td>{{item.UWNetID}}</td>
-                <td>{{item.ClassDesc}}</td>
-                <td>{{item.MajorFullName}}</td>
-                <td>{{item.EnrollStatusCode}}</td>
-                <td>{{item.Gender}}</td>
+                <td>{{ item.StudentName }}</td>
+                <td>
+                  <router-link to="/student">{{ item.StudentNumber }}</router-link>
+                </td>
+                <td>{{ item.UWNetID }}</td>
+                <td>{{ item.ClassDesc }}</td>
+                <td>{{ item.MajorFullName }}</td>
+                <td>{{ item.EnrollStatusCode }}</td>
+                <td>{{ item.Gender }}</td>
                 <td></td>
               </tr>
             </tbody>
@@ -73,7 +98,9 @@
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li>
-              <li class="page-item"><a class="page-link" href="">1</a></li>
+              <li class="page-item">
+                <a class="page-link" href>1</a>
+              </li>
               <li class="page-item">
                 <a class="page-link" href="#" aria-label="Next">
                   <span aria-hidden="true">&raquo;</span>
@@ -96,7 +123,7 @@ export default {
   components: {
     layout: Layout,
   },
-  created: function() {
+  created: function () {
     this.loadEnrolledStudents({});
     this.searchOption = this.searchOptions[0];
   },
@@ -123,7 +150,7 @@ export default {
     };
   },
   computed: {
-    searchFilters: function() {
+    searchFilters: function () {
       let searchFilterType = null;
       let searchFilterText = null;
       if (this.searchOption) {
@@ -139,10 +166,10 @@ export default {
     }
   },
   methods: {
-    filterEnrolledStudents: function() {
+    filterEnrolledStudents: function () {
       this.loadEnrolledStudents(this.searchFilters);
     },
-    loadEnrolledStudents: function(filters) {
+    loadEnrolledStudents: function (filters) {
       let _this = this;
       this.getEnrolledStudentsList(filters).then(response => {
         if (response.data) {
@@ -154,4 +181,5 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+</style>

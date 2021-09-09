@@ -13,22 +13,26 @@
         <div class="container-xl py-2">
           <div class="row">
             <div class="col">Admin, OMAD, ISS, Athletics</div>
-            <div class="col text-end"><a href="#">Compass</a></div>
+            <div class="col text-end">
+              <a href="#">Compass</a>
+            </div>
           </div>
         </div>
       </div>
     </template>
     <template #main>
       <!-- main section override -->
-      <slot name="title"><h1>{{ pageTitle }}</h1></slot>
+      <slot name="title">
+        <h1>{{ pageTitle }}</h1>
+      </slot>
       <slot name="content"></slot>
     </template>
     <template #footer>
       <div class="bg-dark">
         <div class="container-xl py-3 small">
-          <div class="text-white font-weight-light">
-            Copyright &copy; {{ new Date().getFullYear() }} University of Washington
-          </div>
+          <div
+            class="text-white font-weight-light"
+          >Copyright &copy; {{ new Date().getFullYear() }} University of Washington</div>
         </div>
       </div>
     </template>
@@ -64,4 +68,5 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+</style>
