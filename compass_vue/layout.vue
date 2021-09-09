@@ -9,7 +9,7 @@
   >
     <template #header></template>
     <template #bar v-if="true">
-      <div class="bg-gray">
+      <div class="bg-beige">
         <div class="container-xl py-2">
           <div class="d-flex">
             <div class="flex-fill">Admin, OMAD, ISS, Athletics</div>
