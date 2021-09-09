@@ -10,10 +10,10 @@
           <h2 class="h3">{{ $route.params.id }}</h2>
         </div>
         <div class="col-2 text-end text-nowrap">
-          <a class="btn btn-info me-2" href="#" role="button" style="font-size: 20px;">
+          <a class="btn btn-outline-light border text-secondary me-2" href="#" role="button" style="font-size: 20px;">
             <i class="bi bi-telephone"></i>
           </a>
-          <a class="btn btn-info" href="#" role="button" style="font-size: 20px;">
+          <a class="btn btn-outline-light border text-secondary" href="#" role="button" style="font-size: 20px;">
             <i class="bi bi-chat-right-text"></i>
           </a>
         </div>
