@@ -50,12 +50,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item,) in enrolledStudents" :key="item.SystemKey">
+              <tr v-for="(item,) in enrolledStudents" :key="item.StudentNumber">
                 <td>{{item.StudentName}}</td>
                 <td><router-link to="/student">{{item.StudentNumber}}</router-link></td>
                 <td>{{item.UWNetID}}</td>
                 <td>{{item.ClassDesc}}</td>
-                <td>{{item.MajorFullName}}</td>
+                <td>{{item.MajorDesc}}</td>
                 <td>{{item.EnrollStatusCode}}</td>
                 <td>{{item.Gender}}</td>
                 <td></td>
@@ -66,21 +66,12 @@
       </div>
       <div class="row">
         <div class="col">
-          <nav aria-label="Page navigation example">
-            <ul class="pagination pagination-sm justify-content-end">
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <li class="page-item"><a class="page-link" href="">1</a></li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+          <paginate
+            v-model="currentPage"
+            :records="enrolledStudentsCount"
+            :per-page="pageSize"
+            @paginate="filterEnrolledStudents">
+          </paginate>
         </div>
       </div>
     </template>
@@ -97,6 +88,12 @@ export default {
     layout: Layout,
   },
   created: function() {
+    let _this = this;
+    this.getEnrolledStudentsCount().then(
+      function(result) {
+        _this.enrolledStudentsCount = result.data["enrolled_students_count"];
+      }
+    );
     this.loadEnrolledStudents({});
     this.searchOption = this.searchOptions[0];
   },
@@ -104,6 +101,9 @@ export default {
     return {
       pageTitle: "Home",
       enrolledStudents: [],
+      enrolledStudentsCount: 0,
+      pageSize: 10,
+      currentPage: 1,
       searchOption: null,
       searchText: "",
       searchOptions: [
@@ -136,6 +136,9 @@ export default {
           filterText: searchFilterText
         }
       };
+    },
+    numPages: function() {
+      return Math.ceil(this.enrolledStudentsCount / this.pageSize)
     }
   },
   methods: {

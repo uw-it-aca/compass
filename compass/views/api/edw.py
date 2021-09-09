@@ -24,3 +24,18 @@ class EnrolledStudentsListView(RESTDispatch):
             curr_term.sis_term_id, filters=filters)
         return self.json_response(
             content=enrolled_students_df.to_dict('records'))
+
+
+class EnrolledStudentsCount(RESTDispatch):
+    '''
+    API endpoint returning a count of enrolled users from the EDW
+
+    /api/internal/edw/enrolled-students-count/
+    '''
+    def post(self, request, *args, **kwargs):
+        compass_dao = CompassDAO()
+        curr_term, _ = Term.objects.get_or_create_term_from_sis_term_id()
+        enrolled_students_count = compass_dao.get_number_enrolled_students(
+            curr_term.sis_term_id)
+        return self.json_response(
+            content={'enrolled_students_count': enrolled_students_count})
