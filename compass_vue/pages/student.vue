@@ -5,11 +5,11 @@
     <!-- page content -->
     <template #title>
       <div v-if="$route.params.id" class="row border-bottom mb-3">
-        <div class="col-xs-10">
+        <div class="col-10">
           <h1 class="h3 text-uppercase">Lastname, Firstname</h1>
           <h2 class="h3">{{ $route.params.id }}</h2>
         </div>
-        <div class="col-xs-2 text-end">
+        <div class="col-2 text-end text-nowrap">
           <a class="btn btn-info me-2" href="#" role="button" style="font-size: 20px;">
             <i class="bi bi-telephone"></i>
           </a>
