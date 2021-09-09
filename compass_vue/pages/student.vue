@@ -14,8 +14,8 @@
             <a class="btn btn-outline-light border text-secondary me-2" href="#" role="button" style="font-size: 20px;">
               <i class="bi bi-telephone"></i>
             </a>
-            <a class="btn btn-outline-light border text-secondary" href="#" role="button" style="font-size: 20px;">
-              <i class="bi bi-chat-right-text"></i>
+            <a class="btn btn-outline-primary" href="#" role="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" style="font-size: 20px;">
+              <i class="bi bi-chat-square-text"></i>
             </a>
           </div>
         </div>
@@ -98,9 +98,10 @@
               <div class="card-body">
                 <h3 class="card-title">Academics</h3>
                 <ul>
-                  <li>Adviser Name</li>
+                  <li>Adviser Name <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">view profile</a></li>
                   <li>Active? yes/no</li>
-                  <li>Desired Degree (as of quarter? timestamp) <a href="#">edit</a></li>
+                  <li>Intended Major/Degree (as of quarter? timestamp) <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">change</a></li>
+                  <li>Accepted Major</li>
                   <li>Current Schedule (current quarter)</li>
                 </ul>
               </div>
@@ -113,13 +114,16 @@
           <div class="col">
             <ul class="nav nav-tabs">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">History</a>
+                <a class="nav-link active" aria-current="page" href="#">Visit History</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">IC Summary</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Additional Student Info</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Intended Major (change history)</a>
               </li>
             </ul>
 
@@ -128,7 +132,7 @@
                 <tr>
                   <th>Date</th>
                   <th>Time</th>
-                  <th>Type</th>
+                  <th class="text-nowrap">Contact Type</th>
                   <th class="text-nowrap">Event Type</th>
                   <th>Staff</th>
                   <th>Notes</th>
@@ -182,6 +186,62 @@
         <!-- end notes -->
       </div>
       <div v-else>No student</div>
+
+      <!-- visit modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">In-person visit</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              
+              <div class="mb-3">
+                Contact type:
+                <select class="form-select" aria-label="Default select example">
+                  <option selected>Quick Question</option>
+                  <option value="1">Appointment</option>
+                  <option value="2">Drop-in</option>
+                </select>
+              </div>
+              <p>Date (widget)</p>
+              <p>Visit duration</p>
+
+              <div class="mb-3">
+                Topics Covered
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                  <label class="form-check-label" for="flexCheckDefault">
+                    Default checkbox
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                  <label class="form-check-label" for="flexCheckChecked">
+                    Checked checkbox
+                  </label>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Notes</label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              </div>
+
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea2" class="form-label">Actions and Recommmendations</label>
+                <textarea class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save visit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </template>
   </layout>
 </template>

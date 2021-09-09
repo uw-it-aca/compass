@@ -14,7 +14,7 @@
           <div class="d-flex">
             <div class="flex-fill">Admin, OMAD, ISS, Athletics</div>
             <div class="flex-fill text-end">
-              <a href="#">RAD</a>
+              <a href="#">Retention Dashboard</a>
             </div>
           </div>
         </div>
