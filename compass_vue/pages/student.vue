@@ -4,7 +4,17 @@
   <layout :page-title="pageTitle">
     <!-- page content -->
     <template #title>
-      <h1 v-if="$route.params.id">{{ $route.params.id }}</h1>
+
+      <div v-if="$route.params.id" class="row">
+        <div class="col-sm-10">
+          <h1 class="h3 text-uppercase">Average, John</h1>
+          <h2>{{ $route.params.id }}</h2>
+        </div>
+        <div class="col-sm-2">
+          <i class="bi bi-telephone"></i>
+          <i class="bi bi-chat-right-text"></i>
+        </div>
+      </div>
       <h1 v-else>Student</h1>
     </template>
 
@@ -36,7 +46,7 @@ export default {
   },
   data() {
     return {
-      pageTitle: 'Student detail',
+      pageTitle: 'Average, John #12345678',
     };
   },
   methods: {},

@@ -8,7 +8,7 @@ $link-color: #0069d9; //a11y blue
 
 // compass custom colors
 $custom-colors: (
-
+    "test": red,
 );
 
 // axdd-components + pathways custom colors
@@ -23,6 +23,7 @@ $container-max-widths: map.merge($container-max-widths, (xl: 1400px, xxl: 1600px
 
 // import bootstrap and bootstrap-icons
 @import "bootstrap/scss/bootstrap";
+@import "bootstrap-icons/font/bootstrap-icons.css";
 
 // additional non-bootstrap styles
 
