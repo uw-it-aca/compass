@@ -205,31 +205,163 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              
-              <div class="mb-3">
-                Contact type:
-                <select class="form-select" aria-label="Default select example">
-                  <option selected>Quick Question</option>
-                  <option value="1">Appointment</option>
-                  <option value="2">Drop-in</option>
-                </select>
-              </div>
-              <p>Date (widget)</p>
-              <p>Visit duration</p>
+              <div class="row mb-3">
+                <div class="col">
+                  Contact type:
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>Quick Question</option>
+                    <option value="1">Appointment</option>
+                    <option value="2">Drop-in</option>
+                  </select>
+                </div>
+                <div class="col">
+                  Date (widget)
+                  <div class="input-group mb-3">
+                    <button class="btn btn-outline-secondary" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="bi bi-calendar3"></i>
+                    </button>     
+                    <div class="dropdown-menu p-2 shadow rounded-3" style="width: 340px" id="dropdownCalendar">
+                      <div class="d-grid gap-1">
+                        <div class="cal">
+                          <div class="cal-month">
+                            <button class="btn cal-btn" type="button">
+                              <i class="bi bi-arrow-left-short"></i>
+                            </button>
+                            <strong class="cal-month-name">June</strong>
+                            <select class="form-select cal-month-name d-none">
+                              <option value="January">January</option>
+                              <option value="February">February</option>
+                              <option value="March">March</option>
+                              <option value="April">April</option>
+                              <option value="May">May</option>
+                              <option selected="" value="June">June</option>
+                              <option value="July">July</option>
+                              <option value="August">August</option>
+                              <option value="September">September</option>
+                              <option value="October">October</option>
+                              <option value="November">November</option>
+                              <option value="December">December</option>
+                            </select>
+                            <button class="btn cal-btn" type="button">
+                              <i class="bi bi-arrow-right-short"></i>
+                            </button>
+                          </div>
+                          <div class="cal-weekdays text-muted">
+                            <div class="cal-weekday">Sun</div>
+                            <div class="cal-weekday">Mon</div>
+                            <div class="cal-weekday">Tue</div>
+                            <div class="cal-weekday">Wed</div>
+                            <div class="cal-weekday">Thu</div>
+                            <div class="cal-weekday">Fri</div>
+                            <div class="cal-weekday">Sat</div>
+                          </div>
+                          <div class="cal-days">
+                            <button class="btn cal-btn" disabled="" type="button">30</button>
+                            <button class="btn cal-btn" disabled="" type="button">31</button>
 
+                            <button class="btn cal-btn" type="button">1</button>
+                            <button class="btn cal-btn" type="button">2</button>
+                            <button class="btn cal-btn" type="button">3</button>
+                            <button class="btn cal-btn" type="button">4</button>
+                            <button class="btn cal-btn" type="button">5</button>
+                            <button class="btn cal-btn" type="button">6</button>
+                            <button class="btn cal-btn" type="button">7</button>
+
+                            <button class="btn cal-btn" type="button">8</button>
+                            <button class="btn cal-btn" type="button">9</button>
+                            <button class="btn cal-btn" type="button">10</button>
+                            <button class="btn cal-btn" type="button">11</button>
+                            <button class="btn cal-btn" type="button">12</button>
+                            <button class="btn cal-btn" type="button">13</button>
+                            <button class="btn cal-btn" type="button">14</button>
+
+                            <button class="btn cal-btn" type="button">15</button>
+                            <button class="btn cal-btn" type="button">16</button>
+                            <button class="btn cal-btn" type="button">17</button>
+                            <button class="btn cal-btn" type="button">18</button>
+                            <button class="btn cal-btn" type="button">19</button>
+                            <button class="btn cal-btn" type="button">20</button>
+                            <button class="btn cal-btn" type="button">21</button>
+
+                            <button class="btn cal-btn" type="button">22</button>
+                            <button class="btn cal-btn" type="button">23</button>
+                            <button class="btn cal-btn" type="button">24</button>
+                            <button class="btn cal-btn" type="button">25</button>
+                            <button class="btn cal-btn" type="button">26</button>
+                            <button class="btn cal-btn" type="button">27</button>
+                            <button class="btn cal-btn" type="button">28</button>
+
+                            <button class="btn cal-btn" type="button">29</button>
+                            <button class="btn cal-btn" type="button">30</button>
+                            <button class="btn cal-btn" type="button">31</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <input type="text" class="form-control" aria-label="Text input with dropdown button">
+                  </div>
+                </div>
+                <div class="col">
+                  Visit duration (min):
+                  <select class="form-select" aria-label="Default select example">
+                    <option selected>15</option>
+                    <option value="1">30</option>
+                    <option value="2">60</option>
+                    <option value="3">90</option>
+                  </select>
+                </div>
+              </div>
               <div class="mb-3">
                 Topics Covered
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                  <label class="form-check-label" for="flexCheckDefault">
-                    Default checkbox
-                  </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                  <label class="form-check-label" for="flexCheckChecked">
-                    Checked checkbox
-                  </label>
+                <div style="column-count: 3;">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheck1">
+                    <label class="form-check-label" for="flexCheck1">
+                      Add/Drop Class
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheck2">
+                    <label class="form-check-label" for="flexCheck2">
+                      Join/Affiliate
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheck3">
+                    <label class="form-check-label" for="flexCheck3">
+                      Academic Difficulties
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheck4">
+                    <label class="form-check-label" for="flexCheck4">
+                      Hardship Withdrawl
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheck5">
+                    <label class="form-check-label" for="flexCheck5">
+                      Internships
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheck6">
+                    <label class="form-check-label" for="flexCheck6">
+                      Research Opportunities
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheck7">
+                    <label class="form-check-label" for="flexCheck7">
+                      Graduate Professional School
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheck8">
+                    <label class="form-check-label" for="flexCheck8">
+                      Testing/Assessment
+                    </label>
+                  </div>
                 </div>
               </div>
               <div class="mb-3">
@@ -301,4 +433,81 @@ export default {
 </script>
 
 <style lang="scss">
+.dropdown-menu {
+  position: static;
+  display: block;
+  width: auto;
+  margin: 4rem auto;
+}
+
+.dropdown-menu-macos {
+  display: grid;
+  gap: .25rem;
+  padding: .5rem;
+  border-radius: .5rem;
+}
+.dropdown-menu-macos .dropdown-item {
+  border-radius: .25rem;
+}
+
+.dropdown-item-danger {
+  color: var(--bs-red);
+}
+.dropdown-item-danger:hover,
+.dropdown-item-danger:focus {
+  color: #fff;
+  background-color: var(--bs-red);
+}
+.dropdown-item-danger.active {
+  background-color: var(--bs-red);
+}
+
+.btn-hover-light {
+  text-align: left;
+  background-color: var(--bs-white);
+  border-radius: .25rem;
+}
+.btn-hover-light:hover,
+.btn-hover-light:focus {
+  color: var(--bs-blue);
+  background-color: var(--bs-light);
+}
+
+.cal-month,
+.cal-days,
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: center;
+}
+.cal-month-name {
+  grid-column-start: 2;
+  grid-column-end: 7;
+  text-align: center;
+}
+.cal-weekday,
+.cal-btn {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  padding: 0;
+}
+.cal-btn:not([disabled]) {
+  font-weight: 500;
+}
+.cal-btn:hover,
+.cal-btn:focus {
+  background-color: rgba(0, 0, 0, .05);
+}
+.cal-btn[disabled] {
+  opacity: .5;
+}
+
+.form-control-dark {
+  background-color: rgba(255, 255, 255, .05);
+  border-color: rgba(255, 255, 255, .15);
+}
+
 </style>
