@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-8">
                   <div class="card-body px-0">
-                    <h3 class="card-title">Profile</h3>
+                    <h3 class="card-title h6 text-uppercase text-muted fw-bold">Profile</h3>
                     <ul>
                       <li>StudentID Photo</li>
                       <li>Preferred Name</li>
@@ -53,7 +53,7 @@
           <div class="col-sm-4">
             <div class="card shadow-sm mb-3">
               <div class="card-body">
-                <h3 class="card-title">Contact</h3>
+                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Contact</h3>
                 <ul>
                   <li>UW Email</li>
                   <li>Personal email</li>
@@ -69,7 +69,7 @@
           <div class="col-sm-4">
             <div class="card shadow-sm mb-3">
               <div class="card-body">
-                <h3 class="card-title">Standing</h3>
+                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Standing</h3>
                 <ul>
                   <li>Registered yes/no</li>
                   <li>Enrollment Status yes/no</li>
@@ -83,7 +83,7 @@
           <div class="col-sm-4">
             <div class="card shadow-sm mb-3">
               <div class="card-body">
-                <h3 class="card-title">OMAD Specific?</h3>
+                <h3 class="card-title h6 text-uppercase text-muted fw-bold">OMAD Specific?</h3>
                 <ul>
                   <li>EOP - 13 yes/no</li>
                   <li>Pre-professional yes/no</li>
@@ -96,7 +96,7 @@
           <div class="col-sm-4">
             <div class="card shadow-sm mb-3">
               <div class="card-body">
-                <h3 class="card-title">Academics</h3>
+                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Academics</h3>
                 <ul>
                   <li>Adviser Name: 
                     <div class="input-group">
@@ -219,13 +219,22 @@
                   </select>
                 </div>
                 <div class="col">
-                  Visit duration (min):
-                  <select class="form-select" aria-label="Default select example">
-                    <option selected>15</option>
-                    <option value="1">30</option>
-                    <option value="2">60</option>
-                    <option value="3">90</option>
-                  </select>
+                  
+                  <div>
+                    <label for="appt-time">Check in time: </label>
+                    <input id="appt-time" type="time" name="appt-time" value="13:30" class="form-control">
+                  </div>
+
+                  <div>
+                    <label>Visit duration: </label>
+                    <select class="form-select" aria-label="Default select example">
+                      <option selected>15</option>
+                      <option value="1">30</option>
+                      <option value="2">60</option>
+                      <option value="3">90</option>
+                    </select>
+                  </div>
+                  
                 </div>
               </div>
               <div class="mb-3">
