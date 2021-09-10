@@ -85,7 +85,7 @@
               <div class="card-body">
                 <h3 class="card-title h6 text-uppercase text-muted fw-bold">OMAD Specific?</h3>
                 <ul>
-                  <li>EOP - 13 yes/no</li>
+                  <li>EOP - yes/no</li>
                   <li>Pre-professional yes/no</li>
                   <li>IC Eligible yes/no</li>
                   <li>Special program yes/no</li>
@@ -100,18 +100,19 @@
                 <ul>
                   <li>Adviser Name: 
                     <div class="input-group">
-                      <select class="form-select form-select-sm" id="inputGroupSelect04" aria-label="Example select with button addon">
+                      <select class="form-select form-select-sm" disabled id="inputGroupSelect04" aria-label="Example select with button addon">
                         <option selected>Pedro Sanchez</option>
                         <option value="1">Bill Thompson</option>
                         <option value="2">Doris Washington</option>
                       </select>
                       <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#adviserModal">view</button>
                     </div>
+                    <p class="small text-muted">only admins can re-assign advisers</p>
                   </li>
-                  <li>Active? yes/no</li>
-                  <li>Intended Major/Degree (as of quarter? timestamp) <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">change</a></li>
-                  <li>Accepted Major</li>
+                  <li>Active Caseload? yes/no</li>
+                  <li>Degree Degree (as of quarter? timestamp) <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">change</a></li>
                   <li>Current Schedule (current quarter)</li>
+                  <li>Accepted Major NEW ????</li>
                 </ul>
               </div>
             </div>
@@ -132,7 +133,7 @@
                 <a class="nav-link" href="#">Additional Student Info</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Intended Major (change history)</a>
+                <a class="nav-link" href="#">Desired Degree (change history)</a>
               </li>
             </ul>
             <div class="bg-white border-start border-end border-bottom mb-5 p-3 rounded-bottom shadow-sm">
@@ -207,11 +208,11 @@
             <div class="modal-body">
               <div class="row mb-3"> 
                 <div class="col">
-                  <label for="date">Date:</label>
+                  <label for="date" class="form-label">Date:</label>
                   <input type="date" id="date" class="form-control">
                 </div>
                 <div class="col">
-                  Contact type:
+                  <label class="form-label">Contact type:</label>
                   <select class="form-select" aria-label="Default select example">
                     <option selected>Quick Question</option>
                     <option value="1">Appointment</option>
@@ -219,26 +220,26 @@
                   </select>
                 </div>
                 <div class="col">
-                  
-                  <div>
-                    <label for="appt-time">Check in time: </label>
-                    <input id="appt-time" type="time" name="appt-time" value="13:30" class="form-control">
-                  </div>
+                  <div class="row">
+                    <div class="col">
+                      <label for="appt-time" class="form-label">Check in time: </label>
+                      <input id="appt-time" type="time" name="appt-time" value="13:30" class="form-control">
+                    </div>
 
-                  <div>
-                    <label>Visit duration: </label>
-                    <select class="form-select" aria-label="Default select example">
-                      <option selected>15</option>
-                      <option value="1">30</option>
-                      <option value="2">60</option>
-                      <option value="3">90</option>
-                    </select>
+                    <div class="col">
+                      <label class="form-label">Duration:</label>
+                      <select class="form-select" aria-label="Default select example">
+                        <option selected>15</option>
+                        <option value="1">30</option>
+                        <option value="2">60</option>
+                        <option value="3">90</option>
+                      </select>
+                    </div>
                   </div>
-                  
                 </div>
               </div>
               <div class="mb-3">
-                Topics Covered
+                <label class="form-label">Topics Covered:</label>
                 <div style="column-count: 3;">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="flexCheck1">
