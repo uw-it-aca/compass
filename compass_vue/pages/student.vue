@@ -4,19 +4,32 @@
   <layout :page-title="pageTitle">
     <!-- page content -->
     <template #title>
-      <div v-if="$route.params.id" class="border-bottom mb-3">
-        <div class="d-flex">
-          <div class="flex-fill">
-            <h1 class="h3 text-uppercase">Dynamite, Napoleon</h1>
-            <h2 class="h3">{{ $route.params.id }}</h2>
+      <div v-if="$route.params.id" class="mb-3">
+        <div class="row">
+          <div class="col-lg-6 d-flex">
+            <div style="width:130px;">
+              <img src="/static/img/napoleon-dynamite.jpeg" class="img-fluid rounded-circle" alt="">
+            </div>
+            <div class="flex-fill ps-3">
+              <h1 class="h3 text-uppercase">Dynamite, Napoleon</h1>
+              <div class="h5">{{ $route.params.id }}</div>
+              <div>UWNetId, Gender, Pronouns</div>
+            </div>
           </div>
-          <div class="flex-fill text-end text-nowrap">
-            <a class="btn btn-outline-light border text-muted me-2 shadow-sm" href="#" role="button" style="font-size: 20px;">
-              <i class="bi bi-telephone"></i>
-            </a>
-            <a class="btn btn-outline-primary border shadow-sm" href="#" role="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" style="font-size: 20px;">
-              <i class="bi bi-chat-square-text"></i>
-            </a>
+          <div class="col-6 col-lg-3 border-start">
+            <ul>
+                <li>Preferred name</li>
+                <li>Ethnicity</li>
+                <li>Citizenship</li>
+              </ul>
+          </div>
+          <div class="col-6 col-lg-3 border-start">
+            <ul>
+                <li>UW Email</li>
+                <li>Personal email</li>
+                <li>Phone</li>
+                <li>Address</li>
+              </ul>
           </div>
         </div>
       </div>
@@ -25,41 +38,36 @@
 
     <template #content>
       <div v-if="$route.params.id">
+        <div class="row mb-3">
+          <div class="col text-end">
+           <a class="btn btn-outline-light border text-muted m-1 shadow-sm" href="#" role="button" style="font-size: 20px;">
+              <i class="bi bi-telephone"></i>
+            </a>
+            <a class="btn btn-outline-primary border m-1 shadow-sm" href="#" role="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" style="font-size: 20px;">
+              <i class="bi bi-chat-square-text"></i>
+            </a>
+          </div>
+        </div>
         <div class="row">
           <div class="col-sm-8">
             <div class="card shadow-sm mb-3">
-              <div class="row">
-                <div class="col-4">
-                  <img src="/static/img/napoleon-dynamite.jpeg" class="img-fluid rounded-start" alt="">
-                </div>
-                <div class="col-8">
-                  <div class="card-body px-0">
-                    <h3 class="card-title h6 text-uppercase text-muted fw-bold">Profile</h3>
-                    <ul>
-                      <li>StudentID Photo</li>
-                      <li>Preferred Name</li>
-                      <li>Pronouns</li>
-                      <li>UW NetId</li>
-                      <li>DOB</li>
-                      <li>Ethnicity</li>
-                      <li>Gender</li>
-                      <li>Citizenship</li>
-                    </ul>
-                  </div>
-                </div>
+              <div class="card-body">
+                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Standing</h3>
+                <ul>
+                  <li>Registered yes/no</li>
+                  <li>Enrollment Status yes/no</li>
+                  <li>Class standing (freshman, sophmore, etc.)</li>
+                  <li>Total Credits</li>
+                  <li>GPA</li>
+                </ul>
               </div>
             </div>
           </div>
           <div class="col-sm-4">
             <div class="card shadow-sm mb-3">
               <div class="card-body">
-                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Contact</h3>
-                <ul>
-                  <li>UW Email</li>
-                  <li>Personal email</li>
-                  <li>Phone</li>
-                  <li>Address</li>
-                </ul>
+                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Rentention</h3>
+                <p>red, yellow, green</p>
               </div>
             </div>
           </div>
