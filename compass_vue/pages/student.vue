@@ -8,28 +8,30 @@
         <div class="row">
           <div class="col-lg-6 d-flex">
             <div style="width:130px;">
-              <img src="/static/img/napoleon-dynamite.jpeg" class="img-fluid rounded-circle" alt="">
+              <img src="/static/img/napoleon-dynamite.jpeg" class="img-fluid rounded-circle border border-danger border-5" alt="">
+              <div class="text-center text-muted mb-4">priority: <span class="text-danger">TOP</span></div>
             </div>
-            <div class="flex-fill ps-3">
+            <div class="flex-fill ps-3 mb-4">
               <h1 class="h3 text-uppercase">Dynamite, Napoleon</h1>
               <div class="h5">{{ $route.params.id }}</div>
-              <div>UWNetId, Gender, Pronouns</div>
+              <p>UWNetId, Gender, Pronouns</p>
+              <div><i class="bi bi-trophy-fill text-purple"></i> Student Athlete</div>
             </div>
           </div>
           <div class="col-6 col-lg-3 border-start">
-            <ul>
-                <li>Preferred name</li>
-                <li>Ethnicity</li>
-                <li>Citizenship</li>
-              </ul>
+            <ul class="list-unstyled m-0">
+              <li>Preferred name</li>
+              <li>Ethnicity</li>
+              <li>Citizenship</li>
+            </ul>
           </div>
           <div class="col-6 col-lg-3 border-start">
-            <ul>
-                <li>UW Email</li>
-                <li>Personal email</li>
-                <li>Phone</li>
-                <li>Address</li>
-              </ul>
+            <ul class="list-unstyled m-0">
+              <li>UW Email</li>
+              <li>Personal email</li>
+              <li>Phone</li>
+              <li>Address</li>
+            </ul>
           </div>
         </div>
       </div>
@@ -48,36 +50,13 @@
             </a>
           </div>
         </div>
-        <div class="row">
-          <div class="col-sm-8">
-            <div class="card shadow-sm mb-3">
-              <div class="card-body">
-                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Standing</h3>
-                <ul>
-                  <li>Registered yes/no</li>
-                  <li>Enrollment Status yes/no</li>
-                  <li>Class standing (freshman, sophmore, etc.)</li>
-                  <li>Total Credits</li>
-                  <li>GPA</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="card shadow-sm mb-3">
-              <div class="card-body">
-                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Rentention</h3>
-                <p>red, yellow, green</p>
-              </div>
-            </div>
-          </div>
-        </div>
+        
         <!-- academics area -->
         <div class="row">
-          <div class="col-sm-4">
+          <div class="col-md-4">
             <div class="card shadow-sm mb-3">
               <div class="card-body">
-                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Standing</h3>
+                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Academics</h3>
                 <ul>
                   <li>Registered yes/no</li>
                   <li>Enrollment Status yes/no</li>
@@ -88,10 +67,10 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-4">
+          <div class="col-md-4">
             <div class="card shadow-sm mb-3">
               <div class="card-body">
-                <h3 class="card-title h6 text-uppercase text-muted fw-bold">OMAD Specific?</h3>
+                <h3 class="card-title h6 text-uppercase text-muted fw-bold">OMAD Programs</h3>
                 <ul>
                   <li>EOP - yes/no</li>
                   <li>Pre-professional yes/no</li>
@@ -101,26 +80,56 @@
               </div>
             </div>
           </div>
-          <div class="col-sm-4">
+          <div class="col-md-4">
             <div class="card shadow-sm mb-3">
               <div class="card-body">
-                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Academics</h3>
-                <ul>
-                  <li>Adviser Name: 
+                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Adviser</h3>
+
+                <div class="d-flex">
+                  <div style="width: 70px;">
+                    <img src="/static/img/pedro-sanchez.jpeg" class="img-fluid rounded-circle" alt="">
+                  </div>
+                  <div class="flex-fill ps-3">
                     <div class="input-group">
                       <select class="form-select form-select-sm" disabled id="inputGroupSelect04" aria-label="Example select with button addon">
                         <option selected>Pedro Sanchez</option>
                         <option value="1">Bill Thompson</option>
                         <option value="2">Doris Washington</option>
                       </select>
-                      <button class="btn btn-sm btn-outline-primary" type="button" data-bs-toggle="modal" data-bs-target="#adviserModal">view</button>
+                      <button class="btn btn-sm btn-outline-primary" type="button">assign</button>
                     </div>
                     <p class="small text-muted">only admins can re-assign advisers</p>
-                  </li>
+                  </div>
+                </div>
+                <ul>                    
+                  <li>Department Name</li>
+                  <li>Campus location</li>
+                  <li>Phone</li>
+                  <li>Email</li>
                   <li>Active Caseload? yes/no</li>
-                  <li>Degree Degree (as of quarter? timestamp) <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">change</a></li>
-                  <li>Current Schedule (current quarter)</li>
-                  <li>Accepted Major NEW ????</li>
+                </ul>
+                <div class="text-end"><a href="#">View caseload</a></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card shadow-sm mb-3">
+              <div class="card-body">
+                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Major</h3>
+                <ul>
+                  <li>desired major <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">change</a></li>
+                  <li>accepted major</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card shadow-sm mb-3">
+              <div class="card-body">
+                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Schedule</h3>
+                <ul>
+                  <li>curent quarter</li>
+                  <li>class schedule</li>
                 </ul>
               </div>
             </div>
@@ -145,59 +154,61 @@
               </li>
             </ul>
             <div class="bg-white border-start border-end border-bottom mb-5 p-3 rounded-bottom shadow-sm">
-            <table class="table table-hover table-striped">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Time</th>
-                  <th class="text-nowrap">Contact Type</th>
-                  <th class="text-nowrap">Event Type</th>
-                  <th>Staff</th>
-                  <th>Notes</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">09/23/2020</th>
-                  <td>1:55PM</td>
-                  <td>Drop-in</td>
-                  <td></td>
-                  <td>Otto Wilson</td>
-                  <td>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                    Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis 
-                    doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit 
-                    asperiores dolores excepturi?
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">07/04/2020</th>
-                  <td>10:52AM</td>
-                  <td>Quick Question</td>
-                  <td></td>
-                  <td>Boris Washington</td>
-                  <td>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                    Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis 
-                    doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit 
-                    asperiores dolores excepturi?
-                  </td>
-                </tr>
-                <tr>
-                  <th scope="row">06/29/2020</th>
-                  <td>3:15PM</td>
-                  <td>Appointment</td>
-                  <td></td>
-                  <td>Otto Wilson</td>
-                  <td>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                    Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis 
-                    doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit 
-                    asperiores dolores excepturi?
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+              <div class="table-responsive">
+                <table class="table table-hover table-striped">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th class="text-nowrap">Contact Type</th>
+                      <th class="text-nowrap">Event Type</th>
+                      <th>Staff</th>
+                      <th>Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <th scope="row">09/23/2020</th>
+                      <td>1:55PM</td>
+                      <td>Drop-in</td>
+                      <td></td>
+                      <td>Otto Wilson</td>
+                      <td>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                        Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis 
+                        doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit 
+                        asperiores dolores excepturi?
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">07/04/2020</th>
+                      <td>10:52AM</td>
+                      <td>Quick Question</td>
+                      <td></td>
+                      <td>Boris Washington</td>
+                      <td>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                        Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis 
+                        doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit 
+                        asperiores dolores excepturi?
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">06/29/2020</th>
+                      <td>3:15PM</td>
+                      <td>Appointment</td>
+                      <td></td>
+                      <td>Otto Wilson</td>
+                      <td>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+                        Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis 
+                        doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit 
+                        asperiores dolores excepturi?
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -319,30 +330,6 @@
       </div>
       <!-- end visit modal -->
 
-      <!-- adviser modal -->
-      <div class="modal fade" id="adviserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Pedro Sanchez</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <div style="width: 150px;">
-                <img src="/static/img/pedro-sanchez.jpeg" class="img-fluid img-thumbnail" alt="">
-              </div>
-              <ul>
-                <li>Department Name</li>
-                <li>Campus location</li>
-                <li>Phone</li>
-                <li>Email</li>
-              </ul>
-              <p><a href="#">View caseload</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- end adviser modal -->
     </template>
   </layout>
 </template>
