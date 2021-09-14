@@ -62,6 +62,7 @@
           <table class="table table-striped table-hover border">
             <thead>
               <tr>
+                <th scope="col"></th>
                 <th scope="col">Student Name</th>
                 <th scope="col">Student Number</th>
                 <th scope="col">UW NetID</th>
@@ -74,6 +75,11 @@
             </thead>
             <tbody>
               <tr v-for="(item,) in enrolledStudents" :key="item.SystemKey">
+                <td>
+                  <div style="width:40px;">
+                    <img src="/static/img/napoleon-dynamite.jpeg" class="img-fluid rounded-circle border border-3" alt="">
+                  </div>
+                </td>
                 <td>{{ item.StudentName }}</td>
                 <td>
                   <router-link to="/student">{{ item.StudentNumber }}</router-link>
