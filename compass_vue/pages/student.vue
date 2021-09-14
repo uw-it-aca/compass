@@ -86,29 +86,31 @@
                 <h3 class="card-title h6 text-uppercase text-muted fw-bold">Adviser</h3>
 
                 <div class="d-flex">
-                  <div style="width: 70px;">
+                  <div style="width: 65px;">
                     <img src="/static/img/pedro-sanchez.jpeg" class="img-fluid rounded-circle" alt="">
                   </div>
                   <div class="flex-fill ps-3">
-                    <div class="input-group">
-                      <select class="form-select form-select-sm" disabled id="inputGroupSelect04" aria-label="Example select with button addon">
-                        <option selected>Pedro Sanchez</option>
-                        <option value="1">Bill Thompson</option>
-                        <option value="2">Doris Washington</option>
-                      </select>
-                      <button class="btn btn-sm btn-outline-primary" type="button">assign</button>
-                    </div>
-                    <p class="small text-muted">only admins can re-assign advisers</p>
+                    <ul class="list-unstyled">
+                      <li class="fw-bold">Pedro Sanchez</li>
+                      <li>Email</li>
+                      <li>Phone</li>
+                      <li class="border-top mt-2 pt-2">Department Name</li>
+                      <li>Campus location</li>
+                    </ul>
                   </div>
                 </div>
-                <ul>                    
-                  <li>Department Name</li>
-                  <li>Campus location</li>
-                  <li>Phone</li>
-                  <li>Email</li>
-                  <li>Active Caseload? yes/no</li>
-                </ul>
                 <div class="text-end"><a href="#">View caseload</a></div>
+              </div>
+              <div class="card-footer">
+                <div class="input-group">
+                  <select class="form-select form-select-sm" id="inputGroupSelect04" aria-label="Example select with button addon">
+                    <option selected>Pedro Sanchez</option>
+                    <option value="1">Bill Thompson</option>
+                    <option value="2">Doris Washington</option>
+                  </select>
+                  <button class="btn btn-sm btn-outline-primary" type="button">update</button>
+                </div>
+                <div class="small text-danger">Admins can re-assign advisers</div>
               </div>
             </div>
           </div>
