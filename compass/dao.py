@@ -121,7 +121,7 @@ class EdwDAO():
             FROM EDWPresentation.sec.EnrolledStudent AS enr
             LEFT JOIN UWSDBDataStore.sec.student_1 AS stu1 ON enr.SystemKey = stu1.system_key
             LEFT JOIN EDWPresentation.sec.factStudentProgramEnrollment AS fspe ON fspe.StudentKeyId = enr.SystemKey
-            LEFT JOIN EDWPresentation.sec.dimMajor AS dm ON dm.MajorKeyId = fspe.MajorKeyId 
+            LEFT JOIN EDWPresentation.sec.dimMajor AS dm ON dm.MajorKeyId = fspe.MajorKeyId
             WHERE AcademicYrQtr = '{yrq}'
             """  # noqa
         )
@@ -137,7 +137,7 @@ class EdwDAO():
             elif filter_type == "student-email":
                 query += (f" AND UPPER(enr.StudentEmail) LIKE "
                           f"UPPER('%{filter_text}%')")
-        
+
         query += " ORDER BY enr.StudentName"
 
         conn = self.get_connection("EDWPresentation")
