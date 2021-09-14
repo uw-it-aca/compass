@@ -1,9 +1,7 @@
 FROM gcr.io/uwit-mci-axdd/django-container:1.3.1 as app-prewebpack-container
 
-# Choose one database connector for MCI
-#USER root
-#RUN apt-get update && apt-get install libpq-dev -y
-#RUN apt-get update && apt-get install mysql-client libmysqlclient-dev -y
+USER root
+RUN apt-get update && apt-get install libpq-dev -y
 USER acait
 
 ADD --chown=acait:acait compass/VERSION /app/compass/

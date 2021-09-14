@@ -29,7 +29,7 @@ externalService:
   enabled: true
   name: compass-db-service
   type: ClusterIP
-  serviceAddress:
+  serviceAddress: 172.18.1.4
   servicePort: 5432
 database:
   engine: postgres
