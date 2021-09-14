@@ -13,7 +13,7 @@ DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default=" ")
 
-TEMPLATES['OPTIONS']['context_processors'].extend([
+TEMPLATES[0]['OPTIONS']['context_processors'].extend([
     'compass.context_processors.google_analytics',
     'compass.context_processors.django_debug'
 ])

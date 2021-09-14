@@ -9,9 +9,9 @@ services:
     container_name: compass_app
     environment:
       - GOOGLE_ANALYTICS_KEY=${GOOGLE_ANALYTICS_KEY}
-      - EDW_USER=${EDW_USER}
+      - EDW_USERNAME=${EDW_USERNAME}
       - EDW_PASSWORD=${EDW_PASSWORD}
-      - EDW_SERVER=${EDW_SERVER}
+      - EDW_HOSTNAME=${EDW_HOSTNAME}
     volumes:
       - ./compass:/app/compass
       - statics-volume:/static
