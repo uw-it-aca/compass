@@ -77,8 +77,8 @@ class EdwDAO():
 
     def get_connection(self, database):
         password = getattr(settings, "EDW_PASSWORD")
-        user = getattr(settings, "EDW_USER")
-        server = getattr(settings, "EDW_SERVER")
+        user = getattr(settings, "EDW_USERNAME")
+        server = getattr(settings, "EDW_HOSTNAME")
         conn = pymssql.connect(server, user, password, database)
         logging.debug(f"Connected to {server}.{database} with user {user}")
         return conn

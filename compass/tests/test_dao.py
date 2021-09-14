@@ -65,13 +65,13 @@ class TestEdwDAO(TestCase):
     def test_get_connection(self, mock_settings, mock_pymssql_connect):
         mock_database = MagicMock()
         mock_settings.EDW_PASSWORD = MagicMock()
-        mock_settings.EDW_USER = MagicMock()
-        mock_settings.EDW_SERVER = MagicMock()
+        mock_settings.EDW_USERNAME = MagicMock()
+        mock_settings.EDW_HOSTNAME = MagicMock()
         edw = EdwDAO()
         conn = edw.get_connection(mock_database)
         mock_pymssql_connect.assert_called_once_with(
-            mock_settings.EDW_SERVER,
-            mock_settings.EDW_USER,
+            mock_settings.EDW_HOSTNAME,
+            mock_settings.EDW_USERNAME,
             mock_settings.EDW_PASSWORD,
             mock_database)
         self.assertEqual(conn, mock_pymssql_connect.return_value)

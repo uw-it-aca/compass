@@ -1,46 +1,27 @@
 from .base_settings import *
 
-ALLOWED_HOSTS = ['*']
-
 INSTALLED_APPS += [
     'webpack_bridge',
-    'compass'
+    'compass.apps.CompassConfig'
 ]
 
 STATICFILES_DIRS = [
     '/static/compass/',
 ]
 
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-)
-
 DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default=" ")
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'debug':  True,
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'compass.context_processors.google_analytics',
-                'compass.context_processors.django_debug',
-            ],
-        }
-    }
-]
+TEMPLATES['OPTIONS']['context_processors'].extend([
+    'compass.context_processors.google_analytics',
+    'compass.context_processors.django_debug'
+])
 
 if os.getenv("ENV") == "localdev":
     DEBUG = True
-    COMPASS_USERS_GROUP = 'u_test_group'
-    EDW_USER = os.getenv("EDW_USER", default=" ")
-    EDW_PASSWORD = os.getenv("EDW_PASSWORD", default=" ")
-    EDW_SERVER = os.getenv("EDW_SERVER", default=" ")
+    COMPASS_USERS_GROUP = "u_test_group"
+
+EDW_USERNAME = os.getenv("EDW_USERNAME", default=" ")
+EDW_PASSWORD = os.getenv("EDW_PASSWORD", default=" ")
+EDW_HOSTNAME = os.getenv("EDW_HOSTNAME", default=" ")
