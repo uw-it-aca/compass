@@ -42,15 +42,12 @@
       <div v-if="$route.params.id">
         <div class="row mb-3">
           <div class="col text-end">
-           <a class="btn btn-outline-light border text-muted m-1 shadow-sm" href="#" role="button" style="font-size: 20px;">
-              <i class="bi bi-telephone"></i>
-            </a>
             <a class="btn btn-outline-primary border m-1 shadow-sm" href="#" role="button"  data-bs-toggle="modal" data-bs-target="#exampleModal" style="font-size: 20px;">
               <i class="bi bi-chat-square-text"></i>
             </a>
           </div>
         </div>
-        
+
         <!-- academics area -->
         <div class="row">
           <div class="col-md-4">
@@ -143,7 +140,7 @@
           <div class="col">
             <ul class="nav nav-tabs">
               <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Visit History</a>
+                <a class="nav-link active" aria-current="page" href="#">Contact History</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">IC Summary</a>
@@ -163,7 +160,6 @@
                       <th>Date</th>
                       <th>Time</th>
                       <th class="text-nowrap">Contact Type</th>
-                      <th class="text-nowrap">Event Type</th>
                       <th>Staff</th>
                       <th>Notes</th>
                     </tr>
@@ -173,12 +169,11 @@
                       <th scope="row">09/23/2020</th>
                       <td>1:55PM</td>
                       <td>Drop-in</td>
-                      <td></td>
                       <td>Otto Wilson</td>
                       <td>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis 
-                        doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit 
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
+                        doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
                         asperiores dolores excepturi?
                       </td>
                     </tr>
@@ -186,12 +181,11 @@
                       <th scope="row">07/04/2020</th>
                       <td>10:52AM</td>
                       <td>Quick Question</td>
-                      <td></td>
                       <td>Boris Washington</td>
                       <td>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis 
-                        doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit 
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
+                        doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
                         asperiores dolores excepturi?
                       </td>
                     </tr>
@@ -199,12 +193,23 @@
                       <th scope="row">06/29/2020</th>
                       <td>3:15PM</td>
                       <td>Appointment</td>
-                      <td></td>
                       <td>Otto Wilson</td>
                       <td>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis 
-                        doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit 
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
+                        doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
+                        asperiores dolores excepturi?
+                      </td>
+                    </tr>
+                    <tr>
+                      <th scope="row">5/14/2020</th>
+                      <td>2:15PM</td>
+                      <td>Telephone</td>
+                      <td>Otto Wilson</td>
+                      <td>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
+                        doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
                         asperiores dolores excepturi?
                       </td>
                     </tr>
@@ -223,11 +228,11 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">In-person visit</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Record a contact</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <div class="row mb-3"> 
+              <div class="row mb-3">
                 <div class="col">
                   <label for="date" class="form-label">Date:</label>
                   <input type="date" id="date" class="form-control">
@@ -235,9 +240,11 @@
                 <div class="col">
                   <label class="form-label">Contact type:</label>
                   <select class="form-select" aria-label="Default select example">
-                    <option selected>Quick Question</option>
-                    <option value="1">Appointment</option>
-                    <option value="2">Drop-in</option>
+                    <option selected disabled>Choose one...</option>
+                    <option value="1">Quick Question</option>
+                    <option value="2">Appointment</option>
+                    <option value="3">Drop-in</option>
+                    <option value="4">Telephone</option>
                   </select>
                 </div>
                 <div class="col">
@@ -325,7 +332,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save visit</button>
+              <button type="button" class="btn btn-primary">Save contact</button>
             </div>
           </div>
         </div>
