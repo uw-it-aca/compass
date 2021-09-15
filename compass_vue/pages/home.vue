@@ -13,7 +13,7 @@
           <div class="small">
             <div class="d-inline me-3 text-nowrap">Find student by here:</div>
             <div class="d-inline text-nowrap">
-              <div class="form-check form-check-inline" v-for="option in searchOptions" :key="option.id">
+              <div class="form-check form-check-inline" v-for="option in searchRadioOptions" :key="option.id">
                 <input class="form-check-input" type="radio" name="searchRadioOptions" :id="option.id" :value="option" v-model="searchOption">
                 <label class="form-check-label" :for="option.id">{{option.label}}</label>
               </div>
@@ -21,7 +21,7 @@
           </div>
           <div class="input-group input-group-sm mb-3">
             <input type="text" class="form-control" :placeholder="'Student ' + searchOption.label + ' Contains...'" :aria-label="'Student ' + searchOption.label + ' Contains...'" v-model="searchText" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2" v-on:click="filterEnrolledStudents">GO</button>
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" v-on:click="loadEnrolledStudents">GO</button>
           </div>
         </div>
         <div class="col-sm-4">
@@ -50,15 +50,15 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item,) in enrolledStudents" :key="item.StudentNumber">
-                <td>{{item.StudentName}}</td>
-                <td><router-link to="/student">{{item.StudentNumber}}</router-link></td>
-                <td>{{item.UWNetID}}</td>
-                <td>{{item.ClassDesc}}</td>
-                <td>{{item.MajorDesc}}</td>
-                <td>{{item.EnrollStatusCode}}</td>
-                <td>{{item.Gender}}</td>
-                <td></td>
+              <tr v-for="(item,) in enrolledStudents" :key="item.student_number">
+                <td>{{item.student_name}}</td>
+                <td><router-link to="/student">{{item.student_number}}</router-link></td>
+                <td>{{item.uw_net_id}}</td>
+                <td>{{item.class_desc}}</td>
+                <td>{{item.major_full_name}}</td>
+                <td>{{item.enrollment_status}}</td>
+                <td>{{item.gender}}</td>
+                <td>{{item.adviser_full_name}}</td>
               </tr>
             </tbody>
           </table>
@@ -70,7 +70,7 @@
             v-model="currentPage"
             :records="enrolledStudentsCount"
             :per-page="pageSize"
-            @paginate="filterEnrolledStudents">
+            @paginate="loadEnrolledStudents">
           </paginate>
         </div>
       </div>
@@ -94,19 +94,22 @@ export default {
         _this.enrolledStudentsCount = result.data["enrolled_students_count"];
       }
     );
-    this.loadEnrolledStudents({});
-    this.searchOption = this.searchOptions[0];
+    this.loadEnrolledStudents();
+    this.searchOption = this.searchRadioOptions[0];
   },
   data() {
     return {
       pageTitle: "Home",
+      // data
       enrolledStudents: [],
+      // pagination
       enrolledStudentsCount: 0,
-      pageSize: 10,
       currentPage: 1,
+      pageSize: 100,
+      // search filters
       searchOption: null,
       searchText: "",
-      searchOptions: [
+      searchRadioOptions: [
         {
           id: "student-number",
           label: "Number"
@@ -123,7 +126,7 @@ export default {
     };
   },
   computed: {
-    searchFilters: function() {
+    searchOptions: function() {
       let searchFilterType = null;
       let searchFilterText = null;
       if (this.searchOption) {
@@ -131,6 +134,8 @@ export default {
         searchFilterText = this.searchText;
       }
       return {
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
         searchFilter: {
           filterType: searchFilterType,
           filterText: searchFilterText
@@ -142,12 +147,10 @@ export default {
     }
   },
   methods: {
-    filterEnrolledStudents: function() {
-      this.loadEnrolledStudents(this.searchFilters);
-    },
-    loadEnrolledStudents: function(filters) {
+    loadEnrolledStudents: function() {
+      let options = this.searchOptions;
       let _this = this;
-      this.getEnrolledStudentsList(filters).then(response => {
+      this.getEnrolledStudentsList(options).then(response => {
         if (response.data) {
           _this.enrolledStudents = response.data;
         }
