@@ -13,7 +13,7 @@ const dataMixin = {
         },
       };
       return axios.post(
-        `/api/internal/edw/enrolled-students-count/`,
+        `/api/internal/student/enrolled-students-count/`,
         [],
         axiosConfig
       );
@@ -28,7 +28,7 @@ const dataMixin = {
         },
       };
       return axios.post(
-        `/api/internal/edw/enrolled-students/`,
+        `/api/internal/student/enrolled-students/`,
         filters,
         axiosConfig
       );

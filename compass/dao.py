@@ -2,11 +2,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import logging
-from compass.models import Term
+from compass.models import Term, Student, Major
 from restclients_core.exceptions import DataFailureException
 from restclients_core.util.retry import retry
 from uw_sws.term import get_current_term, get_term_after, \
     get_term_by_year_and_quarter
+from edw_clients.compass.dao import EDWCompassDAO
 
 
 class SwsDAO():
@@ -54,3 +55,34 @@ class SwsDAO():
                 Term.objects.get_or_create_from_sws_term(sws_term)
             if created:
                 logging.info(f"Created term {term.sis_term_id}")
+
+
+class EDWClientDAO():
+
+    def load_enrolled_students(self, sis_term_id):
+        edw_client = EDWCompassDAO()
+        enrolled_students_df = edw_client.get_enrolled_students_df(sis_term_id)
+        for _, row in enrolled_students_df.iterrows():
+            stunum = row["StudentNumber"]
+            student, _ = Student.objects.get_or_create(student_number=stunum)
+            student.student_number = stunum
+            student.uw_net_id = row["UWNetID"]
+            student.student_name = row["StudentName"]
+            student.birthdate = row["BirthDate"]
+            student.student_email = row["StudentEmail"]
+            student.external_email = row["ExternalEmail"]
+            student.local_phone_number = row["LocalPhoneNumber"]
+            student.gender = row["Gender"]
+            student.gpa = row["GPA"]
+            student.total_credits = row["TotalCredits"]
+            student.class_desc = row["ClassDesc"]
+            student.enrollment_status = row["EnrollStatusCode"]
+            major_abbr = row["major_abbr"]
+            major, _ = Major.objects.get_or_create(major_abbr_code=major_abbr)
+            major.major_abbr_code = row["major_abbr"]
+            major.major_name = row["major_name"]
+            major.major_full_name = row["major_full_nm"]
+            major.major_short_name = row["major_short_nm"]
+            major.save()
+            student.major.add(major)
+            student.save()

@@ -114,3 +114,46 @@ class Term(models.Model):
     @property
     def term_number(self):
         return utilities.get_term_number(self.quarter)
+
+
+class Adviser(models.Model):
+
+    is_active = models.BooleanField(null=True)
+    is_dept_adviser = models.BooleanField(null=True)
+    full_name = models.TextField(null=True)
+    pronouns = models.TextField(null=True)
+    email_address = models.TextField(null=True)
+    phone_number = models.TextField(null=True)
+    uwnetid = models.TextField(null=True)
+    regid = models.TextField(null=True)
+    program = models.TextField(null=True)
+    booking_url = models.TextField(null=True)
+    metadata = models.TextField(null=True)
+    timestamp = models.DateTimeField(null=True)
+
+
+class Major(models.Model):
+    major_abbr_code = models.TextField(null=True)
+    major_name = models.TextField(null=True)
+    major_full_name = models.TextField(null=True)
+    major_short_name = models.TextField(null=True)
+
+ 
+class Student(models.Model):
+    student_number = models.BigIntegerField(unique=True)
+    uw_net_id = models.TextField(null=True)
+    student_name = models.TextField(null=True)
+    birthdate = models.DateField(null=True)
+    student_email = models.TextField(null=True)
+    external_email = models.TextField(null=True)
+    local_phone_number = models.TextField(null=True)
+    gender = models.TextField(null=True)
+    gpa = models.TextField(null=True)
+    total_credits = models.TextField(null=True)
+    campus_desc = models.TextField(null=True)
+    class_desc = models.TextField(null=True)
+    enrollment_status = models.TextField(null=True)
+    adviser = models.ManyToManyField(Adviser)
+    intended_major = models.ManyToManyField(
+        Major, related_name="intended_major")  # edited by compass
+    major = models.ManyToManyField(Major, related_name="major")
