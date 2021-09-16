@@ -84,7 +84,7 @@
 
                 <div class="d-flex">
                   <div style="width: 65px;">
-                    <img src="/static/img/pedro-sanchez.jpeg" class="img-fluid rounded-circle" alt="">
+                    <img src="/static/img/pedro-sanchez.jpeg" class="img-fluid rounded-circle border border-3" alt="">
                   </div>
                   <div class="flex-fill ps-3">
                     <ul class="list-unstyled">
