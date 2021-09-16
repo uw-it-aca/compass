@@ -1,0 +1,2409 @@
+[
+ {
+  "model": "compass.student",
+  "pk": 1,
+  "fields": {
+   "student_number": 1349893,
+   "uw_net_id": "mw288",
+   "student_name": "Mireille, Weisinger",
+   "birthdate": "1992-10-27",
+   "student_email": "mw288250@uw.edu",
+   "external_email": "mw288632@gmail.com",
+   "local_phone_number": "(206) 241-9451",
+   "gender": "F",
+   "gpa": "3.66",
+   "total_credits": "180.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    1
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 2,
+  "fields": {
+   "student_number": 1699363,
+   "uw_net_id": "lm907",
+   "student_name": "Lina, Merlino",
+   "birthdate": "1992-10-19",
+   "student_email": "lm907938@uw.edu",
+   "external_email": "lm907148@gmail.com",
+   "local_phone_number": "(206) 664-8918",
+   "gender": "F",
+   "gpa": "3.95",
+   "total_credits": "30.00",
+   "campus_desc": null,
+   "class_desc": "Junior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    2
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 3,
+  "fields": {
+   "student_number": 1445751,
+   "uw_net_id": "ad579",
+   "student_name": "Alessandra, Downes",
+   "birthdate": "1978-10-12",
+   "student_email": "ad5795@uw.edu",
+   "external_email": "ad57963@gmail.com",
+   "local_phone_number": "(206) 273-5059",
+   "gender": "F",
+   "gpa": "3.67",
+   "total_credits": "180.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    3
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 4,
+  "fields": {
+   "student_number": 1695038,
+   "uw_net_id": "hp414",
+   "student_name": "Hue, Pals",
+   "birthdate": "1989-02-21",
+   "student_email": "hp414234@uw.edu",
+   "external_email": "hp414126@gmail.com",
+   "local_phone_number": "(206) 648-2221",
+   "gender": "F",
+   "gpa": "0.00",
+   "total_credits": "311.00",
+   "campus_desc": null,
+   "class_desc": "4th Year Professional",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    4
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 5,
+  "fields": {
+   "student_number": 1410428,
+   "uw_net_id": "sc323",
+   "student_name": "Shaquana, Canton",
+   "birthdate": "1992-02-14",
+   "student_email": "sc32365@uw.edu",
+   "external_email": "sc323784@gmail.com",
+   "local_phone_number": "(206) 809-9704",
+   "gender": "F",
+   "gpa": "3.90",
+   "total_credits": "5.00",
+   "campus_desc": null,
+   "class_desc": "Non-Matriculated",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    5
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 6,
+  "fields": {
+   "student_number": 1114847,
+   "uw_net_id": "re307",
+   "student_name": "Rosalie, Eyler",
+   "birthdate": "1956-08-21",
+   "student_email": "re307329@uw.edu",
+   "external_email": "re307338@gmail.com",
+   "local_phone_number": "(206) 443-6083",
+   "gender": "F",
+   "gpa": "3.65",
+   "total_credits": "200.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    6
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 7,
+  "fields": {
+   "student_number": 1612816,
+   "uw_net_id": "lf761",
+   "student_name": "Leslie, Fu",
+   "birthdate": "1978-04-17",
+   "student_email": "lf761465@uw.edu",
+   "external_email": "lf761807@gmail.com",
+   "local_phone_number": "(206) 123-8597",
+   "gender": "M",
+   "gpa": "2.73",
+   "total_credits": "214.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    7
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 8,
+  "fields": {
+   "student_number": 1228341,
+   "uw_net_id": "fb525",
+   "student_name": "Fransisca, Bulow",
+   "birthdate": "1992-11-21",
+   "student_email": "fb525838@uw.edu",
+   "external_email": "fb525436@gmail.com",
+   "local_phone_number": "(206) 779-9608",
+   "gender": "M",
+   "gpa": "3.21",
+   "total_credits": "234.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    8
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 9,
+  "fields": {
+   "student_number": 1824088,
+   "uw_net_id": "tb229",
+   "student_name": "Tracey, Boateng",
+   "birthdate": "1986-04-03",
+   "student_email": "tb229842@uw.edu",
+   "external_email": "tb229722@gmail.com",
+   "local_phone_number": "(206) 283-2482",
+   "gender": "M",
+   "gpa": "3.99",
+   "total_credits": "204.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    9
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 10,
+  "fields": {
+   "student_number": 1490380,
+   "uw_net_id": "dm902",
+   "student_name": "Dorthea, Morphew",
+   "birthdate": "1984-04-30",
+   "student_email": "dm902394@uw.edu",
+   "external_email": "dm902678@gmail.com",
+   "local_phone_number": "(206) 126-4885",
+   "gender": "M",
+   "gpa": "3.68",
+   "total_credits": "192.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    10
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 11,
+  "fields": {
+   "student_number": 1255978,
+   "uw_net_id": "to718",
+   "student_name": "Treena, Otter",
+   "birthdate": "1989-08-25",
+   "student_email": "to718880@uw.edu",
+   "external_email": "to718209@gmail.com",
+   "local_phone_number": "(206) 735-9098",
+   "gender": "M",
+   "gpa": "1.47",
+   "total_credits": "10.00",
+   "campus_desc": null,
+   "class_desc": "Non-Matriculated",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    5
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 12,
+  "fields": {
+   "student_number": 1307992,
+   "uw_net_id": "io508",
+   "student_name": "Ignacia, Ovitt",
+   "birthdate": "1987-09-27",
+   "student_email": "io508235@uw.edu",
+   "external_email": "io50861@gmail.com",
+   "local_phone_number": "(206) 807-7936",
+   "gender": "F",
+   "gpa": "3.29",
+   "total_credits": "217.00",
+   "campus_desc": null,
+   "class_desc": "4th Year Professional",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    11
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 13,
+  "fields": {
+   "student_number": 1086006,
+   "uw_net_id": "jh793",
+   "student_name": "Julene, Haymond",
+   "birthdate": "1984-01-11",
+   "student_email": "jh793795@uw.edu",
+   "external_email": "jh793962@gmail.com",
+   "local_phone_number": "(206) 653-3638",
+   "gender": "M",
+   "gpa": "3.60",
+   "total_credits": "77.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    12
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 14,
+  "fields": {
+   "student_number": 1954475,
+   "uw_net_id": "ap876",
+   "student_name": "Adrien, Pledger",
+   "birthdate": "1991-10-06",
+   "student_email": "ap876314@uw.edu",
+   "external_email": "ap876768@gmail.com",
+   "local_phone_number": "(206) 591-4518",
+   "gender": "M",
+   "gpa": "3.10",
+   "total_credits": "181.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    13
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 15,
+  "fields": {
+   "student_number": 1120590,
+   "uw_net_id": "sw184",
+   "student_name": "Sheridan, Willaims",
+   "birthdate": "1990-08-18",
+   "student_email": "sw184702@uw.edu",
+   "external_email": "sw184834@gmail.com",
+   "local_phone_number": "(206) 683-2147",
+   "gender": "M",
+   "gpa": "2.83",
+   "total_credits": "182.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    6
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 16,
+  "fields": {
+   "student_number": 1403338,
+   "uw_net_id": "jl427",
+   "student_name": "Jannie, Lex",
+   "birthdate": "1990-07-17",
+   "student_email": "jl427210@uw.edu",
+   "external_email": "jl427182@gmail.com",
+   "local_phone_number": "(206) 817-8814",
+   "gender": "M",
+   "gpa": "2.90",
+   "total_credits": "197.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    14
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 17,
+  "fields": {
+   "student_number": 1649589,
+   "uw_net_id": "cc852",
+   "student_name": "Celesta, Cloud",
+   "birthdate": "1993-05-20",
+   "student_email": "cc852770@uw.edu",
+   "external_email": "cc852255@gmail.com",
+   "local_phone_number": "(206) 504-9991",
+   "gender": "M",
+   "gpa": "3.34",
+   "total_credits": "211.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    15
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 18,
+  "fields": {
+   "student_number": 1727928,
+   "uw_net_id": "tw105",
+   "student_name": "Tod, Wilbourn",
+   "birthdate": "1989-09-28",
+   "student_email": "tw105769@uw.edu",
+   "external_email": "tw105278@gmail.com",
+   "local_phone_number": "(206) 451-2243",
+   "gender": "F",
+   "gpa": "2.21",
+   "total_credits": "217.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    16
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 19,
+  "fields": {
+   "student_number": 1029597,
+   "uw_net_id": "eh870",
+   "student_name": "Eunice, Hefley",
+   "birthdate": "1987-09-07",
+   "student_email": "eh870751@uw.edu",
+   "external_email": "eh870719@gmail.com",
+   "local_phone_number": "(206) 713-7334",
+   "gender": "M",
+   "gpa": "2.75",
+   "total_credits": "198.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    17
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 20,
+  "fields": {
+   "student_number": 1584071,
+   "uw_net_id": "is76",
+   "student_name": "Ima, Smedley",
+   "birthdate": "1976-07-12",
+   "student_email": "is76811@uw.edu",
+   "external_email": "is76335@gmail.com",
+   "local_phone_number": "(206) 384-5175",
+   "gender": "M",
+   "gpa": "3.74",
+   "total_credits": "76.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    12
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 21,
+  "fields": {
+   "student_number": 1103152,
+   "uw_net_id": "gm676",
+   "student_name": "Glenda, Meshell",
+   "birthdate": "1992-12-08",
+   "student_email": "gm67614@uw.edu",
+   "external_email": "gm676575@gmail.com",
+   "local_phone_number": "(206) 914-5453",
+   "gender": "F",
+   "gpa": "3.34",
+   "total_credits": "194.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    6
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 22,
+  "fields": {
+   "student_number": 1438937,
+   "uw_net_id": "dk402",
+   "student_name": "Dane, Klingbeil",
+   "birthdate": "1990-11-08",
+   "student_email": "dk402395@uw.edu",
+   "external_email": "dk402477@gmail.com",
+   "local_phone_number": "(206) 701-9082",
+   "gender": "M",
+   "gpa": "3.17",
+   "total_credits": "197.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    15
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 23,
+  "fields": {
+   "student_number": 1163629,
+   "uw_net_id": "jb313",
+   "student_name": "Janis, Brisson",
+   "birthdate": "1987-08-07",
+   "student_email": "jb31357@uw.edu",
+   "external_email": "jb313215@gmail.com",
+   "local_phone_number": "(206) 525-7652",
+   "gender": "M",
+   "gpa": "3.10",
+   "total_credits": "197.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    18
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 24,
+  "fields": {
+   "student_number": 1129967,
+   "uw_net_id": "ll174",
+   "student_name": "Lashaun, Lachance",
+   "birthdate": "1980-02-24",
+   "student_email": "ll174780@uw.edu",
+   "external_email": "ll174985@gmail.com",
+   "local_phone_number": "(206) 119-2631",
+   "gender": "M",
+   "gpa": "3.76",
+   "total_credits": "246.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    19
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 25,
+  "fields": {
+   "student_number": 1509995,
+   "uw_net_id": "fl821",
+   "student_name": "Farah, Lupton",
+   "birthdate": "1992-06-17",
+   "student_email": "fl821798@uw.edu",
+   "external_email": "fl821598@gmail.com",
+   "local_phone_number": "(206) 280-9458",
+   "gender": "F",
+   "gpa": "3.93",
+   "total_credits": "52.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    20
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 26,
+  "fields": {
+   "student_number": 1324008,
+   "uw_net_id": "fv275",
+   "student_name": "Fletcher, Vicks",
+   "birthdate": "1989-12-31",
+   "student_email": "fv275292@uw.edu",
+   "external_email": "fv275456@gmail.com",
+   "local_phone_number": "(206) 954-3351",
+   "gender": "M",
+   "gpa": "1.81",
+   "total_credits": "158.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    6
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 27,
+  "fields": {
+   "student_number": 1793459,
+   "uw_net_id": "zc331",
+   "student_name": "Zachariah, Clinkscales",
+   "birthdate": "1994-06-24",
+   "student_email": "zc331584@uw.edu",
+   "external_email": "zc331588@gmail.com",
+   "local_phone_number": "(206) 794-2065",
+   "gender": "F",
+   "gpa": "2.77",
+   "total_credits": "195.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    6
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 28,
+  "fields": {
+   "student_number": 1497224,
+   "uw_net_id": "an239",
+   "student_name": "Annabelle, Nott",
+   "birthdate": "1991-05-10",
+   "student_email": "an239119@uw.edu",
+   "external_email": "an239416@gmail.com",
+   "local_phone_number": "(206) 785-7326",
+   "gender": "M",
+   "gpa": "2.55",
+   "total_credits": "180.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    21
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 29,
+  "fields": {
+   "student_number": 1436497,
+   "uw_net_id": "so82",
+   "student_name": "Solomon, Oland",
+   "birthdate": "1993-09-11",
+   "student_email": "so8299@uw.edu",
+   "external_email": "so8234@gmail.com",
+   "local_phone_number": "(206) 471-7402",
+   "gender": "M",
+   "gpa": "2.32",
+   "total_credits": "166.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "96",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    22
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 30,
+  "fields": {
+   "student_number": 1658575,
+   "uw_net_id": "gt715",
+   "student_name": "Genia, Theis",
+   "birthdate": "1993-07-12",
+   "student_email": "gt715307@uw.edu",
+   "external_email": "gt715714@gmail.com",
+   "local_phone_number": "(206) 151-4190",
+   "gender": "F",
+   "gpa": "2.56",
+   "total_credits": "47.00",
+   "campus_desc": null,
+   "class_desc": "Junior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    23
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 31,
+  "fields": {
+   "student_number": 1501870,
+   "uw_net_id": "pa23",
+   "student_name": "Palmer, Arel",
+   "birthdate": "1980-05-16",
+   "student_email": "pa23933@uw.edu",
+   "external_email": "pa23540@gmail.com",
+   "local_phone_number": "(206) 399-5538",
+   "gender": "M",
+   "gpa": "3.47",
+   "total_credits": "72.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    12
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 32,
+  "fields": {
+   "student_number": 1349903,
+   "uw_net_id": "lc961",
+   "student_name": "Leia, Cimino",
+   "birthdate": "1988-06-08",
+   "student_email": "lc961860@uw.edu",
+   "external_email": "lc961575@gmail.com",
+   "local_phone_number": "(206) 288-7869",
+   "gender": "M",
+   "gpa": "0.00",
+   "total_credits": "315.00",
+   "campus_desc": null,
+   "class_desc": "4th Year Professional",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    4
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 33,
+  "fields": {
+   "student_number": 1361737,
+   "uw_net_id": "cb866",
+   "student_name": "Colton, Bergan",
+   "birthdate": "1990-05-06",
+   "student_email": "cb866174@uw.edu",
+   "external_email": "cb866885@gmail.com",
+   "local_phone_number": "(206) 369-3705",
+   "gender": "M",
+   "gpa": "3.47",
+   "total_credits": "181.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    24
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 34,
+  "fields": {
+   "student_number": 1314896,
+   "uw_net_id": "vy517",
+   "student_name": "Venita, Ybarra",
+   "birthdate": "1991-02-23",
+   "student_email": "vy517402@uw.edu",
+   "external_email": "vy517758@gmail.com",
+   "local_phone_number": "(206) 561-9484",
+   "gender": "F",
+   "gpa": "3.64",
+   "total_credits": "180.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    25
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 35,
+  "fields": {
+   "student_number": 1405481,
+   "uw_net_id": "bt57",
+   "student_name": "Bess, Turvey",
+   "birthdate": "1979-09-22",
+   "student_email": "bt57437@uw.edu",
+   "external_email": "bt57383@gmail.com",
+   "local_phone_number": "(206) 913-2146",
+   "gender": "M",
+   "gpa": "2.74",
+   "total_credits": "193.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    26
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 36,
+  "fields": {
+   "student_number": 1566981,
+   "uw_net_id": "ct137",
+   "student_name": "Chana, Tetzlaff",
+   "birthdate": "1992-07-13",
+   "student_email": "ct137649@uw.edu",
+   "external_email": "ct137820@gmail.com",
+   "local_phone_number": "(206) 431-9102",
+   "gender": "F",
+   "gpa": "3.35",
+   "total_credits": "189.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    9,
+    27
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 37,
+  "fields": {
+   "student_number": 1047101,
+   "uw_net_id": "ds189",
+   "student_name": "Denna, Saulter",
+   "birthdate": "1993-10-14",
+   "student_email": "ds189775@uw.edu",
+   "external_email": "ds189658@gmail.com",
+   "local_phone_number": "(206) 268-8071",
+   "gender": "F",
+   "gpa": "3.99",
+   "total_credits": "35.00",
+   "campus_desc": null,
+   "class_desc": "Post-Baccalaureate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    28
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 38,
+  "fields": {
+   "student_number": 1180679,
+   "uw_net_id": "cn631",
+   "student_name": "Chanelle, Northup",
+   "birthdate": "1983-10-10",
+   "student_email": "cn631867@uw.edu",
+   "external_email": "cn63175@gmail.com",
+   "local_phone_number": "(206) 648-8152",
+   "gender": "F",
+   "gpa": "0.00",
+   "total_credits": "314.50",
+   "campus_desc": null,
+   "class_desc": "4th Year Professional",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    4
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 39,
+  "fields": {
+   "student_number": 1166875,
+   "uw_net_id": "mi758",
+   "student_name": "Manuela, Ishibashi",
+   "birthdate": "1968-10-13",
+   "student_email": "mi75848@uw.edu",
+   "external_email": "mi758337@gmail.com",
+   "local_phone_number": "(206) 435-7460",
+   "gender": "F",
+   "gpa": "3.44",
+   "total_credits": "63.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    29
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 40,
+  "fields": {
+   "student_number": 1174253,
+   "uw_net_id": "md270",
+   "student_name": "Mertie, Dizon",
+   "birthdate": "1993-04-03",
+   "student_email": "md270694@uw.edu",
+   "external_email": "md27093@gmail.com",
+   "local_phone_number": "(206) 211-8434",
+   "gender": "M",
+   "gpa": "3.00",
+   "total_credits": "183.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    7
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 41,
+  "fields": {
+   "student_number": 1767851,
+   "uw_net_id": "iv54",
+   "student_name": "Inocencia, Vanloan",
+   "birthdate": "1992-09-14",
+   "student_email": "iv54128@uw.edu",
+   "external_email": "iv54908@gmail.com",
+   "local_phone_number": "(206) 395-8027",
+   "gender": "F",
+   "gpa": "3.49",
+   "total_credits": "194.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    30
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 42,
+  "fields": {
+   "student_number": 1955605,
+   "uw_net_id": "am396",
+   "student_name": "Apolonia, Mcatee",
+   "birthdate": "1948-10-12",
+   "student_email": "am396123@uw.edu",
+   "external_email": "am396775@gmail.com",
+   "local_phone_number": "(206) 894-1367",
+   "gender": "M",
+   "gpa": "0.00",
+   "total_credits": "0.00",
+   "campus_desc": null,
+   "class_desc": "Non-Matriculated",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    5
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 43,
+  "fields": {
+   "student_number": 1115010,
+   "uw_net_id": "ck571",
+   "student_name": "Cher, Kiely",
+   "birthdate": "1982-10-16",
+   "student_email": "ck571861@uw.edu",
+   "external_email": "ck571572@gmail.com",
+   "local_phone_number": "(206) 243-4719",
+   "gender": "F",
+   "gpa": "2.57",
+   "total_credits": "9.00",
+   "campus_desc": null,
+   "class_desc": "Non-Matriculated",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    5
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 44,
+  "fields": {
+   "student_number": 1639104,
+   "uw_net_id": "ei44",
+   "student_name": "Emilee, Indelicato",
+   "birthdate": "1954-03-13",
+   "student_email": "ei44846@uw.edu",
+   "external_email": "ei44226@gmail.com",
+   "local_phone_number": "(206) 794-3848",
+   "gender": "F",
+   "gpa": "0.00",
+   "total_credits": "3.00",
+   "campus_desc": null,
+   "class_desc": "Non-Matriculated",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    26
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 45,
+  "fields": {
+   "student_number": 1777354,
+   "uw_net_id": "mp538",
+   "student_name": "Marsha, Pigram",
+   "birthdate": "1993-12-17",
+   "student_email": "mp538206@uw.edu",
+   "external_email": "mp538359@gmail.com",
+   "local_phone_number": "(206) 108-5677",
+   "gender": "F",
+   "gpa": "3.86",
+   "total_credits": "213.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    26
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 46,
+  "fields": {
+   "student_number": 1847076,
+   "uw_net_id": "lh608",
+   "student_name": "Lemuel, Hornbaker",
+   "birthdate": "1991-10-17",
+   "student_email": "lh608144@uw.edu",
+   "external_email": "lh60889@gmail.com",
+   "local_phone_number": "(206) 626-2812",
+   "gender": "M",
+   "gpa": "3.37",
+   "total_credits": "214.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    31
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 47,
+  "fields": {
+   "student_number": 1536457,
+   "uw_net_id": "am459",
+   "student_name": "Agnes, Murr",
+   "birthdate": "1992-02-21",
+   "student_email": "am459271@uw.edu",
+   "external_email": "am459407@gmail.com",
+   "local_phone_number": "(206) 606-7437",
+   "gender": "M",
+   "gpa": "3.63",
+   "total_credits": "180.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    32
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 48,
+  "fields": {
+   "student_number": 1149310,
+   "uw_net_id": "id267",
+   "student_name": "Imogene, Doherty",
+   "birthdate": "1993-11-15",
+   "student_email": "id26771@uw.edu",
+   "external_email": "id26749@gmail.com",
+   "local_phone_number": "(206) 861-5168",
+   "gender": "F",
+   "gpa": "3.49",
+   "total_credits": "13.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    33
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 49,
+  "fields": {
+   "student_number": 1483332,
+   "uw_net_id": "sb852",
+   "student_name": "Shona, Breckenridge",
+   "birthdate": "1984-05-10",
+   "student_email": "sb852510@uw.edu",
+   "external_email": "sb852865@gmail.com",
+   "local_phone_number": "(206) 828-6931",
+   "gender": "F",
+   "gpa": "3.01",
+   "total_credits": "184.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    34
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 50,
+  "fields": {
+   "student_number": 1381491,
+   "uw_net_id": "tb484",
+   "student_name": "Tegan, Bramwell",
+   "birthdate": "1990-11-17",
+   "student_email": "tb484600@uw.edu",
+   "external_email": "tb484533@gmail.com",
+   "local_phone_number": "(206) 873-5201",
+   "gender": "M",
+   "gpa": "2.39",
+   "total_credits": "238.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    35
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 51,
+  "fields": {
+   "student_number": 1742023,
+   "uw_net_id": "xo159",
+   "student_name": "Xenia, Oldenburg",
+   "birthdate": "1991-11-25",
+   "student_email": "xo159666@uw.edu",
+   "external_email": "xo159683@gmail.com",
+   "local_phone_number": "(206) 296-4009",
+   "gender": "M",
+   "gpa": "3.45",
+   "total_credits": "187.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    36
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 52,
+  "fields": {
+   "student_number": 1139433,
+   "uw_net_id": "is12",
+   "student_name": "Inga, Sugg",
+   "birthdate": "1989-10-20",
+   "student_email": "is12693@uw.edu",
+   "external_email": "is12308@gmail.com",
+   "local_phone_number": "(206) 203-5942",
+   "gender": "F",
+   "gpa": "2.98",
+   "total_credits": "150.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "95",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    7
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 53,
+  "fields": {
+   "student_number": 1287629,
+   "uw_net_id": "mr601",
+   "student_name": "Man, Riss",
+   "birthdate": "1991-03-21",
+   "student_email": "mr601757@uw.edu",
+   "external_email": "mr601419@gmail.com",
+   "local_phone_number": "(206) 807-9109",
+   "gender": "M",
+   "gpa": "3.69",
+   "total_credits": "288.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    37
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 54,
+  "fields": {
+   "student_number": 1812008,
+   "uw_net_id": "fe408",
+   "student_name": "Flora, Epps",
+   "birthdate": "1988-07-02",
+   "student_email": "fe408874@uw.edu",
+   "external_email": "fe408482@gmail.com",
+   "local_phone_number": "(206) 594-1452",
+   "gender": "M",
+   "gpa": "2.47",
+   "total_credits": "230.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    38,
+    39
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 55,
+  "fields": {
+   "student_number": 1743157,
+   "uw_net_id": "la3",
+   "student_name": "Landon, Abboud",
+   "birthdate": "1987-02-12",
+   "student_email": "la3487@uw.edu",
+   "external_email": "la3756@gmail.com",
+   "local_phone_number": "(206) 748-3422",
+   "gender": "F",
+   "gpa": "2.30",
+   "total_credits": "3.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    40
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 56,
+  "fields": {
+   "student_number": 1907995,
+   "uw_net_id": "rb532",
+   "student_name": "Rima, Bunch",
+   "birthdate": "1993-10-04",
+   "student_email": "rb532757@uw.edu",
+   "external_email": "rb532343@gmail.com",
+   "local_phone_number": "(206) 272-7516",
+   "gender": "F",
+   "gpa": "2.91",
+   "total_credits": "108.00",
+   "campus_desc": null,
+   "class_desc": "Junior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    41
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 57,
+  "fields": {
+   "student_number": 1089963,
+   "uw_net_id": "tl380",
+   "student_name": "Thomasena, Lafreniere",
+   "birthdate": "1994-03-31",
+   "student_email": "tl380900@uw.edu",
+   "external_email": "tl380798@gmail.com",
+   "local_phone_number": "(206) 117-1272",
+   "gender": "F",
+   "gpa": "3.11",
+   "total_credits": "203.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    19
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 58,
+  "fields": {
+   "student_number": 1034261,
+   "uw_net_id": "ac291",
+   "student_name": "Arminda, Cubbage",
+   "birthdate": "1990-03-28",
+   "student_email": "ac291603@uw.edu",
+   "external_email": "ac291886@gmail.com",
+   "local_phone_number": "(206) 314-6794",
+   "gender": "M",
+   "gpa": "3.47",
+   "total_credits": "48.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    40
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 59,
+  "fields": {
+   "student_number": 1456022,
+   "uw_net_id": "ot508",
+   "student_name": "Otto, Trego",
+   "birthdate": "1988-01-01",
+   "student_email": "ot508195@uw.edu",
+   "external_email": "ot508517@gmail.com",
+   "local_phone_number": "(206) 698-4632",
+   "gender": "M",
+   "gpa": "2.68",
+   "total_credits": "192.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    42
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 60,
+  "fields": {
+   "student_number": 1966840,
+   "uw_net_id": "jm381",
+   "student_name": "Jack, Mucha",
+   "birthdate": "1988-01-01",
+   "student_email": "jm381220@uw.edu",
+   "external_email": "jm381160@gmail.com",
+   "local_phone_number": "(206) 335-7737",
+   "gender": "F",
+   "gpa": "3.38",
+   "total_credits": "183.50",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    43
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 61,
+  "fields": {
+   "student_number": 1248697,
+   "uw_net_id": "ac411",
+   "student_name": "Alfonzo, Coward",
+   "birthdate": "1987-01-01",
+   "student_email": "ac411953@uw.edu",
+   "external_email": "ac411843@gmail.com",
+   "local_phone_number": "(206) 572-6740",
+   "gender": "M",
+   "gpa": "2.73",
+   "total_credits": "183.50",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    44
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 62,
+  "fields": {
+   "student_number": 1692600,
+   "uw_net_id": "ad624",
+   "student_name": "Avril, Dabney",
+   "birthdate": "1969-07-11",
+   "student_email": "ad62493@uw.edu",
+   "external_email": "ad624834@gmail.com",
+   "local_phone_number": "(206) 156-2374",
+   "gender": "M",
+   "gpa": "3.75",
+   "total_credits": "64.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    45
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 63,
+  "fields": {
+   "student_number": 1430617,
+   "uw_net_id": "mg788",
+   "student_name": "Micha, Grafton",
+   "birthdate": "1970-02-20",
+   "student_email": "mg788307@uw.edu",
+   "external_email": "mg788268@gmail.com",
+   "local_phone_number": "(206) 994-1525",
+   "gender": "M",
+   "gpa": "3.20",
+   "total_credits": "10.00",
+   "campus_desc": null,
+   "class_desc": "Non-Matriculated",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    46
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 64,
+  "fields": {
+   "student_number": 1172395,
+   "uw_net_id": "kp322",
+   "student_name": "Kitty, Pauls",
+   "birthdate": "1988-05-28",
+   "student_email": "kp322885@uw.edu",
+   "external_email": "kp322926@gmail.com",
+   "local_phone_number": "(206) 150-1575",
+   "gender": "M",
+   "gpa": "2.04",
+   "total_credits": "215.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "96",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    39
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 65,
+  "fields": {
+   "student_number": 1804209,
+   "uw_net_id": "mh2",
+   "student_name": "Marilyn, Haris",
+   "birthdate": "1989-10-10",
+   "student_email": "mh2847@uw.edu",
+   "external_email": "mh2285@gmail.com",
+   "local_phone_number": "(206) 533-4570",
+   "gender": "F",
+   "gpa": "2.42",
+   "total_credits": "198.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    47
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 66,
+  "fields": {
+   "student_number": 1065362,
+   "uw_net_id": "sl725",
+   "student_name": "Sherie, Lareau",
+   "birthdate": "1994-04-28",
+   "student_email": "sl725156@uw.edu",
+   "external_email": "sl725732@gmail.com",
+   "local_phone_number": "(206) 931-2330",
+   "gender": "M",
+   "gpa": "3.23",
+   "total_credits": "181.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    48
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 67,
+  "fields": {
+   "student_number": 1805620,
+   "uw_net_id": "pa719",
+   "student_name": "Pearlie, Altizer",
+   "birthdate": "1990-12-24",
+   "student_email": "pa719839@uw.edu",
+   "external_email": "pa719302@gmail.com",
+   "local_phone_number": "(206) 243-6327",
+   "gender": "M",
+   "gpa": "3.12",
+   "total_credits": "247.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    49
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 68,
+  "fields": {
+   "student_number": 1480066,
+   "uw_net_id": "bm370",
+   "student_name": "Brigette, Mcpeak",
+   "birthdate": "1982-12-30",
+   "student_email": "bm370475@uw.edu",
+   "external_email": "bm370141@gmail.com",
+   "local_phone_number": "(206) 182-5009",
+   "gender": "M",
+   "gpa": "2.88",
+   "total_credits": "166.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    50
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 69,
+  "fields": {
+   "student_number": 1684519,
+   "uw_net_id": "jf797",
+   "student_name": "Jennell, Focht",
+   "birthdate": "1981-12-10",
+   "student_email": "jf797791@uw.edu",
+   "external_email": "jf797905@gmail.com",
+   "local_phone_number": "(206) 914-2325",
+   "gender": "M",
+   "gpa": "0.00",
+   "total_credits": "0.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    51
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 70,
+  "fields": {
+   "student_number": 1514917,
+   "uw_net_id": "cl45",
+   "student_name": "Charissa, Leavell",
+   "birthdate": "1994-01-29",
+   "student_email": "cl45732@uw.edu",
+   "external_email": "cl453@gmail.com",
+   "local_phone_number": "(206) 886-7981",
+   "gender": "M",
+   "gpa": "3.29",
+   "total_credits": "181.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    3
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 71,
+  "fields": {
+   "student_number": 1089281,
+   "uw_net_id": "rl389",
+   "student_name": "Roselia, Lusk",
+   "birthdate": "1989-06-02",
+   "student_email": "rl389454@uw.edu",
+   "external_email": "rl389651@gmail.com",
+   "local_phone_number": "(206) 548-7525",
+   "gender": "M",
+   "gpa": "0.00",
+   "total_credits": "15.00",
+   "campus_desc": null,
+   "class_desc": "Non-Matriculated",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    5
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 72,
+  "fields": {
+   "student_number": 1056785,
+   "uw_net_id": "dm286",
+   "student_name": "Donald, Mattoon",
+   "birthdate": "1993-08-06",
+   "student_email": "dm286506@uw.edu",
+   "external_email": "dm28617@gmail.com",
+   "local_phone_number": "(206) 206-3764",
+   "gender": "F",
+   "gpa": "0.00",
+   "total_credits": "148.00",
+   "campus_desc": null,
+   "class_desc": "3rd Year Professional",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    4
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 73,
+  "fields": {
+   "student_number": 1689035,
+   "uw_net_id": "sg993",
+   "student_name": "Sherlyn, Gourd",
+   "birthdate": "1990-09-02",
+   "student_email": "sg993925@uw.edu",
+   "external_email": "sg993982@gmail.com",
+   "local_phone_number": "(206) 919-9690",
+   "gender": "F",
+   "gpa": "1.92",
+   "total_credits": "171.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    6
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 74,
+  "fields": {
+   "student_number": 1554774,
+   "uw_net_id": "gs359",
+   "student_name": "Georgene, Stoops",
+   "birthdate": "1993-05-17",
+   "student_email": "gs359525@uw.edu",
+   "external_email": "gs359119@gmail.com",
+   "local_phone_number": "(206) 787-8972",
+   "gender": "F",
+   "gpa": "2.53",
+   "total_credits": "183.50",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    52
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 75,
+  "fields": {
+   "student_number": 1906767,
+   "uw_net_id": "bp5",
+   "student_name": "Brook, Perdue",
+   "birthdate": "1978-07-20",
+   "student_email": "bp5551@uw.edu",
+   "external_email": "bp5773@gmail.com",
+   "local_phone_number": "(206) 130-3898",
+   "gender": "F",
+   "gpa": "3.47",
+   "total_credits": "74.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    53
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 76,
+  "fields": {
+   "student_number": 1968508,
+   "uw_net_id": "mf841",
+   "student_name": "Melaine, Forck",
+   "birthdate": "1968-08-22",
+   "student_email": "mf841194@uw.edu",
+   "external_email": "mf841604@gmail.com",
+   "local_phone_number": "(206) 896-9696",
+   "gender": "M",
+   "gpa": "3.28",
+   "total_credits": "95.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    54,
+    55
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 77,
+  "fields": {
+   "student_number": 1195291,
+   "uw_net_id": "sh505",
+   "student_name": "Shasta, Hoehne",
+   "birthdate": "1975-08-15",
+   "student_email": "sh505144@uw.edu",
+   "external_email": "sh505706@gmail.com",
+   "local_phone_number": "(206) 435-1799",
+   "gender": "M",
+   "gpa": "3.71",
+   "total_credits": "106.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "96",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    56
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 78,
+  "fields": {
+   "student_number": 1836491,
+   "uw_net_id": "gn539",
+   "student_name": "Genesis, Norcross",
+   "birthdate": "1984-08-24",
+   "student_email": "gn539338@uw.edu",
+   "external_email": "gn53994@gmail.com",
+   "local_phone_number": "(206) 963-6291",
+   "gender": "M",
+   "gpa": "3.91",
+   "total_credits": "324.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    57
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 79,
+  "fields": {
+   "student_number": 1775009,
+   "uw_net_id": "mo25",
+   "student_name": "Melina, Otten",
+   "birthdate": "1990-06-15",
+   "student_email": "mo25256@uw.edu",
+   "external_email": "mo2518@gmail.com",
+   "local_phone_number": "(206) 300-2602",
+   "gender": "F",
+   "gpa": "3.97",
+   "total_credits": "220.50",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    58,
+    59
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 80,
+  "fields": {
+   "student_number": 1901271,
+   "uw_net_id": "cm122",
+   "student_name": "Charlsie, Martineau",
+   "birthdate": "1969-04-04",
+   "student_email": "cm122897@uw.edu",
+   "external_email": "cm122176@gmail.com",
+   "local_phone_number": "(206) 464-2861",
+   "gender": "F",
+   "gpa": "3.13",
+   "total_credits": "185.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    60
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 81,
+  "fields": {
+   "student_number": 1586098,
+   "uw_net_id": "ld789",
+   "student_name": "Larita, Duffie",
+   "birthdate": "1993-01-01",
+   "student_email": "ld789155@uw.edu",
+   "external_email": "ld789201@gmail.com",
+   "local_phone_number": "(206) 217-4915",
+   "gender": "F",
+   "gpa": "3.25",
+   "total_credits": "27.00",
+   "campus_desc": null,
+   "class_desc": "Freshman",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    61
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 82,
+  "fields": {
+   "student_number": 1245027,
+   "uw_net_id": "sb981",
+   "student_name": "Santa, Beem",
+   "birthdate": "1994-07-24",
+   "student_email": "sb981644@uw.edu",
+   "external_email": "sb981625@gmail.com",
+   "local_phone_number": "(206) 828-5435",
+   "gender": "M",
+   "gpa": "2.94",
+   "total_credits": "124.00",
+   "campus_desc": null,
+   "class_desc": "Junior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    22
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 83,
+  "fields": {
+   "student_number": 1427849,
+   "uw_net_id": "eg49",
+   "student_name": "Elizebeth, Goodreau",
+   "birthdate": "1988-01-01",
+   "student_email": "eg49891@uw.edu",
+   "external_email": "eg49826@gmail.com",
+   "local_phone_number": "(206) 788-9147",
+   "gender": "F",
+   "gpa": "2.98",
+   "total_credits": "189.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    14,
+    27
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 84,
+  "fields": {
+   "student_number": 1388088,
+   "uw_net_id": "lt218",
+   "student_name": "Letty, Tores",
+   "birthdate": "1993-05-26",
+   "student_email": "lt218327@uw.edu",
+   "external_email": "lt218346@gmail.com",
+   "local_phone_number": "(206) 972-1054",
+   "gender": "M",
+   "gpa": "0.00",
+   "total_credits": "272.00",
+   "campus_desc": null,
+   "class_desc": "4th Year Professional",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    4
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 85,
+  "fields": {
+   "student_number": 1332242,
+   "uw_net_id": "ma189",
+   "student_name": "Michiko, Ates",
+   "birthdate": "1991-12-20",
+   "student_email": "ma189736@uw.edu",
+   "external_email": "ma18966@gmail.com",
+   "local_phone_number": "(206) 839-1127",
+   "gender": "F",
+   "gpa": "2.57",
+   "total_credits": "181.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    62
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 86,
+  "fields": {
+   "student_number": 1316761,
+   "uw_net_id": "ah776",
+   "student_name": "Amie, Hewitt",
+   "birthdate": "1988-03-14",
+   "student_email": "ah776612@uw.edu",
+   "external_email": "ah776303@gmail.com",
+   "local_phone_number": "(206) 128-7736",
+   "gender": "M",
+   "gpa": "3.31",
+   "total_credits": "183.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    63
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 87,
+  "fields": {
+   "student_number": 1186938,
+   "uw_net_id": "ns563",
+   "student_name": "Neta, Sweeney",
+   "birthdate": "1984-03-21",
+   "student_email": "ns563175@uw.edu",
+   "external_email": "ns563887@gmail.com",
+   "local_phone_number": "(206) 139-8372",
+   "gender": "M",
+   "gpa": "3.60",
+   "total_credits": "40.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    64
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 88,
+  "fields": {
+   "student_number": 1270602,
+   "uw_net_id": "kh534",
+   "student_name": "Kazuko, Helmuth",
+   "birthdate": "1991-10-19",
+   "student_email": "kh53463@uw.edu",
+   "external_email": "kh534463@gmail.com",
+   "local_phone_number": "(206) 389-7242",
+   "gender": "M",
+   "gpa": "3.71",
+   "total_credits": "216.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    1
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 89,
+  "fields": {
+   "student_number": 1704878,
+   "uw_net_id": "hm605",
+   "student_name": "Hyman, Madry",
+   "birthdate": "1987-06-12",
+   "student_email": "hm605406@uw.edu",
+   "external_email": "hm6053@gmail.com",
+   "local_phone_number": "(206) 161-3916",
+   "gender": "M",
+   "gpa": "3.65",
+   "total_credits": "48.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    20
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 90,
+  "fields": {
+   "student_number": 1907827,
+   "uw_net_id": "sl113",
+   "student_name": "Socorro, Loder",
+   "birthdate": "1992-03-26",
+   "student_email": "sl113938@uw.edu",
+   "external_email": "sl113619@gmail.com",
+   "local_phone_number": "(206) 138-5023",
+   "gender": "F",
+   "gpa": "2.93",
+   "total_credits": "101.00",
+   "campus_desc": null,
+   "class_desc": "Junior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    65
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 91,
+  "fields": {
+   "student_number": 1191645,
+   "uw_net_id": "jc14",
+   "student_name": "Jina, Capps",
+   "birthdate": "1982-11-12",
+   "student_email": "jc14161@uw.edu",
+   "external_email": "jc14491@gmail.com",
+   "local_phone_number": "(206) 691-6129",
+   "gender": "M",
+   "gpa": "3.23",
+   "total_credits": "207.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    66
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 92,
+  "fields": {
+   "student_number": 1236492,
+   "uw_net_id": "hh37",
+   "student_name": "Hector, Hopson",
+   "birthdate": "1991-01-16",
+   "student_email": "hh3765@uw.edu",
+   "external_email": "hh37776@gmail.com",
+   "local_phone_number": "(206) 180-7346",
+   "gender": "F",
+   "gpa": "3.43",
+   "total_credits": "194.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    60
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 93,
+  "fields": {
+   "student_number": 1033221,
+   "uw_net_id": "ob650",
+   "student_name": "Otha, Bayerl",
+   "birthdate": "1990-02-03",
+   "student_email": "ob650149@uw.edu",
+   "external_email": "ob65020@gmail.com",
+   "local_phone_number": "(206) 791-4801",
+   "gender": "M",
+   "gpa": "2.49",
+   "total_credits": "28.00",
+   "campus_desc": null,
+   "class_desc": "Non-Matriculated",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    5
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 94,
+  "fields": {
+   "student_number": 1617394,
+   "uw_net_id": "dd69",
+   "student_name": "Dong, Depriest",
+   "birthdate": "1989-02-20",
+   "student_email": "dd69814@uw.edu",
+   "external_email": "dd69752@gmail.com",
+   "local_phone_number": "(206) 750-8474",
+   "gender": "M",
+   "gpa": "2.90",
+   "total_credits": "194.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    43
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 95,
+  "fields": {
+   "student_number": 1412622,
+   "uw_net_id": "dt140",
+   "student_name": "David, Tallant",
+   "birthdate": "1993-02-10",
+   "student_email": "dt1403@uw.edu",
+   "external_email": "dt140107@gmail.com",
+   "local_phone_number": "(206) 541-1229",
+   "gender": "M",
+   "gpa": "2.68",
+   "total_credits": "180.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    60
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 96,
+  "fields": {
+   "student_number": 1871939,
+   "uw_net_id": "bs911",
+   "student_name": "Bella, Seabury",
+   "birthdate": "1988-02-04",
+   "student_email": "bs911714@uw.edu",
+   "external_email": "bs911971@gmail.com",
+   "local_phone_number": "(206) 550-3248",
+   "gender": "F",
+   "gpa": "3.76",
+   "total_credits": "227.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    67,
+    68
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 97,
+  "fields": {
+   "student_number": 1949329,
+   "uw_net_id": "mn695",
+   "student_name": "Mariela, Noss",
+   "birthdate": "1985-12-03",
+   "student_email": "mn695545@uw.edu",
+   "external_email": "mn695299@gmail.com",
+   "local_phone_number": "(206) 919-7041",
+   "gender": "F",
+   "gpa": "2.75",
+   "total_credits": "257.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    67,
+    68
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 98,
+  "fields": {
+   "student_number": 1367025,
+   "uw_net_id": "hf884",
+   "student_name": "Hunter, Fouche",
+   "birthdate": "1993-10-23",
+   "student_email": "hf884917@uw.edu",
+   "external_email": "hf88446@gmail.com",
+   "local_phone_number": "(206) 692-8825",
+   "gender": "M",
+   "gpa": "3.48",
+   "total_credits": "229.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    69
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 99,
+  "fields": {
+   "student_number": 1473911,
+   "uw_net_id": "lg472",
+   "student_name": "Lucienne, Golson",
+   "birthdate": "1987-12-28",
+   "student_email": "lg472918@uw.edu",
+   "external_email": "lg472441@gmail.com",
+   "local_phone_number": "(206) 645-7979",
+   "gender": "M",
+   "gpa": "2.78",
+   "total_credits": "225.00",
+   "campus_desc": null,
+   "class_desc": "Senior",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    70
+   ]
+  }
+ },
+ {
+  "model": "compass.student",
+  "pk": 100,
+  "fields": {
+   "student_number": 1536288,
+   "uw_net_id": "gm567",
+   "student_name": "Gwen, Maio",
+   "birthdate": "1985-06-05",
+   "student_email": "gm567516@uw.edu",
+   "external_email": "gm567482@gmail.com",
+   "local_phone_number": "(206) 908-1945",
+   "gender": "M",
+   "gpa": "3.58",
+   "total_credits": "192.00",
+   "campus_desc": null,
+   "class_desc": "Graduate",
+   "enrollment_status": "12",
+   "adviser": [],
+   "intended_major": [],
+   "major": [
+    71
+   ]
+  }
+ }
+]

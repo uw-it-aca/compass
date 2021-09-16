@@ -50,7 +50,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item,) in enrolledStudents" :key="item.student_number">
+              <tr v-for="(item,) in enrolledStudents" :key="item">
                 <td>{{item.student_name}}</td>
                 <td><router-link to="/student">{{item.student_number}}</router-link></td>
                 <td>{{item.uw_net_id}}</td>
@@ -105,7 +105,7 @@ export default {
       // pagination
       enrolledStudentsCount: 0,
       currentPage: 1,
-      pageSize: 100,
+      pageSize: 50,
       // search filters
       searchOption: null,
       searchText: "",
@@ -143,14 +143,14 @@ export default {
       };
     },
     numPages: function() {
-      return Math.ceil(this.enrolledStudentsCount / this.pageSize)
+      let page = Math.ceil(this.enrolledStudentsCount / this.pageSize);
+      return (page > 0) ? page : 1;
     }
   },
   methods: {
     loadEnrolledStudents: function() {
-      let options = this.searchOptions;
       let _this = this;
-      this.getEnrolledStudentsList(options).then(response => {
+      this.getEnrolledStudentsList(this.searchOptions).then(response => {
         if (response.data) {
           _this.enrolledStudents = response.data;
         }

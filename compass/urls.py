@@ -12,5 +12,5 @@ urlpatterns = [
             EnrolledStudentsListView.as_view()),
     re_path(r'^api/internal/student/enrolled-students-count/$',
             EnrolledStudentsCount.as_view()),
-    re_path(r"^.*$", HomeView.as_view(), name="index"),
+    re_path(r"^$", HomeView.as_view(), name="index"),
 ]

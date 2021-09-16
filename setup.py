@@ -24,12 +24,12 @@ setup(
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires = [
+        'edw-clients @ git+https://github.com/uw-it-aca/edw-clients.git@compass-dev-v1.0',
         'django~=3.2',
         'django-webpack-bridge',
         'UW-RestClients-SWS==2.3.14',
         'UW-Django-SAML2~=1.5',
-        'urllib3~=1.25',
-        'pandas~=1.1'
+        'urllib3~=1.25'
     ],
     license="Apache License, Version 2.0",
     description="A application for managing student advising information.",

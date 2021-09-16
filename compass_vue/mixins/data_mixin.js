@@ -18,7 +18,7 @@ const dataMixin = {
         axiosConfig
       );
     },
-    getEnrolledStudentsList: async function (filters) {
+    getEnrolledStudentsList: async function (options) {
       const csrfToken = this.$store.state.csrfToken;
       const axiosConfig = {
         headers: {
@@ -29,7 +29,7 @@ const dataMixin = {
       };
       return axios.post(
         `/api/internal/student/enrolled-students/`,
-        filters,
+        options,
         axiosConfig
       );
     },
