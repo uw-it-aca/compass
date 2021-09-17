@@ -21,6 +21,7 @@
     "axdd-components": "git+https://github.com/uw-it-aca/axdd-components.git#develop",
     "bootstrap": "^5.1.0",
     "jquery": "^3.6.0",
+    "v-pagination-3": "^0.1.6",
     "vue": "^3.1.4",
     "vue-loader": "^16.3.2",
     "vue-router": "^4.0.10",

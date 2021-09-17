@@ -18,10 +18,8 @@ TEMPLATES[0]['OPTIONS']['context_processors'].extend([
     'compass.context_processors.django_debug'
 ])
 
+DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
+
 if os.getenv("ENV") == "localdev":
     DEBUG = True
-    COMPASS_USERS_GROUP = "u_test_group"
-
-EDW_USERNAME = os.getenv("EDW_USERNAME", default=" ")
-EDW_PASSWORD = os.getenv("EDW_PASSWORD", default=" ")
-EDW_HOSTNAME = os.getenv("EDW_HOSTNAME", default=" ")
+    COMPASS_USERS_GROUP = 'u_test_group'
