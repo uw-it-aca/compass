@@ -138,7 +138,7 @@ class Major(models.Model):
     major_full_name = models.TextField(null=True)
     major_short_name = models.TextField(null=True)
 
- 
+
 class Student(models.Model):
     student_number = models.BigIntegerField(unique=True)
     uw_net_id = models.TextField(null=True)
