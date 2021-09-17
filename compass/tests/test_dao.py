@@ -5,7 +5,7 @@ import os
 import pandas as pd
 import unittest
 from django.test import TestCase
-from compass.dao import EdwDAO, SwsDAO
+from compass.dao import EDWClientDAO, SwsDAO
 from mock import call, patch, MagicMock
 
 
@@ -40,10 +40,10 @@ class TestSwsDAO(TestCase):
         self.assertEqual(len(call_args_list), 2)
 
 
-class TestEdwDAO(TestCase):
+class TestEDWClientDAO(TestCase):
 
     def _get_test_edw_dao(self):
-        edw = EdwDAO()
+        edw = EDWClientDAO()
         edw.get_connection = MagicMock()
         return edw
 
@@ -67,7 +67,7 @@ class TestEdwDAO(TestCase):
         mock_settings.EDW_PASSWORD = MagicMock()
         mock_settings.EDW_USERNAME = MagicMock()
         mock_settings.EDW_HOSTNAME = MagicMock()
-        edw = EdwDAO()
+        edw = EDWClientDAO()
         conn = edw.get_connection(mock_database)
         mock_pymssql_connect.assert_called_once_with(
             mock_settings.EDW_HOSTNAME,
