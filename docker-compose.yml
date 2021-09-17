@@ -8,10 +8,12 @@ services:
     restart: always
     container_name: compass_app
     environment:
-      - GOOGLE_ANALYTICS_KEY=${GOOGLE_ANALYTICS_KEY}
-      - EDW_USERNAME=${EDW_USERNAME}
-      - EDW_PASSWORD=${EDW_PASSWORD}
-      - EDW_HOSTNAME=${EDW_HOSTNAME}
+      ENV: localdev
+      AUTH: SAML_MOCK
+      GOOGLE_ANALYTICS_KEY: ${GOOGLE_ANALYTICS_KEY}
+      EDW_USERNAME: ${EDW_USERNAME}
+      EDW_PASSWORD: ${EDW_PASSWORD}
+      EDW_HOSTNAME: ${EDW_HOSTNAME}
     volumes:
       - ./compass:/app/compass
       - statics-volume:/static

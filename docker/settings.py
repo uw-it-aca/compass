@@ -18,8 +18,10 @@ TEMPLATES[0]['OPTIONS']['context_processors'].extend([
     'compass.context_processors.django_debug'
 ])
 
-DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 
 if os.getenv("ENV") == "localdev":
     DEBUG = True
     COMPASS_USERS_GROUP = 'u_test_group'
+else:
+    COMPASS_USERS_GROUP = os.getenv('ACCESS_GROUP', '')
