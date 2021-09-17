@@ -118,11 +118,11 @@ environmentVariablesSecrets:
     name: IDP_CERT
     secretName: test.compass.uw.edu-uw-idp-cert
     secretKey: uw-idp-cert
-  edwUsername: EDW_USERNAME
+  edwUsername:
     name: EDW_USERNAME
     secretName: test.compass.uw.edu-shared-secrets
     secretKey: edw-username
-  edwPassword: EDW_PASSWORD
+  edwPassword:
     name: EDW_PASSWORD
     secretName: test.compass.uw.edu-shared-secrets
     secretKey: edw-password
