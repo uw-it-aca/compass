@@ -39,6 +39,7 @@
           <table class="table table-striped table-hover border">
             <thead>
               <tr>
+                <th scope="col"></th>
                 <th scope="col">Student Name</th>
                 <th scope="col">Student Number</th>
                 <th scope="col">UW NetID</th>
@@ -50,9 +51,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item,) in enrolledStudents" :key="item">
+              <tr v-for="(item,) in enrolledStudents" :key="item.SystemKey">
+                <td>
+                  <div style="width:40px;">
+                    <img src="/static/img/napoleon-dynamite.jpeg" class="img-fluid rounded-circle border border-3" alt="">
+                  </div>
+                </td>
                 <td>{{item.student_name}}</td>
-                <td><router-link to="/student">{{item.student_number}}</router-link></td>
+                <td><router-link :to="'/student/'+item.student_number">{{item.student_number}}</router-link></td>
                 <td>{{item.uw_net_id}}</td>
                 <td>{{item.class_desc}}</td>
                 <td>{{item.major_full_name}}</td>
@@ -160,4 +166,5 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+</style>
