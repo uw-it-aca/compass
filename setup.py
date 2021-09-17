@@ -24,7 +24,6 @@ setup(
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires = [
-        'edw-clients @ git+https://github.com/uw-it-aca/edw-clients.git@compass-dev-v1.0',
         'django~=3.2',
         'django-webpack-bridge',
         'UW-RestClients-SWS~=2.3',
