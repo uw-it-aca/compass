@@ -1,45 +1,27 @@
 from .base_settings import *
 
-ALLOWED_HOSTS = ['*']
-
 INSTALLED_APPS += [
     'webpack_bridge',
-    'compass'
+    'compass.apps.CompassConfig'
 ]
 
 STATICFILES_DIRS = [
     '/static/compass/',
 ]
 
-STATICFILES_FINDERS = (
-    'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-)
-
 DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default=" ")
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'debug':  True,
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'compass.context_processors.google_analytics',
-                'compass.context_processors.django_debug',
-            ],
-        }
-    }
-]
+TEMPLATES[0]['OPTIONS']['context_processors'].extend([
+    'compass.context_processors.google_analytics',
+    'compass.context_processors.django_debug'
+])
 
-DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 
 if os.getenv("ENV") == "localdev":
     DEBUG = True
     COMPASS_USERS_GROUP = 'u_test_group'
+else:
+    COMPASS_USERS_GROUP = os.getenv('ACCESS_GROUP', '')

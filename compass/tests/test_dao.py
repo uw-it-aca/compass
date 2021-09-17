@@ -1,11 +1,9 @@
 # Copyright 2021 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-import os
-import pandas as pd
 import unittest
 from django.test import TestCase
-from compass.dao import EdwDAO, SwsDAO
+from compass.dao import SwsDAO
 from mock import call, patch, MagicMock
 
 
@@ -38,54 +36,6 @@ class TestSwsDAO(TestCase):
         assert (call_args_list[0] == call(mock_term1))
         assert (call_args_list[1] == call(mock_term2))
         self.assertEqual(len(call_args_list), 2)
-
-
-class TestEdwDAO(TestCase):
-
-    def _get_test_edw_dao(self):
-        edw = EdwDAO()
-        edw.get_connection = MagicMock()
-        return edw
-
-    @patch('compass.dao.pd.read_sql')
-    def _get_mock_enrolled_students_df(self, mock_read_sql):
-        edw_dao = self._get_test_edw_dao()
-        mock_enrolled_students_file = \
-            os.path.join(
-                os.path.dirname(__file__),
-                'test_data/enrolled_students.csv')
-        mock_read_sql.return_value = \
-            pd.read_csv(mock_enrolled_students_file, sep=",")
-        mock_enrolled_students_df = \
-            edw_dao.get_enrolled_students_df()
-        return mock_enrolled_students_df
-
-    @patch('compass.dao.pymssql.connect')
-    @patch('compass.dao.settings')
-    def test_get_connection(self, mock_settings, mock_pymssql_connect):
-        mock_database = MagicMock()
-        mock_settings.EDW_PASSWORD = MagicMock()
-        mock_settings.EDW_USER = MagicMock()
-        mock_settings.EDW_SERVER = MagicMock()
-        edw = EdwDAO()
-        conn = edw.get_connection(mock_database)
-        mock_pymssql_connect.assert_called_once_with(
-            mock_settings.EDW_SERVER,
-            mock_settings.EDW_USER,
-            mock_settings.EDW_PASSWORD,
-            mock_database)
-        self.assertEqual(conn, mock_pymssql_connect.return_value)
-
-    def test_get_enrolled_students_df(self):
-        mock_enrolled_students_df = self._get_mock_enrolled_students_df()
-        self.assertEqual(
-            mock_enrolled_students_df.columns.values.tolist(),
-            ["SystemKey", "StudentNumber", "UWNetID", "StudentName",
-             "StudentNamePreferredFirst", "StudentNamePreferredMiddle",
-             "StudentNamePreferredLast", "BirthDate", "StudentEmail",
-             "ExternalEmail", "LocalPhoneNumber", "Gender", "GPA",
-             "TotalCredits", "Major1", "Major2", "Major3", "Minor1", "Minor2",
-             "Minor3", "CampusDesc"])
 
 
 if __name__ == "__main__":

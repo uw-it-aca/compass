@@ -1,9 +1,7 @@
 FROM gcr.io/uwit-mci-axdd/django-container:1.3.1 as app-prewebpack-container
 
-# Choose one database connector for MCI
-#USER root
-#RUN apt-get update && apt-get install libpq-dev -y
-#RUN apt-get update && apt-get install mysql-client libmysqlclient-dev -y
+USER root
+RUN apt-get update && apt-get install libpq-dev -y
 USER acait
 
 ADD --chown=acait:acait compass/VERSION /app/compass/
@@ -15,7 +13,6 @@ RUN . /app/bin/activate && pip install -r requirements.txt
 #RUN . /app/bin/activate && pip install mysqlclient
 RUN . /app/bin/activate && pip install psycopg2
 
-ADD --chown=acait:acait docker/app_deploy.sh /scripts
 ADD --chown=acait:acait docker/app_start.sh /scripts
 RUN chmod u+x /scripts/app_start.sh
 

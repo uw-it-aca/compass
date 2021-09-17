@@ -1,7 +1,9 @@
 if [ "$ENV"  = "localdev" ]
 then
 
-  . /scripts/app_deploy.sh
+  source "/app/bin/activate"
+  cd /app
+  python manage.py migrate
   python manage.py loaddata major_data.json
   python manage.py loaddata student_data.json
 
