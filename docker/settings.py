@@ -38,9 +38,8 @@ TEMPLATES = [
     }
 ]
 
+DEFAULT_AUTO_FIELD='django.db.models.AutoField' 
+
 if os.getenv("ENV") == "localdev":
     DEBUG = True
     COMPASS_USERS_GROUP = 'u_test_group'
-    EDW_USER = os.getenv("EDW_USER", default=" ")
-    EDW_PASSWORD = os.getenv("EDW_PASSWORD", default=" ")
-    EDW_SERVER = os.getenv("EDW_SERVER", default=" ")

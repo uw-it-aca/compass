@@ -13,38 +13,15 @@
           <div class="small">
             <div class="d-inline me-3 text-nowrap">Find student by here:</div>
             <div class="d-inline text-nowrap">
-              <div
-                class="form-check form-check-inline"
-                v-for="option in searchOptions"
-                :key="option.id"
-              >
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="searchRadioOptions"
-                  :id="option.id"
-                  :value="option"
-                  v-model="searchOption"
-                />
-                <label class="form-check-label" :for="option.id">{{ option.label }}</label>
+              <div class="form-check form-check-inline" v-for="option in searchRadioOptions" :key="option.id">
+                <input class="form-check-input" type="radio" name="searchRadioOptions" :id="option.id" :value="option" v-model="searchOption">
+                <label class="form-check-label" :for="option.id">{{option.label}}</label>
               </div>
             </div>
           </div>
           <div class="input-group input-group-sm mb-3">
-            <input
-              type="text"
-              class="form-control"
-              :placeholder="'Student ' + searchOption.label + ' Contains...'"
-              :aria-label="'Student ' + searchOption.label + ' Contains...'"
-              v-model="searchText"
-              aria-describedby="button-addon2"
-            />
-            <button
-              class="btn btn-outline-secondary"
-              type="button"
-              id="button-addon2"
-              v-on:click="filterEnrolledStudents"
-            >GO</button>
+            <input type="text" class="form-control" :placeholder="'Student ' + searchOption.label + ' Contains...'" :aria-label="'Student ' + searchOption.label + ' Contains...'" v-model="searchText" aria-describedby="button-addon2">
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" v-on:click="loadEnrolledStudents">GO</button>
           </div>
         </div>
         <div class="col-sm-4">
@@ -80,16 +57,14 @@
                     <img src="/static/img/napoleon-dynamite.jpeg" class="img-fluid rounded-circle border border-3" alt="">
                   </div>
                 </td>
-                <td>{{ item.StudentName }}</td>
-                <td>
-                  <router-link to="/student">{{ item.StudentNumber }}</router-link>
-                </td>
-                <td>{{ item.UWNetID }}</td>
-                <td>{{ item.ClassDesc }}</td>
-                <td>{{ item.MajorFullName }}</td>
-                <td>{{ item.EnrollStatusCode }}</td>
-                <td>{{ item.Gender }}</td>
-                <td></td>
+                <td>{{item.student_name}}</td>
+                <td><router-link :to="'/student/'+item.student_number">{{item.student_number}}</router-link></td>
+                <td>{{item.uw_net_id}}</td>
+                <td>{{item.class_desc}}</td>
+                <td>{{item.major_full_name}}</td>
+                <td>{{item.enrollment_status}}</td>
+                <td>{{item.gender}}</td>
+                <td>{{item.adviser_full_name}}</td>
               </tr>
             </tbody>
           </table>
@@ -97,23 +72,12 @@
       </div>
       <div class="row">
         <div class="col">
-          <nav aria-label="Page navigation example">
-            <ul class="pagination pagination-sm justify-content-end">
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                </a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href>1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+          <paginate
+            v-model="currentPage"
+            :records="enrolledStudentsCount"
+            :per-page="pageSize"
+            @paginate="loadEnrolledStudents">
+          </paginate>
         </div>
       </div>
     </template>
@@ -129,17 +93,29 @@ export default {
   components: {
     layout: Layout,
   },
-  created: function () {
-    this.loadEnrolledStudents({});
-    this.searchOption = this.searchOptions[0];
+  created: function() {
+    let _this = this;
+    this.getEnrolledStudentsCount().then(
+      function(result) {
+        _this.enrolledStudentsCount = result.data["enrolled_students_count"];
+      }
+    );
+    this.loadEnrolledStudents();
+    this.searchOption = this.searchRadioOptions[0];
   },
   data() {
     return {
       pageTitle: "Home",
+      // data
       enrolledStudents: [],
+      // pagination
+      enrolledStudentsCount: 0,
+      currentPage: 1,
+      pageSize: 50,
+      // search filters
       searchOption: null,
       searchText: "",
-      searchOptions: [
+      searchRadioOptions: [
         {
           id: "student-number",
           label: "Number"
@@ -156,7 +132,7 @@ export default {
     };
   },
   computed: {
-    searchFilters: function () {
+    searchOptions: function() {
       let searchFilterType = null;
       let searchFilterText = null;
       if (this.searchOption) {
@@ -164,20 +140,23 @@ export default {
         searchFilterText = this.searchText;
       }
       return {
+        pageNum: this.currentPage,
+        pageSize: this.pageSize,
         searchFilter: {
           filterType: searchFilterType,
           filterText: searchFilterText
         }
       };
+    },
+    numPages: function() {
+      let page = Math.ceil(this.enrolledStudentsCount / this.pageSize);
+      return (page > 0) ? page : 1;
     }
   },
   methods: {
-    filterEnrolledStudents: function () {
-      this.loadEnrolledStudents(this.searchFilters);
-    },
-    loadEnrolledStudents: function (filters) {
+    loadEnrolledStudents: function() {
       let _this = this;
-      this.getEnrolledStudentsList(filters).then(response => {
+      this.getEnrolledStudentsList(this.searchOptions).then(response => {
         if (response.data) {
           _this.enrolledStudents = response.data;
         }
