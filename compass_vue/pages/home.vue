@@ -94,12 +94,6 @@ export default {
     layout: Layout,
   },
   created: function() {
-    let _this = this;
-    this.getEnrolledStudentsCount().then(
-      function(result) {
-        _this.enrolledStudentsCount = result.data["enrolled_students_count"];
-      }
-    );
     this.loadEnrolledStudents();
     this.searchOption = this.searchRadioOptions[0];
   },
@@ -133,20 +127,15 @@ export default {
   },
   computed: {
     searchOptions: function() {
-      let searchFilterType = null;
-      let searchFilterText = null;
-      if (this.searchOption) {
-        searchFilterType = this.searchOption.id;
-        searchFilterText = this.searchText;
-      }
-      return {
-        pageNum: this.currentPage,
-        pageSize: this.pageSize,
-        searchFilter: {
-          filterType: searchFilterType,
-          filterText: searchFilterText
-        }
+      let params = {
+        offset: this.pageSize * (this.currentPage - 1),
+        limit: this.pageSize
       };
+      if (this.searchOption) {
+        params["filter_type"] = this.searchOption.id;
+        params["filter_text"] = this.searchText;
+      }
+      return params;
     },
     numPages: function() {
       let page = Math.ceil(this.enrolledStudentsCount / this.pageSize);
@@ -158,7 +147,8 @@ export default {
       let _this = this;
       this.getEnrolledStudentsList(this.searchOptions).then(response => {
         if (response.data) {
-          _this.enrolledStudents = response.data;
+          _this.enrolledStudents = response.data["results"];
+          _this.enrolledStudentsCount = response.data["count"]
         }
       });
     }
