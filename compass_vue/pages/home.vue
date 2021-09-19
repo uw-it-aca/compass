@@ -138,6 +138,7 @@ export default {
       if (this.searchOption) {
         params["filter_type"] = this.searchOption.id;
         params["filter_text"] = this.searchText;
+        params["offset"] = 0; // reset to first page
       }
       return params;
     },
