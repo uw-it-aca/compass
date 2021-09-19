@@ -19,5 +19,13 @@ class StudentSerializer(serializers.ModelSerializer):
                   'class_desc',
                   'enrollment_status',
                   'gender',
+                  'birthdate',
+                  'student_email',
+                  'external_email',
+                  'local_phone_number',
+                  'gpa',
+                  'total_credits',
+                  'campus_desc',
+                  'class_desc',
                   'major_full_name',
                   'adviser_full_name']

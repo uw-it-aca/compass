@@ -21,7 +21,7 @@
           </div>
           <div class="input-group input-group-sm mb-3">
             <input type="text" class="form-control" :placeholder="'Student ' + searchOption.label + ' Contains...'" :aria-label="'Student ' + searchOption.label + ' Contains...'" v-model="searchText" aria-describedby="button-addon2">
-            <button class="btn btn-outline-secondary" type="button" id="button-addon2" v-on:click="loadEnrolledStudents">GO</button>
+            <button class="btn btn-outline-secondary" type="button" id="button-addon2" v-on:click="loadStudentList">GO</button>
           </div>
         </div>
         <div class="col-sm-4">
@@ -51,14 +51,18 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item,) in enrolledStudents" :key="item.SystemKey">
+              <tr v-for="(item,) in students" :key="item.SystemKey">
                 <td>
                   <div style="width:40px;">
                     <img src="/static/img/napoleon-dynamite.jpeg" class="img-fluid rounded-circle border border-3" alt="">
                   </div>
                 </td>
                 <td>{{item.student_name}}</td>
-                <td><router-link :to="'/student/'+item.student_number">{{item.student_number}}</router-link></td>
+                <td>
+                  <router-link :to="{ name: 'Student', params: { id: item.student_number } }">
+                    {{item.student_number}}
+                  </router-link>
+                </td>
                 <td>{{item.uw_net_id}}</td>
                 <td>{{item.class_desc}}</td>
                 <td>{{item.major_full_name}}</td>
@@ -74,9 +78,9 @@
         <div class="col">
           <paginate
             v-model="currentPage"
-            :records="enrolledStudentsCount"
+            :records="studentsCount"
             :per-page="pageSize"
-            @paginate="loadEnrolledStudents">
+            @paginate="loadStudentList">
           </paginate>
         </div>
       </div>
@@ -94,16 +98,16 @@ export default {
     layout: Layout,
   },
   created: function() {
-    this.loadEnrolledStudents();
+    this.loadStudentList();
     this.searchOption = this.searchRadioOptions[0];
   },
   data() {
     return {
       pageTitle: "Home",
       // data
-      enrolledStudents: [],
+      students: [],
       // pagination
-      enrolledStudentsCount: 0,
+      studentsCount: 0,
       currentPage: 1,
       pageSize: 50,
       // search filters
@@ -138,17 +142,17 @@ export default {
       return params;
     },
     numPages: function() {
-      let page = Math.ceil(this.enrolledStudentsCount / this.pageSize);
+      let page = Math.ceil(this.studentsCount / this.pageSize);
       return (page > 0) ? page : 1;
     }
   },
   methods: {
-    loadEnrolledStudents: function() {
+    loadStudentList: function() {
       let _this = this;
-      this.getEnrolledStudentsList(this.searchOptions).then(response => {
+      this.getStudentList(this.searchOptions).then(response => {
         if (response.data) {
-          _this.enrolledStudents = response.data["results"];
-          _this.enrolledStudentsCount = response.data["count"]
+          _this.students = response.data["results"];
+          _this.studentsCount = response.data["count"]
         }
       });
     }

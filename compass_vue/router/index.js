@@ -15,6 +15,7 @@ const routes = [
     name: 'Student',
     component: Student,
     pathToRegexpOptions: { strict: true },
+    props: true
   },
 ];
 
