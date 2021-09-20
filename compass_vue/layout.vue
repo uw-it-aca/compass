@@ -59,7 +59,7 @@ export default {
       appName: 'Compass',
       appRootUrl: '/',
       userName: 'javerage',
-      signOutUrl: '/signout',
+      signOutUrl: document.body.getAttribute('data-logout-url'),
 
       // automatically set year
       currentYear: new Date().getFullYear(),

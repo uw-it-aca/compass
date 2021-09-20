@@ -11,10 +11,12 @@ STATICFILES_DIRS = [
 
 DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 
-GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default=" ")
+GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
+LOGOUT_URL = os.getenv("LOGOUT_URL", default="")
 
 TEMPLATES[0]['OPTIONS']['context_processors'].extend([
     'compass.context_processors.google_analytics',
+    'compass.context_processors.logout_url',
     'compass.context_processors.django_debug'
 ])
 
