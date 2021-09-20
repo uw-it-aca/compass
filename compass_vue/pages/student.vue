@@ -56,8 +56,8 @@
                 <h3 class="card-title h6 text-uppercase text-muted fw-bold">Academics</h3>
                 <ul>
                   <li>Registered yes/no</li>
-                  <li>Enrollment Status yes/no</li>
-                  <li>Class standing (freshman, sophmore, etc.)</li>
+                  <li>Enrollment Status: {{studentDetail.enrollment_status}}</li>
+                  <li>Class standing: {{studentDetail.class_desc}}</li>
                   <li>Total Credits: {{studentDetail.total_credits}}</li>
                   <li>GPA: {{studentDetail.gpa}}</li>
                 </ul>
@@ -368,7 +368,6 @@ export default {
       let _this = this;
       this.getStudentDetail(studentNumber).then(response => {
         if (response.data) {
-          console.log(response.data[0]);
           _this.studentDetail = response.data[0];
         }
       });
