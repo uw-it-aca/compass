@@ -12,9 +12,9 @@
               <div class="text-center text-muted mb-4">priority: <span class="text-danger">TOP</span></div>
             </div>
             <div class="flex-fill ps-3 mb-4">
-              <h1 class="h3 text-uppercase">Dynamite, Napoleon</h1>
+              <h1 class="h3 text-uppercase">{{studentDetail.student_name}}</h1>
               <div class="h5">{{ $route.params.id }}</div>
-              <p>UWNetId, Gender, Pronouns</p>
+              <p>{{studentDetail.uw_net_id}}, {{studentDetail.gender}}, Pronouns</p>
               <div><i class="bi bi-trophy-fill text-purple"></i> Student Athlete</div>
             </div>
           </div>
@@ -27,9 +27,9 @@
           </div>
           <div class="col-6 col-lg-3 border-start">
             <ul class="list-unstyled m-0">
-              <li>UW Email</li>
-              <li>Personal email</li>
-              <li>Phone</li>
+              <li>UW Email: {{studentDetail.student_email}}</li>
+              <li>Personal email: {{studentDetail.personal_email}}</li>
+              <li>Phone: {{studentDetail.local_phone_number}}</li>
               <li>Address</li>
             </ul>
           </div>
@@ -56,10 +56,10 @@
                 <h3 class="card-title h6 text-uppercase text-muted fw-bold">Academics</h3>
                 <ul>
                   <li>Registered yes/no</li>
-                  <li>Enrollment Status yes/no</li>
-                  <li>Class standing (freshman, sophmore, etc.)</li>
-                  <li>Total Credits</li>
-                  <li>GPA</li>
+                  <li>Enrollment Status: {{studentDetail.enrollment_status}}</li>
+                  <li>Class standing: {{studentDetail.class_desc}}</li>
+                  <li>Total Credits: {{studentDetail.total_credits}}</li>
+                  <li>GPA: {{studentDetail.gpa}}</li>
                 </ul>
               </div>
             </div>
@@ -346,20 +346,33 @@
 <script>
 import { Card } from 'axdd-components';
 import Layout from '../layout.vue';
-import HelloWorld from '../components/hello-world.vue';
+import dataMixin from '../mixins/data_mixin.js';
 
 export default {
+  mixins: [dataMixin],
   components: {
     layout: Layout,
-    'hello-world': HelloWorld,
     'axdd-card': Card,
+  },
+  created: function() {
+    this.loadStudentDetail(this.$route.params.id);
   },
   data() {
     return {
+      studentDetail: {},
       pageTitle: 'Average, John #12345678',
     };
   },
-  methods: {},
+  methods: {
+    loadStudentDetail: function(studentNumber) {
+      let _this = this;
+      this.getStudentDetail(studentNumber).then(response => {
+        if (response.data) {
+          _this.studentDetail = response.data[0];
+        }
+      });
+    }
+  },
 };
 </script>
 

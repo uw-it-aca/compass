@@ -133,6 +133,7 @@ class Adviser(models.Model):
 
 
 class Major(models.Model):
+
     major_abbr_code = models.TextField(null=True)
     major_name = models.TextField(null=True)
     major_full_name = models.TextField(null=True)
@@ -140,6 +141,7 @@ class Major(models.Model):
 
 
 class Student(models.Model):
+
     student_number = models.BigIntegerField(unique=True)
     uw_net_id = models.TextField(null=True)
     student_name = models.TextField(null=True)

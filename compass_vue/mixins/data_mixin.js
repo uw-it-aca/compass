@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const dataMixin = {
   methods: {
-    getEnrolledStudentsCount: async function () {
+    getStudentList: async function (options) {
       const csrfToken = this.$store.state.csrfToken;
       const axiosConfig = {
         headers: {
@@ -12,13 +12,13 @@ const dataMixin = {
           'X-CSRFToken': csrfToken,
         },
       };
-      return axios.post(
-        `/api/internal/student/enrolled-students-count/`,
-        [],
+      return axios.get(
+        '/api/internal/student/',
+        { params: options },
         axiosConfig
       );
     },
-    getEnrolledStudentsList: async function (options) {
+    getStudentDetail: async function (studentNumber) {
       const csrfToken = this.$store.state.csrfToken;
       const axiosConfig = {
         headers: {
@@ -27,9 +27,9 @@ const dataMixin = {
           'X-CSRFToken': csrfToken,
         },
       };
-      return axios.post(
-        `/api/internal/student/enrolled-students/`,
-        options,
+      return axios.get(
+        '/api/internal/student/' + studentNumber + '/',
+        {},
         axiosConfig
       );
     },
