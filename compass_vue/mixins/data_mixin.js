@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const dataMixin = {
   methods: {
-    getStudentList: async function (options) {
+    getStudentList: async function (paginationOptions, searchOptions) {
       const csrfToken = this.$store.state.csrfToken;
       const axiosConfig = {
         headers: {
@@ -12,6 +12,7 @@ const dataMixin = {
           'X-CSRFToken': csrfToken,
         },
       };
+      let options = Object.assign({}, paginationOptions, searchOptions);
       return axios.get(
         '/api/internal/student/',
         { params: options },

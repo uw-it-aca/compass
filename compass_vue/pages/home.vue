@@ -130,17 +130,22 @@ export default {
     };
   },
   computed: {
-    searchOptions: function() {
-      let params = {
+    paginationOptions: function() {
+      return {
         offset: this.pageSize * (this.currentPage - 1),
         limit: this.pageSize
       };
-      if (this.searchOption) {
-        params["filter_type"] = this.searchOption.id;
-        params["filter_text"] = this.searchText;
-        params["offset"] = 0; // reset to first page
+    },
+    searchOptions: function() {
+      if (this.searchOption != null) {
+        this.currentPage = 1;
+        return {
+          filter_type: this.searchOption.id,
+          filter_text: this.searchText
+        };
+      } else {
+        return {};
       }
-      return params;
     },
     numPages: function() {
       let page = Math.ceil(this.studentsCount / this.pageSize);
@@ -150,7 +155,7 @@ export default {
   methods: {
     loadStudentList: function() {
       let _this = this;
-      this.getStudentList(this.searchOptions).then(response => {
+      this.getStudentList(this.paginationOptions, this.searchOptions).then(response => {
         if (response.data) {
           _this.students = response.data["results"];
           _this.studentsCount = response.data["count"]
