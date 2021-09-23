@@ -137,8 +137,7 @@ export default {
       };
     },
     searchOptions: function() {
-      if (this.searchOption != null) {
-        this.currentPage = 1;
+      if (this.searchOption) {
         return {
           filter_type: this.searchOption.id,
           filter_text: this.searchText
@@ -159,6 +158,9 @@ export default {
         if (response.data) {
           _this.students = response.data["results"];
           _this.studentsCount = response.data["count"]
+          if (_this.currentPage > _this.numPages) {
+            _this.currentPage = 1;
+          }
         }
       });
     }
