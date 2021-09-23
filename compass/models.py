@@ -5,6 +5,7 @@ from compass import utilities
 from datetime import datetime, date
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
 from uw_sws.term import get_current_term, get_term_by_year_and_quarter
 from uw_sws import SWS_TIMEZONE
 
@@ -135,9 +136,16 @@ class Adviser(models.Model):
 class Major(models.Model):
 
     major_abbr_code = models.TextField(null=True)
+    major_full_code = models.TextField(null=True)
     major_name = models.TextField(null=True)
     major_full_name = models.TextField(null=True)
     major_short_name = models.TextField(null=True)
+
+
+class SpecialProgram(models.Model):
+
+    special_program_code = models.TextField(null=True)
+    special_program_desc = models.TextField(null=True)
 
 
 class Student(models.Model):
@@ -145,6 +153,9 @@ class Student(models.Model):
     student_number = models.BigIntegerField(unique=True)
     uw_net_id = models.TextField(null=True)
     student_name = models.TextField(null=True)
+    student_preferred_first_name = models.TextField(null=True)
+    student_preferred_middle_name = models.TextField(null=True)
+    student_preferred_last_name = models.TextField(null=True)
     birthdate = models.DateField(null=True)
     student_email = models.TextField(null=True)
     external_email = models.TextField(null=True)
@@ -152,10 +163,35 @@ class Student(models.Model):
     gender = models.TextField(null=True)
     gpa = models.TextField(null=True)
     total_credits = models.TextField(null=True)
+    total_uw_credits = models.TextField(null=True)
+    campus_code = models.TextField(null=True)
     campus_desc = models.TextField(null=True)
+    class_code = models.TextField(null=True)
     class_desc = models.TextField(null=True)
-    enrollment_status = models.TextField(null=True)
+    enrollment_status_code = models.TextField(null=True)
+    exemption_code = models.TextField(null=True)
+    exemption_desc = models.TextField(null=True)
+    honors_program_code = models.TextField(null=True)
+    honors_program_ind = models.TextField(null=True)
+    resident_code = models.TextField(null=True)
+    resident_desc = models.TextField(null=True)
+    perm_addr_line1 = models.TextField(null=True)
+    perm_addr_line2 = models.TextField(null=True)
+    perm_addr_city = models.TextField(null=True)
+    perm_addr_state = models.TextField(null=True)
+    perm_addr_5digit_zip = models.TextField(null=True)
+    perm_addr_4digit_zip = models.TextField(null=True)
+    perm_addr_country = models.TextField(null=True)
+    perm_addr_postal_code = models.TextField(null=True)
+    registered_in_quarter = models.BooleanField(null=True)
+    special_program = models.ManyToManyField(SpecialProgram)
     adviser = models.ManyToManyField(Adviser)
     intended_major = models.ManyToManyField(
         Major, related_name="intended_major")  # edited by compass
     major = models.ManyToManyField(Major, related_name="major")
+
+    @property
+    def enrollment_desc(self):
+        enrollment_map = settings.ENROLLMENT_STATUS_MAPPING
+        return enrollment_map.get(int(self.enrollment_status_code),
+                                  "Unknown").title()

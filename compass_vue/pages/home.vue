@@ -66,7 +66,7 @@
                 <td>{{item.uw_net_id}}</td>
                 <td>{{item.class_desc}}</td>
                 <td>{{item.major_full_name}}</td>
-                <td>{{item.enrollment_status}}</td>
+                <td>{{item.enrollment_status_desc}}</td>
                 <td>{{item.gender}}</td>
                 <td>{{item.adviser_full_name}}</td>
               </tr>

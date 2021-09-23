@@ -45,17 +45,7 @@ class StudentListView(BasePaginatedAPIView):
             elif filter_type == "student-email":
                 student_qs = student_qs.filter(
                     student_email__icontains=filter_text)
-        queryset = student_qs.values(
-            'student_name',
-            'student_number',
-            'uw_net_id',
-            'class_desc',
-            'enrollment_status',
-            'gender',
-            major_full_name=F('major__major_full_name'),
-            adviser_full_name=F('adviser__full_name')
-        )
-        paginated_queryset = self.paginate_queryset(queryset)
+        paginated_queryset = self.paginate_queryset(student_qs)
         serializer = StudentSerializer(paginated_queryset, many=True)
         return self.get_paginated_response(serializer.data)
 
@@ -71,26 +61,5 @@ class StudentDetailView(BasePaginatedAPIView):
     '''
     def get(self, request, student_number):
         student_qs = Student.objects.filter(student_number=student_number)
-        print(student_qs)
-        queryset = student_qs.values(
-            'student_name',
-            'student_number',
-            'uw_net_id',
-            'class_desc',
-            'enrollment_status',
-            'gender',
-            'birthdate',
-            'student_email',
-            'external_email',
-            'local_phone_number',
-            'gpa',
-            'total_credits',
-            'campus_desc',
-            'class_desc',
-            'major_full_name',
-            'adviser_full_name',
-            major_full_name=F('major__major_full_name'),
-            adviser_full_name=F('adviser__full_name')
-        )
-        serializer = StudentSerializer(queryset, many=True)
+        serializer = StudentSerializer(student_qs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

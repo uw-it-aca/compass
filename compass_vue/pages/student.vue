@@ -12,25 +12,25 @@
               <div class="text-center text-muted mb-4">priority: <span class="text-danger">TOP</span></div>
             </div>
             <div class="flex-fill ps-3 mb-4">
-              <h1 class="h3 text-uppercase">{{studentDetail.student_name}}</h1>
+              <h1 class="h3 text-uppercase">{{student.student_name}}</h1>
               <div class="h5">{{ $route.params.id }}</div>
-              <p>{{studentDetail.uw_net_id}}, {{studentDetail.gender}}, Pronouns</p>
+              <p>{{student.uw_net_id}}, {{student.gender}}, Pronouns</p>
               <div><i class="bi bi-trophy-fill text-purple"></i> Student Athlete</div>
             </div>
           </div>
           <div class="col-6 col-lg-3 border-start">
             <ul class="list-unstyled m-0">
-              <li>Preferred name</li>
-              <li>Ethnicity</li>
-              <li>Citizenship</li>
+              <li>Preferred name: {{student.student_preferred_first_name}} {{student.student_preferred_middle_name}} {{student.student_preferred_last_name}}</li>
+              <li>Ethnicity:</li>
+              <li>Citizenship: {{student.resident_desc}}</li>
             </ul>
           </div>
           <div class="col-6 col-lg-3 border-start">
             <ul class="list-unstyled m-0">
-              <li>UW Email: {{studentDetail.student_email}}</li>
-              <li>Personal email: {{studentDetail.personal_email}}</li>
-              <li>Phone: {{studentDetail.local_phone_number}}</li>
-              <li>Address</li>
+              <li>UW Email: {{student.student_email}}</li>
+              <li>Personal email: {{student.personal_email}}</li>
+              <li>Phone: {{student.local_phone_number}}</li>
+              <li>Address: {{studentAddress}}</li>
             </ul>
           </div>
         </div>
@@ -55,11 +55,18 @@
               <div class="card-body">
                 <h3 class="card-title h6 text-uppercase text-muted fw-bold">Academics</h3>
                 <ul>
-                  <li>Registered yes/no</li>
-                  <li>Enrollment Status: {{studentDetail.enrollment_status}}</li>
-                  <li>Class standing: {{studentDetail.class_desc}}</li>
-                  <li>Total Credits: {{studentDetail.total_credits}}</li>
-                  <li>GPA: {{studentDetail.gpa}}</li>
+                  <li>Registered:
+                    <template v-if="student.registered_in_quarter">
+                      <b>yes</b>/no
+                    </template>
+                    <template v-else>
+                      yes/<b>no</b>
+                    </template>
+                  </li>
+                  <li>Enrollment Status: {{student.enrollment_desc}}</li>
+                  <li>Class standing: {{student.class_desc}}</li>
+                  <li>Total Credits: {{student.total_credits}}</li>
+                  <li>GPA: {{student.gpa}}</li>
                 </ul>
               </div>
             </div>
@@ -69,10 +76,17 @@
               <div class="card-body">
                 <h3 class="card-title h6 text-uppercase text-muted fw-bold">OMAD Programs</h3>
                 <ul>
-                  <li>EOP - yes/no</li>
-                  <li>Pre-professional yes/no</li>
-                  <li>IC Eligible yes/no</li>
-                  <li>Special program yes/no</li>
+                  <li>EOP: yes/no</li>
+                  <li>Pre-professional: yes/no</li>
+                  <li>IC Eligible: yes/no</li>
+                  <li>Special program:
+                    <template v-if="student.special_program_code">
+                      <b>yes</b>/no
+                    </template>
+                    <template v-else>
+                      yes/<b>no</b>
+                    </template>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -116,8 +130,13 @@
               <div class="card-body">
                 <h3 class="card-title h6 text-uppercase text-muted fw-bold">Major</h3>
                 <ul>
-                  <li>desired major <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">change</a></li>
-                  <li>accepted major</li>
+                  <li>Desired major: 
+                    <span v-for="(major, index) in student.intended_major" :key="index">{{major.major_full_name}}<span v-if="index+1 < student.intended_major.length">, </span></span>
+                    <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">change</a>
+                  </li>
+                  <li>Accepted major:
+                    <span v-for="(major, index) in student.major" :key="index">{{major.major_full_name}}<span v-if="index+1 < student.major.length">, </span></span>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -355,20 +374,42 @@ export default {
     'axdd-card': Card,
   },
   created: function() {
-    this.loadStudentDetail(this.$route.params.id);
+    this.loadstudent(this.$route.params.id);
   },
   data() {
     return {
-      studentDetail: {},
-      pageTitle: 'Average, John #12345678',
+      student: {},
+      pageTitle: '',
     };
   },
+  computed: {
+    studentAddress: function () {
+      let addr = "";
+      if (this.student.perm_addr_line1)
+        addr += (this.student.perm_addr_line1 + " ");
+      if (this.student.perm_addr_line2)
+        addr += (this.student.perm_addr_line2 + " ");
+      if (this.student.perm_addr_city )
+        addr += this.student.perm_addr_city;
+      if (this.student.perm_addr_state)
+        addr += (", " + this.student.perm_addr_state);
+      if (this.student.perm_addr_line1)
+        addr += (" " + this.student.perm_addr_postal_code);
+      if (addr)
+        return addr;
+      else
+        return "N/A";
+    },
+  },
   methods: {
-    loadStudentDetail: function(studentNumber) {
+    loadstudent: function(studentNumber) {
       let _this = this;
       this.getStudentDetail(studentNumber).then(response => {
         if (response.data) {
-          _this.studentDetail = response.data[0];
+          _this.student = response.data[0];
+          _this.student.pageTitle = (
+            _this.student.student_name + " (" + _this.student.student_number + ")"
+          );
         }
       });
     }
