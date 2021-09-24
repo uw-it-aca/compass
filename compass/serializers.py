@@ -4,6 +4,7 @@
 from compass.models import Student, Major, SpecialProgram
 from rest_framework import serializers
 
+
 class SpecialProgramSerializer(serializers.ModelSerializer):
 
     class Meta:

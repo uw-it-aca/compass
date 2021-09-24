@@ -4,7 +4,6 @@
 from compass.models import Student
 from compass.serializers import StudentSerializer
 from django.conf import settings
-from django.db.models import F
 from django.utils.decorators import method_decorator
 from rest_framework import status
 from rest_framework.response import Response
