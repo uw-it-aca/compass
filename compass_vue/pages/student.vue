@@ -8,7 +8,7 @@
         <div class="row">
           <div class="col-lg-6 d-flex">
             <div style="width:130px;">
-              <img src="/static/img/napoleon-dynamite.jpeg" class="img-fluid rounded-circle border border-danger border-5" alt="">
+              <img :src="student.photo_url" class="img-fluid rounded-circle border border-danger border-5" alt="">
               <div class="text-center text-muted mb-4">priority: <span class="text-danger">TOP</span></div>
             </div>
             <div class="flex-fill ps-3 mb-4">

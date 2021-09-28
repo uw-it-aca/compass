@@ -150,8 +150,12 @@ class SpecialProgram(models.Model):
 
 class Student(models.Model):
 
-    student_number = models.BigIntegerField(unique=True)
-    uw_net_id = models.TextField(null=True)
+    # Fields from Canvas
+    uw_net_id = models.TextField(unique=True)
+    canvas_user_id = models.TextField(null=True)
+    uw_reg_id = models.TextField(null=True)
+    # Fields from EDW
+    student_number = models.BigIntegerField(null=True)
     student_name = models.TextField(null=True)
     student_preferred_first_name = models.TextField(null=True)
     student_preferred_middle_name = models.TextField(null=True)

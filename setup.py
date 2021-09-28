@@ -27,6 +27,7 @@ setup(
         'django~=3.2',
         'django-webpack-bridge',
         'djangorestframework~=3.12',
+        'UW-RestClients-Canvas~=1.1',
         'UW-RestClients-SWS~=2.3',
         'UW-Django-SAML2~=1.5',
         'urllib3~=1.25'

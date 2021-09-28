@@ -1,14 +1,14 @@
 # Copyright 2021 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.dao import SwsDAO
+from compass.dao import TaskDAO
 from compass.models import Term
 from django.core.management.base import BaseCommand
 
 
 class Command(BaseCommand):
 
-    help = ("Creates current term and all future terms.")
+    help = ("Loads enrolled students into the Compass DB from EDW and Canvas.")
 
     def add_arguments(self, parser):
         # use current term as the default
@@ -21,4 +21,4 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         sis_term_id = options["sis_term_id"]
-        SwsDAO().create_terms(sis_term_id=sis_term_id)
+        TaskDAO().create_or_update_students(sis_term_id)

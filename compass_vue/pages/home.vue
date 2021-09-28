@@ -54,7 +54,7 @@
               <tr v-for="(item,) in students" :key="item.SystemKey">
                 <td>
                   <div style="width:40px;">
-                    <img src="/static/img/napoleon-dynamite.jpeg" class="img-fluid rounded-circle border border-3" alt="">
+                    <img :src="item.photo_url" class="img-fluid rounded-circle border border-3" alt="">
                   </div>
                 </td>
                 <td>{{item.student_name}}</td>

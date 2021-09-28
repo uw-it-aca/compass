@@ -59,6 +59,10 @@ environmentVariables:
     value: test.compass.uw.edu
   - name: EDW_HOSTNAME
     value:
+  - name: CANVAS_ENV
+    value: PROD
+  - name: CANVAS_TIMEOUT
+    value: "10"
 
 externalSecrets:
   enabled: true
@@ -79,6 +83,18 @@ externalSecrets:
           property: edw-username
         - name: edw-password
           property: edw-password
+    - name: test.compass.uw.edu-canvas-secrets
+      externalKey: axdd/kv/data/canvas/shared/secrets
+      data:
+        - name: canvas-account-id
+          property: canvas-account-id
+    - name: test.compass.uw.edu-shared-secrets
+      externalKey: axdd/kv/data/compass/shared/secrets
+      data:
+        - name: canvas-api-token
+          property: canvas-api-token
+        - name: access-group-id
+          property: access-group-id
     - name: test.compass.uw.edu-sql-secrets
       externalKey: axdd/kv/data/compass/shared/sql-secrets
       data:
@@ -126,3 +142,15 @@ environmentVariablesSecrets:
     name: EDW_PASSWORD
     secretName: test.compass.uw.edu-shared-secrets
     secretKey: edw-password
+  canvasAPIToken:
+    name: CANVAS_OAUTH_BEARER
+    secretName: test.compass.uw.edu-shared-secrets
+    secretKey: canvas-api-token
+  canvasAccountID:
+    name: CANVAS_ACCOUNT_ID
+    secretName: test.compass.uw.edu-canvas-secrets
+    secretKey: canvas-account-id
+  accessGroup:
+    name: ACCESS_GROUP
+    secretName: test.compass.uw.edu-shared-secrets
+    secretKey: access-group-id

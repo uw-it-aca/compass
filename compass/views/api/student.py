@@ -1,11 +1,13 @@
 # Copyright 2021 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+from compass.dao import PwsDAO
 from compass.models import Student
 from compass.serializers import StudentSerializer
 from django.conf import settings
+from django.db.models import Q
 from django.utils.decorators import method_decorator
-from rest_framework import status
+from rest_framework import serializers, status
 from rest_framework.response import Response
 from rest_framework.generics import GenericAPIView
 from rest_framework.pagination import LimitOffsetPagination
@@ -31,7 +33,7 @@ class StudentListView(BasePaginatedAPIView):
     * filters: dictionary of request filters
     '''
     def get(self, request, *args, **kwargs):
-        student_qs = Student.objects.all()
+        student_qs = Student.objects.all().filter(~Q(student_number=None))
         if request.query_params:
             filter_text = request.query_params.get("filter_text")
             filter_type = request.query_params.get("filter_type")
@@ -46,6 +48,11 @@ class StudentListView(BasePaginatedAPIView):
                     student_email__icontains=filter_text)
         paginated_queryset = self.paginate_queryset(student_qs)
         serializer = StudentSerializer(paginated_queryset, many=True)
+        # add any additional student context
+        pws_dao = PwsDAO()
+        for row in serializer.data:
+            row["photo_url"] = pws_dao.get_photo_url(row["uw_reg_id"],
+                                                     "small")
         return self.get_paginated_response(serializer.data)
 
 
@@ -61,4 +68,8 @@ class StudentDetailView(BasePaginatedAPIView):
     def get(self, request, student_number):
         student_qs = Student.objects.filter(student_number=student_number)
         serializer = StudentSerializer(student_qs, many=True)
+        pws_dao = PwsDAO()
+        for row in serializer.data:
+            row["photo_url"] = pws_dao.get_photo_url(row["uw_reg_id"],
+                                                     "medium")
         return Response(serializer.data, status=status.HTTP_200_OK)
