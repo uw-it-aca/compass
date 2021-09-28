@@ -66,7 +66,7 @@
                 <td>{{item.uw_net_id}}</td>
                 <td>{{item.class_desc}}</td>
                 <td>{{item.major_full_name}}</td>
-                <td>{{item.enrollment_status}}</td>
+                <td>{{item.enrollment_status_desc}}</td>
                 <td>{{item.gender}}</td>
                 <td>{{item.adviser_full_name}}</td>
               </tr>
@@ -130,17 +130,21 @@ export default {
     };
   },
   computed: {
-    searchOptions: function() {
-      let params = {
+    paginationOptions: function() {
+      return {
         offset: this.pageSize * (this.currentPage - 1),
         limit: this.pageSize
       };
+    },
+    searchOptions: function() {
       if (this.searchOption) {
-        params["filter_type"] = this.searchOption.id;
-        params["filter_text"] = this.searchText;
-        params["offset"] = 0; // reset to first page
+        return {
+          filter_type: this.searchOption.id,
+          filter_text: this.searchText
+        };
+      } else {
+        return {};
       }
-      return params;
     },
     numPages: function() {
       let page = Math.ceil(this.studentsCount / this.pageSize);
@@ -150,10 +154,13 @@ export default {
   methods: {
     loadStudentList: function() {
       let _this = this;
-      this.getStudentList(this.searchOptions).then(response => {
+      this.getStudentList(this.paginationOptions, this.searchOptions).then(response => {
         if (response.data) {
           _this.students = response.data["results"];
           _this.studentsCount = response.data["count"]
+          if (_this.currentPage > _this.numPages) {
+            _this.currentPage = 1;
+          }
         }
       });
     }
