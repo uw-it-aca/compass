@@ -1,9 +1,9 @@
 <template>
-  <div class="VuePagination blah">
+  <div class="VuePagination text-center" :class='props.theme.wrapper'>
     <h1>TEST PAGINATION COMPONENT</h1>
-    <nav>
-      <ul v-show="props.showPagination" class="pagination justify-content-center">
-        <li v-if="props.hasEdgeNav" :class="props.theme.firstPage" @click="props.setFirstPage">
+    <nav :class='props.theme.nav' aria-label="Page navigation example">
+      <ul v-show="props.showPagination" :class="props.theme.list" class="pagination pagination-sm justify-content-center">
+        <li v-if="props.hasEdgeNav" :class='props.theme.firstPage' @click="props.setFirstPage">
           <button type="button" v-bind="props.firstPageProps">{{ props.texts.first }}</button>
         </li>
 
@@ -37,7 +37,7 @@
         </li>
       </ul>
 
-      <p v-show="props.hasRecords" :class="props.theme.count">{{ props.count }}</p>
+      <div v-show="props.hasRecords" :class="props.theme.count">{{ props.count }}</div>
     </nav>
   </div>
 </template>
@@ -45,6 +45,6 @@
 <script>
 export default {
   name: 'MyPagination',
-  props: ['props']
+  props: ['props'],
 };
 </script>

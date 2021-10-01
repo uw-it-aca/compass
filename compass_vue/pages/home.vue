@@ -36,8 +36,9 @@
       </div>
       <div class="row">
         <div class="col">
-          <table class="table table-striped table-hover border">
-            <thead>
+          <div class="border rounded-3">
+          <table class="table table-hover">
+            <thead class="bg-gray">
               <tr>
                 <th scope="col"></th>
                 <th scope="col">Student Name</th>
@@ -71,6 +72,7 @@
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
       </div>
       <div class="row justify-content-md-center">
@@ -79,7 +81,7 @@
             v-model="currentPage"
             :records="studentsCount"
             :per-page="pageSize"
-            :options={template:mytemplate}
+            :options={template:paginationTemplate}
             @paginate="loadStudentList">
           </pagination>
         </div>
@@ -93,7 +95,6 @@ import Pagination from 'v-pagination-3';
 import MyPagination from '../components/pagination.vue';
 import Layout from '../layout.vue';
 import dataMixin from '../mixins/data_mixin.js';
-
 
 export default {
   mixins: [dataMixin],
@@ -114,7 +115,7 @@ export default {
       studentsCount: 0,
       currentPage: 1,
       pageSize: 20,
-      mytemplate: MyPagination,
+      paginationTemplate: MyPagination,
       // search filters
       searchOption: null,
       searchText: "",
