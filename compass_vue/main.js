@@ -15,9 +15,8 @@ import './css/custom.scss';
 const app = createApp(App);
 
 // custom components
-import Pagination from 'v-pagination-3';
-//import MyPagination from './components/pagination.vue'
-app.component('paginate', Pagination);
+//import Pagination from 'v-pagination-3';
+//app.component('paginate', Pagination);
 
 // MARK: google analytics data stream measurement_id
 const gaCode = document.body.getAttribute('google-analytics');
