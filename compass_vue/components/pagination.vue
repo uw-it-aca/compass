@@ -45,6 +45,6 @@
 <script>
 export default {
   name: 'MyPagination',
-  props: ['props'],
+  props: ['props']
 };
 </script>

@@ -77,10 +77,9 @@
         <div class="col-6 border border-danger m-3">
           <pagination
             v-model="currentPage"
-            :theme="bootstrap4"
             :records="studentsCount"
             :per-page="pageSize"
-            :options="{template:MyPagination}"
+            :options={template:mytemplate}
             @paginate="loadStudentList">
           </pagination>
         </div>
@@ -91,7 +90,7 @@
 
 <script>
 import Pagination from 'v-pagination-3';
-//import MyPagination from '../components/pagination.vue';
+import MyPagination from '../components/pagination.vue';
 import Layout from '../layout.vue';
 import dataMixin from '../mixins/data_mixin.js';
 
@@ -100,7 +99,7 @@ export default {
   mixins: [dataMixin],
   components: {
     layout: Layout,
-    pagination: Pagination
+    pagination: Pagination,
   },
   created: function() {
     this.loadStudentList();
@@ -114,7 +113,8 @@ export default {
       // pagination
       studentsCount: 0,
       currentPage: 1,
-      pageSize: 50,
+      pageSize: 60,
+      mytemplate: MyPagination,
       // search filters
       searchOption: null,
       searchText: "",
