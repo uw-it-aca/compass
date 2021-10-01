@@ -25,6 +25,7 @@
                   :id="option.id"
                   :value="option"
                   v-model="searchOption"
+                  style="margin-top:6px;"
                 />
                 <label class="form-check-label" :for="option.id">{{ option.label }}</label>
               </div>
@@ -50,7 +51,7 @@
           </div>
         </div>
         <div class="col-sm-2">
-          <div class="small lh-lg">Select advisor caseload:</div>
+          <div class="small lh-lg">Display caseload for:</div>
           <select class="form-select form-select-sm" aria-label="Default select example">
             <option selected>All advisers</option>
             <option value="1">Jon Average</option>
@@ -59,7 +60,6 @@
           </select>
         </div>
         <div class="col-sm-6">
-          <div class="small lh-lg text-end">Displaying: {{ studentsCount }} students</div>
           <pagination
             v-model="currentPage"
             :records="studentsCount"
