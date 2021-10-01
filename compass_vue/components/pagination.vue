@@ -1,8 +1,8 @@
 <template>
-  <div class="VuePagination" :class="props.theme.wrapper">
+  <div class="VuePagination blah">
     <h1>TEST PAGINATION COMPONENT</h1>
-    <nav :class="props.theme.nav">
-      <ul v-show="props.showPagination" :class="props.theme.list">
+    <nav>
+      <ul v-show="props.showPagination" class="pagination justify-content-center">
         <li v-if="props.hasEdgeNav" :class="props.theme.firstPage" @click="props.setFirstPage">
           <button type="button" v-bind="props.firstPageProps">{{ props.texts.first }}</button>
         </li>

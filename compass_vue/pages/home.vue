@@ -113,7 +113,7 @@ export default {
       // pagination
       studentsCount: 0,
       currentPage: 1,
-      pageSize: 60,
+      pageSize: 20,
       mytemplate: MyPagination,
       // search filters
       searchOption: null,
