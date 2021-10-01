@@ -74,12 +74,13 @@
         </div>
       </div>
       <div class="row justify-content-md-center">
-        <div class="col-6 justify-content-md-center text-center">
+        <div class="col-6 border border-danger m-3">
           <paginate
             v-model="currentPage"
             :theme="bootstrap4"
             :records="studentsCount"
             :per-page="pageSize"
+            :options="{template:MyPagination}"
             @paginate="loadStudentList">
           </paginate>
         </div>
@@ -89,13 +90,17 @@
 </template>
 
 <script>
+//import Pagination from 'v-pagination-3';
+import MyPagination from '../components/pagination.vue';
 import Layout from '../layout.vue';
 import dataMixin from '../mixins/data_mixin.js';
+
 
 export default {
   mixins: [dataMixin],
   components: {
     layout: Layout,
+    MyPagination
   },
   created: function() {
     this.loadStudentList();
