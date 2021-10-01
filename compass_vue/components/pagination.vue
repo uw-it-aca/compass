@@ -1,7 +1,8 @@
 <template>
-  <div class="VuePagination" :class="props.theme.wrapper" >
-
-    <div v-show="props.hasRecords" class="small lh-lg text-end" :class="props.theme.count">{{ props.count }}</div>
+  <div class="VuePagination" :class="props.theme.wrapper">
+    <div v-show="props.hasRecords" class="small lh-lg text-end" :class="props.theme.count">
+      {{ props.count }}
+    </div>
 
     <nav :class="props.theme.nav" aria-label="Page navigation example">
       <ul
@@ -30,7 +31,6 @@
           </button>
         </li>
       </ul>
-      <!---->
     </nav>
   </div>
 </template>
