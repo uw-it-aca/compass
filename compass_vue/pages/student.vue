@@ -154,6 +154,20 @@
               </div>
             </div>
           </div>
+          <div class="col-md-4">
+            <div class="card shadow-sm mb-3">
+              <h3 class="card-header h6 text-uppercase text-muted fw-bold" style="line-height:30px;">Transcript</h3>
+              <div class="card-body">
+                <ul>
+                  <li>all previous courses taken</li>
+                  <li>grade received</li>
+                </ul>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Last updated 3 mins ago</small>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- end academics -->
         <!-- notes area -->
@@ -170,9 +184,6 @@
                     </li>
                     <li class="nav-item" role="presentation">
                       <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Visits</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Additional Student Info</button>
                     </li>
                     <li class="nav-item" role="presentation">
                       <button class="nav-link" id="major-tab" data-bs-toggle="tab" data-bs-target="#major" type="button" role="tab" aria-controls="majors" aria-selected="false">Majors</button>
@@ -292,7 +303,6 @@
                       </table>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">contact</div>
                   <div class="tab-pane fade" id="major" role="tabpanel" aria-labelledby="major-tab">
                     <div class="table-responsive">
                       <table class="table table-hover table-striped m-0">
