@@ -299,7 +299,42 @@
                     </div>
                   </div>
                   <div class="tab-pane fade" id="transcript" role="tabpanel" aria-labelledby="transcript-tab">
-                    transcript data: all previous courses taken + grades received
+                    <div class="table-responsive">
+                      <table class="table table-hover table-striped m-0">
+                        <thead>
+                          <tr>
+                            <th>Course</th>
+                            <th>Credits</th>
+                            <th>Grade</th>
+                            <th>Year</th>
+                            <th>Quarter</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>BIOL 350</td>
+                            <td>3</td>
+                            <td>3.8</td>
+                            <td>2021</td>
+                            <td>Spring</td>
+                          </tr>
+                          <tr>
+                            <td>CHEM 238</td>
+                            <td>4</td>
+                            <td>4.0</td>
+                            <td>2021</td>
+                            <td>Autumn</td>
+                          </tr>
+                          <tr>
+                            <td>MATH 210</td>
+                            <td>5.0</td>
+                            <td>W4</td>
+                            <td>2021</td>
+                            <td>Autumn</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                   <div class="tab-pane fade" id="major" role="tabpanel" aria-labelledby="major-tab">
                     <div class="table-responsive">
