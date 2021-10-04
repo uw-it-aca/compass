@@ -539,8 +539,9 @@ export default {
 </script>
 
 <style lang="scss">
-
-.table tbody > tr:last-child > td {
-  border-bottom: 0;
+.table {
+  tr:last-of-type {
+    border-color: transparent !important;
+  }
 }
 </style>
