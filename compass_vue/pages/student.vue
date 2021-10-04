@@ -52,8 +52,8 @@
         <div class="row">
           <div class="col-md-4">
             <div class="card shadow-sm mb-3">
+              <h3 class="card-header h6 text-uppercase text-muted fw-bold" style="line-height:30px;">Academics</h3>
               <div class="card-body">
-                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Academics</h3>
                 <ul>
                   <li>Registered:
                     <template v-if="student.registered_in_quarter">
@@ -73,8 +73,8 @@
           </div>
           <div class="col-md-4">
             <div class="card shadow-sm mb-3">
+              <h3 class="card-header h6 text-uppercase text-muted fw-bold" style="line-height:30px;">Programs</h3>
               <div class="card-body">
-                <h3 class="card-title h6 text-uppercase text-muted fw-bold">OMAD Programs</h3>
                 <ul>
                   <li>EOP: yes/no</li>
                   <li>Pre-professional: yes/no</li>
@@ -93,9 +93,8 @@
           </div>
           <div class="col-md-4">
             <div class="card shadow-sm mb-3">
+              <h3 class="card-header h6 text-uppercase text-muted fw-bold" style="line-height:30px;">Adviser</h3>
               <div class="card-body">
-                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Adviser</h3>
-
                 <div class="d-flex">
                   <div style="width: 65px;">
                     <img src="/static/img/pedro-sanchez.jpeg" class="img-fluid rounded-circle border border-3" alt="">
@@ -127,14 +126,14 @@
           </div>
           <div class="col-md-4">
             <div class="card shadow-sm mb-3">
+              <h3 class="card-header h6 text-uppercase text-muted fw-bold" style="line-height:30px;">Majors</h3>
               <div class="card-body">
-                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Major</h3>
                 <ul>
-                  <li>Desired major: 
+                  <li>Intended: 
                     <span v-for="(major, index) in student.intended_major" :key="index">{{major.major_full_name}}<span v-if="index+1 < student.intended_major.length">, </span></span>
-                    <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">change</a>
+                    <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">update</a>
                   </li>
-                  <li>Accepted major:
+                  <li>Accepted:
                     <span v-for="(major, index) in student.major" :key="index">{{major.major_full_name}}<span v-if="index+1 < student.major.length">, </span></span>
                   </li>
                 </ul>
@@ -143,12 +142,15 @@
           </div>
           <div class="col-md-4">
             <div class="card shadow-sm mb-3">
+              <h3 class="card-header h6 text-uppercase text-muted fw-bold" style="line-height:30px;">Schedule</h3>
               <div class="card-body">
-                <h3 class="card-title h6 text-uppercase text-muted fw-bold">Schedule</h3>
                 <ul>
                   <li>curent quarter</li>
                   <li>class schedule</li>
                 </ul>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Last updated 3 mins ago</small>
               </div>
             </div>
           </div>
@@ -157,90 +159,204 @@
         <!-- notes area -->
         <div class="row">
           <div class="col">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-              <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Contact History</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">IC Visits</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Additional Student Info</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                <button class="nav-link" id="major-tab" data-bs-toggle="tab" data-bs-target="#major" type="button" role="tab" aria-controls="majors" aria-selected="false">Intended Major</button>
-              </li>
-            </ul>
-            <div class="tab-content bg-white border-start border-end border-bottom mb-5 p-3 rounded-bottom shadow-sm" id="myTabContent">
-              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div class="table-responsive">
-                  <table class="table table-hover table-striped">
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th class="text-nowrap">Contact Type</th>
-                        <th>Staff</th>
-                        <th>Notes</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <th scope="row">09/23/2020</th>
-                        <td>1:55PM</td>
-                        <td>Drop-in</td>
-                        <td>Otto Wilson</td>
-                        <td>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                          Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
-                          doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
-                          asperiores dolores excepturi?
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">07/04/2020</th>
-                        <td>10:52AM</td>
-                        <td>Quick Question</td>
-                        <td>Boris Washington</td>
-                        <td>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                          Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
-                          doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
-                          asperiores dolores excepturi?
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">06/29/2020</th>
-                        <td>3:15PM</td>
-                        <td>Appointment</td>
-                        <td>Otto Wilson</td>
-                        <td>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                          Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
-                          doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
-                          asperiores dolores excepturi?
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">5/14/2020</th>
-                        <td>2:15PM</td>
-                        <td>Telephone</td>
-                        <td>Otto Wilson</td>
-                        <td>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                          Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
-                          doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
-                          asperiores dolores excepturi?
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+
+            <div class="card shadow-sm mb-3">
+              <div class="card-header">
+                <div class="position-relative">
+                  <h3 class="card-title h6 text-uppercase text-muted fw-bold m-0 position-absolute top-50 translate-middle-y">History</h3>
+                  <ul class="nav nav-tabs justify-content-end card-header-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Contact</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Visits</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Additional Student Info</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="major-tab" data-bs-toggle="tab" data-bs-target="#major" type="button" role="tab" aria-controls="majors" aria-selected="false">Majors</button>
+                    </li>
+                  </ul>
                 </div>
               </div>
-              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">profile</div>
-              <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">contact</div>
-              <div class="tab-pane fade" id="major" role="tabpanel" aria-labelledby="major-tab">major</div>
+              <div class="card-body">
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="table-responsive">
+                      <table class="table table-hover table-striped m-0">
+                        <thead>
+                          <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th class="text-nowrap">Contact Type</th>
+                            <th>Staff</th>
+                            <th>Notes</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td scope="row">09/23/2020</td>
+                            <td>1:55PM</td>
+                            <td>Drop-in</td>
+                            <td>Otto Wilson</td>
+                            <td>
+                              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                              Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
+                              doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
+                              asperiores dolores excepturi?
+                            </td>
+                          </tr>
+                          <tr>
+                            <td scope="row">07/04/2020</td>
+                            <td>10:52AM</td>
+                            <td>Quick Question</td>
+                            <td>Boris Washington</td>
+                            <td>
+                              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                              Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
+                              doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
+                              asperiores dolores excepturi?
+                            </td>
+                          </tr>
+                          <tr>
+                            <td scope="row">06/29/2020</td>
+                            <td>3:15PM</td>
+                            <td>Appointment</td>
+                            <td>Otto Wilson</td>
+                            <td>
+                              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                              Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
+                              doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
+                              asperiores dolores excepturi?
+                            </td>
+                          </tr>
+                          <tr>
+                            <td scope="row">5/14/2020</td>
+                            <td>2:15PM</td>
+                            <td>Telephone</td>
+                            <td>Otto Wilson</td>
+                            <td>
+                              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                              Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
+                              doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
+                              asperiores dolores excepturi?
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="table-responsive">
+                      <table class="table table-hover table-striped m-0">
+                        <thead>
+                          <tr>
+                            <th>Date</th>
+                            <th class="text-nowrap">Location</th>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th>Duration</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td scope="row">09/23/2020</td>
+                            <td>Instructional Center</td>
+                            <td>10:35am</td>
+                            <td>11:42pm</td>
+                            <td>1hr 2mins</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">07/04/2020</td>
+                            <td>Computer Lab</td>
+                            <td>9:15am</td>
+                            <td>11:2am</td>
+                            <td>2 hrs</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">06/29/2020</td>
+                            <td>Instruction Center</td>
+                            <td>4:31pm</td>
+                            <td>4:45pm</td>
+                            <td>15 mins</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">5/14/2020</td>
+                            <td>Instructional Center</td>
+                            <td>2:34pm</td>
+                            <td>6:35pm</td>
+                            <td>4 hrs</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">contact</div>
+                  <div class="tab-pane fade" id="major" role="tabpanel" aria-labelledby="major-tab">
+                    <div class="table-responsive">
+                      <table class="table table-hover table-striped m-0">
+                        <thead>
+                          <tr>
+                            <th>Date</th>
+                            <th>Major</th>
+                            <th>Status</th>
+                            <th class="text-nowrap">Source</th>
+                            <th>Actor</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td scope="row">10/01/2021</td>
+                            <td>Anthropology</td>
+                            <td>Accepted</td>
+                            <td>SWS</td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td scope="row">9/23/2020</td>
+                            <td>Computer Engineering</td>
+                            <td>Intended</td>
+                            <td>DawgPath</td>
+                            <td>Student</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">7/04/2020</td>
+                            <td>Human Centered Design &amp; Engineering</td>
+                            <td>Intended</td>
+                            <td>Compass</td>
+                            <td>Pedro Sanchez</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">6/29/2020</td>
+                            <td>Accounting</td>
+                            <td>Intended</td>
+                            <td>Compass</td>
+                            <td>Pedro Sanchez</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">5/23/2020</td>
+                            <td>Economics</td>
+                            <td>Intended</td>
+                            <td>DawgPath</td>
+                            <td>Student</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">5/14/2020</td>
+                            <td>Business</td>
+                            <td>Intended</td>
+                            <td>Admissions</td>
+                            <td>Application</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              <!-- end card-body -->
+              </div>
             </div>
+
           </div>
         </div>
         <!-- end notes -->
@@ -422,4 +538,9 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+
+.table tbody > tr:last-child > td {
+  border-bottom: 0;
+}
+</style>
