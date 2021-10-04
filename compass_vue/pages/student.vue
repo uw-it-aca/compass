@@ -154,20 +154,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card shadow-sm mb-3">
-              <h3 class="card-header h6 text-uppercase text-muted fw-bold" style="line-height:30px;">Transcript</h3>
-              <div class="card-body">
-                <ul>
-                  <li>all previous courses taken</li>
-                  <li>grade received</li>
-                </ul>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">Last updated 3 mins ago</small>
-              </div>
-            </div>
-          </div>
+         
         </div>
         <!-- end academics -->
         <!-- notes area -->
@@ -180,20 +167,23 @@
                   <h3 class="card-title h6 text-uppercase text-muted fw-bold m-0 position-absolute top-50 translate-middle-y">History</h3>
                   <ul class="nav nav-tabs justify-content-end card-header-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Contact</button>
+                      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="true">Contact</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Visits</button>
+                      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#visit" type="button" role="tab" aria-controls="visit" aria-selected="false">Visit</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="major-tab" data-bs-toggle="tab" data-bs-target="#major" type="button" role="tab" aria-controls="majors" aria-selected="false">Majors</button>
+                      <button class="nav-link" id="transcript-tab" data-bs-toggle="tab" data-bs-target="#transcript" type="button" role="tab" aria-controls="transcript" aria-selected="false">Transcript</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="major-tab" data-bs-toggle="tab" data-bs-target="#major" type="button" role="tab" aria-controls="major" aria-selected="false">Major</button>
                     </li>
                   </ul>
                 </div>
               </div>
               <div class="card-body">
                 <div class="tab-content" id="myTabContent">
-                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                  <div class="tab-pane fade show active" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     <div class="table-responsive">
                       <table class="table table-hover table-striped m-0">
                         <thead>
@@ -258,13 +248,14 @@
                       </table>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                  <div class="tab-pane fade" id="visit" role="tabpanel" aria-labelledby="visit-tab">
                     <div class="table-responsive">
                       <table class="table table-hover table-striped m-0">
                         <thead>
                           <tr>
                             <th>Date</th>
                             <th class="text-nowrap">Location</th>
+                            <th>Course</th>
                             <th>Check-in</th>
                             <th>Check-out</th>
                             <th>Duration</th>
@@ -274,6 +265,7 @@
                           <tr>
                             <td scope="row">09/23/2020</td>
                             <td>Instructional Center</td>
+                            <td>BUS 220</td>
                             <td>10:35am</td>
                             <td>11:42pm</td>
                             <td>1hr 2mins</td>
@@ -281,6 +273,7 @@
                           <tr>
                             <td scope="row">07/04/2020</td>
                             <td>Computer Lab</td>
+                            <td>CSE 142</td>
                             <td>9:15am</td>
                             <td>11:2am</td>
                             <td>2 hrs</td>
@@ -288,6 +281,7 @@
                           <tr>
                             <td scope="row">06/29/2020</td>
                             <td>Instruction Center</td>
+                            <td>BUS 220</td>
                             <td>4:31pm</td>
                             <td>4:45pm</td>
                             <td>15 mins</td>
@@ -295,6 +289,7 @@
                           <tr>
                             <td scope="row">5/14/2020</td>
                             <td>Instructional Center</td>
+                            <td>BUS 220</td>
                             <td>2:34pm</td>
                             <td>6:35pm</td>
                             <td>4 hrs</td>
@@ -302,6 +297,9 @@
                         </tbody>
                       </table>
                     </div>
+                  </div>
+                  <div class="tab-pane fade" id="transcript" role="tabpanel" aria-labelledby="transcript-tab">
+                    transcript data: all previous courses taken + grades received
                   </div>
                   <div class="tab-pane fade" id="major" role="tabpanel" aria-labelledby="major-tab">
                     <div class="table-responsive">
