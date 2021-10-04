@@ -157,84 +157,89 @@
         <!-- notes area -->
         <div class="row">
           <div class="col">
-            <ul class="nav nav-tabs">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Contact History</a>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Contact History</button>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">IC Summary</a>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">IC Visits</button>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Additional Student Info</a>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Additional Student Info</button>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Desired Degree (change history)</a>
+              <li class="nav-item" role="presentation">
+                <button class="nav-link" id="major-tab" data-bs-toggle="tab" data-bs-target="#major" type="button" role="tab" aria-controls="majors" aria-selected="false">Intended Major</button>
               </li>
             </ul>
-            <div class="bg-white border-start border-end border-bottom mb-5 p-3 rounded-bottom shadow-sm">
-              <div class="table-responsive">
-                <table class="table table-hover table-striped">
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Time</th>
-                      <th class="text-nowrap">Contact Type</th>
-                      <th>Staff</th>
-                      <th>Notes</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th scope="row">09/23/2020</th>
-                      <td>1:55PM</td>
-                      <td>Drop-in</td>
-                      <td>Otto Wilson</td>
-                      <td>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
-                        doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
-                        asperiores dolores excepturi?
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">07/04/2020</th>
-                      <td>10:52AM</td>
-                      <td>Quick Question</td>
-                      <td>Boris Washington</td>
-                      <td>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
-                        doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
-                        asperiores dolores excepturi?
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">06/29/2020</th>
-                      <td>3:15PM</td>
-                      <td>Appointment</td>
-                      <td>Otto Wilson</td>
-                      <td>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
-                        doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
-                        asperiores dolores excepturi?
-                      </td>
-                    </tr>
-                    <tr>
-                      <th scope="row">5/14/2020</th>
-                      <td>2:15PM</td>
-                      <td>Telephone</td>
-                      <td>Otto Wilson</td>
-                      <td>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
-                        doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
-                        asperiores dolores excepturi?
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+            <div class="tab-content bg-white border-start border-end border-bottom mb-5 p-3 rounded-bottom shadow-sm" id="myTabContent">
+              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="table-responsive">
+                  <table class="table table-hover table-striped">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th class="text-nowrap">Contact Type</th>
+                        <th>Staff</th>
+                        <th>Notes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">09/23/2020</th>
+                        <td>1:55PM</td>
+                        <td>Drop-in</td>
+                        <td>Otto Wilson</td>
+                        <td>
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                          Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
+                          doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
+                          asperiores dolores excepturi?
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">07/04/2020</th>
+                        <td>10:52AM</td>
+                        <td>Quick Question</td>
+                        <td>Boris Washington</td>
+                        <td>
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                          Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
+                          doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
+                          asperiores dolores excepturi?
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">06/29/2020</th>
+                        <td>3:15PM</td>
+                        <td>Appointment</td>
+                        <td>Otto Wilson</td>
+                        <td>
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                          Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
+                          doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
+                          asperiores dolores excepturi?
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">5/14/2020</th>
+                        <td>2:15PM</td>
+                        <td>Telephone</td>
+                        <td>Otto Wilson</td>
+                        <td>
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                          Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
+                          doloribus expedita iure fuga obcaecati modi incidunt. Repellendus velit
+                          asperiores dolores excepturi?
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
+              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">profile</div>
+              <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">contact</div>
+              <div class="tab-pane fade" id="major" role="tabpanel" aria-labelledby="major-tab">major</div>
             </div>
           </div>
         </div>
