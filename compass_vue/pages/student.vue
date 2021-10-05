@@ -345,7 +345,9 @@
                             <th>Major</th>
                             <th>Status</th>
                             <th class="text-nowrap">Source</th>
-                            <th>Actor</th>
+                            <th>Action</th>
+                            <th>Notes</th>
+                            <th>User</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -355,12 +357,16 @@
                             <td>Accepted</td>
                             <td>SWS</td>
                             <td></td>
+                            <td></td>
+                            <td></td>
                           </tr>
                           <tr>
                             <td scope="row">9/23/2020</td>
                             <td>Computer Engineering</td>
                             <td>Intended</td>
                             <td>DawgPath</td>
+                            <td>Remove</td>
+                            <td>No longer interested</td>
                             <td>Student</td>
                           </tr>
                           <tr>
@@ -368,6 +374,8 @@
                             <td>Human Centered Design &amp; Engineering</td>
                             <td>Intended</td>
                             <td>Compass</td>
+                            <td>Add</td>
+                            <td>Wants to be a UX Designer</td>
                             <td>Pedro Sanchez</td>
                           </tr>
                           <tr>
@@ -375,6 +383,8 @@
                             <td>Accounting</td>
                             <td>Intended</td>
                             <td>Compass</td>
+                            <td>Remove</td>
+                            <td>Does not like numbers</td>
                             <td>Pedro Sanchez</td>
                           </tr>
                           <tr>
@@ -382,14 +392,27 @@
                             <td>Economics</td>
                             <td>Intended</td>
                             <td>DawgPath</td>
+                            <td>Remove</td>
+                            <td>n/a</td>
                             <td>Student</td>
+                          </tr>
+                          <tr>
+                            <td scope="row">5/14/2020</td>
+                            <td>Biology</td>
+                            <td>Intended</td>
+                            <td>SWS</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                           </tr>
                           <tr>
                             <td scope="row">5/14/2020</td>
                             <td>Business</td>
                             <td>Intended</td>
-                            <td>Admissions</td>
-                            <td>Application</td>
+                            <td>SWS</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                           </tr>
                         </tbody>
                       </table>
