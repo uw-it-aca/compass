@@ -22,9 +22,7 @@
               <h1 class="h3 text-uppercase">{{ student.student_name }}</h1>
               <div class="h5">{{ $route.params.id }}</div>
               <p>{{ student.uw_net_id }}, {{ student.gender }}, Pronouns</p>
-              <div>
-                <i class="bi bi-trophy-fill text-purple"></i> Student Athlete
-              </div>
+              <div><i class="bi bi-trophy-fill text-purple"></i> Student Athlete</div>
             </div>
           </div>
           <div class="col-6 col-lg-3 border-start">
@@ -75,14 +73,14 @@
               <h3
                 class="card-header h6 text-uppercase text-muted fw-bold"
                 style="line-height: 30px"
-              >Academics</h3>
+              >
+                Academics
+              </h3>
               <div class="card-body">
                 <ul>
                   <li>
                     Registered:
-                    <template v-if="student.registered_in_quarter">
-                      <b>yes</b>/no
-                    </template>
+                    <template v-if="student.registered_in_quarter"> <b>yes</b>/no </template>
                     <template v-else>
                       yes/
                       <b>no</b>
@@ -101,7 +99,9 @@
               <h3
                 class="card-header h6 text-uppercase text-muted fw-bold"
                 style="line-height: 30px"
-              >Programs</h3>
+              >
+                Programs
+              </h3>
               <div class="card-body">
                 <ul>
                   <li>EOP: yes/no</li>
@@ -109,9 +109,7 @@
                   <li>IC Eligible: yes/no</li>
                   <li>
                     Special program:
-                    <template v-if="student.special_program_code">
-                      <b>yes</b>/no
-                    </template>
+                    <template v-if="student.special_program_code"> <b>yes</b>/no </template>
                     <template v-else>
                       yes/
                       <b>no</b>
@@ -126,7 +124,9 @@
               <h3
                 class="card-header h6 text-uppercase text-muted fw-bold"
                 style="line-height: 30px"
-              >Adviser</h3>
+              >
+                Adviser
+              </h3>
               <div class="card-body">
                 <div class="d-flex">
                   <div style="width: 65px">
@@ -172,16 +172,16 @@
               <h3
                 class="card-header h6 text-uppercase text-muted fw-bold"
                 style="line-height: 30px"
-              >Majors</h3>
+              >
+                Majors
+              </h3>
               <div class="card-body">
                 <ul>
                   <li>
                     Intended:
                     <span v-for="(major, index) in student.intended_major" :key="index">
                       {{ major.major_full_name }}
-                      <span
-                        v-if="index + 1 < student.intended_major.length"
-                      >,</span>
+                      <span v-if="index + 1 < student.intended_major.length">,</span>
                     </span>
                     <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">update</a>
                   </li>
@@ -201,7 +201,9 @@
               <h3
                 class="card-header h6 text-uppercase text-muted fw-bold"
                 style="line-height: 30px"
-              >Schedule</h3>
+              >
+                Schedule
+              </h3>
               <div class="card-body">
                 <ul>
                   <li>curent quarter</li>
@@ -222,8 +224,19 @@
               <div class="card-header">
                 <div class="position-relative">
                   <h3
-                    class="card-title h6 text-uppercase text-muted fw-bold m-0 position-absolute top-50 translate-middle-y"
-                  >History</h3>
+                    class="
+                      card-title
+                      h6
+                      text-uppercase text-muted
+                      fw-bold
+                      m-0
+                      position-absolute
+                      top-50
+                      translate-middle-y
+                    "
+                  >
+                    History
+                  </h3>
                   <ul
                     class="nav nav-tabs justify-content-end card-header-tabs"
                     id="myTab"
@@ -239,7 +252,9 @@
                         role="tab"
                         aria-controls="contact"
                         aria-selected="true"
-                      >Contact</button>
+                      >
+                        Contact
+                      </button>
                     </li>
                     <li class="nav-item" role="presentation">
                       <button
@@ -251,7 +266,9 @@
                         role="tab"
                         aria-controls="visit"
                         aria-selected="false"
-                      >Visit</button>
+                      >
+                        Visit
+                      </button>
                     </li>
                     <li class="nav-item" role="presentation">
                       <button
@@ -263,7 +280,9 @@
                         role="tab"
                         aria-controls="transcript"
                         aria-selected="false"
-                      >Transcript</button>
+                      >
+                        Transcript
+                      </button>
                     </li>
                     <li class="nav-item" role="presentation">
                       <button
@@ -275,7 +294,9 @@
                         role="tab"
                         aria-controls="major"
                         aria-selected="false"
-                      >Major</button>
+                      >
+                        Major
+                      </button>
                     </li>
                   </ul>
                 </div>
@@ -549,7 +570,12 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Record a contact</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
             </div>
             <div class="modal-body">
               <div class="row mb-3">
@@ -621,7 +647,9 @@
                   </div>
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" value id="flexCheck7" />
-                    <label class="form-check-label" for="flexCheck7">Graduate Professional School</label>
+                    <label class="form-check-label" for="flexCheck7"
+                      >Graduate Professional School</label
+                    >
                   </div>
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" value id="flexCheck8" />
@@ -635,10 +663,9 @@
               </div>
 
               <div class="mb-3">
-                <label
-                  for="exampleFormControlTextarea2"
-                  class="form-label"
-                >Actions and Recommmendations</label>
+                <label for="exampleFormControlTextarea2" class="form-label"
+                  >Actions and Recommmendations</label
+                >
                 <textarea class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
               </div>
             </div>
@@ -670,7 +697,7 @@ export default {
   },
   data() {
     return {
-      student: {}
+      student: {},
     };
   },
   computed: {
@@ -684,15 +711,9 @@ export default {
       if (addr) return addr;
       else return 'N/A';
     },
-    pageTitle: function() {
-      
-      if (this.student.student_name) {
-        console.log("pagetitle func: " + this.student.student_name);
-        return this.student.student_name;
-      } else {
-        return "hello world";
-      }
-    }
+    pageTitle: function () {
+      return this.student.student_name;
+    },
   },
   methods: {
     loadstudent: function (studentNumber) {
@@ -700,10 +721,6 @@ export default {
       this.getStudentDetail(studentNumber).then((response) => {
         if (response.data) {
           _this.student = response.data[0];
-          /*
-          _this.pageTitle =
-            _this.student.student_name + ' (' + _this.student.student_number + ')';
-          console.log("first log: " + _this.student.student_name);*/
         }
       });
     },
