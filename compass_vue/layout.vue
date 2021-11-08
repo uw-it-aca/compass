@@ -12,7 +12,7 @@
       <div class="bg-beige">
         <div class="container-xl py-2">
           <div class="d-flex">
-            <div class="flex-fill">Admin, OMAD, ISS, Athletics</div>
+            <div class="flex-fill">Office of Minority Affairs &amp; Diversity</div>
             <div class="flex-fill text-end">
               <a href="#">Retention Dashboard</a>
             </div>

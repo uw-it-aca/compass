@@ -7,21 +7,31 @@
       <div v-if="$route.params.id" class="mb-3">
         <div class="row">
           <div class="col-lg-6 d-flex">
-            <div style="width: 130px">
+            <div style="width: 140px">
+
               <img
-                src="/static/img/napoleon-dynamite.jpeg"
-                class="img-fluid rounded-circle border border-danger border-5"
-                alt
+                v-if="student.gender === 'F'"
+                :src="'https://randomuser.me/api/portraits/women/' + getRandomInt() + '.jpg'"
+                class="img-fluid rounded-circle border border-5"
+                :class="getRandomPriority()"
               />
-              <div class="text-center text-muted mb-4">
-                priority:
-                <span class="text-danger">TOP</span>
+              <img
+                v-else
+                :src="'https://randomuser.me/api/portraits/men/' + getRandomInt() + '.jpg'"
+                class="img-fluid rounded-circle border border-5"
+                :class="getRandomPriority()"
+              />
+              <div class="text-center mb-4">
+                <span class="fw-bold">LEVEL -3.7</span>
               </div>
             </div>
             <div class="flex-fill ps-3 mb-4">
-              <h1 class="h3 text-uppercase">{{ student.student_name }}</h1>
-              <div class="h5">{{ $route.params.id }}</div>
-              <p>{{ student.uw_net_id }}, {{ student.gender }}, Pronouns</p>
+              <h1 class="h3 text-uppercase">{{ student.student_preferred_last_name }}, {{ student.student_preferred_first_name }}</h1>
+              <div class="h5">{{ $route.params.id }}, <small>{{ student.uw_net_id }}</small></div>
+              <p><span class="badge rounded-pill border border-muted text-dark me-1">{{ student.gender }}</span> 
+                <span v-if="student.gender === 'F'" class="badge rounded-pill border border-muted text-dark">she/her</span>
+                <span v-else class="badge rounded-pill border border-muted text-dark">he/him</span>
+              </p>
               <div><i class="bi bi-trophy-fill text-purple"></i> Student Athlete</div>
             </div>
           </div>
@@ -69,6 +79,23 @@
         <!-- academics area -->
         <div class="row">
           <div class="col-md-4">
+            <div class="card shadow-sm mb-3">
+              <h3
+                class="card-header h6 text-uppercase text-muted fw-bold"
+                style="line-height: 30px"
+              >
+                Retention
+              </h3>
+              <div class="card-body">
+                <ul>
+                  <li>Priority: <span class="fw-bold">LEVEL -3.7</span></li>
+                  <li>Sign-ins: -5</li>
+                  <li>Activity: -4.8</li>
+                  <li>Assignments: -4.8</li>
+                  <li>Grads: -2.8</li>
+                </ul>
+              </div>
+            </div>
             <div class="card shadow-sm mb-3">
               <h3
                 class="card-header h6 text-uppercase text-muted fw-bold"
@@ -129,16 +156,15 @@
               </h3>
               <div class="card-body">
                 <div class="d-flex">
-                  <div style="width: 65px">
+                  <div style="width: 75px">
                     <img
-                      src="/static/img/pedro-sanchez.jpeg"
+                      :src="'https://randomuser.me/api/portraits/men/' + getRandomInt() + '.jpg'"
                       class="img-fluid rounded-circle border border-3"
-                      alt
                     />
                   </div>
                   <div class="flex-fill ps-3">
                     <ul class="list-unstyled">
-                      <li class="fw-bold">Pedro Sanchez</li>
+                      <li class="fw-bold">John Average</li>
                       <li>Email</li>
                       <li>Phone</li>
                       <li class="border-top mt-2 pt-2">Department Name</li>
@@ -149,21 +175,6 @@
                 <div class="text-end">
                   <a href="#">View caseload</a>
                 </div>
-              </div>
-              <div class="card-footer">
-                <div class="input-group">
-                  <select
-                    class="form-select form-select-sm"
-                    id="inputGroupSelect04"
-                    aria-label="Example select with button addon"
-                  >
-                    <option selected>Pedro Sanchez</option>
-                    <option value="1">Bill Thompson</option>
-                    <option value="2">Doris Washington</option>
-                  </select>
-                  <button class="btn btn-sm btn-outline-primary" type="button">update</button>
-                </div>
-                <div class="small text-danger">Admins can re-assign advisers</div>
               </div>
             </div>
           </div>
@@ -724,6 +735,19 @@ export default {
         }
       });
     },
+    getRandomInt: function() {
+      // returrn random number 0-100
+      return Math.floor(Math.random() * 100);
+    },
+    getRandomPriority: function() {
+      let int = Math.floor(Math.random() * 5);
+      if (int == 0) {
+        return 'border-danger'
+      }
+      else if (int == 1) {
+        return 'border-warning'
+      }
+    }
   },
 };
 </script>

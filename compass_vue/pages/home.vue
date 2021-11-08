@@ -76,7 +76,7 @@
             <table class="table table-hover mb-0">
               <thead class="">
                 <tr>
-                  <th scope="col">Student Name</th>
+                  <th scope="col">Student</th>
                   <th scope="col">Student Number</th>
                   <th scope="col">Class</th>
                   <th scope="col">Major</th>
@@ -87,15 +87,22 @@
               <tbody>
                 <tr v-for="item in students" :key="item.SystemKey">
                   <td class="d-flex">
-                    <div class="me-2" style="width: 45px">
+                    <div class="me-2" style="width:55px;">
                       <img
-                        src="/static/img/napoleon-dynamite.jpeg"
+                        v-if="item.gender === 'F'"
+                        :src="'https://randomuser.me/api/portraits/thumb/women/' + getRandomInt() + '.jpg'"
                         class="img-fluid rounded-circle border border-3"
-                        alt=""
+                        :class="getRandomPriority()"
+                      />
+                      <img
+                        v-else
+                        :src="'https://randomuser.me/api/portraits/thumb/men/' + getRandomInt() + '.jpg'"
+                        class="img-fluid rounded-circle border border-3"
+                        :class="getRandomPriority()"
                       />
                     </div>
                     <div>
-                      <div>{{ item.student_name }} - {{ item.gender }}</div>
+                      <div>{{ item.student_preferred_last_name }}, {{ item.student_preferred_first_name }} <span class="badge rounded-pill border border-muted text-dark small me-1">{{ item.gender }}</span></div>
                       <div class="small text-secondary">{{ item.uw_net_id }}</div>
                     </div>
                   </td>
@@ -129,6 +136,7 @@
 </template>
 
 <script>
+import {markRaw} from 'vue'
 import Pagination from 'v-pagination-3';
 import MyPagination from '../components/pagination.vue';
 import Layout from '../layout.vue';
@@ -155,7 +163,7 @@ export default {
       pageSize: 40,
       pageOptions: {
         theme: 'bootstrap4',
-        template: MyPagination,
+        template: markRaw(MyPagination),
       },
       // search filters
       searchOption: null,
@@ -171,7 +179,7 @@ export default {
         },
         {
           id: 'student-email',
-          label: 'Email',
+          label: 'UW NetId',
         },
       ],
     };
@@ -211,6 +219,19 @@ export default {
         }
       });
     },
+    getRandomInt: function() {
+      // returrn random number 0-100
+      return Math.floor(Math.random() * 100);
+    },
+    getRandomPriority: function() {
+      let int = Math.floor(Math.random() * 10);
+      if (int == 0) {
+        return 'border-danger'
+      }
+      else if (int == 1) {
+        return 'border-warning'
+      }
+    }
   },
 };
 </script>
