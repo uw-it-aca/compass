@@ -8,6 +8,134 @@
     </template>
 
     <template #content>
+      <div class="row justify-content-md-center mt-5 mb-3">
+        <div class="col col-7">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col small border-end">
+                  <p class="fw-bold">Sign-ins</p>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                    <label class="form-check-label" for="defaultCheck1">
+                      High
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                    <label class="form-check-label" for="defaultCheck2">
+                      Average
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
+                    <label class="form-check-label" for="defaultCheck2">
+                      Low
+                    </label>
+                  </div>
+                </div>
+                <div class="col small border-end">
+                  <p class="fw-bold">Activity</p>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
+                    <label class="form-check-label" for="defaultCheck3">
+                      High
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck4">
+                    <label class="form-check-label" for="defaultCheck4">
+                      Average
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck5">
+                    <label class="form-check-label" for="defaultCheck5">
+                      Low
+                    </label>
+                  </div>
+                </div>
+                <div class="col small border-end">
+                  <p class="fw-bold">Assignments</p>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck6">
+                    <label class="form-check-label" for="defaultCheck6">
+                      High
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck7">
+                    <label class="form-check-label" for="defaultCheck7">
+                      Average
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck8">
+                    <label class="form-check-label" for="defaultCheck8">
+                      Low
+                    </label>
+                  </div>
+                </div>
+                <div class="col small">
+                  <p class="fw-bold">Grades</p>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck9">
+                    <label class="form-check-label" for="defaultCheck9">
+                      High
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck10">
+                    <label class="form-check-label" for="defaultCheck10">
+                      Average
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck11">
+                    <label class="form-check-label" for="defaultCheck11">
+                      Low
+                    </label>
+                  </div>
+                </div>
+                <div class="col-12 small text-center">
+                  <ul class="mt-3 mb-0 list-inline">
+                    <li class="list-inline-item me-4"><strong>Low</strong> -5 to -3</li>
+                    <li class="list-inline-item me-4"><strong>Average</strong> -2.9 to +2.9</li>
+                    <li class="list-inline-item"><strong>High</strong> +3 to +5</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-3 small border-start">
+              <p class="fw-bold">Student Type</p>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck12">
+                <label class="form-check-label" for="defaultCheck12">
+                  Pre-major
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck13">
+                <label class="form-check-label" for="defaultCheck13">
+                  STEM
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck14">
+                <label class="form-check-label" for="defaultCheck14">
+                  Freshman
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck15">
+                <label class="form-check-label" for="defaultCheck15">
+                  Athelete
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row mt-5 mb-3">
         <div class="col-sm-4">
           <div class="small lh-lg">
@@ -51,6 +179,16 @@
           </div>
         </div>
         <div class="col-sm-2">
+          <div class="small lh-lg">Show week:</div>
+          <select class="form-select form-select-sm" aria-label="Default select example">
+            <option selected>Current Week</option>
+            <option value="1">Autumn 2021: Week 4</option>
+            <option value="2">Autumn 2021: Week 3</option>
+            <option value="3">Autumn 2021: Week 2</option>
+            <option value="4">Autumn 2021: Week 1</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
           <div class="small lh-lg">Display caseload for:</div>
           <select class="form-select form-select-sm" aria-label="Default select example">
             <option selected>All advisers</option>
@@ -59,7 +197,7 @@
             <option value="3">Bob Samsonite</option>
           </select>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-4">
           <pagination
             v-model="currentPage"
             :records="studentsCount"
