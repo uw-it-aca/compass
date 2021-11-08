@@ -107,7 +107,7 @@
               </div>
             </div>
             <div class="col-3 small border-start">
-              <p class="fw-bold">Student Type</p>
+              <p class="fw-bold">Population</p>
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="defaultCheck12">
                 <label class="form-check-label" for="defaultCheck12">
@@ -129,7 +129,7 @@
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="defaultCheck15">
                 <label class="form-check-label" for="defaultCheck15">
-                  Athelete
+                  Athlete
                 </label>
               </div>
             </div>
