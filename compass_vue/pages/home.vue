@@ -225,18 +225,18 @@
               <tbody>
                 <tr v-for="item in students" :key="item.SystemKey">
                   <td class="d-flex">
-                    <div class="me-2" style="width:55px;">
+                    <div :class="getRandomPriority()" class="rounded-circle border border-3 me-2" style="width:55px;">
                       <img
                         v-if="item.gender === 'F'"
                         :src="'https://randomuser.me/api/portraits/thumb/women/' + getRandomInt() + '.jpg'"
-                        class="img-fluid rounded-circle border border-3"
-                        :class="getRandomPriority()"
+                        class="img-fluid rounded-circle border border-white border-2"
+
                       />
                       <img
                         v-else
                         :src="'https://randomuser.me/api/portraits/thumb/men/' + getRandomInt() + '.jpg'"
-                        class="img-fluid rounded-circle border border-3"
-                        :class="getRandomPriority()"
+                        class="img-fluid rounded-circle border border-white border-2"
+
                       />
                     </div>
                     <div>
@@ -368,6 +368,9 @@ export default {
       }
       else if (int == 1) {
         return 'border-warning'
+      }
+      else {
+        return 'border-muted'
       }
     }
   },

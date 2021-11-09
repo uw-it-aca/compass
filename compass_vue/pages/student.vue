@@ -7,20 +7,23 @@
       <div v-if="$route.params.id" class="mb-3">
         <div class="row">
           <div class="col-lg-6 d-flex">
-            <div style="width: 140px">
+
+            <div>
+            <div :class="getRandomPriority()" class="rounded-circle border border-4" style="width: 140px">
 
               <img
                 v-if="student.gender === 'F'"
                 :src="'https://randomuser.me/api/portraits/women/' + getRandomInt() + '.jpg'"
-                class="img-fluid rounded-circle border border-5"
-                :class="getRandomPriority()"
+                class="img-fluid rounded-circle border border-light border-3"
+
               />
               <img
                 v-else
                 :src="'https://randomuser.me/api/portraits/men/' + getRandomInt() + '.jpg'"
-                class="img-fluid rounded-circle border border-5"
-                :class="getRandomPriority()"
+                class="img-fluid rounded-circle border border-light border-3"
+
               />
+              </div>
               <div class="text-center mb-4">
                 <span class="fw-bold">LEVEL -3.7</span>
               </div>
@@ -28,7 +31,7 @@
             <div class="flex-fill ps-3 mb-4">
               <h1 class="h3 text-uppercase">{{ student.student_preferred_last_name }}, {{ student.student_preferred_first_name }}</h1>
               <div class="h5">{{ $route.params.id }}, <small>{{ student.uw_net_id }}</small></div>
-              <p><span class="badge rounded-pill border border-muted text-dark me-1">{{ student.gender }}</span> 
+              <p><span class="badge rounded-pill border border-muted text-dark me-1">{{ student.gender }}</span>
                 <span v-if="student.gender === 'F'" class="badge rounded-pill border border-muted text-dark">she/her</span>
                 <span v-else class="badge rounded-pill border border-muted text-dark">he/him</span>
               </p>
@@ -746,6 +749,9 @@ export default {
       }
       else if (int == 1) {
         return 'border-warning'
+      }
+      else {
+        return 'border-muted'
       }
     }
   },
