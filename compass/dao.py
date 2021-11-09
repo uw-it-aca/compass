@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import logging
-from compass.models import Term, Student, Major
+from compass.models import Term, Student, Major, SpecialProgram
 from restclients_core.exceptions import DataFailureException
 from restclients_core.util.retry import retry
 from uw_sws.term import get_current_term, get_term_after, \
@@ -68,6 +68,12 @@ class EDWClientDAO():
             student.student_number = stunum
             student.uw_net_id = row["UWNetID"]
             student.student_name = row["StudentName"]
+            student.student_preferred_first_name = \
+                row["StudentNamePreferredFirst"]
+            student.student_preferred_middle_name = \
+                row["StudentNamePreferredMiddle"]
+            student.student_preferred_last_name = \
+                row["StudentNamePreferredLast"]
             student.birthdate = row["BirthDate"]
             student.student_email = row["StudentEmail"]
             student.external_email = row["ExternalEmail"]
@@ -75,8 +81,32 @@ class EDWClientDAO():
             student.gender = row["Gender"]
             student.gpa = row["GPA"]
             student.total_credits = row["TotalCredits"]
+            student.total_uw_credits = row["TotalUWCredits"]
+            student.campus_code = row["CampusCode"]
+            student.campus_desc = row["CampusDesc"]
+            student.class_code = row["ClassCode"]
             student.class_desc = row["ClassDesc"]
-            student.enrollment_status = row["EnrollStatusCode"]
+            student.enrollment_status_code = row["EnrollStatusCode"]
+            student.exemption_code = row["ExemptionCode"]
+            student.exemption_desc = row["ExemptionDesc"]
+            special_program = SpecialProgram.objects.get_or_create(
+                special_program_code=row["SpecialProgramCode"],
+                special_program_desc=row["SpecialProgramDesc"]
+            )
+            student.special_program.add(special_program)
+            student.honors_program_code = row["HonorsProgramCode"]
+            student.honors_program_ind = row["HonorsProgramInd"]
+            student.resident_code = row["ResidentCode"]
+            student.resident_desc = row["ResidentDesc"]
+            student.perm_addr_line1 = row["PermAddrLine1"]
+            student.perm_addr_line2 = row["PermAddrLine2"]
+            student.perm_addr_city = row["PermAddrCity"]
+            student.perm_addr_state = row["PermAddrState"]
+            student.perm_addr_5digit_zip = row["PermAddr5DigitZip"]
+            student.perm_addr_4digit_zip = row["PermAddr4DigitZip"]
+            student.perm_addr_country = row["PermAddrCountry"]
+            student.perm_addr_postal_code = row["PermAddrPostalCode"]
+            student.registered_in_quarter = row["RegisteredInQuarter"]
             major_abbr = row["major_abbr"]
             major, _ = Major.objects.get_or_create(major_abbr_code=major_abbr)
             major.major_abbr_code = row["major_abbr"]

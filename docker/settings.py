@@ -25,4 +25,19 @@ if os.getenv("ENV") == "localdev":
     DEBUG = True
     COMPASS_USERS_GROUP = "u_test_group"
 else:
-    COMPASS_USERS_GROUP = os.getenv("ACCESS_GROUP", "")
+    COMPASS_USERS_GROUP = os.getenv('ACCESS_GROUP', '')
+
+ENROLLMENT_STATUS_MAPPING = {
+    12: "REGISTERED",
+    81: "CANCL-NSF CK",
+    82: "CANCL-REGIST",
+    83: "CANCL-LOW SC",
+    84: "CANCL-HFS",
+    85: "CANCL-NONPAY",
+    86: "CANCL-SC LN",
+    90: "MIL BEF 9TH",
+    92: "MIL 2ND 1/3",
+    93: "MIL LAST 1/3",
+    95: "WTHDR BEF QT",
+    96: "WITHDRAWAL"
+}
