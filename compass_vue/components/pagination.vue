@@ -1,6 +1,6 @@
 <template>
   <div class="VuePagination" :class="props.theme.wrapper">
-    <div v-show="props.hasRecords" class="small lh-lg text-end" :class="props.theme.count">
+    <div v-show="props.hasRecords" class="small lh-lg" :class="props.theme.count">
       {{ props.count }}
     </div>
 
