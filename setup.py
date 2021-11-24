@@ -25,7 +25,7 @@ setup(
     include_package_data=True,
     install_requires = [
         'django~=3.2',
-        'django-webpack-bridge',
+        "django-webpack-loader",
         'djangorestframework~=3.12',
         'UW-RestClients-SWS~=2.3',
         'UW-Django-SAML2~=1.5',
