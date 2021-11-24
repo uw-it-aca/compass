@@ -1,6 +1,8 @@
 @use "sass:map";
 @import 'axdd-components/src/assets/css/custom.scss';
 
+$enable-cssgrid: true;
+
 // override variables
 $nav-height: 52px;
 $bar-height: 40px;
