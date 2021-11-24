@@ -13,13 +13,13 @@
 
               <img
                 v-if="student.gender === 'F'"
-                :src="'https://randomuser.me/api/portraits/women/' + getRandomInt() + '.jpg'"
+                :src="'https://randomuser.me/api/portraits/women/' + getRandomPerson() + '.jpg'"
                 class="img-fluid rounded-circle border border-light border-3"
 
               />
               <img
                 v-else
-                :src="'https://randomuser.me/api/portraits/men/' + getRandomInt() + '.jpg'"
+                :src="'https://randomuser.me/api/portraits/men/' + getRandomPerson() + '.jpg'"
                 class="img-fluid rounded-circle border border-light border-3"
 
               />
@@ -161,8 +161,8 @@
                 <div class="d-flex">
                   <div style="width: 75px">
                     <img
-                      :src="'https://randomuser.me/api/portraits/men/' + getRandomInt() + '.jpg'"
-                      class="img-fluid rounded-circle border border-3"
+                      :src="'https://randomuser.me/api/portraits/men/' + getRandomPerson(8) + '.jpg'"
+                      class="img-fluid rounded-circle border border-light border-3"
                     />
                   </div>
                   <div class="flex-fill ps-3">
@@ -190,15 +190,32 @@
                 Majors
               </h3>
               <div class="card-body">
-                <ul>
+                <ul class="list-unstyled">
                   <li>
-                    Intended:
+                    Intended #1: Anthropology
                     <span v-for="(major, index) in student.intended_major" :key="index">
                       {{ major.major_full_name }}
                       <span v-if="index + 1 < student.intended_major.length">,</span>
                     </span>
                     <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">update</a>
                   </li>
+                  <li>
+                    Intended #2: Computer Science
+                    <span v-for="(major, index) in student.intended_major" :key="index">
+                      {{ major.major_full_name }}
+                      <span v-if="index + 1 < student.intended_major.length">,</span>
+                    </span>
+                    <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">update</a>
+                  </li>
+                  <li>
+                    Intended #3: Informatics
+                    <span v-for="(major, index) in student.intended_major" :key="index">
+                      {{ major.major_full_name }}
+                      <span v-if="index + 1 < student.intended_major.length">,</span>
+                    </span>
+                    <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">update</a>
+                  </li>
+                  <hr>
                   <li>
                     Accepted:
                     <span v-for="(major, index) in student.major" :key="index">
@@ -497,7 +514,7 @@
                         <tbody>
                           <tr>
                             <td scope="row">10/01/2021</td>
-                            <td>Anthropology</td>
+                            <td>Psychology</td>
                             <td>Accepted</td>
                             <td>SWS</td>
                             <td></td>
@@ -507,7 +524,7 @@
                           <tr>
                             <td scope="row">9/23/2020</td>
                             <td>Computer Engineering</td>
-                            <td>Intended</td>
+                            <td>Intended #1</td>
                             <td>DawgPath</td>
                             <td>Remove</td>
                             <td>No longer interested</td>
@@ -516,7 +533,7 @@
                           <tr>
                             <td scope="row">7/04/2020</td>
                             <td>Human Centered Design &amp; Engineering</td>
-                            <td>Intended</td>
+                            <td>Intended #2</td>
                             <td>Compass</td>
                             <td>Add</td>
                             <td>Wants to be a UX Designer</td>
@@ -525,7 +542,7 @@
                           <tr>
                             <td scope="row">6/29/2020</td>
                             <td>Accounting</td>
-                            <td>Intended</td>
+                            <td>Intended #3</td>
                             <td>Compass</td>
                             <td>Remove</td>
                             <td>Does not like numbers</td>
@@ -534,7 +551,7 @@
                           <tr>
                             <td scope="row">5/23/2020</td>
                             <td>Economics</td>
-                            <td>Intended</td>
+                            <td>Intended #3</td>
                             <td>DawgPath</td>
                             <td>Remove</td>
                             <td>n/a</td>
@@ -542,18 +559,27 @@
                           </tr>
                           <tr>
                             <td scope="row">5/14/2020</td>
-                            <td>Biology</td>
-                            <td>Intended</td>
-                            <td>SWS</td>
+                            <td>Informatics</td>
+                            <td>Intended #3</td>
+                            <td>Admissions</td>
                             <td></td>
                             <td></td>
                             <td></td>
                           </tr>
                           <tr>
                             <td scope="row">5/14/2020</td>
-                            <td>Business</td>
-                            <td>Intended</td>
-                            <td>SWS</td>
+                            <td>Computer Science</td>
+                            <td>Intended #2</td>
+                            <td>Admissions</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td scope="row">5/14/2020</td>
+                            <td>Anthropolgy</td>
+                            <td>Intended #1</td>
+                            <td>Admissions</td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -738,9 +764,13 @@ export default {
         }
       });
     },
-    getRandomInt: function() {
-      // returrn random number 0-100
-      return Math.floor(Math.random() * 100);
+    getRandomPerson: function(rangeMax) {
+      // if no range is specified
+      if (!rangeMax) {
+        rangeMax = 100
+      }
+      // return random number
+      return Math.floor(Math.random() * rangeMax);
     },
     getRandomPriority: function() {
       let int = Math.floor(Math.random() * 5);
@@ -751,7 +781,7 @@ export default {
         return 'border-warning'
       }
       else {
-        return 'border-muted'
+        return 'border-light'
       }
     }
   },

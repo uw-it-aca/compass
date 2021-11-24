@@ -106,38 +106,73 @@
                 </div>
               </div>
             </div>
-            <div class="col-3 small border-start">
-              <p class="fw-bold">Population</p>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck12">
-                <label class="form-check-label" for="defaultCheck12">
-                  Pre-major
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck13">
-                <label class="form-check-label" for="defaultCheck13">
-                  STEM
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck14">
-                <label class="form-check-label" for="defaultCheck14">
-                  Freshman
-                </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="defaultCheck15">
-                <label class="form-check-label" for="defaultCheck15">
-                  Athlete
-                </label>
+            <div class="col-5 small border-start">
+              <p class="fw-bold">Populations</p>
+              <div class="grid" style="--bs-columns: 2; row-gap: 0;">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck12">
+                  <label class="form-check-label" for="defaultCheck12">
+                    Pre-major
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck17">
+                  <label class="form-check-label text-nowrap" for="defaultCheck17">
+                    Extended Pre-major
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck13">
+                  <label class="form-check-label" for="defaultCheck13">
+                    STEM
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck14">
+                  <label class="form-check-label" for="defaultCheck14">
+                    Freshman
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck15">
+                  <label class="form-check-label" for="defaultCheck15">
+                    Athlete
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck16">
+                  <label class="form-check-label" for="defaultCheck16">
+                    International
+                  </label>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="row mt-5 mb-3">
-        <div class="col-sm-4">
+
+        <div class="col-sm-2 border-end">
+          <div class="small lh-lg">Show week:</div>
+          <select class="form-select form-select-sm" aria-label="Default select example">
+            <option selected>Current Week</option>
+            <option value="1">Autumn 2021: Week 4</option>
+            <option value="2">Autumn 2021: Week 3</option>
+            <option value="3">Autumn 2021: Week 2</option>
+            <option value="4">Autumn 2021: Week 1</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <div class="small lh-lg">Display caseload for:</div>
+          <select class="form-select form-select-sm" aria-label="Default select example">
+            <option value="0">All advisers</option>
+            <option selected value="1">Jon Average</option>
+            <option value="2">April Foolery</option>
+            <option value="3">Bob Samsonite</option>
+          </select>
+        </div>
+
+        <div class="col-sm-4 offset-md-4">
           <div class="small lh-lg">
             <div class="d-inline me-3 text-nowrap">Find student by:</div>
             <div class="d-inline text-nowrap">
@@ -178,36 +213,9 @@
             </button>
           </div>
         </div>
-        <div class="col-sm-2">
-          <div class="small lh-lg">Show week:</div>
-          <select class="form-select form-select-sm" aria-label="Default select example">
-            <option selected>Current Week</option>
-            <option value="1">Autumn 2021: Week 4</option>
-            <option value="2">Autumn 2021: Week 3</option>
-            <option value="3">Autumn 2021: Week 2</option>
-            <option value="4">Autumn 2021: Week 1</option>
-          </select>
-        </div>
-        <div class="col-sm-2">
-          <div class="small lh-lg">Display caseload for:</div>
-          <select class="form-select form-select-sm" aria-label="Default select example">
-            <option selected>All advisers</option>
-            <option value="1">Jon Average</option>
-            <option value="2">April Foolery</option>
-            <option value="3">Bob Samsonite</option>
-          </select>
-        </div>
-        <div class="col-sm-4">
-          <pagination
-            v-model="currentPage"
-            :records="studentsCount"
-            :per-page="pageSize"
-            :options="pageOptions"
-            @paginate="loadStudentList"
-          >
-          </pagination>
-        </div>
       </div>
+
+
       <div class="row">
         <div class="col">
           <div class="bg-white border rounded-3 shadow-sm p-3 table-responsive">
@@ -224,24 +232,26 @@
               </thead>
               <tbody>
                 <tr v-for="item in students" :key="item.SystemKey">
-                  <td class="d-flex">
-                    <div :class="getRandomPriority()" class="rounded-circle border border-3 me-2" style="width:55px;">
-                      <img
-                        v-if="item.gender === 'F'"
-                        :src="'https://randomuser.me/api/portraits/thumb/women/' + getRandomInt() + '.jpg'"
-                        class="img-fluid rounded-circle border border-white border-2"
+                  <td>
+                    <div class="d-flex">
+                      <div :class="getRandomPriority()" class="rounded-circle border border-3 me-2" style="width:55px;">
+                        <img
+                          v-if="item.gender === 'F'"
+                          :src="'https://randomuser.me/api/portraits/thumb/women/' + getRandomPerson() + '.jpg'"
+                          class="img-fluid rounded-circle border border-white border-2"
 
-                      />
-                      <img
-                        v-else
-                        :src="'https://randomuser.me/api/portraits/thumb/men/' + getRandomInt() + '.jpg'"
-                        class="img-fluid rounded-circle border border-white border-2"
+                        />
+                        <img
+                          v-else
+                          :src="'https://randomuser.me/api/portraits/thumb/men/' + getRandomPerson() + '.jpg'"
+                          class="img-fluid rounded-circle border border-white border-2"
 
-                      />
-                    </div>
-                    <div>
-                      <div>{{ item.student_preferred_last_name }}, {{ item.student_preferred_first_name }} <span class="badge rounded-pill border border-muted text-dark small me-1">{{ item.gender }}</span></div>
-                      <div class="small text-secondary">{{ item.uw_net_id }}</div>
+                        />
+                      </div>
+                      <div>
+                        <div>{{ item.student_preferred_last_name }}, {{ item.student_preferred_first_name }} <span class="badge rounded-pill border border-muted text-dark small me-1">{{ item.gender }}</span></div>
+                        <div class="small text-secondary">{{ item.uw_net_id }}</div>
+                      </div>
                     </div>
                   </td>
                   <td>
@@ -257,7 +267,7 @@
               </tbody>
             </table>
           </div>
-          <div class="text-end mt-2 mb-4">
+          <div class="mt-2 mb-4 text-end">
             <pagination
               v-model="currentPage"
               :records="studentsCount"
@@ -298,7 +308,7 @@ export default {
       // pagination
       studentsCount: 0,
       currentPage: 1,
-      pageSize: 40,
+      pageSize: 30,
       pageOptions: {
         theme: 'bootstrap4',
         template: markRaw(MyPagination),
@@ -357,9 +367,13 @@ export default {
         }
       });
     },
-    getRandomInt: function() {
-      // returrn random number 0-100
-      return Math.floor(Math.random() * 100);
+    getRandomPerson: function(rangeMax) {
+      // if no range is specified
+      if (!rangeMax) {
+        rangeMax = 100
+      }
+      // return random number
+      return Math.floor(Math.random() * rangeMax);
     },
     getRandomPriority: function() {
       let int = Math.floor(Math.random() * 10);
@@ -370,7 +384,7 @@ export default {
         return 'border-warning'
       }
       else {
-        return 'border-muted'
+        return 'border-light'
       }
     }
   },
