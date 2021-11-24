@@ -6,8 +6,14 @@ from django.conf import settings
 
 def google_analytics(request):
 
-    ga_key = getattr(settings, "GOOGLE_ANALYTICS_KEY", " ")
+    ga_key = getattr(settings, "GOOGLE_ANALYTICS_KEY", "")
     return {"google_analytics": ga_key}
+
+
+def logout_url(request):
+
+    logout_url = getattr(settings, "LOGOUT_URL", "")
+    return {"logout_url": logout_url}
 
 
 def django_debug(request):
