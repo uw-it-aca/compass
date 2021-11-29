@@ -1,11 +1,19 @@
 from .base_settings import *
 
-INSTALLED_APPS += ["webpack_bridge", "compass.apps.CompassConfig"]
-
-STATICFILES_DIRS = [
-    "/static/compass/",
+INSTALLED_APPS += [
+    'compass.apps.CompassConfig',
+    'webpack_loader',
 ]
 
+# Location of stats file that can be accessed during local development and 
+# collected from during production build process
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'STATS_FILE': os.path.join(BASE_DIR, 'compass/static/webpack-stats.json'),
+    }
+}
+
+# If you have file data, define the path here
 DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
