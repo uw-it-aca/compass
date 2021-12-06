@@ -108,7 +108,7 @@
             </div>
             <div class="col-5 small border-start">
               <p class="fw-bold">Populations</p>
-              <div class="grid" style="--bs-columns: 2; row-gap: 0;">
+              <div class="grid mb-3" style="--bs-columns: 2; row-gap: 0;">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" value="" id="defaultCheck12">
                   <label class="form-check-label" for="defaultCheck12">
@@ -134,7 +134,7 @@
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck15">
+                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck15" checked disabled>
                   <label class="form-check-label" for="defaultCheck15">
                     Athlete
                   </label>
@@ -144,6 +144,16 @@
                   <label class="form-check-label" for="defaultCheck16">
                     International
                   </label>
+                </div>
+              </div>
+              <div>
+                <div class="fw-bold">Sport
+                <select class="form-select form-select-sm" aria-label="Default select example">
+                  <option selected>All sports</option>
+                  <option value="1">Football</option>
+                  <option value="2">Soccer</option>
+                  <option value="3">Track</option>
+                </select>
                 </div>
               </div>
             </div>
