@@ -11,7 +11,7 @@
       
       <div class="row my-4">
 
-        <div class="col-sm-2">
+        <div class="col-lg-2">
           <div class="small lh-lg">Display caseload for:</div>
           <select class="form-select form-select-sm" aria-label="Default select example">
             <option value="0">All advisers</option>
@@ -21,7 +21,7 @@
           </select>
         </div>
 
-        <div class="col-sm-2 border-start">
+        <div class="col-lg-2 border-start">
           <div class="small lh-lg">Show week:</div>
           <select class="form-select form-select-sm" aria-label="Default select example">
             <option selected>Current Week</option>
@@ -32,7 +32,7 @@
           </select>
         </div>
 
-        <div class="col offset-md-4">
+        <div class="col offset-lg-3">
           <div class="small lh-lg">
             <div class="d-inline me-3 text-nowrap">Find student by:</div>
             <div class="d-inline text-nowrap">
@@ -76,7 +76,7 @@
       </div>
 
       <div class="row">
-        <div class="col-2 small">
+        <div class="col-lg-2 small">
 
           <div class="border-bottom mb-3 pb-3">
             <div class="fw-bold">Sign-ins</div>
