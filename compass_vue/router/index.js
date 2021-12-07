@@ -7,8 +7,14 @@ import Student from '../pages/student.vue';
 const routes = [
   {
     path: '/',
-    name: 'Home',
+    redirect: '/adviser/javerage'
+  },
+  {
+    path: '/adviser/:netid?',
+    name: 'Adviser',
     component: Home,
+    pathToRegexpOptions: { strict: true },
+    props: true
   },
   {
     path: '/student/:id?',
