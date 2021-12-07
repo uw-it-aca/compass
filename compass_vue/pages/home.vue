@@ -79,8 +79,7 @@
         <div class="col-2 small">
 
           <div class="border-bottom mb-3 pb-3">
-
-            <p class="fw-bold">Sign-ins</p>
+            <div class="fw-bold">Sign-ins</div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
               <label class="form-check-label" for="defaultCheck1">
@@ -100,7 +99,7 @@
               </label>
             </div>
 
-            <p class="fw-bold">Activity</p>
+            <div class="fw-bold">Activity</div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
               <label class="form-check-label" for="defaultCheck3">
@@ -120,7 +119,7 @@
               </label>
             </div>
   
-            <p class="fw-bold">Assignments</p>
+            <div class="fw-bold">Assignments</div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="defaultCheck6">
               <label class="form-check-label" for="defaultCheck6">
@@ -140,7 +139,7 @@
               </label>
             </div>
 
-            <p class="fw-bold">Grades</p>
+            <div class="fw-bold">Grades</div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value="" id="defaultCheck9">
               <label class="form-check-label" for="defaultCheck9">
@@ -231,6 +230,7 @@
                 <tr>
                   <th scope="col">Student</th>
                   <th scope="col">Student Number</th>
+                  <th scope="col">Priority</th>
                   <th scope="col">Class</th>
                   <th scope="col">Major</th>
                   <th scope="col">Enroll Status</th>
@@ -241,7 +241,8 @@
                 <tr v-for="item in students" :key="item.SystemKey">
                   <td>
                     <div class="d-flex">
-                      <div :class="getRandomPriority()" class="rounded-circle border border-3 me-2" style="width:55px;">
+                      <div class="me-2" style="min-width:55px;">
+                        <div :class="getRandomPriority()" class="rounded-circle border border-3 ">
                         <img
                           v-if="item.gender === 'F'"
                           :src="'https://randomuser.me/api/portraits/thumb/women/' + getRandomPerson() + '.jpg'"
@@ -254,9 +255,12 @@
                           class="img-fluid rounded-circle border border-white border-2"
 
                         />
+                        </div>
                       </div>
                       <div>
-                        <div>{{ item.student_preferred_last_name }}, {{ item.student_preferred_first_name }} <span class="badge rounded-pill border border-muted text-dark small me-1">{{ item.gender }}</span></div>
+                        <div>{{ item.student_preferred_last_name }}, {{ item.student_preferred_first_name }} <span class="badge rounded-pill border border-muted text-dark small">{{ item.gender }}</span> <span class="badge rounded-pill border border-muted text-dark small"><i class="bi bi-trophy-fill text-purple"></i></span>
+                        
+                        </div>
                         <div class="small text-secondary">{{ item.uw_net_id }}</div>
                       </div>
                     </div>
@@ -266,6 +270,7 @@
                       {{ item.student_number }}
                     </router-link>
                   </td>
+                  <td>priority</td>
                   <td>{{ item.class_desc }}</td>
                   <td>{{ item.major_full_name }}</td>
                   <td>{{ item.enrollment_status_desc }}</td>
