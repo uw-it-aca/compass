@@ -76,7 +76,7 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-2 small">
+        <div class="col-md-2 small">
 
           <div class="border-bottom mb-3 pb-3">
             <div class="fw-bold">Sign-ins</div>
@@ -223,17 +223,17 @@
           </div>
 
         </div>
-        <div class="col">
+        <div class="col-md-10">
           <div class="bg-white border rounded-3 shadow-sm p-3 table-responsive">
             <table class="table table-hover mb-0">
               <thead class="">
                 <tr>
                   <th scope="col">Student</th>
-                  <th scope="col">Student Number</th>
+                  <th scope="col" class="text-nowrap">Student Number</th>
                   <th scope="col">Priority</th>
                   <th scope="col">Class</th>
                   <th scope="col">Major</th>
-                  <th scope="col">Enroll Status</th>
+                  <th scope="col" class="text-nowrap">Enroll Status</th>
                   <th scope="col">Adviser</th>
                 </tr>
               </thead>
@@ -258,8 +258,10 @@
                         </div>
                       </div>
                       <div>
-                        <div>{{ item.student_preferred_last_name }}, {{ item.student_preferred_first_name }} <span class="badge rounded-pill border border-muted text-dark small">{{ item.gender }}</span> <span class="badge rounded-pill border border-muted text-dark small"><i class="bi bi-trophy-fill text-purple"></i></span>
-                        
+                        <div class="text-nowrap">
+                          <span>{{ item.student_preferred_last_name }}, {{ item.student_preferred_first_name }}</span>
+                          <span class="badge rounded-pill border border-muted text-dark small">{{ item.gender }}</span> 
+                          <span class="badge rounded-pill border border-muted text-dark small"><i class="bi bi-trophy-fill text-purple"></i></span>                        
                         </div>
                         <div class="small text-secondary">{{ item.uw_net_id }}</div>
                       </div>
