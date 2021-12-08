@@ -76,7 +76,7 @@
       </div>
 
       <div class="row">
-        <div class="col-md-2 small">
+        <div class="col-md-3 col-lg-2 small">
 
           <div class="border-bottom mb-3 pb-3">
             <div class="fw-bold">Sign-ins</div>
@@ -223,7 +223,7 @@
           </div>
 
         </div>
-        <div class="col-md-10">
+        <div class="col-md-9 col-lg-10">
           <div class="bg-white border rounded-3 shadow-sm p-3 table-responsive">
             <table class="table table-hover mb-0">
               <thead class="">
