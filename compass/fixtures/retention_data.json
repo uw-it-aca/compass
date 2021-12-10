@@ -4,37 +4,34 @@
   {
     "pk": 1,
     "model": "compass.retention",
-    "student_id": 1,
     "fields": {
       "priority": "2.3",
-      "sign_ins": "",
+      "sign_in": "",
       "activity": "",
-      "assignments": "",
-      "grades": ""
+      "assignment": "",
+      "grade": ""
     }
   },
   {
     "pk": 2,
     "model": "compass.retention",
-    "student_id": 2,
     "fields": {
       "priority": "2.3",
-      "sign_ins": "",
+      "sign_in": "",
       "activity": "",
-      "assignments": "",
-      "grades": ""
+      "assignment": "",
+      "grade": ""
     }
   },
   {
     "pk": 3,
     "model": "compass.retention",
-    "student_id": 3,
     "fields": {
       "priority": "2.3",
-      "sign_ins": "",
+      "sign_in": "",
       "activity": "",
-      "assignments": "",
-      "grades": ""
+      "assignment": "",
+      "grade": ""
     }
   }
 ]

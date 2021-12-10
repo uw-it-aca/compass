@@ -6,7 +6,7 @@ with open("student_data.json", "r") as student_file:
     names_file = open("random_names.txt", "r")
     names = [name.strip() for name in names_file]
     cleaned_students = []
-    for stu_dict in students:
+    for idx, stu_dict in enumerate(students):
         name = names.pop()
         first_name, last_name = name.split(", ")
         initials = first_name[0].lower() + last_name[0].lower()
@@ -32,6 +32,7 @@ with open("student_data.json", "r") as student_file:
         stu_dict["fields"]["perm_addr_postal_code"] = "98102-0021"
         special_program_code = random.choice(range(1, 84))
         stu_dict["fields"]["special_program"] = [special_program_code]
+        stu_dict["fields"]["retention"] = idx
         stu_dict["fields"]["honors_program_code"] = 0
         stu_dict["fields"]["honors_program_ind"] = "N"
         stu_dict["fields"]["uw_reg_id"] = "9136CCB8F66711D5BE060004AC494FFE"
