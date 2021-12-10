@@ -147,6 +147,12 @@ class SpecialProgram(models.Model):
     special_program_code = models.TextField(null=True)
     special_program_desc = models.TextField(null=True)
 
+class Retention(models.Model):
+    priority = models.BigIntegerField(unique=True)
+    sign_ins = models.BigIntegerField(unique=True)
+    activity = models.BigIntegerField(unique=True)
+    assignments = models.BigIntegerField(unique=True)
+    grades = models.BigIntegerField(unique=True)
 
 class Student(models.Model):
 
