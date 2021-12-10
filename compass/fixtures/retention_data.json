@@ -1,3 +1,5 @@
+// mock student rentention scores (id=1-100)
+
 [
   {
     "pk": 1,
@@ -15,6 +17,18 @@
     "pk": 2,
     "model": "compass.retention",
     "student_id": 2,
+    "fields": {
+      "priority": "2.3",
+      "sign_ins": "",
+      "activity": "",
+      "assignments": "",
+      "grades": ""
+    }
+  },
+  {
+    "pk": 3,
+    "model": "compass.retention",
+    "student_id": 3,
     "fields": {
       "priority": "2.3",
       "sign_ins": "",
