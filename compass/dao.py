@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import logging
-from compass.models import Term, Student, Major, SpecialProgram
+from compass.models import Retention, Term, Student, Major, SpecialProgram
 from restclients_core.exceptions import DataFailureException
 from restclients_core.util.retry import retry
 from uw_sws.term import get_current_term, get_term_after, \
@@ -89,6 +89,14 @@ class EDWClientDAO():
             student.enrollment_status_code = row["EnrollStatusCode"]
             student.exemption_code = row["ExemptionCode"]
             student.exemption_desc = row["ExemptionDesc"]
+            retention = Retention.objects.get_or_create(
+                priority=row["Priority"],
+                sign_in=row["SignIn"],
+                activity=row["Activity"],
+                assignment=row["Assignment"],
+                grade=row["Grade"]
+            )
+            student.retention.add(retention)
             special_program = SpecialProgram.objects.get_or_create(
                 special_program_code=row["SpecialProgramCode"],
                 special_program_desc=row["SpecialProgramDesc"]

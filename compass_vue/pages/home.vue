@@ -272,7 +272,7 @@
                       {{ item.student_number }}
                     </router-link>
                   </td>
-                  <td>priority</td>
+                  <td>{{ item.retention.priority }}</td>
                   <td>{{ item.class_desc }}</td>
                   <td>{{ item.major_full_name }}</td>
                   <td>{{ item.enrollment_status_desc }}</td>
