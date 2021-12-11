@@ -148,11 +148,11 @@ class SpecialProgram(models.Model):
     special_program_desc = models.TextField(null=True)
 
 class Retention(models.Model):
-    priority = models.BigIntegerField(null=True)
-    sign_in = models.BigIntegerField(null=True)
-    activity = models.BigIntegerField(null=True)
-    assignment = models.BigIntegerField(null=True)
-    grade = models.BigIntegerField(null=True)
+    priority = models.TextField(null=True)
+    sign_in = models.TextField(null=True)
+    activity = models.TextField(null=True)
+    assignment = models.TextField(null=True)
+    grade = models.TextField(null=True)
 
 class Student(models.Model):
 
