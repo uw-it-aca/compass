@@ -1,7 +1,7 @@
 [
   {
-    "pk": 1,
     "model": "compass.retention",
+    "pk": 1,
     "fields": {
       "priority": "2.3",
       "sign_in": "0.5",
