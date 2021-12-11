@@ -1,37 +1,13 @@
-// mock student rentention scores (id=1-100)
-
 [
   {
     "pk": 1,
     "model": "compass.retention",
     "fields": {
       "priority": "2.3",
-      "sign_in": "",
-      "activity": "",
-      "assignment": "",
-      "grade": ""
-    }
-  },
-  {
-    "pk": 2,
-    "model": "compass.retention",
-    "fields": {
-      "priority": "2.3",
-      "sign_in": "",
-      "activity": "",
-      "assignment": "",
-      "grade": ""
-    }
-  },
-  {
-    "pk": 3,
-    "model": "compass.retention",
-    "fields": {
-      "priority": "2.3",
-      "sign_in": "",
-      "activity": "",
-      "assignment": "",
-      "grade": ""
+      "sign_in": "0.5",
+      "activity": "1.0",
+      "assignment": "1.4",
+      "grade": "-2.4"
     }
   }
 ]
