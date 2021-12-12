@@ -242,7 +242,7 @@
                   <td>
                     <div class="d-flex">
                       <div class="me-2" style="min-width:55px;">
-                        <div :class="getRandomPriority()" class="rounded-circle border border-3 ">
+                        <div :class="showPriorityRing(item.retention.priority)" class="rounded-circle border border-3 ">
                         <img
                           v-if="item.gender === 'F'"
                           :src="'https://randomuser.me/api/portraits/thumb/women/' + getRandomPerson() + '.jpg'"
@@ -389,12 +389,12 @@ export default {
       // return random number
       return Math.floor(Math.random() * rangeMax);
     },
-    getRandomPriority: function() {
-      let int = Math.floor(Math.random() * 10);
-      if (int == 0) {
+    showPriorityRing: function(priorityValue) {
+      // mocked display
+      if (priorityValue == '-3.4') {
         return 'border-danger'
       }
-      else if (int == 1) {
+      else if (priorityValue == '2.2') {
         return 'border-warning'
       }
       else {
