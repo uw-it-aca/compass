@@ -13,10 +13,10 @@
     "model": "compass.major",
     "pk": 2,
     "fields": {
-      "major_abbr_code": "XA&S  ",
+      "major_abbr_code": "XA&S",
       "major_name": "EXCHANGE ARTS & SCIENCES",
       "major_full_name": "Exchange - Arts and Sciences",
-      "major_short_name": "EXCH A&S    "
+      "major_short_name": "EXCH A&S"
     }
   },
   {
@@ -26,7 +26,7 @@
       "major_abbr_code": "T INFO",
       "major_name": "INFO TECH (TACOMA)",
       "major_full_name": "Information Technology (Tacoma)",
-      "major_short_name": "T INFO      "
+      "major_short_name": "T INFO"
     }
   },
   {
@@ -35,7 +35,7 @@
     "fields": {
       "major_abbr_code": "MED",
       "major_name": "MEDICINE",
-      "major_full_name": "Medicine ",
+      "major_full_name": "Medicine",
       "major_short_name": "MEDICINE"
     }
   },
@@ -45,8 +45,8 @@
     "fields": {
       "major_abbr_code": "N MATR",
       "major_name": "NON MATRICULATED",
-      "major_full_name": "Non Matriculated  ",
-      "major_short_name": "N MATR      "
+      "major_full_name": "Non Matriculated",
+      "major_short_name": "N MATR"
     }
   },
   {
@@ -84,7 +84,7 @@
     "pk": 9,
     "fields": {
       "major_abbr_code": "MUSIC",
-      "major_name": "MUSIC     ",
+      "major_name": "MUSIC",
       "major_full_name": "Music",
       "major_short_name": "MUSIC"
     }
@@ -133,19 +133,19 @@
     "model": "compass.major",
     "pk": 14,
     "fields": {
-      "major_abbr_code": "POL S ",
+      "major_abbr_code": "POL S",
       "major_name": "POLITICAL SCIENCE",
-      "major_full_name": "Political Science ",
-      "major_short_name": "POL SCI     "
+      "major_full_name": "Political Science",
+      "major_short_name": "POL SCI"
     }
   },
   {
     "model": "compass.major",
     "pk": 15,
     "fields": {
-      "major_abbr_code": "CIV E ",
+      "major_abbr_code": "CIV E",
       "major_name": "CIVIL ENGINEERING",
-      "major_full_name": "Civil Engineering ",
+      "major_full_name": "Civil Engineering",
       "major_short_name": "CIV E"
     }
   },
@@ -155,8 +155,8 @@
     "fields": {
       "major_abbr_code": "TENSCI",
       "major_name": "ENVIRON SCIENCE (TACOMA)",
-      "major_full_name": "Environmental Science - Tacoma Campus ",
-      "major_short_name": "TENSCI      "
+      "major_full_name": "Environmental Science - Tacoma Campus",
+      "major_short_name": "TENSCI"
     }
   },
   {
@@ -173,9 +173,9 @@
     "model": "compass.major",
     "pk": 18,
     "fields": {
-      "major_abbr_code": "T BUS ",
+      "major_abbr_code": "T BUS",
       "major_name": "BUSINESS ADMIN (TACOMA)",
-      "major_full_name": "Business Administration ",
+      "major_full_name": "Business Administration",
       "major_short_name": "BUSINESS-T"
     }
   },
@@ -184,7 +184,7 @@
     "pk": 19,
     "fields": {
       "major_abbr_code": "E E",
-      "major_name": "ELECTRICAL ENGR ",
+      "major_name": "ELECTRICAL ENGR",
       "major_full_name": "Electrical Engineering",
       "major_short_name": "ELEC ENGR"
     }
@@ -194,18 +194,18 @@
     "pk": 20,
     "fields": {
       "major_abbr_code": "SOCWCC",
-      "major_name": "SOCIAL WORK (C-CIP)     ",
-      "major_full_name": "Social Work (Community-Centered Int Prc)      ",
-      "major_short_name": "SOCWCC      "
+      "major_name": "SOCIAL WORK (C-CIP)",
+      "major_full_name": "Social Work (Community-Centered Int Prc)",
+      "major_short_name": "SOCWCC"
     }
   },
   {
     "model": "compass.major",
     "pk": 21,
     "fields": {
-      "major_abbr_code": "ANTH  ",
-      "major_name": "ANTHROPOLOGY    ",
-      "major_full_name": "Anthropology      ",
+      "major_abbr_code": "ANTH",
+      "major_name": "ANTHROPOLOGY",
+      "major_full_name": "Anthropology",
       "major_short_name": "ANTHROPOLOGY"
     }
   },
@@ -213,7 +213,7 @@
     "model": "compass.major",
     "pk": 22,
     "fields": {
-      "major_abbr_code": "EPRMJ ",
+      "major_abbr_code": "EPRMJ",
       "major_name": "EXTENDED PRE MAJOR",
       "major_full_name": "Extended Pre Major",
       "major_short_name": "EXT PRE MAJ"
@@ -223,7 +223,7 @@
     "model": "compass.major",
     "pk": 23,
     "fields": {
-      "major_abbr_code": "V A&S ",
+      "major_abbr_code": "V A&S",
       "major_name": "VISITING-ARTS & SCIENCES",
       "major_full_name": "Visiting Arts & Sciences",
       "major_short_name": "VIS A&S"
@@ -233,7 +233,7 @@
     "model": "compass.major",
     "pk": 24,
     "fields": {
-      "major_abbr_code": "CM    ",
+      "major_abbr_code": "CM",
       "major_name": "CONSTRUCTION MANAGEMENT",
       "major_full_name": "Construction Management",
       "major_short_name": "CONSTR MGMT"
@@ -273,9 +273,9 @@
     "model": "compass.major",
     "pk": 28,
     "fields": {
-      "major_abbr_code": "ISS O ",
-      "major_name": "INTEG SOC SCI (OL)      ",
-      "major_full_name": "Integrated Social Sciences, Online    ",
+      "major_abbr_code": "ISS O",
+      "major_name": "INTEG SOC SCI (OL)",
+      "major_full_name": "Integrated Social Sciences, Online",
       "major_short_name": "ISS O"
     }
   },
@@ -283,9 +283,9 @@
     "model": "compass.major",
     "pk": 29,
     "fields": {
-      "major_abbr_code": "LIS X ",
-      "major_name": "LIBRARY & INFO SCI (DL) ",
-      "major_full_name": "Library & Information Science (DL)    ",
+      "major_abbr_code": "LIS X",
+      "major_name": "LIBRARY & INFO SCI (DL)",
+      "major_full_name": "Library & Information Science (DL)",
       "major_short_name": "LIBR & IN DL"
     }
   },
@@ -293,7 +293,7 @@
     "model": "compass.major",
     "pk": 30,
     "fields": {
-      "major_abbr_code": "B BIO ",
+      "major_abbr_code": "B BIO",
       "major_name": "BIOLOGY (BOTHELL)",
       "major_full_name": "Biology (Bothell Campus)",
       "major_short_name": "B BIO"
@@ -303,9 +303,9 @@
     "model": "compass.major",
     "pk": 31,
     "fields": {
-      "major_abbr_code": "SISA  ",
-      "major_name": "INT ST: ASIA    ",
-      "major_full_name": "International Studies (Asia)    ",
+      "major_abbr_code": "SISA",
+      "major_name": "INT ST: ASIA",
+      "major_full_name": "International Studies (Asia)",
       "major_short_name": "SISA"
     }
   },
@@ -313,9 +313,9 @@
     "model": "compass.major",
     "pk": 32,
     "fields": {
-      "major_abbr_code": "C SCI ",
+      "major_abbr_code": "C SCI",
       "major_name": "COMPUTER SCIENCE",
-      "major_full_name": "Computer Science  ",
+      "major_full_name": "Computer Science",
       "major_short_name": "COMPUTER SCI"
     }
   },
@@ -324,19 +324,19 @@
     "pk": 33,
     "fields": {
       "major_abbr_code": "MJUR X",
-      "major_name": "JURISPRUDENCE   ",
-      "major_full_name": "Jurisprudence     ",
-      "major_short_name": "MJUR X      "
+      "major_name": "JURISPRUDENCE",
+      "major_full_name": "Jurisprudence",
+      "major_short_name": "MJUR X"
     }
   },
   {
     "model": "compass.major",
     "pk": 34,
     "fields": {
-      "major_abbr_code": "B BUS ",
+      "major_abbr_code": "B BUS",
       "major_name": "BUS ADMIN:ACCT (BOTHELL)",
-      "major_full_name": "Business Admin: Accounting (Bothell)  ",
-      "major_short_name": "BUS (ACCT)  "
+      "major_full_name": "Business Admin: Accounting (Bothell)",
+      "major_short_name": "BUS (ACCT)"
     }
   },
   {
@@ -344,17 +344,17 @@
     "pk": 35,
     "fields": {
       "major_abbr_code": "BIOCHM",
-      "major_name": "BIOCHEMISTRY    ",
-      "major_full_name": "Biochemistry      ",
-      "major_short_name": "BIOCHM      "
+      "major_name": "BIOCHEMISTRY",
+      "major_full_name": "Biochemistry",
+      "major_short_name": "BIOCHM"
     }
   },
   {
     "model": "compass.major",
     "pk": 36,
     "fields": {
-      "major_abbr_code": "INFO  ",
-      "major_name": "INFORMATICS     ",
+      "major_abbr_code": "INFO",
+      "major_name": "INFORMATICS",
       "major_full_name": "Informatics",
       "major_short_name": "INFO"
     }
@@ -363,9 +363,9 @@
     "model": "compass.major",
     "pk": 37,
     "fields": {
-      "major_abbr_code": "NBIO  ",
-      "major_name": "NEUROSCIENCE    ",
-      "major_full_name": "Neuroscience      ",
+      "major_abbr_code": "NBIO",
+      "major_name": "NEUROSCIENCE",
+      "major_full_name": "Neuroscience",
       "major_short_name": "NBIO"
     }
   },
@@ -375,16 +375,16 @@
     "fields": {
       "major_abbr_code": "T HIST",
       "major_name": "HISTORY (TACOMA)",
-      "major_full_name": "History (Tacoma)  ",
-      "major_short_name": "T HIST      "
+      "major_full_name": "History (Tacoma)",
+      "major_short_name": "T HIST"
     }
   },
   {
     "model": "compass.major",
     "pk": 39,
     "fields": {
-      "major_abbr_code": "TPPE  ",
-      "major_name": "POL, PHIL & ECON (TAC)  ",
+      "major_abbr_code": "TPPE",
+      "major_name": "POL, PHIL & ECON (TAC)",
       "major_full_name": "Politics, Philosophy, & Economics (Tac)",
       "major_short_name": "TPPE"
     }
@@ -393,18 +393,18 @@
     "model": "compass.major",
     "pk": 40,
     "fields": {
-      "major_abbr_code": "EDUCX ",
-      "major_name": "EDUCATION (SPECIAL ED)  ",
-      "major_full_name": "Education (Special Education)   ",
-      "major_short_name": "EDUC(SPEC)  "
+      "major_abbr_code": "EDUCX",
+      "major_name": "EDUCATION (SPECIAL ED)",
+      "major_full_name": "Education (Special Education)",
+      "major_short_name": "EDUC(SPEC)"
     }
   },
   {
     "model": "compass.major",
     "pk": 41,
     "fields": {
-      "major_abbr_code": "ESRM  ",
-      "major_name": "ENV SCI AND RES MGMT    ",
+      "major_abbr_code": "ESRM",
+      "major_name": "ENV SCI AND RES MGMT",
       "major_full_name": "Environmental Science and Resource Mgmt",
       "major_short_name": "ESRM"
     }
@@ -413,19 +413,19 @@
     "model": "compass.major",
     "pk": 42,
     "fields": {
-      "major_abbr_code": "HRMGT ",
-      "major_name": "BUS ADMIN (HUM RES MGT) ",
+      "major_abbr_code": "HRMGT",
+      "major_name": "BUS ADMIN (HUM RES MGT)",
       "major_full_name": "Bus Admin (Human Resources Management)",
-      "major_short_name": "BUS AD HRM  "
+      "major_short_name": "BUS AD HRM"
     }
   },
   {
     "model": "compass.major",
     "pk": 43,
     "fields": {
-      "major_abbr_code": "PH    ",
-      "major_name": "PUBLIC HLTH-GLOBAL HLTH ",
-      "major_full_name": "Public Health-Global Health     ",
+      "major_abbr_code": "PH",
+      "major_name": "PUBLIC HLTH-GLOBAL HLTH",
+      "major_full_name": "Public Health-Global Health",
       "major_short_name": "PH-GH"
     }
   },
@@ -433,7 +433,7 @@
     "model": "compass.major",
     "pk": 44,
     "fields": {
-      "major_abbr_code": "TWRT  ",
+      "major_abbr_code": "TWRT",
       "major_name": "WRITING STUDIES (TACOMA)",
       "major_full_name": "Writing Studies (Tacoma)",
       "major_short_name": "TWRT"
@@ -444,16 +444,16 @@
     "pk": 45,
     "fields": {
       "major_abbr_code": "HSERVX",
-      "major_name": "HEALTH SERVICES (EMPH)  ",
-      "major_full_name": "Health Services (Executive Program)   ",
-      "major_short_name": "HSERVX      "
+      "major_name": "HEALTH SERVICES (EMPH)",
+      "major_full_name": "Health Services (Executive Program)",
+      "major_short_name": "HSERVX"
     }
   },
   {
     "model": "compass.major",
     "pk": 46,
     "fields": {
-      "major_abbr_code": "A A   ",
+      "major_abbr_code": "A A",
       "major_name": "AERONAUTICS & ASTRO(TEL)",
       "major_full_name": "Aeronautics & Astronautics (Televised)",
       "major_short_name": "AERO & ASTRO"
@@ -465,15 +465,15 @@
     "fields": {
       "major_abbr_code": "NEAR E",
       "major_name": "NEAR EAST ST LANG & CULT",
-      "major_full_name": "Near Eastern Studies: Lang & Cultures ",
-      "major_short_name": "NEAR E      "
+      "major_full_name": "Near Eastern Studies: Lang & Cultures",
+      "major_short_name": "NEAR E"
     }
   },
   {
     "model": "compass.major",
     "pk": 48,
     "fields": {
-      "major_abbr_code": "B MCS ",
+      "major_abbr_code": "B MCS",
       "major_name": "MEDIA & COM ST (BOTHELL)",
       "major_full_name": "Media & Communication Studies (Bothell)",
       "major_short_name": "B MCS"
@@ -483,9 +483,9 @@
     "model": "compass.major",
     "pk": 49,
     "fields": {
-      "major_abbr_code": "ENV H ",
-      "major_name": "ENVIRONMENTAL HEALTH    ",
-      "major_full_name": "Environmental Health    ",
+      "major_abbr_code": "ENV H",
+      "major_name": "ENVIRONMENTAL HEALTH",
+      "major_full_name": "Environmental Health",
       "major_short_name": "ENVIRON HLTH"
     }
   },
@@ -493,10 +493,10 @@
     "model": "compass.major",
     "pk": 50,
     "fields": {
-      "major_abbr_code": "GEOG  ",
-      "major_name": "GEOGRAPHY ",
-      "major_full_name": "Geography ",
-      "major_short_name": "GEOGRAPHY   "
+      "major_abbr_code": "GEOG",
+      "major_name": "GEOGRAPHY",
+      "major_full_name": "Geography",
+      "major_short_name": "GEOGRAPHY "
     }
   },
   {
@@ -504,18 +504,18 @@
     "pk": 51,
     "fields": {
       "major_abbr_code": "BCYBER",
-      "major_name": "CYBERSECURITY ENGINEER  ",
-      "major_full_name": "Cybersecurity Engineering (Bothell)   ",
-      "major_short_name": "BCYBER      "
+      "major_name": "CYBERSECURITY ENGINEER",
+      "major_full_name": "Cybersecurity Engineering (Bothell)",
+      "major_short_name": "BCYBER"
     }
   },
   {
     "model": "compass.major",
     "pk": 52,
     "fields": {
-      "major_abbr_code": "ESS   ",
-      "major_name": "ESS: GEOLOGY    ",
-      "major_full_name": "Earth and Space Sciences: Geology     ",
+      "major_abbr_code": "ESS",
+      "major_name": "ESS: GEOLOGY",
+      "major_full_name": "Earth and Space Sciences: Geology",
       "major_short_name": "ESS "
     }
   },
@@ -523,10 +523,10 @@
     "model": "compass.major",
     "pk": 53,
     "fields": {
-      "major_abbr_code": "B MBA ",
+      "major_abbr_code": "B MBA",
       "major_name": "MBA LEADERSHIP (BOTHELL)",
-      "major_full_name": "Business Admin: Leadership (Bothell)  ",
-      "major_short_name": "MBA LEADER  "
+      "major_full_name": "Business Admin: Leadership (Bothell)",
+      "major_short_name": "MBA LEADER"
     }
   },
   {
@@ -535,17 +535,17 @@
     "fields": {
       "major_abbr_code": "GLOBLH",
       "major_name": "GLOBL HLTH: INTNATL HLTH",
-      "major_full_name": "Global Health: International Health   ",
-      "major_short_name": "GLOBLH      "
+      "major_full_name": "Global Health: International Health",
+      "major_short_name": "GLOBLH"
     }
   },
   {
     "model": "compass.major",
     "pk": 55,
     "fields": {
-      "major_abbr_code": "SIS   ",
-      "major_name": "INTERNATIONAL STUDIES   ",
-      "major_full_name": "International Studies   ",
+      "major_abbr_code": "SIS",
+      "major_name": "INTERNATIONAL STUDIES",
+      "major_full_name": "International Studies",
       "major_short_name": "SIS "
     }
   },
@@ -553,40 +553,40 @@
     "model": "compass.major",
     "pk": 56,
     "fields": {
-      "major_abbr_code": "NURSX ",
-      "major_name": "NURSING   ",
-      "major_full_name": "Nursing   ",
-      "major_short_name": "NURSING     "
+      "major_abbr_code": "NURSX",
+      "major_name": "NURSING",
+      "major_full_name": "Nursing",
+      "major_short_name": "NURSING"
     }
   },
   {
     "model": "compass.major",
     "pk": 57,
     "fields": {
-      "major_abbr_code": "SOC   ",
-      "major_name": "SOCIOLOGY ",
-      "major_full_name": "Sociology ",
-      "major_short_name": "SOCIOLOGY   "
+      "major_abbr_code": "SOC",
+      "major_name": "SOCIOLOGY",
+      "major_full_name": "Sociology",
+      "major_short_name": "SOCIOLOGY "
     }
   },
   {
     "model": "compass.major",
     "pk": 58,
     "fields": {
-      "major_abbr_code": "ACMS  ",
-      "major_name": "ACMS (MATH ECONOMICS)   ",
+      "major_abbr_code": "ACMS",
+      "major_name": "ACMS (MATH ECONOMICS)",
       "major_full_name": "App & Comp Math Sci (Mathematical Econ)",
-      "major_short_name": "ACMS (ME)   "
+      "major_short_name": "ACMS (ME) "
     }
   },
   {
     "model": "compass.major",
     "pk": 59,
     "fields": {
-      "major_abbr_code": "ECON  ",
-      "major_name": "ECONOMICS ",
-      "major_full_name": "Economics ",
-      "major_short_name": "ECONOMICS   "
+      "major_abbr_code": "ECON",
+      "major_name": "ECONOMICS",
+      "major_full_name": "Economics",
+      "major_short_name": "ECONOMICS "
     }
   },
   {
@@ -595,16 +595,16 @@
     "fields": {
       "major_abbr_code": "HIHIME",
       "major_name": "HLTH INFO & HLTH INFO MG",
-      "major_full_name": "Health Informatics&Hlth Information Mgmt      ",
-      "major_short_name": "HIHIME      "
+      "major_full_name": "Health Informatics&Hlth Information Mgmt",
+      "major_short_name": "HIHIME"
     }
   },
   {
     "model": "compass.major",
     "pk": 61,
     "fields": {
-      "major_abbr_code": "B PRE ",
-      "major_name": "PREMAJOR (BOTHELL)      ",
+      "major_abbr_code": "B PRE",
+      "major_name": "PREMAJOR (BOTHELL)",
       "major_full_name": "Premajor (Bothell Campus)",
       "major_short_name": "B PRE"
     }
@@ -614,7 +614,7 @@
     "pk": 62,
     "fields": {
       "major_abbr_code": "SOCS E",
-      "major_name": "SOCIAL SCIENCES,EVENING ",
+      "major_name": "SOCIAL SCIENCES,EVENING",
       "major_full_name": "Social Sciences, Evening Degree Program",
       "major_short_name": "SOCIAL SCI,E"
     }
@@ -623,9 +623,9 @@
     "model": "compass.major",
     "pk": 63,
     "fields": {
-      "major_abbr_code": "ECFS  ",
-      "major_name": "ECFS: TEACH & LEARN     ",
-      "major_full_name": "Early Chld & Fam St: Teaching & Learning      ",
+      "major_abbr_code": "ECFS",
+      "major_name": "ECFS: TEACH & LEARN",
+      "major_full_name": "Early Chld & Fam St: Teaching & Learning",
       "major_short_name": "ECFS"
     }
   },
@@ -633,8 +633,8 @@
     "model": "compass.major",
     "pk": 64,
     "fields": {
-      "major_abbr_code": "CSE E ",
-      "major_name": "COMP SCI & ENGR,EVENING ",
+      "major_abbr_code": "CSE E",
+      "major_name": "COMP SCI & ENGR,EVENING",
       "major_full_name": "Computer Science & Engineering, Evening",
       "major_short_name": "CSE E (EVEN)"
     }
@@ -644,17 +644,17 @@
     "pk": 65,
     "fields": {
       "major_abbr_code": "PRENGR",
-      "major_name": "PRE ENGINEERING ",
-      "major_full_name": "Pre Engineering   ",
-      "major_short_name": "PRE ENGR    "
+      "major_name": "PRE ENGINEERING",
+      "major_full_name": "Pre Engineering",
+      "major_short_name": "PRE ENGR"
     }
   },
   {
     "model": "compass.major",
     "pk": 66,
     "fields": {
-      "major_abbr_code": "B GST ",
-      "major_name": "GLOBAL ST (BOTHELL)     ",
+      "major_abbr_code": "B GST",
+      "major_name": "GLOBAL ST (BOTHELL)",
       "major_full_name": "Global Studies (Bothell)",
       "major_short_name": "B GST"
     }
@@ -663,8 +663,8 @@
     "model": "compass.major",
     "pk": 67,
     "fields": {
-      "major_abbr_code": "TCES  ",
-      "major_name": "COMPUTER ENGR & SYS     ",
+      "major_abbr_code": "TCES",
+      "major_name": "COMPUTER ENGR & SYS",
       "major_full_name": "Computer Engineering and Systems",
       "major_short_name": "TCES"
     }
@@ -673,9 +673,9 @@
     "model": "compass.major",
     "pk": 68,
     "fields": {
-      "major_abbr_code": "TCSCI ",
-      "major_name": "COMPUTER SCI & SYS      ",
-      "major_full_name": "Computer Science and Systems    ",
+      "major_abbr_code": "TCSCI",
+      "major_name": "COMPUTER SCI & SYS",
+      "major_full_name": "Computer Science and Systems",
       "major_short_name": "TCSCI"
     }
   },
@@ -683,18 +683,18 @@
     "model": "compass.major",
     "pk": 69,
     "fields": {
-      "major_abbr_code": "PHYS  ",
-      "major_name": "PHYSICS   ",
-      "major_full_name": "Physics   ",
-      "major_short_name": "PHYSICS     "
+      "major_abbr_code": "PHYS",
+      "major_name": "PHYSICS",
+      "major_full_name": "Physics",
+      "major_short_name": "PHYSICS"
     }
   },
   {
     "model": "compass.major",
     "pk": 70,
     "fields": {
-      "major_abbr_code": "B EE  ",
-      "major_name": "ELEC ENGR (BOTHELL)     ",
+      "major_abbr_code": "B EE",
+      "major_name": "ELEC ENGR (BOTHELL)",
       "major_full_name": "Electrical Engineering (Bothell)",
       "major_short_name": "B EE"
     }
@@ -703,9 +703,9 @@
     "model": "compass.major",
     "pk": 71,
     "fields": {
-      "major_abbr_code": "BIOEN ",
-      "major_name": "BIOENGINEERING  ",
-      "major_full_name": "Bioengineering    ",
+      "major_abbr_code": "BIOEN",
+      "major_name": "BIOENGINEERING",
+      "major_full_name": "Bioengineering",
       "major_short_name": "BIOEN"
     }
   },
@@ -713,39 +713,39 @@
     "model": "compass.major",
     "pk": 72,
     "fields": {
-      "major_abbr_code": "HIST  ",
-      "major_name": "HISTORY   ",
-      "major_full_name": "History   ",
-      "major_short_name": "HISTORY     "
+      "major_abbr_code": "HIST",
+      "major_name": "HISTORY",
+      "major_full_name": "History",
+      "major_short_name": "HISTORY"
     }
   },
   {
     "model": "compass.major",
     "pk": 73,
     "fields": {
-      "major_abbr_code": "JAPAN ",
-      "major_name": "JAPANESE  ",
-      "major_full_name": "Japanese  ",
-      "major_short_name": "JAPANESE    "
+      "major_abbr_code": "JAPAN",
+      "major_name": "JAPANESE",
+      "major_full_name": "Japanese",
+      "major_short_name": "JAPANESE"
     }
   },
   {
     "model": "compass.major",
     "pk": 74,
     "fields": {
-      "major_abbr_code": "HSERV ",
+      "major_abbr_code": "HSERV",
       "major_name": "HLTH SERV-COMMUNITY PRAC",
-      "major_full_name": "Health Services - Community Practice  ",
-      "major_short_name": "HSERV-CP    "
+      "major_full_name": "Health Services - Community Practice",
+      "major_short_name": "HSERV-CP"
     }
   },
   {
     "model": "compass.major",
     "pk": 75,
     "fields": {
-      "major_abbr_code": "IND E ",
-      "major_name": "INDUSTRIAL ENGINEERING  ",
-      "major_full_name": "Industrial Engineering  ",
+      "major_abbr_code": "IND E",
+      "major_name": "INDUSTRIAL ENGINEERING",
+      "major_full_name": "Industrial Engineering",
       "major_short_name": "INDUST ENGR "
     }
   },
@@ -753,9 +753,9 @@
     "model": "compass.major",
     "pk": 76,
     "fields": {
-      "major_abbr_code": "URBDP ",
-      "major_name": "URBAN DESIGN & PLANNING ",
-      "major_full_name": "Urban Design & Planning ",
+      "major_abbr_code": "URBDP",
+      "major_name": "URBAN DESIGN & PLANNING",
+      "major_full_name": "Urban Design & Planning",
       "major_short_name": "URB DES &PL "
     }
   },
@@ -763,19 +763,19 @@
     "model": "compass.major",
     "pk": 77,
     "fields": {
-      "major_abbr_code": "DENT  ",
-      "major_name": "DENTISTRY ",
-      "major_full_name": "Dentistry ",
-      "major_short_name": "DENTISTRY   "
+      "major_abbr_code": "DENT",
+      "major_name": "DENTISTRY",
+      "major_full_name": "Dentistry",
+      "major_short_name": "DENTISTRY "
     }
   },
   {
     "model": "compass.major",
     "pk": 78,
     "fields": {
-      "major_abbr_code": "AFS   ",
-      "major_name": "AQUATIC & FISHERY SCI   ",
-      "major_full_name": "Aquatic and Fishery Sciences    ",
+      "major_abbr_code": "AFS",
+      "major_name": "AQUATIC & FISHERY SCI",
+      "major_full_name": "Aquatic and Fishery Sciences",
       "major_short_name": "AFS "
     }
   },
@@ -783,9 +783,9 @@
     "model": "compass.major",
     "pk": 79,
     "fields": {
-      "major_abbr_code": "MEDXD ",
-      "major_name": "MEDIX DEGREE PROGRAM    ",
-      "major_full_name": "Medxd (Medex Degree Program)    ",
+      "major_abbr_code": "MEDXD",
+      "major_name": "MEDIX DEGREE PROGRAM",
+      "major_full_name": "Medxd (Medex Degree Program)",
       "major_short_name": "MEDEX DEGR P"
     }
   },
@@ -794,9 +794,9 @@
     "pk": 80,
     "fields": {
       "major_abbr_code": "PHARBX",
-      "major_name": "PHARM BIOENGINEERING    ",
-      "major_full_name": "Pharmaceutical Bioengineering   ",
-      "major_short_name": "PHARBX      "
+      "major_name": "PHARM BIOENGINEERING",
+      "major_full_name": "Pharmaceutical Bioengineering",
+      "major_short_name": "PHARBX"
     }
   },
   {
@@ -804,18 +804,18 @@
     "pk": 81,
     "fields": {
       "major_abbr_code": "BISMCS",
-      "major_name": "INTERDISC STUDIES (MCS) ",
-      "major_full_name": "Interdisciplinary Studies (MCS) ",
-      "major_short_name": "BISMCS      "
+      "major_name": "INTERDISC STUDIES (MCS)",
+      "major_full_name": "Interdisciplinary Studies (MCS)",
+      "major_short_name": "BISMCS"
     }
   },
   {
     "model": "compass.major",
     "pk": 82,
     "fields": {
-      "major_abbr_code": "LAW   ",
+      "major_abbr_code": "LAW",
       "major_name": "LAW",
-      "major_full_name": "Law ",
+      "major_full_name": "Law",
       "major_short_name": "LAW "
     }
   },
@@ -823,9 +823,9 @@
     "model": "compass.major",
     "pk": 83,
     "fields": {
-      "major_abbr_code": "MCB   ",
-      "major_name": "MOLE CELL BIO (FHCRC)   ",
-      "major_full_name": "MOLECULAR AND CELLULAR BIO (FHCRC)    ",
+      "major_abbr_code": "MCB",
+      "major_name": "MOLE CELL BIO (FHCRC)",
+      "major_full_name": "MOLECULAR AND CELLULAR BIO (FHCRC)",
       "major_short_name": "MOLE CELL FH"
     }
   },
@@ -834,8 +834,8 @@
     "pk": 84,
     "fields": {
       "major_abbr_code": "B CHEM",
-      "major_name": "CHEM: BIOC (BOTHELL)    ",
-      "major_full_name": "Chemistry: Biochemistry (Bothell)     ",
+      "major_name": "CHEM: BIOC (BOTHELL)",
+      "major_full_name": "Chemistry: Biochemistry (Bothell)",
       "major_short_name": "CHEM (BIOC) "
     }
   },
@@ -843,9 +843,9 @@
     "model": "compass.major",
     "pk": 85,
     "fields": {
-      "major_abbr_code": "TCOMM ",
-      "major_name": "IAS (COMMUNICATION)     ",
-      "major_full_name": "Interdisciplinary Arts & Sciences (COMM)      ",
+      "major_abbr_code": "TCOMM",
+      "major_name": "IAS (COMMUNICATION)",
+      "major_full_name": "Interdisciplinary Arts & Sciences (COMM)",
       "major_short_name": "TCOMM"
     }
   },
@@ -854,18 +854,18 @@
     "pk": 86,
     "fields": {
       "major_abbr_code": "TGLBST",
-      "major_name": "IAS (GLOBAL STUDIES)    ",
-      "major_full_name": "Interdisciplinary Arts & Sciences (GLBS)      ",
-      "major_short_name": "TGLBST      "
+      "major_name": "IAS (GLOBAL STUDIES)",
+      "major_full_name": "Interdisciplinary Arts & Sciences (GLBS)",
+      "major_short_name": "TGLBST"
     }
   },
   {
     "model": "compass.major",
     "pk": 87,
     "fields": {
-      "major_abbr_code": "INSC  ",
-      "major_name": "INFORMATION SCIENCE     ",
-      "major_full_name": "Information Science     ",
+      "major_abbr_code": "INSC",
+      "major_name": "INFORMATION SCIENCE",
+      "major_full_name": "Information Science",
       "major_short_name": "INSC"
     }
   },
@@ -874,18 +874,18 @@
     "pk": 88,
     "fields": {
       "major_abbr_code": "FINANC",
-      "major_name": "BUS ADMIN (FINANCE)     ",
-      "major_full_name": "Business Administration (Finance)     ",
-      "major_short_name": "BUS AD FIN  "
+      "major_name": "BUS ADMIN (FINANCE)",
+      "major_full_name": "Business Administration (Finance)",
+      "major_short_name": "BUS AD FIN"
     }
   },
   {
     "model": "compass.major",
     "pk": 89,
     "fields": {
-      "major_abbr_code": "SCM   ",
-      "major_name": "SUPPLY CHAIN MANAGEMENT ",
-      "major_full_name": "Supply Chain Management ",
+      "major_abbr_code": "SCM",
+      "major_name": "SUPPLY CHAIN MANAGEMENT",
+      "major_full_name": "Supply Chain Management",
       "major_short_name": "SCM "
     }
   },
@@ -893,9 +893,9 @@
     "model": "compass.major",
     "pk": 90,
     "fields": {
-      "major_abbr_code": "LSJ   ",
-      "major_name": "LAW, SOCIETIES, JUSTICE ",
-      "major_full_name": "Law, Societies, and Justice     ",
+      "major_abbr_code": "LSJ",
+      "major_name": "LAW, SOCIETIES, JUSTICE",
+      "major_full_name": "Law, Societies, and Justice",
       "major_short_name": "LAW, SOC, JU"
     }
   },
@@ -903,19 +903,19 @@
     "model": "compass.major",
     "pk": 91,
     "fields": {
-      "major_abbr_code": "HCDE  ",
+      "major_abbr_code": "HCDE",
       "major_name": "HUM CTR DES & ENGR (HCI)",
-      "major_full_name": "Human Ctr Des & Engr: Human-Computer Int      ",
-      "major_short_name": "HCDE (HCI)  "
+      "major_full_name": "Human Ctr Des & Engr: Human-Computer Int",
+      "major_short_name": "HCDE (HCI)"
     }
   },
   {
     "model": "compass.major",
     "pk": 92,
     "fields": {
-      "major_abbr_code": "PSOCS ",
-      "major_name": "PRE SOCIAL SCIENCE      ",
-      "major_full_name": "Pre Social Sciences     ",
+      "major_abbr_code": "PSOCS",
+      "major_name": "PRE SOCIAL SCIENCE",
+      "major_full_name": "Pre Social Sciences",
       "major_short_name": "PRE SOC SCI "
     }
   },
@@ -924,8 +924,8 @@
     "pk": 93,
     "fields": {
       "major_abbr_code": "TSOCWF",
-      "major_name": "SOCIAL WELFARE (TACOMA) ",
-      "major_full_name": "Social Welfare (Tacoma) ",
+      "major_name": "SOCIAL WELFARE (TACOMA)",
+      "major_full_name": "Social Welfare (Tacoma)",
       "major_short_name": "SOC WELF-TAC"
     }
   },
@@ -933,8 +933,8 @@
     "model": "compass.major",
     "pk": 94,
     "fields": {
-      "major_abbr_code": "TGS   ",
-      "major_name": "IAS (GENERAL STUDIES)   ",
+      "major_abbr_code": "TGS",
+      "major_name": "IAS (GENERAL STUDIES)",
       "major_full_name": "Interdisciplinary Arts & Sciences (GS)",
       "major_short_name": "TGS "
     }
@@ -943,9 +943,9 @@
     "model": "compass.major",
     "pk": 95,
     "fields": {
-      "major_abbr_code": "OSCM  ",
+      "major_abbr_code": "OSCM",
       "major_name": "BUS ADMIN (OSCM)",
-      "major_full_name": "Bus Admin (Oper & Supply Chain Mgmt)  ",
+      "major_full_name": "Bus Admin (Oper & Supply Chain Mgmt)",
       "major_short_name": "BUS AD OSCM "
     }
   },
@@ -953,7 +953,7 @@
     "model": "compass.major",
     "pk": 96,
     "fields": {
-      "major_abbr_code": "MS E  ",
+      "major_abbr_code": "MS E",
       "major_name": "MAT SCI & ENGR (NANOTCH)",
       "major_full_name": "Mat Sci & Engineering (Nanotechnology)",
       "major_short_name": "MS E (NANTC)"
@@ -963,9 +963,9 @@
     "model": "compass.major",
     "pk": 97,
     "fields": {
-      "major_abbr_code": "REHAB ",
+      "major_abbr_code": "REHAB",
       "major_name": "REHAB MED(OCCUPATIONAL T",
-      "major_full_name": "Rehabilitation Med(Occupational Therapy)      ",
+      "major_full_name": "Rehabilitation Med(Occupational Therapy)",
       "major_short_name": "REHAB"
     }
   },
@@ -973,8 +973,8 @@
     "model": "compass.major",
     "pk": 98,
     "fields": {
-      "major_abbr_code": "CSE M ",
-      "major_name": "COMP SCI & ENGR (BS/MS) ",
+      "major_abbr_code": "CSE M",
+      "major_name": "COMP SCI & ENGR (BS/MS)",
       "major_full_name": "Computer Science & Engineering (BS/MS)",
       "major_short_name": "CSE M"
     }
@@ -983,9 +983,9 @@
     "model": "compass.major",
     "pk": 99,
     "fields": {
-      "major_abbr_code": "LAW C ",
-      "major_name": "LAW CONCURRENT  ",
-      "major_full_name": "Law Concurrent Degree Program   ",
+      "major_abbr_code": "LAW C",
+      "major_name": "LAW CONCURRENT",
+      "major_full_name": "Law Concurrent Degree Program",
       "major_short_name": "LAW CONCURR "
     }
   },
@@ -993,19 +993,19 @@
     "model": "compass.major",
     "pk": 100,
     "fields": {
-      "major_abbr_code": "LAW T ",
-      "major_name": "LAW (TAXATION)  ",
-      "major_full_name": "Law (Taxation)    ",
-      "major_short_name": "LAW (TAX)   "
+      "major_abbr_code": "LAW T",
+      "major_name": "LAW (TAXATION)",
+      "major_full_name": "Law (Taxation)",
+      "major_short_name": "LAW (TAX) "
     }
   },
   {
     "model": "compass.major",
     "pk": 101,
     "fields": {
-      "major_abbr_code": "CHID  ",
-      "major_name": "COMP HIST OF IDEAS      ",
-      "major_full_name": "Comparative History of Ideas    ",
+      "major_abbr_code": "CHID",
+      "major_name": "COMP HIST OF IDEAS",
+      "major_full_name": "Comparative History of Ideas",
       "major_short_name": "CHID"
     }
   },
@@ -1013,8 +1013,8 @@
     "model": "compass.major",
     "pk": 102,
     "fields": {
-      "major_abbr_code": "LING  ",
-      "major_name": "LINGUISTICS     ",
+      "major_abbr_code": "LING",
+      "major_name": "LINGUISTICS",
       "major_full_name": "Linguistics",
       "major_short_name": "LINGUISTICS "
     }
@@ -1023,7 +1023,7 @@
     "model": "compass.major",
     "pk": 103,
     "fields": {
-      "major_abbr_code": "B NM  ",
+      "major_abbr_code": "B NM",
       "major_name": "BOTHELL NON MATRICULATED",
       "major_full_name": "Bothell Non Matriculated Student",
       "major_short_name": "NON MATRIC-B"
@@ -1033,9 +1033,9 @@
     "model": "compass.major",
     "pk": 104,
     "fields": {
-      "major_abbr_code": "MKTG  ",
-      "major_name": "BUS ADMIN (MARKETING)   ",
-      "major_full_name": "Business Administration (Marketing)   ",
+      "major_abbr_code": "MKTG",
+      "major_name": "BUS ADMIN (MARKETING)",
+      "major_full_name": "Business Administration (Marketing)",
       "major_short_name": "BUS AD MKTG "
     }
   },
@@ -1046,7 +1046,7 @@
       "major_abbr_code": "TPRMAJ",
       "major_name": "PREMAJOR (TACOMA)",
       "major_full_name": "Premajor (Tacoma Campus)",
-      "major_short_name": "TPRMAJ      "
+      "major_short_name": "TPRMAJ"
     }
   },
   {
@@ -1054,7 +1054,7 @@
     "pk": 106,
     "fields": {
       "major_abbr_code": "B ED I",
-      "major_name": "EDUCATION (BOTHELL)     ",
+      "major_name": "EDUCATION (BOTHELL)",
       "major_full_name": "Education (Certificate:Bothell Campus)",
       "major_short_name": "EDUC(BOTHEL)"
     }
@@ -1063,20 +1063,20 @@
     "model": "compass.major",
     "pk": 107,
     "fields": {
-      "major_abbr_code": "STAT  ",
+      "major_abbr_code": "STAT",
       "major_name": "STATISTICS",
       "major_full_name": "Statistics",
-      "major_short_name": "STATISTICS  "
+      "major_short_name": "STATISTICS"
     }
   },
   {
     "model": "compass.major",
     "pk": 108,
     "fields": {
-      "major_abbr_code": "ART   ",
+      "major_abbr_code": "ART",
       "major_name": "ART (PHOTOMEDIA)",
-      "major_full_name": "Art (Photomedia)  ",
-      "major_short_name": "ART(PHOTO)  "
+      "major_full_name": "Art (Photomedia)",
+      "major_short_name": "ART(PHOTO)"
     }
   },
   {
@@ -1084,38 +1084,38 @@
     "pk": 109,
     "fields": {
       "major_abbr_code": "MUSEOX",
-      "major_name": "MUSEOLOGY ",
-      "major_full_name": "Museology ",
-      "major_short_name": "MUSEOLOGY   "
+      "major_name": "MUSEOLOGY",
+      "major_full_name": "Museology",
+      "major_short_name": "MUSEOLOGY "
     }
   },
   {
     "model": "compass.major",
     "pk": 110,
     "fields": {
-      "major_abbr_code": "ACCTG ",
+      "major_abbr_code": "ACCTG",
       "major_name": "ACCOUNTING",
       "major_full_name": "Accounting",
-      "major_short_name": "ACCOUNTING  "
+      "major_short_name": "ACCOUNTING"
     }
   },
   {
     "model": "compass.major",
     "pk": 111,
     "fields": {
-      "major_abbr_code": "I S   ",
-      "major_name": "BUS ADMIN (INFOR SYS)   ",
-      "major_full_name": "Business Administration (Inform Systems)      ",
-      "major_short_name": "BUS AD IS   "
+      "major_abbr_code": "I S",
+      "major_name": "BUS ADMIN (INFOR SYS)",
+      "major_full_name": "Business Administration (Inform Systems)",
+      "major_short_name": "BUS AD IS "
     }
   },
   {
     "model": "compass.major",
     "pk": 112,
     "fields": {
-      "major_abbr_code": "ATM S ",
-      "major_name": "ATMOSPHERIC SCIENCE     ",
-      "major_full_name": "Atmospheric Sciences    ",
+      "major_abbr_code": "ATM S",
+      "major_name": "ATMOSPHERIC SCIENCE",
+      "major_full_name": "Atmospheric Sciences",
       "major_short_name": "ATMOSPHERIC "
     }
   },
@@ -1123,7 +1123,7 @@
     "model": "compass.major",
     "pk": 113,
     "fields": {
-      "major_abbr_code": "TEGL  ",
+      "major_abbr_code": "TEGL",
       "major_name": "IAS (ETHNIC GENDR LABOR)",
       "major_full_name": "Interdisciplinary Arts & Sciences (EGL)",
       "major_short_name": "TEGL"
@@ -1133,9 +1133,9 @@
     "model": "compass.major",
     "pk": 114,
     "fields": {
-      "major_abbr_code": "DEMOG ",
-      "major_name": "DEMOGRAPHIC METHODS     ",
-      "major_full_name": "Demographic Methods     ",
+      "major_abbr_code": "DEMOG",
+      "major_name": "DEMOGRAPHIC METHODS",
+      "major_full_name": "Demographic Methods",
       "major_short_name": "DEMOG"
     }
   },
@@ -1143,19 +1143,19 @@
     "model": "compass.major",
     "pk": 115,
     "fields": {
-      "major_abbr_code": "AES   ",
-      "major_name": "AMERICAN ETHNIC STUDIES ",
-      "major_full_name": "American Ethnic Studies ",
-      "major_short_name": "AMER ETH S  "
+      "major_abbr_code": "AES",
+      "major_name": "AMERICAN ETHNIC STUDIES",
+      "major_full_name": "American Ethnic Studies",
+      "major_short_name": "AMER ETH S"
     }
   },
   {
     "model": "compass.major",
     "pk": 116,
     "fields": {
-      "major_abbr_code": "ENVIR ",
-      "major_name": "ENVIRONMENTAL STUDIES   ",
-      "major_full_name": "Environmental Studies   ",
+      "major_abbr_code": "ENVIR",
+      "major_name": "ENVIRONMENTAL STUDIES",
+      "major_full_name": "Environmental Studies",
       "major_short_name": "ENVIR"
     }
   },
@@ -1163,9 +1163,9 @@
     "model": "compass.major",
     "pk": 117,
     "fields": {
-      "major_abbr_code": "ARCH  ",
-      "major_name": "ARCHITECTURE    ",
-      "major_full_name": "Architecture      ",
+      "major_abbr_code": "ARCH",
+      "major_name": "ARCHITECTURE",
+      "major_full_name": "Architecture",
       "major_short_name": "ARCHITECTURE"
     }
   },
@@ -1174,8 +1174,8 @@
     "pk": 118,
     "fields": {
       "major_abbr_code": "SOC WF",
-      "major_name": "SOCIAL WELFARE (BSW)    ",
-      "major_full_name": "Social Welfare    ",
+      "major_name": "SOCIAL WELFARE (BSW)",
+      "major_full_name": "Social Welfare",
       "major_short_name": "SOCIAL WELF "
     }
   },
@@ -1184,8 +1184,8 @@
     "pk": 119,
     "fields": {
       "major_abbr_code": "T MGMT",
-      "major_name": "BUS AD (MANAGEMENT) TAC ",
-      "major_full_name": "Business Administration (Management)  ",
+      "major_name": "BUS AD (MANAGEMENT) TAC",
+      "major_full_name": "Business Administration (Management)",
       "major_short_name": "BUS AD MGT-T"
     }
   },
@@ -1193,10 +1193,10 @@
     "model": "compass.major",
     "pk": 120,
     "fields": {
-      "major_abbr_code": "T URB ",
-      "major_name": "URBAN STUDIES   ",
-      "major_full_name": "Urban Studies     ",
-      "major_short_name": "URBAN ST    "
+      "major_abbr_code": "T URB",
+      "major_name": "URBAN STUDIES",
+      "major_full_name": "Urban Studies",
+      "major_short_name": "URBAN ST"
     }
   },
   {
@@ -1204,38 +1204,38 @@
     "pk": 121,
     "fields": {
       "major_abbr_code": "PRESCI",
-      "major_name": "PRE SCIENCE     ",
-      "major_full_name": "Pre Sciences      ",
-      "major_short_name": "PRE SCI     "
+      "major_name": "PRE SCIENCE",
+      "major_full_name": "Pre Sciences",
+      "major_short_name": "PRE SCI"
     }
   },
   {
     "model": "compass.major",
     "pk": 122,
     "fields": {
-      "major_abbr_code": "HA GX ",
+      "major_abbr_code": "HA GX",
       "major_name": "HEALTH ADMIN GRAD",
-      "major_full_name": "Health Administration Group     ",
-      "major_short_name": "HLTH AD G   "
+      "major_full_name": "Health Administration Group",
+      "major_short_name": "HLTH AD G "
     }
   },
   {
     "model": "compass.major",
     "pk": 123,
     "fields": {
-      "major_abbr_code": "FOR R ",
+      "major_abbr_code": "FOR R",
       "major_name": "FOREST RESOURCES",
-      "major_full_name": "Forest Resources  ",
-      "major_short_name": "FOREST RES  "
+      "major_full_name": "Forest Resources",
+      "major_short_name": "FOREST RES"
     }
   },
   {
     "model": "compass.major",
     "pk": 124,
     "fields": {
-      "major_abbr_code": "AIS   ",
-      "major_name": "AMERICAN INDIAN STUDIES ",
-      "major_full_name": "American Indian Studies ",
+      "major_abbr_code": "AIS",
+      "major_name": "AMERICAN INDIAN STUDIES",
+      "major_full_name": "American Indian Studies",
       "major_short_name": "AMER IND ST "
     }
   },
@@ -1243,10 +1243,10 @@
     "model": "compass.major",
     "pk": 125,
     "fields": {
-      "major_abbr_code": "EMBA  ",
-      "major_name": "EXECUTIVE MBA   ",
-      "major_full_name": "Business Administration (Executive)   ",
-      "major_short_name": "EXEC MBA    "
+      "major_abbr_code": "EMBA",
+      "major_name": "EXECUTIVE MBA",
+      "major_full_name": "Business Administration (Executive)",
+      "major_short_name": "EXEC MBA"
     }
   },
   {
@@ -1254,18 +1254,18 @@
     "pk": 126,
     "fields": {
       "major_abbr_code": "T NURS",
-      "major_name": "NURSING(TACOMA CAMPUS)  ",
-      "major_full_name": "Nursing (Tacoma Campus) ",
-      "major_short_name": "NURSING T   "
+      "major_name": "NURSING(TACOMA CAMPUS)",
+      "major_full_name": "Nursing (Tacoma Campus)",
+      "major_short_name": "NURSING T "
     }
   },
   {
     "model": "compass.major",
     "pk": 127,
     "fields": {
-      "major_abbr_code": "CEP   ",
-      "major_name": "COM, ENVIR, & PLAN      ",
-      "major_full_name": "Community, Environment, and Planning  ",
+      "major_abbr_code": "CEP",
+      "major_name": "COM, ENVIR, & PLAN",
+      "major_full_name": "Community, Environment, and Planning",
       "major_short_name": "CEP "
     }
   },
@@ -1273,19 +1273,19 @@
     "model": "compass.major",
     "pk": 128,
     "fields": {
-      "major_abbr_code": "COM E ",
-      "major_name": "COMMUNICATION (DIG MED) ",
-      "major_full_name": "Communication (Digital Media)   ",
-      "major_short_name": "COM (DM)    "
+      "major_abbr_code": "COM E",
+      "major_name": "COMMUNICATION (DIG MED)",
+      "major_full_name": "Communication (Digital Media)",
+      "major_short_name": "COM (DM)"
     }
   },
   {
     "model": "compass.major",
     "pk": 129,
     "fields": {
-      "major_abbr_code": "OCEAN ",
-      "major_name": "OCEANOGRAPHY    ",
-      "major_full_name": "Oceanography      ",
+      "major_abbr_code": "OCEAN",
+      "major_name": "OCEANOGRAPHY",
+      "major_full_name": "Oceanography",
       "major_short_name": "OCEANOGRAPHY"
     }
   },
@@ -1296,16 +1296,16 @@
       "major_abbr_code": "B NURS",
       "major_name": "NURSING(BOTHELL)",
       "major_full_name": "Nursing (Bothell Campus)",
-      "major_short_name": "NURSING-B   "
+      "major_short_name": "NURSING-B "
     }
   },
   {
     "model": "compass.major",
     "pk": 131,
     "fields": {
-      "major_abbr_code": "B SEB ",
-      "major_name": "SOC, ETH, BEH (BOTHELL) ",
-      "major_full_name": "Society, Ethics, & Human Behavior (Bthl)      ",
+      "major_abbr_code": "B SEB",
+      "major_name": "SOC, ETH, BEH (BOTHELL)",
+      "major_full_name": "Society, Ethics, & Human Behavior (Bthl)",
       "major_short_name": "B SEB"
     }
   },
@@ -1314,8 +1314,8 @@
     "pk": 132,
     "fields": {
       "major_abbr_code": "PRE HS",
-      "major_name": "PRE HEALTH SCIENCES     ",
-      "major_full_name": "Pre Health Sciences     ",
+      "major_name": "PRE HEALTH SCIENCES",
+      "major_full_name": "Pre Health Sciences",
       "major_short_name": "PRE HLTH SCI"
     }
   },
@@ -1323,9 +1323,9 @@
     "model": "compass.major",
     "pk": 133,
     "fields": {
-      "major_abbr_code": "HA G  ",
+      "major_abbr_code": "HA G",
       "major_name": "HEALTH ADMINISTRATION GR",
-      "major_full_name": "Health Administration Group     ",
+      "major_full_name": "Health Administration Group",
       "major_short_name": "HLTH ADM GR "
     }
   },
@@ -1333,9 +1333,9 @@
     "model": "compass.major",
     "pk": 134,
     "fields": {
-      "major_abbr_code": "ENTRE ",
+      "major_abbr_code": "ENTRE",
       "major_name": "BUS ADMIN (ENTREPRENEUR)",
-      "major_full_name": "Business Admin (Entrepreneurship)     ",
+      "major_full_name": "Business Admin (Entrepreneurship)",
       "major_short_name": "ENTRE"
     }
   },
@@ -1344,17 +1344,17 @@
     "pk": 135,
     "fields": {
       "major_abbr_code": "T ACCT",
-      "major_name": "ACCOUNTING (TACOMA)     ",
+      "major_name": "ACCOUNTING (TACOMA)",
       "major_full_name": "Accounting",
-      "major_short_name": "ACCTG-T     "
+      "major_short_name": "ACCTG-T"
     }
   },
   {
     "model": "compass.major",
     "pk": 136,
     "fields": {
-      "major_abbr_code": "TMMBA ",
-      "major_name": "TECHNOLOGY MGMT MBA     ",
+      "major_abbr_code": "TMMBA",
+      "major_name": "TECHNOLOGY MGMT MBA",
       "major_full_name": "Technology Management MBA",
       "major_short_name": "TECH MGT MBA"
     }
@@ -1365,26 +1365,26 @@
     "fields": {
       "major_abbr_code": "CONMGT",
       "major_name": "CONSTRUCTION MGMT EVE DG",
-      "major_full_name": "Construction Management,Evening Deg Prog      ",
-      "major_short_name": "CON MGMT E  "
+      "major_full_name": "Construction Management,Evening Deg Prog",
+      "major_short_name": "CON MGMT E"
     }
   },
   {
     "model": "compass.major",
     "pk": 138,
     "fields": {
-      "major_abbr_code": "MPA   ",
-      "major_name": "PUBLIC ADMINISTRATION   ",
-      "major_full_name": "Public Administration   ",
-      "major_short_name": "PUB ADMIN   "
+      "major_abbr_code": "MPA",
+      "major_name": "PUBLIC ADMINISTRATION",
+      "major_full_name": "Public Administration",
+      "major_short_name": "PUB ADMIN "
     }
   },
   {
     "model": "compass.major",
     "pk": 139,
     "fields": {
-      "major_abbr_code": "DRAMA ",
-      "major_name": "DRAMA: PERFORMANCE      ",
+      "major_abbr_code": "DRAMA",
+      "major_name": "DRAMA: PERFORMANCE",
       "major_full_name": "Drama: Performance",
       "major_short_name": "DRAMA (PERF)"
     }
@@ -1395,17 +1395,17 @@
     "fields": {
       "major_abbr_code": "SOCWEM",
       "major_name": "SOCIAL WORK (MGC)",
-      "major_full_name": "Social Work (Multigenerational Practice)      ",
-      "major_short_name": "SOCWEM      "
+      "major_full_name": "Social Work (Multigenerational Practice)",
+      "major_short_name": "SOCWEM"
     }
   },
   {
     "model": "compass.major",
     "pk": 141,
     "fields": {
-      "major_abbr_code": "HCDEE ",
+      "major_abbr_code": "HCDEE",
       "major_name": "HUM CTR DES & ENGR (EVE)",
-      "major_full_name": "Human Centered Design & Engineering(Eve)      ",
+      "major_full_name": "Human Centered Design & Engineering(Eve)",
       "major_short_name": "HCDEE"
     }
   },
@@ -1413,10 +1413,10 @@
     "model": "compass.major",
     "pk": 142,
     "fields": {
-      "major_abbr_code": "PHIL  ",
+      "major_abbr_code": "PHIL",
       "major_name": "PHILOSOPHY",
       "major_full_name": "Philosophy",
-      "major_short_name": "PHILOSOPHY  "
+      "major_short_name": "PHILOSOPHY"
     }
   },
   {
@@ -1424,7 +1424,7 @@
     "pk": 143,
     "fields": {
       "major_abbr_code": "SOC WH",
-      "major_name": "SOCIAL WORK (HP: ASP)   ",
+      "major_name": "SOCIAL WORK (HP: ASP)",
       "major_full_name": "Social Work (Health Practice - Adv St)",
       "major_short_name": "SOCIAL WORK "
     }
@@ -1433,9 +1433,9 @@
     "model": "compass.major",
     "pk": 144,
     "fields": {
-      "major_abbr_code": "RELIG ",
+      "major_abbr_code": "RELIG",
       "major_name": "INT ST:COMPARATIVE RELIG",
-      "major_full_name": "Comparative Religion    ",
+      "major_full_name": "Comparative Religion",
       "major_short_name": "RELIG"
     }
   },
@@ -1445,8 +1445,8 @@
     "fields": {
       "major_abbr_code": "T EDUC",
       "major_name": "EDUC (ELEM EDUC)",
-      "major_full_name": "Education: Elementary Education ",
-      "major_short_name": "EDUCATION   "
+      "major_full_name": "Education: Elementary Education",
+      "major_short_name": "EDUCATION "
     }
   },
   {
@@ -1454,8 +1454,8 @@
     "pk": 146,
     "fields": {
       "major_abbr_code": "B EDUC",
-      "major_name": "EDUCATION (BOTHELL)     ",
-      "major_full_name": "Education (Bothell Campus)      ",
+      "major_name": "EDUCATION (BOTHELL)",
+      "major_full_name": "Education (Bothell Campus)",
       "major_short_name": "EDUC BOTHELL"
     }
   },
@@ -1463,9 +1463,9 @@
     "model": "compass.major",
     "pk": 147,
     "fields": {
-      "major_abbr_code": "T FIN ",
-      "major_name": "BUS AD (FINANCE) (TAC)  ",
-      "major_full_name": "Business Administration (Finance)     ",
+      "major_abbr_code": "T FIN",
+      "major_name": "BUS AD (FINANCE) (TAC)",
+      "major_full_name": "Business Administration (Finance)",
       "major_short_name": "BUS AD FIN-T"
     }
   },
@@ -1473,9 +1473,9 @@
     "model": "compass.major",
     "pk": 148,
     "fields": {
-      "major_abbr_code": "CISB  ",
+      "major_abbr_code": "CISB",
       "major_name": "CERTIF INTERNATIONAL BUS",
-      "major_full_name": "Certificate in International Business ",
+      "major_full_name": "Certificate in International Business",
       "major_short_name": "CERT INT BUS"
     }
   },
@@ -1484,9 +1484,9 @@
     "pk": 149,
     "fields": {
       "major_abbr_code": "TPSYCH",
-      "major_name": "PSYCHOLOGY (TACOMA)     ",
-      "major_full_name": "Psychology (Tacoma)     ",
-      "major_short_name": "TPSYCH      "
+      "major_name": "PSYCHOLOGY (TACOMA)",
+      "major_full_name": "Psychology (Tacoma)",
+      "major_short_name": "TPSYCH"
     }
   },
   {
@@ -1494,18 +1494,18 @@
     "pk": 150,
     "fields": {
       "major_abbr_code": "T SOCW",
-      "major_name": "SOCIAL WORK - TACOMA    ",
-      "major_full_name": "Social Work (Tacoma Campus)     ",
-      "major_short_name": "T SOCW      "
+      "major_name": "SOCIAL WORK - TACOMA",
+      "major_full_name": "Social Work (Tacoma Campus)",
+      "major_short_name": "T SOCW"
     }
   },
   {
     "model": "compass.major",
     "pk": 151,
     "fields": {
-      "major_abbr_code": "BHI   ",
-      "major_name": "BIOMED & HEALTH INFORM  ",
-      "major_full_name": "Biomedical and Health Informatics     ",
+      "major_abbr_code": "BHI",
+      "major_name": "BIOMED & HEALTH INFORM",
+      "major_full_name": "Biomedical and Health Informatics",
       "major_short_name": "BHI "
     }
   },
@@ -1513,9 +1513,9 @@
     "model": "compass.major",
     "pk": 152,
     "fields": {
-      "major_abbr_code": "MED C ",
-      "major_name": "MEDICINE CONCURRENT     ",
-      "major_full_name": "Medicine Concurrent Degree Program    ",
+      "major_abbr_code": "MED C",
+      "major_name": "MEDICINE CONCURRENT",
+      "major_full_name": "Medicine Concurrent Degree Program",
       "major_short_name": "MED CONCURR "
     }
   },
@@ -1523,10 +1523,10 @@
     "model": "compass.major",
     "pk": 153,
     "fields": {
-      "major_abbr_code": "PATH  ",
-      "major_name": "PATHOLOGY ",
-      "major_full_name": "Pathology ",
-      "major_short_name": "PATHOLOGY   "
+      "major_abbr_code": "PATH",
+      "major_name": "PATHOLOGY",
+      "major_full_name": "Pathology",
+      "major_short_name": "PATHOLOGY "
     }
   },
   {
@@ -1534,9 +1534,9 @@
     "pk": 154,
     "fields": {
       "major_abbr_code": "MEDXOH",
-      "major_name": "MEDEX ORAL HEALTH TH    ",
+      "major_name": "MEDEX ORAL HEALTH TH",
       "major_full_name": "Medex Oral Health Therapist Certificate",
-      "major_short_name": "MEDXOH      "
+      "major_short_name": "MEDXOH"
     }
   },
   {
@@ -1544,17 +1544,17 @@
     "pk": 155,
     "fields": {
       "major_abbr_code": "SPHSCX",
-      "major_name": "SPEECH & HEARING SCI    ",
-      "major_full_name": "Speech and Hearing Sciences     ",
-      "major_short_name": "SPHSCX      "
+      "major_name": "SPEECH & HEARING SCI",
+      "major_full_name": "Speech and Hearing Sciences",
+      "major_short_name": "SPHSCX"
     }
   },
   {
     "model": "compass.major",
     "pk": 156,
     "fields": {
-      "major_abbr_code": "ART H ",
-      "major_name": "ART HISTORY     ",
+      "major_abbr_code": "ART H",
+      "major_name": "ART HISTORY",
       "major_full_name": "Art History",
       "major_short_name": "ART HISTORY "
     }
@@ -1563,19 +1563,19 @@
     "model": "compass.major",
     "pk": 157,
     "fields": {
-      "major_abbr_code": "PHARM ",
-      "major_name": "PHARMACY  ",
-      "major_full_name": "Pharmacy  ",
-      "major_short_name": "PHARMACY    "
+      "major_abbr_code": "PHARM",
+      "major_name": "PHARMACY",
+      "major_full_name": "Pharmacy",
+      "major_short_name": "PHARMACY"
     }
   },
   {
     "model": "compass.major",
     "pk": 158,
     "fields": {
-      "major_abbr_code": "SIMX  ",
-      "major_name": "INFORMATION MANAGEMENT  ",
-      "major_full_name": "Information Management  ",
+      "major_abbr_code": "SIMX",
+      "major_name": "INFORMATION MANAGEMENT",
+      "major_full_name": "Information Management",
       "major_short_name": "SIMX"
     }
   },
@@ -1584,7 +1584,7 @@
     "pk": 159,
     "fields": {
       "major_abbr_code": "GRAD V",
-      "major_name": "TACOMA VISIT GRAD STD   ",
+      "major_name": "TACOMA VISIT GRAD STD",
       "major_full_name": "Tacoma Graduate Visiting Student",
       "major_short_name": "TAC GRAD VIS"
     }
@@ -1593,8 +1593,8 @@
     "model": "compass.major",
     "pk": 160,
     "fields": {
-      "major_abbr_code": "T SUD ",
-      "major_name": "SUSTAIN URBAN DEVELOP   ",
+      "major_abbr_code": "T SUD",
+      "major_name": "SUSTAIN URBAN DEVELOP",
       "major_full_name": "Sustainable Urban Development (Tacoma)",
       "major_short_name": "T SUD"
     }
@@ -1614,8 +1614,8 @@
     "pk": 162,
     "fields": {
       "major_abbr_code": "NEUBEH",
-      "major_name": "NEUROBIOLOGY & BEHAVIOR ",
-      "major_full_name": "Neurobiology & Behavior ",
+      "major_name": "NEUROBIOLOGY & BEHAVIOR",
+      "major_full_name": "Neurobiology & Behavior",
       "major_short_name": "NEUR & BEHAV"
     }
   },
@@ -1624,17 +1624,17 @@
     "pk": 163,
     "fields": {
       "major_abbr_code": "B ENST",
-      "major_name": "ENVIR ST (BOTHELL)      ",
-      "major_full_name": "Environmental Studies (Bothell) ",
-      "major_short_name": "B ENST      "
+      "major_name": "ENVIR ST (BOTHELL)",
+      "major_full_name": "Environmental Studies (Bothell)",
+      "major_short_name": "B ENST"
     }
   },
   {
     "model": "compass.major",
     "pk": 164,
     "fields": {
-      "major_abbr_code": "TCJUS ",
-      "major_name": "CRIMINAL JUSTICE-TACOMA ",
+      "major_abbr_code": "TCJUS",
+      "major_name": "CRIMINAL JUSTICE-TACOMA",
       "major_full_name": "Criminal Justice (Tacoma Campus)",
       "major_short_name": "TCJUS"
     }
@@ -1644,18 +1644,18 @@
     "pk": 165,
     "fields": {
       "major_abbr_code": "MEDSLP",
-      "major_name": "MED SPCH-LANG PATHOLOGY ",
-      "major_full_name": "Medical Speech-Language Pathology     ",
-      "major_short_name": "MEDSLP      "
+      "major_name": "MED SPCH-LANG PATHOLOGY",
+      "major_full_name": "Medical Speech-Language Pathology",
+      "major_short_name": "MEDSLP"
     }
   },
   {
     "model": "compass.major",
     "pk": 166,
     "fields": {
-      "major_abbr_code": "B CLA ",
+      "major_abbr_code": "B CLA",
       "major_name": "CULT, LIT, ART (BOTHELL)",
-      "major_full_name": "Culture, Literature, and the Arts (Bthl)      ",
+      "major_full_name": "Culture, Literature, and the Arts (Bthl)",
       "major_short_name": "B CLA"
     }
   },
@@ -1663,19 +1663,19 @@
     "model": "compass.major",
     "pk": 167,
     "fields": {
-      "major_abbr_code": "MUSAP ",
+      "major_abbr_code": "MUSAP",
       "major_name": "APPLIED MUSIC-STRING INS",
-      "major_full_name": "Applied Music (String Instruments)    ",
-      "major_short_name": "APPL MUSIC  "
+      "major_full_name": "Applied Music (String Instruments)",
+      "major_short_name": "APPL MUSIC"
     }
   },
   {
     "model": "compass.major",
     "pk": 168,
     "fields": {
-      "major_abbr_code": "MICRO ",
-      "major_name": "MICROBIOLOGY    ",
-      "major_full_name": "Microbiology      ",
+      "major_abbr_code": "MICRO",
+      "major_name": "MICROBIOLOGY",
+      "major_full_name": "Microbiology",
       "major_short_name": "MICROBIOLOGY"
     }
   },
@@ -1683,9 +1683,9 @@
     "model": "compass.major",
     "pk": 169,
     "fields": {
-      "major_abbr_code": "N&MES ",
+      "major_abbr_code": "N&MES",
       "major_name": "NEAR & MIDDLE EASTERN ST",
-      "major_full_name": "Near & Middle Eastern Studies   ",
+      "major_full_name": "Near & Middle Eastern Studies",
       "major_short_name": "NEAR & MID E"
     }
   },
@@ -1693,9 +1693,9 @@
     "model": "compass.major",
     "pk": 170,
     "fields": {
-      "major_abbr_code": "PB AF ",
-      "major_name": "PUBLIC AFFAIRS  ",
-      "major_full_name": "Public Affairs    ",
+      "major_abbr_code": "PB AF",
+      "major_name": "PUBLIC AFFAIRS",
+      "major_full_name": "Public Affairs",
       "major_short_name": "PUB AFFAIRS "
     }
   },
@@ -1703,10 +1703,10 @@
     "model": "compass.major",
     "pk": 171,
     "fields": {
-      "major_abbr_code": "NUTR  ",
-      "major_name": "NUTRITIONAL SCIENCES    ",
-      "major_full_name": "Nutritional Sciences:Practice Experience      ",
-      "major_short_name": "NUTR SCI    "
+      "major_abbr_code": "NUTR",
+      "major_name": "NUTRITIONAL SCIENCES",
+      "major_full_name": "Nutritional Sciences:Practice Experience",
+      "major_short_name": "NUTR SCI"
     }
   },
   {
@@ -1715,27 +1715,27 @@
     "fields": {
       "major_abbr_code": "B BUSX",
       "major_name": "BUSINESS ADMIN (BOTHELL)",
-      "major_full_name": "Business Administration ",
-      "major_short_name": "BUSINESS-B  "
+      "major_full_name": "Business Administration",
+      "major_short_name": "BUSINESS-B"
     }
   },
   {
     "model": "compass.major",
     "pk": 173,
     "fields": {
-      "major_abbr_code": "FINN  ",
-      "major_name": "FINNISH   ",
-      "major_full_name": "Finnish   ",
-      "major_short_name": "FINNISH     "
+      "major_abbr_code": "FINN",
+      "major_name": "FINNISH",
+      "major_full_name": "Finnish",
+      "major_short_name": "FINNISH"
     }
   },
   {
     "model": "compass.major",
     "pk": 174,
     "fields": {
-      "major_abbr_code": "MBA   ",
-      "major_name": "BUSINESS ADMINISTRATION ",
-      "major_full_name": "Business Administration ",
+      "major_abbr_code": "MBA",
+      "major_name": "BUSINESS ADMINISTRATION",
+      "major_full_name": "Business Administration",
       "major_short_name": "MBA "
     }
   },
@@ -1743,9 +1743,9 @@
     "model": "compass.major",
     "pk": 175,
     "fields": {
-      "major_abbr_code": "TIAS  ",
-      "major_name": "INTERDISCP ARTS & SCI   ",
-      "major_full_name": "Interdisciplinary Arts & Sciences     ",
+      "major_abbr_code": "TIAS",
+      "major_name": "INTERDISCP ARTS & SCI",
+      "major_full_name": "Interdisciplinary Arts & Sciences",
       "major_short_name": "TIAS"
     }
   },
@@ -1753,8 +1753,8 @@
     "model": "compass.major",
     "pk": 176,
     "fields": {
-      "major_abbr_code": "MED T ",
-      "major_name": "MEDICAL TECHNOLOGY      ",
+      "major_abbr_code": "MED T",
+      "major_name": "MEDICAL TECHNOLOGY",
       "major_full_name": "Medical Technology",
       "major_short_name": "MEDICAL TECH"
     }
@@ -1765,17 +1765,17 @@
     "fields": {
       "major_abbr_code": "BPOLST",
       "major_name": "POLICY STUDIES (BOTHELL)",
-      "major_full_name": "Policy Studies (Bothell Campus) ",
-      "major_short_name": "POLICY ST   "
+      "major_full_name": "Policy Studies (Bothell Campus)",
+      "major_short_name": "POLICY ST "
     }
   },
   {
     "model": "compass.major",
     "pk": 178,
     "fields": {
-      "major_abbr_code": "C LIT ",
-      "major_name": "COMPARATIVE LITERATURE  ",
-      "major_full_name": "Comparative Literature  ",
+      "major_abbr_code": "C LIT",
+      "major_name": "COMPARATIVE LITERATURE",
+      "major_full_name": "Comparative Literature",
       "major_short_name": "C LIT"
     }
   },
@@ -1783,9 +1783,9 @@
     "model": "compass.major",
     "pk": 179,
     "fields": {
-      "major_abbr_code": "SISSA ",
+      "major_abbr_code": "SISSA",
       "major_name": "INT ST:SOUTH ASIA",
-      "major_full_name": "International Studies: South Asia     ",
+      "major_full_name": "International Studies: South Asia",
       "major_short_name": "SISSA"
     }
   },
@@ -1793,7 +1793,7 @@
     "model": "compass.major",
     "pk": 180,
     "fields": {
-      "major_abbr_code": "T NM  ",
+      "major_abbr_code": "T NM",
       "major_name": "NONMATRIC TACOMA",
       "major_full_name": "Nonmatriculated - Tacoma",
       "major_short_name": "NONMATR TAC "
@@ -1803,9 +1803,9 @@
     "model": "compass.major",
     "pk": 181,
     "fields": {
-      "major_abbr_code": "GEOGX ",
-      "major_name": "GEOGRAPHIC INFO SYSTEMS ",
-      "major_full_name": "Geographic Information Systems  ",
+      "major_abbr_code": "GEOGX",
+      "major_name": "GEOGRAPHIC INFO SYSTEMS",
+      "major_full_name": "Geographic Information Systems",
       "major_short_name": "GEOGX"
     }
   },
@@ -1814,18 +1814,18 @@
     "pk": 182,
     "fields": {
       "major_abbr_code": "GERMAN",
-      "major_name": "GERMANICS ",
-      "major_full_name": "Germanics ",
-      "major_short_name": "GERMAN      "
+      "major_name": "GERMANICS",
+      "major_full_name": "Germanics",
+      "major_short_name": "GERMAN"
     }
   },
   {
     "model": "compass.major",
     "pk": 183,
     "fields": {
-      "major_abbr_code": "PHCOL ",
-      "major_name": "PHARMACOLOGY    ",
-      "major_full_name": "Pharmacology      ",
+      "major_abbr_code": "PHCOL",
+      "major_name": "PHARMACOLOGY",
+      "major_full_name": "Pharmacology",
       "major_short_name": "PHARMACOLOGY"
     }
   },
@@ -1834,19 +1834,19 @@
     "pk": 184,
     "fields": {
       "major_abbr_code": "B LEPP",
-      "major_name": "LAW ECON PUB POL (BOTH) ",
-      "major_full_name": "Law, Economics & Public Policy (Bothell)      ",
-      "major_short_name": "B LEPP      "
+      "major_name": "LAW ECON PUB POL (BOTH)",
+      "major_full_name": "Law, Economics & Public Policy (Bothell)",
+      "major_short_name": "B LEPP"
     }
   },
   {
     "model": "compass.major",
     "pk": 185,
     "fields": {
-      "major_abbr_code": "EPI   ",
-      "major_name": "EPIDEM-MAT & CHILD HLTH ",
+      "major_abbr_code": "EPI",
+      "major_name": "EPIDEM-MAT & CHILD HLTH",
       "major_full_name": "Epidemiology - Maternal & Child Health",
-      "major_short_name": "EPI-M&CH    "
+      "major_short_name": "EPI-M&CH"
     }
   },
   {
@@ -1854,8 +1854,8 @@
     "pk": 186,
     "fields": {
       "major_abbr_code": "PREMAJ",
-      "major_name": "PRE MAJOR (A&S) ",
-      "major_full_name": "Pre Major (Arts & Sciences)     ",
+      "major_name": "PRE MAJOR (A&S)",
+      "major_full_name": "Pre Major (Arts & Sciences)",
       "major_short_name": "PRE MJR(A&S)"
     }
   },
@@ -1863,9 +1863,9 @@
     "model": "compass.major",
     "pk": 187,
     "fields": {
-      "major_abbr_code": "CSSX  ",
+      "major_abbr_code": "CSSX",
       "major_name": "COMPUTING & SOFTWARE SYS",
-      "major_full_name": "Computing & Software Systems    ",
+      "major_full_name": "Computing & Software Systems",
       "major_short_name": "COMP & SOFT "
     }
   },
@@ -1875,17 +1875,17 @@
     "fields": {
       "major_abbr_code": "THLEAD",
       "major_name": "HEALTHCARE LEAD (TACOMA)",
-      "major_full_name": "Healthcare Leadership (Tacoma Campus) ",
-      "major_short_name": "THLEAD      "
+      "major_full_name": "Healthcare Leadership (Tacoma Campus)",
+      "major_short_name": "THLEAD"
     }
   },
   {
     "model": "compass.major",
     "pk": 189,
     "fields": {
-      "major_abbr_code": "ORALB ",
-      "major_name": "ORAL HEALTH SCIENCES    ",
-      "major_full_name": "Oral Health Sciences    ",
+      "major_abbr_code": "ORALB",
+      "major_name": "ORAL HEALTH SCIENCES",
+      "major_full_name": "Oral Health Sciences",
       "major_short_name": "ORAL HTH SCI"
     }
   },
@@ -1894,18 +1894,18 @@
     "pk": 190,
     "fields": {
       "major_abbr_code": "CHEM E",
-      "major_name": "CHEMICAL ENGINEERING    ",
-      "major_full_name": "Chemical Engineering    ",
-      "major_short_name": "CHEM E      "
+      "major_name": "CHEMICAL ENGINEERING",
+      "major_full_name": "Chemical Engineering",
+      "major_short_name": "CHEM E"
     }
   },
   {
     "model": "compass.major",
     "pk": 191,
     "fields": {
-      "major_abbr_code": "GWSS  ",
+      "major_abbr_code": "GWSS",
       "major_name": "GENDER, WOMEN, SEXUALITY",
-      "major_full_name": "Gender, Women, and Sexuality Studies  ",
+      "major_full_name": "Gender, Women, and Sexuality Studies",
       "major_short_name": "GWSS"
     }
   },
@@ -1914,8 +1914,8 @@
     "pk": 192,
     "fields": {
       "major_abbr_code": "ARCHST",
-      "major_name": "ARCHITECTURAL STUDIES   ",
-      "major_full_name": "Architectural Studies   ",
+      "major_name": "ARCHITECTURAL STUDIES",
+      "major_full_name": "Architectural Studies",
       "major_short_name": "ARCH STDIES "
     }
   },
@@ -1923,8 +1923,8 @@
     "model": "compass.major",
     "pk": 193,
     "fields": {
-      "major_abbr_code": "IPM   ",
-      "major_name": "INFRASTR PLAN AND MGT   ",
+      "major_abbr_code": "IPM",
+      "major_name": "INFRASTR PLAN AND MGT",
       "major_full_name": "Infrastructure Planning and Management",
       "major_short_name": "IPM "
     }
@@ -1934,19 +1934,19 @@
     "pk": 194,
     "fields": {
       "major_abbr_code": "FRNCHS",
-      "major_name": "FRENCH STUDIES  ",
-      "major_full_name": "French Studies    ",
-      "major_short_name": "FRNCHS      "
+      "major_name": "FRENCH STUDIES",
+      "major_full_name": "French Studies",
+      "major_short_name": "FRNCHS"
     }
   },
   {
     "model": "compass.major",
     "pk": 195,
     "fields": {
-      "major_abbr_code": "ASTR  ",
-      "major_name": "ASTRONOMY ",
-      "major_full_name": "Astronomy ",
-      "major_short_name": "ASTRONOMY   "
+      "major_abbr_code": "ASTR",
+      "major_name": "ASTRONOMY",
+      "major_full_name": "Astronomy",
+      "major_short_name": "ASTRONOMY "
     }
   },
   {
@@ -1954,9 +1954,9 @@
     "pk": 196,
     "fields": {
       "major_abbr_code": "BCULST",
-      "major_name": "BOTHELL - CULTURAL ST   ",
-      "major_full_name": "Bothell - Cultural Studies      ",
-      "major_short_name": "BCULST      "
+      "major_name": "BOTHELL - CULTURAL ST",
+      "major_full_name": "Bothell - Cultural Studies",
+      "major_short_name": "BCULST"
     }
   },
   {
@@ -1965,8 +1965,8 @@
     "fields": {
       "major_abbr_code": "B XPRE",
       "major_name": "EXTND PREMAJOR (BOTHELL)",
-      "major_full_name": "Extended Premajor (Bothell Campus)    ",
-      "major_short_name": "B XPRE      "
+      "major_full_name": "Extended Premajor (Bothell Campus)",
+      "major_short_name": "B XPRE"
     }
   },
   {
@@ -1974,28 +1974,28 @@
     "pk": 198,
     "fields": {
       "major_abbr_code": "SOCWAP",
-      "major_name": "SOCIAL WORK (AP-ASP)    ",
-      "major_full_name": "Social Work (Admin & Pol Pract - Adv St)      ",
-      "major_short_name": "SOCWAP      "
+      "major_name": "SOCIAL WORK (AP-ASP)",
+      "major_full_name": "Social Work (Admin & Pol Pract - Adv St)",
+      "major_short_name": "SOCWAP"
     }
   },
   {
     "model": "compass.major",
     "pk": 199,
     "fields": {
-      "major_abbr_code": "ITAL  ",
-      "major_name": "ITALIAN   ",
-      "major_full_name": "Italian   ",
-      "major_short_name": "ITALIAN     "
+      "major_abbr_code": "ITAL",
+      "major_name": "ITALIAN",
+      "major_full_name": "Italian",
+      "major_short_name": "ITALIAN"
     }
   },
   {
     "model": "compass.major",
     "pk": 200,
     "fields": {
-      "major_abbr_code": "CMP E ",
-      "major_name": "COMPUTER ENGINEERING    ",
-      "major_full_name": "Computer Engineering    ",
+      "major_abbr_code": "CMP E",
+      "major_name": "COMPUTER ENGINEERING",
+      "major_full_name": "Computer Engineering",
       "major_short_name": "COMPUTER ENG"
     }
   },
@@ -2003,10 +2003,10 @@
     "model": "compass.major",
     "pk": 201,
     "fields": {
-      "major_abbr_code": "EURO  ",
-      "major_name": "INT ST:EUROPE   ",
-      "major_full_name": "International Studies: Europe   ",
-      "major_short_name": "SISEUR      "
+      "major_abbr_code": "EURO",
+      "major_name": "INT ST:EUROPE",
+      "major_full_name": "International Studies: Europe",
+      "major_short_name": "SISEUR"
     }
   },
   {
@@ -2014,18 +2014,18 @@
     "pk": 202,
     "fields": {
       "major_abbr_code": "EX MPA",
-      "major_name": "EXECUTIVE MPA   ",
-      "major_full_name": "Public Administration (Executive)     ",
-      "major_short_name": "EX MPA      "
+      "major_name": "EXECUTIVE MPA",
+      "major_full_name": "Public Administration (Executive)",
+      "major_short_name": "EX MPA"
     }
   },
   {
     "model": "compass.major",
     "pk": 203,
     "fields": {
-      "major_abbr_code": "SPHSC ",
-      "major_name": "SPEECH & HEARING SCI    ",
-      "major_full_name": "Speech and Hearing Sciences     ",
+      "major_abbr_code": "SPHSC",
+      "major_name": "SPEECH & HEARING SCI",
+      "major_full_name": "Speech and Hearing Sciences",
       "major_short_name": "SPHSC"
     }
   },
@@ -2033,9 +2033,9 @@
     "model": "compass.major",
     "pk": 204,
     "fields": {
-      "major_abbr_code": "CSE   ",
-      "major_name": "COMPUTER SCI & ENGR     ",
-      "major_full_name": "Computer Science & Engineering  ",
+      "major_abbr_code": "CSE",
+      "major_name": "COMPUTER SCI & ENGR",
+      "major_full_name": "Computer Science & Engineering",
       "major_short_name": "CMP SCI & E "
     }
   },
@@ -2044,17 +2044,17 @@
     "pk": 205,
     "fields": {
       "major_abbr_code": "L ARCH",
-      "major_name": "LANDSCAPE ARCHITECTURE  ",
-      "major_full_name": "Landscape Architecture  ",
-      "major_short_name": "L ARCH      "
+      "major_name": "LANDSCAPE ARCHITECTURE",
+      "major_full_name": "Landscape Architecture",
+      "major_short_name": "L ARCH"
     }
   },
   {
     "model": "compass.major",
     "pk": 206,
     "fields": {
-      "major_abbr_code": "IS PA ",
-      "major_name": "INTERNATL STDY/P AFFR   ",
+      "major_abbr_code": "IS PA",
+      "major_name": "INTERNATL STDY/P AFFR",
       "major_full_name": "International St/Public Administration",
       "major_short_name": "IS/PUB AFFR "
     }
@@ -2063,9 +2063,9 @@
     "model": "compass.major",
     "pk": 207,
     "fields": {
-      "major_abbr_code": "SISME ",
-      "major_name": "INT ST:MIDDLE EAST      ",
-      "major_full_name": "International Studies: Middle East    ",
+      "major_abbr_code": "SISME",
+      "major_name": "INT ST:MIDDLE EAST",
+      "major_full_name": "International Studies: Middle East",
       "major_short_name": "SISME"
     }
   },
@@ -2073,10 +2073,10 @@
     "model": "compass.major",
     "pk": 208,
     "fields": {
-      "major_abbr_code": "CHEM  ",
-      "major_name": "CHEMISTRY ",
-      "major_full_name": "Chemistry ",
-      "major_short_name": "CHEMISTRY   "
+      "major_abbr_code": "CHEM",
+      "major_name": "CHEMISTRY",
+      "major_full_name": "Chemistry",
+      "major_short_name": "CHEMISTRY "
     }
   },
   {
@@ -2084,18 +2084,18 @@
     "pk": 209,
     "fields": {
       "major_abbr_code": "PHYS X",
-      "major_name": "PHYSICS   ",
-      "major_full_name": "Physics   ",
-      "major_short_name": "PHYSICS     "
+      "major_name": "PHYSICS",
+      "major_full_name": "Physics",
+      "major_short_name": "PHYSICS"
     }
   },
   {
     "model": "compass.major",
     "pk": 210,
     "fields": {
-      "major_abbr_code": "B CP  ",
+      "major_abbr_code": "B CP",
       "major_name": "COM PSYCHOLOGY (BOTHELL)",
-      "major_full_name": "Community Psychology (Bothell)  ",
+      "major_full_name": "Community Psychology (Bothell)",
       "major_short_name": "B CP"
     }
   },
@@ -2103,18 +2103,18 @@
     "model": "compass.major",
     "pk": 211,
     "fields": {
-      "major_abbr_code": "MEDCH ",
-      "major_name": "MEDICINAL CHEMISTRY     ",
-      "major_full_name": "Medicinal Chemistry     ",
-      "major_short_name": "MED CHEM    "
+      "major_abbr_code": "MEDCH",
+      "major_name": "MEDICINAL CHEMISTRY",
+      "major_full_name": "Medicinal Chemistry",
+      "major_short_name": "MED CHEM"
     }
   },
   {
     "model": "compass.major",
     "pk": 212,
     "fields": {
-      "major_abbr_code": "CFRM  ",
-      "major_name": "COMP FIN & RISK MGMT    ",
+      "major_abbr_code": "CFRM",
+      "major_name": "COMP FIN & RISK MGMT",
       "major_full_name": "Computational Finance & Risk Management",
       "major_short_name": "CFRM"
     }
@@ -2124,8 +2124,8 @@
     "pk": 213,
     "fields": {
       "major_abbr_code": "NP MGT",
-      "major_name": "NONPROFIT MANAGEMENT    ",
-      "major_full_name": "Nonprofit Management    ",
+      "major_name": "NONPROFIT MANAGEMENT",
+      "major_full_name": "Nonprofit Management",
       "major_short_name": "NP MG"
     }
   },
@@ -2133,9 +2133,9 @@
     "model": "compass.major",
     "pk": 214,
     "fields": {
-      "major_abbr_code": "CL ST ",
+      "major_abbr_code": "CL ST",
       "major_name": "CLASSICAL STUDIES",
-      "major_full_name": "Classical Studies ",
+      "major_full_name": "Classical Studies",
       "major_short_name": "CLASSICAL ST"
     }
   },
@@ -2145,18 +2145,18 @@
     "fields": {
       "major_abbr_code": "SOCWMH",
       "major_name": "SOCIAL WORK (MH)",
-      "major_full_name": "Social Work (Mental Health Practice)  ",
-      "major_short_name": "SOCWMH      "
+      "major_full_name": "Social Work (Mental Health Practice)",
+      "major_short_name": "SOCWMH"
     }
   },
   {
     "model": "compass.major",
     "pk": 216,
     "fields": {
-      "major_abbr_code": "T MBA ",
-      "major_name": "UW TACOMA MBA   ",
-      "major_full_name": "UW Tacoma Master of Business Admin    ",
-      "major_short_name": "TACOMA MBA  "
+      "major_abbr_code": "T MBA",
+      "major_name": "UW TACOMA MBA",
+      "major_full_name": "UW Tacoma Master of Business Admin",
+      "major_short_name": "TACOMA MBA"
     }
   },
   {
@@ -2164,18 +2164,18 @@
     "pk": 217,
     "fields": {
       "major_abbr_code": "T MAIS",
-      "major_name": "T MAIS (INTERDISC ST)   ",
+      "major_name": "T MAIS (INTERDISC ST)",
       "major_full_name": "Interdisciplinary Studies",
-      "major_short_name": "T MAIS      "
+      "major_short_name": "T MAIS"
     }
   },
   {
     "model": "compass.major",
     "pk": 218,
     "fields": {
-      "major_abbr_code": "MEDXM ",
-      "major_name": "MEDEX MCHS PROGRAM      ",
-      "major_full_name": "Medxm (Medex Masters Degree Program)  ",
+      "major_abbr_code": "MEDXM",
+      "major_name": "MEDEX MCHS PROGRAM",
+      "major_full_name": "Medxm (Medex Masters Degree Program)",
       "major_short_name": "MEDXM"
     }
   },
@@ -2183,7 +2183,7 @@
     "model": "compass.major",
     "pk": 219,
     "fields": {
-      "major_abbr_code": "TAMC  ",
+      "major_abbr_code": "TAMC",
       "major_name": "IAS (ARTS MEDIA&CULTURE)",
       "major_full_name": "Interdisciplinary Arts & Sciences (AMC)",
       "major_short_name": "TAMC"
@@ -2193,9 +2193,9 @@
     "model": "compass.major",
     "pk": 220,
     "fields": {
-      "major_abbr_code": "B IMD ",
+      "major_abbr_code": "B IMD",
       "major_name": "INTERACTIVE MEDIA DESIGN",
-      "major_full_name": "Interactive Media Design (Bothell)    ",
+      "major_full_name": "Interactive Media Design (Bothell)",
       "major_short_name": "B IMD"
     }
   },
@@ -2203,9 +2203,9 @@
     "model": "compass.major",
     "pk": 221,
     "fields": {
-      "major_abbr_code": "BSE   ",
-      "major_name": "BIORESOURCE SCI & ENGR  ",
-      "major_full_name": "Bioresource Science and Engineering   ",
+      "major_abbr_code": "BSE",
+      "major_name": "BIORESOURCE SCI & ENGR",
+      "major_full_name": "Bioresource Science and Engineering",
       "major_short_name": "BSE "
     }
   },
@@ -2213,9 +2213,9 @@
     "model": "compass.major",
     "pk": 222,
     "fields": {
-      "major_abbr_code": "B AMS ",
-      "major_name": "AMERICAN ST (BOTHELL)   ",
-      "major_full_name": "American Studies (Bothell)      ",
+      "major_abbr_code": "B AMS",
+      "major_name": "AMERICAN ST (BOTHELL)",
+      "major_full_name": "American Studies (Bothell)",
       "major_short_name": "B AMS"
     }
   },
@@ -2223,9 +2223,9 @@
     "model": "compass.major",
     "pk": 223,
     "fields": {
-      "major_abbr_code": "LIS R ",
-      "major_name": "LIBRARY & INFO SCIENCE  ",
-      "major_full_name": "Library & Information Science   ",
+      "major_abbr_code": "LIS R",
+      "major_name": "LIBRARY & INFO SCIENCE",
+      "major_full_name": "Library & Information Science",
       "major_short_name": "LIS R"
     }
   },
@@ -2233,19 +2233,19 @@
     "model": "compass.major",
     "pk": 224,
     "fields": {
-      "major_abbr_code": "SPAN  ",
-      "major_name": "SPANISH   ",
-      "major_full_name": "Spanish   ",
-      "major_short_name": "SPANISH     "
+      "major_abbr_code": "SPAN",
+      "major_name": "SPANISH",
+      "major_full_name": "Spanish",
+      "major_short_name": "SPANISH"
     }
   },
   {
     "model": "compass.major",
     "pk": 225,
     "fields": {
-      "major_abbr_code": "ISE   ",
-      "major_name": "IND AND SYS ENGINEERING ",
-      "major_full_name": "Industrial and Systems Engineering    ",
+      "major_abbr_code": "ISE",
+      "major_name": "IND AND SYS ENGINEERING",
+      "major_full_name": "Industrial and Systems Engineering",
       "major_short_name": "ISE "
     }
   },
@@ -2254,8 +2254,8 @@
     "pk": 226,
     "fields": {
       "major_abbr_code": "ACCTGX",
-      "major_name": "ACCOUNTING (TAXATION)   ",
-      "major_full_name": "Accounting (Taxation)   ",
+      "major_name": "ACCOUNTING (TAXATION)",
+      "major_full_name": "Accounting (Taxation)",
       "major_short_name": "ACCTGX (TAX)"
     }
   },
@@ -2265,8 +2265,8 @@
     "fields": {
       "major_abbr_code": "T HISP",
       "major_name": "HISPANIC STUDIES",
-      "major_full_name": "Hispanic Studies  ",
-      "major_short_name": "T HISP      "
+      "major_full_name": "Hispanic Studies",
+      "major_short_name": "T HISP"
     }
   },
   {
@@ -2275,8 +2275,8 @@
     "fields": {
       "major_abbr_code": "SOCWEH",
       "major_name": "SOCIAL WORK (HMH)",
-      "major_full_name": "Social Work (Intg Hlth & Mntl Hlth Prac)      ",
-      "major_short_name": "SOCWEH      "
+      "major_full_name": "Social Work (Intg Hlth & Mntl Hlth Prac)",
+      "major_short_name": "SOCWEH"
     }
   },
   {
@@ -2284,18 +2284,18 @@
     "pk": 229,
     "fields": {
       "major_abbr_code": "BENSCI",
-      "major_name": "ENVIRON SCI (BOTHELL)   ",
+      "major_name": "ENVIRON SCI (BOTHELL)",
       "major_full_name": "Environmental Science - Bothell Campus",
-      "major_short_name": "BENSCI      "
+      "major_short_name": "BENSCI"
     }
   },
   {
     "model": "compass.major",
     "pk": 230,
     "fields": {
-      "major_abbr_code": "HUM E ",
-      "major_name": "HUMANITIES,EVENING      ",
-      "major_full_name": "Humanities, Evening Degree Program    ",
+      "major_abbr_code": "HUM E",
+      "major_name": "HUMANITIES,EVENING",
+      "major_full_name": "Humanities, Evening Degree Program",
       "major_short_name": "HUMANITIES,E"
     }
   },
@@ -2303,10 +2303,10 @@
     "model": "compass.major",
     "pk": 231,
     "fields": {
-      "major_abbr_code": "DANCE ",
-      "major_name": "DANCE: CREATIVE STUDIES ",
-      "major_full_name": "Dance: Creative Studies ",
-      "major_short_name": "DANCE (CS)  "
+      "major_abbr_code": "DANCE",
+      "major_name": "DANCE: CREATIVE STUDIES",
+      "major_full_name": "Dance: Creative Studies",
+      "major_short_name": "DANCE (CS)"
     }
   },
   {
@@ -2314,16 +2314,16 @@
     "pk": 232,
     "fields": {
       "major_abbr_code": "B MATH",
-      "major_name": "MATHEMATICS (BOTHELL)   ",
-      "major_full_name": "Mathematics (Bothell Campus)    ",
-      "major_short_name": "B MATH      "
+      "major_name": "MATHEMATICS (BOTHELL)",
+      "major_full_name": "Mathematics (Bothell Campus)",
+      "major_short_name": "B MATH"
     }
   },
   {
     "model": "compass.major",
     "pk": 233,
     "fields": {
-      "major_abbr_code": "SCAND ",
+      "major_abbr_code": "SCAND",
       "major_name": "SCANDINAVIAN(LANG & LIT)",
       "major_full_name": "Scandinavian (Languages & Literatures)",
       "major_short_name": "SCAND L & L "
@@ -2333,9 +2333,9 @@
     "model": "compass.major",
     "pk": 234,
     "fields": {
-      "major_abbr_code": "PROS  ",
-      "major_name": "PROSTHODONTICS  ",
-      "major_full_name": "Prosthodontics    ",
+      "major_abbr_code": "PROS",
+      "major_name": "PROSTHODONTICS",
+      "major_full_name": "Prosthodontics",
       "major_short_name": "PROSTHODONT "
     }
   },
@@ -2344,18 +2344,18 @@
     "pk": 235,
     "fields": {
       "major_abbr_code": "DENT C",
-      "major_name": "DENTISTRY CONCURRENT    ",
-      "major_full_name": "Dentistry Concurrent Degree Program   ",
-      "major_short_name": "DENT C      "
+      "major_name": "DENTISTRY CONCURRENT",
+      "major_full_name": "Dentistry Concurrent Degree Program",
+      "major_short_name": "DENT C"
     }
   },
   {
     "model": "compass.major",
     "pk": 236,
     "fields": {
-      "major_abbr_code": "B A   ",
-      "major_name": "BUSINESS ADMINISTRATION ",
-      "major_full_name": "Business  Administration",
+      "major_abbr_code": "B A",
+      "major_name": "BUSINESS ADMINISTRATION",
+      "major_full_name": "BusinessAdministration",
       "major_short_name": "BUSINESS ADM"
     }
   },
@@ -2363,9 +2363,9 @@
     "model": "compass.major",
     "pk": 237,
     "fields": {
-      "major_abbr_code": "ORTHO ",
-      "major_name": "ORTHODONTICS    ",
-      "major_full_name": "Orthodontics      ",
+      "major_abbr_code": "ORTHO",
+      "major_name": "ORTHODONTICS",
+      "major_full_name": "Orthodontics",
       "major_short_name": "ORTHODONTICS"
     }
   },
@@ -2374,7 +2374,7 @@
     "pk": 238,
     "fields": {
       "major_abbr_code": "PRENUR",
-      "major_name": "PRE NURSING     ",
+      "major_name": "PRE NURSING",
       "major_full_name": "Pre Nursing",
       "major_short_name": "PRE NURSING "
     }
@@ -2384,18 +2384,18 @@
     "pk": 239,
     "fields": {
       "major_abbr_code": "REHABX",
-      "major_name": "REHAB MED (PHYSICAL TH) ",
-      "major_full_name": "Rehabilitation Med (Physical Therapy) ",
-      "major_short_name": "REHAB (PT)  "
+      "major_name": "REHAB MED (PHYSICAL TH)",
+      "major_full_name": "Rehabilitation Med (Physical Therapy)",
+      "major_short_name": "REHAB (PT)"
     }
   },
   {
     "model": "compass.major",
     "pk": 240,
     "fields": {
-      "major_abbr_code": "B E   ",
+      "major_abbr_code": "B E",
       "major_name": "BUILT ENVIRONMENT",
-      "major_full_name": "Built Environment ",
+      "major_full_name": "Built Environment",
       "major_short_name": "B E "
     }
   },
@@ -2405,17 +2405,17 @@
     "fields": {
       "major_abbr_code": "CORSLP",
       "major_name": "CORE SPCH-LANG PATHOLOGY",
-      "major_full_name": "Core Speech-Language Pathology  ",
-      "major_short_name": "CORSLP      "
+      "major_full_name": "Core Speech-Language Pathology",
+      "major_short_name": "CORSLP"
     }
   },
   {
     "model": "compass.major",
     "pk": 242,
     "fields": {
-      "major_abbr_code": "TDE   ",
-      "major_name": "TACOMA DUAL ENROLLMENT  ",
-      "major_full_name": "Tacoma Dual Enrollment  ",
+      "major_abbr_code": "TDE",
+      "major_name": "TACOMA DUAL ENROLLMENT",
+      "major_full_name": "Tacoma Dual Enrollment",
       "major_short_name": "TDE "
     }
   },
@@ -2423,7 +2423,7 @@
     "model": "compass.major",
     "pk": 243,
     "fields": {
-      "major_abbr_code": "TEST  ",
+      "major_abbr_code": "TEST",
       "major_name": "IAS (ENVIRONMTL STUDIES)",
       "major_full_name": "Interdisciplinary Arts & Sciences (EST)",
       "major_short_name": "TEST"
@@ -2433,9 +2433,9 @@
     "model": "compass.major",
     "pk": 244,
     "fields": {
-      "major_abbr_code": "B STS ",
+      "major_abbr_code": "B STS",
       "major_name": "SCI, TECH, SOC (BOTHELL)",
-      "major_full_name": "Science, Technology, and Society (Bthll)      ",
+      "major_full_name": "Science, Technology, and Society (Bthll)",
       "major_short_name": "B STS"
     }
   },
@@ -2443,20 +2443,20 @@
     "model": "compass.major",
     "pk": 245,
     "fields": {
-      "major_abbr_code": "NORW  ",
-      "major_name": "NORWEGIAN ",
-      "major_full_name": "Norwegian ",
-      "major_short_name": "NORWEGIAN   "
+      "major_abbr_code": "NORW",
+      "major_name": "NORWEGIAN",
+      "major_full_name": "Norwegian",
+      "major_short_name": "NORWEGIAN "
     }
   },
   {
     "model": "compass.major",
     "pk": 246,
     "fields": {
-      "major_abbr_code": "SWED  ",
-      "major_name": "SWEDISH   ",
-      "major_full_name": "Swedish   ",
-      "major_short_name": "SWEDISH     "
+      "major_abbr_code": "SWED",
+      "major_name": "SWEDISH",
+      "major_full_name": "Swedish",
+      "major_short_name": "SWEDISH"
     }
   },
   {
@@ -2464,9 +2464,9 @@
     "pk": 247,
     "fields": {
       "major_abbr_code": "SUSTRN",
-      "major_name": "SUSTAINABLE TRANSPORT   ",
-      "major_full_name": "Sustainable Transportation      ",
-      "major_short_name": "SUSTRN      "
+      "major_name": "SUSTAINABLE TRANSPORT",
+      "major_full_name": "Sustainable Transportation",
+      "major_short_name": "SUSTRN"
     }
   },
   {
@@ -2474,18 +2474,18 @@
     "pk": 248,
     "fields": {
       "major_abbr_code": "B ACCT",
-      "major_name": "ACCOUNTING (BOTHELL)    ",
-      "major_full_name": "Accounting (Bothell)    ",
-      "major_short_name": "B ACCT      "
+      "major_name": "ACCOUNTING (BOTHELL)",
+      "major_full_name": "Accounting (Bothell)",
+      "major_short_name": "B ACCT"
     }
   },
   {
     "model": "compass.major",
     "pk": 249,
     "fields": {
-      "major_abbr_code": "AMATH ",
-      "major_name": "APPLIED MATHEMATICS     ",
-      "major_full_name": "Applied Mathematics     ",
+      "major_abbr_code": "AMATH",
+      "major_name": "APPLIED MATHEMATICS",
+      "major_full_name": "Applied Mathematics",
       "major_short_name": "APPLIED MATH"
     }
   },
@@ -2493,8 +2493,8 @@
     "model": "compass.major",
     "pk": 250,
     "fields": {
-      "major_abbr_code": "R E   ",
-      "major_name": "REAL ESTATE     ",
+      "major_abbr_code": "R E",
+      "major_name": "REAL ESTATE",
       "major_full_name": "Real Estate",
       "major_short_name": "R E "
     }
@@ -2503,9 +2503,9 @@
     "model": "compass.major",
     "pk": 251,
     "fields": {
-      "major_abbr_code": "NEURO ",
-      "major_name": "NEUROSCIENCE    ",
-      "major_full_name": "Neuroscience      ",
+      "major_abbr_code": "NEURO",
+      "major_name": "NEUROSCIENCE",
+      "major_full_name": "Neuroscience",
       "major_short_name": "NEURO"
     }
   },
@@ -2513,9 +2513,9 @@
     "model": "compass.major",
     "pk": 252,
     "fields": {
-      "major_abbr_code": "MLS   ",
-      "major_name": "MEDICAL LAB SCIENCE     ",
-      "major_full_name": "Medical Laboratory Science      ",
+      "major_abbr_code": "MLS",
+      "major_name": "MEDICAL LAB SCIENCE",
+      "major_full_name": "Medical Laboratory Science",
       "major_short_name": "MLS "
     }
   },
@@ -2524,9 +2524,9 @@
     "pk": 253,
     "fields": {
       "major_abbr_code": "PBSTDY",
-      "major_name": "POSTBAC STUDY   ",
-      "major_full_name": "Postbaccalaureate Study ",
-      "major_short_name": "PBSTDY      "
+      "major_name": "POSTBAC STUDY",
+      "major_full_name": "Postbaccalaureate Study",
+      "major_short_name": "PBSTDY"
     }
   },
   {
@@ -2534,18 +2534,18 @@
     "pk": 254,
     "fields": {
       "major_abbr_code": "GENOME",
-      "major_name": "GENOME SCIENCES ",
-      "major_full_name": "Genome Sciences   ",
-      "major_short_name": "GENOME      "
+      "major_name": "GENOME SCIENCES",
+      "major_full_name": "Genome Sciences",
+      "major_short_name": "GENOME"
     }
   },
   {
     "model": "compass.major",
     "pk": 255,
     "fields": {
-      "major_abbr_code": "P BIO ",
-      "major_name": "PHYSIOLOGY & BIOPHYSICS ",
-      "major_full_name": "Physiology & Biophysics ",
+      "major_abbr_code": "P BIO",
+      "major_name": "PHYSIOLOGY & BIOPHYSICS",
+      "major_full_name": "Physiology & Biophysics",
       "major_short_name": "PHYS & BIOPH"
     }
   },
@@ -2553,8 +2553,8 @@
     "model": "compass.major",
     "pk": 256,
     "fields": {
-      "major_abbr_code": "SMA   ",
-      "major_name": "SCH OF MARINE AFFAIRS   ",
+      "major_abbr_code": "SMA",
+      "major_name": "SCH OF MARINE AFFAIRS",
       "major_full_name": "School of Marine Affairs",
       "major_short_name": "SCH MARINE A"
     }
@@ -2563,9 +2563,9 @@
     "model": "compass.major",
     "pk": 257,
     "fields": {
-      "major_abbr_code": "SISRE ",
-      "major_name": "INT ST:RUS,E.E.,&C.ASIA ",
-      "major_full_name": "International Studies(Rus, E.E.,&C.Asia)      ",
+      "major_abbr_code": "SISRE",
+      "major_name": "INT ST:RUS,E.E.,&C.ASIA",
+      "major_full_name": "International Studies(Rus, E.E.,&C.Asia)",
       "major_short_name": "SISRE"
     }
   },
@@ -2574,9 +2574,9 @@
     "pk": 258,
     "fields": {
       "major_abbr_code": "NUTR S",
-      "major_name": "PH NUTR:COORD PROG      ",
+      "major_name": "PH NUTR:COORD PROG",
       "major_full_name": "Pub Health Nutr Practice:Coord Program",
-      "major_short_name": "PH N COORD  "
+      "major_short_name": "PH N COORD"
     }
   },
   {
@@ -2584,9 +2584,9 @@
     "pk": 259,
     "fields": {
       "major_abbr_code": "FRENCH",
-      "major_name": "FRENCH    ",
-      "major_full_name": "French    ",
-      "major_short_name": "FRENCH      "
+      "major_name": "FRENCH",
+      "major_full_name": "French",
+      "major_short_name": "FRENCH"
     }
   },
   {
@@ -2596,17 +2596,17 @@
       "major_abbr_code": "B HLTH",
       "major_name": "HEALTH STUDIES (BOTHELL)",
       "major_full_name": "Health Studies (Bothell)",
-      "major_short_name": "B HLTH      "
+      "major_short_name": "B HLTH"
     }
   },
   {
     "model": "compass.major",
     "pk": 261,
     "fields": {
-      "major_abbr_code": "IMMUN ",
+      "major_abbr_code": "IMMUN",
       "major_name": "IMMUNOLOGY",
       "major_full_name": "Immunology",
-      "major_short_name": "IMMUNOLOGY  "
+      "major_short_name": "IMMUNOLOGY"
     }
   },
   {
@@ -2616,16 +2616,16 @@
       "major_abbr_code": "TEDEAC",
       "major_name": "EDUC ADMIN CERT (TACOMA)",
       "major_full_name": "Education Administration (Tacoma Cert)",
-      "major_short_name": "TEDEAC      "
+      "major_short_name": "TEDEAC"
     }
   },
   {
     "model": "compass.major",
     "pk": 263,
     "fields": {
-      "major_abbr_code": "SFLT  ",
-      "major_name": "SEC AND FOR LANG TEACH  ",
-      "major_full_name": "Second and Foreign Language Teaching  ",
+      "major_abbr_code": "SFLT",
+      "major_name": "SEC AND FOR LANG TEACH",
+      "major_full_name": "Second and Foreign Language Teaching",
       "major_short_name": "SFLT"
     }
   },
@@ -2633,9 +2633,9 @@
     "model": "compass.major",
     "pk": 264,
     "fields": {
-      "major_abbr_code": "SPANS ",
+      "major_abbr_code": "SPANS",
       "major_name": "HISPANIC STUDIES",
-      "major_full_name": "Hispanic Studies  ",
+      "major_full_name": "Hispanic Studies",
       "major_short_name": "HISPANIC ST "
     }
   },
@@ -2644,9 +2644,9 @@
     "pk": 265,
     "fields": {
       "major_abbr_code": "MICROM",
-      "major_name": "MICROBIOLOGY (MED)      ",
-      "major_full_name": "Microbiology (Medicine) ",
-      "major_short_name": "MICROM      "
+      "major_name": "MICROBIOLOGY (MED)",
+      "major_full_name": "Microbiology (Medicine)",
+      "major_short_name": "MICROM"
     }
   },
   {
@@ -2655,16 +2655,16 @@
     "fields": {
       "major_abbr_code": "DXARTS",
       "major_name": "DIGTL ARTS AND EXP MEDIA",
-      "major_full_name": "Digital Arts and Experimental Media   ",
-      "major_short_name": "DXARTS      "
+      "major_full_name": "Digital Arts and Experimental Media",
+      "major_short_name": "DXARTS"
     }
   },
   {
     "model": "compass.major",
     "pk": 267,
     "fields": {
-      "major_abbr_code": "RUSS  ",
-      "major_name": "RUSSIAN LANG, LIT, CULT ",
+      "major_abbr_code": "RUSS",
+      "major_name": "RUSSIAN LANG, LIT, CULT",
       "major_full_name": "Russian Language, Literature, & Culture",
       "major_short_name": "RUSS"
     }
@@ -2673,9 +2673,9 @@
     "model": "compass.major",
     "pk": 268,
     "fields": {
-      "major_abbr_code": "HISP  ",
+      "major_abbr_code": "HISP",
       "major_name": "HISPANIC STUDIES",
-      "major_full_name": "Hispanic Studies  ",
+      "major_full_name": "Hispanic Studies",
       "major_short_name": "HISP"
     }
   },
@@ -2684,9 +2684,9 @@
     "pk": 269,
     "fields": {
       "major_abbr_code": "PUBSCH",
-      "major_name": "PUBLIC SCHOLARSHIP      ",
+      "major_name": "PUBLIC SCHOLARSHIP",
       "major_full_name": "Public Scholarship",
-      "major_short_name": "PUBSCH      "
+      "major_short_name": "PUBSCH"
     }
   },
   {
@@ -2695,16 +2695,16 @@
     "fields": {
       "major_abbr_code": "A CMPT",
       "major_name": "APPL COMPUTING (BOTHELL)",
-      "major_full_name": "Applied Computing (Bothell)     ",
-      "major_short_name": "A CMPT      "
+      "major_full_name": "Applied Computing (Bothell)",
+      "major_short_name": "A CMPT"
     }
   },
   {
     "model": "compass.major",
     "pk": 271,
     "fields": {
-      "major_abbr_code": "B ME  ",
-      "major_name": "MECH ENGR (BOTHELL)     ",
+      "major_abbr_code": "B ME",
+      "major_name": "MECH ENGR (BOTHELL)",
       "major_full_name": "Mechanical Engineering (Bothell)",
       "major_short_name": "B ME"
     }
@@ -2715,7 +2715,7 @@
     "fields": {
       "major_abbr_code": "DENT R",
       "major_name": "DENTISTRY (RIDE)",
-      "major_full_name": "Dentistry (RIDE)  ",
+      "major_full_name": "Dentistry (RIDE)",
       "major_short_name": "DENT (RIDE) "
     }
   },
@@ -2724,9 +2724,9 @@
     "pk": 273,
     "fields": {
       "major_abbr_code": "TLAWPL",
-      "major_name": "LAW AND POLICY  ",
-      "major_full_name": "Law and Policy (Tacoma) ",
-      "major_short_name": "TLAWPL      "
+      "major_name": "LAW AND POLICY",
+      "major_full_name": "Law and Policy (Tacoma)",
+      "major_short_name": "TLAWPL"
     }
   },
   {
@@ -2734,9 +2734,9 @@
     "pk": 274,
     "fields": {
       "major_abbr_code": "CLIMAT",
-      "major_name": "CLIMATE SCIENCE ",
-      "major_full_name": "Climate Science   ",
-      "major_short_name": "CLIMAT      "
+      "major_name": "CLIMATE SCIENCE",
+      "major_full_name": "Climate Science",
+      "major_short_name": "CLIMAT"
     }
   },
   {
@@ -2744,9 +2744,9 @@
     "pk": 275,
     "fields": {
       "major_abbr_code": "KOREAN",
-      "major_name": "KOREAN    ",
-      "major_full_name": "Korean    ",
-      "major_short_name": "KOREAN      "
+      "major_name": "KOREAN",
+      "major_full_name": "Korean",
+      "major_short_name": "KOREAN"
     }
   },
   {
@@ -2754,8 +2754,8 @@
     "pk": 276,
     "fields": {
       "major_abbr_code": "PHARMC",
-      "major_name": "PHARMACY CONCURRENT     ",
-      "major_full_name": "Pharmacy Concurrent Degree Program    ",
+      "major_name": "PHARMACY CONCURRENT",
+      "major_full_name": "Pharmacy Concurrent Degree Program",
       "major_short_name": "PHARM CONCUR"
     }
   },
@@ -2763,9 +2763,9 @@
     "model": "compass.major",
     "pk": 277,
     "fields": {
-      "major_abbr_code": "PABIO ",
+      "major_abbr_code": "PABIO",
       "major_name": "PUBLIC HLTH PATHOBIOLOGY",
-      "major_full_name": "Public Health Pathobiology      ",
+      "major_full_name": "Public Health Pathobiology",
       "major_short_name": "PABIO"
     }
   },
@@ -2774,9 +2774,9 @@
     "pk": 278,
     "fields": {
       "major_abbr_code": "PRE BA",
-      "major_name": "PRE BUSINESS ADMIN      ",
-      "major_full_name": "Pre Business Administration     ",
-      "major_short_name": "PRE BA      "
+      "major_name": "PRE BUSINESS ADMIN",
+      "major_full_name": "Pre Business Administration",
+      "major_short_name": "PRE BA"
     }
   },
   {
@@ -2784,8 +2784,8 @@
     "pk": 279,
     "fields": {
       "major_abbr_code": "PED DN",
-      "major_name": "PEDIATRIC DENTISTRY     ",
-      "major_full_name": "Pediatric Dentistry     ",
+      "major_name": "PEDIATRIC DENTISTRY",
+      "major_full_name": "Pediatric Dentistry",
       "major_short_name": "PEDIATR DENT"
     }
   },
@@ -2794,18 +2794,18 @@
     "pk": 280,
     "fields": {
       "major_abbr_code": "BUS AD",
-      "major_name": "BUS ADMIN ",
-      "major_full_name": "Business Administration ",
-      "major_short_name": "BUS AD      "
+      "major_name": "BUS ADMIN",
+      "major_full_name": "Business Administration",
+      "major_short_name": "BUS AD"
     }
   },
   {
     "model": "compass.major",
     "pk": 281,
     "fields": {
-      "major_abbr_code": "UD&PL ",
-      "major_name": "URBAN DESIGN & PLAN     ",
-      "major_full_name": "Urban Design & Planning ",
+      "major_abbr_code": "UD&PL",
+      "major_name": "URBAN DESIGN & PLAN",
+      "major_full_name": "Urban Design & Planning",
       "major_short_name": "URB DES & PL"
     }
   },
@@ -2814,8 +2814,8 @@
     "pk": 282,
     "fields": {
       "major_abbr_code": "SOC WE",
-      "major_name": "SOCIAL WORK (AGP EVEN)  ",
-      "major_full_name": "Social Work: Adv Generalist Practice  ",
+      "major_name": "SOCIAL WORK (AGP EVEN)",
+      "major_full_name": "Social Work: Adv Generalist Practice",
       "major_short_name": "SOCIAL WORK "
     }
   },
@@ -2824,9 +2824,9 @@
     "pk": 283,
     "fields": {
       "major_abbr_code": "INTSCI",
-      "major_name": "INTEGRATED SCIENCES     ",
-      "major_full_name": "Integrated Sciences     ",
-      "major_short_name": "INTSCI      "
+      "major_name": "INTEGRATED SCIENCES",
+      "major_full_name": "Integrated Sciences",
+      "major_short_name": "INTSCI"
     }
   },
   {
@@ -2834,18 +2834,18 @@
     "pk": 284,
     "fields": {
       "major_abbr_code": "MOLMED",
-      "major_name": "MOLECULAR MEDICINE      ",
+      "major_name": "MOLECULAR MEDICINE",
       "major_full_name": "Molecular Medicine",
-      "major_short_name": "MOLMED      "
+      "major_short_name": "MOLMED"
     }
   },
   {
     "model": "compass.major",
     "pk": 285,
     "fields": {
-      "major_abbr_code": "BIOST ",
-      "major_name": "BIOSTATISTICS   ",
-      "major_full_name": "Biostatistics     ",
+      "major_abbr_code": "BIOST",
+      "major_name": "BIOSTATISTICS",
+      "major_full_name": "Biostatistics",
       "major_short_name": "BIOSTATISTIC"
     }
   },
@@ -2853,7 +2853,7 @@
     "model": "compass.major",
     "pk": 286,
     "fields": {
-      "major_abbr_code": "ENV M ",
+      "major_abbr_code": "ENV M",
       "major_name": "ENVIRONMENTAL MANAGEMENT",
       "major_full_name": "Environmental Management",
       "major_short_name": "ENV M"
@@ -2863,10 +2863,10 @@
     "model": "compass.major",
     "pk": 287,
     "fields": {
-      "major_abbr_code": "I S X ",
-      "major_name": "BUS ADMIN (INFOR SYS)   ",
-      "major_full_name": "Business Administration (Inform Systems)      ",
-      "major_short_name": "BUS AD IS   "
+      "major_abbr_code": "I S X",
+      "major_name": "BUS ADMIN (INFOR SYS)",
+      "major_full_name": "Business Administration (Inform Systems)",
+      "major_short_name": "BUS AD IS "
     }
   },
   {
@@ -2874,18 +2874,18 @@
     "pk": 288,
     "fields": {
       "major_abbr_code": "ECFS O",
-      "major_name": "EARLY CHLD & FAM ST     ",
-      "major_full_name": "Early Childhood & Family Studies, Online      ",
-      "major_short_name": "ECFS O      "
+      "major_name": "EARLY CHLD & FAM ST",
+      "major_full_name": "Early Childhood & Family Studies, Online",
+      "major_short_name": "ECFS O"
     }
   },
   {
     "model": "compass.major",
     "pk": 289,
     "fields": {
-      "major_abbr_code": "T GST ",
+      "major_abbr_code": "T GST",
       "major_name": "GEOSPATIAL TECH (TACOMA)",
-      "major_full_name": "Geospatial Technologies ",
+      "major_full_name": "Geospatial Technologies",
       "major_short_name": "T GST"
     }
   },
@@ -2894,18 +2894,18 @@
     "pk": 290,
     "fields": {
       "major_abbr_code": "BISLEP",
-      "major_name": "INTERDISC ST (LEPP)     ",
-      "major_full_name": "Interdisc St: Law, Economics, Public Pol      ",
-      "major_short_name": "BISLEP      "
+      "major_name": "INTERDISC ST (LEPP)",
+      "major_full_name": "Interdisc St: Law, Economics, Public Pol",
+      "major_short_name": "BISLEP"
     }
   },
   {
     "model": "compass.major",
     "pk": 291,
     "fields": {
-      "major_abbr_code": "PERIO ",
-      "major_name": "PERIODONTICS    ",
-      "major_full_name": "Periodontics      ",
+      "major_abbr_code": "PERIO",
+      "major_name": "PERIODONTICS",
+      "major_full_name": "Periodontics",
       "major_short_name": "PERIODONTICS"
     }
   },
@@ -2914,8 +2914,8 @@
     "pk": 292,
     "fields": {
       "major_abbr_code": "SOC WL",
-      "major_name": "SOCIAL WELFARE  ",
-      "major_full_name": "Social Welfare    ",
+      "major_name": "SOCIAL WELFARE",
+      "major_full_name": "Social Welfare",
       "major_short_name": "SOC WELFARE "
     }
   },
@@ -2924,17 +2924,17 @@
     "pk": 293,
     "fields": {
       "major_abbr_code": "PH GEN",
-      "major_name": "PUBLIC HEALTH GENETICS  ",
-      "major_full_name": "Public Health Genetics  ",
-      "major_short_name": "PH GEN      "
+      "major_name": "PUBLIC HEALTH GENETICS",
+      "major_full_name": "Public Health Genetics",
+      "major_short_name": "PH GEN"
     }
   },
   {
     "model": "compass.major",
     "pk": 294,
     "fields": {
-      "major_abbr_code": "ENDO  ",
-      "major_name": "ENDODONTICS     ",
+      "major_abbr_code": "ENDO",
+      "major_name": "ENDODONTICS",
       "major_full_name": "Endodontics",
       "major_short_name": "ENDODONTICS "
     }
@@ -2944,18 +2944,18 @@
     "pk": 295,
     "fields": {
       "major_abbr_code": "PREHUM",
-      "major_name": "PRE HUMANITIES  ",
-      "major_full_name": "Pre Humanities    ",
-      "major_short_name": "PRE HUM     "
+      "major_name": "PRE HUMANITIES",
+      "major_full_name": "Pre Humanities",
+      "major_short_name": "PRE HUM"
     }
   },
   {
     "model": "compass.major",
     "pk": 296,
     "fields": {
-      "major_abbr_code": "WOMEN ",
-      "major_name": "WOMEN STUDIES   ",
-      "major_full_name": "Women Studies     ",
+      "major_abbr_code": "WOMEN",
+      "major_name": "WOMEN STUDIES",
+      "major_full_name": "Women Studies",
       "major_short_name": "WOMEN"
     }
   },
@@ -2963,9 +2963,9 @@
     "model": "compass.major",
     "pk": 297,
     "fields": {
-      "major_abbr_code": "EELLC ",
+      "major_abbr_code": "EELLC",
       "major_name": "EAST EUR LANG, LIT, CULT",
-      "major_full_name": "Eastern European Languages,Lit,& Culture      ",
+      "major_full_name": "Eastern European Languages,Lit,& Culture",
       "major_short_name": "EELLC"
     }
   },
@@ -2975,7 +2975,7 @@
     "fields": {
       "major_abbr_code": "T MKTG",
       "major_name": "BUS AD (MARKETING) (TAC)",
-      "major_full_name": "Business Administration (Marketing)   ",
+      "major_full_name": "Business Administration (Marketing)",
       "major_short_name": "BUS AD MKT-T"
     }
   },
@@ -2984,8 +2984,8 @@
     "pk": 299,
     "fields": {
       "major_abbr_code": "ASTBIO",
-      "major_name": "ASTROBIOLOGY    ",
-      "major_full_name": "Astrobiology      ",
+      "major_name": "ASTROBIOLOGY",
+      "major_full_name": "Astrobiology",
       "major_short_name": "ASTROBIOLOGY"
     }
   },
@@ -2993,9 +2993,9 @@
     "model": "compass.major",
     "pk": 300,
     "fields": {
-      "major_abbr_code": "PA HA ",
+      "major_abbr_code": "PA HA",
       "major_name": "PUBLIC AFFAIRS/HEALTH AD",
-      "major_full_name": "Public Affairs/Health Administration  ",
+      "major_full_name": "Public Affairs/Health Administration",
       "major_short_name": "PUB A/HLTH A"
     }
   },
@@ -3004,16 +3004,16 @@
     "pk": 301,
     "fields": {
       "major_abbr_code": "PREBSE",
-      "major_name": "PRE BIORES SCI & ENGR   ",
+      "major_name": "PRE BIORES SCI & ENGR",
       "major_full_name": "Pre Bioresource Science and Engineering",
-      "major_short_name": "PREBSE      "
+      "major_short_name": "PREBSE"
     }
   },
   {
     "model": "compass.major",
     "pk": 302,
     "fields": {
-      "major_abbr_code": "SW PH ",
+      "major_abbr_code": "SW PH",
       "major_name": "SOCIAL WRK/PUBLIC HEALTH",
       "major_full_name": "Social Work/Public Health",
       "major_short_name": "SOC WK/P HLT"
@@ -3023,8 +3023,8 @@
     "model": "compass.major",
     "pk": 303,
     "fields": {
-      "major_abbr_code": "SISJE ",
-      "major_name": "INT ST:JEWISH STUDIES   ",
+      "major_abbr_code": "SISJE",
+      "major_name": "INT ST:JEWISH STUDIES",
       "major_full_name": "International Studies (Jewish Studies)",
       "major_short_name": "SISJE"
     }
@@ -3033,19 +3033,19 @@
     "model": "compass.major",
     "pk": 304,
     "fields": {
-      "major_abbr_code": "CHIN  ",
-      "major_name": "CHINESE   ",
-      "major_full_name": "Chinese   ",
-      "major_short_name": "CHINESE     "
+      "major_abbr_code": "CHIN",
+      "major_name": "CHINESE",
+      "major_full_name": "Chinese",
+      "major_short_name": "CHINESE"
     }
   },
   {
     "model": "compass.major",
     "pk": 305,
     "fields": {
-      "major_abbr_code": "INDIV ",
-      "major_name": "INDIVIDUALIZED STUDIES  ",
-      "major_full_name": "Individualized Studies  ",
+      "major_abbr_code": "INDIV",
+      "major_name": "INDIVIDUALIZED STUDIES",
+      "major_full_name": "Individualized Studies",
       "major_short_name": "INDIV"
     }
   },
@@ -3054,18 +3054,18 @@
     "pk": 306,
     "fields": {
       "major_abbr_code": "BCWRIT",
-      "major_name": "CREATIVE WR & POETICS   ",
+      "major_name": "CREATIVE WR & POETICS",
       "major_full_name": "Creative Writing and Poetics (Bothell)",
-      "major_short_name": "BCWRIT      "
+      "major_short_name": "BCWRIT"
     }
   },
   {
     "model": "compass.major",
     "pk": 307,
     "fields": {
-      "major_abbr_code": "LAB M ",
-      "major_name": "LABORATORY MEDICINE     ",
-      "major_full_name": "Laboratory Medicine     ",
+      "major_abbr_code": "LAB M",
+      "major_name": "LABORATORY MEDICINE",
+      "major_full_name": "Laboratory Medicine",
       "major_short_name": "LAB MEDICINE"
     }
   },
@@ -3073,8 +3073,8 @@
     "model": "compass.major",
     "pk": 308,
     "fields": {
-      "major_abbr_code": "TAM   ",
-      "major_name": "IAS (AMERICAN STUDIES)  ",
+      "major_abbr_code": "TAM",
+      "major_name": "IAS (AMERICAN STUDIES)",
       "major_full_name": "Interdisciplinary Arts & Sciences (AS)",
       "major_short_name": "TAM "
     }
@@ -3084,17 +3084,17 @@
     "pk": 309,
     "fields": {
       "major_abbr_code": "ROM LI",
-      "major_name": "ROMANCE LINGUISTICS     ",
-      "major_full_name": "Romance Linguistics     ",
-      "major_short_name": "ROM LING    "
+      "major_name": "ROMANCE LINGUISTICS",
+      "major_full_name": "Romance Linguistics",
+      "major_short_name": "ROM LING"
     }
   },
   {
     "model": "compass.major",
     "pk": 310,
     "fields": {
-      "major_abbr_code": "IDPM  ",
-      "major_name": "INTL DEVEL POL AND MGMT ",
+      "major_abbr_code": "IDPM",
+      "major_name": "INTL DEVEL POL AND MGMT",
       "major_full_name": "Intl Development Policy and Management",
       "major_short_name": "IDPM"
     }
@@ -3103,9 +3103,9 @@
     "model": "compass.major",
     "pk": 311,
     "fields": {
-      "major_abbr_code": "IPHD  ",
-      "major_name": "INDIVIDUAL PHD  ",
-      "major_full_name": "Individual PhD    ",
+      "major_abbr_code": "IPHD",
+      "major_name": "INDIVIDUAL PHD",
+      "major_full_name": "Individual PhD",
       "major_short_name": "INDIVID PHD "
     }
   },
@@ -3123,19 +3123,19 @@
     "model": "compass.major",
     "pk": 313,
     "fields": {
-      "major_abbr_code": "TPBST ",
-      "major_name": "POST BAC ST (TACOMA)    ",
+      "major_abbr_code": "TPBST",
+      "major_name": "POST BAC ST (TACOMA)",
       "major_full_name": "Post Bac Studies (Tacoma Campus)",
-      "major_short_name": "T PBST      "
+      "major_short_name": "T PBST"
     }
   },
   {
     "model": "compass.major",
     "pk": 314,
     "fields": {
-      "major_abbr_code": "SISLA ",
-      "major_name": "INT ST: LAT AM & CARIB  ",
-      "major_full_name": "Intl St: Latin America and Caribbean  ",
+      "major_abbr_code": "SISLA",
+      "major_name": "INT ST: LAT AM & CARIB",
+      "major_full_name": "Intl St: Latin America and Caribbean",
       "major_short_name": "SISLA"
     }
   },
@@ -3143,8 +3143,8 @@
     "model": "compass.major",
     "pk": 315,
     "fields": {
-      "major_abbr_code": "MMES  ",
-      "major_name": "MIXED METHODS EDUC SCI  ",
+      "major_abbr_code": "MMES",
+      "major_name": "MIXED METHODS EDUC SCI",
       "major_full_name": "Mixed Methods Education Sciences",
       "major_short_name": "MMES"
     }
@@ -3155,8 +3155,8 @@
     "fields": {
       "major_abbr_code": "B PHYS",
       "major_name": "PHYSICS (BOTHELL)",
-      "major_full_name": "Physics (Bothell) ",
-      "major_short_name": "B PHYS      "
+      "major_full_name": "Physics (Bothell)",
+      "major_short_name": "B PHYS"
     }
   },
   {
@@ -3164,9 +3164,9 @@
     "pk": 317,
     "fields": {
       "major_abbr_code": "ENGL E",
-      "major_name": "ENGLISH,EVENING ",
-      "major_full_name": "English,Evening Degree Program  ",
-      "major_short_name": "ENGL E      "
+      "major_name": "ENGLISH,EVENING",
+      "major_full_name": "English,Evening Degree Program",
+      "major_short_name": "ENGL E"
     }
   },
   {
@@ -3174,9 +3174,9 @@
     "pk": 318,
     "fields": {
       "major_abbr_code": "TBIOMD",
-      "major_name": "BIOMEDICAL SCIENCES     ",
-      "major_full_name": "Biomedical Sciences     ",
-      "major_short_name": "TBIOMD      "
+      "major_name": "BIOMEDICAL SCIENCES",
+      "major_full_name": "Biomedical Sciences",
+      "major_short_name": "TBIOMD"
     }
   },
   {
@@ -3186,26 +3186,26 @@
       "major_abbr_code": "TCJUSO",
       "major_name": "CRIMINAL JUSTICE-TAC ONL",
       "major_full_name": "Criminal Justice (Tacoma Online)",
-      "major_short_name": "TCJUSO      "
+      "major_short_name": "TCJUSO"
     }
   },
   {
     "model": "compass.major",
     "pk": 320,
     "fields": {
-      "major_abbr_code": "CLAS  ",
-      "major_name": "CLASSICS  ",
-      "major_full_name": "Classics  ",
-      "major_short_name": "CLASSICS    "
+      "major_abbr_code": "CLAS",
+      "major_name": "CLASSICS",
+      "major_full_name": "Classics",
+      "major_short_name": "CLASSICS"
     }
   },
   {
     "model": "compass.major",
     "pk": 321,
     "fields": {
-      "major_abbr_code": "MSBA  ",
-      "major_name": "MS BUSINESS ANALYTICS   ",
-      "major_full_name": "MS Business Analytics   ",
+      "major_abbr_code": "MSBA",
+      "major_name": "MS BUSINESS ANALYTICS",
+      "major_full_name": "MS Business Analytics",
       "major_short_name": "MSBA"
     }
   },
@@ -3213,9 +3213,9 @@
     "model": "compass.major",
     "pk": 322,
     "fields": {
-      "major_abbr_code": "DATA  ",
-      "major_name": "DATA SCIENCE    ",
-      "major_full_name": "Data Science      ",
+      "major_abbr_code": "DATA",
+      "major_name": "DATA SCIENCE",
+      "major_full_name": "Data Science",
       "major_short_name": "DATA"
     }
   },
@@ -3224,17 +3224,17 @@
     "pk": 323,
     "fields": {
       "major_abbr_code": "SOCWCL",
-      "major_name": "SOCIAL WORK (CLINICAL)  ",
-      "major_full_name": "Clinical Social Work    ",
-      "major_short_name": "SOCWCL      "
+      "major_name": "SOCIAL WORK (CLINICAL)",
+      "major_full_name": "Clinical Social Work",
+      "major_short_name": "SOCWCL"
     }
   },
   {
     "model": "compass.major",
     "pk": 324,
     "fields": {
-      "major_abbr_code": "TSS   ",
-      "major_name": "IAS (SELF & SOCIETY)    ",
+      "major_abbr_code": "TSS",
+      "major_name": "IAS (SELF & SOCIETY)",
       "major_full_name": "Interdisciplinary Arts & Sciences (SS)",
       "major_short_name": "TSS "
     }
@@ -3243,10 +3243,10 @@
     "model": "compass.major",
     "pk": 325,
     "fields": {
-      "major_abbr_code": "APNX  ",
-      "major_name": "APN (INF MENTAL HLTH)   ",
-      "major_full_name": "Adv Practice Nurs (Infant Mental Health)      ",
-      "major_short_name": "APN (IMH)   "
+      "major_abbr_code": "APNX",
+      "major_name": "APN (INF MENTAL HLTH)",
+      "major_full_name": "Adv Practice Nurs (Infant Mental Health)",
+      "major_short_name": "APN (IMH) "
     }
   },
   {
@@ -3254,19 +3254,19 @@
     "pk": 326,
     "fields": {
       "major_abbr_code": "SOCWMG",
-      "major_name": "SOCIAL WORK (MG: ASP)   ",
+      "major_name": "SOCIAL WORK (MG: ASP)",
       "major_full_name": "Social Work (Multign Pr w Eld - Adv St)",
-      "major_short_name": "SOCWMG      "
+      "major_short_name": "SOCWMG"
     }
   },
   {
     "model": "compass.major",
     "pk": 327,
     "fields": {
-      "major_abbr_code": "EMPA  ",
-      "major_name": "EXECUTIVE MPA   ",
-      "major_full_name": "Public Administration (Executive)     ",
-      "major_short_name": "EX MPA      "
+      "major_abbr_code": "EMPA",
+      "major_name": "EXECUTIVE MPA",
+      "major_full_name": "Public Administration (Executive)",
+      "major_short_name": "EX MPA"
     }
   },
   {
@@ -3274,9 +3274,9 @@
     "pk": 328,
     "fields": {
       "major_abbr_code": "MBAVIS",
-      "major_name": "MBA VISITING    ",
-      "major_full_name": "Visiting Graduate (MBA) ",
-      "major_short_name": "MBA VISIT   "
+      "major_name": "MBA VISITING",
+      "major_full_name": "Visiting Graduate (MBA)",
+      "major_short_name": "MBA VISIT "
     }
   },
   {
@@ -3284,29 +3284,29 @@
     "pk": 329,
     "fields": {
       "major_abbr_code": "T MSBA",
-      "major_name": "MS BUS ANALYTICS (TAC)  ",
-      "major_full_name": "MS Business Analytics (Tacoma)  ",
-      "major_short_name": "T MSBA      "
+      "major_name": "MS BUS ANALYTICS (TAC)",
+      "major_full_name": "MS Business Analytics (Tacoma)",
+      "major_short_name": "T MSBA"
     }
   },
   {
     "model": "compass.major",
     "pk": 330,
     "fields": {
-      "major_abbr_code": "ORALM ",
-      "major_name": "ORAL MEDICINE   ",
-      "major_full_name": "Oral Medicine     ",
-      "major_short_name": "ORAL MED    "
+      "major_abbr_code": "ORALM",
+      "major_name": "ORAL MEDICINE",
+      "major_full_name": "Oral Medicine",
+      "major_short_name": "ORAL MED"
     }
   },
   {
     "model": "compass.major",
     "pk": 331,
     "fields": {
-      "major_abbr_code": "EXPBA ",
-      "major_name": "EXTENDED PRE BUS ADMIN  ",
-      "major_full_name": "Extended Pre Business Administration  ",
-      "major_short_name": "EXT PRE BA  "
+      "major_abbr_code": "EXPBA",
+      "major_name": "EXTENDED PRE BUS ADMIN",
+      "major_full_name": "Extended Pre Business Administration",
+      "major_short_name": "EXT PRE BA"
     }
   },
   {
@@ -3316,16 +3316,16 @@
       "major_abbr_code": "SLAVIC",
       "major_name": "SLAVIC LANG & LIT",
       "major_full_name": "Slavic Languages and Literatures",
-      "major_short_name": "SLAVIC      "
+      "major_short_name": "SLAVIC"
     }
   },
   {
     "model": "compass.major",
     "pk": 333,
     "fields": {
-      "major_abbr_code": "QERM  ",
-      "major_name": "QUAN ECOL & RESOURCE MG ",
-      "major_full_name": "Quantitative Ecology & Resource Mgmt  ",
+      "major_abbr_code": "QERM",
+      "major_name": "QUAN ECOL & RESOURCE MG",
+      "major_full_name": "Quantitative Ecology & Resource Mgmt",
       "major_short_name": "QUANT ECO RE"
     }
   },
@@ -3333,9 +3333,9 @@
     "model": "compass.major",
     "pk": 334,
     "fields": {
-      "major_abbr_code": "ASIAN ",
+      "major_abbr_code": "ASIAN",
       "major_name": "ASIAN LANG & LIT",
-      "major_full_name": "Asian Languages and Literature  ",
+      "major_full_name": "Asian Languages and Literature",
       "major_short_name": "ASIAN"
     }
   },
@@ -3343,8 +3343,8 @@
     "model": "compass.major",
     "pk": 335,
     "fields": {
-      "major_abbr_code": "SOC W ",
-      "major_name": "SOCIAL WORK     ",
+      "major_abbr_code": "SOC W",
+      "major_name": "SOCIAL WORK",
       "major_full_name": "Social Work",
       "major_short_name": "SOC W"
     }
@@ -3353,9 +3353,9 @@
     "model": "compass.major",
     "pk": 336,
     "fields": {
-      "major_abbr_code": "PA FR ",
-      "major_name": "PUB AFF/FOREST RES      ",
-      "major_full_name": "Public Affairs/Forest Resources ",
+      "major_abbr_code": "PA FR",
+      "major_name": "PUB AFF/FOREST RES",
+      "major_full_name": "Public Affairs/Forest Resources",
       "major_short_name": "PA FR"
     }
   },
@@ -3365,17 +3365,17 @@
     "fields": {
       "major_abbr_code": "SASIAN",
       "major_name": "SOUTH ASIAN LANG",
-      "major_full_name": "South Asian Languages   ",
-      "major_short_name": "SASIAN      "
+      "major_full_name": "South Asian Languages",
+      "major_short_name": "SASIAN"
     }
   },
   {
     "model": "compass.major",
     "pk": 338,
     "fields": {
-      "major_abbr_code": "GREEK ",
-      "major_name": "GREEK     ",
-      "major_full_name": "Greek     ",
+      "major_abbr_code": "GREEK",
+      "major_name": "GREEK",
+      "major_full_name": "Greek",
       "major_short_name": "GREEK"
     }
   },
@@ -3383,10 +3383,10 @@
     "model": "compass.major",
     "pk": 339,
     "fields": {
-      "major_abbr_code": "HPS   ",
-      "major_name": "HIST & PHIL OF SCIENCE  ",
-      "major_full_name": "History and Philosophy of Science     ",
-      "major_short_name": "HPS "
+      "major_abbr_code": "HPS",
+      "major_name": "HIST & PHIL OF SCIENCE",
+      "major_full_name": "History and Philosophy of Science",
+      "major_short_name": "HPS"
     }
   },
   {
@@ -3394,18 +3394,18 @@
     "pk": 340,
     "fields": {
       "major_abbr_code": "BIOMRX",
-      "major_name": "BIOMEDICAL REG AFFAIRS  ",
-      "major_full_name": "Biomedical Regulatory Affairs   ",
-      "major_short_name": "BIOMRX      "
+      "major_name": "BIOMEDICAL REG AFFAIRS",
+      "major_full_name": "Biomedical Regulatory Affairs",
+      "major_short_name": "BIOMRX"
     }
   },
   {
     "model": "compass.major",
     "pk": 341,
     "fields": {
-      "major_abbr_code": "BIOC  ",
-      "major_name": "BIOCHEMISTRY    ",
-      "major_full_name": "Biochemistry      ",
+      "major_abbr_code": "BIOC",
+      "major_name": "BIOCHEMISTRY",
+      "major_full_name": "Biochemistry",
       "major_short_name": "BIOCHEMISTRY"
     }
   },
@@ -3413,9 +3413,9 @@
     "model": "compass.major",
     "pk": 342,
     "fields": {
-      "major_abbr_code": "SISJA ",
-      "major_name": "INT ST:JAPAN    ",
-      "major_full_name": "International Studies (Japan)   ",
+      "major_abbr_code": "SISJA",
+      "major_name": "INT ST:JAPAN",
+      "major_full_name": "International Studies (Japan)",
       "major_short_name": "SISJA"
     }
   },
@@ -3423,10 +3423,10 @@
     "model": "compass.major",
     "pk": 343,
     "fields": {
-      "major_abbr_code": "GPHYS ",
+      "major_abbr_code": "GPHYS",
       "major_name": "GEOPHYSICS",
       "major_full_name": "Geophysics",
-      "major_short_name": "GEOPHYSICS  "
+      "major_short_name": "GEOPHYSICS"
     }
   },
   {
@@ -3434,18 +3434,18 @@
     "pk": 344,
     "fields": {
       "major_abbr_code": "MUSEUM",
-      "major_name": "MUSEOLOGY ",
-      "major_full_name": "Museology ",
-      "major_short_name": "MUSEOLOGY   "
+      "major_name": "MUSEOLOGY",
+      "major_full_name": "Museology",
+      "major_short_name": "MUSEOLOGY "
     }
   },
   {
     "model": "compass.major",
     "pk": 345,
     "fields": {
-      "major_abbr_code": "SISCH ",
-      "major_name": "INT ST:CHINA    ",
-      "major_full_name": "International Studies (China)   ",
+      "major_abbr_code": "SISCH",
+      "major_name": "INT ST:CHINA",
+      "major_full_name": "International Studies (China)",
       "major_short_name": "SISCH"
     }
   },
@@ -3453,19 +3453,19 @@
     "model": "compass.major",
     "pk": 346,
     "fields": {
-      "major_abbr_code": "GEMBA ",
-      "major_name": "GLOBAL EXECUTIVE MBA    ",
-      "major_full_name": "Global Executive MBA    ",
-      "major_short_name": "GLO EMBA    "
+      "major_abbr_code": "GEMBA",
+      "major_name": "GLOBAL EXECUTIVE MBA",
+      "major_full_name": "Global Executive MBA",
+      "major_short_name": "GLO EMBA"
     }
   },
   {
     "model": "compass.major",
     "pk": 347,
     "fields": {
-      "major_abbr_code": "TDS   ",
+      "major_abbr_code": "TDS",
       "major_name": "TEXTUAL & DIGITAL STDIES",
-      "major_full_name": "Textual and Digital Studies     ",
+      "major_full_name": "Textual and Digital Studies",
       "major_short_name": "TEXT DIGIT S"
     }
   },
@@ -3473,9 +3473,9 @@
     "model": "compass.major",
     "pk": 348,
     "fields": {
-      "major_abbr_code": "CER   ",
-      "major_name": "COMP EFFECT RESEARCH    ",
-      "major_full_name": "Comparative Effectiveness Research    ",
+      "major_abbr_code": "CER",
+      "major_name": "COMP EFFECT RESEARCH",
+      "major_full_name": "Comparative Effectiveness Research",
       "major_short_name": "CER "
     }
   },
@@ -3483,9 +3483,9 @@
     "model": "compass.major",
     "pk": 349,
     "fields": {
-      "major_abbr_code": "PHG   ",
-      "major_name": "PUBLIC HEALTH GENETICS  ",
-      "major_full_name": "Public Health Genetics  ",
+      "major_abbr_code": "PHG",
+      "major_name": "PUBLIC HEALTH GENETICS",
+      "major_full_name": "Public Health Genetics",
       "major_short_name": "PUB HLTH GEN"
     }
   },
@@ -3493,8 +3493,8 @@
     "model": "compass.major",
     "pk": 350,
     "fields": {
-      "major_abbr_code": "PH&CM ",
-      "major_name": "PUBLIC HEALTH: HIV&STI  ",
+      "major_abbr_code": "PH&CM",
+      "major_name": "PUBLIC HEALTH: HIV&STI",
       "major_full_name": "Public Health: HIV & STIs",
       "major_short_name": "PHCM-HIV/STI"
     }
@@ -3504,18 +3504,18 @@
     "pk": 351,
     "fields": {
       "major_abbr_code": "DANISH",
-      "major_name": "DANISH    ",
-      "major_full_name": "Danish    ",
-      "major_short_name": "DANISH      "
+      "major_name": "DANISH",
+      "major_full_name": "Danish",
+      "major_short_name": "DANISH"
     }
   },
   {
     "model": "compass.major",
     "pk": 352,
     "fields": {
-      "major_abbr_code": "BMSD  ",
+      "major_abbr_code": "BMSD",
       "major_name": "BIOMOLECULAR STRUC & DES",
-      "major_full_name": "Biomolecular Structure and Design     ",
+      "major_full_name": "Biomolecular Structure and Design",
       "major_short_name": "BMSD"
     }
   },
@@ -3523,7 +3523,7 @@
     "model": "compass.major",
     "pk": 353,
     "fields": {
-      "major_abbr_code": "SCTL  ",
+      "major_abbr_code": "SCTL",
       "major_name": "SUPPLY CHAIN TRANS & LOG",
       "major_full_name": "Supply Chain Transportation & Logistics",
       "major_short_name": "SCTL"
@@ -3535,7 +3535,7 @@
     "fields": {
       "major_abbr_code": "DENT X",
       "major_name": "DENTISTRY (IDDS)",
-      "major_full_name": "Dentistry (International DDS)   ",
+      "major_full_name": "Dentistry (International DDS)",
       "major_short_name": "DENT (IDDS) "
     }
   },
@@ -3543,9 +3543,9 @@
     "model": "compass.major",
     "pk": 355,
     "fields": {
-      "major_abbr_code": "SIMF  ",
-      "major_name": "INFORMATION MANAGEMENT  ",
-      "major_full_name": "Information Management  ",
+      "major_abbr_code": "SIMF",
+      "major_name": "INFORMATION MANAGEMENT",
+      "major_full_name": "Information Management",
       "major_short_name": "SIMF"
     }
   },
@@ -3553,9 +3553,9 @@
     "model": "compass.major",
     "pk": 356,
     "fields": {
-      "major_abbr_code": "A E   ",
-      "major_name": "AEROSPACE ENGINEERING   ",
-      "major_full_name": "Aerospace Engineering   ",
+      "major_abbr_code": "A E",
+      "major_name": "AEROSPACE ENGINEERING",
+      "major_full_name": "Aerospace Engineering",
       "major_short_name": "A E "
     }
   },
@@ -3564,18 +3564,18 @@
     "pk": 357,
     "fields": {
       "major_abbr_code": "PREART",
-      "major_name": "PRE ARTS  ",
-      "major_full_name": "Pre Arts  ",
-      "major_short_name": "PRE ARTS    "
+      "major_name": "PRE ARTS",
+      "major_full_name": "Pre Arts",
+      "major_short_name": "PRE ARTS"
     }
   },
   {
     "model": "compass.major",
     "pk": 358,
     "fields": {
-      "major_abbr_code": "PCEUT ",
-      "major_name": "PHARMACEUTICS   ",
-      "major_full_name": "Pharmaceutics     ",
+      "major_abbr_code": "PCEUT",
+      "major_name": "PHARMACEUTICS",
+      "major_full_name": "Pharmaceutics",
       "major_short_name": "PHARMACEUTIC"
     }
   },
@@ -3583,9 +3583,9 @@
     "model": "compass.major",
     "pk": 359,
     "fields": {
-      "major_abbr_code": "HCID  ",
+      "major_abbr_code": "HCID",
       "major_name": "HUMAN-COMPUTER INT & DES",
-      "major_full_name": "Human-Computer Interaction and Design ",
+      "major_full_name": "Human-Computer Interaction and Design",
       "major_short_name": "HCID"
     }
   },
@@ -3593,9 +3593,9 @@
     "model": "compass.major",
     "pk": 360,
     "fields": {
-      "major_abbr_code": "T MCL ",
+      "major_abbr_code": "T MCL",
       "major_name": "CYBERSECRTY & LEADERSHIP",
-      "major_full_name": "Cybersecurity and Leadership (Tacoma) ",
+      "major_full_name": "Cybersecurity and Leadership (Tacoma)",
       "major_short_name": "T MCL"
     }
   },
@@ -3604,8 +3604,8 @@
     "pk": 361,
     "fields": {
       "major_abbr_code": "ASIALC",
-      "major_name": "ASIAN LANG AND CULTURES ",
-      "major_full_name": "Asian Languages and Cultures    ",
+      "major_name": "ASIAN LANG AND CULTURES",
+      "major_full_name": "Asian Languages and Cultures",
       "major_short_name": "ASIAN L & C "
     }
   },
@@ -3613,9 +3613,9 @@
     "model": "compass.major",
     "pk": 362,
     "fields": {
-      "major_abbr_code": "ECO   ",
-      "major_name": "EDUC, COMMUNITIES & ORG ",
-      "major_full_name": "Education, Communities and Organizations      ",
+      "major_abbr_code": "ECO",
+      "major_name": "EDUC, COMMUNITIES & ORG",
+      "major_full_name": "Education, Communities and Organizations",
       "major_short_name": "EDUC,COM&ORG"
     }
   },
@@ -3623,9 +3623,9 @@
     "model": "compass.major",
     "pk": 363,
     "fields": {
-      "major_abbr_code": "FSNH  ",
+      "major_abbr_code": "FSNH",
       "major_name": "FOOD SYS, NUTR, & HEALTH",
-      "major_full_name": "Food Systems, Nutrition, and Health   ",
+      "major_full_name": "Food Systems, Nutrition, and Health",
       "major_short_name": "FSNH"
     }
   },
@@ -3633,9 +3633,9 @@
     "model": "compass.major",
     "pk": 364,
     "fields": {
-      "major_abbr_code": "BPSD  ",
-      "major_name": "BIOL PHYS, STRUCT & DES ",
-      "major_full_name": "Biological Physics, Structure and Design      ",
+      "major_abbr_code": "BPSD",
+      "major_name": "BIOL PHYS, STRUCT & DES",
+      "major_full_name": "Biological Physics, Structure and Design",
       "major_short_name": "BPSD"
     }
   },
@@ -3645,15 +3645,15 @@
     "fields": {
       "major_abbr_code": "PREARC",
       "major_name": "PRE ARCHITECTURE",
-      "major_full_name": "Pre Architecture & Urban Planning     ",
-      "major_short_name": "PREARCH     "
+      "major_full_name": "Pre Architecture & Urban Planning",
+      "major_short_name": "PREARCH"
     }
   },
   {
     "model": "compass.major",
     "pk": 366,
     "fields": {
-      "major_abbr_code": "TPRE  ",
+      "major_abbr_code": "TPRE",
       "major_name": "PREMAJOR (TACOMA)",
       "major_full_name": "Premajor (Tacoma Campus)",
       "major_short_name": "TPRE"
@@ -3663,8 +3663,8 @@
     "model": "compass.major",
     "pk": 367,
     "fields": {
-      "major_abbr_code": "HS BA ",
-      "major_name": "HEALTH SCIENCE/BUS ADM  ",
+      "major_abbr_code": "HS BA",
+      "major_name": "HEALTH SCIENCE/BUS ADM",
       "major_full_name": "Health Services/Business Administration",
       "major_short_name": "HLTH SC-B A "
     }
@@ -3673,9 +3673,9 @@
     "model": "compass.major",
     "pk": 368,
     "fields": {
-      "major_abbr_code": "LIS   ",
-      "major_name": "LIBRARY & INFO SCIENCE  ",
-      "major_full_name": "Library & Information Science   ",
+      "major_abbr_code": "LIS",
+      "major_name": "LIBRARY & INFO SCIENCE",
+      "major_full_name": "Library & Information Science",
       "major_short_name": "LIBRARY & IN"
     }
   },
@@ -3683,9 +3683,9 @@
     "model": "compass.major",
     "pk": 369,
     "fields": {
-      "major_abbr_code": "SISKO ",
-      "major_name": "INT ST:KOREA    ",
-      "major_full_name": "International Studies (Korea)   ",
+      "major_abbr_code": "SISKO",
+      "major_name": "INT ST:KOREA",
+      "major_full_name": "International Studies (Korea)",
       "major_short_name": "SISKO"
     }
   },
@@ -3694,8 +3694,8 @@
     "pk": 370,
     "fields": {
       "major_abbr_code": "TECH I",
-      "major_name": "TECHNOLOGY INNOVATION   ",
-      "major_full_name": "Technology Innovation   ",
+      "major_name": "TECHNOLOGY INNOVATION",
+      "major_full_name": "Technology Innovation",
       "major_short_name": "TECH INNOVTN"
     }
   },
@@ -3703,7 +3703,7 @@
     "model": "compass.major",
     "pk": 371,
     "fields": {
-      "major_abbr_code": "B IA  ",
+      "major_abbr_code": "B IA",
       "major_name": "INTERDISC ARTS (BOTHELL)",
       "major_full_name": "Interdisciplinary Arts (Bothell)",
       "major_short_name": "B IA"
@@ -3713,19 +3713,19 @@
     "model": "compass.major",
     "pk": 372,
     "fields": {
-      "major_abbr_code": "ENGR  ",
-      "major_name": "ENGINEERING (INTR ENGR) ",
-      "major_full_name": "Engineering (Inter Engineering) ",
-      "major_short_name": "ENGR(INTR)  "
+      "major_abbr_code": "ENGR",
+      "major_name": "ENGINEERING (INTR ENGR)",
+      "major_full_name": "Engineering (Inter Engineering)",
+      "major_short_name": "ENGR(INTR)"
     }
   },
   {
     "model": "compass.major",
     "pk": 373,
     "fields": {
-      "major_abbr_code": "LIS T ",
-      "major_name": "LIBRARY & INFO SCIENCE  ",
-      "major_full_name": "Library & Information Science   ",
+      "major_abbr_code": "LIS T",
+      "major_name": "LIBRARY & INFO SCIENCE",
+      "major_full_name": "Library & Information Science",
       "major_short_name": "LIS T"
     }
   },
@@ -3735,25 +3735,25 @@
     "fields": {
       "major_abbr_code": "VALUES",
       "major_name": "VALUES IN SOCIETY",
-      "major_full_name": "Values in Society ",
-      "major_short_name": "VALUES      "
+      "major_full_name": "Values in Society",
+      "major_short_name": "VALUES"
     }
   },
   {
     "model": "compass.major",
     "pk": 375,
     "fields": {
-      "major_abbr_code": "B H   ",
-      "major_name": "BIOETHICS & HUMANITIES  ",
+      "major_abbr_code": "B H",
+      "major_name": "BIOETHICS & HUMANITIES",
       "major_full_name": "Bioethics and Humanities",
-      "major_short_name": "B H "
+      "major_short_name": "B H"
     }
   },
   {
     "model": "compass.major",
     "pk": 376,
     "fields": {
-      "major_abbr_code": "H S   ",
+      "major_abbr_code": "H S",
       "major_name": "GRD CERT HOUSING STUDIES",
       "major_full_name": "Graduate Certificate in Housing Studies",
       "major_short_name": "GRD CERT H S"
@@ -3764,7 +3764,7 @@
     "pk": 377,
     "fields": {
       "major_abbr_code": "SCAN A",
-      "major_name": "SCANDINAVIAN AREA ST    ",
+      "major_name": "SCANDINAVIAN AREA ST",
       "major_full_name": "Scandinavian Area Studies",
       "major_short_name": "SCAN AREA S "
     }
@@ -3774,28 +3774,28 @@
     "pk": 378,
     "fields": {
       "major_abbr_code": "COMP E",
-      "major_name": "COMPUTER ENGR (BOTHELL) ",
-      "major_full_name": "Computer Engineering (Bothell)  ",
-      "major_short_name": "COMP E      "
+      "major_name": "COMPUTER ENGR (BOTHELL)",
+      "major_full_name": "Computer Engineering (Bothell)",
+      "major_short_name": "COMP E"
     }
   },
   {
     "model": "compass.major",
     "pk": 379,
     "fields": {
-      "major_abbr_code": "APN   ",
+      "major_abbr_code": "APN",
       "major_name": "APN (NURSE EDUC)",
-      "major_full_name": "Adv Practice Nurs (Nurse Educator)    ",
-      "major_short_name": "APN (NE)    "
+      "major_full_name": "Adv Practice Nurs (Nurse Educator)",
+      "major_short_name": "APN (NE)"
     }
   },
   {
     "model": "compass.major",
     "pk": 380,
     "fields": {
-      "major_abbr_code": "PPM   ",
-      "major_name": "PUBLIC POLICY & MGMT    ",
-      "major_full_name": "Public Policy and Management    ",
+      "major_abbr_code": "PPM",
+      "major_name": "PUBLIC POLICY & MGMT",
+      "major_full_name": "Public Policy and Management",
       "major_short_name": "PUB POL MGMT"
     }
   },
@@ -3803,8 +3803,8 @@
     "model": "compass.major",
     "pk": 381,
     "fields": {
-      "major_abbr_code": "LIS J ",
-      "major_name": "LIBRARY & INFO SCI(LAW) ",
+      "major_abbr_code": "LIS J",
+      "major_name": "LIBRARY & INFO SCI(LAW)",
       "major_full_name": "Libr & Info Science (Law Librarianship)",
       "major_short_name": "LIS J"
     }
@@ -3813,9 +3813,9 @@
     "model": "compass.major",
     "pk": 382,
     "fields": {
-      "major_abbr_code": "MED E ",
-      "major_name": "MEDICAL ENGINEERING     ",
-      "major_full_name": "Medical Engineering     ",
+      "major_abbr_code": "MED E",
+      "major_name": "MEDICAL ENGINEERING",
+      "major_full_name": "Medical Engineering",
       "major_short_name": "MED E"
     }
   },
@@ -3823,9 +3823,9 @@
     "model": "compass.major",
     "pk": 383,
     "fields": {
-      "major_abbr_code": "B AES ",
-      "major_name": "AMERICAN ST (BOTHELL)   ",
-      "major_full_name": "American and Ethnic Studies (Bothell) ",
+      "major_abbr_code": "B AES",
+      "major_name": "AMERICAN ST (BOTHELL)",
+      "major_full_name": "American and Ethnic Studies (Bothell)",
       "major_short_name": "B AMS"
     }
   },
@@ -3833,9 +3833,9 @@
     "model": "compass.major",
     "pk": 384,
     "fields": {
-      "major_abbr_code": "MEDXC ",
-      "major_name": "MEDEX CERTIFICATE PROG  ",
-      "major_full_name": "Medex (Medex Certificate Program)     ",
+      "major_abbr_code": "MEDXC",
+      "major_name": "MEDEX CERTIFICATE PROG",
+      "major_full_name": "Medex (Medex Certificate Program)",
       "major_short_name": "MEDEX CERT P"
     }
   },
@@ -3844,18 +3844,18 @@
     "pk": 385,
     "fields": {
       "major_abbr_code": "BISSEB",
-      "major_name": "INTERDISC STUDIES (SEB) ",
-      "major_full_name": "Interdisciplinary Studies (SEB) ",
-      "major_short_name": "BISSEB      "
+      "major_name": "INTERDISC STUDIES (SEB)",
+      "major_full_name": "Interdisciplinary Studies (SEB)",
+      "major_short_name": "BISSEB"
     }
   },
   {
     "model": "compass.major",
     "pk": 386,
     "fields": {
-      "major_abbr_code": "TCMP  ",
+      "major_abbr_code": "TCMP",
       "major_name": "COMMUNITY PLANNING (TAC)",
-      "major_full_name": "Community Planning (Tacoma)     ",
+      "major_full_name": "Community Planning (Tacoma)",
       "major_short_name": "TCMP"
     }
   },
@@ -3864,18 +3864,18 @@
     "pk": 387,
     "fields": {
       "major_abbr_code": "CINEMA",
-      "major_name": "CINEMA & MEDIA STUDIES  ",
+      "major_name": "CINEMA & MEDIA STUDIES",
       "major_full_name": "Cinema and Media Studies",
-      "major_short_name": "CINEMA      "
+      "major_short_name": "CINEMA "
     }
   },
   {
     "model": "compass.major",
     "pk": 388,
     "fields": {
-      "major_abbr_code": "ITALS ",
-      "major_name": "ITALIAN STUDIES ",
-      "major_full_name": "Italian Studies   ",
+      "major_abbr_code": "ITALS",
+      "major_name": "ITALIAN STUDIES",
+      "major_full_name": "Italian Studies",
       "major_short_name": "ITALS"
     }
   },
@@ -3884,18 +3884,18 @@
     "pk": 389,
     "fields": {
       "major_abbr_code": "COMP F",
-      "major_name": "COMPUTATIONAL FINANCE   ",
-      "major_full_name": "Computational Finance   ",
-      "major_short_name": "COMP F      "
+      "major_name": "COMPUTATIONAL FINANCE",
+      "major_full_name": "Computational Finance",
+      "major_short_name": "COMP F "
     }
   },
   {
     "model": "compass.major",
     "pk": 390,
     "fields": {
-      "major_abbr_code": "XBSAD ",
-      "major_name": "EXCHANGE BUS ADMIN      ",
-      "major_full_name": "Exchange - Business administration    ",
+      "major_abbr_code": "XBSAD",
+      "major_name": "EXCHANGE BUS ADMIN",
+      "major_full_name": "Exchange - Business administration",
       "major_short_name": "EXCH BUS AD "
     }
   },
@@ -3904,9 +3904,9 @@
     "pk": 391,
     "fields": {
       "major_abbr_code": "UWACAD",
-      "major_name": "ACADEMY FOR YOUNG SCH   ",
-      "major_full_name": "Academy for Young Scholars      ",
-      "major_short_name": "UW ACADEMY  "
+      "major_name": "ACADEMY FOR YOUNG SCH",
+      "major_full_name": "Academy for Young Scholars",
+      "major_short_name": "UW ACADEMY"
     }
   },
   {
@@ -3914,18 +3914,18 @@
     "pk": 392,
     "fields": {
       "major_abbr_code": "BISSTE",
-      "major_name": "INTERDISC STUDIES (STE) ",
-      "major_full_name": "Interdisciplinary Studies (STE) ",
-      "major_short_name": "BISSTE      "
+      "major_name": "INTERDISC STUDIES (STE)",
+      "major_full_name": "Interdisciplinary Studies (STE)",
+      "major_short_name": "BISSTE"
     }
   },
   {
     "model": "compass.major",
     "pk": 393,
     "fields": {
-      "major_abbr_code": "LATIN ",
-      "major_name": "LATIN     ",
-      "major_full_name": "Latin     ",
+      "major_abbr_code": "LATIN",
+      "major_name": "LATIN",
+      "major_full_name": "Latin",
       "major_short_name": "LATIN"
     }
   },
@@ -3933,9 +3933,9 @@
     "model": "compass.major",
     "pk": 394,
     "fields": {
-      "major_abbr_code": "CMB   ",
+      "major_abbr_code": "CMB",
       "major_name": "COMPUT MOLECULAR BIOLOGY",
-      "major_full_name": "Computational Molecular Biology ",
+      "major_full_name": "Computational Molecular Biology",
       "major_short_name": "CMB "
     }
   },
@@ -3945,17 +3945,17 @@
     "fields": {
       "major_abbr_code": "TDETCC",
       "major_name": "TACOMA DUAL ENROLL - TCC",
-      "major_full_name": "Tacoma Dual Enrollment - TCC    ",
-      "major_short_name": "TDETCC      "
+      "major_full_name": "Tacoma Dual Enrollment - TCC",
+      "major_short_name": "TDETCC"
     }
   },
   {
     "model": "compass.major",
     "pk": 396,
     "fields": {
-      "major_abbr_code": "TMATH ",
-      "major_name": "MATHEMATICS (TACOMA)    ",
-      "major_full_name": "Mathematics (Tacoma)    ",
+      "major_abbr_code": "TMATH",
+      "major_name": "MATHEMATICS (TACOMA)",
+      "major_full_name": "Mathematics (Tacoma)",
       "major_short_name": "TMATH"
     }
   },
@@ -3964,8 +3964,8 @@
     "pk": 397,
     "fields": {
       "major_abbr_code": "B EDSD",
-      "major_name": "EDUCATIONAL STUDIES     ",
-      "major_full_name": "Educational Studies (Bothell)   ",
+      "major_name": "EDUCATIONAL STUDIES",
+      "major_full_name": "Educational Studies (Bothell)",
       "major_short_name": "EDSD"
     }
   },
@@ -3976,16 +3976,16 @@
       "major_abbr_code": "TPRCES",
       "major_name": "PRE CES (TACOMA)",
       "major_full_name": "Pre Computer Engineering & Sys (Tacoma)",
-      "major_short_name": "TPRCES      "
+      "major_short_name": "TPRCES"
     }
   },
   {
     "model": "compass.major",
     "pk": 399,
     "fields": {
-      "major_abbr_code": "TEE   ",
+      "major_abbr_code": "TEE",
       "major_name": "ELECTRICAL ENGR (TACOMA)",
-      "major_full_name": "Electrical Engineering (Tacoma) ",
+      "major_full_name": "Electrical Engineering (Tacoma)",
       "major_short_name": "E E (TACOMA)"
     }
   },
@@ -3993,8 +3993,8 @@
     "model": "compass.major",
     "pk": 400,
     "fields": {
-      "major_abbr_code": "STSS  ",
-      "major_name": "SCI, TECH & SOCIETY ST  ",
+      "major_abbr_code": "STSS",
+      "major_name": "SCI, TECH & SOCIETY ST",
       "major_full_name": "Science, Technology and Society Studies",
       "major_short_name": "STSS"
     }
@@ -4004,19 +4004,19 @@
     "pk": 401,
     "fields": {
       "major_abbr_code": "ST GEN",
-      "major_name": "STATISTICAL GENETICS    ",
-      "major_full_name": "Statistical Genetics    ",
-      "major_short_name": "STAT GENET  "
+      "major_name": "STATISTICAL GENETICS",
+      "major_full_name": "Statistical Genetics",
+      "major_short_name": "STAT GENET"
     }
   },
   {
     "model": "compass.major",
     "pk": 402,
     "fields": {
-      "major_abbr_code": "GEOL  ",
-      "major_name": "GEOLOGICAL SCIENCES     ",
-      "major_full_name": "Geological Sciences     ",
-      "major_short_name": "GEOL SCI    "
+      "major_abbr_code": "GEOL",
+      "major_name": "GEOLOGICAL SCIENCES",
+      "major_full_name": "Geological Sciences",
+      "major_short_name": "GEOL SCI"
     }
   },
   {
@@ -4024,9 +4024,9 @@
     "pk": 403,
     "fields": {
       "major_abbr_code": "BISIND",
-      "major_name": "INTERDISC STUDIES (IND) ",
-      "major_full_name": "Interdisciplinary Studies (IND) ",
-      "major_short_name": "BISIND      "
+      "major_name": "INTERDISC STUDIES (IND)",
+      "major_full_name": "Interdisciplinary Studies (IND)",
+      "major_short_name": "BISIND"
     }
   },
   {
@@ -4034,18 +4034,18 @@
     "pk": 404,
     "fields": {
       "major_abbr_code": "ETHICS",
-      "major_name": "GRAD CERT IN ETHICS     ",
-      "major_full_name": "Graduate Certificate in Ethics  ",
-      "major_short_name": "ETHICS      "
+      "major_name": "GRAD CERT IN ETHICS",
+      "major_full_name": "Graduate Certificate in Ethics",
+      "major_short_name": "ETHICS"
     }
   },
   {
     "model": "compass.major",
     "pk": 405,
     "fields": {
-      "major_abbr_code": "ECE   ",
-      "major_name": "EARLY CARE & EDUCATION  ",
-      "major_full_name": "Early Care and Education (Online)     ",
+      "major_abbr_code": "ECE",
+      "major_name": "EARLY CARE & EDUCATION",
+      "major_full_name": "Early Care and Education (Online)",
       "major_short_name": "ECE "
     }
   },
@@ -4053,19 +4053,19 @@
     "model": "compass.major",
     "pk": 406,
     "fields": {
-      "major_abbr_code": "EEP   ",
-      "major_name": "EARLY ENTRANCE PROGRAM  ",
-      "major_full_name": "Center for Study of Capable Youth     ",
-      "major_short_name": "EARLY ENTR  "
+      "major_abbr_code": "EEP",
+      "major_name": "EARLY ENTRANCE PROGRAM",
+      "major_full_name": "Center for Study of Capable Youth",
+      "major_short_name": "EARLY ENTR"
     }
   },
   {
     "model": "compass.major",
     "pk": 407,
     "fields": {
-      "major_abbr_code": "TPRCJ ",
+      "major_abbr_code": "TPRCJ",
       "major_name": "PRE CRIMINAL JUSTICE-TAC",
-      "major_full_name": "Pre Major Criminal Justice (Tacoma)   ",
+      "major_full_name": "Pre Major Criminal Justice (Tacoma)",
       "major_short_name": "TPRCJ"
     }
   },
@@ -4074,19 +4074,19 @@
     "pk": 408,
     "fields": {
       "major_abbr_code": "LA ARC",
-      "major_name": "L ARCH/ARCH CONCURRENT  ",
-      "major_full_name": "Landscape Arch/Architecture (Concurrent)      ",
-      "major_short_name": "LA ARC      "
+      "major_name": "L ARCH/ARCH CONCURRENT",
+      "major_full_name": "Landscape Arch/Architecture (Concurrent)",
+      "major_short_name": "LA ARC"
     }
   },
   {
     "model": "compass.major",
     "pk": 409,
     "fields": {
-      "major_abbr_code": "XLAW  ",
-      "major_name": "EXCHANGE LAW    ",
-      "major_full_name": "Exchange - Law    ",
-      "major_short_name": "EXCH LAW    "
+      "major_abbr_code": "XLAW",
+      "major_name": "EXCHANGE LAW",
+      "major_full_name": "Exchange - Law",
+      "major_short_name": "EXCH LAW"
     }
   },
   {
@@ -4096,14 +4096,14 @@
       "major_abbr_code": "EDUC C",
       "major_name": "EDUC (CONTINUING)",
       "major_full_name": "Education Fifth Year,Continuing)",
-      "major_short_name": "EDUC C      "
+      "major_short_name": "EDUC C"
     }
   },
   {
     "model": "compass.major",
     "pk": 411,
     "fields": {
-      "major_abbr_code": "IBSJH ",
+      "major_abbr_code": "IBSJH",
       "major_name": "INTL BIOETH, SOJU & HLTH",
       "major_full_name": "Intl Bioethics, Soc Justice and Health",
       "major_short_name": "IBSJH"
@@ -4113,9 +4113,9 @@
     "model": "compass.major",
     "pk": 412,
     "fields": {
-      "major_abbr_code": "MOLE  ",
-      "major_name": "MOLECULAR ENGINEERING   ",
-      "major_full_name": "Molecular Engineering   ",
+      "major_abbr_code": "MOLE",
+      "major_name": "MOLECULAR ENGINEERING",
+      "major_full_name": "Molecular Engineering",
       "major_short_name": "MOLE"
     }
   },
@@ -4123,7 +4123,7 @@
     "model": "compass.major",
     "pk": 413,
     "fields": {
-      "major_abbr_code": "B MTV ",
+      "major_abbr_code": "B MTV",
       "major_name": "MTH THNK & VIS (BOTHELL)",
       "major_full_name": "Mathematical Thinking and Visualization",
       "major_short_name": "B MTV"
@@ -4133,9 +4133,9 @@
     "model": "compass.major",
     "pk": 414,
     "fields": {
-      "major_abbr_code": "LAW V ",
-      "major_name": "LAW VISITING    ",
-      "major_full_name": "Law Visiting      ",
+      "major_abbr_code": "LAW V",
+      "major_name": "LAW VISITING",
+      "major_full_name": "Law Visiting",
       "major_short_name": "LAW VISITING"
     }
   },
@@ -4143,8 +4143,8 @@
     "model": "compass.major",
     "pk": 415,
     "fields": {
-      "major_abbr_code": "MST   ",
-      "major_name": "MS TAXATION     ",
+      "major_abbr_code": "MST",
+      "major_name": "MS TAXATION",
       "major_full_name": "MS Taxation",
       "major_short_name": "MS TAXATION "
     }
@@ -4154,8 +4154,8 @@
     "pk": 416,
     "fields": {
       "major_abbr_code": "GENEPI",
-      "major_name": "GENETIC EPIDEMIOLOGY    ",
-      "major_full_name": "Genetic Epidemiology    ",
+      "major_name": "GENETIC EPIDEMIOLOGY",
+      "major_full_name": "Genetic Epidemiology",
       "major_short_name": "GENET EPIDEM"
     }
   },
@@ -4163,10 +4163,10 @@
     "model": "compass.major",
     "pk": 417,
     "fields": {
-      "major_abbr_code": "XENGR ",
-      "major_name": "EXCHANGE ENGINEERING    ",
-      "major_full_name": "Exchange - Engineering  ",
-      "major_short_name": "EXCH ENGR   "
+      "major_abbr_code": "XENGR",
+      "major_name": "EXCHANGE ENGINEERING",
+      "major_full_name": "Exchange - Engineering",
+      "major_short_name": "EXCH ENGR "
     }
   },
   {
@@ -4174,18 +4174,18 @@
     "pk": 418,
     "fields": {
       "major_abbr_code": "TPRBUS",
-      "major_name": "PRE BUS AD (TACOMA)     ",
-      "major_full_name": "Pre Major Business (Tacoma)     ",
-      "major_short_name": "TPRBUS      "
+      "major_name": "PRE BUS AD (TACOMA)",
+      "major_full_name": "Pre Major Business (Tacoma)",
+      "major_short_name": "TPRBUS"
     }
   },
   {
     "model": "compass.major",
     "pk": 419,
     "fields": {
-      "major_abbr_code": "SISCA ",
-      "major_name": "INT ST:CANADA   ",
-      "major_full_name": "International Studies: Canada   ",
+      "major_abbr_code": "SISCA",
+      "major_name": "INT ST:CANADA",
+      "major_full_name": "International Studies: Canada",
       "major_short_name": "SISCA"
     }
   },
@@ -4193,9 +4193,9 @@
     "model": "compass.major",
     "pk": 420,
     "fields": {
-      "major_abbr_code": "SISSE ",
-      "major_name": "INT ST:SOUTHEAST ASIA   ",
-      "major_full_name": "International Studies: Southeast Asia ",
+      "major_abbr_code": "SISSE",
+      "major_name": "INT ST:SOUTHEAST ASIA",
+      "major_full_name": "International Studies: Southeast Asia",
       "major_short_name": "SISSE"
     }
   },
@@ -4203,9 +4203,9 @@
     "model": "compass.major",
     "pk": 421,
     "fields": {
-      "major_abbr_code": "UP PA ",
-      "major_name": "URBAN PLAN/PUBLIC ADM   ",
-      "major_full_name": "Urban Planning/Public Administration  ",
+      "major_abbr_code": "UP PA",
+      "major_name": "URBAN PLAN/PUBLIC ADM",
+      "major_full_name": "Urban Planning/Public Administration",
       "major_short_name": "URB PL/P ADM"
     }
   },
@@ -4213,8 +4213,8 @@
     "model": "compass.major",
     "pk": 422,
     "fields": {
-      "major_abbr_code": "UP LA ",
-      "major_name": "URBP/LARCH CONCURRENT   ",
+      "major_abbr_code": "UP LA",
+      "major_name": "URBP/LARCH CONCURRENT",
       "major_full_name": "Urban Plan/Landscape Arch (Concurrent)",
       "major_short_name": "UP LA"
     }
@@ -4223,9 +4223,9 @@
     "model": "compass.major",
     "pk": 423,
     "fields": {
-      "major_abbr_code": "T UDE ",
-      "major_name": "URBAN DESIGN (TACOMA)   ",
-      "major_full_name": "Urban Design (Tacoma)   ",
+      "major_abbr_code": "T UDE",
+      "major_name": "URBAN DESIGN (TACOMA)",
+      "major_full_name": "Urban Design (Tacoma)",
       "major_short_name": "URBAN DESIGN"
     }
   },
@@ -4233,9 +4233,9 @@
     "model": "compass.major",
     "pk": 424,
     "fields": {
-      "major_abbr_code": "MEDXX ",
-      "major_name": "MEDEX EXT MCHS PROGRAM  ",
-      "major_full_name": "Medxx (Ext Medex Masters Degree Program)      ",
+      "major_abbr_code": "MEDXX",
+      "major_name": "MEDEX EXT MCHS PROGRAM",
+      "major_full_name": "Medxx (Ext Medex Masters Degree Program)",
       "major_short_name": "MEDXX"
     }
   },
@@ -4243,9 +4243,9 @@
     "model": "compass.major",
     "pk": 425,
     "fields": {
-      "major_abbr_code": "BIO T ",
+      "major_abbr_code": "BIO T",
       "major_name": "BIOLOGY TEACHING",
-      "major_full_name": "Biology Teaching  ",
+      "major_full_name": "Biology Teaching",
       "major_short_name": "BIOLOGY TEAC"
     }
   },
@@ -4253,9 +4253,9 @@
     "model": "compass.major",
     "pk": 426,
     "fields": {
-      "major_abbr_code": "SPCI  ",
+      "major_abbr_code": "SPCI",
       "major_name": "STRAT PLAN FOR CRIT INFR",
-      "major_full_name": "Strategic Planning for Critical Infrastr      ",
+      "major_full_name": "Strategic Planning for Critical Infrastr",
       "major_short_name": "SPCI"
     }
   },
@@ -4263,9 +4263,9 @@
     "model": "compass.major",
     "pk": 427,
     "fields": {
-      "major_abbr_code": "NCE   ",
-      "major_name": "NEURAL COMP AND ENGR    ",
-      "major_full_name": "Neural Computation and Engineering    ",
+      "major_abbr_code": "NCE",
+      "major_name": "NEURAL COMP AND ENGR",
+      "major_full_name": "Neural Computation and Engineering",
       "major_short_name": "NCE "
     }
   },
@@ -4274,9 +4274,9 @@
     "pk": 428,
     "fields": {
       "major_abbr_code": "EDUC I",
-      "major_name": "EDUC I (INITIAL CERTIF) ",
-      "major_full_name": "Education (Initial Certificate) ",
-      "major_short_name": "EDUC I      "
+      "major_name": "EDUC I (INITIAL CERTIF)",
+      "major_full_name": "Education (Initial Certificate)",
+      "major_short_name": "EDUC I"
     }
   },
   {
@@ -4293,7 +4293,7 @@
     "model": "compass.major",
     "pk": 430,
     "fields": {
-      "major_abbr_code": "C MED ",
+      "major_abbr_code": "C MED",
       "major_name": "COMPARATIVE MEDICINE",
       "major_full_name": "Comparative Medicine",
       "major_short_name": "COMPAR MED"
@@ -4303,9 +4303,9 @@
     "model": "compass.major",
     "pk": 431,
     "fields": {
-      "major_abbr_code": "ACHEM ",
-      "major_name": "APPL CHEM S & T (BS/MS) ",
-      "major_full_name": "Applied Chemical Science and Technology (BS/MS)     ",
+      "major_abbr_code": "ACHEM",
+      "major_name": "APPL CHEM S & T (BS/MS)",
+      "major_full_name": "Applied Chemical Science and Technology (BS/MS)",
       "major_short_name": "APPL CHM SCI"
     }
   },
@@ -4324,18 +4324,18 @@
     "pk": 433,
     "fields": {
       "major_abbr_code": "PHARMX",
-      "major_name": "PHARMACY EXTENSION      ",
-      "major_full_name": "Pharmacy  ",
-      "major_short_name": "PHARM EXT   "
+      "major_name": "PHARMACY EXTENSION",
+      "major_full_name": "Pharmacy",
+      "major_short_name": "PHARM EXT "
     }
   },
   {
     "model": "compass.major",
     "pk": 434,
     "fields": {
-      "major_abbr_code": "EXBEE ",
-      "major_name": "EXCHANGE ELEC ENGR      ",
-      "major_full_name": "Exchange - Electrical Engineering     ",
+      "major_abbr_code": "EXBEE",
+      "major_name": "EXCHANGE ELEC ENGR",
+      "major_full_name": "Exchange - Electrical Engineering",
       "major_short_name": "EXBEE"
     }
   },
@@ -4345,8 +4345,8 @@
     "fields": {
       "major_abbr_code": "BPRBUS",
       "major_name": "PRE BUS AD (BOTHELL)",
-      "major_full_name": "Pre Major in Business Admin (Bothell) ",
-      "major_short_name": "BPRBUS      "
+      "major_full_name": "Pre Major in Business Admin (Bothell)",
+      "major_short_name": "BPRBUS"
     }
   },
   {
@@ -4354,16 +4354,16 @@
     "pk": 436,
     "fields": {
       "major_abbr_code": "DIS ST",
-      "major_name": "DISABILITY STUDIES      ",
+      "major_name": "DISABILITY STUDIES",
       "major_full_name": "Disability Studies",
-      "major_short_name": "DIS ST      "
+      "major_short_name": "DIS ST"
     }
   },
   {
     "model": "compass.major",
     "pk": 437,
     "fields": {
-      "major_abbr_code": "EHUF  ",
+      "major_abbr_code": "EHUF",
       "major_name": "ENV HORT & URB FORESTRY",
       "major_full_name": "Environmental Horticulture & Urban For",
       "major_short_name": "EHUF"
@@ -4373,7 +4373,7 @@
     "model": "compass.major",
     "pk": 438,
     "fields": {
-      "major_abbr_code": "PSY E ",
+      "major_abbr_code": "PSY E",
       "major_name": "PSYCHOLOGY,EVENING",
       "major_full_name": "Psychology, Evening Degree Program",
       "major_short_name": "PSY E"
@@ -4385,7 +4385,7 @@
     "fields": {
       "major_abbr_code": "BISGST",
       "major_name": "INTERDISC ST (GLOBAL ST)",
-      "major_full_name": "Interdisciplinary Studies (Global St) ",
+      "major_full_name": "Interdisciplinary Studies (Global St)",
       "major_short_name": "BISGST"
     }
   },
