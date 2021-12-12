@@ -3,11 +3,33 @@
     "model": "compass.retention",
     "pk": 1,
     "fields": {
-      "priority": "2.3",
-      "sign_in": "0.5",
+      "priority": "-3.4",
+      "sign_in": "-5.0",
       "activity": "1.0",
-      "assignment": "1.4",
-      "grade": "-2.4"
+      "assignment": "3.0",
+      "grade": "3.8"
+    }
+  },
+  {
+    "model": "compass.retention",
+    "pk": 2,
+    "fields": {
+      "priority": "2.2",
+      "sign_in": "1.4",
+      "activity": "-0.3",
+      "assignment": "-1.0",
+      "grade": "1.8"
+    }
+  },
+  {
+    "model": "compass.retention",
+    "pk": 3,
+    "fields": {
+      "priority": "4.0",
+      "sign_in": "-2.6",
+      "activity": "3.0",
+      "assignment": "1.0",
+      "grade": "2.7"
     }
   }
 ]
