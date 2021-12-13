@@ -51,7 +51,6 @@ export default {
     pageTitle: {
       type: String,
       required: true,
-      default: ""
     },
   },
   data() {

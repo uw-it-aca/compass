@@ -2,11 +2,10 @@
 
 <template>
   <layout :page-title="pageTitle">
-    <!-- page content -->
     <template #title>
-      <h1 v-if="!$route.params.id" >Student</h1>
+      <h1 v-if="$route.params.id"  class="visually-hidden">{{ student.student_name }}</h1>
+      <h1 v-else>Student</h1>
     </template>
-
     <template #content>
       <div v-if="$route.params.id" class="mb-3">
         <div class="row">
@@ -33,7 +32,7 @@
               </div>
             </div>
             <div class="flex-fill ps-3 mb-4">
-              <h1 class="h3 text-uppercase">{{ student.student_preferred_last_name }}, {{ student.student_preferred_first_name }}</h1>
+              <div class="h3 text-uppercase">{{ student.student_preferred_last_name }}, {{ student.student_preferred_first_name }}</div>
               <div class="h5">{{ $route.params.id }}, <small>{{ student.uw_net_id }}</small></div>
               <p><span class="badge rounded-pill border border-muted text-dark me-1">{{ student.gender }}</span>
                 <span v-if="student.gender === 'F'" class="badge rounded-pill border border-muted text-dark">she/her</span>
@@ -737,6 +736,7 @@ export default {
   },
   data() {
     return {
+      pageTitle: 'DYASDLFKJAS',
       student: {},
     };
   },
@@ -751,9 +751,9 @@ export default {
       if (addr) return addr;
       else return 'N/A';
     },
-    pageTitle: function () {
+    /*pageTitle: function () {
       return this.student.student_name;
-    },
+    },*/
     priorityRing: function() {
       // mocked display
       if (this.student.retention.priority === '-3.4') {
