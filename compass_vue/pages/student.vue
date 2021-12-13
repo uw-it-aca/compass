@@ -13,7 +13,7 @@
           <div class="col-lg-6 d-flex">
 
             <div>
-            <div :class="showPriorityRing(student.retention.priority)" class="rounded-circle border border-4" style="width: 140px">
+            <div :class="priorityRing" class="rounded-circle border border-4" style="width: 140px">
 
               <img
                 v-if="student.gender === 'F'"
@@ -754,6 +754,17 @@ export default {
     pageTitle: function () {
       return this.student.student_name;
     },
+    priorityRing: function() {
+      // mocked display
+      if (this.student.retention.priority === '-3.4') {
+        return 'border-danger';
+      }
+      else if (this.student.retention.priority === '2.2') {
+        return 'border-warning';
+      } else {
+        return 'border-default';
+      }
+    }
   },
   methods: {
     loadstudent: function (studentNumber) {
@@ -772,16 +783,6 @@ export default {
       // return random number
       return Math.floor(Math.random() * rangeMax);
     },
-    showPriorityRing: function(priorityValue) {
-      console.log(this.student.retention.priority);
-      // mocked display
-      if (priorityValue === '-3.4') {
-        return 'border-danger'
-      }
-      else if (priorityValue === '2.2') {
-        return 'border-warning'
-      }
-    }
   },
 };
 </script>
