@@ -9,7 +9,7 @@
           <div class="col-lg-6 d-flex">
 
             <div>
-            <div :class="getRandomPriority()" class="rounded-circle border border-4" style="width: 140px">
+            <div :class="showPriorityRing(student.retention.priority)" class="rounded-circle border border-4" style="width: 140px">
 
               <img
                 v-if="student.gender === 'F'"
@@ -25,7 +25,7 @@
               />
               </div>
               <div class="text-center mb-4">
-                <span class="fw-bold">LEVEL -3.7</span>
+                <span class="fw-bold">LEVEL {{student.retention.priority }}</span>
               </div>
             </div>
             <div class="flex-fill ps-3 mb-4">
@@ -772,12 +772,12 @@ export default {
       // return random number
       return Math.floor(Math.random() * rangeMax);
     },
-    getRandomPriority: function() {
-      let int = Math.floor(Math.random() * 5);
-      if (int == 0) {
+    showPriorityRing: function(priorityValue) {
+      // mocked display
+      if (priorityValue == '-3.4') {
         return 'border-danger'
       }
-      else if (int == 1) {
+      else if (priorityValue == '2.2') {
         return 'border-warning'
       }
       else {
