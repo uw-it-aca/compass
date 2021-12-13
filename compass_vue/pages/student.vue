@@ -773,7 +773,7 @@ export default {
       return Math.floor(Math.random() * rangeMax);
     },
     showPriorityRing: function(priorityValue) {
-      console.log(student.retention.priority);
+      console.log(this.student.retention.priority);
       // mocked display
       if (priorityValue === '-3.4') {
         return 'border-danger'
