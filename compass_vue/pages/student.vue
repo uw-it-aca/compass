@@ -4,6 +4,10 @@
   <layout :page-title="pageTitle">
     <!-- page content -->
     <template #title>
+      <h1 v-if="!$route.params.id" >Student</h1>
+    </template>
+
+    <template #content>
       <div v-if="$route.params.id" class="mb-3">
         <div class="row">
           <div class="col-lg-6 d-flex">
@@ -59,10 +63,6 @@
           </div>
         </div>
       </div>
-      <h1 v-else>Student</h1>
-    </template>
-
-    <template #content>
       <div v-if="$route.params.id">
         <div class="row mb-3">
           <div class="col text-end">
@@ -773,15 +773,13 @@ export default {
       return Math.floor(Math.random() * rangeMax);
     },
     showPriorityRing: function(priorityValue) {
+      console.log(student.retention.priority);
       // mocked display
       if (priorityValue === '-3.4') {
         return 'border-danger'
       }
       else if (priorityValue === '2.2') {
         return 'border-warning'
-      }
-      else {
-        return 'border-light'
       }
     }
   },
