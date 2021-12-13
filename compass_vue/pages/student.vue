@@ -25,7 +25,7 @@
               />
               </div>
               <div class="text-center mb-4">
-                <span class="fw-bold">LEVEL {{student.retention.priority }}</span>
+                <span class="fw-bold">LEVEL {{ student.retention.priority }}</span>
               </div>
             </div>
             <div class="flex-fill ps-3 mb-4">
@@ -91,11 +91,11 @@
               </h3>
               <div class="card-body">
                 <ul>
-                  <li>Priority: <span class="fw-bold">LEVEL -3.7</span></li>
-                  <li>Sign-ins: -5</li>
-                  <li>Activity: -4.8</li>
-                  <li>Assignments: -4.8</li>
-                  <li>Grads: -2.8</li>
+                  <li>Priority: <span class="fw-bold">{{ student.retention.priority }}</span></li>
+                  <li>Sign-ins: {{ student.retention.sign_in }}</li>
+                  <li>Activity: {{ student.retention.activity }}</li>
+                  <li>Assignments: {{ student.retention.assignment }}</li>
+                  <li>Grades: {{ student.retention.grade }}</li>
                 </ul>
               </div>
             </div>
@@ -774,10 +774,10 @@ export default {
     },
     showPriorityRing: function(priorityValue) {
       // mocked display
-      if (priorityValue == '-3.4') {
+      if (priorityValue === '-3.4') {
         return 'border-danger'
       }
-      else if (priorityValue == '2.2') {
+      else if (priorityValue === '2.2') {
         return 'border-warning'
       }
       else {
