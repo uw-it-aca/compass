@@ -173,7 +173,7 @@
                   <div style="width: 65px">
                     <img
                       :src="
-                        'https://randomuser.me/api/portraits/men/' + (student.id + 50) + '.jpg'
+                        'https://randomuser.me/api/portraits/men/29.jpg'
                       "
                       class="img-fluid rounded-circle border border-3"
                     />
