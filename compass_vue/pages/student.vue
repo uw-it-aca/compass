@@ -1,7 +1,7 @@
 // about.vue
 
 <template>
-  <layout v-if="pageTitle !== undefined" :page-title="pageTitle">
+  <layout v-if="student.student_name !== undefined" :page-title="student.student_name">
     <template #title>
       <h1 v-if="$route.params.id" class="visually-hidden">{{ student.student_name }}</h1>
       <h1 v-else>Student</h1>
@@ -773,10 +773,7 @@ export default {
       } else {
         return '';
       }
-    },
-    pageTitle: function () {
-      return this.student.student_name;
-    },
+    }
   },
   methods: {
     loadstudent: function (studentNumber) {

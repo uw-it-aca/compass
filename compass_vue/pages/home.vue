@@ -1,10 +1,10 @@
 // home.vue
 
 <template>
-  <layout :page-title="pageTitle">
+  <layout :page-title="'Home'">
     <!-- page content -->
     <template #title>
-      <h1 class="visually-hidden">{{ pageTitle }}</h1>
+      <h1 class="visually-hidden">Home</h1>
     </template>
 
     <template #content>
@@ -298,7 +298,6 @@ export default {
   },
   data() {
     return {
-      pageTitle: 'Home',
       // data
       students: [],
       // pagination
