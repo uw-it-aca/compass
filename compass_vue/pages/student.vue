@@ -189,7 +189,7 @@
                   </div>
                 </div>
                 <div class="text-end">
-                  <a href="#">View caseload</a>
+                  <a href="/adviser/javerage">View caseload</a>
                 </div>
               </div>
             </div>
