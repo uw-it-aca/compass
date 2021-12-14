@@ -199,7 +199,6 @@
                   <th scope="col" class="text-nowrap">Student Number</th>
                   <th scope="col">Priority</th>
                   <th scope="col">Class</th>
-                  <th scope="col">Major</th>
                   <th scope="col" class="text-nowrap">Enroll Status</th>
                   <th scope="col">Adviser</th>
                 </tr>
@@ -217,7 +216,7 @@
                             v-if="item.gender === 'F'"
                             :src="
                               'https://randomuser.me/api/portraits/thumb/women/' +
-                              getRandomPerson() +
+                              item.id +
                               '.jpg'
                             "
                             class="img-fluid rounded-circle border border-white border-2"
@@ -226,7 +225,7 @@
                             v-else
                             :src="
                               'https://randomuser.me/api/portraits/thumb/men/' +
-                              getRandomPerson() +
+                              item.id +
                               '.jpg'
                             "
                             class="img-fluid rounded-circle border border-white border-2"
@@ -257,7 +256,6 @@
                   </td>
                   <td>{{ item.retention.priority }}</td>
                   <td>{{ item.class_desc }}</td>
-                  <td>{{ item.major_full_name }}</td>
                   <td>{{ item.enrollment_status_desc }}</td>
                   <td>{{ item.adviser_full_name }}</td>
                 </tr>
@@ -362,14 +360,6 @@ export default {
           }
         }
       });
-    },
-    getRandomPerson: function (rangeMax) {
-      // if no range is specified
-      if (!rangeMax) {
-        rangeMax = 100;
-      }
-      // return random number
-      return Math.floor(Math.random() * rangeMax);
     },
     showPriorityRing: function (priorityValue) {
       // mocked display

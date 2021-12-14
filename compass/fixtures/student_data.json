@@ -4562,51 +4562,5 @@
       "class_code": "11",
       "campus_code": 2
     }
-  },
-  {
-    "pk": 100,
-    "model": "compass.student",
-    "fields": {
-      "major": [
-        71
-      ],
-      "perm_addr_state": "WA",
-      "perm_addr_line1": "123 Salmon Way",
-      "perm_addr_line2": "Apt. 3",
-      "perm_addr_postal_code": "98102-0021",
-      "perm_addr_5digit_zip": "98102",
-      "student_number": 1028671,
-      "student_preferred_last_name": "Maio",
-      "gpa": "3.58",
-      "student_name": "Gwen Maio",
-      "perm_addr_country": "USA",
-      "adviser": [],
-      "class_desc": "Senior",
-      "enrollment_status_code": "12",
-      "student_preferred_first_name": "Gwen",
-      "intended_major": [],
-      "student_preferred_middle_name": null,
-      "external_email": "gm830599@gmail.com",
-      "uw_net_id": "gm830",
-      "local_phone_number": "(206) 340-4199",
-      "perm_addr_4digit_zip": "0021",
-      "perm_addr_city": "Seattle",
-      "gender": "F",
-      "birthdate": "1985-06-05",
-      "total_credits": "192.00",
-      "campus_desc": "Seattle",
-      "student_email": "gm830471@uw.edu",
-      "registered_in_quarter": false,
-      "special_program": [
-        28
-      ],
-      "retention": 3,
-      "honors_program_code": 0,
-      "honors_program_ind": "N",
-      "resident_code": "5",
-      "resident_desc": "NONRESIDENT STUDENT VISA",
-      "class_code": "4",
-      "campus_code": 0
-    }
   }
 ]

@@ -18,12 +18,12 @@
               >
                 <img
                   v-if="student.gender === 'F'"
-                  :src="'https://randomuser.me/api/portraits/women/' + getRandomPerson() + '.jpg'"
+                  :src="'https://randomuser.me/api/portraits/women/' + student.id + '.jpg'"
                   class="img-fluid rounded-circle border border-light border-3"
                 />
                 <img
                   v-else
-                  :src="'https://randomuser.me/api/portraits/men/' + getRandomPerson() + '.jpg'"
+                  :src="'https://randomuser.me/api/portraits/men/' + student.id + '.jpg'"
                   class="img-fluid rounded-circle border border-light border-3"
                 />
               </div>
@@ -170,12 +170,12 @@
               </h3>
               <div class="card-body">
                 <div class="d-flex">
-                  <div style="width: 75px">
+                  <div style="width: 65px">
                     <img
                       :src="
-                        'https://randomuser.me/api/portraits/men/' + getRandomPerson(8) + '.jpg'
+                        'https://randomuser.me/api/portraits/men/' + (student.id + 50) + '.jpg'
                       "
-                      class="img-fluid rounded-circle border border-light border-3"
+                      class="img-fluid rounded-circle border border-3"
                     />
                   </div>
                   <div class="flex-fill ps-3">
@@ -783,14 +783,6 @@ export default {
           _this.student = response.data[0];
         }
       });
-    },
-    getRandomPerson: function (rangeMax) {
-      // if no range is specified
-      if (!rangeMax) {
-        rangeMax = 100;
-      }
-      // return random number
-      return Math.floor(Math.random() * rangeMax);
     }
   },
 };
