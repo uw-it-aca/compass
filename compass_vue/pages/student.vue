@@ -1,7 +1,7 @@
 // about.vue
 
 <template>
-  <layout :page-title="pageTitle">
+  <layout v-if="pageTitle !== undefined" :page-title="pageTitle">
     <template #title>
       <h1 v-if="$route.params.id" class="visually-hidden">{{ student.student_name }}</h1>
       <h1 v-else>Student</h1>
@@ -775,10 +775,7 @@ export default {
       }
     },
     pageTitle: function () {
-      //let blah = this.student.student_name;
-      //console.log("xxxxxx " + blah)
-      return 'asdlfasdfa';
-      //return this.student.student_name;
+      return this.student.student_name;
     },
   },
   methods: {
