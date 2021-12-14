@@ -194,7 +194,8 @@ class Student(models.Model):
     perm_addr_postal_code = models.TextField(null=True)
     registered_in_quarter = models.BooleanField(null=True)
     special_program = models.ManyToManyField(SpecialProgram)
-    retention = models.ForeignKey(Retention, on_delete=models.CASCADE, default=1)
+    retention = models.ForeignKey(Retention, on_delete=models.CASCADE,
+                                  default=1)
     adviser = models.ManyToManyField(Adviser)
     intended_major = models.ManyToManyField(
         Major, related_name="intended_major")  # edited by compass
