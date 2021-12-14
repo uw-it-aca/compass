@@ -771,7 +771,7 @@ export default {
       } else if (this.student.retention.priority === '2.2') {
         return 'border-warning';
       } else {
-        return 'border-default';
+        return '';
       }
     },
   },

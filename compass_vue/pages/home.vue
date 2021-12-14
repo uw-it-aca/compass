@@ -378,7 +378,7 @@ export default {
       } else if (priorityValue == '2.2') {
         return 'border-warning';
       } else {
-        return 'border-light';
+        return '';
       }
     },
   },
