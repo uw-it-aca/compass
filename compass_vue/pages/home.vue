@@ -92,6 +92,7 @@
 
             <div class="fw-bold">Activity</div>
             <div class="form-check">
+
               <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" />
               <label class="form-check-label" for="defaultCheck3"> High </label>
             </div>
