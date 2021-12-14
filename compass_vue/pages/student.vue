@@ -1,7 +1,7 @@
 // about.vue
 
 <template>
-  <layout :page-title="`STUDENT_NAME`">
+  <layout :page-title="pageTitle">
     <template #title>
       <h1 v-if="$route.params.id" class="visually-hidden">{{ student.student_name }}</h1>
       <h1 v-else>Student</h1>
@@ -742,7 +742,7 @@ import dataMixin from '../mixins/data_mixin.js';
 export default {
   mixins: [dataMixin],
   components: {
-    layout: Layout,
+    'layout': Layout,
     'axdd-card': Card,
   },
   created: function () {
@@ -774,6 +774,12 @@ export default {
         return '';
       }
     },
+    pageTitle: function () {
+      //let blah = this.student.student_name;
+      //console.log("xxxxxx " + blah)
+      return 'asdlfasdfa';
+      //return this.student.student_name;
+    },
   },
   methods: {
     loadstudent: function (studentNumber) {
@@ -791,7 +797,7 @@ export default {
       }
       // return random number
       return Math.floor(Math.random() * rangeMax);
-    },
+    }
   },
 };
 </script>
