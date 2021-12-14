@@ -3,38 +3,51 @@
 <template>
   <layout :page-title="`STUDENT_NAME`">
     <template #title>
-      <h1 v-if="$route.params.id"  class="visually-hidden">{{ student.student_name }}</h1>
+      <h1 v-if="$route.params.id" class="visually-hidden">{{ student.student_name }}</h1>
       <h1 v-else>Student</h1>
     </template>
     <template #content>
       <div v-if="$route.params.id">
-        <div class="row">
+        <div class="row mb-3">
           <div class="col-lg-6 d-flex">
             <div>
-            <div :class="priorityRing" class="rounded-circle border border-4" style="width: 140px">
-
-              <img
-                v-if="student.gender === 'F'"
-                :src="'https://randomuser.me/api/portraits/women/' + getRandomPerson() + '.jpg'"
-                class="img-fluid rounded-circle border border-light border-3"
-
-              />
-              <img
-                v-else
-                :src="'https://randomuser.me/api/portraits/men/' + getRandomPerson() + '.jpg'"
-                class="img-fluid rounded-circle border border-light border-3"
-
-              />
+              <div
+                :class="priorityRing"
+                class="rounded-circle border border-4"
+                style="width: 140px"
+              >
+                <img
+                  v-if="student.gender === 'F'"
+                  :src="'https://randomuser.me/api/portraits/women/' + getRandomPerson() + '.jpg'"
+                  class="img-fluid rounded-circle border border-light border-3"
+                />
+                <img
+                  v-else
+                  :src="'https://randomuser.me/api/portraits/men/' + getRandomPerson() + '.jpg'"
+                  class="img-fluid rounded-circle border border-light border-3"
+                />
               </div>
               <div class="text-center mb-4">
                 <span class="fw-bold">LEVEL {{ student.retention.priority }}</span>
               </div>
             </div>
             <div class="flex-fill ps-3 mb-4">
-              <div class="h3 text-uppercase">{{ student.student_preferred_last_name }}, {{ student.student_preferred_first_name }}</div>
-              <div class="h5">{{ $route.params.id }}, <small>{{ student.uw_net_id }}</small></div>
-              <p><span class="badge rounded-pill border border-muted text-dark me-1">{{ student.gender }}</span>
-                <span v-if="student.gender === 'F'" class="badge rounded-pill border border-muted text-dark">she/her</span>
+              <div class="h3 text-uppercase">
+                {{ student.student_preferred_last_name }},
+                {{ student.student_preferred_first_name }}
+              </div>
+              <div class="h5">
+                {{ $route.params.id }}, <small>{{ student.uw_net_id }}</small>
+              </div>
+              <p>
+                <span class="badge rounded-pill border border-muted text-dark me-1">{{
+                  student.gender
+                }}</span>
+                <span
+                  v-if="student.gender === 'F'"
+                  class="badge rounded-pill border border-muted text-dark"
+                  >she/her</span
+                >
                 <span v-else class="badge rounded-pill border border-muted text-dark">he/him</span>
               </p>
               <div><i class="bi bi-trophy-fill text-purple"></i> Student Athlete</div>
@@ -87,7 +100,9 @@
               </h3>
               <div class="card-body">
                 <ul>
-                  <li>Priority: <span class="fw-bold">{{ student.retention.priority }}</span></li>
+                  <li>
+                    Priority: <span class="fw-bold">{{ student.retention.priority }}</span>
+                  </li>
                   <li>Sign-ins: {{ student.retention.sign_in }}</li>
                   <li>Activity: {{ student.retention.activity }}</li>
                   <li>Assignments: {{ student.retention.assignment }}</li>
@@ -157,7 +172,9 @@
                 <div class="d-flex">
                   <div style="width: 75px">
                     <img
-                      :src="'https://randomuser.me/api/portraits/men/' + getRandomPerson(8) + '.jpg'"
+                      :src="
+                        'https://randomuser.me/api/portraits/men/' + getRandomPerson(8) + '.jpg'
+                      "
                       class="img-fluid rounded-circle border border-light border-3"
                     />
                   </div>
@@ -211,7 +228,7 @@
                     </span>
                     <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">update</a>
                   </li>
-                  <hr>
+                  <hr />
                   <li>
                     Accepted:
                     <span v-for="(major, index) in student.major" :key="index">
@@ -733,7 +750,7 @@ export default {
   },
   data() {
     return {
-      student: {}
+      student: {},
     };
   },
   computed: {
@@ -747,17 +764,16 @@ export default {
       if (addr) return addr;
       else return 'N/A';
     },
-    priorityRing: function() {
+    priorityRing: function () {
       // mocked display
       if (this.student.retention.priority === '-3.4') {
         return 'border-danger';
-      }
-      else if (this.student.retention.priority === '2.2') {
+      } else if (this.student.retention.priority === '2.2') {
         return 'border-warning';
       } else {
         return 'border-default';
       }
-    }
+    },
   },
   methods: {
     loadstudent: function (studentNumber) {
@@ -768,10 +784,10 @@ export default {
         }
       });
     },
-    getRandomPerson: function(rangeMax) {
+    getRandomPerson: function (rangeMax) {
       // if no range is specified
       if (!rangeMax) {
-        rangeMax = 100
+        rangeMax = 100;
       }
       // return random number
       return Math.floor(Math.random() * rangeMax);
