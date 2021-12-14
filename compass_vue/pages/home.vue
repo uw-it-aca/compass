@@ -1,16 +1,14 @@
 // home.vue
 
 <template>
-  <layout :page-title="pageTitle">
+  <layout :page-title="'Home'">
     <!-- page content -->
     <template #title>
-      <h1 class="visually-hidden">{{ pageTitle }}</h1>
+      <h1 class="visually-hidden">Home</h1>
     </template>
 
     <template #content>
-      
       <div class="row my-4">
-
         <div class="col-lg-2">
           <div class="small lh-lg">Display caseload for:</div>
           <select class="form-select form-select-sm" aria-label="Default select example">
@@ -48,7 +46,7 @@
                   :id="option.id"
                   :value="option"
                   v-model="searchOption"
-                  style="margin-top:6px;"
+                  style="margin-top: 6px"
                 />
                 <label class="form-check-label" :for="option.id">{{ option.label }}</label>
               </div>
@@ -77,86 +75,62 @@
 
       <div class="row">
         <div class="col-md-3 col-lg-2 small">
-
           <div class="border-bottom mb-3 pb-3">
             <div class="fw-bold">Sign-ins</div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-              <label class="form-check-label" for="defaultCheck1">
-                High
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+              <label class="form-check-label" for="defaultCheck1"> High </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-              <label class="form-check-label" for="defaultCheck2">
-                Average
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
+              <label class="form-check-label" for="defaultCheck2"> Average </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck2">
-              <label class="form-check-label" for="defaultCheck2">
-                Low
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
+              <label class="form-check-label" for="defaultCheck2"> Low </label>
             </div>
 
             <div class="fw-bold">Activity</div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck3">
-              <label class="form-check-label" for="defaultCheck3">
-                High
-              </label>
+
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" />
+              <label class="form-check-label" for="defaultCheck3"> High </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck4">
-              <label class="form-check-label" for="defaultCheck4">
-                Average
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck4" />
+              <label class="form-check-label" for="defaultCheck4"> Average </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck5">
-              <label class="form-check-label" for="defaultCheck5">
-                Low
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck5" />
+              <label class="form-check-label" for="defaultCheck5"> Low </label>
             </div>
-  
+
             <div class="fw-bold">Assignments</div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck6">
-              <label class="form-check-label" for="defaultCheck6">
-                High
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck6" />
+              <label class="form-check-label" for="defaultCheck6"> High </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck7">
-              <label class="form-check-label" for="defaultCheck7">
-                Average
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck7" />
+              <label class="form-check-label" for="defaultCheck7"> Average </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck8">
-              <label class="form-check-label" for="defaultCheck8">
-                Low
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck8" />
+              <label class="form-check-label" for="defaultCheck8"> Low </label>
             </div>
 
             <div class="fw-bold">Grades</div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck9">
-              <label class="form-check-label" for="defaultCheck9">
-                High
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck9" />
+              <label class="form-check-label" for="defaultCheck9"> High </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck10">
-              <label class="form-check-label" for="defaultCheck10">
-                Average
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck10" />
+              <label class="form-check-label" for="defaultCheck10"> Average </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck11">
-              <label class="form-check-label" for="defaultCheck11">
-                Low
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck11" />
+              <label class="form-check-label" for="defaultCheck11"> Low </label>
             </div>
 
             <ul class="mt-3 mb-0 list-inline">
@@ -169,46 +143,40 @@
           <div class="border-bottom mb-3 pb-3">
             <div class="fw-bold">Populations</div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck12">
-              <label class="form-check-label" for="defaultCheck12">
-                Pre-major
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck12" />
+              <label class="form-check-label" for="defaultCheck12"> Pre-major </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck17">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck17" />
               <label class="form-check-label text-nowrap" for="defaultCheck17">
                 Extended Pre-major
               </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck13">
-              <label class="form-check-label" for="defaultCheck13">
-                STEM
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck13" />
+              <label class="form-check-label" for="defaultCheck13"> STEM </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck14">
-              <label class="form-check-label" for="defaultCheck14">
-                Freshman
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck14" />
+              <label class="form-check-label" for="defaultCheck14"> Freshman </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck15" checked>
-              <label class="form-check-label" for="defaultCheck15">
-                Athlete
-              </label>
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value=""
+                id="defaultCheck15"
+                checked
+              />
+              <label class="form-check-label" for="defaultCheck15"> Athlete </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck16">
-              <label class="form-check-label" for="defaultCheck16">
-                International
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck16" />
+              <label class="form-check-label" for="defaultCheck16"> International </label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck17">
-              <label class="form-check-label" for="defaultCheck17">
-                Graduate
-              </label>
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck17" />
+              <label class="form-check-label" for="defaultCheck17"> Graduate </label>
             </div>
           </div>
 
@@ -221,7 +189,6 @@
               <option value="3">Track</option>
             </select>
           </div>
-
         </div>
         <div class="col-md-9 col-lg-10">
           <div class="bg-white border rounded-3 shadow-sm p-3 table-responsive">
@@ -241,27 +208,43 @@
                 <tr v-for="item in students" :key="item.SystemKey">
                   <td>
                     <div class="d-flex">
-                      <div class="me-2" style="min-width:55px;">
-                        <div :class="getRandomPriority()" class="rounded-circle border border-3 ">
-                        <img
-                          v-if="item.gender === 'F'"
-                          :src="'https://randomuser.me/api/portraits/thumb/women/' + getRandomPerson() + '.jpg'"
-                          class="img-fluid rounded-circle border border-white border-2"
-
-                        />
-                        <img
-                          v-else
-                          :src="'https://randomuser.me/api/portraits/thumb/men/' + getRandomPerson() + '.jpg'"
-                          class="img-fluid rounded-circle border border-white border-2"
-
-                        />
+                      <div class="me-2" style="min-width: 55px">
+                        <div
+                          :class="showPriorityRing(item.retention.priority)"
+                          class="rounded-circle border border-3"
+                        >
+                          <img
+                            v-if="item.gender === 'F'"
+                            :src="
+                              'https://randomuser.me/api/portraits/thumb/women/' +
+                              getRandomPerson() +
+                              '.jpg'
+                            "
+                            class="img-fluid rounded-circle border border-white border-2"
+                          />
+                          <img
+                            v-else
+                            :src="
+                              'https://randomuser.me/api/portraits/thumb/men/' +
+                              getRandomPerson() +
+                              '.jpg'
+                            "
+                            class="img-fluid rounded-circle border border-white border-2"
+                          />
                         </div>
                       </div>
                       <div>
                         <div class="text-nowrap">
-                          <span>{{ item.student_preferred_last_name }}, {{ item.student_preferred_first_name }}</span>
-                          <span class="badge rounded-pill border border-muted text-dark small">{{ item.gender }}</span> 
-                          <span class="badge rounded-pill border border-muted text-dark small"><i class="bi bi-trophy-fill text-purple"></i></span>                        
+                          <span
+                            >{{ item.student_preferred_last_name }},
+                            {{ item.student_preferred_first_name }}</span
+                          >
+                          <span class="badge rounded-pill border border-muted text-dark small">{{
+                            item.gender
+                          }}</span>
+                          <span class="badge rounded-pill border border-muted text-dark small"
+                            ><i class="bi bi-trophy-fill text-purple"></i
+                          ></span>
                         </div>
                         <div class="small text-secondary">{{ item.uw_net_id }}</div>
                       </div>
@@ -272,7 +255,7 @@
                       {{ item.student_number }}
                     </router-link>
                   </td>
-                  <td>priority</td>
+                  <td>{{ item.retention.priority }}</td>
                   <td>{{ item.class_desc }}</td>
                   <td>{{ item.major_full_name }}</td>
                   <td>{{ item.enrollment_status_desc }}</td>
@@ -298,7 +281,7 @@
 </template>
 
 <script>
-import {markRaw} from 'vue'
+import { markRaw } from 'vue';
 import Pagination from 'v-pagination-3';
 import MyPagination from '../components/pagination.vue';
 import Layout from '../layout.vue';
@@ -316,7 +299,6 @@ export default {
   },
   data() {
     return {
-      pageTitle: 'Home',
       // data
       students: [],
       // pagination
@@ -381,26 +363,24 @@ export default {
         }
       });
     },
-    getRandomPerson: function(rangeMax) {
+    getRandomPerson: function (rangeMax) {
       // if no range is specified
       if (!rangeMax) {
-        rangeMax = 100
+        rangeMax = 100;
       }
       // return random number
       return Math.floor(Math.random() * rangeMax);
     },
-    getRandomPriority: function() {
-      let int = Math.floor(Math.random() * 10);
-      if (int == 0) {
-        return 'border-danger'
+    showPriorityRing: function (priorityValue) {
+      // mocked display
+      if (priorityValue == '-3.4') {
+        return 'border-danger';
+      } else if (priorityValue == '2.2') {
+        return 'border-warning';
+      } else {
+        return '';
       }
-      else if (int == 1) {
-        return 'border-warning'
-      }
-      else {
-        return 'border-light'
-      }
-    }
+    },
   },
 };
 </script>

@@ -1,8 +1,19 @@
 # Copyright 2021 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.models import Student, Major, SpecialProgram
+from compass.models import Retention, Student, Major, Retention, SpecialProgram
 from rest_framework import serializers
+
+
+class RetentionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Retention
+        fields = ['priority',
+                  'sign_in',
+                  'activity',
+                  'assignment',
+                  'grade']
 
 
 class SpecialProgramSerializer(serializers.ModelSerializer):
@@ -27,6 +38,7 @@ class MajorSerializer(serializers.ModelSerializer):
 class StudentSerializer(serializers.ModelSerializer):
     intended_major = MajorSerializer(many=True, read_only=True)
     major = MajorSerializer(many=True, read_only=True)
+    retention = RetentionSerializer(read_only=True)
     special_program = SpecialProgramSerializer(many=True, read_only=True)
     adviser_full_name = \
         serializers.CharField(source="adviser.full_name", read_only=True)
@@ -52,6 +64,7 @@ class StudentSerializer(serializers.ModelSerializer):
                   'class_desc',
                   'enrollment_status_code',
                   'enrollment_desc',
+                  'retention',
                   'special_program',
                   'honors_program_code',
                   'resident_desc',

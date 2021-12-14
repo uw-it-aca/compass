@@ -1,38 +1,53 @@
 // about.vue
 
 <template>
-  <layout :page-title="pageTitle">
-    <!-- page content -->
+  <layout v-if="student.student_name !== undefined" :page-title="student.student_name">
     <template #title>
-      <div v-if="$route.params.id" class="mb-3">
-        <div class="row">
+      <h1 v-if="$route.params.id" class="visually-hidden">{{ student.student_name }}</h1>
+      <h1 v-else>Student</h1>
+    </template>
+    <template #content>
+      <div v-if="$route.params.id">
+        <div class="row mb-3">
           <div class="col-lg-6 d-flex">
-
             <div>
-            <div :class="getRandomPriority()" class="rounded-circle border border-4" style="width: 140px">
-
-              <img
-                v-if="student.gender === 'F'"
-                :src="'https://randomuser.me/api/portraits/women/' + getRandomPerson() + '.jpg'"
-                class="img-fluid rounded-circle border border-light border-3"
-
-              />
-              <img
-                v-else
-                :src="'https://randomuser.me/api/portraits/men/' + getRandomPerson() + '.jpg'"
-                class="img-fluid rounded-circle border border-light border-3"
-
-              />
+              <div
+                :class="priorityRing"
+                class="rounded-circle border border-4"
+                style="width: 140px"
+              >
+                <img
+                  v-if="student.gender === 'F'"
+                  :src="'https://randomuser.me/api/portraits/women/' + getRandomPerson() + '.jpg'"
+                  class="img-fluid rounded-circle border border-light border-3"
+                />
+                <img
+                  v-else
+                  :src="'https://randomuser.me/api/portraits/men/' + getRandomPerson() + '.jpg'"
+                  class="img-fluid rounded-circle border border-light border-3"
+                />
               </div>
               <div class="text-center mb-4">
-                <span class="fw-bold">LEVEL -3.7</span>
+                <span class="fw-bold">LEVEL {{ student.retention.priority }}</span>
               </div>
             </div>
             <div class="flex-fill ps-3 mb-4">
-              <h1 class="h3 text-uppercase">{{ student.student_preferred_last_name }}, {{ student.student_preferred_first_name }}</h1>
-              <div class="h5">{{ $route.params.id }}, <small>{{ student.uw_net_id }}</small></div>
-              <p><span class="badge rounded-pill border border-muted text-dark me-1">{{ student.gender }}</span>
-                <span v-if="student.gender === 'F'" class="badge rounded-pill border border-muted text-dark">she/her</span>
+              <div class="h3 text-uppercase">
+                {{ student.student_preferred_last_name }},
+                {{ student.student_preferred_first_name }}
+              </div>
+              <div class="h5">
+                {{ $route.params.id }}, <small>{{ student.uw_net_id }}</small>
+              </div>
+              <p>
+                <span class="badge rounded-pill border border-muted text-dark me-1">{{
+                  student.gender
+                }}</span>
+                <span
+                  v-if="student.gender === 'F'"
+                  class="badge rounded-pill border border-muted text-dark"
+                  >she/her</span
+                >
                 <span v-else class="badge rounded-pill border border-muted text-dark">he/him</span>
               </p>
               <div><i class="bi bi-trophy-fill text-purple"></i> Student Athlete</div>
@@ -58,12 +73,6 @@
             </ul>
           </div>
         </div>
-      </div>
-      <h1 v-else>Student</h1>
-    </template>
-
-    <template #content>
-      <div v-if="$route.params.id">
         <div class="row mb-3">
           <div class="col text-end">
             <a
@@ -91,11 +100,13 @@
               </h3>
               <div class="card-body">
                 <ul>
-                  <li>Priority: <span class="fw-bold">LEVEL -3.7</span></li>
-                  <li>Sign-ins: -5</li>
-                  <li>Activity: -4.8</li>
-                  <li>Assignments: -4.8</li>
-                  <li>Grads: -2.8</li>
+                  <li>
+                    Priority: <span class="fw-bold">{{ student.retention.priority }}</span>
+                  </li>
+                  <li>Sign-ins: {{ student.retention.sign_in }}</li>
+                  <li>Activity: {{ student.retention.activity }}</li>
+                  <li>Assignments: {{ student.retention.assignment }}</li>
+                  <li>Grades: {{ student.retention.grade }}</li>
                 </ul>
               </div>
             </div>
@@ -161,7 +172,9 @@
                 <div class="d-flex">
                   <div style="width: 75px">
                     <img
-                      :src="'https://randomuser.me/api/portraits/men/' + getRandomPerson(8) + '.jpg'"
+                      :src="
+                        'https://randomuser.me/api/portraits/men/' + getRandomPerson(8) + '.jpg'
+                      "
                       class="img-fluid rounded-circle border border-light border-3"
                     />
                   </div>
@@ -215,7 +228,7 @@
                     </span>
                     <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">update</a>
                   </li>
-                  <hr>
+                  <hr />
                   <li>
                     Accepted:
                     <span v-for="(major, index) in student.major" :key="index">
@@ -729,7 +742,7 @@ import dataMixin from '../mixins/data_mixin.js';
 export default {
   mixins: [dataMixin],
   components: {
-    layout: Layout,
+    'layout': Layout,
     'axdd-card': Card,
   },
   created: function () {
@@ -751,9 +764,16 @@ export default {
       if (addr) return addr;
       else return 'N/A';
     },
-    pageTitle: function () {
-      return this.student.student_name;
-    },
+    priorityRing: function () {
+      // mocked display
+      if (this.student.retention.priority === '-3.4') {
+        return 'border-danger';
+      } else if (this.student.retention.priority === '2.2') {
+        return 'border-warning';
+      } else {
+        return '';
+      }
+    }
   },
   methods: {
     loadstudent: function (studentNumber) {
@@ -764,25 +784,13 @@ export default {
         }
       });
     },
-    getRandomPerson: function(rangeMax) {
+    getRandomPerson: function (rangeMax) {
       // if no range is specified
       if (!rangeMax) {
-        rangeMax = 100
+        rangeMax = 100;
       }
       // return random number
       return Math.floor(Math.random() * rangeMax);
-    },
-    getRandomPriority: function() {
-      let int = Math.floor(Math.random() * 5);
-      if (int == 0) {
-        return 'border-danger'
-      }
-      else if (int == 1) {
-        return 'border-warning'
-      }
-      else {
-        return 'border-light'
-      }
     }
   },
 };

@@ -45,7 +45,7 @@ import { Topbar } from 'axdd-components';
 export default {
   name: 'Compass',
   components: {
-    topbar: Topbar,
+    'topbar': Topbar,
   },
   props: {
     pageTitle: {

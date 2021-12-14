@@ -148,6 +148,15 @@ class SpecialProgram(models.Model):
     special_program_desc = models.TextField(null=True)
 
 
+class Retention(models.Model):
+
+    priority = models.TextField(null=True)
+    sign_in = models.TextField(null=True)
+    activity = models.TextField(null=True)
+    assignment = models.TextField(null=True)
+    grade = models.TextField(null=True)
+
+
 class Student(models.Model):
 
     student_number = models.BigIntegerField(unique=True)
@@ -185,6 +194,8 @@ class Student(models.Model):
     perm_addr_postal_code = models.TextField(null=True)
     registered_in_quarter = models.BooleanField(null=True)
     special_program = models.ManyToManyField(SpecialProgram)
+    retention = models.ForeignKey(Retention, on_delete=models.CASCADE,
+                                  default=1)
     adviser = models.ManyToManyField(Adviser)
     intended_major = models.ManyToManyField(
         Major, related_name="intended_major")  # edited by compass
