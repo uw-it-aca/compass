@@ -1,16 +1,15 @@
 // about.vue
 
 <template>
-  <layout :page-title="pageTitle">
+  <layout :page-title="`STUDENT_NAME`">
     <template #title>
       <h1 v-if="$route.params.id"  class="visually-hidden">{{ student.student_name }}</h1>
       <h1 v-else>Student</h1>
     </template>
     <template #content>
-      <div v-if="$route.params.id" class="mb-3">
+      <div v-if="$route.params.id">
         <div class="row">
           <div class="col-lg-6 d-flex">
-
             <div>
             <div :class="priorityRing" class="rounded-circle border border-4" style="width: 140px">
 
@@ -61,8 +60,6 @@
             </ul>
           </div>
         </div>
-      </div>
-      <div v-if="$route.params.id">
         <div class="row mb-3">
           <div class="col text-end">
             <a
@@ -736,8 +733,7 @@ export default {
   },
   data() {
     return {
-      pageTitle: 'DYASDLFKJAS',
-      student: {},
+      student: {}
     };
   },
   computed: {
@@ -751,9 +747,6 @@ export default {
       if (addr) return addr;
       else return 'N/A';
     },
-    /*pageTitle: function () {
-      return this.student.student_name;
-    },*/
     priorityRing: function() {
       // mocked display
       if (this.student.retention.priority === '-3.4') {
