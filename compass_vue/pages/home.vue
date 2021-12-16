@@ -161,13 +161,7 @@
               <label class="form-check-label" for="defaultCheck14"> Freshman </label>
             </div>
             <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="defaultCheck15"
-                checked
-              />
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck15" />
               <label class="form-check-label" for="defaultCheck15"> Athlete </label>
             </div>
             <div class="form-check">
