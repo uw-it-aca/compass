@@ -15,20 +15,20 @@ import './css/custom.scss';
 const app = createApp(App);
 
 // MARK: google analytics data stream measurement_id
-const gaCode = document.body.getAttribute('google-analytics');
-const debugMode = document.body.getAttribute('django-debug');
+const gaCode = document.body.getAttribute('data-google-analytics');
+const debugMode = document.body.getAttribute('data-django-debug');
 
 app.config.productionTip = false;
 
-// vue-gtag
+// vue-gtag-next
 app.use(VueGtag, {
-  config: {
+  isEnabled: debugMode == 'false',
+  property: {
     id: gaCode,
     params: {
       anonymize_ip: true,
     },
-  },
-  enabled: debugMode == 'true',
+  }
 });
 
 // vue-mq (media queries)
