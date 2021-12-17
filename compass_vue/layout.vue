@@ -11,7 +11,8 @@
     <template #bar v-if="true">
       <div class="bg-beige">
         <div class="container-xl py-2">
-            <div class="w-25">
+            <div>Office of Minority Affairs &amp; Diversity</div>
+            <div class="d-none w-25">
               <select class="form-select form-select-sm" aria-label="Default select example">
                 <option value="1" selected>Undergraduate Academic Affairs</option>
                 <option value="2">Office of Minority Affairs &amp; Diversity</option>
