@@ -75,6 +75,8 @@
 
       <div class="row">
         <div class="col-md-3 col-lg-2 small">
+
+          <div class="fw-bold">Retention Filters</div>
           <div class="border-bottom mb-3 pb-3">
             <div class="fw-bold">Sign-ins</div>
             <div class="form-check">
@@ -161,13 +163,7 @@
               <label class="form-check-label" for="defaultCheck14"> Freshman </label>
             </div>
             <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="defaultCheck15"
-                checked
-              />
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck15" />
               <label class="form-check-label" for="defaultCheck15"> Athlete </label>
             </div>
             <div class="form-check">
@@ -191,88 +187,95 @@
           </div>
         </div>
         <div class="col-md-9 col-lg-10">
-          <div class="bg-white border rounded-3 shadow-sm p-3 table-responsive">
-            <table class="table table-hover mb-0">
-              <thead class="">
-                <tr>
-                  <th scope="col">Student</th>
-                  <th scope="col" class="text-nowrap">Student Number</th>
-                  <th scope="col">Priority</th>
-                  <th scope="col">Class</th>
-                  <th scope="col">Major</th>
-                  <th scope="col" class="text-nowrap">Enroll Status</th>
-                  <th scope="col">Adviser</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="item in students" :key="item.SystemKey">
-                  <td>
-                    <div class="d-flex">
-                      <div class="me-2" style="min-width: 55px">
-                        <div
-                          :class="showPriorityRing(item.retention.priority)"
-                          class="rounded-circle border border-3"
-                        >
-                          <img
-                            v-if="item.gender === 'F'"
-                            :src="
-                              'https://randomuser.me/api/portraits/thumb/women/' +
-                              getRandomPerson() +
-                              '.jpg'
-                            "
-                            class="img-fluid rounded-circle border border-white border-2"
-                          />
-                          <img
-                            v-else
-                            :src="
-                              'https://randomuser.me/api/portraits/thumb/men/' +
-                              getRandomPerson() +
-                              '.jpg'
-                            "
-                            class="img-fluid rounded-circle border border-white border-2"
-                          />
+          
+          <div class="card shadow-sm mb-3">
+            <h3 class="card-header h6 text-uppercase text-muted fw-bold" style="line-height: 30px">
+              Students
+            </h3>
+            <div class="card-body">
+              
+              <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                  <thead class="">
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col" class="text-nowrap">Student Number</th>
+                      <th scope="col">Priority</th>
+                      <th scope="col">Class</th>
+                      <th scope="col" class="text-nowrap">Enroll Status</th>
+                      <th scope="col">Adviser</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="item in students" :key="item.SystemKey">
+                      <td>
+                        <div class="d-flex">
+                          <div class="me-2" style="min-width: 55px">
+                            <div
+                              :class="showPriorityRing(item.retention.priority)"
+                              class="rounded-circle border border-3"
+                            >
+                              <img
+                                v-if="item.gender === 'F'"
+                                :src="
+                                  'https://randomuser.me/api/portraits/thumb/women/' +
+                                  item.id +
+                                  '.jpg'
+                                "
+                                class="img-fluid rounded-circle border border-white border-2"
+                              />
+                              <img
+                                v-else
+                                :src="
+                                  'https://randomuser.me/api/portraits/thumb/men/' +
+                                  item.id +
+                                  '.jpg'
+                                "
+                                class="img-fluid rounded-circle border border-white border-2"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <div class="text-nowrap">
+                              <span
+                                >{{ item.student_preferred_last_name }},
+                                {{ item.student_preferred_first_name }}</span
+                              >
+                              <span class="badge rounded-pill border border-muted text-dark small">{{
+                                item.gender
+                              }}</span>
+                              <span class="badge rounded-pill border border-muted text-dark small"
+                                ><i class="bi bi-trophy-fill text-purple"></i
+                              ></span>
+                            </div>
+                            <div class="small text-secondary">{{ item.uw_net_id }}</div>
+                          </div>
                         </div>
-                      </div>
-                      <div>
-                        <div class="text-nowrap">
-                          <span
-                            >{{ item.student_preferred_last_name }},
-                            {{ item.student_preferred_first_name }}</span
-                          >
-                          <span class="badge rounded-pill border border-muted text-dark small">{{
-                            item.gender
-                          }}</span>
-                          <span class="badge rounded-pill border border-muted text-dark small"
-                            ><i class="bi bi-trophy-fill text-purple"></i
-                          ></span>
-                        </div>
-                        <div class="small text-secondary">{{ item.uw_net_id }}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <router-link :to="{ name: 'Student', params: { id: item.student_number } }">
-                      {{ item.student_number }}
-                    </router-link>
-                  </td>
-                  <td>{{ item.retention.priority }}</td>
-                  <td>{{ item.class_desc }}</td>
-                  <td>{{ item.major_full_name }}</td>
-                  <td>{{ item.enrollment_status_desc }}</td>
-                  <td>{{ item.adviser_full_name }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="mt-2 mb-4 text-end">
-            <pagination
-              v-model="currentPage"
-              :records="studentsCount"
-              :per-page="pageSize"
-              :options="pageOptions"
-              @paginate="loadStudentList"
-            >
-            </pagination>
+                      </td>
+                      <td>
+                        <router-link :to="{ name: 'Student', params: { id: item.student_number } }">
+                          {{ item.student_number }}
+                        </router-link>
+                      </td>
+                      <td>{{ item.retention.priority }}</td>
+                      <td>{{ item.class_desc }}</td>
+                      <td>{{ item.enrollment_status_desc }}</td>
+                      <td>{{ item.adviser_full_name }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-footer text-end">
+              <pagination
+                v-model="currentPage"
+                :records="studentsCount"
+                :per-page="pageSize"
+                :options="pageOptions"
+                @paginate="loadStudentList"
+              >
+              </pagination>
+            </div>
           </div>
         </div>
       </div>
@@ -362,14 +365,6 @@ export default {
           }
         }
       });
-    },
-    getRandomPerson: function (rangeMax) {
-      // if no range is specified
-      if (!rangeMax) {
-        rangeMax = 100;
-      }
-      // return random number
-      return Math.floor(Math.random() * rangeMax);
     },
     showPriorityRing: function (priorityValue) {
       // mocked display

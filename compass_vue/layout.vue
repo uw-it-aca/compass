@@ -11,12 +11,18 @@
     <template #bar v-if="true">
       <div class="bg-beige">
         <div class="container-xl py-2">
-          <div class="d-flex">
-            <div class="flex-fill">Office of Minority Affairs &amp; Diversity</div>
-            <div class="flex-fill text-end">
-              <a href="#">Retention Dashboard</a>
+            <div>Office of Minority Affairs &amp; Diversity</div>
+            <div class="d-none w-25">
+              <select class="form-select form-select-sm" aria-label="Default select example">
+                <option value="1" selected>Undergraduate Academic Affairs</option>
+                <option value="2">Office of Minority Affairs &amp; Diversity</option>
+                <option value="3">International Students Services</option>
+                <option value="4">Itegrated Social Sciences</option>
+                <option value="5">College of Engineering</option>
+                <option value="6">UW Tacoma</option>
+                <option value="7">Intercollegiate Athletics</option>
+              </select>
             </div>
-          </div>
         </div>
       </div>
     </template>
