@@ -76,63 +76,85 @@
       <div class="row">
         <div class="col-md-3 col-lg-2 small">
 
+          <div class="border-bottom mb-3 pb-3">
+            <div class="fw-bold">Caseload status</div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault1"
+                checked
+              />
+              <label class="form-check-label" for="flexRadioDefault1">Active</label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="flexRadioDefault"
+                id="flexRadioDefault2"
+              />
+              <label class="form-check-label" for="flexRadioDefault2">Inactive</label>
+            </div>
+          </div>
+
           <div class="fw-bold">Retention Filters</div>
           <div class="border-bottom mb-3 pb-3">
             <div class="fw-bold">Sign-ins</div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-              <label class="form-check-label" for="defaultCheck1"> High </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck1" />
+              <label class="form-check-label" for="defaultCheck1">High</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
-              <label class="form-check-label" for="defaultCheck2"> Average </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck2" />
+              <label class="form-check-label" for="defaultCheck2">Average</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
-              <label class="form-check-label" for="defaultCheck2"> Low </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck2" />
+              <label class="form-check-label" for="defaultCheck2">Low</label>
             </div>
 
             <div class="fw-bold">Activity</div>
             <div class="form-check">
-
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" />
-              <label class="form-check-label" for="defaultCheck3"> High </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck3" />
+              <label class="form-check-label" for="defaultCheck3">High</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck4" />
-              <label class="form-check-label" for="defaultCheck4"> Average </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck4" />
+              <label class="form-check-label" for="defaultCheck4">Average</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck5" />
-              <label class="form-check-label" for="defaultCheck5"> Low </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck5" />
+              <label class="form-check-label" for="defaultCheck5">Low</label>
             </div>
 
             <div class="fw-bold">Assignments</div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck6" />
-              <label class="form-check-label" for="defaultCheck6"> High </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck6" />
+              <label class="form-check-label" for="defaultCheck6">High</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck7" />
-              <label class="form-check-label" for="defaultCheck7"> Average </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck7" />
+              <label class="form-check-label" for="defaultCheck7">Average</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck8" />
-              <label class="form-check-label" for="defaultCheck8"> Low </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck8" />
+              <label class="form-check-label" for="defaultCheck8">Low</label>
             </div>
 
             <div class="fw-bold">Grades</div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck9" />
-              <label class="form-check-label" for="defaultCheck9"> High </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck9" />
+              <label class="form-check-label" for="defaultCheck9">High</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck10" />
-              <label class="form-check-label" for="defaultCheck10"> Average </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck10" />
+              <label class="form-check-label" for="defaultCheck10">Average</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck11" />
-              <label class="form-check-label" for="defaultCheck11"> Low </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck11" />
+              <label class="form-check-label" for="defaultCheck11">Low</label>
             </div>
 
             <ul class="mt-3 mb-0 list-inline">
@@ -145,34 +167,42 @@
           <div class="border-bottom mb-3 pb-3">
             <div class="fw-bold">Populations</div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck12" />
-              <label class="form-check-label" for="defaultCheck12"> Pre-major </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck12" />
+              <label class="form-check-label" for="defaultCheck12">Pre-major</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck17" />
-              <label class="form-check-label text-nowrap" for="defaultCheck17">
-                Extended Pre-major
-              </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck17" />
+              <label class="form-check-label text-nowrap" for="defaultCheck17"
+                >Extended Pre-major</label
+              >
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck13" />
-              <label class="form-check-label" for="defaultCheck13"> STEM </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck13" />
+              <label class="form-check-label" for="defaultCheck13">STEM</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck14" />
-              <label class="form-check-label" for="defaultCheck14"> Freshman </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck14" />
+              <label class="form-check-label" for="defaultCheck14">Freshman</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck15" />
-              <label class="form-check-label" for="defaultCheck15"> Athlete </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck15" />
+              <label class="form-check-label" for="defaultCheck15">Athlete</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck16" />
-              <label class="form-check-label" for="defaultCheck16"> International </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck16" />
+              <label class="form-check-label" for="defaultCheck16">International</label>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck17" />
-              <label class="form-check-label" for="defaultCheck17"> Graduate </label>
+              <input class="form-check-input" type="checkbox" value id="defaultCheck17" />
+              <label class="form-check-label" for="defaultCheck17">Graduate</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value id="defaultCheck18" />
+              <label class="form-check-label" for="defaultCheck18">Running Start</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value id="defaultCheck19" />
+              <label class="form-check-label" for="defaultCheck19">Transfer</label>
             </div>
           </div>
 
@@ -187,16 +217,14 @@
           </div>
         </div>
         <div class="col-md-9 col-lg-10">
-          
           <div class="card shadow-sm mb-3">
             <h3 class="card-header h6 text-uppercase text-muted fw-bold" style="line-height: 30px">
               Students
             </h3>
             <div class="card-body">
-              
               <div class="table-responsive">
                 <table class="table table-hover mb-0">
-                  <thead class="">
+                  <thead class>
                     <tr>
                       <th scope="col">Name</th>
                       <th scope="col" class="text-nowrap">Student Number</th>
@@ -237,25 +265,27 @@
                           </div>
                           <div>
                             <div class="text-nowrap">
+                              <span>
+                                {{ item.student_preferred_last_name }},
+                                {{ item.student_preferred_first_name }}
+                              </span>
                               <span
-                                >{{ item.student_preferred_last_name }},
-                                {{ item.student_preferred_first_name }}</span
+                                class="badge rounded-pill border border-muted text-dark small"
+                                >{{ item.gender }}</span
                               >
-                              <span class="badge rounded-pill border border-muted text-dark small">{{
-                                item.gender
-                              }}</span>
-                              <span class="badge rounded-pill border border-muted text-dark small"
-                                ><i class="bi bi-trophy-fill text-purple"></i
-                              ></span>
+                              <span class="badge rounded-pill border border-muted text-dark small">
+                                <i class="bi bi-trophy-fill text-purple"></i>
+                              </span>
                             </div>
                             <div class="small text-secondary">{{ item.uw_net_id }}</div>
                           </div>
                         </div>
                       </td>
                       <td>
-                        <router-link :to="{ name: 'Student', params: { id: item.student_number } }">
-                          {{ item.student_number }}
-                        </router-link>
+                        <router-link
+                          :to="{ name: 'Student', params: { id: item.student_number } }"
+                          >{{ item.student_number }}</router-link
+                        >
                       </td>
                       <td>{{ item.retention.priority }}</td>
                       <td>{{ item.class_desc }}</td>
@@ -273,8 +303,7 @@
                 :per-page="pageSize"
                 :options="pageOptions"
                 @paginate="loadStudentList"
-              >
-              </pagination>
+              ></pagination>
             </div>
           </div>
         </div>
