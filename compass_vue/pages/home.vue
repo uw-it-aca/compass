@@ -182,7 +182,11 @@
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value id="defaultCheck14" />
-              <label class="form-check-label" for="defaultCheck14">Freshman</label>
+              <label class="form-check-label" for="defaultCheck14">Freshman (credit)</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value id="defaultCheck20" />
+              <label class="form-check-label" for="defaultCheck20">First-Year (at UW)</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" value id="defaultCheck15" />

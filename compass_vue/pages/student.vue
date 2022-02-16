@@ -154,6 +154,7 @@
                     <template v-else>
                       yes/
                       <b>no</b>
+                      CAMP, TRIO SSS, Champions, EOP
                     </template>
                   </li>
                 </ul>
@@ -510,9 +511,11 @@
                       </table>
                     </div>
                   </div>
+
                   <div class="tab-pane fade" id="major" role="tabpanel" aria-labelledby="major-tab">
                     <div class="table-responsive">
-                      <table class="table table-hover table-striped m-0">
+                      <h3 class="h6">Intended Major</h3>
+                      <table class="table table-hover table-striped m-0 mb-3">
                         <thead>
                           <tr>
                             <th>Date</th>
@@ -524,7 +527,7 @@
                             <th>User</th>
                           </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="mb-3">
                           <tr>
                             <td scope="row">10/01/2021</td>
                             <td>Psychology</td>
@@ -570,6 +573,22 @@
                             <td>n/a</td>
                             <td>Student</td>
                           </tr>
+                        </tbody>
+                      </table>
+                      <h3 class="h6">Intended Major upon Admission</h3>
+                      <table class="table table-hover table-striped m-0">
+                        <thead>
+                          <tr>
+                            <th>Date</th>
+                            <th>Major</th>
+                            <th>Status</th>
+                            <th class="text-nowrap">Source</th>
+                            <th>Action</th>
+                            <th>Notes</th>
+                            <th>User</th>
+                          </tr>
+                        </thead>
+                        <tbody>
                           <tr>
                             <td scope="row">5/14/2020</td>
                             <td>Informatics</td>
