@@ -28,7 +28,7 @@
                 />
               </div>
               <div class="text-center mb-4">
-                <span class="fw-bold">LEVEL {{ student.retention.priority }}</span>
+                <span class="fw-bold">Priority {{ student.retention.priority }}</span>
               </div>
             </div>
             <div class="flex-fill ps-3 mb-4">
@@ -50,7 +50,7 @@
                 >
                 <span v-else class="badge rounded-pill border border-muted text-dark">he/him</span>
               </p>
-              <div><i class="bi bi-trophy-fill text-purple"></i> Student Athlete</div>
+              <div><i class="bi bi-trophy-fill text-purple"></i> Sport: Track &amp; Field</div>
             </div>
           </div>
           <div class="col-6 col-lg-3 border-start">
@@ -62,29 +62,19 @@
               </li>
               <li>Ethnicity:</li>
               <li>Citizenship: {{ student.resident_desc }}</li>
+              <li>DOB: 7/23/2001</li>
             </ul>
           </div>
           <div class="col-6 col-lg-3 border-start">
             <ul class="list-unstyled m-0">
               <li>UW Email: {{ student.student_email }}</li>
               <li>Personal email: {{ student.personal_email }}</li>
-              <li>Phone: {{ student.local_phone_number }}</li>
-              <li>Address: {{ studentAddress }}</li>
+              <li>Local Phone: {{ student.local_phone_number }}</li>
+              <li><hr></li>
+              <li>Perm Address: {{ studentAddress }}</li>
+              <li><hr></li>
+              <li>Local Address: 1234 <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">update</a></li>
             </ul>
-          </div>
-        </div>
-        <div class="row mb-3">
-          <div class="col text-end">
-            <a
-              class="btn btn-outline-primary border m-1 shadow-sm"
-              href="#"
-              role="button"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              style="font-size: 20px"
-            >
-              <i class="bi bi-chat-square-text"></i>
-            </a>
           </div>
         </div>
 
@@ -130,6 +120,8 @@
                   <li>Enrollment Status: {{ student.enrollment_desc }}</li>
                   <li>Class standing: {{ student.class_desc }}</li>
                   <li>Total Credits: {{ student.total_credits }}</li>
+                  <li>Total UW Credits: 170.00</li>
+                  <li>Transfer student: <b>yes</b>/no</li>
                   <li>GPA: {{ student.gpa }}</li>
                 </ul>
               </div>
@@ -144,6 +136,7 @@
                 Programs
               </h3>
               <div class="card-body">
+                <p>OMAD special programs</p>
                 <ul>
                   <li>EOP: yes/no</li>
                   <li>Pre-professional: yes/no</li>
@@ -158,8 +151,15 @@
                     </template>
                   </li>
                 </ul>
+                <p>UW Programs</p>
+                <ul>
+                  <li>Honor's</li>
+                  <li>Dean's List</li>
+                  <li>Athletics</li>
+                </ul>
               </div>
             </div>
+
           </div>
           <div class="col-md-4">
             <div class="card shadow-sm mb-3">
@@ -182,10 +182,11 @@
                   <div class="flex-fill ps-3">
                     <ul class="list-unstyled">
                       <li class="fw-bold">John Average</li>
+                      <li>he/him</li>
                       <li>Email</li>
                       <li>Phone</li>
-                      <li class="border-top mt-2 pt-2">Department Name</li>
-                      <li>Campus location</li>
+                      <li class="border-top mt-2 pt-2">Dept Name: OMAD</li>
+                      <li>Campus location: MGH 123</li>
                     </ul>
                   </div>
                 </div>
@@ -201,35 +202,10 @@
                 class="card-header h6 text-uppercase text-muted fw-bold"
                 style="line-height: 30px"
               >
-                Majors
+                Major
               </h3>
               <div class="card-body">
-                <ul class="list-unstyled">
-                  <li>
-                    Intended #1: Anthropology
-                    <span v-for="(major, index) in student.intended_major" :key="index">
-                      {{ major.major_full_name }}
-                      <span v-if="index + 1 < student.intended_major.length">,</span>
-                    </span>
-                    <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">update</a>
-                  </li>
-                  <li>
-                    Intended #2: Computer Science
-                    <span v-for="(major, index) in student.intended_major" :key="index">
-                      {{ major.major_full_name }}
-                      <span v-if="index + 1 < student.intended_major.length">,</span>
-                    </span>
-                    <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">update</a>
-                  </li>
-                  <li>
-                    Intended #3: Informatics
-                    <span v-for="(major, index) in student.intended_major" :key="index">
-                      {{ major.major_full_name }}
-                      <span v-if="index + 1 < student.intended_major.length">,</span>
-                    </span>
-                    <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">update</a>
-                  </li>
-                  <hr />
+                <ul>
                   <li>
                     Accepted:
                     <span v-for="(major, index) in student.major" :key="index">
@@ -262,6 +238,22 @@
           </div>
         </div>
         <!-- end academics -->
+
+         <div class="row mb-3">
+          <div class="col text-end">
+            <a
+              class="btn btn-outline-primary border m-1 shadow-sm"
+              href="#"
+              role="button"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              style="font-size: 20px"
+            >
+              <i class="bi bi-chat-square-text"></i>
+            </a>
+          </div>
+        </div>
+
         <!-- notes area -->
         <div class="row">
           <div class="col">
@@ -318,15 +310,15 @@
                     <li class="nav-item" role="presentation">
                       <button
                         class="nav-link"
-                        id="transcript-tab"
+                        id="registrations-tab"
                         data-bs-toggle="tab"
-                        data-bs-target="#transcript"
+                        data-bs-target="#registrations"
                         type="button"
                         role="tab"
-                        aria-controls="transcript"
+                        aria-controls="registrations"
                         aria-selected="false"
                       >
-                        Transcript
+                        Registrations
                       </button>
                     </li>
                     <li class="nav-item" role="presentation">
@@ -470,9 +462,9 @@
                   </div>
                   <div
                     class="tab-pane fade"
-                    id="transcript"
+                    id="registrations"
                     role="tabpanel"
-                    aria-labelledby="transcript-tab"
+                    aria-labelledby="registrations-tab"
                   >
                     <div class="table-responsive">
                       <table class="table table-hover table-striped m-0">
