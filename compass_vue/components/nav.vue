@@ -1,5 +1,5 @@
 <template>
-  <div class="text-white small">
+  <div class="text-light small">
     <ul class="nav flex-column">
       <li class="nav-item mb-1">
         <button

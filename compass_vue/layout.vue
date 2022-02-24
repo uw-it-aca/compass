@@ -83,12 +83,13 @@ export default {
       appRootUrl: '/',
       userName: 'javerage',
       signOutUrl: document.body.getAttribute('data-logout-url'),
-
       // automatically set year
       currentYear: new Date().getFullYear(),
-
-      pageTitle: "lkadsfj"
     };
+  },
+  created: function () {
+    // constructs page title in the following format "Page Title - AppName"
+    document.title = this.pageTitle + " - " + this.appName;
   },
 };
 </script>

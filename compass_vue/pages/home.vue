@@ -106,7 +106,7 @@
                               />
                             </div>
                           </div>
-                          <div>
+                          <div class="flex-fill">
                             <div class="text-nowrap">
                               <span>
                                 {{ item.student_preferred_last_name }},
