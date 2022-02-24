@@ -1,6 +1,6 @@
 <template>
   <!-- layout.vue: this is where you override the layout -->
-  <topbar
+  <!--<topbar
     :app-name="appName"
     :app-root-url="appRootUrl"
     :page-title="pageTitle"
@@ -27,7 +27,6 @@
       </div>
     </template>
     <template #main>
-      <!-- main section override -->
       <slot name="title">
         <h1>{{ pageTitle }}</h1>
       </slot>
@@ -42,16 +41,34 @@
         </div>
       </div>
     </template>
-  </topbar>
+  </topbar>-->
+
+   <Sidebar :app-name="appName"
+    :app-root-url="appRootUrl"
+    :page-title="pageTitle"
+    :user-name="userName"
+    :sign-out-url="signOutUrl">
+    <template #navigation>
+      <Nav></Nav>
+    </template>
+    <template #main>
+      <slot name="content"></slot>
+    </template>
+    <template #footer></template>
+  </Sidebar>
+
 </template>
 
 <script>
-import { Topbar } from 'axdd-components';
+import { Topbar, Sidebar } from 'axdd-components';
+import Nav from "./components/nav.vue";
 
 export default {
   name: 'Compass',
   components: {
     'topbar': Topbar,
+    Sidebar,
+    Nav
   },
   props: {
     pageTitle: {
@@ -69,6 +86,8 @@ export default {
 
       // automatically set year
       currentYear: new Date().getFullYear(),
+
+      pageTitle: "lkadsfj"
     };
   },
 };

@@ -8,7 +8,7 @@
     </template>
     <template #content>
       <div v-if="$route.params.id">
-        <div class="row mb-3">
+        <div class="row my-3">
           <div class="col-lg-6 d-flex">
             <div>
               <div

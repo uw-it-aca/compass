@@ -3,23 +3,9 @@
 <template>
   <layout :page-title="'Home'">
     <!-- page content -->
-    <template #title>
-      <h1 class="visually-hidden">Home</h1>
-    </template>
-
     <template #content>
       <div class="row my-4">
-        <div class="col-lg-2">
-          <div class="small lh-lg">Display caseload for:</div>
-          <select class="form-select form-select-sm" aria-label="Default select example">
-            <option value="0">All advisers</option>
-            <option selected value="1">Jon Average</option>
-            <option value="2">April Foolery</option>
-            <option value="3">Bob Samsonite</option>
-          </select>
-        </div>
-
-        <div class="col-lg-2 border-start">
+        <div class="col-lg-4">
           <div class="small lh-lg">Show week:</div>
           <select class="form-select form-select-sm" aria-label="Default select example">
             <option selected>Current Week</option>
@@ -30,7 +16,7 @@
           </select>
         </div>
 
-        <div class="col offset-lg-3">
+        <div class="col offset-lg-2">
           <div class="small lh-lg">
             <div class="d-inline me-3 text-nowrap">Find student by:</div>
             <div class="d-inline text-nowrap">
@@ -66,165 +52,18 @@
               type="button"
               id="button-addon2"
               v-on:click="loadStudentList"
-            >
-              GO
-            </button>
+            >GO</button>
           </div>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-md-3 col-lg-2 small">
-
-          <div class="border-bottom mb-3 pb-3">
-            <div class="fw-bold">Caseload status</div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault1"
-                checked
-              />
-              <label class="form-check-label" for="flexRadioDefault1">Active</label>
-            </div>
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault2"
-              />
-              <label class="form-check-label" for="flexRadioDefault2">Inactive</label>
-            </div>
-          </div>
-
-          <div class="fw-bold">Retention Filters</div>
-          <div class="border-bottom mb-3 pb-3">
-            <div class="fw-bold">Sign-ins</div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck1" />
-              <label class="form-check-label" for="defaultCheck1">High</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck2" />
-              <label class="form-check-label" for="defaultCheck2">Average</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck2" />
-              <label class="form-check-label" for="defaultCheck2">Low</label>
-            </div>
-
-            <div class="fw-bold">Activity</div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck3" />
-              <label class="form-check-label" for="defaultCheck3">High</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck4" />
-              <label class="form-check-label" for="defaultCheck4">Average</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck5" />
-              <label class="form-check-label" for="defaultCheck5">Low</label>
-            </div>
-
-            <div class="fw-bold">Assignments</div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck6" />
-              <label class="form-check-label" for="defaultCheck6">High</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck7" />
-              <label class="form-check-label" for="defaultCheck7">Average</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck8" />
-              <label class="form-check-label" for="defaultCheck8">Low</label>
-            </div>
-
-            <div class="fw-bold">Grades</div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck9" />
-              <label class="form-check-label" for="defaultCheck9">High</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck10" />
-              <label class="form-check-label" for="defaultCheck10">Average</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck11" />
-              <label class="form-check-label" for="defaultCheck11">Low</label>
-            </div>
-
-            <ul class="mt-3 mb-0 list-inline">
-              <li class="list-inline-item"><strong>Low</strong> -5 to -3</li>
-              <li class="list-inline-item"><strong>Average</strong> -2.9 to +2.9</li>
-              <li class="list-inline-item"><strong>High</strong> +3 to +5</li>
-            </ul>
-          </div>
-
-          <div class="border-bottom mb-3 pb-3">
-            <div class="fw-bold">Populations</div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck12" />
-              <label class="form-check-label" for="defaultCheck12">Pre-major</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck17" />
-              <label class="form-check-label text-nowrap" for="defaultCheck17"
-                >Extended Pre-major</label
-              >
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck13" />
-              <label class="form-check-label" for="defaultCheck13">STEM</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck14" />
-              <label class="form-check-label" for="defaultCheck14">Freshman (credit)</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck20" />
-              <label class="form-check-label" for="defaultCheck20">First-Year (at UW)</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck15" />
-              <label class="form-check-label" for="defaultCheck15">Athlete</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck16" />
-              <label class="form-check-label" for="defaultCheck16">International</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck17" />
-              <label class="form-check-label" for="defaultCheck17">Graduate</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck18" />
-              <label class="form-check-label" for="defaultCheck18">Running Start</label>
-            </div>
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" value id="defaultCheck19" />
-              <label class="form-check-label" for="defaultCheck19">Transfer</label>
-            </div>
-          </div>
-
-          <div class="mb-3 pb-3">
-            <div class="fw-bold">Sport</div>
-            <select class="form-select form-select-sm" aria-label="Default select example">
-              <option selected>All sports</option>
-              <option value="1">Football</option>
-              <option value="2">Soccer</option>
-              <option value="3">Track</option>
-            </select>
-          </div>
-        </div>
-        <div class="col-md-9 col-lg-10">
+        <div class="col">
           <div class="card shadow-sm mb-3">
-            <h3 class="card-header h6 text-uppercase text-muted fw-bold" style="line-height: 30px">
-              Students
-            </h3>
+            <h3
+              class="card-header h6 text-uppercase text-muted fw-bold"
+              style="line-height: 30px"
+            >Students</h3>
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-hover mb-0">
@@ -275,8 +114,7 @@
                               </span>
                               <span
                                 class="badge rounded-pill border border-muted text-dark small"
-                                >{{ item.gender }}</span
-                              >
+                              >{{ item.gender }}</span>
                               <span class="badge rounded-pill border border-muted text-dark small">
                                 <i class="bi bi-trophy-fill text-purple"></i>
                               </span>
@@ -288,8 +126,7 @@
                       <td>
                         <router-link
                           :to="{ name: 'Student', params: { id: item.student_number } }"
-                          >{{ item.student_number }}</router-link
-                        >
+                        >{{ item.student_number }}</router-link>
                       </td>
                       <td>{{ item.retention.priority }}</td>
                       <td>{{ item.class_desc }}</td>
@@ -335,6 +172,7 @@ export default {
   },
   data() {
     return {
+
       // data
       students: [],
       // pagination
