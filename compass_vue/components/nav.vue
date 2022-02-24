@@ -3,7 +3,7 @@
     <ul class="nav flex-column">
       <li class="nav-item mb-1">
         <button
-          class="btn btn-toggle align-items-center collapsed collapsed py-1 text-white bg-dark-purple w-100 text-start"
+          class="btn btn-toggle align-items-center collapsed collapsed py-1 text-white bg-dark-purple-hover w-100 text-start"
           data-bs-toggle="collapse"
           data-bs-target="#caseload-collapse"
           aria-expanded="false"
@@ -48,7 +48,7 @@
       </li>
       <li class="nav-item mb-1">
         <button
-          class="btn btn-toggle align-items-center collapsed collapsed py-1 text-white bg-dark-purple w-100 text-start"
+          class="btn btn-toggle align-items-center collapsed collapsed py-1 text-white bg-dark-purple-hover w-100 text-start"
           data-bs-toggle="collapse"
           data-bs-target="#retention-collapse"
           aria-expanded="false"
@@ -129,7 +129,7 @@
       </li>
       <li class="nav-item mb-1">
         <button
-          class="btn btn-toggle align-items-center collapsed collapsed py-1 text-white bg-dark-purple w-100 text-start"
+          class="btn btn-toggle align-items-center collapsed collapsed py-1 text-white bg-dark-purple-hover w-100 text-start"
           data-bs-toggle="collapse"
           data-bs-target="#populations-collapse"
           aria-expanded="false"
