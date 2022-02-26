@@ -2,6 +2,8 @@
 @import 'axdd-components/src/assets/css/custom.scss';
 
 $enable-cssgrid: true;
+// override max width of containers
+//$container-max-widths: map.merge($container-max-widths, (xl: 1400px, xxl: 1600px));
 
 // compass custom colors
 $custom-colors: (
@@ -32,13 +34,13 @@ $utilities: (
   )
 );
 
-// override max width of containers
-$container-max-widths: map.merge($container-max-widths, (xl: 1400px, xxl: 1600px));
+// additional non-bootstrap styles
+
+.blah { color: purple; }
+
+
 
 // import bootstrap and bootstrap-icons
 @import "bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons.css";
 
-// additional non-bootstrap styles
-
-.blah { color: purple; }
