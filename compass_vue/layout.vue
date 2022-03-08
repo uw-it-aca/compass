@@ -62,13 +62,15 @@
 <script>
 import { Topbar, Sidebar } from 'axdd-components';
 import Nav from "./components/nav.vue";
+import Search from "./components/search.vue";
 
 export default {
   name: 'Compass',
   components: {
     'topbar': Topbar,
     Sidebar,
-    Nav
+    Nav,
+    Search
   },
   props: {
     pageTitle: {

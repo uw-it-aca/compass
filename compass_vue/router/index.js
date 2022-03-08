@@ -3,17 +3,26 @@ import { trackRouter } from "vue-gtag-next";
 
 // page components
 import Home from '../pages/home.vue';
+import Caseload from '../pages/caseload.vue';
 import Student from '../pages/student.vue';
+
 
 const routes = [
   {
     path: '/',
-    redirect: '/adviser/javerage'
+    redirect: '/javerage'
   },
   {
-    path: '/adviser/:netid?',
+    path: '/:netid?',
     name: 'Adviser',
     component: Home,
+    pathToRegexpOptions: { strict: true },
+    props: true
+  },
+  {
+    path: '/:netid?/caseload',
+    name: 'Caseload',
+    component: Caseload,
     pathToRegexpOptions: { strict: true },
     props: true
   },

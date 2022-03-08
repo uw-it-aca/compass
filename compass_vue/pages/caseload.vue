@@ -1,114 +1,43 @@
 // home.vue
 
 <template>
-  <layout :page-title="'Home'">
+  <layout :page-title="'Caseload'">
     <!-- page content -->
     <template #content>
       <div class="row my-3">
-        <div class="col-5 offset-7">
+        <div class="col">
+          <div class="small lh-lg">Show week:</div>
+          <select class="form-select form-select-sm" aria-label="Default select example">
+            <option selected>Current Week</option>
+            <option value="1">Autumn 2021: Week 4</option>
+            <option value="2">Autumn 2021: Week 3</option>
+            <option value="3">Autumn 2021: Week 2</option>
+            <option value="4">Autumn 2021: Week 1</option>
+          </select>
+        </div>
+        <div class="col">
+          <div class="small lh-lg">Display caseload for:</div>
+          <select class="form-select form-select-sm" aria-label="Default select example">
+            <option value="0">All advisers</option>
+            <option selected value="1">Jon Average</option>
+            <option value="2">April Foolery</option>
+            <option value="3">Bob Samsonite</option>
+          </select>
+        </div>
+        <div class="col-5">
           <Search></Search>
         </div>
       </div>
-
       <div class="row">
         <div class="col">
-          <div class="card shadow-sm mb-3">
-            <h3 class="card-header h6 text-uppercase text-muted fw-bold" style="line-height: 30px">
-              Recent Appointments
-            </h3>
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-hover mb-0">
-                  <thead class>
-                    <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col" class="text-nowrap">Student Number</th>
-                      <th scope="col">Priority</th>
-                      <th scope="col">Class</th>
-                      <th scope="col" class="text-nowrap">Enroll Status</th>
-                      <th scope="col">Adviser</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="item in students" :key="item.SystemKey">
-                      <td>
-                        <div class="d-flex">
-                          <div class="me-2" style="min-width: 55px">
-                            <div
-                              :class="showPriorityRing(item.retention.priority)"
-                              class="rounded-circle border border-3"
-                            >
-                              <img
-                                v-if="item.gender === 'F'"
-                                :src="
-                                  'https://randomuser.me/api/portraits/thumb/women/' +
-                                  item.id +
-                                  '.jpg'
-                                "
-                                class="img-fluid rounded-circle border border-white border-2"
-                              />
-                              <img
-                                v-else
-                                :src="
-                                  'https://randomuser.me/api/portraits/thumb/men/' +
-                                  item.id +
-                                  '.jpg'
-                                "
-                                class="img-fluid rounded-circle border border-white border-2"
-                              />
-                            </div>
-                          </div>
-                          <div class="flex-fill">
-                            <div class="text-nowrap">
-                              <span>
-                                {{ item.student_preferred_last_name }},
-                                {{ item.student_preferred_first_name }}
-                              </span>
-                              <span
-                                class="badge rounded-pill border border-muted text-dark small"
-                                >{{ item.gender }}</span
-                              >
-                              <span class="badge rounded-pill border border-muted text-dark small">
-                                <i class="bi bi-trophy-fill text-purple"></i>
-                              </span>
-                            </div>
-                            <div class="small text-secondary">{{ item.uw_net_id }}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <router-link
-                          :to="{ name: 'Student', params: { id: item.student_number } }"
-                          >{{ item.student_number }}</router-link
-                        >
-                      </td>
-                      <td>{{ item.retention.priority }}</td>
-                      <td>{{ item.class_desc }}</td>
-                      <td>{{ item.enrollment_status_desc }}</td>
-                      <td>{{ item.adviser_full_name }}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="card-footer text-end">
-              <pagination
-                v-model="currentPage"
-                :records="studentsCount"
-                :per-page="pageSize"
-                :options="pageOptions"
-                @paginate="loadStudentList"
-              ></pagination>
-            </div>
-          </div>
+          RETENTION AND STUDENT POPOULATION FILTERS HERE
         </div>
       </div>
-
       <div class="row">
         <div class="col">
           <div class="card shadow-sm mb-3">
             <h3 class="card-header h6 text-uppercase text-muted fw-bold" style="line-height: 30px">
-              Search Results
+              My Caseload (<a href="#">show/hide inactive</a>)
             </h3>
             <div class="card-body">
               <div class="table-responsive">
@@ -120,7 +49,7 @@
                       <th scope="col">Priority</th>
                       <th scope="col">Class</th>
                       <th scope="col" class="text-nowrap">Enroll Status</th>
-                      <th scope="col">Adviser</th>
+                      <th scope="col">Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -179,7 +108,7 @@
                       <td>{{ item.retention.priority }}</td>
                       <td>{{ item.class_desc }}</td>
                       <td>{{ item.enrollment_status_desc }}</td>
-                      <td>{{ item.adviser_full_name }}</td>
+                      <td>Active/Inactive</td>
                     </tr>
                   </tbody>
                 </table>
@@ -205,8 +134,8 @@
 import { markRaw } from 'vue';
 import Pagination from 'v-pagination-3';
 import MyPagination from '../components/pagination.vue';
-import Search from '../components/search.vue';
 import Layout from '../layout.vue';
+import Search from '../components/search.vue';
 import dataMixin from '../mixins/data_mixin.js';
 
 export default {
@@ -225,9 +154,9 @@ export default {
       // data
       students: [],
       // pagination
-      studentsCount: 20,
+      studentsCount: 0,
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 30,
       pageOptions: {
         theme: 'bootstrap4',
         template: markRaw(MyPagination),
