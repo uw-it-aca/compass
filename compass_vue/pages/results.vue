@@ -1,7 +1,7 @@
 // home.vue
 
 <template>
-  <layout :page-title="'Home'">
+  <layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
       <div class="row my-4">
@@ -10,18 +10,15 @@
         </div>
       </div>
 
+      <h1 class="h4 my-4 text-dark">{{ pageTitle }}</h1>
+
       <div class="row">
         <div class="col">
           <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-            <div class="card-header bg-white border-0 p-4 pb-3">
-              <h3 class="h6 m-0 text-uppercase fw-bold text-uppercase text-dark-beige">
-                Search Results
-              </h3>
-            </div>
-            <div v-if="isLoading" class="card-body p-4 pt-0 d-flex justify-content-center">
+            <div v-if="isLoading" class="card-body p-4 d-flex justify-content-center">
               <table-loading></table-loading>
             </div>
-            <div v-else class="card-body p-4 pt-0 table-responsive-md">search results</div>
+            <div v-else class="card-body p-4 table-responsive-md">search results</div>
           </div>
         </div>
       </div>
@@ -51,6 +48,9 @@ export default {
   },
   data() {
     return {
+
+      pageTitle: 'Results',
+
       // loading
       isLoading: true,
 

@@ -1,7 +1,7 @@
 // home.vue
 
 <template>
-  <layout :page-title="'Home'">
+  <layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
       <div class="row my-4">
@@ -10,18 +10,38 @@
         </div>
       </div>
 
+      <h1 class="h4 my-4 text-dark">{{ pageTitle }}</h1>
+
       <div class="row">
         <div class="col">
           <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-            <div class="card-header bg-white border-0 p-4 pb-3">
-            <h3 class="h6 m-0 text-uppercase fw-bold text-uppercase text-dark-beige">
-              Recent Appointments
-            </h3>
+            <div class="card-header bg-white border-0 p-4 pb-0 d-flex justify-content-between">
+              <h3 class="h6 m-0 text-uppercase fw-bold text-uppercase text-dark-beige">
+                Today
+              </h3>
+              <div>{{ getToday() }}</div>
             </div>
-            <div v-if="isLoading" class="card-body p-4 pt-0 d-flex justify-content-center">
+            <div v-if="isLoading" class="card-body p-4 d-flex justify-content-center">
               <table-loading></table-loading>
             </div>
-            <div v-else class="card-body p-4 pt-0 table-responsive-md">recent students</div>
+            <div v-else class="card-body p-4 table-responsive-md">recent students</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="card border-light-gray shadow-sm rounded-3 mb-4">
+            <div class="card-header bg-white border-0 p-4 pb-0 d-flex justify-content-between">
+              <h3 class="h6 m-0 text-uppercase fw-bold text-uppercase text-dark-beige">
+                Tomorrow
+              </h3>
+              <div>{{ getTomorrow() }}</div>
+            </div>
+            <div v-if="isLoading" class="card-body p-4 d-flex justify-content-center">
+              <table-loading></table-loading>
+            </div>
+            <div v-else class="card-body p-4 table-responsive-md">recent students</div>
           </div>
         </div>
       </div>
@@ -38,14 +58,15 @@ import MyPagination from '../components/pagination.vue';
 import Search from '../components/search.vue';
 import Layout from '../layout.vue';
 import dataMixin from '../mixins/data_mixin.js';
+import { getToday, getTomorrow } from '../helpers/utils';
 
 export default {
   mixins: [dataMixin],
   components: {
-    'layout': Layout,
-    'pagination': Pagination,
-    'search': Search,
-    'table-loading': TableLoading
+    layout: Layout,
+    pagination: Pagination,
+    search: Search,
+    'table-loading': TableLoading,
   },
   created: function () {
     this.loadStudentList();
@@ -53,10 +74,11 @@ export default {
   },
   data() {
     return {
+      pageTitle: 'Appointments',
 
       // loading
       isLoading: true,
-
+      today: 'bal',
       // data
       students: [],
       // pagination
@@ -84,7 +106,7 @@ export default {
           label: 'UW NetId',
         },
       ],
-    }
+    };
   },
   computed: {
     paginationOptions: function () {
@@ -109,6 +131,8 @@ export default {
     },
   },
   methods: {
+    getToday,
+    getTomorrow,
     loadStudentList: function () {
       let _this = this;
       this.getStudentList(this.paginationOptions, this.searchOptions).then((response) => {
@@ -136,7 +160,7 @@ export default {
     },
   },
   mounted() {
-    setTimeout(this.showResults, 3000);
+    setTimeout(this.showResults, 4000);
   },
 };
 </script>

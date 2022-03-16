@@ -1,7 +1,7 @@
 // home.vue
 
 <template>
-  <layout :page-title="'Caseload'">
+  <layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
 
@@ -10,6 +10,8 @@
           <search></search>
         </div>
       </div>
+
+      <h1 class="h4 my-4 text-dark">{{ pageTitle }}</h1>
 
       <div class="row my-4">
         <div class="col">
@@ -221,6 +223,9 @@ export default {
   },
   data() {
     return {
+
+      pageTitle: 'Caseload',
+
       // data
       students: [],
       // pagination

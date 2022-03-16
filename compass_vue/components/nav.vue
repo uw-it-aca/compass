@@ -6,7 +6,7 @@
           :to="'/'"
           active-class="bg-dark-purple"
           class="nav-link text-gray d-block px-2 py-1"
-          ><i class="bi bi-calendar-date-fill me-2"></i>Recent</router-link
+          ><i class="bi bi-calendar-date-fill me-2"></i>Appointments</router-link
         >
       </li>
       <li class="nav-item mb-2 bg-dark-purple-hover rounded">
@@ -20,7 +20,7 @@
     </ul>
 
     <p
-      v-show="$route.name == 'Home'"
+      v-show="$route.path == '/'"
       class="text-light-gray bg-dark-purple rounded-3 p-3 small"
     >
       Welcome to <strong>home</strong>... Lorem ipsum dolor, sit amet consectetur adipisicing
@@ -29,7 +29,7 @@
     </p>
 
     <p
-      v-show="$route.name == 'Caseload'"
+      v-show="$route.path == '/caseload'"
       class="text-light-gray bg-dark-purple rounded-3 p-3 small"
     >
       Welcome to <strong>caseloads</strong>... Lorem ipsum dolor, sit amet consectetur adipisicing

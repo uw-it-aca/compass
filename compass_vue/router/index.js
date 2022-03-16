@@ -11,7 +11,6 @@ import Student from '../pages/student.vue';
 const routes = [
   {
     path: '/',
-    name: 'Home',
     component: Home,
     pathToRegexpOptions: { strict: true },
     props: true
