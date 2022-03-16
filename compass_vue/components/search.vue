@@ -33,7 +33,7 @@
       class="btn btn-outline-primary"
       type="button"
       id="button-addon2"
-      v-on:click="loadStudentList"
+      v-on:click="showResults"
     >
       GO
     </button>
@@ -83,7 +83,11 @@ export default {
       }
     },
   },
-  methods: {},
+  methods: {
+    showResults: function() {
+      this.$router.push('/results')
+    }
+  },
 };
 </script>
 

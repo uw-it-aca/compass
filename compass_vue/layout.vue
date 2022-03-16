@@ -43,34 +43,32 @@
     </template>
   </topbar>-->
 
-   <Sidebar :app-name="appName"
+   <sidebar :app-name="appName"
     :app-root-url="appRootUrl"
     :page-title="pageTitle"
     :user-name="userName"
     :sign-out-url="signOutUrl">
     <template #navigation>
-      <Nav></Nav>
+      <navigation></navigation>
     </template>
     <template #main>
       <slot name="content"></slot>
     </template>
     <template #footer></template>
-  </Sidebar>
+  </sidebar>
 
 </template>
 
 <script>
 import { Topbar, Sidebar } from 'axdd-components';
 import Nav from "./components/nav.vue";
-import Search from "./components/search.vue";
 
 export default {
   name: 'Compass',
   components: {
     'topbar': Topbar,
-    Sidebar,
-    Nav,
-    Search
+    'sidebar': Sidebar,
+    'navigation': Nav,
   },
   props: {
     pageTitle: {

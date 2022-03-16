@@ -8,7 +8,7 @@
     </template>
     <template #content>
       <div v-if="$route.params.id">
-        <div class="row my-3">
+        <div class="row my-4">
           <div class="col-lg-6 d-flex">
             <div>
               <div
@@ -70,10 +70,13 @@
               <li>UW Email: {{ student.student_email }}</li>
               <li>Personal email: {{ student.personal_email }}</li>
               <li>Local Phone: {{ student.local_phone_number }}</li>
-              <li><hr></li>
+              <li><hr /></li>
               <li>Perm Address: {{ studentAddress }}</li>
-              <li><hr></li>
-              <li>Local Address: 1234 <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">update</a></li>
+              <li><hr /></li>
+              <li>
+                Local Address: 1234
+                <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">update</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -81,14 +84,15 @@
         <!-- academics area -->
         <div class="row">
           <div class="col-md-4">
-            <div class="card shadow-sm mb-3">
-              <h3
-                class="card-header h6 text-uppercase text-muted fw-bold"
-                style="line-height: 30px"
-              >
-                Retention
-              </h3>
-              <div class="card-body">
+
+            <!-- MARK: card component styling -->
+            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
+              <div class="card-header bg-white border-0 p-4 pb-3">
+                <h3 class="h6 m-0 text-uppercase fw-bold text-uppercase text-dark-beige">
+                  Retention
+                </h3>
+              </div>
+              <div class="card-body p-4 pt-0">
                 <ul>
                   <li>
                     Priority: <span class="fw-bold">{{ student.retention.priority }}</span>
@@ -100,6 +104,7 @@
                 </ul>
               </div>
             </div>
+
             <div class="card shadow-sm mb-3">
               <h3
                 class="card-header h6 text-uppercase text-muted fw-bold"
@@ -159,7 +164,6 @@
                 </ul>
               </div>
             </div>
-
           </div>
           <div class="col-md-4">
             <div class="card shadow-sm mb-3">
@@ -173,9 +177,7 @@
                 <div class="d-flex">
                   <div style="width: 65px">
                     <img
-                      :src="
-                        'https://randomuser.me/api/portraits/men/29.jpg'
-                      "
+                      :src="'https://randomuser.me/api/portraits/men/29.jpg'"
                       class="img-fluid rounded-circle border border-3"
                     />
                   </div>
@@ -191,7 +193,7 @@
                   </div>
                 </div>
                 <div class="text-end">
-                  <a href="/javerage/caseload">View caseload</a>
+                  <a href="/caseload?adviser=javerage">View caseload</a>
                 </div>
               </div>
             </div>
@@ -239,7 +241,7 @@
         </div>
         <!-- end academics -->
 
-         <div class="row mb-3">
+        <div class="row mb-3">
           <div class="col text-end">
             <a
               class="btn btn-outline-primary border m-1 shadow-sm"
@@ -261,16 +263,7 @@
               <div class="card-header">
                 <div class="position-relative">
                   <h3
-                    class="
-                      card-title
-                      h6
-                      text-uppercase text-muted
-                      fw-bold
-                      m-0
-                      position-absolute
-                      top-50
-                      translate-middle-y
-                    "
+                    class="card-title h6 text-uppercase text-muted fw-bold m-0 position-absolute top-50 translate-middle-y"
                   >
                     History
                   </h3>
@@ -753,7 +746,7 @@ import dataMixin from '../mixins/data_mixin.js';
 export default {
   mixins: [dataMixin],
   components: {
-    'layout': Layout,
+    layout: Layout,
     'axdd-card': Card,
   },
   created: function () {
@@ -784,7 +777,7 @@ export default {
       } else {
         return '';
       }
-    }
+    },
   },
   methods: {
     loadstudent: function (studentNumber) {
@@ -794,7 +787,7 @@ export default {
           _this.student = response.data[0];
         }
       });
-    }
+    },
   },
 };
 </script>

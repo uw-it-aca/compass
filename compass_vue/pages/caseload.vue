@@ -4,7 +4,14 @@
   <layout :page-title="'Caseload'">
     <!-- page content -->
     <template #content>
-      <div class="row my-3">
+
+      <div class="row my-4">
+        <div class="col-5 offset-7">
+          <search></search>
+        </div>
+      </div>
+
+      <div class="row my-4">
         <div class="col">
           <div class="small lh-lg">Show week:</div>
           <select class="form-select form-select-sm" aria-label="Default select example">
@@ -24,13 +31,76 @@
             <option value="3">Bob Samsonite</option>
           </select>
         </div>
-        <div class="col-5">
-          <Search></Search>
-        </div>
       </div>
       <div class="row">
         <div class="col">
           RETENTION AND STUDENT POPOULATION FILTERS HERE
+
+          <div class="small">
+            <div class="fw-bold">Sign-ins</div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+              <label class="form-check-label" for="defaultCheck1"> High </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
+              <label class="form-check-label" for="defaultCheck2"> Average </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
+              <label class="form-check-label" for="defaultCheck2"> Low </label>
+            </div>
+
+            <div class="fw-bold">Activity</div>
+            <div class="form-check">
+
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" />
+              <label class="form-check-label" for="defaultCheck3"> High </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck4" />
+              <label class="form-check-label" for="defaultCheck4"> Average </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck5" />
+              <label class="form-check-label" for="defaultCheck5"> Low </label>
+            </div>
+
+            <div class="fw-bold">Assignments</div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck6" />
+              <label class="form-check-label" for="defaultCheck6"> High </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck7" />
+              <label class="form-check-label" for="defaultCheck7"> Average </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck8" />
+              <label class="form-check-label" for="defaultCheck8"> Low </label>
+            </div>
+
+            <div class="fw-bold">Grades</div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck9" />
+              <label class="form-check-label" for="defaultCheck9"> High </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck10" />
+              <label class="form-check-label" for="defaultCheck10"> Average </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck11" />
+              <label class="form-check-label" for="defaultCheck11"> Low </label>
+            </div>
+
+            <ul class="mt-3 mb-0 list-inline">
+              <li class="list-inline-item"><strong>Low</strong> -5 to -3</li>
+              <li class="list-inline-item"><strong>Average</strong> -2.9 to +2.9</li>
+              <li class="list-inline-item"><strong>High</strong> +3 to +5</li>
+            </ul>
+          </div>
+
         </div>
       </div>
       <div class="row">
@@ -42,7 +112,7 @@
             <div class="card-body">
               <div class="table-responsive">
                 <table class="table table-hover mb-0">
-                  <thead class>
+                  <thead class="small">
                     <tr>
                       <th scope="col">Name</th>
                       <th scope="col" class="text-nowrap">Student Number</th>
@@ -141,9 +211,9 @@ import dataMixin from '../mixins/data_mixin.js';
 export default {
   mixins: [dataMixin],
   components: {
-    layout: Layout,
-    pagination: Pagination,
-    Search,
+    'layout': Layout,
+    'pagination': Pagination,
+    'search': Search,
   },
   created: function () {
     this.loadStudentList();

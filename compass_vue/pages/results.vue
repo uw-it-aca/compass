@@ -14,18 +14,17 @@
         <div class="col">
           <div class="card border-light-gray shadow-sm rounded-3 mb-4">
             <div class="card-header bg-white border-0 p-4 pb-3">
-            <h3 class="h6 m-0 text-uppercase fw-bold text-uppercase text-dark-beige">
-              Recent Appointments
-            </h3>
+              <h3 class="h6 m-0 text-uppercase fw-bold text-uppercase text-dark-beige">
+                Search Results
+              </h3>
             </div>
             <div v-if="isLoading" class="card-body p-4 pt-0 d-flex justify-content-center">
               <table-loading></table-loading>
             </div>
-            <div v-else class="card-body p-4 pt-0 table-responsive-md">recent students</div>
+            <div v-else class="card-body p-4 pt-0 table-responsive-md">search results</div>
           </div>
         </div>
       </div>
-
     </template>
   </layout>
 </template>
@@ -34,7 +33,6 @@
 import { markRaw } from 'vue';
 import TableLoading from '../components/table-loading.vue';
 import Pagination from 'v-pagination-3';
-import MyPagination from '../components/pagination.vue';
 import Search from '../components/search.vue';
 import Layout from '../layout.vue';
 import dataMixin from '../mixins/data_mixin.js';
@@ -42,31 +40,20 @@ import dataMixin from '../mixins/data_mixin.js';
 export default {
   mixins: [dataMixin],
   components: {
-    'layout': Layout,
-    'pagination': Pagination,
-    'search': Search,
-    'table-loading': TableLoading
+    layout: Layout,
+    pagination: Pagination,
+    search: Search,
+    'table-loading': TableLoading,
   },
   created: function () {
-    this.loadStudentList();
+    //this.loadStudentList();
     this.searchOption = this.searchRadioOptions[0];
   },
   data() {
     return {
-
       // loading
       isLoading: true,
 
-      // data
-      students: [],
-      // pagination
-      studentsCount: 20,
-      currentPage: 1,
-      pageSize: 10,
-      pageOptions: {
-        theme: 'bootstrap4',
-        template: markRaw(MyPagination),
-      },
       // search filters
       searchOption: null,
       searchText: '',
@@ -84,15 +71,9 @@ export default {
           label: 'UW NetId',
         },
       ],
-    }
+    };
   },
   computed: {
-    paginationOptions: function () {
-      return {
-        offset: this.pageSize * (this.currentPage - 1),
-        limit: this.pageSize,
-      };
-    },
     searchOptions: function () {
       if (this.searchOption) {
         return {
@@ -103,24 +84,8 @@ export default {
         return {};
       }
     },
-    numPages: function () {
-      let page = Math.ceil(this.studentsCount / this.pageSize);
-      return page > 0 ? page : 1;
-    },
   },
   methods: {
-    loadStudentList: function () {
-      let _this = this;
-      this.getStudentList(this.paginationOptions, this.searchOptions).then((response) => {
-        if (response.data) {
-          _this.students = response.data['results'];
-          _this.studentsCount = response.data['count'];
-          if (_this.currentPage > _this.numPages) {
-            _this.currentPage = 1;
-          }
-        }
-      });
-    },
     showPriorityRing: function (priorityValue) {
       // mocked display
       if (priorityValue == '-3.4') {
