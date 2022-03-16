@@ -87,12 +87,12 @@
 
             <!-- MARK: card component styling -->
             <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-              <div class="card-header bg-white border-0 p-4 pb-3">
-                <h3 class="h6 m-0 text-uppercase fw-bold text-uppercase text-dark-beige">
+              <div class="card-header bg-white border-0 p-4 pb-0">
+                <h3 class="h6 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige">
                   Retention
                 </h3>
               </div>
-              <div class="card-body p-4 pt-0">
+              <div class="card-body p-4">
                 <ul>
                   <li>
                     Priority: <span class="fw-bold">{{ student.retention.priority }}</span>

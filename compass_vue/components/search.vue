@@ -1,6 +1,7 @@
 <template>
+  <div class="bg-gray p-4 rounded-3">
   <div class="small lh-lg">
-    <div class="d-inline me-3 text-nowrap">Find student by:</div>
+    <div class="d-inline me-3 text-nowrap fw-bold">Find student by:</div>
     <div class="d-inline text-nowrap">
       <div
         class="form-check form-check-inline mb-0"
@@ -37,6 +38,7 @@
     >
       GO
     </button>
+  </div>
   </div>
 </template>
 

@@ -4,6 +4,7 @@
   <layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
+
       <div class="row my-4">
         <div class="col-5 offset-7">
           <search></search>
@@ -14,9 +15,11 @@
 
       <div class="row">
         <div class="col">
+
+          <!-- MARK: card component -->
           <div class="card border-light-gray shadow-sm rounded-3 mb-4">
             <div class="card-header bg-white border-0 p-4 pb-0 d-flex justify-content-between">
-              <h3 class="h6 m-0 text-uppercase fw-bold text-uppercase text-dark-beige">
+              <h3 class="h6 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige">
                 Today
               </h3>
               <div>{{ getToday() }}</div>
@@ -24,8 +27,9 @@
             <div v-if="isLoading" class="card-body p-4 d-flex justify-content-center">
               <table-loading></table-loading>
             </div>
-            <div v-else class="card-body p-4 table-responsive-md">recent students</div>
+            <div v-else class="card-body p-4">recent students</div>
           </div>
+
         </div>
       </div>
 
@@ -33,7 +37,7 @@
         <div class="col">
           <div class="card border-light-gray shadow-sm rounded-3 mb-4">
             <div class="card-header bg-white border-0 p-4 pb-0 d-flex justify-content-between">
-              <h3 class="h6 m-0 text-uppercase fw-bold text-uppercase text-dark-beige">
+              <h3 class="h6 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige">
                 Tomorrow
               </h3>
               <div>{{ getTomorrow() }}</div>
@@ -41,7 +45,7 @@
             <div v-if="isLoading" class="card-body p-4 d-flex justify-content-center">
               <table-loading></table-loading>
             </div>
-            <div v-else class="card-body p-4 table-responsive-md">recent students</div>
+            <div v-else class="card-body p-4">recent students</div>
           </div>
         </div>
       </div>
