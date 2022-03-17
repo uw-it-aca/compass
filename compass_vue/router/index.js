@@ -3,7 +3,7 @@ import { trackRouter } from "vue-gtag-next";
 
 // page components
 import Home from '../pages/home.vue';
-import Results from '../pages/results.vue';
+import Search from '../pages/search.vue';
 import Caseload from '../pages/caseload.vue';
 import Student from '../pages/student.vue';
 
@@ -16,9 +16,8 @@ const routes = [
     props: true
   },
   {
-    path: '/results',
-    name: 'Results',
-    component: Results,
+    path: '/search',
+    component: Search,
     pathToRegexpOptions: { strict: true },
     props: true
   },

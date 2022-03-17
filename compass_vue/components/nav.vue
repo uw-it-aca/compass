@@ -1,10 +1,10 @@
 <template>
   <div class="text-light">
-    <ul class="nav flex-column mb-5">
+    <ul class="nav flex-column my-3">
       <li class="nav-item mb-1 bg-dark-purple-hover rounded">
         <router-link
           :to="'/'"
-          active-class="bg-dark-purple"
+          active-class="bg-dark-purple rounded"
           class="nav-link text-gray d-block px-2 py-1"
           ><i class="bi bi-calendar-date-fill me-2"></i>Appointments</router-link
         >
@@ -12,9 +12,25 @@
       <li class="nav-item mb-2 bg-dark-purple-hover rounded">
         <router-link
           :to="'/caseload'"
-          active-class="bg-dark-purple"
+          active-class="bg-dark-purple rounded"
           class="nav-link text-gray d-block px-2 py-1"
           ><i class="bi bi-people-fill me-2"></i>Caseload</router-link
+        >
+      </li>
+      <li aria-hidden="true" class="nav-item mb-2">
+          <a
+            href="#"
+            class="nav-link disabled text-gray d-block p-0 internal-link"
+            ><hr class="m-0 bg-gray" />
+            <span class="visually-hidden"> Navigation separator</span></a
+          >
+        </li>
+      <li class="nav-item mb-1 bg-dark-purple-hover rounded">
+        <router-link
+          :to="'/search'"
+          active-class="bg-dark-purple rounded"
+          class="nav-link text-gray d-block px-2 py-1"
+          ><i class="bi bi-search me-2"></i>Search</router-link
         >
       </li>
     </ul>

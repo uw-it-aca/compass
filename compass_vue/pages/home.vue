@@ -4,22 +4,31 @@
   <layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
+      <h1 class="h4 my-4 text-dark">{{ pageTitle }}</h1>
 
       <div class="row my-4">
-        <div class="col-5 offset-7">
-          <search></search>
+        <div class="col">
+          <div class="d-flex bg-gray p-4 rounded-3">
+            <div class="me-3">
+              <div class="text-muted small">Today</div>
+              <div class="h3 m-0">18 <i class="bi bi-people-fill h5 text-dark-purple"></i></div>
+            </div>
+            <div class="me-3 ps-4 border-start">
+              <div class="text-muted small">Tomorrow</div>
+              <div class="h3 m-0">26 <i class="bi bi-people-fill h5 text-dark-purple"></i></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <h1 class="h4 my-4 text-dark">{{ pageTitle }}</h1>
-
       <div class="row">
         <div class="col">
-
           <!-- MARK: card component -->
           <div class="card border-light-gray shadow-sm rounded-3 mb-4">
             <div class="card-header bg-white border-0 p-4 pb-0 d-flex justify-content-between">
-              <h3 class="h6 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige">
+              <h3
+                class="h6 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
+              >
                 Today
               </h3>
               <div>{{ getToday() }}</div>
@@ -29,7 +38,6 @@
             </div>
             <div v-else class="card-body p-4">recent students</div>
           </div>
-
         </div>
       </div>
 
@@ -37,7 +45,9 @@
         <div class="col">
           <div class="card border-light-gray shadow-sm rounded-3 mb-4">
             <div class="card-header bg-white border-0 p-4 pb-0 d-flex justify-content-between">
-              <h3 class="h6 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige">
+              <h3
+                class="h6 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
+              >
                 Tomorrow
               </h3>
               <div>{{ getTomorrow() }}</div>
@@ -49,7 +59,6 @@
           </div>
         </div>
       </div>
-
     </template>
   </layout>
 </template>

@@ -4,190 +4,251 @@
   <layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
-      <div class="row my-4">
-        <div class="col-5 offset-7">
-          <search></search>
-        </div>
-      </div>
-
       <h1 class="h4 my-4 text-dark">{{ pageTitle }}</h1>
 
       <div class="row my-4 small">
-        <div class="col-7 d-flex justify-content-between">
-          <div class="flex-fill me-3">
-            <div class="fw-bold">Class Standing</div>
-            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-              <option selected>All</option>
-              <option value="1">Freshman</option>
-              <option value="2">Sophomore</option>
-              <option value="3">Junior</option>
-              <option value="4">Senior</option>
-            </select>
-          </div>
+        <div class="col">
+          <div class="bg-gray p-4 rounded-3">
+            <div class="row">
+              <div class="col-5 d-flex justify-content-between">
+                <div class="flex-fill me-3">
+                  <div class="fw-bold lh-lg">Show week:</div>
+                  <select class="form-select form-select-sm" aria-label="Default select example">
+                    <option selected>Current Week</option>
+                    <option value="1">Autumn 2021: Week 4</option>
+                    <option value="2">Autumn 2021: Week 3</option>
+                    <option value="3">Autumn 2021: Week 2</option>
+                    <option value="4">Autumn 2021: Week 1</option>
+                  </select>
+                </div>
+                <div class="flex-fill">
+                  <div class="fw-bold lh-lg">Display caseload for:</div>
+                  <select class="form-select form-select-sm" aria-label="Default select example">
+                    <option value="0">All advisers</option>
+                    <option selected value="1">Jon Average</option>
+                    <option value="2">April Foolery</option>
+                    <option value="3">Bob Samsonite</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-7 border-start d-flex justify-content-between">
+                <div class="flex-fill me-3">
+                  <div class="fw-bold lh-lg">Class Standing:</div>
+                  <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                    <option selected>All</option>
+                    <option value="1">Freshman</option>
+                    <option value="2">Sophomore</option>
+                    <option value="3">Junior</option>
+                    <option value="4">Senior</option>
+                  </select>
+                </div>
 
-          <div class="me-3">
-            <div class="fw-bold">Population</div>
-            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-              <option selected>All</option>
-              <option value="1">Atheletes</option>
-              <option value="2">Pre-Engineering</option>
-              <option value="3">STEM</option>
-            </select>
-          </div>
-          <div class="me-3">
-            <div class="fw-bold">Sport (if Athelete)</div>
-            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
-              <option selected>All</option>
-              <option value="1">Football</option>
-              <option value="2">Baseball</option>
-              <option value="3">Volleyball</option>
-            </select>
-          </div>
+                <div class="me-3">
+                  <div class="fw-bold lh-lg">Population:</div>
+                  <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                    <option selected>All</option>
+                    <option value="1">Atheletes</option>
+                    <option value="2">Pre-Engineering</option>
+                    <option value="3">STEM</option>
+                  </select>
+                </div>
+                <div class="me-3">
+                  <div class="fw-bold lh-lg">Sport (if Athelete):</div>
+                  <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                    <option selected>All</option>
+                    <option value="1">Football</option>
+                    <option value="2">Baseball</option>
+                    <option value="3">Volleyball</option>
+                  </select>
+                </div>
 
-          <div class="flex-fill">
-            <div class="fw-bold">Status</div>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault1"
-              />
-              <label class="form-check-label" for="flexRadioDefault1">Active</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault2"
-                checked
-              />
-              <label class="form-check-label" for="flexRadioDefault2">Inactive</label>
-            </div>
-          </div>
-        </div>
-        <div class="col-5 d-flex justify-content-between border-start">
-          <div class="flex-fill me-3">
-            <div class="fw-bold lh-lg">Show week:</div>
-            <select class="form-select form-select-sm" aria-label="Default select example">
-              <option selected>Current Week</option>
-              <option value="1">Autumn 2021: Week 4</option>
-              <option value="2">Autumn 2021: Week 3</option>
-              <option value="3">Autumn 2021: Week 2</option>
-              <option value="4">Autumn 2021: Week 1</option>
-            </select>
-          </div>
-          <div class="flex-fill">
-            <div class="fw-bold lh-lg">Display caseload for:</div>
-            <select class="form-select form-select-sm" aria-label="Default select example">
-              <option value="0">All advisers</option>
-              <option selected value="1">Jon Average</option>
-              <option value="2">April Foolery</option>
-              <option value="3">Bob Samsonite</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <!-- Retention Filters-->
-      <div class="row my-4 small">
-        <div class="col-4">
-          <div class="d-flex">
-            <div class="fw-bold me-3">Priority:</div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-              <label class="form-check-label" for="defaultCheck1"> Top </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
-              <label class="form-check-label" for="defaultCheck2"> Middle </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
-              <label class="form-check-label" for="defaultCheck2"> Bottom </label>
-            </div>
-            <a
-            class="small"
-            data-bs-toggle="collapse"
-            href="#collapseExample"
-            role="button"
-            aria-expanded="false"
-            aria-controls="collapseExample"
-          >
-            show more filters
-          </a>
-          </div>
-        </div>
-        <div class="col-8">
-          <div class="collapse" id="collapseExample">
-            <div class="d-flex">
-              <div class="flex-fill">
-                <div class="fw-bold">Sign-ins</div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                  <label class="form-check-label" for="defaultCheck1"> High </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
-                  <label class="form-check-label" for="defaultCheck2"> Average </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
-                  <label class="form-check-label" for="defaultCheck2"> Low </label>
-                </div>
-              </div>
-              <div class="flex-fill">
-                <div class="fw-bold">Activity</div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" />
-                  <label class="form-check-label" for="defaultCheck3"> High </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck4" />
-                  <label class="form-check-label" for="defaultCheck4"> Average </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck5" />
-                  <label class="form-check-label" for="defaultCheck5"> Low </label>
-                </div>
-              </div>
-              <div class="flex-fill">
-                <div class="fw-bold">Assignments</div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck6" />
-                  <label class="form-check-label" for="defaultCheck6"> High </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck7" />
-                  <label class="form-check-label" for="defaultCheck7"> Average </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck8" />
-                  <label class="form-check-label" for="defaultCheck8"> Low </label>
-                </div>
-              </div>
-              <div class="flex-fill">
-                <div class="fw-bold">Grades</div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck9" />
-                  <label class="form-check-label" for="defaultCheck9"> High </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck10" />
-                  <label class="form-check-label" for="defaultCheck10"> Average </label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="defaultCheck11" />
-                  <label class="form-check-label" for="defaultCheck11"> Low </label>
+                <div class="flex-fill">
+                  <div class="fw-bold lh-lg">Status:</div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault1"
+                    />
+                    <label class="form-check-label" for="flexRadioDefault1">Active</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="flexRadioDefault"
+                      id="flexRadioDefault2"
+                      checked
+                    />
+                    <label class="form-check-label" for="flexRadioDefault2">Inactive</label>
+                  </div>
                 </div>
               </div>
             </div>
-            <ul class="mt-3 mb-0 list-inline">
-              <li class="list-inline-item"><strong>Low</strong> -5 to -3</li>
-              <li class="list-inline-item"><strong>Average</strong> -2.9 to +2.9</li>
-              <li class="list-inline-item"><strong>High</strong> +3 to +5</li>
-            </ul>
+            <!-- Retention Filters-->
+            <div class="row mt-4">
+              <div class="col-5">
+                <div class="d-flex">
+                  <div class="fw-bold me-3">Priority:</div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                    <label class="form-check-label" for="defaultCheck1"> Top </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
+                    <label class="form-check-label" for="defaultCheck2"> Middle </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
+                    <label class="form-check-label" for="defaultCheck2"> Bottom </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-7 border-start">
+                <div class="">
+                  <a
+                    class="small"
+                    data-bs-toggle="collapse"
+                    href="#collapseExample"
+                    role="button"
+                    aria-expanded="false"
+                    aria-controls="collapseExample"
+                  >
+                    Show Retention filters
+                  </a>
+                </div>
+                <div class="collapse" id="collapseExample">
+                  <div class="d-flex pt-3">
+                    <div class="flex-fill">
+                      <div class="fw-bold">Sign-ins</div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="defaultCheck1"
+                        />
+                        <label class="form-check-label" for="defaultCheck1"> High </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="defaultCheck2"
+                        />
+                        <label class="form-check-label" for="defaultCheck2"> Average </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="defaultCheck2"
+                        />
+                        <label class="form-check-label" for="defaultCheck2"> Low </label>
+                      </div>
+                    </div>
+                    <div class="flex-fill">
+                      <div class="fw-bold">Activity</div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="defaultCheck3"
+                        />
+                        <label class="form-check-label" for="defaultCheck3"> High </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="defaultCheck4"
+                        />
+                        <label class="form-check-label" for="defaultCheck4"> Average </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="defaultCheck5"
+                        />
+                        <label class="form-check-label" for="defaultCheck5"> Low </label>
+                      </div>
+                    </div>
+                    <div class="flex-fill">
+                      <div class="fw-bold">Assignments</div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="defaultCheck6"
+                        />
+                        <label class="form-check-label" for="defaultCheck6"> High </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="defaultCheck7"
+                        />
+                        <label class="form-check-label" for="defaultCheck7"> Average </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="defaultCheck8"
+                        />
+                        <label class="form-check-label" for="defaultCheck8"> Low </label>
+                      </div>
+                    </div>
+                    <div class="flex-fill">
+                      <div class="fw-bold">Grades</div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="defaultCheck9"
+                        />
+                        <label class="form-check-label" for="defaultCheck9"> High </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="defaultCheck10"
+                        />
+                        <label class="form-check-label" for="defaultCheck10"> Average </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="defaultCheck11"
+                        />
+                        <label class="form-check-label" for="defaultCheck11"> Low </label>
+                      </div>
+                    </div>
+                  </div>
+                  <ul class="mt-3 mb-0 list-inline">
+                    <li class="list-inline-item"><strong>Low</strong> -5 to -3</li>
+                    <li class="list-inline-item"><strong>Average</strong> -2.9 to +2.9</li>
+                    <li class="list-inline-item"><strong>High</strong> +3 to +5</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -199,7 +260,7 @@
               <h3
                 class="h6 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
               >
-                My Caseload
+                My Cases
               </h3>
             </div>
             <div v-if="isLoading" class="card-body p-4 d-flex justify-content-center">
@@ -308,13 +369,12 @@ import dataMixin from '../mixins/data_mixin.js';
 export default {
   mixins: [dataMixin],
   components: {
-    'layout': Layout,
-    'pagination': Pagination,
-    'search': Search,
+    layout: Layout,
+    pagination: Pagination,
+    search: Search,
     'table-loading': TableLoading,
   },
   created: function () {
-
     setTimeout(this.loadStudentList, 3000);
     //this.loadStudentList();
 
@@ -380,8 +440,7 @@ export default {
   methods: {
     loadStudentList: function () {
       let _this = this;
-      this.getStudentList(this.paginationOptions, this.searchOptions)
-      .then((response) => {
+      this.getStudentList(this.paginationOptions, this.searchOptions).then((response) => {
         if (response.data) {
           _this.students = response.data['results'];
           _this.studentsCount = response.data['count'];
