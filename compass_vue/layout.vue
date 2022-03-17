@@ -52,6 +52,9 @@
       <navigation></navigation>
     </template>
     <template #main>
+        <slot name="title">
+          <h1 class="h4 my-4 text-dark">{{ pageTitle }}</h1>
+        </slot>
       <slot name="content"></slot>
     </template>
     <template #footer></template>

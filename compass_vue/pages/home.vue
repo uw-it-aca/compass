@@ -4,8 +4,6 @@
   <layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
-      <h1 class="h4 my-4 text-dark">{{ pageTitle }}</h1>
-
       <div class="row my-4">
         <div class="col">
           <div class="d-flex bg-gray p-4 rounded-3">

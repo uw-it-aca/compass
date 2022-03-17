@@ -4,8 +4,6 @@
   <layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
-      <h1 class="h4 my-4 text-dark">{{ pageTitle }}</h1>
-
       <div class="row my-4">
         <div class="col">
           <div class="bg-gray p-4 rounded-3">
@@ -66,9 +64,7 @@
               <table-loading></table-loading>
             </div>
             <div v-else class="card-body p-4">
-              <div v-if="hasResults">
-                12 search results
-              </div>
+              <div v-if="hasResults">12 search results</div>
               <div v-else>no results yet. begin by searching.</div>
             </div>
           </div>
@@ -89,9 +85,9 @@ import dataMixin from '../mixins/data_mixin.js';
 export default {
   mixins: [dataMixin],
   components: {
-    'layout': Layout,
-    'pagination': Pagination,
-    'search': Search,
+    layout: Layout,
+    pagination: Pagination,
+    search: Search,
     'table-loading': TableLoading,
   },
   created: function () {
@@ -153,14 +149,13 @@ export default {
       this.hasResults = true;
     },
     clickButton: function () {
-
       // show loading again
       if (this.isLoading == false) {
         this.isLoading = true;
       }
 
       setTimeout(this.showResults, 3000);
-    }
+    },
   },
 };
 </script>
