@@ -86,7 +86,7 @@
             </div>
             <!-- Retention Filters-->
             <div class="row mt-4">
-              <div class="col-5">
+              <div class="col-4">
                 <div class="d-flex">
                   <div class="fw-bold me-3">Priority:</div>
                   <div class="form-check form-check-inline">
@@ -103,10 +103,10 @@
                   </div>
                 </div>
               </div>
-              <div class="col-7 border-start">
+              <div class="col-8 border-start">
                 <div class="">
                   <a
-                    class="small"
+                    class=""
                     data-bs-toggle="collapse"
                     href="#collapseExample"
                     role="button"
@@ -256,7 +256,7 @@
           <div class="card border-light-gray shadow-sm rounded-3 mb-4">
             <div class="card-header bg-white border-0 p-4 pb-0">
               <h3
-                class="h6 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
+                class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
               >
                 My Cases
               </h3>

@@ -88,7 +88,7 @@
             <!-- MARK: card component styling -->
             <div class="card border-light-gray shadow-sm rounded-3 mb-4">
               <div class="card-header bg-white border-0 p-4 pb-0">
-                <h3 class="h6 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige">
+                <h3 class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige">
                   Retention
                 </h3>
               </div>
