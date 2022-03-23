@@ -12,7 +12,7 @@
               <div class="h3 m-0">18 <i class="bi bi-people-fill h5 text-dark-purple"></i></div>
             </div>
             <div class="me-3 ps-4 border-start">
-              <div class="text-muted small">Tomorrow</div>
+              <div class="text-muted small">Yesterday</div>
               <div class="h3 m-0">26 <i class="bi bi-people-fill h5 text-dark-purple"></i></div>
             </div>
           </div>
@@ -34,7 +34,9 @@
             <div v-if="isLoading" class="card-body p-4 d-flex justify-content-center">
               <table-loading></table-loading>
             </div>
-            <div v-else class="card-body p-4">recent students</div>
+            <div v-else class="card-body p-4">
+              <table-display></table-display>
+            </div>
           </div>
         </div>
       </div>
@@ -53,7 +55,9 @@
             <div v-if="isLoading" class="card-body p-4 d-flex justify-content-center">
               <table-loading></table-loading>
             </div>
-            <div v-else class="card-body p-4">recent students</div>
+            <div v-else class="card-body p-4">
+              <table-display></table-display>
+            </div>
           </div>
         </div>
       </div>
@@ -64,6 +68,7 @@
 <script>
 import { markRaw } from 'vue';
 import TableLoading from '../components/table-loading.vue';
+import TableDisplay from '../components/table-display.vue';
 import Pagination from 'v-pagination-3';
 import MyPagination from '../components/pagination.vue';
 import Layout from '../layout.vue';
@@ -76,6 +81,7 @@ export default {
     'layout': Layout,
     'pagination': Pagination,
     'table-loading': TableLoading,
+    'table-display': TableDisplay
   },
   created: function () {
     this.loadStudentList();

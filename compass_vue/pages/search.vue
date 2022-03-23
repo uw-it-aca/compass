@@ -64,7 +64,10 @@
               <table-loading></table-loading>
             </div>
             <div v-else class="card-body p-4">
-              <div v-if="hasResults">12 search results</div>
+              <div v-if="hasResults">
+                <p>has 12 results</p>
+                <table-display></table-display>
+              </div>
               <div v-else>no results yet. begin by searching.</div>
             </div>
           </div>
@@ -77,6 +80,7 @@
 <script>
 import { markRaw } from 'vue';
 import TableLoading from '../components/table-loading.vue';
+import TableDisplay from '../components/table-display.vue';
 import Pagination from 'v-pagination-3';
 import Layout from '../layout.vue';
 import dataMixin from '../mixins/data_mixin.js';
@@ -87,6 +91,7 @@ export default {
     'layout': Layout,
     'pagination': Pagination,
     'table-loading': TableLoading,
+    'table-display': TableDisplay,
   },
   created: function () {
     //this.loadStudentList();

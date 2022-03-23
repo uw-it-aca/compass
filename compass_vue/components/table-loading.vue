@@ -2,12 +2,13 @@
   <table class="table mb-0">
     <thead class="small">
       <tr>
-        <th scope="col" style="width: 30%;">Name</th>
-        <th scope="col" class="w-25">Student Number</th>
+        <th scope="col" style="width: 325px;">Name</th>
+        <th scope="col" style="width:155px;">Student Number</th>
         <th scope="col">Priority</th>
         <th scope="col">Class</th>
         <th scope="col">Enroll Status</th>
         <th scope="col">Status</th>
+        <th>&nbsp;</th>
       </tr>
     </thead>
     <tbody>
@@ -35,6 +36,9 @@
         </td>
         <td class="placeholder-glow">
           <div><span class="placeholder bg-light-gray col-8"></span></div>
+        </td>
+        <td class="pe-0 align-middle text-end">
+          <button type="button" disabled class="btn btn-sm placeholder bg-light-gray text-muted rounded-pill px-3">Add Notes</button>
         </td>
       </tr>
     </tbody>

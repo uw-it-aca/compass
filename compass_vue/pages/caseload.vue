@@ -270,11 +270,12 @@
                   <thead class="small">
                     <tr>
                       <th scope="col" class="ps-0">Name</th>
-                      <th scope="col" class="text-nowrap">Student Number</th>
+                      <th scope="col">Student Number</th>
                       <th scope="col">Priority</th>
                       <th scope="col">Class</th>
                       <th scope="col" class="text-nowrap">Enroll Status</th>
                       <th scope="col">Status</th>
+                      <th scope="col">&nbsp;</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -332,8 +333,11 @@
                       </td>
                       <td>top/middle/bottom {{ item.retention.priority }}</td>
                       <td>{{ item.class_desc }}</td>
-                      <td>{{ item.enrollment_status_desc }}</td>
-                      <td>Active/Inactive</td>
+                      <td>Enrolled{{ item.enrollment_status_desc }}</td>
+                      <td>Active</td>
+                      <td class="pe-0 align-middle text-end">
+                        <add-contact></add-contact>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -357,6 +361,7 @@
 
 <script>
 import { markRaw } from 'vue';
+import AddContact from '../components/add-contact.vue'
 import TableLoading from '../components/table-loading.vue';
 import Pagination from 'v-pagination-3';
 import MyPagination from '../components/pagination.vue';
@@ -369,6 +374,7 @@ export default {
     'layout': Layout,
     'pagination': Pagination,
     'table-loading': TableLoading,
+    'add-contact': AddContact
   },
   created: function () {
     setTimeout(this.loadStudentList, 3000);
