@@ -91,15 +91,21 @@
                   <div class="fw-bold me-3">Priority:</div>
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                    <label class="form-check-label" for="defaultCheck1"> Top </label>
+                    <label class="form-check-label" for="defaultCheck1">
+                      <span class="badge rounded-pill bg-danger">Top</span>
+                    </label>
                   </div>
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
-                    <label class="form-check-label" for="defaultCheck2"> Middle </label>
+                    <label class="form-check-label" for="defaultCheck2">
+                      <span class="badge rounded-pill bg-warning">Middle</span>
+                    </label>
                   </div>
                   <div class="form-check form-check-inline">
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
-                    <label class="form-check-label" for="defaultCheck2"> Bottom </label>
+                    <label class="form-check-label" for="defaultCheck2">
+                      <span class="badge rounded-pill border text-muted">Bottom</span>
+                    </label>
                   </div>
                 </div>
               </div>

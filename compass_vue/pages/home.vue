@@ -36,6 +36,7 @@
             </div>
             <div v-else class="card-body p-4">
               <table-display></table-display>
+              <p class="text-end">Not seeing a student? <a href="/search">Try searching!</a></p>
             </div>
           </div>
         </div>

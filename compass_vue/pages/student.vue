@@ -81,180 +81,8 @@
           </div>
         </div>
 
-        <!-- academics area -->
-        <div class="row">
-          <div class="col-md-4">
-
-            <!-- MARK: card component styling -->
-            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-              <div class="card-header bg-white border-0 p-4 pb-0">
-                <h3 class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige">
-                  Retention
-                </h3>
-              </div>
-              <div class="card-body p-4">
-                <ul>
-                  <li>
-                    Priority: <span class="fw-bold">{{ student.retention.priority }}</span>
-                  </li>
-                  <li>Sign-ins: {{ student.retention.sign_in }}</li>
-                  <li>Activity: {{ student.retention.activity }}</li>
-                  <li>Assignments: {{ student.retention.assignment }}</li>
-                  <li>Grades: {{ student.retention.grade }}</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="card shadow-sm mb-3">
-              <h3
-                class="card-header h6 text-uppercase text-muted fw-bold"
-                style="line-height: 30px"
-              >
-                Academics
-              </h3>
-              <div class="card-body">
-                <ul>
-                  <li>
-                    Registered:
-                    <template v-if="student.registered_in_quarter"> <b>yes</b>/no </template>
-                    <template v-else>
-                      yes/
-                      <b>no</b>
-                    </template>
-                  </li>
-                  <li>Enrollment Status: {{ student.enrollment_desc }}</li>
-                  <li>Class standing: {{ student.class_desc }}</li>
-                  <li>Total Credits: {{ student.total_credits }}</li>
-                  <li>Total UW Credits: 170.00</li>
-                  <li>Transfer student: <b>yes</b>/no</li>
-                  <li>GPA: {{ student.gpa }}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card shadow-sm mb-3">
-              <h3
-                class="card-header h6 text-uppercase text-muted fw-bold"
-                style="line-height: 30px"
-              >
-                Programs
-              </h3>
-              <div class="card-body">
-                <p>OMAD special programs</p>
-                <ul>
-                  <li>EOP: yes/no</li>
-                  <li>Pre-professional: yes/no</li>
-                  <li>IC Eligible: yes/no</li>
-                  <li>
-                    Special program:
-                    <template v-if="student.special_program_code"> <b>yes</b>/no </template>
-                    <template v-else>
-                      yes/
-                      <b>no</b>
-                      CAMP, TRIO SSS, Champions, EOP
-                    </template>
-                  </li>
-                </ul>
-                <p>UW Programs</p>
-                <ul>
-                  <li>Honor's</li>
-                  <li>Dean's List</li>
-                  <li>Athletics</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card shadow-sm mb-3">
-              <h3
-                class="card-header h6 text-uppercase text-muted fw-bold"
-                style="line-height: 30px"
-              >
-                Adviser
-              </h3>
-              <div class="card-body">
-                <div class="d-flex">
-                  <div style="width: 65px">
-                    <img
-                      :src="'https://randomuser.me/api/portraits/men/29.jpg'"
-                      class="img-fluid rounded-circle border border-3"
-                    />
-                  </div>
-                  <div class="flex-fill ps-3">
-                    <ul class="list-unstyled">
-                      <li class="fw-bold">John Average</li>
-                      <li>he/him</li>
-                      <li>Email</li>
-                      <li>Phone</li>
-                      <li class="border-top mt-2 pt-2">Dept Name: OMAD</li>
-                      <li>Campus location: MGH 123</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="text-end">
-                  <a href="/caseload?adviser=javerage">View caseload</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card shadow-sm mb-3">
-              <h3
-                class="card-header h6 text-uppercase text-muted fw-bold"
-                style="line-height: 30px"
-              >
-                Major
-              </h3>
-              <div class="card-body">
-                <ul>
-                  <li>
-                    Accepted:
-                    <span v-for="(major, index) in student.major" :key="index">
-                      {{ major.major_full_name }}
-                      <span v-if="index + 1 < student.major.length">,</span>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card shadow-sm mb-3">
-              <h3
-                class="card-header h6 text-uppercase text-muted fw-bold"
-                style="line-height: 30px"
-              >
-                Schedule
-              </h3>
-              <div class="card-body">
-                <ul>
-                  <li>curent quarter</li>
-                  <li>class schedule</li>
-                </ul>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">Last updated 3 mins ago</small>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- end academics -->
-
-        <div class="row mb-3">
-          <div class="col text-end">
-            <a
-              class="btn btn-outline-primary border m-1 shadow-sm"
-              href="#"
-
-              style="font-size: 20px"
-            >
-              <i class="bi bi-chat-square-text"></i>
-            </a>
-          </div>
-        </div>
-
         <!-- notes area -->
+        <p class="text-end"><add-contact></add-contact></p>
         <div class="row">
           <div class="col">
             <div class="card shadow-sm mb-3">
@@ -610,6 +438,167 @@
           </div>
         </div>
         <!-- end notes -->
+
+        <!-- academics area -->
+        <div class="row">
+          <div class="col-md-4">
+
+            <!-- MARK: card component styling -->
+            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
+              <div class="card-header bg-white border-0 p-4 pb-0">
+                <h3 class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige">
+                  Retention
+                </h3>
+              </div>
+              <div class="card-body p-4">
+                <ul>
+                  <li>
+                    Priority: <span class="fw-bold">{{ student.retention.priority }}</span>
+                  </li>
+                  <li>Sign-ins: {{ student.retention.sign_in }}</li>
+                  <li>Activity: {{ student.retention.activity }}</li>
+                  <li>Assignments: {{ student.retention.assignment }}</li>
+                  <li>Grades: {{ student.retention.grade }}</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="card shadow-sm mb-3">
+              <h3
+                class="card-header h6 text-uppercase text-muted fw-bold"
+                style="line-height: 30px"
+              >
+                Academics
+              </h3>
+              <div class="card-body">
+                <ul>
+                  <li>
+                    Registered:
+                    <template v-if="student.registered_in_quarter"> <b>yes</b>/no </template>
+                    <template v-else>
+                      yes/
+                      <b>no</b>
+                    </template>
+                  </li>
+                  <li>Enrollment Status: {{ student.enrollment_desc }}</li>
+                  <li>Class standing: {{ student.class_desc }}</li>
+                  <li>Total Credits: {{ student.total_credits }}</li>
+                  <li>Total UW Credits: 170.00</li>
+                  <li>Transfer student: <b>yes</b>/no</li>
+                  <li>GPA: {{ student.gpa }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card shadow-sm mb-3">
+              <h3
+                class="card-header h6 text-uppercase text-muted fw-bold"
+                style="line-height: 30px"
+              >
+                Programs
+              </h3>
+              <div class="card-body">
+                <p>OMAD special programs</p>
+                <ul>
+                  <li>EOP: yes/no</li>
+                  <li>Pre-professional: yes/no</li>
+                  <li>IC Eligible: yes/no</li>
+                  <li>
+                    Special program:
+                    <template v-if="student.special_program_code"> <b>yes</b>/no </template>
+                    <template v-else>
+                      yes/
+                      <b>no</b>
+                      CAMP, TRIO SSS, Champions, EOP
+                    </template>
+                  </li>
+                </ul>
+                <p>UW Programs</p>
+                <ul>
+                  <li>Honor's</li>
+                  <li>Dean's List</li>
+                  <li>Athletics</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card shadow-sm mb-3">
+              <h3
+                class="card-header h6 text-uppercase text-muted fw-bold"
+                style="line-height: 30px"
+              >
+                Adviser
+              </h3>
+              <div class="card-body">
+                <div class="d-flex">
+                  <div style="width: 65px">
+                    <img
+                      :src="'https://randomuser.me/api/portraits/men/29.jpg'"
+                      class="img-fluid rounded-circle border border-3"
+                    />
+                  </div>
+                  <div class="flex-fill ps-3">
+                    <ul class="list-unstyled">
+                      <li class="fw-bold">John Average</li>
+                      <li>he/him</li>
+                      <li>Email</li>
+                      <li>Phone</li>
+                      <li class="border-top mt-2 pt-2">Dept Name: OMAD</li>
+                      <li>Campus location: MGH 123</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="text-end">
+                  <a href="/caseload?adviser=javerage">View caseload</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card shadow-sm mb-3">
+              <h3
+                class="card-header h6 text-uppercase text-muted fw-bold"
+                style="line-height: 30px"
+              >
+                Major
+              </h3>
+              <div class="card-body">
+                <ul>
+                  <li>
+                    Accepted:
+                    <span v-for="(major, index) in student.major" :key="index">
+                      {{ major.major_full_name }}
+                      <span v-if="index + 1 < student.major.length">,</span>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card shadow-sm mb-3">
+              <h3
+                class="card-header h6 text-uppercase text-muted fw-bold"
+                style="line-height: 30px"
+              >
+                Schedule
+              </h3>
+              <div class="card-body">
+                <ul>
+                  <li>curent quarter</li>
+                  <li>class schedule</li>
+                </ul>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Last updated 3 mins ago</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end academics -->
+
       </div>
       <div v-else>No student</div>
     </template>
@@ -620,12 +609,14 @@
 import { Card } from 'axdd-components';
 import Layout from '../layout.vue';
 import dataMixin from '../mixins/data_mixin.js';
+import AddContact from '../components/add-contact.vue';
 
 export default {
   mixins: [dataMixin],
   components: {
     'layout': Layout,
     'axdd-card': Card,
+    'add-contact': AddContact
   },
   created: function () {
     this.loadstudent(this.$route.params.id);

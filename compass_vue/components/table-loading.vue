@@ -38,7 +38,7 @@
           <div><span class="placeholder bg-light-gray col-8"></span></div>
         </td>
         <td class="pe-0 align-middle text-end">
-          <button type="button" disabled class="btn btn-sm placeholder bg-light-gray text-muted rounded-pill px-3">Add Notes</button>
+          <button type="button" disabled class="btn btn-sm placeholder bg-light-gray text-muted rounded-pill px-3">Add Contact</button>
         </td>
       </tr>
     </tbody>

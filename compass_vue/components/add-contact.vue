@@ -5,7 +5,7 @@
     data-bs-toggle="modal"
     data-bs-target="#exampleModal"
     class="btn btn-dark-beige btn-sm rounded-pill px-3 text-nowrap"
-    >Add Notes</a
+    >Add Contact</a
   >
 
   <!-- contact modal -->
