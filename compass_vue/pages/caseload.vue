@@ -361,15 +361,13 @@ import TableLoading from '../components/table-loading.vue';
 import Pagination from 'v-pagination-3';
 import MyPagination from '../components/pagination.vue';
 import Layout from '../layout.vue';
-import Search from '../components/search.vue';
 import dataMixin from '../mixins/data_mixin.js';
 
 export default {
   mixins: [dataMixin],
   components: {
-    layout: Layout,
-    pagination: Pagination,
-    search: Search,
+    'layout': Layout,
+    'pagination': Pagination,
     'table-loading': TableLoading,
   },
   created: function () {

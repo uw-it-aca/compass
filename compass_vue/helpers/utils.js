@@ -10,10 +10,10 @@ function getToday() {
   return today.format('MMMM D, YYYY');
 }
 
-function getTomorrow() {
+function getYesterday() {
   let today = dayjs();
-  let tomorrow = today.add('1', 'day');
+  let tomorrow = today.subtract('1', 'day');
   return tomorrow.format('MMMM D, YYYY');
 }
 
-export { formatDate, getToday, getTomorrow };
+export { formatDate, getToday, getYesterday };

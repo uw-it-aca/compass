@@ -46,9 +46,9 @@
               <h3
                 class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
               >
-                Tomorrow
+                Yesterday
               </h3>
-              <div>{{ getTomorrow() }}</div>
+              <div>{{ getYesterday() }}</div>
             </div>
             <div v-if="isLoading" class="card-body p-4 d-flex justify-content-center">
               <table-loading></table-loading>
@@ -66,17 +66,15 @@ import { markRaw } from 'vue';
 import TableLoading from '../components/table-loading.vue';
 import Pagination from 'v-pagination-3';
 import MyPagination from '../components/pagination.vue';
-import Search from '../components/search.vue';
 import Layout from '../layout.vue';
 import dataMixin from '../mixins/data_mixin.js';
-import { getToday, getTomorrow } from '../helpers/utils';
+import { getToday, getYesterday } from '../helpers/utils';
 
 export default {
   mixins: [dataMixin],
   components: {
-    layout: Layout,
-    pagination: Pagination,
-    search: Search,
+    'layout': Layout,
+    'pagination': Pagination,
     'table-loading': TableLoading,
   },
   created: function () {
@@ -143,7 +141,7 @@ export default {
   },
   methods: {
     getToday,
-    getTomorrow,
+    getYesterday,
     loadStudentList: function () {
       let _this = this;
       this.getStudentList(this.paginationOptions, this.searchOptions).then((response) => {
