@@ -264,7 +264,7 @@
               <h3
                 class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
               >
-                My Cases
+                My Caseload
               </h3>
             </div>
             <div v-if="isLoading" class="card-body p-4 d-flex justify-content-center">
@@ -399,7 +399,7 @@ export default {
       // pagination
       studentsCount: 0,
       currentPage: 1,
-      pageSize: 10,
+      pageSize: 30,
       pageOptions: {
         theme: 'bootstrap4',
         template: markRaw(MyPagination),

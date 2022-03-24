@@ -9,82 +9,262 @@
     <template #content>
       <div v-if="$route.params.id">
         <div class="row my-4">
-          <div class="col-lg-6 d-flex">
-            <div>
-              <div
-                :class="priorityRing"
-                class="rounded-circle border border-4"
-                style="width: 140px"
-              >
-                <img
-                  v-if="student.gender === 'F'"
-                  :src="'https://randomuser.me/api/portraits/women/' + student.id + '.jpg'"
-                  class="img-fluid rounded-circle border border-light border-3"
-                />
-                <img
-                  v-else
-                  :src="'https://randomuser.me/api/portraits/men/' + student.id + '.jpg'"
-                  class="img-fluid rounded-circle border border-light border-3"
-                />
-              </div>
-              <div class="text-center mb-4">
-                <span class="fw-bold">Priority {{ student.retention.priority }}</span>
+          <div class="col">
+            <div class="bg-gray p-4 rounded-3">
+              <div class="row">
+                <div class="col-lg-6 d-flex border-end">
+                  <div>
+                    <div
+                      :class="priorityRing"
+                      class="rounded-circle border border-4"
+                      style="width: 140px"
+                    >
+                      <img
+                        v-if="student.gender === 'F'"
+                        :src="'https://randomuser.me/api/portraits/women/' + student.id + '.jpg'"
+                        class="img-fluid rounded-circle border border-light border-3"
+                      />
+                      <img
+                        v-else
+                        :src="'https://randomuser.me/api/portraits/men/' + student.id + '.jpg'"
+                        class="img-fluid rounded-circle border border-light border-3"
+                      />
+                    </div>
+                    <div class="text-center mb-4">
+                      <span class="fw-bold">Priority {{ student.retention.priority }}</span>
+                    </div>
+                  </div>
+                  <div class="flex-fill ps-3 mb-4">
+                    <div class="h3 text-dark axdd-font-encode-sans">
+                      {{ student.student_preferred_last_name }},
+                      {{ student.student_preferred_first_name }}
+                    </div>
+                    <div class="h5">
+                      {{ $route.params.id }}, <small>{{ student.uw_net_id }}</small>
+                    </div>
+                    <p>
+                      <span class="badge rounded-pill border border-muted text-dark me-1">{{
+                        student.gender
+                      }}</span>
+                      <span
+                        v-if="student.gender === 'F'"
+                        class="badge rounded-pill border border-muted text-dark"
+                        >she/her</span
+                      >
+                      <span v-else class="badge rounded-pill border border-muted text-dark"
+                        >he/him</span
+                      >
+                    </p>
+                    <div>
+                      <i class="bi bi-trophy-fill text-purple"></i> Sport: Track &amp; Field
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6 col-lg-3 px-4 small">
+                  <ul class="list-unstyled m-0">
+                    <li>
+                      Preferred name: {{ student.student_preferred_first_name }}
+                      {{ student.student_preferred_middle_name }}
+                      {{ student.student_preferred_last_name }}
+                    </li>
+                    <li>Ethnicity:</li>
+                    <li>Citizenship: {{ student.resident_desc }}</li>
+                    <li>DOB: 7/23/2001</li>
+                  </ul>
+                </div>
+                <div class="col-6 col-lg-3 px-4 small">
+                  <ul class="list-unstyled m-0">
+                    <li>UW Email: {{ student.student_email }}</li>
+                    <li>Personal email: {{ student.personal_email }}</li>
+                    <li>Local Phone: {{ student.local_phone_number }}</li>
+                    <li><hr /></li>
+                    <li>Perm Address: {{ studentAddress }}</li>
+                    <li><hr /></li>
+                    <li>
+                      Local Address: 1234
+                      <a href="#" class="small" role="button">Update address</a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
-            <div class="flex-fill ps-3 mb-4">
-              <div class="h3 text-uppercase">
-                {{ student.student_preferred_last_name }},
-                {{ student.student_preferred_first_name }}
-              </div>
-              <div class="h5">
-                {{ $route.params.id }}, <small>{{ student.uw_net_id }}</small>
-              </div>
-              <p>
-                <span class="badge rounded-pill border border-muted text-dark me-1">{{
-                  student.gender
-                }}</span>
-                <span
-                  v-if="student.gender === 'F'"
-                  class="badge rounded-pill border border-muted text-dark"
-                  >she/her</span
-                >
-                <span v-else class="badge rounded-pill border border-muted text-dark">he/him</span>
-              </p>
-              <div><i class="bi bi-trophy-fill text-purple"></i> Sport: Track &amp; Field</div>
-            </div>
-          </div>
-          <div class="col-6 col-lg-3 border-start">
-            <ul class="list-unstyled m-0">
-              <li>
-                Preferred name: {{ student.student_preferred_first_name }}
-                {{ student.student_preferred_middle_name }}
-                {{ student.student_preferred_last_name }}
-              </li>
-              <li>Ethnicity:</li>
-              <li>Citizenship: {{ student.resident_desc }}</li>
-              <li>DOB: 7/23/2001</li>
-            </ul>
-          </div>
-          <div class="col-6 col-lg-3 border-start">
-            <ul class="list-unstyled m-0">
-              <li>UW Email: {{ student.student_email }}</li>
-              <li>Personal email: {{ student.personal_email }}</li>
-              <li>Local Phone: {{ student.local_phone_number }}</li>
-              <li><hr /></li>
-              <li>Perm Address: {{ studentAddress }}</li>
-              <li><hr /></li>
-              <li>
-                Local Address: 1234
-                <a href="#" class="btn btn-sm btn-outline-primary py-0" role="button">update</a>
-              </li>
-            </ul>
           </div>
         </div>
 
         <!-- notes area -->
-        <p class="text-end"><add-contact></add-contact></p>
         <div class="row">
-          <div class="col">
+          <div class="col-9">
+            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
+              <div class="card-header d-flex justify-content-between bg-white border-0 p-4 pb-0">
+                <h3
+                  class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
+                >
+                  Contact
+                </h3>
+                <p class="text-end"><add-contact></add-contact></p>
+              </div>
+              <div class="card-body p-4">
+                <div class="table-responsive">
+                  <table class="table m-0">
+                    <thead class="small">
+                      <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th class="text-nowrap">Contact Type</th>
+                        <th>Staff</th>
+                        <th>Notes</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td scope="row">09/23/2020</td>
+                        <td>1:55PM</td>
+                        <td>Drop-in</td>
+                        <td>Otto Wilson</td>
+                        <td>
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
+                          mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
+                          expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
+                          dolores excepturi?
+                          <p class="text-end small"><a href="#">Edit notes</a></p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td scope="row">07/04/2020</td>
+                        <td>10:52AM</td>
+                        <td>Quick Question</td>
+                        <td>Boris Washington</td>
+                        <td>
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
+                          mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
+                          expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
+                          dolores excepturi?
+                          <p class="text-end small"><a href="#">Edit notes</a></p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td scope="row">06/29/2020</td>
+                        <td>3:15PM</td>
+                        <td>Appointment</td>
+                        <td>Otto Wilson</td>
+                        <td>
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
+                          mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
+                          expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
+                          dolores excepturi?
+                          <p class="text-end small"><a href="#">Edit notes</a></p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td scope="row">5/14/2020</td>
+                        <td>2:15PM</td>
+                        <td>Telephone</td>
+                        <td>Otto Wilson</td>
+                        <td>
+                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
+                          mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
+                          expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
+                          dolores excepturi?
+                          <p class="text-end small"><a href="#">Edit notes</a></p>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-3">
+            <!-- adviser -->
+            <div class="card shadow-sm mb-3">
+              <div class="card-header bg-white border-0 p-4 pb-0">
+                <h3
+                  class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
+                >
+                  Adviser
+                </h3>
+              </div>
+              <div class="card-body p-4">
+                <ul class="list-unstyled">
+                  <li class="fw-bold">John Average</li>
+                  <li>he/him</li>
+                  <li>Email</li>
+                  <li>Phone</li>
+                  <li class="border-top mt-2 pt-2">Dept Name: OMAD</li>
+                  <li>Campus location: MGH 123</li>
+                </ul>
+                <div class="text-end">
+                  <a href="#" class="small">Update adviser</a>
+                </div>
+                <div class="text-end">
+                  <a href="/caseload?adviser=javerage" class="small">View caseload</a>
+                </div>
+              </div>
+            </div>
+            <!-- end adviser -->
+
+            <!-- programs -->
+            <div class="card shadow-sm mb-3">
+              <div class="card-header bg-white border-0 p-4 pb-0">
+                <h3
+                  class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
+                >
+                  Programs
+                </h3>
+              </div>
+              <div class="card-body p-4">
+                <p>OMAD special programs</p>
+                <ul>
+                  <li>EOP: yes/no</li>
+                  <li>Pre-professional: yes/no</li>
+                  <li>IC Eligible: yes/no</li>
+                  <li>
+                    Special program:
+                    <template v-if="student.special_program_code"> <b>yes</b>/no </template>
+                    <template v-else>
+                      yes/
+                      <b>no</b>
+                      CAMP, TRIO SSS, Champions, EOP
+                    </template>
+                  </li>
+                </ul>
+                <p>UW Programs</p>
+                <ul>
+                  <li>Honor's</li>
+                  <li>Dean's List</li>
+                  <li>Athletics</li>
+                </ul>
+              </div>
+            </div>
+            <!-- end programs -->
+          </div>
+        </div>
+        <!-- end notes -->
+
+        <div class="row mt-5">
+          <div class="col-9">
+            <!-- schedule -->
+            <div class="card shadow-sm mb-3">
+              <h3
+                class="card-header h6 text-uppercase text-muted fw-bold"
+                style="line-height: 30px"
+              >
+                Schedule
+              </h3>
+              <div class="card-body">
+                <ul>
+                  <li>curent</li>
+                  <li>next</li>
+                  <li>after</li>
+                </ul>
+              </div>
+              <div class="card-footer">
+                <small class="text-muted">Last updated 3 mins ago</small>
+              </div>
+            </div>
+            <!-- end schedule -->
+
+            <!-- history -->
             <div class="card shadow-sm mb-3">
               <div class="card-header">
                 <div class="position-relative">
@@ -101,20 +281,6 @@
                     <li class="nav-item" role="presentation">
                       <button
                         class="nav-link active"
-                        id="home-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#contact"
-                        type="button"
-                        role="tab"
-                        aria-controls="contact"
-                        aria-selected="true"
-                      >
-                        Contact
-                      </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button
-                        class="nav-link"
                         id="profile-tab"
                         data-bs-toggle="tab"
                         data-bs-target="#visit"
@@ -161,78 +327,13 @@
                 <div class="tab-content" id="myTabContent">
                   <div
                     class="tab-pane fade show active"
-                    id="contact"
+                    id="visit"
                     role="tabpanel"
-                    aria-labelledby="contact-tab"
+                    aria-labelledby="visit-tab"
                   >
                     <div class="table-responsive">
                       <table class="table table-hover table-striped m-0">
-                        <thead>
-                          <tr>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th class="text-nowrap">Contact Type</th>
-                            <th>Staff</th>
-                            <th>Notes</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td scope="row">09/23/2020</td>
-                            <td>1:55PM</td>
-                            <td>Drop-in</td>
-                            <td>Otto Wilson</td>
-                            <td>
-                              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam,
-                              ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
-                              doloribus expedita iure fuga obcaecati modi incidunt. Repellendus
-                              velit asperiores dolores excepturi?
-                            </td>
-                          </tr>
-                          <tr>
-                            <td scope="row">07/04/2020</td>
-                            <td>10:52AM</td>
-                            <td>Quick Question</td>
-                            <td>Boris Washington</td>
-                            <td>
-                              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam,
-                              ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
-                              doloribus expedita iure fuga obcaecati modi incidunt. Repellendus
-                              velit asperiores dolores excepturi?
-                            </td>
-                          </tr>
-                          <tr>
-                            <td scope="row">06/29/2020</td>
-                            <td>3:15PM</td>
-                            <td>Appointment</td>
-                            <td>Otto Wilson</td>
-                            <td>
-                              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam,
-                              ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
-                              doloribus expedita iure fuga obcaecati modi incidunt. Repellendus
-                              velit asperiores dolores excepturi?
-                            </td>
-                          </tr>
-                          <tr>
-                            <td scope="row">5/14/2020</td>
-                            <td>2:15PM</td>
-                            <td>Telephone</td>
-                            <td>Otto Wilson</td>
-                            <td>
-                              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam,
-                              ducimus mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis
-                              doloribus expedita iure fuga obcaecati modi incidunt. Repellendus
-                              velit asperiores dolores excepturi?
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="visit" role="tabpanel" aria-labelledby="visit-tab">
-                    <div class="table-responsive">
-                      <table class="table table-hover table-striped m-0">
-                        <thead>
+                        <thead class="small">
                           <tr>
                             <th>Date</th>
                             <th class="text-nowrap">Location</th>
@@ -287,7 +388,7 @@
                   >
                     <div class="table-responsive">
                       <table class="table table-hover table-striped m-0">
-                        <thead>
+                        <thead class="small">
                           <tr>
                             <th>Course</th>
                             <th>Credits</th>
@@ -327,7 +428,7 @@
                     <div class="table-responsive">
                       <h3 class="h6">Intended Major</h3>
                       <table class="table table-hover table-striped m-0 mb-3">
-                        <thead>
+                        <thead class="small">
                           <tr>
                             <th>Date</th>
                             <th>Major</th>
@@ -435,18 +536,15 @@
                 <!-- end card-body -->
               </div>
             </div>
+            <!-- end history -->
           </div>
-        </div>
-        <!-- end notes -->
-
-        <!-- academics area -->
-        <div class="row">
-          <div class="col-md-4">
-
+          <div class="col-3">
             <!-- MARK: card component styling -->
             <div class="card border-light-gray shadow-sm rounded-3 mb-4">
               <div class="card-header bg-white border-0 p-4 pb-0">
-                <h3 class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige">
+                <h3
+                  class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
+                >
                   Retention
                 </h3>
               </div>
@@ -489,74 +587,7 @@
                 </ul>
               </div>
             </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card shadow-sm mb-3">
-              <h3
-                class="card-header h6 text-uppercase text-muted fw-bold"
-                style="line-height: 30px"
-              >
-                Programs
-              </h3>
-              <div class="card-body">
-                <p>OMAD special programs</p>
-                <ul>
-                  <li>EOP: yes/no</li>
-                  <li>Pre-professional: yes/no</li>
-                  <li>IC Eligible: yes/no</li>
-                  <li>
-                    Special program:
-                    <template v-if="student.special_program_code"> <b>yes</b>/no </template>
-                    <template v-else>
-                      yes/
-                      <b>no</b>
-                      CAMP, TRIO SSS, Champions, EOP
-                    </template>
-                  </li>
-                </ul>
-                <p>UW Programs</p>
-                <ul>
-                  <li>Honor's</li>
-                  <li>Dean's List</li>
-                  <li>Athletics</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card shadow-sm mb-3">
-              <h3
-                class="card-header h6 text-uppercase text-muted fw-bold"
-                style="line-height: 30px"
-              >
-                Adviser
-              </h3>
-              <div class="card-body">
-                <div class="d-flex">
-                  <div style="width: 65px">
-                    <img
-                      :src="'https://randomuser.me/api/portraits/men/29.jpg'"
-                      class="img-fluid rounded-circle border border-3"
-                    />
-                  </div>
-                  <div class="flex-fill ps-3">
-                    <ul class="list-unstyled">
-                      <li class="fw-bold">John Average</li>
-                      <li>he/him</li>
-                      <li>Email</li>
-                      <li>Phone</li>
-                      <li class="border-top mt-2 pt-2">Dept Name: OMAD</li>
-                      <li>Campus location: MGH 123</li>
-                    </ul>
-                  </div>
-                </div>
-                <div class="text-end">
-                  <a href="/caseload?adviser=javerage">View caseload</a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
+
             <div class="card shadow-sm mb-3">
               <h3
                 class="card-header h6 text-uppercase text-muted fw-bold"
@@ -577,28 +608,13 @@
               </div>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card shadow-sm mb-3">
-              <h3
-                class="card-header h6 text-uppercase text-muted fw-bold"
-                style="line-height: 30px"
-              >
-                Schedule
-              </h3>
-              <div class="card-body">
-                <ul>
-                  <li>curent quarter</li>
-                  <li>class schedule</li>
-                </ul>
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">Last updated 3 mins ago</small>
-              </div>
-            </div>
-          </div>
         </div>
-        <!-- end academics -->
 
+        <!-- history -->
+        <div class="row">
+          <div class="col"></div>
+        </div>
+        <!-- end history -->
       </div>
       <div v-else>No student</div>
     </template>
@@ -614,9 +630,9 @@ import AddContact from '../components/add-contact.vue';
 export default {
   mixins: [dataMixin],
   components: {
-    'layout': Layout,
+    layout: Layout,
     'axdd-card': Card,
-    'add-contact': AddContact
+    'add-contact': AddContact,
   },
   created: function () {
     this.loadstudent(this.$route.params.id);
