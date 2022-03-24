@@ -12,7 +12,7 @@
           <div class="col">
             <div class="bg-gray p-4 rounded-3">
               <div class="row">
-                <div class="col-lg-6 d-flex border-end">
+                <div class="col-lg-6 pe-4 d-flex">
                   <div>
                     <div
                       :class="priorityRing"
@@ -34,7 +34,7 @@
                       <span class="fw-bold">Priority {{ student.retention.priority }}</span>
                     </div>
                   </div>
-                  <div class="flex-fill ps-3 mb-4">
+                  <div class="flex-fill ps-4 mb-4">
                     <div class="h3 text-dark axdd-font-encode-sans">
                       {{ student.student_preferred_last_name }},
                       {{ student.student_preferred_first_name }}
@@ -60,7 +60,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-6 col-lg-3 px-4 small">
+                <div class="col-6 col-lg-3 px-4 border-start small">
                   <ul class="list-unstyled m-0">
                     <li>
                       Preferred name: {{ student.student_preferred_first_name }}
@@ -72,7 +72,7 @@
                     <li>DOB: 7/23/2001</li>
                   </ul>
                 </div>
-                <div class="col-6 col-lg-3 px-4 small">
+                <div class="col-6 col-lg-3 ps-4 border-start small">
                   <ul class="list-unstyled m-0">
                     <li>UW Email: {{ student.student_email }}</li>
                     <li>Personal email: {{ student.personal_email }}</li>
