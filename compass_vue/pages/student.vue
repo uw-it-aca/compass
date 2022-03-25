@@ -294,6 +294,7 @@
                 </h2>
               </div>
               <div class="card-body p-4">
+
                 <axdd-tabs pills bottom-border nav-wrapper-class="mb-3 p-0">
                   <template #tabs>
                     <axdd-tab-button

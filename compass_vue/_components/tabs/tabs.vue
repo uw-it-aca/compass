@@ -3,13 +3,13 @@
     <div :class="navWrapperClassesComputed">
       <ul role="tablist" :class="navClassesComputed">
         <slot name="tabs">
-          <!-- uw-tab-button and uw-tab-dropdown components with panelId-->
+          <!-- axdd-tab-button and uw-tab-dropdown components with panelId-->
         </slot>
       </ul>
     </div>
     <div class="tab-content">
       <slot name="panels">
-        <!-- uw-tab-panel components with panelId matching tabs-->
+        <!-- axdd-tab-panel components with panelId matching tabs-->
       </slot>
     </div>
   </div>
@@ -102,6 +102,9 @@ export default {
     },
   },
   created() {
+
+    // TODO: THIS IS NO LONGER SUPPORTED IN VUE3
+
     this.$on('setActivePanel', (panelId) => {
       // child tab components emit setActivePanel when
       // a tab is activated
