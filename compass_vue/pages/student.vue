@@ -236,7 +236,7 @@
                   <li>EOP</li>
                 </ul>
 
-                <hr>
+                <hr />
 
                 <p>OMAD Programs (if EOP yes)</p>
                 <ul>
@@ -254,12 +254,7 @@
                     <label class="form-check-label" for="defaultCheck1">CAMP</label>
                   </div>
                   <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="defaultCheck2"
-                    />
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
                     <label class="form-check-label" for="defaultCheck2">TRIO</label>
                   </div>
                   <div class="form-check">
@@ -270,14 +265,14 @@
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck4" />
                     <label class="form-check-label" for="defaultCheck4">Champions</label>
                   </div>
-                   <div class="form-check">
+                  <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck5" />
                     <label class="form-check-label" for="defaultCheck5">IC Eligible</label>
                   </div>
                   <div class="text-end">
-                     <button type="button" class="btn btn-outline-dark-beige btn-sm rounded-pill">
-                        Update programs
-                      </button>
+                    <button type="button" class="btn btn-outline-dark-beige btn-sm rounded-pill">
+                      Update programs
+                    </button>
                   </div>
                 </div>
               </div>
@@ -299,77 +294,29 @@
                 </h2>
               </div>
               <div class="card-body p-4">
+                <axdd-tabs pills bottom-border nav-wrapper-class="mb-3 p-0">
+                  <template #tabs>
+                    <axdd-tab-button
+                      :panel-id="blah1"
+                      title-item-class="myuw-text-xs me-2 mb-1"
+                      title-link-class="rounded-0 text-body text-uppercase"
+                    >
+                      Blah1
+                    </axdd-tab-button>
+                    <axdd-tab-button
+                      :panel-id="blah2"
+                      title-item-class="myuw-text-xs me-2 mb-1"
+                      title-link-class="rounded-0 text-body text-uppercase"
+                    >
+                      Blah2
+                    </axdd-tab-button>
+                  </template>
+                  <template #panels>
+                    <axdd-tab-panel :panel-id="blah1"> blah 1 sadsasadf </axdd-tab-panel>
+                    <axdd-tab-panel :panel-id="blah2"> blah 2 sadsasadf </axdd-tab-panel>
+                  </template>
+                </axdd-tabs>
 
-                <ul class="nav nav-tabs mb-3" id="myTab1" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link active"
-                      id="home-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#home"
-                      type="button"
-                      role="tab"
-                      aria-controls="home"
-                      aria-selected="true"
-                    >
-                      Current Quarter
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link"
-                      id="profile-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#profile"
-                      type="button"
-                      role="tab"
-                      aria-controls="profile"
-                      aria-selected="false"
-                    >
-                      Next Quarter
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link"
-                      id="contact-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#contact"
-                      type="button"
-                      role="tab"
-                      aria-controls="contact"
-                      aria-selected="false"
-                    >
-                      Quarter After
-                    </button>
-                  </li>
-                </ul>
-                <div class="tab-content" id="myTabContent1">
-                  <div
-                    class="tab-pane fade show active"
-                    id="home"
-                    role="tabpanel"
-                    aria-labelledby="home-tab"
-                  >
-                    ...
-                  </div>
-                  <div
-                    class="tab-pane fade"
-                    id="profile"
-                    role="tabpanel"
-                    aria-labelledby="profile-tab"
-                  >
-                    ...
-                  </div>
-                  <div
-                    class="tab-pane fade"
-                    id="contact"
-                    role="tabpanel"
-                    aria-labelledby="contact-tab"
-                  >
-                    ...
-                  </div>
-                </div>
               </div>
             </div>
             <!-- end schedule -->
@@ -384,7 +331,6 @@
                 </h2>
               </div>
               <div class="card-body p-4">
-
                 <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
                   <li class="nav-item" role="presentation">
                     <button
@@ -760,6 +706,11 @@
 
 <script>
 import { Card } from 'axdd-components';
+
+import Tabs from '../_components/tabs/tabs.vue';
+import TabButton from '../_components/tabs/button.vue';
+import TabPanel from '../_components/tabs/panel.vue';
+
 import Layout from '../layout.vue';
 import dataMixin from '../mixins/data_mixin.js';
 import AddContact from '../components/add-contact.vue';
@@ -770,6 +721,9 @@ export default {
     layout: Layout,
     'axdd-card': Card,
     'add-contact': AddContact,
+    'axdd-tabs': Tabs,
+    'axdd-tab-button': TabButton,
+    'axdd-tab-panel': TabPanel,
   },
   created: function () {
     this.loadstudent(this.$route.params.id);
