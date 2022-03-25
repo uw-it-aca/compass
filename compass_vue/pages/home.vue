@@ -6,19 +6,9 @@
     <template #content>
       <div class="row my-4">
         <div class="col">
-          <div class="d-flex bg-gray p-4 rounded-3">
-            <div class="me-3">
-              <div class="text-muted small">Today</div>
-              <div class="h3 m-0">18 <i class="bi bi-people-fill h5 text-dark-purple"></i></div>
-            </div>
-            <div class="me-3 ps-4 border-start">
-              <div class="text-muted small">Yesterday</div>
-              <div class="h3 m-0">26 <i class="bi bi-people-fill h5 text-dark-purple"></i></div>
-            </div>
-          </div>
+          <search></search>
         </div>
       </div>
-
       <div class="row">
         <div class="col">
           <!-- MARK: card component -->
@@ -68,6 +58,7 @@
 
 <script>
 import { markRaw } from 'vue';
+import Search from '../components/search.vue';
 import TableLoading from '../components/table-loading.vue';
 import TableDisplay from '../components/table-display.vue';
 import Pagination from 'v-pagination-3';
@@ -80,21 +71,22 @@ export default {
   mixins: [dataMixin],
   components: {
     'layout': Layout,
+    'search': Search,
     'pagination': Pagination,
     'table-loading': TableLoading,
     'table-display': TableDisplay
   },
   created: function () {
     this.loadStudentList();
-    this.searchOption = this.searchRadioOptions[0];
   },
   data() {
     return {
-      pageTitle: 'Appointments',
+      pageTitle: 'Contacts',
 
       // loading
       isLoading: true,
       today: 'bal',
+
       // data
       students: [],
       // pagination
@@ -105,23 +97,6 @@ export default {
         theme: 'bootstrap4',
         template: markRaw(MyPagination),
       },
-      // search filters
-      searchOption: null,
-      searchText: '',
-      searchRadioOptions: [
-        {
-          id: 'student-number',
-          label: 'Number',
-        },
-        {
-          id: 'student-name',
-          label: 'Name',
-        },
-        {
-          id: 'student-email',
-          label: 'UW NetId',
-        },
-      ],
     };
   },
   computed: {
@@ -130,16 +105,6 @@ export default {
         offset: this.pageSize * (this.currentPage - 1),
         limit: this.pageSize,
       };
-    },
-    searchOptions: function () {
-      if (this.searchOption) {
-        return {
-          filter_type: this.searchOption.id,
-          filter_text: this.searchText,
-        };
-      } else {
-        return {};
-      }
     },
     numPages: function () {
       let page = Math.ceil(this.studentsCount / this.pageSize);

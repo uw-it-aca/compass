@@ -4,6 +4,11 @@
   <layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
+      <div class="row my-4">
+        <div class="col">
+          <search></search>
+        </div>
+      </div>
       <div class="row my-4 small">
         <div class="col">
           <div class="bg-gray p-4 rounded-3">
@@ -368,6 +373,7 @@
 
 <script>
 import { markRaw } from 'vue';
+import Search from '../components/search.vue';
 import AddContact from '../components/add-contact.vue'
 import TableLoading from '../components/table-loading.vue';
 import Pagination from 'v-pagination-3';
@@ -379,6 +385,7 @@ export default {
   mixins: [dataMixin],
   components: {
     'layout': Layout,
+    'search': Search,
     'pagination': Pagination,
     'table-loading': TableLoading,
     'add-contact': AddContact
@@ -386,8 +393,6 @@ export default {
   created: function () {
     setTimeout(this.loadStudentList, 3000);
     //this.loadStudentList();
-
-    this.searchOption = this.searchRadioOptions[0];
   },
   data() {
     return {
@@ -405,23 +410,6 @@ export default {
         theme: 'bootstrap4',
         template: markRaw(MyPagination),
       },
-      // search filters
-      searchOption: null,
-      searchText: '',
-      searchRadioOptions: [
-        {
-          id: 'student-number',
-          label: 'Number',
-        },
-        {
-          id: 'student-name',
-          label: 'Name',
-        },
-        {
-          id: 'student-email',
-          label: 'UW NetId',
-        },
-      ],
     };
   },
   computed: {
@@ -430,16 +418,6 @@ export default {
         offset: this.pageSize * (this.currentPage - 1),
         limit: this.pageSize,
       };
-    },
-    searchOptions: function () {
-      if (this.searchOption) {
-        return {
-          filter_type: this.searchOption.id,
-          filter_text: this.searchText,
-        };
-      } else {
-        return {};
-      }
     },
     numPages: function () {
       let page = Math.ceil(this.studentsCount / this.pageSize);

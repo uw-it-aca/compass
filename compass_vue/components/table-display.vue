@@ -43,7 +43,7 @@
         <td>Enrolled</td>
         <td>Active</td>
         <td class="align-middle text-end">
-          <add-contact>Update Notes</add-contact>
+          <add-contact>Add Notes</add-contact>
         </td>
       </tr>
     </tbody>

@@ -6,47 +6,7 @@
     <template #content>
       <div class="row my-4">
         <div class="col">
-          <div class="bg-gray p-4 rounded-3">
-            <div class="small lh-lg">
-              <div class="d-inline me-3 text-nowrap fw-bold">Find student by:</div>
-              <div class="d-inline text-nowrap">
-                <div
-                  class="form-check form-check-inline mb-0"
-                  v-for="option in searchRadioOptions"
-                  :key="option.id"
-                >
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    name="searchRadioOptions"
-                    :id="option.id"
-                    :value="option"
-                    v-model="searchOption"
-                    style="margin-top: 6px"
-                  />
-                  <label class="form-check-label" :for="option.id">{{ option.label }}</label>
-                </div>
-              </div>
-            </div>
-            <div class="input-group input-group-sm mb-0 w-50">
-              <input
-                type="text"
-                class="form-control"
-                :placeholder="'Student ' + searchOption.label + ' Contains...'"
-                :aria-label="'Student ' + searchOption.label + ' Contains...'"
-                v-model="searchText"
-                aria-describedby="button-addon2"
-              />
-              <button
-                class="btn btn-outline-primary"
-                type="button"
-                id="button-addon2"
-                v-on:click="clickButton"
-              >
-                GO
-              </button>
-            </div>
-          </div>
+          <search></search>
         </div>
       </div>
 
@@ -79,6 +39,7 @@
 
 <script>
 import { markRaw } from 'vue';
+import Search from '../components/search.vue';
 import TableLoading from '../components/table-loading.vue';
 import TableDisplay from '../components/table-display.vue';
 import Pagination from 'v-pagination-3';
@@ -89,13 +50,10 @@ export default {
   mixins: [dataMixin],
   components: {
     'layout': Layout,
+    'search': Search,
     'pagination': Pagination,
     'table-loading': TableLoading,
     'table-display': TableDisplay,
-  },
-  created: function () {
-    //this.loadStudentList();
-    this.searchOption = this.searchRadioOptions[0];
   },
   data() {
     return {
@@ -105,36 +63,19 @@ export default {
       isLoading: false,
       hasResults: false,
 
-      // search filters
-      searchOption: null,
-      searchText: '',
-      searchRadioOptions: [
-        {
-          id: 'student-number',
-          label: 'Number',
-        },
-        {
-          id: 'student-name',
-          label: 'Name',
-        },
-        {
-          id: 'student-email',
-          label: 'UW NetId',
-        },
-      ],
     };
   },
-  computed: {
-    searchOptions: function () {
-      if (this.searchOption) {
-        return {
-          filter_type: this.searchOption.id,
-          filter_text: this.searchText,
-        };
-      } else {
-        return {};
+  created: function () {
+    console.log("created");
+
+    if (this.isLoading == false) {
+        this.isLoading = true;
       }
-    },
+
+      setTimeout(this.showResults, 3000);
+  },
+  mounted: function () {
+    console.log("mounted");
   },
   methods: {
     showPriorityRing: function (priorityValue) {
@@ -150,14 +91,6 @@ export default {
     showResults: function () {
       this.isLoading = false;
       this.hasResults = true;
-    },
-    clickButton: function () {
-      // show loading again
-      if (this.isLoading == false) {
-        this.isLoading = true;
-      }
-
-      setTimeout(this.showResults, 3000);
     },
   },
 };

@@ -53,7 +53,7 @@
     </template>
     <template #main>
         <slot name="title">
-          <h1 class="h3 my-4 text-dark axdd-font-encode-sans">{{ pageTitle }}</h1>
+          <h1 class="visually-hidden">{{ pageTitle }}</h1>
         </slot>
       <slot name="content"></slot>
     </template>
