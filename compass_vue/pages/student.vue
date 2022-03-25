@@ -291,13 +291,16 @@
           <div class="col-xl-9">
             <!-- schedule -->
             <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-              <div class="card-header bg-white p-4 pb-0">
+              <div class="card-header border-0 bg-white p-4 pb-0">
                 <h2
                   class="h5 m-0 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
                 >
                   Schedule
                 </h2>
-                <ul class="nav nav-tabs border-0 mt-3" id="myTab1" role="tablist">
+              </div>
+              <div class="card-body p-4">
+
+                <ul class="nav nav-tabs mb-3" id="myTab1" role="tablist">
                   <li class="nav-item" role="presentation">
                     <button
                       class="nav-link active"
@@ -341,8 +344,6 @@
                     </button>
                   </li>
                 </ul>
-              </div>
-              <div class="card-body p-4">
                 <div class="tab-content" id="myTabContent1">
                   <div
                     class="tab-pane fade show active"
@@ -375,13 +376,16 @@
 
             <!-- history -->
             <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-              <div class="card-header bg-white p-4 pb-0">
+              <div class="card-header border-0 bg-white p-4 pb-0">
                 <h2
                   class="h5 m-0 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
                 >
                   History
                 </h2>
-                <ul class="nav nav-tabs border-0 mt-3" id="myTab" role="tablist">
+              </div>
+              <div class="card-body p-4">
+
+                <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
                   <li class="nav-item" role="presentation">
                     <button
                       class="nav-link active"
@@ -425,8 +429,6 @@
                     </button>
                   </li>
                 </ul>
-              </div>
-              <div class="card-body p-4">
                 <div class="tab-content" id="myTabContent">
                   <div
                     class="tab-pane fade show active"
