@@ -342,7 +342,7 @@
                       <td>{{ item.class_desc }}</td>
                       <td>Enrolled{{ item.enrollment_status_desc }}</td>
                       <td>Active</td>
-                      <td class="pe-0 align-middle text-end">
+                      <td class="align-middle text-end">
                         <add-contact></add-contact>
                       </td>
                     </tr>

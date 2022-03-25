@@ -208,7 +208,7 @@
                       </select>
                     </li>
                     <li class="text-end">
-                      <button type="button" class="btn btn-dark-beige btn-sm rounded-pill">
+                      <button type="button" class="btn btn-outline-dark-beige btn-sm rounded-pill">
                         Update adviser
                       </button>
                     </li>
@@ -275,7 +275,7 @@
                     <label class="form-check-label" for="defaultCheck5">IC Eligible</label>
                   </div>
                   <div class="text-end">
-                     <button type="button" class="btn btn-dark-beige btn-sm rounded-pill">
+                     <button type="button" class="btn btn-outline-dark-beige btn-sm rounded-pill">
                         Update programs
                       </button>
                   </div>

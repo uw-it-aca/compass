@@ -42,7 +42,7 @@
         <td>1st Year Professional</td>
         <td>Enrolled</td>
         <td>Active</td>
-        <td class="pe-0 align-middle text-end">
+        <td class="align-middle text-end">
           <add-contact>Update Notes</add-contact>
         </td>
       </tr>
