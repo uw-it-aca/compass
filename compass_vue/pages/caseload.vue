@@ -22,8 +22,9 @@
                 <div class="flex-fill">
                   <div class="fw-bold lh-lg">Display caseload for:</div>
                   <select class="form-select form-select-sm" aria-label="Default select example">
-                    <option value="0">All advisers</option>
-                    <option selected value="1">Jon Average</option>
+                    <option selected>All advisers</option>
+                    <option value="4">All un-assigned (ADMIN)</option>
+                    <option value="1">Jon Average</option>
                     <option value="2">April Foolery</option>
                     <option value="3">Bob Samsonite</option>
                   </select>

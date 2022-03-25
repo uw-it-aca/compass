@@ -12,7 +12,7 @@
           <div class="col">
             <div class="bg-gray p-4 rounded-3">
               <div class="row">
-                <div class="col-lg-6 pe-4 d-flex">
+                <div class="col-lg-6 pe-4 d-flex small">
                   <div>
                     <div
                       :class="priorityRing"
@@ -60,7 +60,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-6 col-lg-3 px-4 border-start small">
+                <div class="col-6 col-lg-3 px-4 small">
                   <ul class="list-unstyled m-0">
                     <li>
                       Preferred name: {{ student.student_preferred_first_name }}
@@ -72,17 +72,15 @@
                     <li>DOB: 7/23/2001</li>
                   </ul>
                 </div>
-                <div class="col-6 col-lg-3 ps-4 border-start small">
+                <div class="col-6 col-lg-3 ps-4 small">
                   <ul class="list-unstyled m-0">
                     <li>UW Email: {{ student.student_email }}</li>
                     <li>Personal email: {{ student.personal_email }}</li>
                     <li>Local Phone: {{ student.local_phone_number }}</li>
-                    <li><hr /></li>
                     <li>Perm Address: {{ studentAddress }}</li>
-                    <li><hr /></li>
                     <li>
                       Local Address: 1234
-                      <a href="#" class="small" role="button">Update address</a>
+                      <a href="#" class="small" role="button">Edit address (ALL)</a>
                     </li>
                   </ul>
                 </div>
@@ -93,14 +91,14 @@
 
         <!-- notes area -->
         <div class="row">
-          <div class="col-9">
+          <div class="col-xl-9">
             <div class="card border-light-gray shadow-sm rounded-3 mb-4">
               <div class="card-header d-flex justify-content-between bg-white border-0 p-4 pb-0">
-                <h3
+                <h2
                   class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
                 >
                   Contact
-                </h3>
+                </h2>
                 <p class="text-end"><add-contact></add-contact></p>
               </div>
               <div class="card-body p-4">
@@ -174,15 +172,15 @@
               </div>
             </div>
           </div>
-          <div class="col-3">
+          <div class="col-xl-3">
             <!-- adviser -->
-            <div class="card shadow-sm mb-3">
+            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
               <div class="card-header bg-white border-0 p-4 pb-0">
-                <h3
+                <h2
                   class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
                 >
                   Adviser
-                </h3>
+                </h2>
               </div>
               <div class="card-body p-4">
                 <ul class="list-unstyled">
@@ -192,48 +190,96 @@
                   <li>Phone</li>
                   <li class="border-top mt-2 pt-2">Dept Name: OMAD</li>
                   <li>Campus location: MGH 123</li>
+                  <li><a href="#" class="small">Edit adviser (ADMIN)</a></li>
                 </ul>
-                <div class="text-end">
-                  <a href="#" class="small">Update adviser</a>
-                </div>
-                <div class="text-end">
-                  <a href="/caseload?adviser=javerage" class="small">View caseload</a>
+
+                <div class="border border-danger">
+                  <ul class="list-unstyled text-muted">
+                    <li><p>This student does not have an assigned adviser.</p></li>
+                    <li>
+                      <select
+                        class="form-select form-select-sm mb-2"
+                        aria-label=".form-select-sm example"
+                      >
+                        <option selected>Select adviser</option>
+                        <option value="1">Bob</option>
+                        <option value="2">Tim</option>
+                        <option value="3">Joe</option>
+                      </select>
+                    </li>
+                    <li class="text-end">
+                      <button type="button" class="btn btn-dark-beige btn-sm rounded-pill">
+                        Update adviser
+                      </button>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
             <!-- end adviser -->
 
             <!-- programs -->
-            <div class="card shadow-sm mb-3">
+            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
               <div class="card-header bg-white border-0 p-4 pb-0">
-                <h3
+                <h2
                   class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
                 >
                   Programs
-                </h3>
+                </h2>
               </div>
               <div class="card-body p-4">
-                <p>OMAD special programs</p>
-                <ul>
-                  <li>EOP: yes/no</li>
-                  <li>Pre-professional: yes/no</li>
-                  <li>IC Eligible: yes/no</li>
-                  <li>
-                    Special program:
-                    <template v-if="student.special_program_code"> <b>yes</b>/no </template>
-                    <template v-else>
-                      yes/
-                      <b>no</b>
-                      CAMP, TRIO SSS, Champions, EOP
-                    </template>
-                  </li>
-                </ul>
-                <p>UW Programs</p>
+                <p>UW Programs (from EDW?)</p>
                 <ul>
                   <li>Honor's</li>
                   <li>Dean's List</li>
                   <li>Athletics</li>
+                  <li>EOP</li>
                 </ul>
+
+                <hr>
+
+                <p>OMAD Programs (if EOP yes)</p>
+                <ul>
+                  <li>Pre-professional: yes/no</li>
+                  <li>IC Eligible: yes/no</li>
+                  <li>
+                    <template v-if="student.special_program_code"> <b>yes</b>/no </template>
+                    <template v-else> CAMP, TRIO SSS, Champions </template>
+                  </li>
+                </ul>
+                <p><a href="#" class="small">Edit Programs (ADMIN)</a></p>
+                <div class="border border-danger">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                    <label class="form-check-label" for="defaultCheck1">CAMP</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value=""
+                      id="defaultCheck2"
+                    />
+                    <label class="form-check-label" for="defaultCheck2">TRIO</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" />
+                    <label class="form-check-label" for="defaultCheck3">SSS</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck4" />
+                    <label class="form-check-label" for="defaultCheck4">Champions</label>
+                  </div>
+                   <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck5" />
+                    <label class="form-check-label" for="defaultCheck5">IC Eligible</label>
+                  </div>
+                  <div class="text-end">
+                     <button type="button" class="btn btn-dark-beige btn-sm rounded-pill">
+                        Update programs
+                      </button>
+                  </div>
+                </div>
               </div>
             </div>
             <!-- end programs -->
@@ -241,89 +287,146 @@
         </div>
         <!-- end notes -->
 
-        <div class="row mt-5">
-          <div class="col-9">
+        <div class="row">
+          <div class="col-xl-9">
             <!-- schedule -->
-            <div class="card shadow-sm mb-3">
-              <h3
-                class="card-header h6 text-uppercase text-muted fw-bold"
-                style="line-height: 30px"
-              >
-                Schedule
-              </h3>
-              <div class="card-body">
-                <ul>
-                  <li>curent</li>
-                  <li>next</li>
-                  <li>after</li>
+            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
+              <div class="card-header bg-white p-4 pb-0">
+                <h2
+                  class="h5 m-0 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
+                >
+                  Schedule
+                </h2>
+                <ul class="nav nav-tabs border-0 mt-3" id="myTab1" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link active"
+                      id="home-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#home"
+                      type="button"
+                      role="tab"
+                      aria-controls="home"
+                      aria-selected="true"
+                    >
+                      Current Quarter
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="profile-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#profile"
+                      type="button"
+                      role="tab"
+                      aria-controls="profile"
+                      aria-selected="false"
+                    >
+                      Next Quarter
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="contact-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#contact"
+                      type="button"
+                      role="tab"
+                      aria-controls="contact"
+                      aria-selected="false"
+                    >
+                      Quarter After
+                    </button>
+                  </li>
                 </ul>
               </div>
-              <div class="card-footer">
-                <small class="text-muted">Last updated 3 mins ago</small>
+              <div class="card-body p-4">
+                <div class="tab-content" id="myTabContent1">
+                  <div
+                    class="tab-pane fade show active"
+                    id="home"
+                    role="tabpanel"
+                    aria-labelledby="home-tab"
+                  >
+                    ...
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="profile"
+                    role="tabpanel"
+                    aria-labelledby="profile-tab"
+                  >
+                    ...
+                  </div>
+                  <div
+                    class="tab-pane fade"
+                    id="contact"
+                    role="tabpanel"
+                    aria-labelledby="contact-tab"
+                  >
+                    ...
+                  </div>
+                </div>
               </div>
             </div>
             <!-- end schedule -->
 
             <!-- history -->
-            <div class="card shadow-sm mb-3">
-              <div class="card-header">
-                <div class="position-relative">
-                  <h3
-                    class="card-title h6 text-uppercase text-muted fw-bold m-0 position-absolute top-50 translate-middle-y"
-                  >
-                    History
-                  </h3>
-                  <ul
-                    class="nav nav-tabs justify-content-end card-header-tabs"
-                    id="myTab"
-                    role="tablist"
-                  >
-                    <li class="nav-item" role="presentation">
-                      <button
-                        class="nav-link active"
-                        id="profile-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#visit"
-                        type="button"
-                        role="tab"
-                        aria-controls="visit"
-                        aria-selected="false"
-                      >
-                        Visit
-                      </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button
-                        class="nav-link"
-                        id="registrations-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#registrations"
-                        type="button"
-                        role="tab"
-                        aria-controls="registrations"
-                        aria-selected="false"
-                      >
-                        Registrations
-                      </button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <button
-                        class="nav-link"
-                        id="major-tab"
-                        data-bs-toggle="tab"
-                        data-bs-target="#major"
-                        type="button"
-                        role="tab"
-                        aria-controls="major"
-                        aria-selected="false"
-                      >
-                        Major
-                      </button>
-                    </li>
-                  </ul>
-                </div>
+            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
+              <div class="card-header bg-white p-4 pb-0">
+                <h2
+                  class="h5 m-0 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
+                >
+                  History
+                </h2>
+                <ul class="nav nav-tabs border-0 mt-3" id="myTab" role="tablist">
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link active"
+                      id="profile-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#visit"
+                      type="button"
+                      role="tab"
+                      aria-controls="visit"
+                      aria-selected="false"
+                    >
+                      Visit (Instructional Center)
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="registrations-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#registrations"
+                      type="button"
+                      role="tab"
+                      aria-controls="registrations"
+                      aria-selected="false"
+                    >
+                      Transcript
+                    </button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                    <button
+                      class="nav-link"
+                      id="major-tab"
+                      data-bs-toggle="tab"
+                      data-bs-target="#major"
+                      type="button"
+                      role="tab"
+                      aria-controls="major"
+                      aria-selected="false"
+                    >
+                      Major
+                    </button>
+                  </li>
+                </ul>
               </div>
-              <div class="card-body">
+              <div class="card-body p-4">
                 <div class="tab-content" id="myTabContent">
                   <div
                     class="tab-pane fade show active"
@@ -426,7 +529,11 @@
 
                   <div class="tab-pane fade" id="major" role="tabpanel" aria-labelledby="major-tab">
                     <div class="table-responsive">
-                      <h3 class="h6">Intended Major</h3>
+                      <h3
+                        class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
+                      >
+                        Accepted Major
+                      </h3>
                       <table class="table table-hover table-striped m-0 mb-3">
                         <thead class="small">
                           <tr>
@@ -449,6 +556,28 @@
                             <td></td>
                             <td></td>
                           </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="table-responsive">
+                      <h3
+                        class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
+                      >
+                        Intended Major
+                      </h3>
+                      <table class="table table-hover table-striped m-0 mb-3">
+                        <thead class="small">
+                          <tr>
+                            <th>Date</th>
+                            <th>Major</th>
+                            <th>Status</th>
+                            <th class="text-nowrap">Source</th>
+                            <th>Action</th>
+                            <th>Notes</th>
+                            <th>User</th>
+                          </tr>
+                        </thead>
+                        <tbody class="mb-3">
                           <tr>
                             <td scope="row">9/23/2020</td>
                             <td>Computer Engineering</td>
@@ -487,9 +616,13 @@
                           </tr>
                         </tbody>
                       </table>
-                      <h3 class="h6">Intended Major upon Admission</h3>
+                      <h3
+                        class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
+                      >
+                        Intended Major upon Admission
+                      </h3>
                       <table class="table table-hover table-striped m-0">
-                        <thead>
+                        <thead class="small">
                           <tr>
                             <th>Date</th>
                             <th>Major</th>
@@ -538,15 +671,15 @@
             </div>
             <!-- end history -->
           </div>
-          <div class="col-3">
+          <div class="col-xl-3">
             <!-- MARK: card component styling -->
             <div class="card border-light-gray shadow-sm rounded-3 mb-4">
               <div class="card-header bg-white border-0 p-4 pb-0">
-                <h3
+                <h2
                   class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
                 >
                   Retention
-                </h3>
+                </h2>
               </div>
               <div class="card-body p-4">
                 <ul>
@@ -561,14 +694,15 @@
               </div>
             </div>
 
-            <div class="card shadow-sm mb-3">
-              <h3
-                class="card-header h6 text-uppercase text-muted fw-bold"
-                style="line-height: 30px"
-              >
-                Academics
-              </h3>
-              <div class="card-body">
+            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
+              <div class="card-header bg-white border-0 p-4 pb-0">
+                <h2
+                  class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
+                >
+                  Academics
+                </h2>
+              </div>
+              <div class="card-body p-4">
                 <ul>
                   <li>
                     Registered:
@@ -588,14 +722,15 @@
               </div>
             </div>
 
-            <div class="card shadow-sm mb-3">
-              <h3
-                class="card-header h6 text-uppercase text-muted fw-bold"
-                style="line-height: 30px"
-              >
-                Major
-              </h3>
-              <div class="card-body">
+            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
+              <div class="card-header bg-white border-0 p-4 pb-0">
+                <h2
+                  class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
+                >
+                  Major
+                </h2>
+              </div>
+              <div class="card-body p-4">
                 <ul>
                   <li>
                     Accepted:
