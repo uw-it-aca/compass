@@ -49,9 +49,9 @@ import dataMixin from '../mixins/data_mixin.js';
 export default {
   mixins: [dataMixin],
   components: {
-    'layout': Layout,
-    'search': Search,
-    'pagination': Pagination,
+    layout: Layout,
+    search: Search,
+    pagination: Pagination,
     'table-loading': TableLoading,
     'table-display': TableDisplay,
   },
@@ -62,20 +62,18 @@ export default {
       // loading
       isLoading: false,
       hasResults: false,
-
     };
   },
   created: function () {
-    console.log("created");
+    console.log('created');
 
     if (this.isLoading == false) {
-        this.isLoading = true;
-      }
-
-      setTimeout(this.showResults, 3000);
+      this.isLoading = true;
+    }
+    setTimeout(this.showResults, 3000);
   },
   mounted: function () {
-    console.log("mounted");
+    console.log('mounted');
   },
   methods: {
     showPriorityRing: function (priorityValue) {
