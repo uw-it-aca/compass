@@ -294,30 +294,29 @@
                 </h2>
               </div>
               <div class="card-body p-4">
-
-                <axdd-tabs pills bottom-border nav-wrapper-class="mb-3 p-0">
+                <axdd-tabs :tabs-id="'testies'">
                   <template #tabs>
-                    <axdd-tab-button
-                      :panel-id="blah1"
-                      title-item-class="myuw-text-xs me-2 mb-1"
-                      title-link-class="rounded-0 text-body text-uppercase"
-                    >
-                      Blah1
-                    </axdd-tab-button>
-                    <axdd-tab-button
-                      :panel-id="blah2"
-                      title-item-class="myuw-text-xs me-2 mb-1"
-                      title-link-class="rounded-0 text-body text-uppercase"
-                    >
-                      Blah2
-                    </axdd-tab-button>
+                    <axdd-tab-item :panel-id="'home'">Home</axdd-tab-item>
+                    <axdd-tab-item :panel-id="'contact'" :active-tab="true">Contact</axdd-tab-item>
                   </template>
                   <template #panels>
-                    <axdd-tab-panel :panel-id="blah1"> blah 1 sadsasadf </axdd-tab-panel>
-                    <axdd-tab-panel :panel-id="blah2"> blah 2 sadsasadf </axdd-tab-panel>
+                    <axdd-tab-panel :panel-id="'home'">
+                      <p>
+                        home Lorem ipsum dolor sit amet consectetur adipisicing elit. Id aperiam
+                        dolores harum doloribus libero sapiente corrupti sint rerum incidunt. Qui
+                        quia hic ipsam culpa laudantium delectus sapiente tempore, eveniet modi.
+                      </p>
+                    </axdd-tab-panel>
+                    <axdd-tab-panel :panel-id="'contact'" class="show active">
+                      <p>
+                        contact Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
+                        iste, expedita, vitae voluptatibus nobis amet eligendi consectetur
+                        repudiandae aut ut vel? Amet nesciunt culpa non molestiae enim consequuntur
+                        provident sit.
+                      </p>
+                    </axdd-tab-panel>
                   </template>
                 </axdd-tabs>
-
               </div>
             </div>
             <!-- end schedule -->
@@ -709,7 +708,7 @@
 import { Card } from 'axdd-components';
 
 import Tabs from '../_components/tabs/tabs.vue';
-import TabButton from '../_components/tabs/button.vue';
+import TabItem from '../_components/tabs/item.vue';
 import TabPanel from '../_components/tabs/panel.vue';
 
 import Layout from '../layout.vue';
@@ -722,8 +721,9 @@ export default {
     layout: Layout,
     'axdd-card': Card,
     'add-contact': AddContact,
+
     'axdd-tabs': Tabs,
-    'axdd-tab-button': TabButton,
+    'axdd-tab-item': TabItem,
     'axdd-tab-panel': TabPanel,
   },
   created: function () {
