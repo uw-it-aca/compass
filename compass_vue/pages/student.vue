@@ -294,25 +294,33 @@
                 </h2>
               </div>
               <div class="card-body p-4">
-                <axdd-tabs :tabs-id="'testies'">
+                <axdd-tabs :tabs-id="'schedule'">
                   <template #tabs>
-                    <axdd-tab-item :panel-id="'home'">Home</axdd-tab-item>
-                    <axdd-tab-item :panel-id="'contact'" :active-tab="true">Contact</axdd-tab-item>
+                    <axdd-tab-item :panel-id="'current'">Current</axdd-tab-item>
+                    <axdd-tab-item :panel-id="'next'" :active-tab="true">Next</axdd-tab-item>
+                    <axdd-tab-item :panel-id="'after'">After</axdd-tab-item>
                   </template>
                   <template #panels>
-                    <axdd-tab-panel :panel-id="'home'">
+                    <axdd-tab-panel :panel-id="'current'">
                       <p>
                         home Lorem ipsum dolor sit amet consectetur adipisicing elit. Id aperiam
                         dolores harum doloribus libero sapiente corrupti sint rerum incidunt. Qui
                         quia hic ipsam culpa laudantium delectus sapiente tempore, eveniet modi.
                       </p>
                     </axdd-tab-panel>
-                    <axdd-tab-panel :panel-id="'contact'" class="show active">
+                    <axdd-tab-panel :panel-id="'next'" class="show active">
                       <p>
                         contact Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
                         iste, expedita, vitae voluptatibus nobis amet eligendi consectetur
                         repudiandae aut ut vel? Amet nesciunt culpa non molestiae enim consequuntur
                         provident sit.
+                      </p>
+                    </axdd-tab-panel>
+                    <axdd-tab-panel :panel-id="'after'">
+                      <p>
+                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Doloremque est
+                        totam, ipsa corporis molestias, temporibus maiores ex enim error perferendis
+                        ad veritatis tenetur dicta laboriosam nam eaque eum minus distinctio.
                       </p>
                     </axdd-tab-panel>
                   </template>
