@@ -308,7 +308,7 @@
                         quia hic ipsam culpa laudantium delectus sapiente tempore, eveniet modi.
                       </p>
                     </axdd-tab-panel>
-                    <axdd-tab-panel :panel-id="'next'" class="show active">
+                    <axdd-tab-panel :panel-id="'next'" :active-panel="true">
                       <p>
                         contact Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
                         iste, expedita, vitae voluptatibus nobis amet eligendi consectetur

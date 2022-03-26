@@ -46,8 +46,8 @@ export default {
   }
 
   .nav-link:hover {
-    //border-bottom: solid 5px #dee2e6;
-    //color: gray;
+    border-color: #333 !important;
+    color: #333 !important;
   }
 
 }
