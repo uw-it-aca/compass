@@ -1,7 +1,7 @@
 <template>
-<li class="nav-item" role="presentation">
+<li class="nav-item me-1" role="presentation">
   <button
-    class="nav-link"
+    class="nav-link text-secondary  border-bottom border-5"
     :class="{ 'active': activeTab }"
     :id="panelId + '-tab'"
     data-bs-toggle="tab"

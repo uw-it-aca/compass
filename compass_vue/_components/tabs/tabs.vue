@@ -31,22 +31,23 @@ export default {
 .nav-lines {
 
   border-bottom: 1px solid #dee2e6;
-  margin-bottom: -1px;
 
   .nav-link {
     background: none;
     border: none;
     color: gray;
+    margin-bottom: -1px;
+
   }
 
   .nav-link.active {
-    border-bottom: solid 5px purple !important;
-    color: gray;
+    border-color: #000 !important;
+    color: #000 !important;
   }
 
   .nav-link:hover {
-    border-bottom: solid 5px lightgray;
-    color: gray;
+    //border-bottom: solid 5px #dee2e6;
+    //color: gray;
   }
 
 }
