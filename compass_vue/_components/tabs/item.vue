@@ -10,6 +10,8 @@
     role="tab"
     :aria-controls="panelId"
     aria-selected="true"
+    @keyup.right="test"
+    @keyup.left="test"
   >
     <slot></slot>
   </button>
@@ -29,5 +31,10 @@ export default {
       required: false,
     }
   },
+  methods: {
+    test() {
+      alert("sdlajfa");
+    }
+  }
 };
 </script>
