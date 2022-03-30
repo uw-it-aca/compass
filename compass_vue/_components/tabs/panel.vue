@@ -5,6 +5,8 @@
     :id="panelId"
     role="tabpanel"
     :aria-labelledby="panelId + '-tab'"
+    tabindex="0"
+    @keydown.shift.tab.prevent="setFocus"
   >
     <slot></slot>
   </div>
@@ -23,5 +25,11 @@ export default {
       required: false,
     },
   },
+  methods: {
+    setFocus() {
+      // shift-tab will focus current tab selected
+      document.getElementById(this.panelId + '-tab').focus();
+    },
+  }
 };
 </script>

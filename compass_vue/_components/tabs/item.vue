@@ -51,6 +51,7 @@ export default {
         // focus and click on tab
         this.elements[index].focus();
         this.elements[index].click();
+        this.elements[index].tabIndex = 0;
       }
     },
     moveNext(event) {
@@ -61,6 +62,11 @@ export default {
       const index = this.findIndex(event.target);
       this.moveTab(index - 1);
     },
+    /*
+    moveFocus() {
+      // set focus on current active tab's panel
+      document.getElementById(this.panelId).focus();
+    },*/
   },
 };
 </script>
