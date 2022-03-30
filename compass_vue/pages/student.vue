@@ -93,13 +93,12 @@
         <div class="row">
           <div class="col-xl-9">
             <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-              <div class="card-header d-flex justify-content-between bg-white border-0 p-4 pb-0">
+              <div class="card-header bg-white border-0 p-4 pb-0">
                 <h2
                   class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
                 >
                   Contact
                 </h2>
-                <p class="text-end"><add-contact></add-contact></p>
               </div>
               <div class="card-body p-4">
                 <div class="table-responsive">
@@ -118,13 +117,15 @@
                         <td scope="row">09/23/2020</td>
                         <td>1:55PM</td>
                         <td>Drop-in</td>
-                        <td>Otto Wilson</td>
+                        <td>Jon Average</td>
                         <td>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
-                          mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
-                          expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                          dolores excepturi?
-                          <p class="text-end small"><a href="#">Edit notes</a></p>
+                          <p><span class="badge bg-beige text-dark fw-normal"><i class="bi bi-lock-fill"></i> Restricted</span>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
+                            mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
+                            expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
+                            dolores excepturi?
+                          </p>
+                          <p class="text-end small"><add-contact>Edit notes</add-contact></p>
                         </td>
                       </tr>
                       <tr>
@@ -133,24 +134,23 @@
                         <td>Quick Question</td>
                         <td>Boris Washington</td>
                         <td>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
+                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
                           mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
                           expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                          dolores excepturi?
-                          <p class="text-end small"><a href="#">Edit notes</a></p>
+                          dolores excepturi?</p>
                         </td>
                       </tr>
                       <tr>
                         <td scope="row">06/29/2020</td>
                         <td>3:15PM</td>
                         <td>Appointment</td>
-                        <td>Otto Wilson</td>
+                        <td>Jon Average</td>
                         <td>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
+                          <p><span class="badge bg-beige text-dark fw-normal"><i class="bi bi-lock-fill"></i> Restricted</span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
                           mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
                           expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                          dolores excepturi?
-                          <p class="text-end small"><a href="#">Edit notes</a></p>
+                          dolores excepturi?</p>
+                          <p class="text-end small"><add-contact>Edit notes</add-contact></p>
                         </td>
                       </tr>
                       <tr>
@@ -159,16 +159,18 @@
                         <td>Telephone</td>
                         <td>Otto Wilson</td>
                         <td>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
+                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
                           mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
                           expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                          dolores excepturi?
-                          <p class="text-end small"><a href="#">Edit notes</a></p>
+                          dolores excepturi?</p>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
+              </div>
+              <div class="card-footer bg-white px-4 py-3 text-end">
+                <add-contact>Record new contact</add-contact>
               </div>
             </div>
           </div>
