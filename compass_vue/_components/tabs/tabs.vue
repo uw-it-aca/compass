@@ -30,24 +30,24 @@ export default {
 // creates a custom bootstrap tab style
 .nav-lines {
 
-  border-bottom: 1px solid #dee2e6;
+  border-bottom: 4px solid #f8f9fa;
 
   .nav-link {
     background: none;
     border: none;
     color: gray;
-    margin-bottom: -1px;
+    margin-bottom: -4px;
 
   }
 
   .nav-link.active {
-    border-color: #000 !important;
-    color: #000 !important;
+    border-color: #4d307f !important;
+    color: #4d307f !important;
   }
 
   .nav-link:hover {
-    border-color: #333 !important;
-    color: #333 !important;
+    border-color: #6c757d !important;
+    color: #666 !important;
   }
 
 }
