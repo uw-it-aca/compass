@@ -93,13 +93,12 @@
         <div class="row">
           <div class="col-xl-9">
             <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-              <div class="card-header d-flex justify-content-between bg-white border-0 p-4 pb-0">
+              <div class="card-header bg-white border-0 p-4 pb-0">
                 <h2
                   class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
                 >
                   Contact
                 </h2>
-                <p class="text-end"><add-contact></add-contact></p>
               </div>
               <div class="card-body p-4">
                 <div class="table-responsive">
@@ -118,13 +117,15 @@
                         <td scope="row">09/23/2020</td>
                         <td>1:55PM</td>
                         <td>Drop-in</td>
-                        <td>Otto Wilson</td>
+                        <td>Jon Average</td>
                         <td>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
-                          mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
-                          expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                          dolores excepturi?
-                          <p class="text-end small"><a href="#">Edit notes</a></p>
+                          <p><span class="badge bg-beige text-dark fw-normal"><i class="bi bi-lock-fill"></i> Restricted</span>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
+                            mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
+                            expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
+                            dolores excepturi?
+                          </p>
+                          <p class="text-end small"><add-contact>Edit notes</add-contact></p>
                         </td>
                       </tr>
                       <tr>
@@ -133,24 +134,23 @@
                         <td>Quick Question</td>
                         <td>Boris Washington</td>
                         <td>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
+                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
                           mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
                           expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                          dolores excepturi?
-                          <p class="text-end small"><a href="#">Edit notes</a></p>
+                          dolores excepturi?</p>
                         </td>
                       </tr>
                       <tr>
                         <td scope="row">06/29/2020</td>
                         <td>3:15PM</td>
                         <td>Appointment</td>
-                        <td>Otto Wilson</td>
+                        <td>Jon Average</td>
                         <td>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
+                          <p><span class="badge bg-beige text-dark fw-normal"><i class="bi bi-lock-fill"></i> Restricted</span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
                           mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
                           expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                          dolores excepturi?
-                          <p class="text-end small"><a href="#">Edit notes</a></p>
+                          dolores excepturi?</p>
+                          <p class="text-end small"><add-contact>Edit notes</add-contact></p>
                         </td>
                       </tr>
                       <tr>
@@ -159,16 +159,18 @@
                         <td>Telephone</td>
                         <td>Otto Wilson</td>
                         <td>
-                          Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
+                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
                           mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
                           expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                          dolores excepturi?
-                          <p class="text-end small"><a href="#">Edit notes</a></p>
+                          dolores excepturi?</p>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
+              </div>
+              <div class="card-footer bg-white px-4 py-3 text-end">
+                <add-contact>Record new contact</add-contact>
               </div>
             </div>
           </div>
@@ -236,7 +238,7 @@
                   <li>EOP</li>
                 </ul>
 
-                <hr>
+                <hr />
 
                 <p>OMAD Programs (if EOP yes)</p>
                 <ul>
@@ -254,12 +256,7 @@
                     <label class="form-check-label" for="defaultCheck1">CAMP</label>
                   </div>
                   <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="defaultCheck2"
-                    />
+                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
                     <label class="form-check-label" for="defaultCheck2">TRIO</label>
                   </div>
                   <div class="form-check">
@@ -270,14 +267,14 @@
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck4" />
                     <label class="form-check-label" for="defaultCheck4">Champions</label>
                   </div>
-                   <div class="form-check">
+                  <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck5" />
                     <label class="form-check-label" for="defaultCheck5">IC Eligible</label>
                   </div>
                   <div class="text-end">
-                     <button type="button" class="btn btn-outline-dark-beige btn-sm rounded-pill">
-                        Update programs
-                      </button>
+                    <button type="button" class="btn btn-outline-dark-beige btn-sm rounded-pill">
+                      Update programs
+                    </button>
                   </div>
                 </div>
               </div>
@@ -299,77 +296,45 @@
                 </h2>
               </div>
               <div class="card-body p-4">
-
-                <ul class="nav nav-tabs mb-3" id="myTab1" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link active"
-                      id="home-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#home"
-                      type="button"
-                      role="tab"
-                      aria-controls="home"
-                      aria-selected="true"
-                    >
-                      Current Quarter
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link"
-                      id="profile-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#profile"
-                      type="button"
-                      role="tab"
-                      aria-controls="profile"
-                      aria-selected="false"
-                    >
-                      Next Quarter
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link"
-                      id="contact-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#contact"
-                      type="button"
-                      role="tab"
-                      aria-controls="contact"
-                      aria-selected="false"
-                    >
-                      Quarter After
-                    </button>
-                  </li>
-                </ul>
-                <div class="tab-content" id="myTabContent1">
-                  <div
-                    class="tab-pane fade show active"
-                    id="home"
-                    role="tabpanel"
-                    aria-labelledby="home-tab"
-                  >
-                    ...
-                  </div>
-                  <div
-                    class="tab-pane fade"
-                    id="profile"
-                    role="tabpanel"
-                    aria-labelledby="profile-tab"
-                  >
-                    ...
-                  </div>
-                  <div
-                    class="tab-pane fade"
-                    id="contact"
-                    role="tabpanel"
-                    aria-labelledby="contact-tab"
-                  >
-                    ...
-                  </div>
-                </div>
+                <axdd-tabs :tabs-id="'schedule'">
+                  <template #items>
+                    <axdd-tab-item :tabs-id="'schedule'" :panel-id="'current'" :active-tab="true">Current</axdd-tab-item>
+                    <axdd-tab-item :tabs-id="'schedule'" :panel-id="'next'">Next</axdd-tab-item>
+                    <axdd-tab-item :tabs-id="'schedule'" :panel-id="'after'">After</axdd-tab-item>
+                    <axdd-tab-item :tabs-id="'schedule'" :panel-id="'further'">Further</axdd-tab-item>
+                  </template>
+                  <template #panels>
+                    <axdd-tab-panel :panel-id="'current'" :active-panel="true">
+                      <p>
+                        <strong>current</strong> Lorem ipsum dolor sit amet consectetur adipisicing elit. Id aperiam
+                        dolores harum doloribus libero sapiente corrupti sint rerum incidunt. Qui
+                        quia hic ipsam culpa laudantium delectus sapiente tempore, eveniet modi.
+                      </p>
+                    </axdd-tab-panel>
+                    <axdd-tab-panel :panel-id="'next'" >
+                      <p>
+                        <strong>next</strong> Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
+                        iste, expedita, vitae voluptatibus nobis amet eligendi consectetur
+                        repudiandae aut ut vel? Amet nesciunt culpa non molestiae enim consequuntur
+                        provident sit.
+                      </p>
+                    </axdd-tab-panel>
+                    <axdd-tab-panel :panel-id="'after'">
+                      <p>
+                        <strong>after</strong>, ipsum dolor sit amet consectetur adipisicing elit. Doloremque est
+                        totam, ipsa corporis molestias, temporibus maiores ex enim error perferendis
+                        ad veritatis tenetur dicta laboriosam nam eaque eum minus distinctio.
+                      </p>
+                    </axdd-tab-panel>
+                    <axdd-tab-panel :panel-id="'further'">
+                      <p>
+                        <strong>further</strong>, ipsum dolor sit amet consectetur adipisicing elit. Doloremque est
+                        totam, ipsa corporis molestias, temporibus maiores ex enim error perferendis
+                        ad veritatis tenetur dicta laboriosam nam eaque eum minus distinctio.
+                      </p>
+                    </axdd-tab-panel>
+                  </template>
+                </axdd-tabs>
               </div>
             </div>
             <!-- end schedule -->
@@ -385,291 +350,243 @@
               </div>
               <div class="card-body p-4">
 
-                <ul class="nav nav-tabs mb-3" id="myTab" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link active"
-                      id="profile-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#visit"
-                      type="button"
-                      role="tab"
-                      aria-controls="visit"
-                      aria-selected="false"
-                    >
-                      Visit (Instructional Center)
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link"
-                      id="registrations-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#registrations"
-                      type="button"
-                      role="tab"
-                      aria-controls="registrations"
-                      aria-selected="false"
-                    >
-                      Transcript
-                    </button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button
-                      class="nav-link"
-                      id="major-tab"
-                      data-bs-toggle="tab"
-                      data-bs-target="#major"
-                      type="button"
-                      role="tab"
-                      aria-controls="major"
-                      aria-selected="false"
-                    >
-                      Major
-                    </button>
-                  </li>
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                  <div
-                    class="tab-pane fade show active"
-                    id="visit"
-                    role="tabpanel"
-                    aria-labelledby="visit-tab"
-                  >
-                    <div class="table-responsive">
-                      <table class="table table-hover table-striped m-0">
-                        <thead class="small">
-                          <tr>
-                            <th>Date</th>
-                            <th class="text-nowrap">Location</th>
-                            <th>Course</th>
-                            <th>Check-in</th>
-                            <th>Check-out</th>
-                            <th>Duration</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td scope="row">09/23/2020</td>
-                            <td>Instructional Center</td>
-                            <td>BUS 220</td>
-                            <td>10:35am</td>
-                            <td>11:42pm</td>
-                            <td>1hr 2mins</td>
-                          </tr>
-                          <tr>
-                            <td scope="row">07/04/2020</td>
-                            <td>Computer Lab</td>
-                            <td>CSE 142</td>
-                            <td>9:15am</td>
-                            <td>11:2am</td>
-                            <td>2 hrs</td>
-                          </tr>
-                          <tr>
-                            <td scope="row">06/29/2020</td>
-                            <td>Instruction Center</td>
-                            <td>BUS 220</td>
-                            <td>4:31pm</td>
-                            <td>4:45pm</td>
-                            <td>15 mins</td>
-                          </tr>
-                          <tr>
-                            <td scope="row">5/14/2020</td>
-                            <td>Instructional Center</td>
-                            <td>BUS 220</td>
-                            <td>2:34pm</td>
-                            <td>6:35pm</td>
-                            <td>4 hrs</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div
-                    class="tab-pane fade"
-                    id="registrations"
-                    role="tabpanel"
-                    aria-labelledby="registrations-tab"
-                  >
-                    <div class="table-responsive">
-                      <table class="table table-hover table-striped m-0">
-                        <thead class="small">
-                          <tr>
-                            <th>Course</th>
-                            <th>Credits</th>
-                            <th>Grade</th>
-                            <th>Year</th>
-                            <th>Quarter</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>BIOL 350</td>
-                            <td>3</td>
-                            <td>3.8</td>
-                            <td>2021</td>
-                            <td>Spring</td>
-                          </tr>
-                          <tr>
-                            <td>CHEM 238</td>
-                            <td>4</td>
-                            <td>4.0</td>
-                            <td>2021</td>
-                            <td>Autumn</td>
-                          </tr>
-                          <tr>
-                            <td>MATH 210</td>
-                            <td>5.0</td>
-                            <td>W4</td>
-                            <td>2021</td>
-                            <td>Autumn</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-
-                  <div class="tab-pane fade" id="major" role="tabpanel" aria-labelledby="major-tab">
-                    <div class="table-responsive">
-                      <h3
-                        class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
-                      >
-                        Accepted Major
-                      </h3>
-                      <table class="table table-hover table-striped m-0 mb-3">
-                        <thead class="small">
-                          <tr>
-                            <th>Date</th>
-                            <th>Major</th>
-                            <th>Status</th>
-                            <th class="text-nowrap">Source</th>
-                            <th>Action</th>
-                            <th>Notes</th>
-                            <th>User</th>
-                          </tr>
-                        </thead>
-                        <tbody class="mb-3">
-                          <tr>
-                            <td scope="row">10/01/2021</td>
-                            <td>Psychology</td>
-                            <td>Accepted</td>
-                            <td>SWS</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="table-responsive">
-                      <h3
-                        class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
-                      >
-                        Intended Major
-                      </h3>
-                      <table class="table table-hover table-striped m-0 mb-3">
-                        <thead class="small">
-                          <tr>
-                            <th>Date</th>
-                            <th>Major</th>
-                            <th>Status</th>
-                            <th class="text-nowrap">Source</th>
-                            <th>Action</th>
-                            <th>Notes</th>
-                            <th>User</th>
-                          </tr>
-                        </thead>
-                        <tbody class="mb-3">
-                          <tr>
-                            <td scope="row">9/23/2020</td>
-                            <td>Computer Engineering</td>
-                            <td>Intended #1</td>
-                            <td>DawgPath</td>
-                            <td>Remove</td>
-                            <td>No longer interested</td>
-                            <td>Student</td>
-                          </tr>
-                          <tr>
-                            <td scope="row">7/04/2020</td>
-                            <td>Human Centered Design &amp; Engineering</td>
-                            <td>Intended #2</td>
-                            <td>Compass</td>
-                            <td>Add</td>
-                            <td>Wants to be a UX Designer</td>
-                            <td>Pedro Sanchez</td>
-                          </tr>
-                          <tr>
-                            <td scope="row">6/29/2020</td>
-                            <td>Accounting</td>
-                            <td>Intended #3</td>
-                            <td>Compass</td>
-                            <td>Remove</td>
-                            <td>Does not like numbers</td>
-                            <td>Pedro Sanchez</td>
-                          </tr>
-                          <tr>
-                            <td scope="row">5/23/2020</td>
-                            <td>Economics</td>
-                            <td>Intended #3</td>
-                            <td>DawgPath</td>
-                            <td>Remove</td>
-                            <td>n/a</td>
-                            <td>Student</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <h3
-                        class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
-                      >
-                        Intended Major upon Admission
-                      </h3>
-                      <table class="table table-hover table-striped m-0">
-                        <thead class="small">
-                          <tr>
-                            <th>Date</th>
-                            <th>Major</th>
-                            <th>Status</th>
-                            <th class="text-nowrap">Source</th>
-                            <th>Action</th>
-                            <th>Notes</th>
-                            <th>User</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td scope="row">5/14/2020</td>
-                            <td>Informatics</td>
-                            <td>Intended #3</td>
-                            <td>Admissions</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                          <tr>
-                            <td scope="row">5/14/2020</td>
-                            <td>Computer Science</td>
-                            <td>Intended #2</td>
-                            <td>Admissions</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                          <tr>
-                            <td scope="row">5/14/2020</td>
-                            <td>Anthropolgy</td>
-                            <td>Intended #1</td>
-                            <td>Admissions</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-                <!-- end card-body -->
+                <axdd-tabs :tabs-id="'history'">
+                  <template #items>
+                    <axdd-tab-item :tabs-id="'history'" :panel-id="'visit'" :active-tab="true">Visit</axdd-tab-item>
+                    <axdd-tab-item :tabs-id="'history'" :panel-id="'transcript'">Transcript</axdd-tab-item>
+                    <axdd-tab-item :tabs-id="'history'" :panel-id="'major'">Major</axdd-tab-item>
+                  </template>
+                  <template #panels>
+                    <axdd-tab-panel :panel-id="'visit'" :active-panel="true">
+                      <div class="table-responsive">
+                        <table class="table table-hover table-striped m-0">
+                          <thead class="small">
+                            <tr>
+                              <th>Date</th>
+                              <th class="text-nowrap">Location</th>
+                              <th>Course</th>
+                              <th>Check-in</th>
+                              <th>Check-out</th>
+                              <th>Duration</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td scope="row">09/23/2020</td>
+                              <td>Instructional Center</td>
+                              <td>BUS 220</td>
+                              <td>10:35am</td>
+                              <td>11:42pm</td>
+                              <td>1hr 2mins</td>
+                            </tr>
+                            <tr>
+                              <td scope="row">07/04/2020</td>
+                              <td>Computer Lab</td>
+                              <td>CSE 142</td>
+                              <td>9:15am</td>
+                              <td>11:2am</td>
+                              <td>2 hrs</td>
+                            </tr>
+                            <tr>
+                              <td scope="row">06/29/2020</td>
+                              <td>Instruction Center</td>
+                              <td>BUS 220</td>
+                              <td>4:31pm</td>
+                              <td>4:45pm</td>
+                              <td>15 mins</td>
+                            </tr>
+                            <tr>
+                              <td scope="row">5/14/2020</td>
+                              <td>Instructional Center</td>
+                              <td>BUS 220</td>
+                              <td>2:34pm</td>
+                              <td>6:35pm</td>
+                              <td>4 hrs</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </axdd-tab-panel>
+                    <axdd-tab-panel :panel-id="'transcript'" >
+                      <div class="table-responsive">
+                        <table class="table table-hover table-striped m-0">
+                          <thead class="small">
+                            <tr>
+                              <th>Course</th>
+                              <th>Credits</th>
+                              <th>Grade</th>
+                              <th>Year</th>
+                              <th>Quarter</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>BIOL 350</td>
+                              <td>3</td>
+                              <td>3.8</td>
+                              <td>2021</td>
+                              <td>Spring</td>
+                            </tr>
+                            <tr>
+                              <td>CHEM 238</td>
+                              <td>4</td>
+                              <td>4.0</td>
+                              <td>2021</td>
+                              <td>Autumn</td>
+                            </tr>
+                            <tr>
+                              <td>MATH 210</td>
+                              <td>5.0</td>
+                              <td>W4</td>
+                              <td>2021</td>
+                              <td>Autumn</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </axdd-tab-panel>
+                    <axdd-tab-panel :panel-id="'major'">
+                      <div class="table-responsive">
+                        <h3
+                          class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
+                        >
+                          Accepted Major
+                        </h3>
+                        <table class="table table-hover table-striped m-0 mb-3">
+                          <thead class="small">
+                            <tr>
+                              <th>Date</th>
+                              <th>Major</th>
+                              <th>Status</th>
+                              <th class="text-nowrap">Source</th>
+                              <th>Action</th>
+                              <th>Notes</th>
+                              <th>User</th>
+                            </tr>
+                          </thead>
+                          <tbody class="mb-3">
+                            <tr>
+                              <td scope="row">10/01/2021</td>
+                              <td>Psychology</td>
+                              <td>Accepted</td>
+                              <td>SWS</td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="table-responsive">
+                        <h3
+                          class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
+                        >
+                          Intended Major
+                        </h3>
+                        <table class="table table-hover table-striped m-0 mb-3">
+                          <thead class="small">
+                            <tr>
+                              <th>Date</th>
+                              <th>Major</th>
+                              <th>Status</th>
+                              <th class="text-nowrap">Source</th>
+                              <th>Action</th>
+                              <th>Notes</th>
+                              <th>User</th>
+                            </tr>
+                          </thead>
+                          <tbody class="mb-3">
+                            <tr>
+                              <td scope="row">9/23/2020</td>
+                              <td>Computer Engineering</td>
+                              <td>Intended #1</td>
+                              <td>DawgPath</td>
+                              <td>Remove</td>
+                              <td>No longer interested</td>
+                              <td>Student</td>
+                            </tr>
+                            <tr>
+                              <td scope="row">7/04/2020</td>
+                              <td>Human Centered Design &amp; Engineering</td>
+                              <td>Intended #2</td>
+                              <td>Compass</td>
+                              <td>Add</td>
+                              <td>Wants to be a UX Designer</td>
+                              <td>Pedro Sanchez</td>
+                            </tr>
+                            <tr>
+                              <td scope="row">6/29/2020</td>
+                              <td>Accounting</td>
+                              <td>Intended #3</td>
+                              <td>Compass</td>
+                              <td>Remove</td>
+                              <td>Does not like numbers</td>
+                              <td>Pedro Sanchez</td>
+                            </tr>
+                            <tr>
+                              <td scope="row">5/23/2020</td>
+                              <td>Economics</td>
+                              <td>Intended #3</td>
+                              <td>DawgPath</td>
+                              <td>Remove</td>
+                              <td>n/a</td>
+                              <td>Student</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <h3
+                          class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
+                        >
+                          Intended Major upon Admission
+                        </h3>
+                        <table class="table table-hover table-striped m-0">
+                          <thead class="small">
+                            <tr>
+                              <th>Date</th>
+                              <th>Major</th>
+                              <th>Status</th>
+                              <th class="text-nowrap">Source</th>
+                              <th>Action</th>
+                              <th>Notes</th>
+                              <th>User</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td scope="row">5/14/2020</td>
+                              <td>Informatics</td>
+                              <td>Intended #3</td>
+                              <td>Admissions</td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td scope="row">5/14/2020</td>
+                              <td>Computer Science</td>
+                              <td>Intended #2</td>
+                              <td>Admissions</td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                            <tr>
+                              <td scope="row">5/14/2020</td>
+                              <td>Anthropolgy</td>
+                              <td>Intended #1</td>
+                              <td>Admissions</td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </axdd-tab-panel>
+                  </template>
+                </axdd-tabs>
               </div>
+              <!-- end card-body -->
             </div>
             <!-- end history -->
           </div>
@@ -760,6 +677,11 @@
 
 <script>
 import { Card } from 'axdd-components';
+
+import Tabs from '../_components/tabs/tabs.vue';
+import TabItem from '../_components/tabs/item.vue';
+import TabPanel from '../_components/tabs/panel.vue';
+
 import Layout from '../layout.vue';
 import dataMixin from '../mixins/data_mixin.js';
 import AddContact from '../components/add-contact.vue';
@@ -770,6 +692,10 @@ export default {
     layout: Layout,
     'axdd-card': Card,
     'add-contact': AddContact,
+
+    'axdd-tabs': Tabs,
+    'axdd-tab-item': TabItem,
+    'axdd-tab-panel': TabPanel,
   },
   created: function () {
     this.loadstudent(this.$route.params.id);

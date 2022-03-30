@@ -33,7 +33,7 @@ const dataMixin = {
         {},
         axiosConfig
       );
-    },
+    }
   },
 };
 
