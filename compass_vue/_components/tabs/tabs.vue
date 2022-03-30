@@ -1,14 +1,15 @@
 <template>
-  <ul class="nav nav-lines mb-3" :id="tabsId" role="tablist">
-    <slot name="items">
-      <!-- axdd-tab-button and uw-tab-dropdown components with panelId-->
-    </slot>
-  </ul>
-
-  <div class="tab-content" :id="tabsId + 'Content'">
-    <slot name="panels">
-      <!-- axdd-tab-panel components with panelId matching tabs-->
-    </slot>
+  <div class="tabs">
+    <ul class="nav nav-lines mb-3" :id="tabsId" role="tablist">
+      <slot name="items">
+        <!-- axdd-tab-button and uw-tab-dropdown components with panelId-->
+      </slot>
+    </ul>
+    <div class="tab-content" :id="tabsId + 'Content'">
+      <slot name="panels">
+        <!-- axdd-tab-panel components with panelId matching tabs-->
+      </slot>
+    </div>
   </div>
 </template>
 

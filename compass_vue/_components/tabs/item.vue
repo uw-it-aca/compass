@@ -2,7 +2,7 @@
   <li class="nav-item me-2" role="presentation">
     <button
       class="nav-link text-secondary text-uppercase small border-bottom border-5"
-      :class="{ 'active': activeTab }, tabsId + '-link'"
+      :class="classObject"
       :tabindex="[activeTab ? '0' : '-1']"
       :id="panelId + '-tab'"
       data-bs-toggle="tab"
@@ -40,43 +40,45 @@ export default {
   },
   computed: {
     elements() {
-      // get elements by custon className by concat tabsId and -link (i.e. tabsId-link )
+      // get elements by custom className by concat tabsId and -link (i.e. tabsId-link )
       return document.getElementsByClassName(this.tabsId + '-link');
     },
+    classObject() {
+      let classes = {}
+      classes[this.tabsId + "-link"] = true;
+      classes["active"] = this.activeTab;
+      return classes;
+    }
   },
   methods: {
     findIndex(target) {
       return [].findIndex.call(this.elements, (e) => e === target);
     },
     moveTab(index) {
-      if (this.elements[index]) {
-        // focus and click on tab
-        this.elements[index].focus();
-        this.elements[index].click();
-
-        // set tabindexes
-        this.elements[index - 1].tabIndex = -1;
-        this.elements[index + 1].tabIndex = -1;
-        this.elements[index].tabIndex = 0;
-      }
+      // focus and click on tab
+      this.elements[index].focus();
+      this.elements[index].click();
+      // set tabindexes
+      Array.from(this.elements).forEach((element, i) => {
+          if (i == index)
+            element.tabIndex = 0;
+          else
+            element.tabIndex = -1;
+      });
     },
     moveNext(event) {
       const index = this.findIndex(event.target);
-      this.moveTab(index + 1);
+      if (index < this.elements.length - 1)
+        this.moveTab(index + 1);
     },
     movePrev(event) {
       const index = this.findIndex(event.target);
-      this.moveTab(index - 1);
+      if (index > 0)
+        this.moveTab(index - 1);
     },
     onClick(event) {
-
       const index = this.findIndex(event.target);
-      console.log(index);
-
-      // set tabindexes
-      this.elements[index - 1].tabIndex = -1;
-      this.elements[index + 1].tabIndex = -1;
-      this.elements[index].tabIndex = 0;
+      this.moveTab(index);
     }
   },
 };
