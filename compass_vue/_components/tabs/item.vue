@@ -3,6 +3,7 @@
     <button
       class="nav-link text-secondary text-uppercase small border-bottom border-5"
       :class="{ 'active': activeTab }, tabsId + '-link'"
+      :tabindex="[activeTab ? '0' : '-1']"
       :id="panelId + '-tab'"
       data-bs-toggle="tab"
       :data-bs-target="'#' + panelId"
@@ -51,7 +52,6 @@ export default {
         // focus and click on tab
         this.elements[index].focus();
         this.elements[index].click();
-        this.elements[index].tabIndex = 0;
       }
     },
     moveNext(event) {
