@@ -41,13 +41,13 @@ export default {
   }
 
   .nav-link.active {
-    border-color: #4d307f !important;
-    color: #4d307f !important;
+    border-color: #452a78 !important;
+    color: #452a78 !important;
   }
 
   .nav-link:hover {
-    border-color: #6c757d !important;
-    color: #666 !important;
+    border-color: #4d307f !important;
+    color: #4d307f !important;
   }
 
 }
