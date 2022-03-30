@@ -13,6 +13,7 @@
       :aria-selected="activeTab"
       @keydown.right="moveNext"
       @keydown.left="movePrev"
+      @click="onClick"
     >
       <slot></slot>
     </button>
@@ -67,11 +68,16 @@ export default {
       const index = this.findIndex(event.target);
       this.moveTab(index - 1);
     },
-    /*
-    moveFocus() {
-      // set focus on current active tab's panel
-      document.getElementById(this.panelId).focus();
-    },*/
+    onClick(event) {
+
+      const index = this.findIndex(event.target);
+      console.log(index);
+
+      // set tabindexes
+      this.elements[index - 1].tabIndex = -1;
+      this.elements[index + 1].tabIndex = -1;
+      this.elements[index].tabIndex = 0;
+    }
   },
 };
 </script>
