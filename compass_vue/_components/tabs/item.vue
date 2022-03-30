@@ -52,6 +52,11 @@ export default {
         // focus and click on tab
         this.elements[index].focus();
         this.elements[index].click();
+
+        // set tabindexes
+        this.elements[index - 1].tabIndex = -1;
+        this.elements[index + 1].tabIndex = -1;
+        this.elements[index].tabIndex = 0;
       }
     },
     moveNext(event) {
