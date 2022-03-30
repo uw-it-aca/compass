@@ -301,6 +301,7 @@
                     <axdd-tab-item :tabs-id="'schedule'" :panel-id="'current'" :active-tab="true">Current</axdd-tab-item>
                     <axdd-tab-item :tabs-id="'schedule'" :panel-id="'next'">Next</axdd-tab-item>
                     <axdd-tab-item :tabs-id="'schedule'" :panel-id="'after'">After</axdd-tab-item>
+                    <axdd-tab-item :tabs-id="'schedule'" :panel-id="'further'">Further</axdd-tab-item>
                   </template>
                   <template #panels>
                     <axdd-tab-panel :panel-id="'current'" :active-panel="true">
@@ -321,6 +322,13 @@
                     <axdd-tab-panel :panel-id="'after'">
                       <p>
                         <strong>after</strong>, ipsum dolor sit amet consectetur adipisicing elit. Doloremque est
+                        totam, ipsa corporis molestias, temporibus maiores ex enim error perferendis
+                        ad veritatis tenetur dicta laboriosam nam eaque eum minus distinctio.
+                      </p>
+                    </axdd-tab-panel>
+                    <axdd-tab-panel :panel-id="'further'">
+                      <p>
+                        <strong>further</strong>, ipsum dolor sit amet consectetur adipisicing elit. Doloremque est
                         totam, ipsa corporis molestias, temporibus maiores ex enim error perferendis
                         ad veritatis tenetur dicta laboriosam nam eaque eum minus distinctio.
                       </p>
