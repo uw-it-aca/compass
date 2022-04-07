@@ -1,7 +1,7 @@
 // about.vue
 
 <template>
-  <layout v-if="student.student_name !== undefined" :page-title="student.student_name">
+  <axdd-layout v-if="student.student_name !== undefined" :page-title="student.student_name">
     <template #title>
       <h1 v-if="$route.params.id" class="visually-hidden">{{ student.student_name }}</h1>
       <h1 v-else>Student</h1>
@@ -89,590 +89,25 @@
           </div>
         </div>
 
-        <!-- notes area -->
         <div class="row">
           <div class="col-xl-9">
-            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-              <div class="card-header bg-white border-0 p-4 pb-0">
-                <h2
-                  class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
-                >
-                  Contact
-                </h2>
-              </div>
-              <div class="card-body p-4">
-                <div class="table-responsive">
-                  <table class="table m-0">
-                    <thead class="small">
-                      <tr>
-                        <th>Date</th>
-                        <th>Time</th>
-                        <th class="text-nowrap">Contact Type</th>
-                        <th>Staff</th>
-                        <th>Notes</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td scope="row">09/23/2020</td>
-                        <td>1:55PM</td>
-                        <td>Drop-in</td>
-                        <td>Jon Average</td>
-                        <td>
-                          <p><span class="badge bg-beige text-dark fw-normal"><i class="bi bi-lock-fill"></i> Restricted</span>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
-                            mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
-                            expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                            dolores excepturi?
-                          </p>
-                          <p class="text-end small"><add-contact>Edit notes</add-contact></p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td scope="row">07/04/2020</td>
-                        <td>10:52AM</td>
-                        <td>Quick Question</td>
-                        <td>Boris Washington</td>
-                        <td>
-                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
-                          mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
-                          expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                          dolores excepturi?</p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td scope="row">06/29/2020</td>
-                        <td>3:15PM</td>
-                        <td>Appointment</td>
-                        <td>Jon Average</td>
-                        <td>
-                          <p><span class="badge bg-beige text-dark fw-normal"><i class="bi bi-lock-fill"></i> Restricted</span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
-                          mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
-                          expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                          dolores excepturi?</p>
-                          <p class="text-end small"><add-contact>Edit notes</add-contact></p>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td scope="row">5/14/2020</td>
-                        <td>2:15PM</td>
-                        <td>Telephone</td>
-                        <td>Otto Wilson</td>
-                        <td>
-                          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
-                          mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
-                          expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                          dolores excepturi?</p>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="card-footer bg-white px-4 py-3 text-end">
-                <add-contact>Record new contact</add-contact>
-              </div>
-            </div>
+            <StudentContact></StudentContact>
+            <StudentSchedule></StudentSchedule>
+            <StudentHistory></StudentHistory>
           </div>
           <div class="col-xl-3">
-            <!-- adviser -->
-            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-              <div class="card-header bg-white border-0 p-4 pb-0">
-                <h2
-                  class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
-                >
-                  Adviser
-                </h2>
-              </div>
-              <div class="card-body p-4">
-                <ul class="list-unstyled">
-                  <li class="fw-bold">John Average</li>
-                  <li>he/him</li>
-                  <li>Email</li>
-                  <li>Phone</li>
-                  <li class="border-top mt-2 pt-2">Dept Name: OMAD</li>
-                  <li>Campus location: MGH 123</li>
-                  <li><a href="#" class="small">Edit adviser (ADMIN)</a></li>
-                </ul>
-
-                <div class="border border-danger">
-                  <ul class="list-unstyled text-muted">
-                    <li><p>This student does not have an assigned adviser.</p></li>
-                    <li>
-                      <select
-                        class="form-select form-select-sm mb-2"
-                        aria-label=".form-select-sm example"
-                      >
-                        <option selected>Select adviser</option>
-                        <option value="1">Bob</option>
-                        <option value="2">Tim</option>
-                        <option value="3">Joe</option>
-                      </select>
-                    </li>
-                    <li class="text-end">
-                      <button type="button" class="btn btn-outline-dark-beige btn-sm rounded-pill">
-                        Update adviser
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <!-- end adviser -->
-
-            <!-- programs -->
-            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-              <div class="card-header bg-white border-0 p-4 pb-0">
-                <h2
-                  class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
-                >
-                  Programs
-                </h2>
-              </div>
-              <div class="card-body p-4">
-                <p>UW Programs (from EDW?)</p>
-                <ul>
-                  <li>Honor's</li>
-                  <li>Dean's List</li>
-                  <li>Athletics</li>
-                  <li>EOP</li>
-                </ul>
-
-                <hr />
-
-                <p>OMAD Programs (if EOP yes)</p>
-                <ul>
-                  <li>Pre-professional: yes/no</li>
-                  <li>IC Eligible: yes/no</li>
-                  <li>
-                    <template v-if="student.special_program_code"> <b>yes</b>/no </template>
-                    <template v-else> CAMP, TRIO SSS, Champions </template>
-                  </li>
-                </ul>
-                <p><a href="#" class="small">Edit Programs (ADMIN)</a></p>
-                <div class="border border-danger">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
-                    <label class="form-check-label" for="defaultCheck1">CAMP</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
-                    <label class="form-check-label" for="defaultCheck2">TRIO</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck3" />
-                    <label class="form-check-label" for="defaultCheck3">SSS</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck4" />
-                    <label class="form-check-label" for="defaultCheck4">Champions</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck5" />
-                    <label class="form-check-label" for="defaultCheck5">IC Eligible</label>
-                  </div>
-                  <div class="text-end">
-                    <button type="button" class="btn btn-outline-dark-beige btn-sm rounded-pill">
-                      Update programs
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- end programs -->
-          </div>
-        </div>
-        <!-- end notes -->
-
-        <div class="row">
-          <div class="col-xl-9">
-            <!-- schedule -->
-            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-              <div class="card-header border-0 bg-white p-4 pb-0">
-                <h2
-                  class="h5 m-0 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
-                >
-                  Schedule
-                </h2>
-              </div>
-              <div class="card-body p-4">
-                <axdd-tabs :tabs-id="'schedule'">
-                  <template #items>
-                    <axdd-tab-item :tabs-id="'schedule'" :panel-id="'current'" :active-tab="true">Current</axdd-tab-item>
-                    <axdd-tab-item :tabs-id="'schedule'" :panel-id="'next'">Next</axdd-tab-item>
-                    <axdd-tab-item :tabs-id="'schedule'" :panel-id="'after'">After</axdd-tab-item>
-                    <axdd-tab-item :tabs-id="'schedule'" :panel-id="'further'">Further</axdd-tab-item>
-                  </template>
-                  <template #panels>
-                    <axdd-tab-panel :panel-id="'current'" :active-panel="true">
-                      <p>
-                        <strong>current</strong> Lorem ipsum dolor sit amet consectetur adipisicing elit. Id aperiam
-                        dolores harum doloribus libero sapiente corrupti sint rerum incidunt. Qui
-                        quia hic ipsam culpa laudantium delectus sapiente tempore, eveniet modi.
-                      </p>
-                    </axdd-tab-panel>
-                    <axdd-tab-panel :panel-id="'next'" >
-                      <p>
-                        <strong>next</strong> Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
-                        iste, expedita, vitae voluptatibus nobis amet eligendi consectetur
-                        repudiandae aut ut vel? Amet nesciunt culpa non molestiae enim consequuntur
-                        provident sit.
-                      </p>
-                    </axdd-tab-panel>
-                    <axdd-tab-panel :panel-id="'after'">
-                      <p>
-                        <strong>after</strong>, ipsum dolor sit amet consectetur adipisicing elit. Doloremque est
-                        totam, ipsa corporis molestias, temporibus maiores ex enim error perferendis
-                        ad veritatis tenetur dicta laboriosam nam eaque eum minus distinctio.
-                      </p>
-                    </axdd-tab-panel>
-                    <axdd-tab-panel :panel-id="'further'">
-                      <p>
-                        <strong>further</strong>, ipsum dolor sit amet consectetur adipisicing elit. Doloremque est
-                        totam, ipsa corporis molestias, temporibus maiores ex enim error perferendis
-                        ad veritatis tenetur dicta laboriosam nam eaque eum minus distinctio.
-                      </p>
-                    </axdd-tab-panel>
-                  </template>
-                </axdd-tabs>
-              </div>
-            </div>
-            <!-- end schedule -->
-
-            <!-- history -->
-            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-              <div class="card-header border-0 bg-white p-4 pb-0">
-                <h2
-                  class="h5 m-0 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
-                >
-                  History
-                </h2>
-              </div>
-              <div class="card-body p-4">
-
-                <axdd-tabs :tabs-id="'history'">
-                  <template #items>
-                    <axdd-tab-item :tabs-id="'history'" :panel-id="'visit'" :active-tab="true">Visit</axdd-tab-item>
-                    <axdd-tab-item :tabs-id="'history'" :panel-id="'transcript'">Transcript</axdd-tab-item>
-                    <axdd-tab-item :tabs-id="'history'" :panel-id="'major'">Major</axdd-tab-item>
-                  </template>
-                  <template #panels>
-                    <axdd-tab-panel :panel-id="'visit'" :active-panel="true">
-                      <div class="table-responsive">
-                        <table class="table table-hover table-striped m-0">
-                          <thead class="small">
-                            <tr>
-                              <th>Date</th>
-                              <th class="text-nowrap">Location</th>
-                              <th>Course</th>
-                              <th>Check-in</th>
-                              <th>Check-out</th>
-                              <th>Duration</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td scope="row">09/23/2020</td>
-                              <td>Instructional Center</td>
-                              <td>BUS 220</td>
-                              <td>10:35am</td>
-                              <td>11:42pm</td>
-                              <td>1hr 2mins</td>
-                            </tr>
-                            <tr>
-                              <td scope="row">07/04/2020</td>
-                              <td>Computer Lab</td>
-                              <td>CSE 142</td>
-                              <td>9:15am</td>
-                              <td>11:2am</td>
-                              <td>2 hrs</td>
-                            </tr>
-                            <tr>
-                              <td scope="row">06/29/2020</td>
-                              <td>Instruction Center</td>
-                              <td>BUS 220</td>
-                              <td>4:31pm</td>
-                              <td>4:45pm</td>
-                              <td>15 mins</td>
-                            </tr>
-                            <tr>
-                              <td scope="row">5/14/2020</td>
-                              <td>Instructional Center</td>
-                              <td>BUS 220</td>
-                              <td>2:34pm</td>
-                              <td>6:35pm</td>
-                              <td>4 hrs</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </axdd-tab-panel>
-                    <axdd-tab-panel :panel-id="'transcript'" >
-                      <div class="table-responsive">
-                        <table class="table table-hover table-striped m-0">
-                          <thead class="small">
-                            <tr>
-                              <th>Course</th>
-                              <th>Credits</th>
-                              <th>Grade</th>
-                              <th>Year</th>
-                              <th>Quarter</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td>BIOL 350</td>
-                              <td>3</td>
-                              <td>3.8</td>
-                              <td>2021</td>
-                              <td>Spring</td>
-                            </tr>
-                            <tr>
-                              <td>CHEM 238</td>
-                              <td>4</td>
-                              <td>4.0</td>
-                              <td>2021</td>
-                              <td>Autumn</td>
-                            </tr>
-                            <tr>
-                              <td>MATH 210</td>
-                              <td>5.0</td>
-                              <td>W4</td>
-                              <td>2021</td>
-                              <td>Autumn</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </axdd-tab-panel>
-                    <axdd-tab-panel :panel-id="'major'">
-                      <div class="table-responsive">
-                        <h3
-                          class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
-                        >
-                          Accepted Major
-                        </h3>
-                        <table class="table table-hover table-striped m-0 mb-3">
-                          <thead class="small">
-                            <tr>
-                              <th>Date</th>
-                              <th>Major</th>
-                              <th>Status</th>
-                              <th class="text-nowrap">Source</th>
-                              <th>Action</th>
-                              <th>Notes</th>
-                              <th>User</th>
-                            </tr>
-                          </thead>
-                          <tbody class="mb-3">
-                            <tr>
-                              <td scope="row">10/01/2021</td>
-                              <td>Psychology</td>
-                              <td>Accepted</td>
-                              <td>SWS</td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                      <div class="table-responsive">
-                        <h3
-                          class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
-                        >
-                          Intended Major
-                        </h3>
-                        <table class="table table-hover table-striped m-0 mb-3">
-                          <thead class="small">
-                            <tr>
-                              <th>Date</th>
-                              <th>Major</th>
-                              <th>Status</th>
-                              <th class="text-nowrap">Source</th>
-                              <th>Action</th>
-                              <th>Notes</th>
-                              <th>User</th>
-                            </tr>
-                          </thead>
-                          <tbody class="mb-3">
-                            <tr>
-                              <td scope="row">9/23/2020</td>
-                              <td>Computer Engineering</td>
-                              <td>Intended #1</td>
-                              <td>DawgPath</td>
-                              <td>Remove</td>
-                              <td>No longer interested</td>
-                              <td>Student</td>
-                            </tr>
-                            <tr>
-                              <td scope="row">7/04/2020</td>
-                              <td>Human Centered Design &amp; Engineering</td>
-                              <td>Intended #2</td>
-                              <td>Compass</td>
-                              <td>Add</td>
-                              <td>Wants to be a UX Designer</td>
-                              <td>Pedro Sanchez</td>
-                            </tr>
-                            <tr>
-                              <td scope="row">6/29/2020</td>
-                              <td>Accounting</td>
-                              <td>Intended #3</td>
-                              <td>Compass</td>
-                              <td>Remove</td>
-                              <td>Does not like numbers</td>
-                              <td>Pedro Sanchez</td>
-                            </tr>
-                            <tr>
-                              <td scope="row">5/23/2020</td>
-                              <td>Economics</td>
-                              <td>Intended #3</td>
-                              <td>DawgPath</td>
-                              <td>Remove</td>
-                              <td>n/a</td>
-                              <td>Student</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <h3
-                          class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
-                        >
-                          Intended Major upon Admission
-                        </h3>
-                        <table class="table table-hover table-striped m-0">
-                          <thead class="small">
-                            <tr>
-                              <th>Date</th>
-                              <th>Major</th>
-                              <th>Status</th>
-                              <th class="text-nowrap">Source</th>
-                              <th>Action</th>
-                              <th>Notes</th>
-                              <th>User</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-                              <td scope="row">5/14/2020</td>
-                              <td>Informatics</td>
-                              <td>Intended #3</td>
-                              <td>Admissions</td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td scope="row">5/14/2020</td>
-                              <td>Computer Science</td>
-                              <td>Intended #2</td>
-                              <td>Admissions</td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                            </tr>
-                            <tr>
-                              <td scope="row">5/14/2020</td>
-                              <td>Anthropolgy</td>
-                              <td>Intended #1</td>
-                              <td>Admissions</td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </axdd-tab-panel>
-                  </template>
-                </axdd-tabs>
-              </div>
-              <!-- end card-body -->
-            </div>
-            <!-- end history -->
-          </div>
-          <div class="col-xl-3">
-            <!-- MARK: card component styling -->
-            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-              <div class="card-header bg-white border-0 p-4 pb-0">
-                <h2
-                  class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
-                >
-                  Retention
-                </h2>
-              </div>
-              <div class="card-body p-4">
-                <ul>
-                  <li>
-                    Priority: <span class="fw-bold">{{ student.retention.priority }}</span>
-                  </li>
-                  <li>Sign-ins: {{ student.retention.sign_in }}</li>
-                  <li>Activity: {{ student.retention.activity }}</li>
-                  <li>Assignments: {{ student.retention.assignment }}</li>
-                  <li>Grades: {{ student.retention.grade }}</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-              <div class="card-header bg-white border-0 p-4 pb-0">
-                <h2
-                  class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
-                >
-                  Academics
-                </h2>
-              </div>
-              <div class="card-body p-4">
-                <ul>
-                  <li>
-                    Registered:
-                    <template v-if="student.registered_in_quarter"> <b>yes</b>/no </template>
-                    <template v-else>
-                      yes/
-                      <b>no</b>
-                    </template>
-                  </li>
-                  <li>Enrollment Status: {{ student.enrollment_desc }}</li>
-                  <li>Class standing: {{ student.class_desc }}</li>
-                  <li>Total Credits: {{ student.total_credits }}</li>
-                  <li>Total UW Credits: 170.00</li>
-                  <li>Transfer student: <b>yes</b>/no</li>
-                  <li>GPA: {{ student.gpa }}</li>
-                </ul>
-              </div>
-            </div>
-
-            <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-              <div class="card-header bg-white border-0 p-4 pb-0">
-                <h2
-                  class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
-                >
-                  Major
-                </h2>
-              </div>
-              <div class="card-body p-4">
-                <ul>
-                  <li>
-                    Accepted:
-                    <span v-for="(major, index) in student.major" :key="index">
-                      {{ major.major_full_name }}
-                      <span v-if="index + 1 < student.major.length">,</span>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
+            <StudentAdviser></StudentAdviser>
+            <StudentPrograms :student="student"></StudentPrograms>
+            <StudentRetention :student="student"></StudentRetention>
+            <StudentAcademics :student="student"></StudentAcademics>
+            <StudentMajors :student="student"></StudentMajors>
           </div>
         </div>
 
-        <!-- history -->
-        <div class="row">
-          <div class="col"></div>
-        </div>
-        <!-- end history -->
       </div>
       <div v-else>No student</div>
     </template>
-  </layout>
+  </axdd-layout>
 </template>
 
 <script>
@@ -684,19 +119,33 @@ import TabPanel from '../_components/tabs/panel.vue';
 
 import Layout from '../layout.vue';
 import dataMixin from '../mixins/data_mixin.js';
-import AddContact from '../components/add-contact.vue';
+
+import StudentContact from '../components/student/contact.vue'
+import StudentSchedule from '../components/student/schedule.vue';
+import StudentHistory from '../components/student/history.vue';
+import StudentAdviser from '../components/student/adviser.vue';
+import StudentPrograms from '../components/student/programs.vue';
+import StudentRetention from '../components/student/retention.vue';
+import StudentAcademics from '../components/student/academics.vue';
+import StudentMajors from '../components/student/majors.vue';
 
 export default {
   mixins: [dataMixin],
   components: {
-    layout: Layout,
-    'axdd-card': Card,
-    'add-contact': AddContact,
-
-    'axdd-tabs': Tabs,
-    'axdd-tab-item': TabItem,
-    'axdd-tab-panel': TabPanel,
-  },
+    "axdd-layout": Layout,
+    "axdd-card": Card,
+    "axdd-tabs": Tabs,
+    "axdd-tab-item": TabItem,
+    "axdd-tab-panel": TabPanel,
+    StudentContact,
+    StudentSchedule,
+    StudentHistory,
+    StudentAdviser,
+    StudentPrograms,
+    StudentRetention,
+    StudentAcademics,
+    StudentMajors
+},
   created: function () {
     this.loadstudent(this.$route.params.id);
   },
