@@ -6,52 +6,43 @@
     <template #content>
       <div class="row my-4">
         <div class="col">
-          <search></search>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
           <!-- MARK: card component -->
           <div class="card border-light-gray shadow-sm rounded-3 mb-4">
             <div class="card-header bg-white border-0 p-4 pb-0 d-flex justify-content-between">
               <h3
                 class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
               >
-                Today
+                Today, {{ getToday() }}
               </h3>
-              <div>{{ getToday() }}</div>
+              <div>
+
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    placeholder="Search all students..."
+                    aria-label="Recipient's username"
+                    aria-describedby="button-addon2"
+                  />
+                  <button
+                    class="btn btn-sm btn-outline-dark-purple btn-outline-secondary"
+                    type="button"
+                    id="button-addon2"
+                  >Search</button>
+                </div>
+
+              </div>
             </div>
             <div v-if="isLoading" class="card-body p-4 d-flex justify-content-center">
               <table-loading></table-loading>
             </div>
             <div v-else class="card-body p-4">
               <table-display></table-display>
-              <p class="text-end">Not seeing a student? <a href="/search">Try searching!</a></p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col">
-          <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-            <div class="card-header bg-white border-0 p-4 pb-0 d-flex justify-content-between">
-              <h3
-                class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
-              >
-                Yesterday
-              </h3>
-              <div>{{ getYesterday() }}</div>
-            </div>
-            <div v-if="isLoading" class="card-body p-4 d-flex justify-content-center">
-              <table-loading></table-loading>
-            </div>
-            <div v-else class="card-body p-4">
-              <table-display></table-display>
-            </div>
-          </div>
-        </div>
-      </div>
     </template>
   </layout>
 </template>

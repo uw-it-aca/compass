@@ -16,12 +16,6 @@ const routes = [
     props: true
   },
   {
-    path: '/search',
-    component: Search,
-    pathToRegexpOptions: { strict: true },
-    props: true
-  },
-  {
     path: '/caseload',
     name: 'Caseload',
     component: Caseload,

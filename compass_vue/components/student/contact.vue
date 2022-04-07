@@ -1,9 +1,12 @@
 <template>
   <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-    <div class="card-header bg-white border-0 p-4 pb-0">
+    <div class="card-header bg-white border-0 p-4 pb-0 d-flex justify-content-between">
       <h2
         class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
       >Contact</h2>
+      <div>
+        <AddContact>Record new contact</AddContact>
+      </div>
     </div>
     <div class="card-body p-4">
       <div class="table-responsive">
@@ -34,7 +37,7 @@
                   dolores excepturi?
                 </p>
                 <p class="text-end small">
-                  <AddContact>Edit notes</AddContact>
+                  <AddContact>Edit contact</AddContact>
                 </p>
               </td>
             </tr>
@@ -67,7 +70,7 @@
                   dolores excepturi?
                 </p>
                 <p class="text-end small">
-                  <AddContact>Edit notes</AddContact>
+                  <AddContact>Edit contact</AddContact>
                 </p>
               </td>
             </tr>
@@ -88,9 +91,6 @@
           </tbody>
         </table>
       </div>
-    </div>
-    <div class="card-footer bg-white px-4 py-3 text-end">
-      <AddContact>Record new contact</AddContact>
     </div>
   </div>
 </template>

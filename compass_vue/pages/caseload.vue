@@ -4,11 +4,6 @@
   <layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
-      <div class="row my-4">
-        <div class="col">
-          <search></search>
-        </div>
-      </div>
       <div class="row my-4 small">
         <div class="col">
           <div class="bg-gray p-4 rounded-3">
@@ -96,19 +91,19 @@
                 <div class="d-flex">
                   <div class="fw-bold me-3">Priority:</div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1" />
+                    <input class="form-check-input" type="checkbox" value id="defaultCheck1" />
                     <label class="form-check-label" for="defaultCheck1">
                       <span class="badge rounded-pill bg-danger">Top</span>
                     </label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
+                    <input class="form-check-input" type="checkbox" value id="defaultCheck2" />
                     <label class="form-check-label" for="defaultCheck2">
                       <span class="badge rounded-pill bg-warning">Middle</span>
                     </label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck2" />
+                    <input class="form-check-input" type="checkbox" value id="defaultCheck2" />
                     <label class="form-check-label" for="defaultCheck2">
                       <span class="badge rounded-pill border text-muted">Bottom</span>
                     </label>
@@ -116,145 +111,89 @@
                 </div>
               </div>
               <div class="col-8 border-start">
-                <div class="">
+                <div class>
                   <a
-                    class=""
+                    class
                     data-bs-toggle="collapse"
                     href="#collapseExample"
                     role="button"
                     aria-expanded="false"
                     aria-controls="collapseExample"
-                  >
-                    Show Retention filters
-                  </a>
+                  >Show Retention filters</a>
                 </div>
                 <div class="collapse" id="collapseExample">
                   <div class="d-flex pt-3">
                     <div class="flex-fill">
                       <div class="fw-bold">Sign-ins</div>
                       <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="defaultCheck1"
-                        />
-                        <label class="form-check-label" for="defaultCheck1"> High </label>
+                        <input class="form-check-input" type="checkbox" value id="defaultCheck1" />
+                        <label class="form-check-label" for="defaultCheck1">High</label>
                       </div>
                       <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="defaultCheck2"
-                        />
-                        <label class="form-check-label" for="defaultCheck2"> Average </label>
+                        <input class="form-check-input" type="checkbox" value id="defaultCheck2" />
+                        <label class="form-check-label" for="defaultCheck2">Average</label>
                       </div>
                       <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="defaultCheck2"
-                        />
-                        <label class="form-check-label" for="defaultCheck2"> Low </label>
+                        <input class="form-check-input" type="checkbox" value id="defaultCheck2" />
+                        <label class="form-check-label" for="defaultCheck2">Low</label>
                       </div>
                     </div>
                     <div class="flex-fill">
                       <div class="fw-bold">Activity</div>
                       <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="defaultCheck3"
-                        />
-                        <label class="form-check-label" for="defaultCheck3"> High </label>
+                        <input class="form-check-input" type="checkbox" value id="defaultCheck3" />
+                        <label class="form-check-label" for="defaultCheck3">High</label>
                       </div>
                       <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="defaultCheck4"
-                        />
-                        <label class="form-check-label" for="defaultCheck4"> Average </label>
+                        <input class="form-check-input" type="checkbox" value id="defaultCheck4" />
+                        <label class="form-check-label" for="defaultCheck4">Average</label>
                       </div>
                       <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="defaultCheck5"
-                        />
-                        <label class="form-check-label" for="defaultCheck5"> Low </label>
+                        <input class="form-check-input" type="checkbox" value id="defaultCheck5" />
+                        <label class="form-check-label" for="defaultCheck5">Low</label>
                       </div>
                     </div>
                     <div class="flex-fill">
                       <div class="fw-bold">Assignments</div>
                       <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="defaultCheck6"
-                        />
-                        <label class="form-check-label" for="defaultCheck6"> High </label>
+                        <input class="form-check-input" type="checkbox" value id="defaultCheck6" />
+                        <label class="form-check-label" for="defaultCheck6">High</label>
                       </div>
                       <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="defaultCheck7"
-                        />
-                        <label class="form-check-label" for="defaultCheck7"> Average </label>
+                        <input class="form-check-input" type="checkbox" value id="defaultCheck7" />
+                        <label class="form-check-label" for="defaultCheck7">Average</label>
                       </div>
                       <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="defaultCheck8"
-                        />
-                        <label class="form-check-label" for="defaultCheck8"> Low </label>
+                        <input class="form-check-input" type="checkbox" value id="defaultCheck8" />
+                        <label class="form-check-label" for="defaultCheck8">Low</label>
                       </div>
                     </div>
                     <div class="flex-fill">
                       <div class="fw-bold">Grades</div>
                       <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="defaultCheck9"
-                        />
-                        <label class="form-check-label" for="defaultCheck9"> High </label>
+                        <input class="form-check-input" type="checkbox" value id="defaultCheck9" />
+                        <label class="form-check-label" for="defaultCheck9">High</label>
                       </div>
                       <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="defaultCheck10"
-                        />
-                        <label class="form-check-label" for="defaultCheck10"> Average </label>
+                        <input class="form-check-input" type="checkbox" value id="defaultCheck10" />
+                        <label class="form-check-label" for="defaultCheck10">Average</label>
                       </div>
                       <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="defaultCheck11"
-                        />
-                        <label class="form-check-label" for="defaultCheck11"> Low </label>
+                        <input class="form-check-input" type="checkbox" value id="defaultCheck11" />
+                        <label class="form-check-label" for="defaultCheck11">Low</label>
                       </div>
                     </div>
                   </div>
                   <ul class="mt-3 mb-0 list-inline">
-                    <li class="list-inline-item"><strong>Low</strong> -5 to -3</li>
-                    <li class="list-inline-item"><strong>Average</strong> -2.9 to +2.9</li>
-                    <li class="list-inline-item"><strong>High</strong> +3 to +5</li>
+                    <li class="list-inline-item">
+                      <strong>Low</strong> -5 to -3
+                    </li>
+                    <li class="list-inline-item">
+                      <strong>Average</strong> -2.9 to +2.9
+                    </li>
+                    <li class="list-inline-item">
+                      <strong>High</strong> +3 to +5
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -266,12 +205,26 @@
       <div class="row my-4">
         <div class="col">
           <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-            <div class="card-header bg-white border-0 p-4 pb-0">
+            <div class="card-header bg-white border-0 p-4 pb-0 d-flex justify-content-between">
               <h3
                 class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
-              >
-                My Caseload
-              </h3>
+              >My Caseload</h3>
+              <div>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control form-control-sm"
+                    placeholder="Search all students..."
+                    aria-label="Recipient's username"
+                    aria-describedby="button-addon2"
+                  />
+                  <button
+                    class="btn btn-sm btn-outline-dark-purple btn-outline-secondary"
+                    type="button"
+                    id="button-addon2"
+                  >Search</button>
+                </div>
+              </div>
             </div>
             <div v-if="isLoading" class="card-body p-4 d-flex justify-content-center">
               <table-loading></table-loading>
@@ -327,8 +280,7 @@
                               </span>
                               <span
                                 class="badge rounded-pill border border-muted text-dark small"
-                                >{{ item.gender }}</span
-                              >
+                              >{{ item.gender }}</span>
                               <span class="badge rounded-pill border border-muted text-dark small">
                                 <i class="bi bi-trophy-fill text-purple"></i>
                               </span>
@@ -340,8 +292,7 @@
                       <td>
                         <router-link
                           :to="{ name: 'Student', params: { id: item.student_number } }"
-                          >{{ item.student_number }}</router-link
-                        >
+                        >{{ item.student_number }}</router-link>
                       </td>
                       <td>top/middle/bottom {{ item.retention.priority }}</td>
                       <td>{{ item.class_desc }}</td>

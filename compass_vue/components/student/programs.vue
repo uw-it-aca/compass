@@ -54,7 +54,7 @@
         <div class="text-end">
           <button
             type="button"
-            class="btn btn-outline-dark-beige btn-sm rounded-pill"
+            class="btn btn-outline-dark-beige btn-sm"
           >Update programs</button>
         </div>
       </div>
