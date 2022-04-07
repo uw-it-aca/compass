@@ -5,7 +5,7 @@
         class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
       >Contact</h2>
       <div>
-        <AddContact>Record new contact</AddContact>
+        <AddContact><i class="bi bi-plus-square-dotted me-2"></i>Record new contact</AddContact>
       </div>
     </div>
     <div class="card-body p-4">

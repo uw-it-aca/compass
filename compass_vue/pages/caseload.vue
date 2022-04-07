@@ -219,7 +219,7 @@
                     aria-describedby="button-addon2"
                   />
                   <button
-                    class="btn btn-sm btn-outline-dark-purple btn-outline-secondary"
+                    class="btn btn-sm btn-dark-beige"
                     type="button"
                     id="button-addon2"
                   >Search</button>

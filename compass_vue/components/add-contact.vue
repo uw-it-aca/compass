@@ -4,7 +4,7 @@
     role="button"
     data-bs-toggle="modal"
     data-bs-target="#exampleModal"
-    class="btn btn-outline-dark-purple btn-sm px-3 text-nowrap"
+    class="btn btn-sm btn-dark-beige text-nowrap"
     ><slot>Add Contact</slot></a
   >
 
