@@ -38,11 +38,6 @@ $utilities: (
 
 .blah { color: purple; }
 
-// TODO: put this back into AXDD-Components v1.0.4
-.axdd-font-encode-sans {
-  font-family: 'Encode Sans Condensed', sans-serif !important;
-}
-
 // import bootstrap and bootstrap-icons
 @import "bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons.css";
