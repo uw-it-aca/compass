@@ -3,7 +3,6 @@ import { trackRouter } from "vue-gtag-next";
 
 // page components
 import Home from '../pages/home.vue';
-import Search from '../pages/search.vue';
 import Caseload from '../pages/caseload.vue';
 import Student from '../pages/student.vue';
 
