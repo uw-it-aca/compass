@@ -1,7 +1,7 @@
 <template>
   <div class="VuePagination d-flex justify-content-between" :class="props.theme.wrapper">
- 
-    <div v-show="props.hasRecords" class="small lh-lg text-muted" :class="props.theme.count">
+
+    <div v-show="props.hasRecords" class="lh-lg text-muted" :class="props.theme.count">
       {{ props.count }}
     </div>
 

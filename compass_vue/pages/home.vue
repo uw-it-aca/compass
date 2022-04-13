@@ -6,16 +6,11 @@
     <template #content>
       <div class="row my-4">
         <div class="col">
-          <!-- MARK: card component -->
-          <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-            <div class="card-header bg-white border-0 p-4 pb-0 d-flex justify-content-between">
-              <h3
-                class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
-              >
-                Today, {{ getToday() }}
-              </h3>
-              <div>
 
+          <axdd-card>
+            <template #heading-action>
+              <axdd-card-heading :level="2">Today, {{ getToday() }}</axdd-card-heading>
+              <axdd-card-action>
                 <div class="input-group">
                   <input
                     type="text"
@@ -28,27 +23,27 @@
                     class="btn btn-sm btn-outline-dark-purple btn-outline-secondary"
                     type="button"
                     id="button-addon2"
-                  >Search</button>
+                  >
+                    Search
+                  </button>
                 </div>
+              </axdd-card-action>
+            </template>
+            <template #body>
+              <table-loading v-if="isLoading"></table-loading>
+              <table-display v-else></table-display>
+            </template>
+          </axdd-card>
 
-              </div>
-            </div>
-            <div v-if="isLoading" class="card-body p-4 d-flex justify-content-center">
-              <table-loading></table-loading>
-            </div>
-            <div v-else class="card-body p-4">
-              <table-display></table-display>
-            </div>
-          </div>
         </div>
       </div>
-
     </template>
   </layout>
 </template>
 
 <script>
 import { markRaw } from 'vue';
+import { Card, CardHeading, CardAction } from 'axdd-components';
 import Search from '../components/search.vue';
 import TableLoading from '../components/table-loading.vue';
 import TableDisplay from '../components/table-display.vue';
@@ -65,7 +60,10 @@ export default {
     'search': Search,
     'pagination': Pagination,
     'table-loading': TableLoading,
-    'table-display': TableDisplay
+    'table-display': TableDisplay,
+    'axdd-card': Card,
+    'axdd-card-heading': CardHeading,
+    'axdd-card-action': CardAction,
   },
   created: function () {
     this.loadStudentList();

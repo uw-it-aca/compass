@@ -119,7 +119,8 @@
                     role="button"
                     aria-expanded="false"
                     aria-controls="collapseExample"
-                  >Show Retention filters</a>
+                    >Show Retention filters</a
+                  >
                 </div>
                 <div class="collapse" id="collapseExample">
                   <div class="d-flex pt-3">
@@ -185,15 +186,9 @@
                     </div>
                   </div>
                   <ul class="mt-3 mb-0 list-inline">
-                    <li class="list-inline-item">
-                      <strong>Low</strong> -5 to -3
-                    </li>
-                    <li class="list-inline-item">
-                      <strong>Average</strong> -2.9 to +2.9
-                    </li>
-                    <li class="list-inline-item">
-                      <strong>High</strong> +3 to +5
-                    </li>
+                    <li class="list-inline-item"><strong>Low</strong> -5 to -3</li>
+                    <li class="list-inline-item"><strong>Average</strong> -2.9 to +2.9</li>
+                    <li class="list-inline-item"><strong>High</strong> +3 to +5</li>
                   </ul>
                 </div>
               </div>
@@ -204,12 +199,10 @@
 
       <div class="row my-4">
         <div class="col">
-          <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-            <div class="card-header bg-white border-0 p-4 pb-0 d-flex justify-content-between">
-              <h3
-                class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
-              >My Caseload</h3>
-              <div>
+          <axdd-card>
+            <template #heading-action>
+              <axdd-card-heading :level="2">My Caseload</axdd-card-heading>
+              <axdd-card-action>
                 <div class="input-group">
                   <input
                     type="text"
@@ -218,19 +211,15 @@
                     aria-label="Recipient's username"
                     aria-describedby="button-addon2"
                   />
-                  <button
-                    class="btn btn-sm btn-dark-beige"
-                    type="button"
-                    id="button-addon2"
-                  >Search</button>
+                  <button class="btn btn-sm btn-dark-beige" type="button" id="button-addon2">
+                    Search
+                  </button>
                 </div>
-              </div>
-            </div>
-            <div v-if="isLoading" class="card-body p-4 d-flex justify-content-center">
-              <table-loading></table-loading>
-            </div>
-            <div v-else class="card-body p-4">
-              <div class="table-responsive">
+              </axdd-card-action>
+            </template>
+            <template #body>
+              <table-loading v-if="isLoading"></table-loading>
+              <div v-else class="table-responsive">
                 <table class="table mb-0">
                   <thead class="small">
                     <tr>
@@ -264,9 +253,7 @@
                               <img
                                 v-else
                                 :src="
-                                  'https://randomuser.me/api/portraits/thumb/men/' +
-                                  item.id +
-                                  '.jpg'
+                                  'https://randomuser.me/api/portraits/thumb/men/' + item.id + '.jpg'
                                 "
                                 class="img-fluid rounded-circle border border-white border-2"
                               />
@@ -278,9 +265,9 @@
                                 {{ item.student_preferred_last_name }},
                                 {{ item.student_preferred_first_name }}
                               </span>
-                              <span
-                                class="badge rounded-pill border border-muted text-dark small"
-                              >{{ item.gender }}</span>
+                              <span class="badge rounded-pill border border-muted text-dark small">{{
+                                item.gender
+                              }}</span>
                               <span class="badge rounded-pill border border-muted text-dark small">
                                 <i class="bi bi-trophy-fill text-purple"></i>
                               </span>
@@ -290,9 +277,9 @@
                         </div>
                       </td>
                       <td>
-                        <router-link
-                          :to="{ name: 'Student', params: { id: item.student_number } }"
-                        >{{ item.student_number }}</router-link>
+                        <router-link :to="{ name: 'Student', params: { id: item.student_number } }">{{
+                          item.student_number
+                        }}</router-link>
                       </td>
                       <td>top/middle/bottom {{ item.retention.priority }}</td>
                       <td>{{ item.class_desc }}</td>
@@ -305,8 +292,8 @@
                   </tbody>
                 </table>
               </div>
-            </div>
-            <div v-show="!isLoading" class="card-footer bg-white p-4">
+            </template>
+            <template v-if="!isLoading" #footer>
               <pagination
                 v-model="currentPage"
                 :records="studentsCount"
@@ -314,8 +301,8 @@
                 :options="pageOptions"
                 @paginate="loadStudentList"
               ></pagination>
-            </div>
-          </div>
+            </template>
+          </axdd-card>
         </div>
       </div>
     </template>
@@ -324,8 +311,10 @@
 
 <script>
 import { markRaw } from 'vue';
+import { Card, CardHeading, CardAction } from 'axdd-components';
+
 import Search from '../components/search.vue';
-import AddContact from '../components/add-contact.vue'
+import AddContact from '../components/add-contact.vue';
 import TableLoading from '../components/table-loading.vue';
 import Pagination from 'v-pagination-3';
 import MyPagination from '../components/pagination.vue';
@@ -335,11 +324,14 @@ import dataMixin from '../mixins/data_mixin.js';
 export default {
   mixins: [dataMixin],
   components: {
-    'layout': Layout,
-    'search': Search,
-    'pagination': Pagination,
+    layout: Layout,
+    search: Search,
+    pagination: Pagination,
     'table-loading': TableLoading,
-    'add-contact': AddContact
+    'add-contact': AddContact,
+    'axdd-card': Card,
+    'axdd-card-heading': CardHeading,
+    'axdd-card-action': CardAction,
   },
   created: function () {
     setTimeout(this.loadStudentList, 3000);

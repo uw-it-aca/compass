@@ -1,7 +1,7 @@
 // about.vue
 
 <template>
-  <axdd-layout v-if="student.student_name !== undefined" :page-title="student.student_name">
+  <layout v-if="student.student_name !== undefined" :page-title="student.student_name">
     <template #title>
       <h1 v-if="$route.params.id" class="visually-hidden">{{ student.student_name }}</h1>
       <h1 v-else>Student</h1>
@@ -107,11 +107,10 @@
       </div>
       <div v-else>No student</div>
     </template>
-  </axdd-layout>
+  </layout>
 </template>
 
 <script>
-import { Card } from 'axdd-components';
 
 import Tabs from '../_components/tabs/tabs.vue';
 import TabItem from '../_components/tabs/item.vue';
@@ -132,11 +131,12 @@ import StudentMajors from '../components/student/majors.vue';
 export default {
   mixins: [dataMixin],
   components: {
-    "axdd-layout": Layout,
-    "axdd-card": Card,
+    "layout": Layout,
+
     "axdd-tabs": Tabs,
     "axdd-tab-item": TabItem,
     "axdd-tab-panel": TabPanel,
+
     StudentContact,
     StudentSchedule,
     StudentHistory,

@@ -1,11 +1,9 @@
 <template>
-  <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-    <div class="card-header bg-white border-0 p-4 pb-0">
-      <h2
-        class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
-      >Adviser</h2>
-    </div>
-    <div class="card-body p-4">
+  <axdd-card>
+    <template #heading>
+      <axdd-card-heading :level="2">Adviser</axdd-card-heading>
+    </template>
+    <template #body>
       <ul class="list-unstyled">
         <li class="fw-bold">John Average</li>
         <li>he/him</li>
@@ -32,17 +30,21 @@
             </select>
           </li>
           <li class="text-end">
-            <button
-              type="button"
-              class="btn btn-outline-dark-beige btn-sm"
-            >Update adviser</button>
+            <button type="button" class="btn btn-outline-dark-beige btn-sm">Update adviser</button>
           </li>
         </ul>
       </div>
-    </div>
-  </div>
+    </template>
+  </axdd-card>
 </template>
 
 <script>
+import { Card, CardHeading } from 'axdd-components';
 
+export default {
+  components: {
+    'axdd-card': Card,
+    'axdd-card-heading': CardHeading,
+  },
+};
 </script>
