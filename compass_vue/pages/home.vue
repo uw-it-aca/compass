@@ -6,27 +6,11 @@
     <template #content>
       <div class="row my-4">
         <div class="col">
-
           <axdd-card>
             <template #heading-action>
               <axdd-card-heading :level="2">Today, {{ getToday() }}</axdd-card-heading>
               <axdd-card-action>
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    placeholder="Search all students..."
-                    aria-label="Recipient's username"
-                    aria-describedby="button-addon2"
-                  />
-                  <button
-                    class="btn btn-sm btn-outline-dark-purple btn-outline-secondary"
-                    type="button"
-                    id="button-addon2"
-                  >
-                    Search
-                  </button>
-                </div>
+                <student-search></student-search>
               </axdd-card-action>
             </template>
             <template #body>
@@ -34,7 +18,6 @@
               <table-display v-else></table-display>
             </template>
           </axdd-card>
-
         </div>
       </div>
     </template>
@@ -42,13 +25,11 @@
 </template>
 
 <script>
-import { markRaw } from 'vue';
 import { Card, CardHeading, CardAction } from 'axdd-components';
-import Search from '../components/search.vue';
+import StudentSearch from '../components/student-search.vue';
 import TableLoading from '../components/table-loading.vue';
 import TableDisplay from '../components/table-display.vue';
-import Pagination from 'v-pagination-3';
-import MyPagination from '../components/pagination.vue';
+
 import Layout from '../layout.vue';
 import dataMixin from '../mixins/data_mixin.js';
 import { getToday, getYesterday } from '../helpers/utils';
@@ -57,74 +38,24 @@ export default {
   mixins: [dataMixin],
   components: {
     'layout': Layout,
-    'search': Search,
-    'pagination': Pagination,
+    'student-search': StudentSearch,
+
     'table-loading': TableLoading,
     'table-display': TableDisplay,
     'axdd-card': Card,
     'axdd-card-heading': CardHeading,
     'axdd-card-action': CardAction,
   },
-  created: function () {
-    this.loadStudentList();
-  },
   data() {
     return {
       pageTitle: 'Contacts',
-
-      // loading
       isLoading: true,
-      today: 'bal',
-
-      // data
-      students: [],
-      // pagination
-      studentsCount: 20,
-      currentPage: 1,
-      pageSize: 10,
-      pageOptions: {
-        theme: 'bootstrap4',
-        template: markRaw(MyPagination),
-      },
+      today: '',
     };
   },
-  computed: {
-    paginationOptions: function () {
-      return {
-        offset: this.pageSize * (this.currentPage - 1),
-        limit: this.pageSize,
-      };
-    },
-    numPages: function () {
-      let page = Math.ceil(this.studentsCount / this.pageSize);
-      return page > 0 ? page : 1;
-    },
-  },
+  computed: { },
   methods: {
     getToday,
-    getYesterday,
-    loadStudentList: function () {
-      let _this = this;
-      this.getStudentList(this.paginationOptions, this.searchOptions).then((response) => {
-        if (response.data) {
-          _this.students = response.data['results'];
-          _this.studentsCount = response.data['count'];
-          if (_this.currentPage > _this.numPages) {
-            _this.currentPage = 1;
-          }
-        }
-      });
-    },
-    showPriorityRing: function (priorityValue) {
-      // mocked display
-      if (priorityValue == '-3.4') {
-        return 'border-danger';
-      } else if (priorityValue == '2.2') {
-        return 'border-warning';
-      } else {
-        return '';
-      }
-    },
     showResults: function () {
       this.isLoading = false;
     },

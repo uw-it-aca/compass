@@ -203,18 +203,7 @@
             <template #heading-action>
               <axdd-card-heading :level="2">My Caseload</axdd-card-heading>
               <axdd-card-action>
-                <div class="input-group">
-                  <input
-                    type="text"
-                    class="form-control form-control-sm"
-                    placeholder="Search all students..."
-                    aria-label="Recipient's username"
-                    aria-describedby="button-addon2"
-                  />
-                  <button class="btn btn-sm btn-dark-beige" type="button" id="button-addon2">
-                    Search
-                  </button>
-                </div>
+                <student-search></student-search>
               </axdd-card-action>
             </template>
             <template #body>
@@ -312,8 +301,7 @@
 <script>
 import { markRaw } from 'vue';
 import { Card, CardHeading, CardAction } from 'axdd-components';
-
-import Search from '../components/search.vue';
+import StudentSearch from "../components/student-search.vue"
 import AddContact from '../components/add-contact.vue';
 import TableLoading from '../components/table-loading.vue';
 import Pagination from 'v-pagination-3';
@@ -324,9 +312,9 @@ import dataMixin from '../mixins/data_mixin.js';
 export default {
   mixins: [dataMixin],
   components: {
-    layout: Layout,
-    search: Search,
-    pagination: Pagination,
+   'layout': Layout,
+    'student-search': StudentSearch,
+    'pagination': Pagination,
     'table-loading': TableLoading,
     'add-contact': AddContact,
     'axdd-card': Card,
