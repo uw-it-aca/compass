@@ -35,7 +35,7 @@
                   dolores excepturi?
                 </p>
                 <p class="text-end small">
-                  <AddContact>Edit contact</AddContact>
+                  <a href="#">Edit contact</a>
                 </p>
               </td>
             </tr>
@@ -68,7 +68,7 @@
                   dolores excepturi?
                 </p>
                 <p class="text-end small">
-                  <AddContact>Edit contact</AddContact>
+                  <a href="#">Edit contact</a>
                 </p>
               </td>
             </tr>
