@@ -1,14 +1,14 @@
 <template>
-  <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-    <div class="card-header border-0 bg-white p-4 pb-0">
-      <h2
-        class="h5 m-0 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
-      >History</h2>
-    </div>
-    <div class="card-body p-4">
+  <axdd-card>
+    <template #heading>
+      <axdd-card-heading :level="2">History</axdd-card-heading>
+    </template>
+    <template #body>
       <axdd-tabs :tabs-id="'history'">
         <template #items>
-          <axdd-tab-item :tabs-id="'history'" :panel-id="'visit'" :active-tab="true">Visit</axdd-tab-item>
+          <axdd-tab-item :tabs-id="'history'" :panel-id="'visit'" :active-tab="true"
+            >Visit</axdd-tab-item
+          >
           <axdd-tab-item :tabs-id="'history'" :panel-id="'transcript'">Transcript</axdd-tab-item>
           <axdd-tab-item :tabs-id="'history'" :panel-id="'major'">Major</axdd-tab-item>
         </template>
@@ -105,7 +105,9 @@
             <div class="table-responsive">
               <h3
                 class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
-              >Accepted Major</h3>
+              >
+                Accepted Major
+              </h3>
               <table class="table table-hover table-striped m-0 mb-3">
                 <thead class="small">
                   <tr>
@@ -134,7 +136,9 @@
             <div class="table-responsive">
               <h3
                 class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
-              >Intended Major</h3>
+              >
+                Intended Major
+              </h3>
               <table class="table table-hover table-striped m-0 mb-3">
                 <thead class="small">
                   <tr>
@@ -188,7 +192,9 @@
               </table>
               <h3
                 class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
-              >Intended Major upon Admission</h3>
+              >
+                Intended Major upon Admission
+              </h3>
               <table class="table table-hover table-striped m-0">
                 <thead class="small">
                   <tr>
@@ -235,26 +241,24 @@
           </axdd-tab-panel>
         </template>
       </axdd-tabs>
-    </div>
-    <!-- end card-body -->
-  </div>
+    </template>
+  </axdd-card>
 </template>
 
 <script>
-
-import Tabs from '../../_components/tabs/tabs.vue';
-import TabItem from '../../_components/tabs/item.vue';
-import TabPanel from '../../_components/tabs/panel.vue';
+import { Card, CardHeading, CardAction, Tabs, TabItem, TabPanel } from 'axdd-components';
 
 export default {
   components: {
+    'axdd-card': Card,
+    'axdd-card-heading': CardHeading,
+    'axdd-card-action': CardAction,
     'axdd-tabs': Tabs,
     'axdd-tab-item': TabItem,
     'axdd-tab-panel': TabPanel,
   },
   data() {
-    return { };
+    return {};
   },
-}
-
+};
 </script>

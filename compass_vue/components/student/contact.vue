@@ -1,14 +1,12 @@
 <template>
-  <div class="card border-light-gray shadow-sm rounded-3 mb-4">
-    <div class="card-header bg-white border-0 p-4 pb-0 d-flex justify-content-between">
-      <h2
-        class="h5 m-0 text-uppercase axdd-font-encode-sans fw-bold text-uppercase text-dark-beige"
-      >Contact</h2>
-      <div>
+  <axdd-card>
+    <template #heading-action>
+      <axdd-card-heading :level="2">Contact</axdd-card-heading>
+      <axdd-card-action>
         <AddContact><i class="bi bi-plus-square-dotted me-2"></i>Record new contact</AddContact>
-      </div>
-    </div>
-    <div class="card-body p-4">
+      </axdd-card-action>
+    </template>
+    <template #body>
       <div class="table-responsive">
         <table class="table m-0">
           <thead class="small">
@@ -91,17 +89,21 @@
           </tbody>
         </table>
       </div>
-    </div>
-  </div>
+    </template>
+  </axdd-card>
 </template>
 
 
 <script>
+import { Card, CardHeading, CardAction } from 'axdd-components';
 import AddContact from '../add-contact.vue';
 
 export default {
   components: {
-    AddContact
+    AddContact,
+    'axdd-card': Card,
+    'axdd-card-heading': CardHeading,
+    'axdd-card-action': CardAction
   },
   data() {
     return { };

@@ -103,7 +103,6 @@
             <StudentMajors :student="student"></StudentMajors>
           </div>
         </div>
-
       </div>
       <div v-else>No student</div>
     </template>
@@ -111,15 +110,9 @@
 </template>
 
 <script>
-
-import Tabs from '../_components/tabs/tabs.vue';
-import TabItem from '../_components/tabs/item.vue';
-import TabPanel from '../_components/tabs/panel.vue';
-
 import Layout from '../layout.vue';
 import dataMixin from '../mixins/data_mixin.js';
-
-import StudentContact from '../components/student/contact.vue'
+import StudentContact from '../components/student/contact.vue';
 import StudentSchedule from '../components/student/schedule.vue';
 import StudentHistory from '../components/student/history.vue';
 import StudentAdviser from '../components/student/adviser.vue';
@@ -131,12 +124,7 @@ import StudentMajors from '../components/student/majors.vue';
 export default {
   mixins: [dataMixin],
   components: {
-    "layout": Layout,
-
-    "axdd-tabs": Tabs,
-    "axdd-tab-item": TabItem,
-    "axdd-tab-panel": TabPanel,
-
+    layout: Layout,
     StudentContact,
     StudentSchedule,
     StudentHistory,
@@ -144,8 +132,8 @@ export default {
     StudentPrograms,
     StudentRetention,
     StudentAcademics,
-    StudentMajors
-},
+    StudentMajors,
+  },
   created: function () {
     this.loadstudent(this.$route.params.id);
   },
