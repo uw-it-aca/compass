@@ -7,7 +7,7 @@
       aria-label="Recipient's username"
       aria-describedby="button-addon2"
     />
-    <button class="btn btn-sm btn-dark-beige" type="button" @click="findStudent">Search</button>
+    <button class="btn btn-sm btn-outline-dark-beige" type="button" @click="findStudent">Search</button>
   </div>
 </template>
 
