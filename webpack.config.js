@@ -1,6 +1,7 @@
+const path = require("path")
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const DjangoBridgePlugin = require('django-webpack-bridge');
+const BundleTracker = require('webpack-bundle-tracker');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader')
@@ -13,10 +14,12 @@ module.exports = (_env, options) => {
 
   const config = {
 
-    //context: __dirname,
+    context: __dirname,
 
+    // MARK: Specify the 'entry point' js for the vue application. Multiple entry points can be
+    // declared using an object
     entry: {
-      main: './app_name_vue/main.js'
+      main: './compass_vue/main.js'
     },
 
     optimization: {
@@ -26,10 +29,12 @@ module.exports = (_env, options) => {
       },
     },
 
+    // MARK: Put the 'bundles' in a name-spaced directory in the django app statics
+    // where it be collected when using 'collectstatic'
     output: {
-      path: '/static/app_name/',
+      path: path.resolve('./compass/static/compass/bundles/'),
       filename: "[name]-[contenthash].js",
-      publicPath: '',
+      publicPath: '/static/compass/bundles/',
     },
 
     plugins: [
@@ -43,7 +48,12 @@ module.exports = (_env, options) => {
       new MiniCssExtractPlugin({
         filename: "[name]-[contenthash].css",
       }),
-      new DjangoBridgePlugin(),
+      
+      // MARK: Put the 'webpack-stats.json' file in the static location directory so that it 
+      // can be accessed during development and production static collection
+      new BundleTracker({
+        filename: './compass/static/webpack-stats.json'
+      }),
     ],
 
     module: {
@@ -80,11 +90,7 @@ module.exports = (_env, options) => {
         },
         {
           test: /\.(png|jpe?g|gif)$/i,
-          use: [
-            {
-              loader: 'file-loader',
-            },
-          ],
+          type: 'asset/resource',
         },
       ]
     },

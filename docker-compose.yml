@@ -6,11 +6,17 @@ services:
       context: .
       target: app-container
     restart: always
-    container_name: app_name_app
+    container_name: compass_app
     environment:
-      - GOOGLE_ANALYTICS_KEY=${GOOGLE_ANALYTICS_KEY}
+      ENV: localdev
+      AUTH: SAML_MOCK
+      GOOGLE_ANALYTICS_KEY: ${GOOGLE_ANALYTICS_KEY}
+      LOGOUT_URL: ${LOGOUT_URL}
+      EDW_USERNAME: ${EDW_USERNAME}
+      EDW_PASSWORD: ${EDW_PASSWORD}
+      EDW_HOSTNAME: ${EDW_HOSTNAME}
     volumes:
-      - ./app_name:/app/app_name
+      - ./compass:/app/compass
       - statics-volume:/static
     ports:
       - "${RUNSERVER_PORT:-8000}:8000"
@@ -21,14 +27,15 @@ services:
       context: .
       target: wpack
     restart: always
-    container_name: app_name_devtools
+    container_name: compass_devtools
     ports:
       - "${BUNDLE_ANALYZER_PORT:-8888}:8888" # Required when environment.BUNDLE_ANALYZER is true
     environment:
       VUE_DEVTOOLS: "True"
       BUNDLE_ANALYZER: "True"
     volumes:
-      - ./app_name_vue:/app/app_name_vue
+      - ./compass:/app/compass # expose main django app so webpack-loader can output bundles here
+      - ./compass_vue:/app/compass_vue
       - statics-volume:/static
     command: npx webpack --watch --mode=development
     stdin_open: true
