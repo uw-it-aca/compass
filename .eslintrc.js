@@ -1,3 +1,6 @@
+/* eslint-env node */
+require("@rushstack/eslint-patch/modern-module-resolution");
+
 module.exports = {
   root: true,
   env: {
@@ -10,17 +13,15 @@ module.exports = {
   plugins: ["jest"],
   extends: [
     // use the recommended rule set for both plain javascript and vue
-    //'eslint:recommended',
-    //'plugin:vue/recommended',
-    //'plugin:jest/recommended',
-    //'prettier',
-    //'prettier/vue',
+    "plugin:jest/recommended",
     "plugin:vue/vue3-essential",
     "eslint:recommended",
     "@vue/eslint-config-prettier",
   ],
-  parserOptions: {
-    parser: "babel-eslint",
+  settings: {
+    jest: {
+      version: 26,
+    },
   },
   rules: {
     // global rules

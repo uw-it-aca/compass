@@ -43,35 +43,36 @@
     </template>
   </topbar>-->
 
-   <sidebar :app-name="appName"
+  <sidebar
+    :app-name="appName"
     :app-root-url="appRootUrl"
     :page-title="pageTitle"
     :user-name="userName"
-    :sign-out-url="signOutUrl">
+    :sign-out-url="signOutUrl"
+  >
     <template #navigation>
       <navigation></navigation>
     </template>
     <template #main>
-        <slot name="title">
-          <h1 class="visually-hidden">{{ pageTitle }}</h1>
-        </slot>
+      <slot name="title">
+        <h1 class="visually-hidden">{{ pageTitle }}</h1>
+      </slot>
       <slot name="content"></slot>
     </template>
     <template #footer></template>
   </sidebar>
-
 </template>
 
 <script>
-import { Topbar, Sidebar } from 'axdd-components';
+import { Topbar, Sidebar } from "axdd-components";
 import Nav from "./components/nav.vue";
 
 export default {
-  name: 'Compass',
+  name: "Compass",
   components: {
-    'topbar': Topbar,
-    'sidebar': Sidebar,
-    'navigation': Nav,
+    topbar: Topbar,
+    sidebar: Sidebar,
+    navigation: Nav,
   },
   props: {
     pageTitle: {
@@ -82,10 +83,10 @@ export default {
   data() {
     return {
       // minimum application setup overrides
-      appName: 'Compass',
-      appRootUrl: '/',
-      userName: 'javerage',
-      signOutUrl: document.body.getAttribute('data-logout-url'),
+      appName: "Compass",
+      appRootUrl: "/",
+      userName: "javerage",
+      signOutUrl: document.body.getAttribute("data-logout-url"),
       // automatically set year
       currentYear: new Date().getFullYear(),
     };
@@ -97,5 +98,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

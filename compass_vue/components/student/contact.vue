@@ -3,7 +3,10 @@
     <template #heading-action>
       <axdd-card-heading :level="2">Contact</axdd-card-heading>
       <axdd-card-action>
-        <AddContact><i class="bi bi-plus-square-dotted me-2"></i>Record new contact</AddContact>
+        <AddContact
+          ><i class="bi bi-plus-square-dotted me-2"></i>Record new
+          contact</AddContact
+        >
       </axdd-card-action>
     </template>
     <template #body>
@@ -29,10 +32,10 @@
                   <span class="badge bg-beige text-dark fw-normal">
                     <i class="bi bi-lock-fill"></i> Restricted
                   </span>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
-                  mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
-                  expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                  dolores excepturi?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa
+                  beatae omnis doloribus expedita iure fuga obcaecati modi
+                  incidunt. Repellendus velit asperiores dolores excepturi?
                 </p>
                 <p class="text-end small">
                   <a href="#">Edit contact</a>
@@ -46,10 +49,10 @@
               <td>Boris Washington</td>
               <td>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
-                  mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
-                  expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                  dolores excepturi?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa
+                  beatae omnis doloribus expedita iure fuga obcaecati modi
+                  incidunt. Repellendus velit asperiores dolores excepturi?
                 </p>
               </td>
             </tr>
@@ -62,10 +65,11 @@
                 <p>
                   <span class="badge bg-beige text-dark fw-normal">
                     <i class="bi bi-lock-fill"></i> Restricted
-                  </span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
-                  mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
-                  expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                  dolores excepturi?
+                  </span>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa
+                  beatae omnis doloribus expedita iure fuga obcaecati modi
+                  incidunt. Repellendus velit asperiores dolores excepturi?
                 </p>
                 <p class="text-end small">
                   <a href="#">Edit contact</a>
@@ -79,10 +83,10 @@
               <td>Otto Wilson</td>
               <td>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
-                  mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
-                  expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                  dolores excepturi?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa
+                  beatae omnis doloribus expedita iure fuga obcaecati modi
+                  incidunt. Repellendus velit asperiores dolores excepturi?
                 </p>
               </td>
             </tr>
@@ -93,21 +97,19 @@
   </axdd-card>
 </template>
 
-
 <script>
-import { Card, CardHeading, CardAction } from 'axdd-components';
-import AddContact from '../add-contact.vue';
+import { Card, CardHeading, CardAction } from "axdd-components";
+import AddContact from "../add-contact.vue";
 
 export default {
   components: {
     AddContact,
-    'axdd-card': Card,
-    'axdd-card-heading': CardHeading,
-    'axdd-card-action': CardAction
+    "axdd-card": Card,
+    "axdd-card-heading": CardHeading,
+    "axdd-card-action": CardAction,
   },
   data() {
-    return { };
+    return {};
   },
-}
-
+};
 </script>

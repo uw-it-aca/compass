@@ -6,11 +6,18 @@
     <template #body>
       <axdd-tabs :tabs-id="'history'">
         <template #items>
-          <axdd-tab-item :tabs-id="'history'" :panel-id="'visit'" :active-tab="true"
+          <axdd-tab-item
+            :tabs-id="'history'"
+            :panel-id="'visit'"
+            :active-tab="true"
             >Visit</axdd-tab-item
           >
-          <axdd-tab-item :tabs-id="'history'" :panel-id="'transcript'">Transcript</axdd-tab-item>
-          <axdd-tab-item :tabs-id="'history'" :panel-id="'major'">Major</axdd-tab-item>
+          <axdd-tab-item :tabs-id="'history'" :panel-id="'transcript'"
+            >Transcript</axdd-tab-item
+          >
+          <axdd-tab-item :tabs-id="'history'" :panel-id="'major'"
+            >Major</axdd-tab-item
+          >
         </template>
         <template #panels>
           <axdd-tab-panel :panel-id="'visit'" :active-panel="true">
@@ -104,7 +111,14 @@
           <axdd-tab-panel :panel-id="'major'">
             <div class="table-responsive">
               <h3
-                class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
+                class="
+                  h6
+                  text-uppercase
+                  fw-bold
+                  text-uppercase
+                  axdd-font-encode-sans
+                  text-dark-beige
+                "
               >
                 Accepted Major
               </h3>
@@ -135,7 +149,14 @@
             </div>
             <div class="table-responsive">
               <h3
-                class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
+                class="
+                  h6
+                  text-uppercase
+                  fw-bold
+                  text-uppercase
+                  axdd-font-encode-sans
+                  text-dark-beige
+                "
               >
                 Intended Major
               </h3>
@@ -191,7 +212,14 @@
                 </tbody>
               </table>
               <h3
-                class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
+                class="
+                  h6
+                  text-uppercase
+                  fw-bold
+                  text-uppercase
+                  axdd-font-encode-sans
+                  text-dark-beige
+                "
               >
                 Intended Major upon Admission
               </h3>
@@ -246,16 +274,23 @@
 </template>
 
 <script>
-import { Card, CardHeading, CardAction, Tabs, TabItem, TabPanel } from 'axdd-components';
+import {
+  Card,
+  CardHeading,
+  CardAction,
+  Tabs,
+  TabItem,
+  TabPanel,
+} from "axdd-components";
 
 export default {
   components: {
-    'axdd-card': Card,
-    'axdd-card-heading': CardHeading,
-    'axdd-card-action': CardAction,
-    'axdd-tabs': Tabs,
-    'axdd-tab-item': TabItem,
-    'axdd-tab-panel': TabPanel,
+    "axdd-card": Card,
+    "axdd-card-heading": CardHeading,
+    "axdd-card-action": CardAction,
+    "axdd-tabs": Tabs,
+    "axdd-tab-item": TabItem,
+    "axdd-tab-panel": TabPanel,
   },
   data() {
     return {};

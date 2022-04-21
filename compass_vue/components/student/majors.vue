@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { Card, CardHeading } from 'axdd-components';
+import { Card, CardHeading } from "axdd-components";
 
 export default {
   props: {
@@ -28,8 +28,8 @@ export default {
     },
   },
   components: {
-    'axdd-card': Card,
-    'axdd-card-heading': CardHeading,
+    "axdd-card": Card,
+    "axdd-card-heading": CardHeading,
   },
   data() {
     return {};

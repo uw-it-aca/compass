@@ -2,8 +2,8 @@
   <table class="table mb-0">
     <thead class="small">
       <tr>
-        <th scope="col" style="width: 325px;">Name</th>
-        <th scope="col" style="width:155px;">Student Number</th>
+        <th scope="col" style="width: 325px">Name</th>
+        <th scope="col" style="width: 155px">Student Number</th>
         <th scope="col">Priority</th>
         <th scope="col">Class</th>
         <th scope="col">Enroll Status</th>
@@ -12,7 +12,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="index in 6" :key="index" >
+      <tr v-for="index in 6" :key="index">
         <td>
           <div class="d-flex">
             <div class="me-2" style="min-width: 55px">
@@ -26,8 +26,11 @@
             <div class="flex-fill">
               <div class="text-nowrap">
                 <span>Pals, Hue</span
-                ><span class="badge rounded-pill border border-muted text-dark small">M</span
-                ><span class="badge rounded-pill border border-muted text-dark small"
+                ><span
+                  class="badge rounded-pill border border-muted text-dark small"
+                  >M</span
+                ><span
+                  class="badge rounded-pill border border-muted text-dark small"
                   ><i class="bi bi-trophy-fill text-purple"></i
                 ></span>
               </div>
@@ -43,23 +46,24 @@
         <td>Enrolled</td>
         <td>Active</td>
         <td class="align-middle text-end">
-          <add-contact><i class="bi bi-plus-square-dotted me-2"></i>Add Notes</add-contact>
+          <add-contact
+            ><i class="bi bi-plus-square-dotted me-2"></i>Add Notes</add-contact
+          >
         </td>
       </tr>
     </tbody>
   </table>
 </template>
 
-
 <script>
-import AddContact from '../components/add-contact.vue';
+import AddContact from "../components/add-contact.vue";
 
 export default {
   components: {
-    'add-contact': AddContact,
+    "add-contact": AddContact,
   },
   data() {
-    return { }
-  }
+    return {};
+  },
 };
 </script>

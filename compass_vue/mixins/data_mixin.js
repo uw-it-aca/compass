@@ -1,5 +1,5 @@
-import 'regenerator-runtime/runtime';
-import axios from 'axios';
+import "regenerator-runtime/runtime";
+import axios from "axios";
 
 const dataMixin = {
   methods: {
@@ -7,14 +7,14 @@ const dataMixin = {
       const csrfToken = this.$store.state.csrfToken;
       const axiosConfig = {
         headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
-          'X-CSRFToken': csrfToken,
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          "X-CSRFToken": csrfToken,
         },
       };
       let options = Object.assign({}, paginationOptions, searchOptions);
       return axios.get(
-        '/api/internal/student/',
+        "/api/internal/student/",
         { params: options },
         axiosConfig
       );
@@ -23,17 +23,17 @@ const dataMixin = {
       const csrfToken = this.$store.state.csrfToken;
       const axiosConfig = {
         headers: {
-          'Content-Type': 'application/json;charset=UTF-8',
-          'Access-Control-Allow-Origin': '*',
-          'X-CSRFToken': csrfToken,
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          "X-CSRFToken": csrfToken,
         },
       };
       return axios.get(
-        '/api/internal/student/' + studentNumber + '/',
+        "/api/internal/student/" + studentNumber + "/",
         {},
         axiosConfig
       );
-    }
+    },
   },
 };
 

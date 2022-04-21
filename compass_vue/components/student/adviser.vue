@@ -22,7 +22,10 @@
             <p>This student does not have an assigned adviser.</p>
           </li>
           <li>
-            <select class="form-select form-select-sm mb-2" aria-label=".form-select-sm example">
+            <select
+              class="form-select form-select-sm mb-2"
+              aria-label=".form-select-sm example"
+            >
               <option selected>Select adviser</option>
               <option value="1">Bob</option>
               <option value="2">Tim</option>
@@ -30,7 +33,9 @@
             </select>
           </li>
           <li class="text-end">
-            <button type="button" class="btn btn-outline-dark-beige btn-sm">Update adviser</button>
+            <button type="button" class="btn btn-outline-dark-beige btn-sm">
+              Update adviser
+            </button>
           </li>
         </ul>
       </div>
@@ -39,12 +44,12 @@
 </template>
 
 <script>
-import { Card, CardHeading } from 'axdd-components';
+import { Card, CardHeading } from "axdd-components";
 
 export default {
   components: {
-    'axdd-card': Card,
-    'axdd-card-heading': CardHeading,
+    "axdd-card": Card,
+    "axdd-card-heading": CardHeading,
   },
 };
 </script>

@@ -17,7 +17,9 @@
             v-model="searchOption"
             style="margin-top: 6px"
           />
-          <label class="form-check-label" :for="option.id">{{ option.label }}</label>
+          <label class="form-check-label" :for="option.id">{{
+            option.label
+          }}</label>
         </div>
       </div>
     </div>
@@ -52,19 +54,19 @@ export default {
     return {
       // search filters
       searchOption: null,
-      searchText: '',
+      searchText: "",
       searchRadioOptions: [
         {
-          id: 'student-number',
-          label: 'Number',
+          id: "student-number",
+          label: "Number",
         },
         {
-          id: 'student-name',
-          label: 'Name',
+          id: "student-name",
+          label: "Name",
         },
         {
-          id: 'student-email',
-          label: 'UW NetId',
+          id: "student-email",
+          label: "UW NetId",
         },
       ],
     };
@@ -87,12 +89,12 @@ export default {
       this.hasResults = true;
     },
     clickButton: function () {
-      if (this.$route.path == '/search') {
+      if (this.$route.path == "/search") {
         // reload page if already on search
         this.$router.go();
       } else {
         // push to search page
-        this.$router.push('/search');
+        this.$router.push("/search");
       }
     },
   },

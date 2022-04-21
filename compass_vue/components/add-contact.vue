@@ -46,7 +46,9 @@
             <div class="col">
               <div class="row">
                 <div class="col">
-                  <label for="appt-time" class="form-label">Check in time:</label>
+                  <label for="appt-time" class="form-label"
+                    >Check in time:</label
+                  >
                   <input
                     id="appt-time"
                     type="time"
@@ -58,7 +60,10 @@
 
                 <div class="col">
                   <label class="form-label">Duration:</label>
-                  <select class="form-select" aria-label="Default select example">
+                  <select
+                    class="form-select"
+                    aria-label="Default select example"
+                  >
                     <option selected>15</option>
                     <option value="1">30</option>
                     <option value="2">60</option>
@@ -72,55 +77,125 @@
             <label class="form-label">Topics Covered:</label>
             <div style="column-count: 3">
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value id="flexCheck1" />
-                <label class="form-check-label" for="flexCheck1">Add/Drop Class</label>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value
+                  id="flexCheck1"
+                />
+                <label class="form-check-label" for="flexCheck1"
+                  >Add/Drop Class</label
+                >
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value id="flexCheck2" />
-                <label class="form-check-label" for="flexCheck2">Join/Affiliate</label>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value
+                  id="flexCheck2"
+                />
+                <label class="form-check-label" for="flexCheck2"
+                  >Join/Affiliate</label
+                >
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value id="flexCheck3" />
-                <label class="form-check-label" for="flexCheck3">Academic Difficulties</label>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value
+                  id="flexCheck3"
+                />
+                <label class="form-check-label" for="flexCheck3"
+                  >Academic Difficulties</label
+                >
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value id="flexCheck4" />
-                <label class="form-check-label" for="flexCheck4">Hardship Withdrawl</label>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value
+                  id="flexCheck4"
+                />
+                <label class="form-check-label" for="flexCheck4"
+                  >Hardship Withdrawl</label
+                >
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value id="flexCheck5" />
-                <label class="form-check-label" for="flexCheck5">Internships</label>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value
+                  id="flexCheck5"
+                />
+                <label class="form-check-label" for="flexCheck5"
+                  >Internships</label
+                >
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value id="flexCheck6" />
-                <label class="form-check-label" for="flexCheck6">Research Opportunities</label>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value
+                  id="flexCheck6"
+                />
+                <label class="form-check-label" for="flexCheck6"
+                  >Research Opportunities</label
+                >
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value id="flexCheck7" />
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value
+                  id="flexCheck7"
+                />
                 <label class="form-check-label" for="flexCheck7"
                   >Graduate Professional School</label
                 >
               </div>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value id="flexCheck8" />
-                <label class="form-check-label" for="flexCheck8">Testing/Assessment</label>
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  value
+                  id="flexCheck8"
+                />
+                <label class="form-check-label" for="flexCheck8"
+                  >Testing/Assessment</label
+                >
               </div>
             </div>
           </div>
           <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label">Notes</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <label for="exampleFormControlTextarea1" class="form-label"
+              >Notes</label
+            >
+            <textarea
+              class="form-control"
+              id="exampleFormControlTextarea1"
+              rows="3"
+            ></textarea>
           </div>
 
           <div class="mb-3">
             <label for="exampleFormControlTextarea2" class="form-label"
               >Actions and Recommmendations</label
             >
-            <textarea class="form-control" id="exampleFormControlTextarea2" rows="3"></textarea>
+            <textarea
+              class="form-control"
+              id="exampleFormControlTextarea2"
+              rows="3"
+            ></textarea>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
           <button type="button" class="btn btn-primary">Save contact</button>
         </div>
       </div>

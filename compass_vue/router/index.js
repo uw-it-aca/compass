@@ -1,32 +1,31 @@
-import { createWebHistory, createRouter } from 'vue-router';
+import { createWebHistory, createRouter } from "vue-router";
 import { trackRouter } from "vue-gtag-next";
 
 // page components
-import Home from '../pages/home.vue';
-import Caseload from '../pages/caseload.vue';
-import Student from '../pages/student.vue';
-
+import Home from "../pages/home.vue";
+import Caseload from "../pages/caseload.vue";
+import Student from "../pages/student.vue";
 
 const routes = [
   {
-    path: '/',
+    path: "/",
     component: Home,
     pathToRegexpOptions: { strict: true },
-    props: true
+    props: true,
   },
   {
-    path: '/caseload',
-    name: 'Caseload',
+    path: "/caseload",
+    name: "Caseload",
     component: Caseload,
     pathToRegexpOptions: { strict: true },
-    props: true
+    props: true,
   },
   {
-    path: '/student/:id?',
-    name: 'Student',
+    path: "/student/:id?",
+    name: "Student",
     component: Student,
     pathToRegexpOptions: { strict: true },
-    props: true
+    props: true,
   },
 ];
 
@@ -35,9 +34,9 @@ const router = createRouter({
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
-      return savedPosition
+      return savedPosition;
     } else {
-      return { top: 0 }
+      return { top: 0 };
     }
   },
 });

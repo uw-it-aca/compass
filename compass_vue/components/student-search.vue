@@ -7,7 +7,13 @@
       aria-label="Recipient's username"
       aria-describedby="button-addon2"
     />
-    <button class="btn btn-sm btn-outline-dark-beige" type="button" @click="findStudent">Search</button>
+    <button
+      class="btn btn-sm btn-outline-dark-beige"
+      type="button"
+      @click="findStudent"
+    >
+      Search
+    </button>
   </div>
 </template>
 
@@ -19,7 +25,7 @@ export default {
   methods: {
     findStudent: function () {
       // push to search page
-      this.$router.push('/student/1544522');
+      this.$router.push("/student/1544522");
     },
   },
 };

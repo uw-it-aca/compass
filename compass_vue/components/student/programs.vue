@@ -19,7 +19,9 @@
         <li>Pre-professional: yes/no</li>
         <li>IC Eligible: yes/no</li>
         <li>
-          <template v-if="student.special_program_code"> <b>yes</b>/no </template>
+          <template v-if="student.special_program_code">
+            <b>yes</b>/no
+          </template>
           <template v-else>CAMP, TRIO SSS, Champions</template>
         </li>
       </ul>
@@ -28,27 +30,56 @@
       </p>
       <div class="border border-danger">
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value id="defaultCheck1" />
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value
+            id="defaultCheck1"
+          />
           <label class="form-check-label" for="defaultCheck1">CAMP</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value id="defaultCheck2" />
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value
+            id="defaultCheck2"
+          />
           <label class="form-check-label" for="defaultCheck2">TRIO</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value id="defaultCheck3" />
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value
+            id="defaultCheck3"
+          />
           <label class="form-check-label" for="defaultCheck3">SSS</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value id="defaultCheck4" />
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value
+            id="defaultCheck4"
+          />
           <label class="form-check-label" for="defaultCheck4">Champions</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value id="defaultCheck5" />
-          <label class="form-check-label" for="defaultCheck5">IC Eligible</label>
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value
+            id="defaultCheck5"
+          />
+          <label class="form-check-label" for="defaultCheck5"
+            >IC Eligible</label
+          >
         </div>
         <div class="text-end">
-          <button type="button" class="btn btn-outline-dark-beige btn-sm">Update programs</button>
+          <button type="button" class="btn btn-outline-dark-beige btn-sm">
+            Update programs
+          </button>
         </div>
       </div>
     </template>
@@ -56,7 +87,7 @@
 </template>
 
 <script>
-import { Card, CardHeading } from 'axdd-components';
+import { Card, CardHeading } from "axdd-components";
 
 export default {
   props: {
@@ -66,8 +97,8 @@ export default {
     },
   },
   components: {
-    'axdd-card': Card,
-    'axdd-card-heading': CardHeading,
+    "axdd-card": Card,
+    "axdd-card-heading": CardHeading,
   },
   data() {
     return {};
