@@ -13,7 +13,7 @@ module.exports = {
   plugins: ["jest"],
   extends: [
     // use the recommended rule set for both plain javascript and vue
-    "plugin:jest/recommended",
+    //"plugin:jest/recommended",
     "plugin:vue/vue3-essential",
     "eslint:recommended",
     "@vue/eslint-config-prettier",

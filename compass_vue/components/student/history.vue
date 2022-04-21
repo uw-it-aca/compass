@@ -274,20 +274,12 @@
 </template>
 
 <script>
-import {
-  Card,
-  CardHeading,
-  CardAction,
-  Tabs,
-  TabItem,
-  TabPanel,
-} from "axdd-components";
+import { Card, CardHeading, Tabs, TabItem, TabPanel } from "axdd-components";
 
 export default {
   components: {
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
-    "axdd-card-action": CardAction,
     "axdd-tabs": Tabs,
     "axdd-tab-item": TabItem,
     "axdd-tab-panel": TabPanel,

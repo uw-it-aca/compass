@@ -1,9 +1,10 @@
 @use "sass:map";
-@import 'axdd-components/src/assets/css/custom.scss';
+@import 'axdd-components/src/assets/css/custom';
 
 $enable-cssgrid: true;
+
 // override max width of containers
-//$container-max-widths: map.merge($container-max-widths, (xl: 1400px, xxl: 1600px));
+// $container-max-widths: map.merge($container-max-widths, (xl: 1400px, xxl: 1600px));
 
 // compass custom colors
 $custom-colors: (
