@@ -29,10 +29,10 @@
                     aria-label="Default select example"
                   >
                     <option selected>All advisers</option>
-                    <option value="4">All un-assigned (ADMIN)</option>
-                    <option value="1">Jon Average</option>
-                    <option value="2">April Foolery</option>
-                    <option value="3">Bob Samsonite</option>
+                    <option>All un-assigned (ADMIN)</option>
+                    <option v-for="adviser in advisers" :key="adviser.id" value="adviser.uwnetid">
+                      {{adviser.display_name}}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -483,8 +483,8 @@ export default {
     "axdd-card-action": CardAction,
   },
   created: function () {
-    setTimeout(this.loadStudentList, 3000);
-    //this.loadStudentList();
+    this.loadStudentList();
+    this.loadAdviserList();
   },
   data() {
     return {
@@ -494,6 +494,7 @@ export default {
 
       // data
       students: [],
+      advisers: [],
       // pagination
       studentsCount: 0,
       currentPage: 1,
@@ -507,8 +508,8 @@ export default {
   computed: {
     paginationOptions: function () {
       return {
-        offset: this.pageSize * (this.currentPage - 1),
-        limit: this.pageSize,
+        page_num: this.currentPage,
+        page_size: this.pageSize,
       };
     },
     numPages: function () {
@@ -530,6 +531,16 @@ export default {
           }
 
           this.isLoading = false;
+        }
+      );
+    },
+    loadAdviserList: function() {
+      let _this = this;
+      this.getAdviserList().then(
+        (response) => {
+          if (response.data) {
+            _this.advisers = response.data;
+          }
         }
       );
     },

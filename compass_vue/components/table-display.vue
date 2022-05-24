@@ -12,20 +12,26 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="index in 6" :key="index">
+      <tr v-for="person in persons" :key="person.id">
         <td>
           <div class="d-flex">
             <div class="me-2" style="min-width: 55px">
               <div class="border-danger rounded-circle border border-3">
                 <img
-                  src="https://randomuser.me/api/portraits/thumb/men/4.jpg"
+                  v-if="person.student.gender === 'M'"
+                  src="https://randomuser.me/api/portraits/thumb/men/1.jpg"
+                  class="img-fluid rounded-circle border border-white border-2"
+                />
+                <img
+                  v-else
+                  src="https://randomuser.me/api/portraits/thumb/women/1.jpg"
                   class="img-fluid rounded-circle border border-white border-2"
                 />
               </div>
             </div>
             <div class="flex-fill">
               <div class="text-nowrap">
-                <span>Pals, Hue</span
+                <span>{{person.display_name}}</span
                 ><span
                   class="badge rounded-pill border border-muted text-dark small"
                   >M</span
@@ -34,15 +40,17 @@
                   ><i class="bi bi-trophy-fill text-purple"></i
                 ></span>
               </div>
-              <div class="small text-secondary">hp396</div>
+              <div class="small text-secondary">{{person.uwnetid}}</div>
             </div>
           </div>
         </td>
         <td>
-          <router-link :to="{ path: '/student/1544522' }">1544522</router-link>
+          <router-link :to="{ path: '/student/'+person.student.student_number }">
+              {{person.student.student_number}}
+          </router-link>
         </td>
         <td>top/middle/bottom</td>
-        <td>1st Year Professional</td>
+        <td>{{person.student.class_desc}}</td>
         <td>Enrolled</td>
         <td>Active</td>
         <td class="align-middle text-end">
@@ -61,6 +69,12 @@ import AddContact from "../components/add-contact.vue";
 export default {
   components: {
     "add-contact": AddContact,
+  },
+  props: {
+    persons: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
     return {};

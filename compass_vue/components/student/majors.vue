@@ -7,9 +7,9 @@
       <ul>
         <li>
           Accepted:
-          <span v-for="(major, index) in student.major" :key="index">
-            {{ major.major_full_name }}
-            <span v-if="index + 1 < student.major.length">,</span>
+          <span v-for="(major, index) in person.student.majors" :key="index">
+            {{ major.major_name }}
+            <span v-if="index + 1 < person.student.majors.length">,</span>
           </span>
         </li>
       </ul>
@@ -22,7 +22,7 @@ import { Card, CardHeading } from "axdd-components";
 
 export default {
   props: {
-    student: {
+    person: {
       type: Object,
       required: true,
     },

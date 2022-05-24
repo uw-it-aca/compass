@@ -4,6 +4,7 @@
 from django.urls import include, re_path
 from compass.views.pages import LandingView
 from compass.views.api.student import StudentListView, StudentDetailView
+from compass.views.api.adviser import AdviserListView
 
 
 urlpatterns = [
@@ -11,5 +12,7 @@ urlpatterns = [
             StudentListView.as_view()),
     re_path(r'^api/internal/student/(?P<student_number>[-@:\w]+)/$',
             StudentDetailView.as_view()),
+    re_path(r'^api/internal/adviser/$',
+            AdviserListView.as_view()),
     re_path(r"^.*$", LandingView.as_view(), name="index"),
 ]
