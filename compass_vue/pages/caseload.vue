@@ -445,6 +445,7 @@
             </template>
             <template v-if="!isLoading" #footer>
               <pagination
+                v-if="studentsCount > 0"
                 v-model="currentPage"
                 :records="studentsCount"
                 :per-page="pageSize"
