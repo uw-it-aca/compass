@@ -335,7 +335,7 @@
             <template #body>
               <table-loading v-if="isLoading"></table-loading>
               <div v-else class="table-responsive">
-                <table class="table mb-0">
+                <table v-if="studentsCount > 0" class="table mb-0">
                   <thead class="small">
                     <tr>
                       <th scope="col" class="ps-0">Name</th>
@@ -441,9 +441,12 @@
                     </tr>
                   </tbody>
                 </table>
+                <div v-else>
+                  no students in your caseload
+                </div>
               </div>
             </template>
-            <template v-if="!isLoading" #footer>
+            <template v-if="!isLoading && studentsCount > 0" #footer>
               <pagination
                 v-if="studentsCount > 0"
                 v-model="currentPage"
