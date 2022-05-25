@@ -4,10 +4,8 @@
       <tr>
         <th scope="col" style="width: 325px">Name</th>
         <th scope="col" style="width: 155px">Student Number</th>
-        <th scope="col">Priority</th>
         <th scope="col">Class</th>
-        <th scope="col">Enroll Status</th>
-        <th scope="col">Status</th>
+        <th scope="col">Enrollment Status</th>
         <th scope="col">&nbsp;</th>
       </tr>
     </thead>
@@ -31,7 +29,7 @@
             </div>
             <div class="flex-fill">
               <div class="text-nowrap">
-                <span>{{person.display_name}}</span
+                <span>{{ person.display_name }}</span
                 ><span
                   class="badge rounded-pill border border-muted text-dark small"
                   >M</span
@@ -40,20 +38,21 @@
                   ><i class="bi bi-trophy-fill text-purple"></i
                 ></span>
               </div>
-              <div class="small text-secondary">{{person.uwnetid}}</div>
+              <div class="small text-secondary">{{ person.uwnetid }}</div>
             </div>
           </div>
         </td>
         <td>
-          <router-link :to="{ path: '/student/'+person.student.student_number }">
-              {{person.student.student_number}}
+          <router-link
+            :to="{ path: '/student/' + person.student.student_number }"
+          >
+            {{ person.student.student_number }}
           </router-link>
         </td>
-        <td>top/middle/bottom</td>
-        <td>{{person.student.class_desc}}</td>
+        <td>{{ person.student.class_desc }}</td>
         <td>Enrolled</td>
-        <td>Active</td>
         <td class="align-middle text-end">
+          <div class="small text-danger">You have not added a note yet!</div>
           <add-contact
             ><i class="bi bi-plus-square-dotted me-2"></i>Add Notes</add-contact
           >
