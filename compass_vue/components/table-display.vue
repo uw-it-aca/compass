@@ -31,9 +31,16 @@
               <div class="text-nowrap">
                 <span>{{ person.display_name }}</span
                 ><span
+                  v-if="person.student.gender === 'M'"
                   class="badge rounded-pill border border-muted text-dark small"
                   >M</span
+                >
+                <span
+                  v-if="person.student.gender === 'F'"
+                  class="badge rounded-pill border border-muted text-dark small"
+                  >F</span
                 ><span
+                  v-if="person.student.sports.length > 0"
                   class="badge rounded-pill border border-muted text-dark small"
                   ><i class="bi bi-trophy-fill text-purple"></i
                 ></span>
@@ -50,7 +57,12 @@
           </router-link>
         </td>
         <td>{{ person.student.class_desc }}</td>
-        <td>Enrolled</td>
+        <td>
+          <template v-if="person.student.registered_in_quarter">
+            Registered
+          </template>
+          <template v-else> Unregistered </template>
+        </td>
         <td class="align-middle text-end">
           <div class="small text-danger">You have not added a note yet!</div>
           <add-contact

@@ -69,9 +69,11 @@
                         {{ person.pronouns }}
                       </span>
                     </p>
-                    <div>
-                      <i class="bi bi-trophy-fill text-purple"></i> Sport: Track
-                      &amp; Field
+                    <div v-if="person.student.sports.length > 0">
+                      <i class="bi bi-trophy-fill text-purple"></i> Sport:
+                      <span v-for="(sport, index) in person.student.sports" :key="sport.code">
+                          {{sport.sport_code}} <span v-if="index+1 < person.student.sports.length">, </span>
+                      </span>
                     </div>
                   </div>
                 </div>

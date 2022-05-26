@@ -18,7 +18,7 @@
         <li>Enrollment Status: {{ person.student.enrollment_desc }}</li>
         <li>Class standing: {{ person.student.class_desc }}</li>
         <li>Total Credits: {{ person.student.total_credits }}</li>
-        <li>Total UW Credits: 170.00</li>
+        <li>Total UW Credits: {{ person.student.total_uw_credits }}</li>
         <li>
           Transfer student:
           <b>yes</b>/no
