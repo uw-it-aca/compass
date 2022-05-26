@@ -54,9 +54,7 @@
           </div>
         </td>
         <td>
-          <router-link
-            :to="{ path: '/student/' + person.student.student_number }"
-          >
+          <router-link :to="{ path: '/student/' + person.uwnetid }">
             {{ person.student.student_number }}
           </router-link>
         </td>

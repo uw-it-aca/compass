@@ -25,7 +25,7 @@ export default {
   methods: {
     findStudent: function () {
       // push to search page
-      this.$router.push("/student/1544522");
+      this.$router.push("/student/javerage");
     },
   },
 };
