@@ -27,12 +27,20 @@
                       <img
                         v-if="person.gender === 'F'"
                         src="https://randomuser.me/api/portraits/women/4.jpg"
-                        class="img-fluid rounded-circle border border-light border-3"
+                        class="
+                          img-fluid
+                          rounded-circle
+                          border border-light border-3
+                        "
                       />
                       <img
                         v-else
                         src="https://randomuser.me/api/portraits/men/4.jpg"
-                        class="img-fluid rounded-circle border border-light border-3"
+                        class="
+                          img-fluid
+                          rounded-circle
+                          border border-light border-3
+                        "
                       />
                     </div>
                     <div class="text-center mb-4">
@@ -44,8 +52,7 @@
                       <template v-if="person.preferred_first_name">
                         {{ person.preferred_last_name }}
                       </template>
-                      <template v-else>
-                        {{ person.first_name }} </template
+                      <template v-else> {{ person.first_name }} </template
                       >&nbsp;
                       <template v-if="person.preferred_surname">
                         {{ person.preferred_surname }}
@@ -60,7 +67,13 @@
                     </div>
                     <p>
                       <span
-                        class="badge rounded-pill border border-muted text-dark me-1"
+                        class="
+                          badge
+                          rounded-pill
+                          border border-muted
+                          text-dark
+                          me-1
+                        "
                         >{{ person.gender }}</span
                       >
                       <span
@@ -71,8 +84,14 @@
                     </p>
                     <div v-if="person.student.sports.length > 0">
                       <i class="bi bi-trophy-fill text-purple"></i> Sport:
-                      <span v-for="(sport, index) in person.student.sports" :key="sport.code">
-                          {{sport.sport_code}} <span v-if="index+1 < person.student.sports.length">, </span>
+                      <span
+                        v-for="(sport, index) in person.student.sports"
+                        :key="sport.code"
+                      >
+                        {{ sport.sport_code }}
+                        <span v-if="index + 1 < person.student.sports.length"
+                          >,
+                        </span>
                       </span>
                     </div>
                   </div>
