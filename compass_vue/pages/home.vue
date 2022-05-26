@@ -76,7 +76,7 @@ export default {
   },
   mounted() {
     //this.loadStudentList()
-    setTimeout(this.loadStudentList, 4000);
+    setTimeout(this.loadStudentList, 2000);
   },
 };
 </script>
