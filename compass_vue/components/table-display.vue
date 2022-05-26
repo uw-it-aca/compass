@@ -2,11 +2,11 @@
   <table class="table mb-0">
     <thead class="small">
       <tr>
-        <th scope="col" style="width: 325px">Name</th>
-        <th scope="col" style="width: 155px">Student Number</th>
-        <th scope="col">Class</th>
-        <th scope="col">Enrollment Status</th>
-        <th scope="col">&nbsp;</th>
+        <th scope="col">Student</th>
+        <th scope="col">Date</th>
+        <th scope="col">Time</th>
+        <th scope="col">Contact Type</th>
+        <th scope="col">Notes</th>
       </tr>
     </thead>
     <tbody>
@@ -14,7 +14,7 @@
         <td>
           <div class="d-flex">
             <div class="me-2" style="min-width: 55px">
-              <div class="border-danger rounded-circle border border-3">
+              <div class="rounded-circle border border-light border-3">
                 <img
                   v-if="person.student.gender === 'M'"
                   src="https://randomuser.me/api/portraits/thumb/men/1.jpg"
@@ -47,25 +47,24 @@
               </div>
               <div class="small text-secondary">
                 <router-link :to="{ path: '/student/' + person.uwnetid }">
-                  {{ person.uwnetid }}
+                  {{ person.uwnetid }}, {{ person.student.student_number }}
                 </router-link>
               </div>
+              {{ person.student.class_desc }}
+              <template v-if="person.student.registered_in_quarter">
+            Registered
+          </template>
+          <template v-else> Unregistered </template>
+
             </div>
           </div>
         </td>
         <td>
-          <router-link :to="{ path: '/student/' + person.uwnetid }">
-            {{ person.student.student_number }}
-          </router-link>
+          May 26, 2022
         </td>
-        <td>{{ person.student.class_desc }}</td>
+        <td>2:30pm</td>
+        <td>Appointment</td>
         <td>
-          <template v-if="person.student.registered_in_quarter">
-            Registered
-          </template>
-          <template v-else> Unregistered </template>
-        </td>
-        <td class="align-middle text-end">
           <div class="small text-danger">You have not added a note yet!</div>
           <add-contact
             ><i class="bi bi-plus-square-dotted me-2"></i>Update Contact</add-contact
