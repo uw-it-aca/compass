@@ -24,6 +24,7 @@ class StudentListView(View):
         data = client.get_active_students(page=page, page_size=page_size)
         return JsonResponse([item.to_dict() for item in data], safe=False)
 
+
 @method_decorator(group_required(settings.COMPASS_USERS_GROUP),
                   name='dispatch')
 class StudentDetailView(View):
