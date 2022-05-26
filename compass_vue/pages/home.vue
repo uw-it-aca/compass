@@ -16,13 +16,17 @@
               </axdd-card-action>
             </template>
             <template #body>
+              We cannot build our own future, without helping others to build theirs. -Bill Clinton
+            </template>
+          </axdd-card>
+
+          <axdd-card>
+            <template #heading-action>
+              <axdd-card-heading :level="2">My Contacts</axdd-card-heading>
+            </template>
+            <template #body>
               <table-loading v-if="isLoading"></table-loading>
               <table-display v-else :persons="persons"></table-display>
-
-              <div>
-                <p>No contacts (admins)</p>
-              </div>
-
             </template>
           </axdd-card>
         </div>
