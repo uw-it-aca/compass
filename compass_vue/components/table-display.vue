@@ -45,7 +45,11 @@
                   ><i class="bi bi-trophy-fill text-purple"></i
                 ></span>
               </div>
-              <div class="small text-secondary">{{ person.uwnetid }}</div>
+              <div class="small text-secondary">
+                <router-link :to="{ path: '/student/' + person.uwnetid }">
+                  {{ person.uwnetid }}
+                </router-link>
+              </div>
             </div>
           </div>
         </td>
@@ -66,7 +70,7 @@
         <td class="align-middle text-end">
           <div class="small text-danger">You have not added a note yet!</div>
           <add-contact
-            ><i class="bi bi-plus-square-dotted me-2"></i>Add Notes</add-contact
+            ><i class="bi bi-plus-square-dotted me-2"></i>Update Contact</add-contact
           >
         </td>
       </tr>
