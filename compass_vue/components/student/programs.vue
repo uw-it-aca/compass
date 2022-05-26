@@ -6,7 +6,6 @@
     <template #body>
       <p>UW Programs (from EDW?)</p>
       <ul>
-        <li>Honor's</li>
         <li>Dean's List</li>
         <li>Athletics</li>
         <li>EOP</li>
@@ -19,7 +18,7 @@
         <li>Pre-professional: yes/no</li>
         <li>IC Eligible: yes/no</li>
         <li>
-          <template v-if="student.special_program_code">
+          <template v-if="latestTranscript.special_program">
             <b>yes</b>/no
           </template>
           <template v-else>CAMP, TRIO SSS, Champions</template>
@@ -91,9 +90,17 @@ import { Card, CardHeading } from "axdd-components";
 
 export default {
   props: {
-    student: {
+    person: {
       type: Object,
       required: true,
+    },
+  },
+  computed: {
+    latestTranscript() {
+      if (this.person.student.transcripts)
+        return this.person.student.transcripts[0];
+      else
+        return null
     },
   },
   components: {

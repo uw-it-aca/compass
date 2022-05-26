@@ -52,8 +52,6 @@ environmentVariables:
     value: https://test.compass.uw.edu/saml2
   - name: CLUSTER_CNAME
     value: test.compass.uw.edu
-  - name: EDW_HOSTNAME
-    value:
 
 externalSecrets:
   enabled: true
@@ -67,13 +65,6 @@ externalSecrets:
           property: access-group-id
         - name: google-analytics-key
           property: google-analytics-key
-    - name: test.compass.uw.edu-shared-secrets
-      externalKey: compass/shared/secrets
-      data:
-        - name: edw-username
-          property: edw-username
-        - name: edw-password
-          property: edw-password
     - name: test.compass.uw.edu-sql-secrets
       externalKey: compass/shared/sql-secrets
       data:
@@ -113,11 +104,3 @@ environmentVariablesSecrets:
     name: IDP_CERT
     secretName: test.compass.uw.edu-uw-idp-cert
     secretKey: uw-idp-cert
-  edwUsername:
-    name: EDW_USERNAME
-    secretName: test.compass.uw.edu-shared-secrets
-    secretKey: edw-username
-  edwPassword:
-    name: EDW_PASSWORD
-    secretName: test.compass.uw.edu-shared-secrets
-    secretKey: edw-password

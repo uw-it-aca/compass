@@ -17,7 +17,7 @@
             </template>
             <template #body>
               <table-loading v-if="isLoading"></table-loading>
-              <table-display v-else></table-display>
+              <table-display v-else :persons="persons"></table-display>
             </template>
           </axdd-card>
         </div>
@@ -52,18 +52,25 @@ export default {
     return {
       pageTitle: "Contacts",
       isLoading: true,
+      persons: [],
       today: "",
     };
   },
   computed: {},
   methods: {
     getToday,
-    showResults: function () {
-      this.isLoading = false;
+    loadStudentList: function (studentNumber) {
+      let _this = this;
+      this.getStudentList().then((response) => {
+        if (response.data) {
+          _this.persons = response.data;
+          _this.isLoading = false;
+        }
+      });
     },
   },
   mounted() {
-    setTimeout(this.showResults, 4000);
+    this.loadStudentList()
   },
 };
 </script>

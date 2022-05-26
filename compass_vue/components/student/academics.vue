@@ -7,7 +7,7 @@
       <ul>
         <li>
           Registered:
-          <template v-if="student.registered_in_quarter">
+          <template v-if="person.student.registered_in_quarter">
             <b>yes</b>/no
           </template>
           <template v-else>
@@ -15,15 +15,15 @@
             <b>no</b>
           </template>
         </li>
-        <li>Enrollment Status: {{ student.enrollment_desc }}</li>
-        <li>Class standing: {{ student.class_desc }}</li>
-        <li>Total Credits: {{ student.total_credits }}</li>
+        <li>Enrollment Status: {{ person.student.enrollment_desc }}</li>
+        <li>Class standing: {{ person.student.class_desc }}</li>
+        <li>Total Credits: {{ person.student.total_credits }}</li>
         <li>Total UW Credits: 170.00</li>
         <li>
           Transfer student:
           <b>yes</b>/no
         </li>
-        <li>GPA: {{ student.gpa }}</li>
+        <li>GPA: {{ person.student.cumulative_gpa }}</li>
       </ul>
     </template>
   </axdd-card>
@@ -34,7 +34,7 @@ import { Card, CardHeading } from "axdd-components";
 
 export default {
   props: {
-    student: {
+    person: {
       type: Object,
       required: true,
     },

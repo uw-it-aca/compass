@@ -2,12 +2,12 @@
 
 <template>
   <layout
-    v-if="student.student_name !== undefined"
-    :page-title="student.student_name"
+    v-if="person.display_name !== undefined"
+    :page-title="person.display_name"
   >
     <template #title>
       <h1 v-if="$route.params.id" class="visually-hidden">
-        {{ student.student_name }}
+        {{ person.display_name }}
       </h1>
       <h1 v-else>Student</h1>
     </template>
@@ -25,12 +25,8 @@
                       style="width: 140px"
                     >
                       <img
-                        v-if="student.gender === 'F'"
-                        :src="
-                          'https://randomuser.me/api/portraits/women/' +
-                          student.id +
-                          '.jpg'
-                        "
+                        v-if="person.gender === 'F'"
+                        src="https://randomuser.me/api/portraits/women/4.jpg"
                         class="
                           img-fluid
                           rounded-circle
@@ -39,11 +35,7 @@
                       />
                       <img
                         v-else
-                        :src="
-                          'https://randomuser.me/api/portraits/men/' +
-                          student.id +
-                          '.jpg'
-                        "
+                        src="https://randomuser.me/api/portraits/men/4.jpg"
                         class="
                           img-fluid
                           rounded-circle
@@ -53,18 +45,28 @@
                     </div>
                     <div class="text-center mb-4">
                       <span class="fw-bold"
-                        >Priority {{ student.retention.priority }}</span
+                        >Priority</span
                       >
                     </div>
                   </div>
                   <div class="flex-fill ps-4 mb-4">
                     <div class="h3 text-dark axdd-font-encode-sans">
-                      {{ student.student_preferred_last_name }},
-                      {{ student.student_preferred_first_name }}
+                      <template v-if="person.preferred_first_name">
+                        {{ person.preferred_last_name }}
+                      </template>
+                      <template v-else>
+                        {{ person.first_name }}
+                      </template>&nbsp;
+                      <template v-if="person.preferred_surname">
+                        {{ person.preferred_surname }}
+                      </template>
+                      <template v-else>
+                        {{ person.surname }}
+                      </template>
                     </div>
                     <div class="h5">
-                      {{ $route.params.id }},
-                      <small>{{ student.uw_net_id }}</small>
+                      {{ person.student.student_number }},
+                      <small>{{ person.uwnetid }}</small>
                     </div>
                     <p>
                       <span
@@ -75,18 +77,11 @@
                           text-dark
                           me-1
                         "
-                        >{{ student.gender }}</span
+                        >{{ person.gender }}</span
                       >
-                      <span
-                        v-if="student.gender === 'F'"
-                        class="badge rounded-pill border border-muted text-dark"
-                        >she/her</span
-                      >
-                      <span
-                        v-else
-                        class="badge rounded-pill border border-muted text-dark"
-                        >he/him</span
-                      >
+                      <span class="badge rounded-pill border border-muted text-dark">
+                        {{ person.pronouns }}
+                      </span>
                     </p>
                     <div>
                       <i class="bi bi-trophy-fill text-purple"></i> Sport: Track
@@ -97,23 +92,28 @@
                 <div class="col-6 col-lg-3 px-4 small">
                   <ul class="list-unstyled m-0">
                     <li>
-                      Preferred name: {{ student.student_preferred_first_name }}
-                      {{ student.student_preferred_middle_name }}
-                      {{ student.student_preferred_last_name }}
+                      Preferred name: {{ person.preferred_first_name }}
+                      {{ person.preferred_middle_name }}
+                      {{ person.preferred_last_name }}
                     </li>
-                    <li>Ethnicity:</li>
-                    <li>Citizenship: {{ student.resident_desc }}</li>
-                    <li>DOB: 7/23/2001</li>
+                    <li>Ethnicity: {{ person.student.assigned_ethnic_desc }} </li>
+                    <li>Citizenship: {{ person.student.resident_desc }}</li>
+                    <li>DOB: {{ person.student.birthdate }}</li>
                   </ul>
                 </div>
                 <div class="col-6 col-lg-3 ps-4 small">
                   <ul class="list-unstyled m-0">
-                    <li>UW Email: {{ student.student_email }}</li>
-                    <li>Personal email: {{ student.personal_email }}</li>
-                    <li>Local Phone: {{ student.local_phone_number }}</li>
-                    <li>Perm Address: {{ studentAddress }}</li>
+                    <li>UW Email: {{ person.student.student_email }}</li>
+                    <li>Personal email: {{ person.student.personal_email }}</li>
+                    <li>Local Phone: {{ person.student.local_phone_number }}</li>
+                    <li>Perm Address:<br/>
+                         {{ person.student.perm_addr_line1 }}<br/>
+                         {{ person.student.perm_addr_line2 }}<br/>
+                         {{ person.student.perm_addr_city }}, {{ person.student.perm_addr_state }}
+                         {{person.student.perm_addr_5digit_zip}}-{{ person.student.perm_addr_4digit_zip }}, {{ person.student.perm_addr_country }}
+                    </li>
                     <li>
-                      Local Address: 1234
+                      Local Address:<br/>
                       <a href="#" class="small" role="button"
                         >Edit address (ALL)</a
                       >
@@ -132,11 +132,10 @@
             <StudentHistory></StudentHistory>
           </div>
           <div class="col-xl-3">
-            <StudentAdviser></StudentAdviser>
-            <StudentPrograms :student="student"></StudentPrograms>
-            <StudentRetention :student="student"></StudentRetention>
-            <StudentAcademics :student="student"></StudentAcademics>
-            <StudentMajors :student="student"></StudentMajors>
+            <StudentAdviser v-for="adviser in person.student.advisers" :key="adviser.id" :person="adviser"></StudentAdviser>
+            <StudentPrograms :person="person"></StudentPrograms>
+            <StudentAcademics :person="person"></StudentAcademics>
+            <StudentMajors :person="person"></StudentMajors>
           </div>
         </div>
       </div>
@@ -153,7 +152,6 @@ import StudentSchedule from "../components/student/schedule.vue";
 import StudentHistory from "../components/student/history.vue";
 import StudentAdviser from "../components/student/adviser.vue";
 import StudentPrograms from "../components/student/programs.vue";
-import StudentRetention from "../components/student/retention.vue";
 import StudentAcademics from "../components/student/academics.vue";
 import StudentMajors from "../components/student/majors.vue";
 
@@ -166,16 +164,15 @@ export default {
     StudentHistory,
     StudentAdviser,
     StudentPrograms,
-    StudentRetention,
     StudentAcademics,
     StudentMajors,
   },
   created: function () {
-    this.loadstudent(this.$route.params.id);
+    this.loadStudent(this.$route.params.id);
   },
   data() {
     return {
-      student: {},
+      person: {},
     };
   },
   computed: {
@@ -193,23 +190,13 @@ export default {
       if (addr) return addr;
       else return "N/A";
     },
-    priorityRing: function () {
-      // mocked display
-      if (this.student.retention.priority === "-3.4") {
-        return "border-danger";
-      } else if (this.student.retention.priority === "2.2") {
-        return "border-warning";
-      } else {
-        return "";
-      }
-    },
   },
   methods: {
-    loadstudent: function (studentNumber) {
+    loadStudent: function (studentNumber) {
       let _this = this;
       this.getStudentDetail(studentNumber).then((response) => {
         if (response.data) {
-          _this.student = response.data[0];
+          _this.person = response.data;
         }
       });
     },

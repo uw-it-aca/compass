@@ -12,9 +12,6 @@ services:
       AUTH: SAML_MOCK
       GOOGLE_ANALYTICS_KEY: ${GOOGLE_ANALYTICS_KEY}
       LOGOUT_URL: ${LOGOUT_URL}
-      EDW_USERNAME: ${EDW_USERNAME}
-      EDW_PASSWORD: ${EDW_PASSWORD}
-      EDW_HOSTNAME: ${EDW_HOSTNAME}
     volumes:
       - ./compass:/app/compass
       - statics-volume:/static

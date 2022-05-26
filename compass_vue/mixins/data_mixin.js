@@ -34,6 +34,20 @@ const dataMixin = {
         axiosConfig
       );
     },
+    getAdviserList: async function () {
+      const csrfToken = this.$store.state.csrfToken;
+      const axiosConfig = {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          "X-CSRFToken": csrfToken,
+        },
+      };
+      return axios.get(
+        "/api/internal/adviser/",
+        axiosConfig
+      );
+    },
   },
 };
 
