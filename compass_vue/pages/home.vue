@@ -6,20 +6,20 @@
     <template #content>
       <div class="row my-4">
         <div class="col">
-          <axdd-card>
-            <template #heading-action>
-              <axdd-card-heading :level="2"
-                >Today, {{ getToday() }}</axdd-card-heading
-              >
-              <axdd-card-action>
-                <student-search></student-search>
-              </axdd-card-action>
-            </template>
-            <template #body>
-              We cannot build our own future, without helping others to build theirs. -Bill Clinton
-            </template>
-          </axdd-card>
-
+          <div class="bg-gray p-4 rounded-3">
+            <div class="row">
+              <div class="col d-flex justify-content-between">
+                <div classw="w-50">Today, {{ getToday() }}</div>
+                <div>
+                  <student-search></student-search>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
           <axdd-card>
             <template #heading-action>
               <axdd-card-heading :level="2">Recent Contacts</axdd-card-heading>
