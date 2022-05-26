@@ -22,7 +22,7 @@
 
           <axdd-card>
             <template #heading-action>
-              <axdd-card-heading :level="2">My Contacts</axdd-card-heading>
+              <axdd-card-heading :level="2">Recent Contacts</axdd-card-heading>
             </template>
             <template #body>
               <table-loading v-if="isLoading"></table-loading>

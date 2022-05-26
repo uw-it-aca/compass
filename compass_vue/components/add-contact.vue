@@ -57,19 +57,6 @@
                     class="form-control"
                   />
                 </div>
-
-                <div class="col">
-                  <label class="form-label">Duration:</label>
-                  <select
-                    class="form-select"
-                    aria-label="Default select example"
-                  >
-                    <option selected>15</option>
-                    <option value="1">30</option>
-                    <option value="2">60</option>
-                    <option value="3">90</option>
-                  </select>
-                </div>
               </div>
             </div>
           </div>
