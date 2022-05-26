@@ -13,7 +13,7 @@
             >Visit</axdd-tab-item
           >
           <axdd-tab-item :tabs-id="'history'" :panel-id="'transcript'"
-            >Transcript</axdd-tab-item
+            >Registrations</axdd-tab-item
           >
           <axdd-tab-item :tabs-id="'history'" :panel-id="'major'"
             >Major</axdd-tab-item

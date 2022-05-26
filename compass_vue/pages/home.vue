@@ -18,6 +18,11 @@
             <template #body>
               <table-loading v-if="isLoading"></table-loading>
               <table-display v-else :persons="persons"></table-display>
+
+              <div>
+                <p>No contacts (admins)</p>
+              </div>
+
             </template>
           </axdd-card>
         </div>
@@ -70,7 +75,8 @@ export default {
     },
   },
   mounted() {
-    this.loadStudentList()
+    //this.loadStudentList()
+    setTimeout(this.loadStudentList, 2000);
   },
 };
 </script>

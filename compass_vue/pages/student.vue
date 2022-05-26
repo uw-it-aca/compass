@@ -44,9 +44,7 @@
                       />
                     </div>
                     <div class="text-center mb-4">
-                      <span class="fw-bold"
-                        >Priority</span
-                      >
+                      <span class="fw-bold">Priority</span>
                     </div>
                   </div>
                   <div class="flex-fill ps-4 mb-4">
@@ -54,9 +52,8 @@
                       <template v-if="person.preferred_first_name">
                         {{ person.preferred_last_name }}
                       </template>
-                      <template v-else>
-                        {{ person.first_name }}
-                      </template>&nbsp;
+                      <template v-else> {{ person.first_name }} </template
+                      >&nbsp;
                       <template v-if="person.preferred_surname">
                         {{ person.preferred_surname }}
                       </template>
@@ -79,13 +76,23 @@
                         "
                         >{{ person.gender }}</span
                       >
-                      <span class="badge rounded-pill border border-muted text-dark">
+                      <span
+                        class="badge rounded-pill border border-muted text-dark"
+                      >
                         {{ person.pronouns }}
                       </span>
                     </p>
-                    <div>
-                      <i class="bi bi-trophy-fill text-purple"></i> Sport: Track
-                      &amp; Field
+                    <div v-if="person.student.sports.length > 0">
+                      <i class="bi bi-trophy-fill text-purple"></i> Sport:
+                      <span
+                        v-for="(sport, index) in person.student.sports"
+                        :key="sport.code"
+                      >
+                        {{ sport.sport_code }}
+                        <span v-if="index + 1 < person.student.sports.length"
+                          >,
+                        </span>
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -96,7 +103,9 @@
                       {{ person.preferred_middle_name }}
                       {{ person.preferred_last_name }}
                     </li>
-                    <li>Ethnicity: {{ person.student.assigned_ethnic_desc }} </li>
+                    <li>
+                      Ethnicity: {{ person.student.assigned_ethnic_desc }}
+                    </li>
                     <li>Citizenship: {{ person.student.resident_desc }}</li>
                     <li>DOB: {{ person.student.birthdate }}</li>
                   </ul>
@@ -105,15 +114,21 @@
                   <ul class="list-unstyled m-0">
                     <li>UW Email: {{ person.student.student_email }}</li>
                     <li>Personal email: {{ person.student.personal_email }}</li>
-                    <li>Local Phone: {{ person.student.local_phone_number }}</li>
-                    <li>Perm Address:<br/>
-                         {{ person.student.perm_addr_line1 }}<br/>
-                         {{ person.student.perm_addr_line2 }}<br/>
-                         {{ person.student.perm_addr_city }}, {{ person.student.perm_addr_state }}
-                         {{person.student.perm_addr_5digit_zip}}-{{ person.student.perm_addr_4digit_zip }}, {{ person.student.perm_addr_country }}
+                    <li>
+                      Local Phone: {{ person.student.local_phone_number }}
                     </li>
                     <li>
-                      Local Address:<br/>
+                      Perm Address:<br />
+                      {{ person.student.perm_addr_line1 }}<br />
+                      {{ person.student.perm_addr_line2 }}<br />
+                      {{ person.student.perm_addr_city }},
+                      {{ person.student.perm_addr_state }}
+                      {{ person.student.perm_addr_5digit_zip }}-{{
+                        person.student.perm_addr_4digit_zip
+                      }}, {{ person.student.perm_addr_country }}
+                    </li>
+                    <li>
+                      Local Address:<br />
                       <a href="#" class="small" role="button"
                         >Edit address (ALL)</a
                       >
@@ -132,7 +147,11 @@
             <StudentHistory></StudentHistory>
           </div>
           <div class="col-xl-3">
-            <StudentAdviser v-for="adviser in person.student.advisers" :key="adviser.id" :person="adviser"></StudentAdviser>
+            <StudentAdviser
+              v-for="adviser in person.student.advisers"
+              :key="adviser.id"
+              :person="adviser"
+            ></StudentAdviser>
             <StudentPrograms :person="person"></StudentPrograms>
             <StudentAcademics :person="person"></StudentAcademics>
             <StudentMajors :person="person"></StudentMajors>

@@ -4,10 +4,8 @@
       <tr>
         <th scope="col" style="width: 325px">Name</th>
         <th scope="col" style="width: 155px">Student Number</th>
-        <th scope="col">Priority</th>
         <th scope="col">Class</th>
-        <th scope="col">Enroll Status</th>
-        <th scope="col">Status</th>
+        <th scope="col">Enrollment Status</th>
         <th>&nbsp;</th>
       </tr>
     </thead>
@@ -29,18 +27,14 @@
         <td class="placeholder-glow">
           <div><span class="placeholder bg-light-gray col-12"></span></div>
         </td>
-        <td class="placeholder-glow">
-          <div><span class="placeholder bg-light-gray col-9"></span></div>
-        </td>
+
         <td class="placeholder-glow">
           <div><span class="placeholder bg-light-gray col-10"></span></div>
         </td>
         <td class="placeholder-glow">
           <div><span class="placeholder bg-light-gray col-7"></span></div>
         </td>
-        <td class="placeholder-glow">
-          <div><span class="placeholder bg-light-gray col-8"></span></div>
-        </td>
+
         <td class="align-middle text-end">
           <button
             type="button"

@@ -41,7 +41,7 @@ export default {
       // minimum application setup overrides
       appName: "Compass",
       appRootUrl: "/",
-      userName: "javerage",
+      userName: "jadviser",
       signOutUrl: document.body.getAttribute("data-logout-url"),
       // automatically set year
       currentYear: new Date().getFullYear(),
