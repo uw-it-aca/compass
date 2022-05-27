@@ -6,12 +6,14 @@
         <th scope="col">Date</th>
         <th scope="col">Time</th>
         <th scope="col">Contact Type</th>
-        <th scope="col">Notes</th>
+        <th scope="col">&nbsp;</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="person in persons" :key="person.id">
         <td>
+
+          <profile-mini></profile-mini>
           <div class="d-flex">
             <div class="me-2" style="min-width: 55px">
               <div class="rounded-circle border border-light border-3">
@@ -65,7 +67,6 @@
         <td>2:30pm</td>
         <td>Appointment</td>
         <td>
-          <div class="small text-danger">You have not added a note yet!</div>
           <add-contact
             ><i class="bi bi-plus-square-dotted me-2"></i>Update Contact</add-contact
           >
@@ -77,10 +78,12 @@
 
 <script>
 import AddContact from "../components/add-contact.vue";
+import ProfileMini from "../components/student/profile-mini.vue"
 
 export default {
   components: {
     "add-contact": AddContact,
+    "profile-mini": ProfileMini,
   },
   props: {
     persons: {
