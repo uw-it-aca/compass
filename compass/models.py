@@ -4,9 +4,26 @@
 from django.db import models
 
 
+class ContactType(models.Model):
+    label = models.TextField(unique=True)
+
+
+class Topic(models.Model):
+    label = models.TextField(unique=True)
+
+
+class Group(models.Model):
+    label = models.TextField(unique=True)
+    slug = models.TextField(unique=True)
+    topics = models.ManyToManyField(Topic)
+    contact_types = \
+        models.ManyToManyField(ContactType)
+
+
 class User(models.Model):
     uwnetid = models.TextField(unique=True)
     uwregid = models.TextField(unique=True)
+    group = models.ManyToManyField(Group)
 
     class Meta:
         indexes = [
@@ -22,22 +39,6 @@ class Student(models.Model):
         indexes = [
             models.Index(fields=['system_key']),
         ]
-
-
-class ContactType(models.Model):
-    label = models.TextField(unique=True)
-
-
-class Topic(models.Model):
-    label = models.TextField(unique=True)
-
-
-class Group(models.Model):
-    label = models.TextField(unique=True)
-    slug = models.TextField(unique=True)
-    topics = models.ManyToManyField(Topic)
-    contact_types = \
-        models.ManyToManyField(ContactType)
 
 
 class Contact(models.Model):
