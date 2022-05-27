@@ -8,20 +8,7 @@
         <div class="col">
           <div class="bg-gray p-4 rounded-3">
             <div class="row">
-              <div class="col-5 d-flex justify-content-between">
-                <div class="flex-fill me-3">
-                  <div class="fw-bold lh-lg">Show week:</div>
-                  <select
-                    class="form-select form-select-sm"
-                    aria-label="Default select example"
-                  >
-                    <option selected>Current Week</option>
-                    <option value="1">Autumn 2021: Week 4</option>
-                    <option value="2">Autumn 2021: Week 3</option>
-                    <option value="3">Autumn 2021: Week 2</option>
-                    <option value="4">Autumn 2021: Week 1</option>
-                  </select>
-                </div>
+              <div class="col-3 d-flex justify-content-between">
                 <div class="flex-fill">
                   <div class="fw-bold lh-lg">Display caseload for:</div>
                   <select
@@ -30,13 +17,17 @@
                   >
                     <option selected>All advisers</option>
                     <option>All un-assigned (ADMIN)</option>
-                    <option v-for="adviser in advisers" :key="adviser.id" value="adviser.uwnetid">
-                      {{adviser.display_name}}
+                    <option
+                      v-for="adviser in advisers"
+                      :key="adviser.id"
+                      value="adviser.uwnetid"
+                    >
+                      {{ adviser.display_name }}
                     </option>
                   </select>
                 </div>
               </div>
-              <div class="col-7 border-start d-flex justify-content-between">
+              <div class="col-9 border-start d-flex justify-content-between">
                 <div class="flex-fill me-3">
                   <div class="fw-bold lh-lg">Class Standing:</div>
                   <select
@@ -50,34 +41,8 @@
                     <option value="4">Senior</option>
                   </select>
                 </div>
-
-                <div class="me-3">
-                  <div class="fw-bold lh-lg">Population:</div>
-                  <select
-                    class="form-select form-select-sm"
-                    aria-label=".form-select-sm example"
-                  >
-                    <option selected>All</option>
-                    <option value="1">Atheletes</option>
-                    <option value="2">Pre-Engineering</option>
-                    <option value="3">STEM</option>
-                  </select>
-                </div>
-                <div class="me-3">
-                  <div class="fw-bold lh-lg">Sport (if Athelete):</div>
-                  <select
-                    class="form-select form-select-sm"
-                    aria-label=".form-select-sm example"
-                  >
-                    <option selected>All</option>
-                    <option value="1">Football</option>
-                    <option value="2">Baseball</option>
-                    <option value="3">Volleyball</option>
-                  </select>
-                </div>
-
                 <div class="flex-fill">
-                  <div class="fw-bold lh-lg">Status:</div>
+                  <div class="fw-bold lh-lg">Enrollment Status:</div>
                   <div class="form-check form-check-inline">
                     <input
                       class="form-check-input"
@@ -86,7 +51,7 @@
                       id="flexRadioDefault1"
                     />
                     <label class="form-check-label" for="flexRadioDefault1"
-                      >Active</label
+                      >Enrolled</label
                     >
                   </div>
                   <div class="form-check form-check-inline">
@@ -98,8 +63,15 @@
                       checked
                     />
                     <label class="form-check-label" for="flexRadioDefault2"
-                      >Inactive</label
+                      >Not Enrolled</label
                     >
+                  </div>
+                </div>
+
+                <div class="flex-fill">
+                  <div class="fw-bold lh-lg">Search all Students:</div>
+                  <div>
+                    <student-search></student-search>
                   </div>
                 </div>
               </div>
@@ -113,9 +85,6 @@
           <axdd-card>
             <template #heading-action>
               <axdd-card-heading :level="2">My Caseload</axdd-card-heading>
-              <axdd-card-action>
-                <student-search></student-search>
-              </axdd-card-action>
             </template>
             <template #body>
               <table-loading v-if="isLoading"></table-loading>
@@ -226,9 +195,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <div v-else>
-                  no students in your caseload
-                </div>
+                <div v-else>no students in your caseload</div>
               </div>
             </template>
             <template v-if="!isLoading && studentsCount > 0" #footer>
@@ -323,15 +290,13 @@ export default {
         }
       );
     },
-    loadAdviserList: function() {
+    loadAdviserList: function () {
       let _this = this;
-      this.getAdviserList().then(
-        (response) => {
-          if (response.data) {
-            _this.advisers = response.data;
-          }
+      this.getAdviserList().then((response) => {
+        if (response.data) {
+          _this.advisers = response.data;
         }
-      );
+      });
     },
     showPriorityRing: function (priorityValue) {
       // mocked display
