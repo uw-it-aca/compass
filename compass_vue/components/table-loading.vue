@@ -27,22 +27,11 @@
         <td class="placeholder-glow">
           <div><span class="placeholder bg-light-gray col-12"></span></div>
         </td>
-
         <td class="placeholder-glow">
           <div><span class="placeholder bg-light-gray col-10"></span></div>
         </td>
         <td class="placeholder-glow">
           <div><span class="placeholder bg-light-gray col-7"></span></div>
-        </td>
-
-        <td class="align-middle text-end">
-          <button
-            type="button"
-            disabled
-            class="btn btn-sm placeholder bg-light-gray text-muted px-3"
-          >
-            Add Contact
-          </button>
         </td>
       </tr>
     </tbody>

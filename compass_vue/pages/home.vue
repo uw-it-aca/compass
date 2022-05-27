@@ -27,21 +27,9 @@
             <template #body>
               <table-loading v-if="isLoading"></table-loading>
               <table-display v-else :persons="persons"></table-display>
-              <div class="mt-5 text-secondary">You have not met with any students.</div>
+              <div class="mt-5 text-secondary">No students to meet with.</div>
             </template>
           </axdd-card>
-
-           <axdd-card>
-            <template #heading-action>
-              <axdd-card-heading :level="2">Recently Completed</axdd-card-heading>
-            </template>
-            <template #body>
-              <table-loading v-if="isLoading"></table-loading>
-              <table-display v-else :persons="persons"></table-display>
-              <div class="mt-5 text-secondary">You have not completed any appointments in the past 3 days.</div>
-            </template>
-          </axdd-card>
-
         </div>
       </div>
     </template>
