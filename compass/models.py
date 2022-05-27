@@ -33,7 +33,8 @@ class Topic(models.Model):
 
 
 class Group(models.Model):
-    name = models.TextField(unique=True)
+    label = models.TextField(unique=True)
+    slug = models.TextField(unique=True)
     topics = models.ManyToManyField(Topic)
     contact_types = \
         models.ManyToManyField(ContactType)
