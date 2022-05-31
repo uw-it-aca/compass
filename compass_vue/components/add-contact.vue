@@ -175,19 +175,7 @@
             ></textarea>
           </div>
         </div>
-        <div class="modal-footer d-flex justify-content-between">
-          <div class="form-check">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              value=""
-              id="flexCheckDefault"
-            />
-            <label class="form-check-label" for="flexCheckDefault">
-              Make this contact record public
-            </label>
-          </div>
-
+        <div class="modal-footer text-end">
           <div>
             <button
               type="button"

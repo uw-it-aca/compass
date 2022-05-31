@@ -30,11 +30,22 @@
           v-if="person.student.gender === 'F'"
           class="badge rounded-pill border border-muted text-dark small"
           >F</span
-        ><span
+        >
+
+        <span
           v-if="person.student.sports.length > 0"
           class="badge rounded-pill border border-muted text-dark small"
-          ><i class="bi bi-trophy-fill text-purple"></i
-        ></span>
+        >
+          <i class="bi bi-trophy-fill text-purple"></i> Sport:
+          <span
+            v-for="(sport, index) in person.student.sports"
+            :key="sport.code"
+          >
+            {{ sport.sport_code }}
+            <span v-if="index + 1 < person.student.sports.length">, </span>
+          </span>
+        </span>
+
       </div>
       <div class="small text-secondary">
         {{ person.student.student_number }}, {{ person.student.class_desc }},

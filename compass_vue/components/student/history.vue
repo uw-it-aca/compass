@@ -10,13 +10,13 @@
             :tabs-id="'history'"
             :panel-id="'visit'"
             :active-tab="true"
-            >Visit</axdd-tab-item
-          >
-          <axdd-tab-item :tabs-id="'history'" :panel-id="'transcript'"
-            >Registrations</axdd-tab-item
+            >IC Visits (compass)</axdd-tab-item
           >
           <axdd-tab-item :tabs-id="'history'" :panel-id="'major'"
-            >Major</axdd-tab-item
+            >Major (compass)</axdd-tab-item
+          >
+          <axdd-tab-item :tabs-id="'history'" :panel-id="'transcript'"
+            >Registrations (sws)</axdd-tab-item
           >
         </template>
         <template #panels>
@@ -26,7 +26,6 @@
                 <thead class="small">
                   <tr>
                     <th>Date</th>
-                    <th class="text-nowrap">Location</th>
                     <th>Course</th>
                     <th>Check-in</th>
                     <th>Check-out</th>
@@ -36,7 +35,6 @@
                 <tbody>
                   <tr>
                     <td scope="row">09/23/2020</td>
-                    <td>Instructional Center</td>
                     <td>BUS 220</td>
                     <td>10:35am</td>
                     <td>11:42pm</td>
@@ -44,7 +42,6 @@
                   </tr>
                   <tr>
                     <td scope="row">07/04/2020</td>
-                    <td>Computer Lab</td>
                     <td>CSE 142</td>
                     <td>9:15am</td>
                     <td>11:2am</td>
@@ -52,7 +49,6 @@
                   </tr>
                   <tr>
                     <td scope="row">06/29/2020</td>
-                    <td>Instruction Center</td>
                     <td>BUS 220</td>
                     <td>4:31pm</td>
                     <td>4:45pm</td>
@@ -60,7 +56,6 @@
                   </tr>
                   <tr>
                     <td scope="row">5/14/2020</td>
-                    <td>Instructional Center</td>
                     <td>BUS 220</td>
                     <td>2:34pm</td>
                     <td>6:35pm</td>
@@ -129,9 +124,6 @@
                     <th>Major</th>
                     <th>Status</th>
                     <th class="text-nowrap">Source</th>
-                    <th>Action</th>
-                    <th>Notes</th>
-                    <th>User</th>
                   </tr>
                 </thead>
                 <tbody class="mb-3">
@@ -140,9 +132,6 @@
                     <td>Psychology</td>
                     <td>Accepted</td>
                     <td>SWS</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
                   </tr>
                 </tbody>
               </table>
@@ -167,9 +156,6 @@
                     <th>Major</th>
                     <th>Status</th>
                     <th class="text-nowrap">Source</th>
-                    <th>Action</th>
-                    <th>Notes</th>
-                    <th>User</th>
                   </tr>
                 </thead>
                 <tbody class="mb-3">
@@ -178,36 +164,24 @@
                     <td>Computer Engineering</td>
                     <td>Intended #1</td>
                     <td>DawgPath</td>
-                    <td>Remove</td>
-                    <td>No longer interested</td>
-                    <td>Student</td>
                   </tr>
                   <tr>
                     <td scope="row">7/04/2020</td>
                     <td>Human Centered Design &amp; Engineering</td>
                     <td>Intended #2</td>
                     <td>Compass</td>
-                    <td>Add</td>
-                    <td>Wants to be a UX Designer</td>
-                    <td>Pedro Sanchez</td>
                   </tr>
                   <tr>
                     <td scope="row">6/29/2020</td>
                     <td>Accounting</td>
                     <td>Intended #3</td>
                     <td>Compass</td>
-                    <td>Remove</td>
-                    <td>Does not like numbers</td>
-                    <td>Pedro Sanchez</td>
                   </tr>
                   <tr>
                     <td scope="row">5/23/2020</td>
                     <td>Economics</td>
                     <td>Intended #3</td>
                     <td>DawgPath</td>
-                    <td>Remove</td>
-                    <td>n/a</td>
-                    <td>Student</td>
                   </tr>
                 </tbody>
               </table>
@@ -230,9 +204,6 @@
                     <th>Major</th>
                     <th>Status</th>
                     <th class="text-nowrap">Source</th>
-                    <th>Action</th>
-                    <th>Notes</th>
-                    <th>User</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -241,27 +212,18 @@
                     <td>Informatics</td>
                     <td>Intended #3</td>
                     <td>Admissions</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
                   </tr>
                   <tr>
                     <td scope="row">5/14/2020</td>
                     <td>Computer Science</td>
                     <td>Intended #2</td>
                     <td>Admissions</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
                   </tr>
                   <tr>
                     <td scope="row">5/14/2020</td>
                     <td>Anthropolgy</td>
                     <td>Intended #1</td>
                     <td>Admissions</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
                   </tr>
                 </tbody>
               </table>

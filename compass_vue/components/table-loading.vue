@@ -2,11 +2,10 @@
   <table class="table mb-0">
     <thead class="small">
       <tr>
-        <th scope="col" style="width: 325px">Name</th>
-        <th scope="col" style="width: 155px">Student Number</th>
-        <th scope="col">Class</th>
-        <th scope="col">Enrollment Status</th>
-        <th>&nbsp;</th>
+        <th scope="col" class="w-50">Student</th>
+        <th scope="col">Date</th>
+        <th scope="col">Time</th>
+        <th scope="col">Contact Type</th>
       </tr>
     </thead>
     <tbody>

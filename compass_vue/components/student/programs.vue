@@ -1,19 +1,24 @@
 <template>
   <axdd-card>
     <template #heading>
-      <axdd-card-heading :level="2">Programs</axdd-card-heading>
+      <axdd-card-heading :level="2">Special Programs</axdd-card-heading>
     </template>
     <template #body>
-      <p>UW Programs (from EDW?)</p>
+      <p class="small">https://studentdata.washington.edu/sdb-code-manual/student/sdb-special-program-codes/</p>
       <ul>
-        <li>Dean's List</li>
+        <li>Honor's</li>
         <li>Athletics</li>
         <li>EOP</li>
       </ul>
+    </template>
+  </axdd-card>
 
-      <hr />
-
-      <p>OMAD Programs (if EOP yes)</p>
+  <axdd-card>
+    <template #heading>
+      <axdd-card-heading :level="2">Dept. Programs (compass)</axdd-card-heading>
+    </template>
+    <template #body>
+      <p>OMAD Programs</p>
       <ul>
         <li>Pre-professional: yes/no</li>
         <li>IC Eligible: yes/no</li>

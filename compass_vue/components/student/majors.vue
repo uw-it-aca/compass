@@ -1,16 +1,12 @@
 <template>
   <axdd-card>
     <template #heading>
-      <axdd-card-heading :level="2">Academics</axdd-card-heading>
+      <axdd-card-heading :level="2">Majors</axdd-card-heading>
     </template>
     <template #body>
       <ul>
-        <li>
-          Accepted:
-          <span v-for="(major, index) in person.student.majors" :key="index">
-            {{ major.major_name }}
-            <span v-if="index + 1 < person.student.majors.length">,</span>
-          </span>
+        <li v-for="(major, index) in person.student.majors" :key="index">
+          {{ major.major_name }}
         </li>
       </ul>
     </template>

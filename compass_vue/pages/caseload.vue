@@ -8,16 +8,16 @@
         <div class="col">
           <div class="bg-gray p-4 rounded-3">
             <div class="row">
-              <div class="col-3 d-flex justify-content-between">
-                <div class="flex-fill">
+              <div class="col-9 border-end d-flex justify-content-between">
+                <div class="flex-fill me-3">
                   <div class="fw-bold lh-lg">Display caseload for:</div>
                   <select
                     class="form-select form-select-sm"
                     aria-label="Default select example"
                   >
-                    <option selected>All advisers</option>
+                    <option>All advisers</option>
                     <option>All un-assigned (ADMIN)</option>
-                    <option
+                    <option selected
                       v-for="adviser in advisers"
                       :key="adviser.id"
                       value="adviser.uwnetid"
@@ -26,8 +26,7 @@
                     </option>
                   </select>
                 </div>
-              </div>
-              <div class="col-9 border-start d-flex justify-content-between">
+
                 <div class="flex-fill me-3">
                   <div class="fw-bold lh-lg">Class Standing:</div>
                   <select
@@ -49,6 +48,7 @@
                       type="radio"
                       name="flexRadioDefault"
                       id="flexRadioDefault1"
+                      checked
                     />
                     <label class="form-check-label" for="flexRadioDefault1"
                       >Enrolled</label
@@ -60,19 +60,18 @@
                       type="radio"
                       name="flexRadioDefault"
                       id="flexRadioDefault2"
-                      checked
                     />
                     <label class="form-check-label" for="flexRadioDefault2"
                       >Not Enrolled</label
                     >
                   </div>
                 </div>
+              </div>
 
-                <div class="flex-fill">
-                  <div class="fw-bold lh-lg">Search all Students:</div>
-                  <div>
-                    <student-search></student-search>
-                  </div>
+              <div class="col-3">
+                <div class="fw-bold lh-lg">Search all Students:</div>
+                <div>
+                  <student-search></student-search>
                 </div>
               </div>
             </div>
@@ -121,11 +120,7 @@
                                   item.id +
                                   '.jpg'
                                 "
-                                class="
-                                  img-fluid
-                                  rounded-circle
-                                  border border-white border-2
-                                "
+                                class="img-fluid rounded-circle border border-white border-2"
                               />
                               <img
                                 v-else
@@ -134,11 +129,7 @@
                                   item.id +
                                   '.jpg'
                                 "
-                                class="
-                                  img-fluid
-                                  rounded-circle
-                                  border border-white border-2
-                                "
+                                class="img-fluid rounded-circle border border-white border-2"
                               />
                             </div>
                           </div>
@@ -149,23 +140,11 @@
                                 {{ item.student_preferred_first_name }}
                               </span>
                               <span
-                                class="
-                                  badge
-                                  rounded-pill
-                                  border border-muted
-                                  text-dark
-                                  small
-                                "
+                                class="badge rounded-pill border border-muted text-dark small"
                                 >{{ item.gender }}</span
                               >
                               <span
-                                class="
-                                  badge
-                                  rounded-pill
-                                  border border-muted
-                                  text-dark
-                                  small
-                                "
+                                class="badge rounded-pill border border-muted text-dark small"
                               >
                                 <i class="bi bi-trophy-fill text-purple"></i>
                               </span>
