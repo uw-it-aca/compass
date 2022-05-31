@@ -14,7 +14,7 @@
         <li>Total UW Credits: {{ person.student.total_uw_credits }}</li>
         <li>
           Transfer student:
-          <span class="text-danger"><b>yes</b>/no</span>
+          <span class="text-danger">tbd</span>
         </li>
         <li>GPA: {{ person.student.cumulative_gpa }}</li>
       </ul>
