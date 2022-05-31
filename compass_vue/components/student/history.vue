@@ -10,13 +10,13 @@
             :tabs-id="'history'"
             :panel-id="'visit'"
             :active-tab="true"
-            >IC Visits (compass)</axdd-tab-item
+            >Visits (compass)</axdd-tab-item
           >
           <axdd-tab-item :tabs-id="'history'" :panel-id="'major'"
-            >Major (compass)</axdd-tab-item
+            >Majors</axdd-tab-item
           >
           <axdd-tab-item :tabs-id="'history'" :panel-id="'transcript'"
-            >Registrations (sws)</axdd-tab-item
+            >Unoffical Transcript (sws)</axdd-tab-item
           >
         </template>
         <template #panels>
@@ -65,7 +65,111 @@
               </table>
             </div>
           </axdd-tab-panel>
+
+          <axdd-tab-panel :panel-id="'major'">
+            <div class="table-responsive">
+              <h3
+                class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
+              >
+                Majors
+              </h3>
+              <table class="table table-hover table-striped m-0 mb-5">
+                <thead class="small">
+                  <tr>
+                    <th>Code</th>
+                    <th class="w-50">Major</th>
+                    <th>Status</th>
+                    <th class="text-nowrap">Source</th>
+                  </tr>
+                </thead>
+                <tbody class="mb-3">
+                  <tr
+                    v-for="(major, index) in person.student.majors"
+                    :key="index"
+                  >
+                    <td>{{ major.major_abbr_code }}</td>
+                    <td>{{ major.major_name }}</td>
+                    <td>Current</td>
+                    <td>EDW/UWPDS</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-responsive">
+              <h3
+                class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
+              >
+                Intended Major (compass)
+              </h3>
+              <table class="table table-hover table-striped m-0 mb-5">
+                <thead class="small">
+                  <tr>
+                    <th>Code</th>
+                    <th class="w-50">Major</th>
+                    <th>Status</th>
+                    <th class="text-nowrap">Source</th>
+                  </tr>
+                </thead>
+                <tbody class="mb-3">
+                  <tr>
+                    <td>ENG</td>
+                    <td>Computer Engineering</td>
+                    <td>Intended</td>
+                    <td>DawgPath</td>
+                  </tr>
+                  <tr>
+                    <td>HCDE</td>
+                    <td>Human Centered Design &amp; Engineering</td>
+                    <td>Intended</td>
+                    <td>Compass</td>
+                  </tr>
+                  <tr>
+                    <td>ACCT</td>
+                    <td>Accounting</td>
+                    <td>Intended</td>
+                    <td>Compass</td>
+                  </tr>
+                  <tr>
+                    <td>ECON</td>
+                    <td>Economics</td>
+                    <td>Intended</td>
+                    <td>DawgPath</td>
+                  </tr>
+                </tbody>
+              </table>
+              <h3
+                class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
+              >
+                Intended Major upon Admission to UW
+              </h3>
+              <table class="table table-hover table-striped m-0">
+                <thead class="small">
+                  <tr>
+                    <th>Code</th>
+                    <th class="w-50">Major</th>
+                    <th>Status</th>
+                    <th class="text-nowrap">Source</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    v-for="(intendedMajor, index) in person.student.intended_majors"
+                    :key="index"
+                  >
+                    <td>{{ intendedMajor.major_abbr_code }}</td>
+                    <td>{{ intendedMajor.major_name }}</td>
+                    <td>Intended</td>
+                    <td>EDW/UWPDS</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </axdd-tab-panel>
+
           <axdd-tab-panel :panel-id="'transcript'">
+            <p class="text-danger small">
+              Previous Registrations and Grade transcript
+            </p>
             <div class="table-responsive">
               <table class="table table-hover table-striped m-0">
                 <thead class="small">
@@ -103,132 +207,6 @@
               </table>
             </div>
           </axdd-tab-panel>
-          <axdd-tab-panel :panel-id="'major'">
-            <div class="table-responsive">
-              <h3
-                class="
-                  h6
-                  text-uppercase
-                  fw-bold
-                  text-uppercase
-                  axdd-font-encode-sans
-                  text-dark-beige
-                "
-              >
-                Accepted Major
-              </h3>
-              <table class="table table-hover table-striped m-0 mb-3">
-                <thead class="small">
-                  <tr>
-                    <th>Date</th>
-                    <th>Major</th>
-                    <th>Status</th>
-                    <th class="text-nowrap">Source</th>
-                  </tr>
-                </thead>
-                <tbody class="mb-3">
-                  <tr>
-                    <td scope="row">10/01/2021</td>
-                    <td>Psychology</td>
-                    <td>Accepted</td>
-                    <td>SWS</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="table-responsive">
-              <h3
-                class="
-                  h6
-                  text-uppercase
-                  fw-bold
-                  text-uppercase
-                  axdd-font-encode-sans
-                  text-dark-beige
-                "
-              >
-                Intended Major
-              </h3>
-              <table class="table table-hover table-striped m-0 mb-3">
-                <thead class="small">
-                  <tr>
-                    <th>Date</th>
-                    <th>Major</th>
-                    <th>Status</th>
-                    <th class="text-nowrap">Source</th>
-                  </tr>
-                </thead>
-                <tbody class="mb-3">
-                  <tr>
-                    <td scope="row">9/23/2020</td>
-                    <td>Computer Engineering</td>
-                    <td>Intended #1</td>
-                    <td>DawgPath</td>
-                  </tr>
-                  <tr>
-                    <td scope="row">7/04/2020</td>
-                    <td>Human Centered Design &amp; Engineering</td>
-                    <td>Intended #2</td>
-                    <td>Compass</td>
-                  </tr>
-                  <tr>
-                    <td scope="row">6/29/2020</td>
-                    <td>Accounting</td>
-                    <td>Intended #3</td>
-                    <td>Compass</td>
-                  </tr>
-                  <tr>
-                    <td scope="row">5/23/2020</td>
-                    <td>Economics</td>
-                    <td>Intended #3</td>
-                    <td>DawgPath</td>
-                  </tr>
-                </tbody>
-              </table>
-              <h3
-                class="
-                  h6
-                  text-uppercase
-                  fw-bold
-                  text-uppercase
-                  axdd-font-encode-sans
-                  text-dark-beige
-                "
-              >
-                Intended Major upon Admission
-              </h3>
-              <table class="table table-hover table-striped m-0">
-                <thead class="small">
-                  <tr>
-                    <th>Date</th>
-                    <th>Major</th>
-                    <th>Status</th>
-                    <th class="text-nowrap">Source</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td scope="row">5/14/2020</td>
-                    <td>Informatics</td>
-                    <td>Intended #3</td>
-                    <td>Admissions</td>
-                  </tr>
-                  <tr>
-                    <td scope="row">5/14/2020</td>
-                    <td>Computer Science</td>
-                    <td>Intended #2</td>
-                    <td>Admissions</td>
-                  </tr>
-                  <tr>
-                    <td scope="row">5/14/2020</td>
-                    <td>Anthropolgy</td>
-                    <td>Intended #1</td>
-                    <td>Admissions</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </axdd-tab-panel>
         </template>
       </axdd-tabs>
     </template>
@@ -239,6 +217,12 @@
 import { Card, CardHeading, Tabs, TabItem, TabPanel } from "axdd-components";
 
 export default {
+  props: {
+    person: {
+      type: Object,
+      required: true,
+    },
+  },
   components: {
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
