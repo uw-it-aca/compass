@@ -4,25 +4,35 @@
   <layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
-      <div class="row my-4">
+      <div class="row my-4 small">
+        <div class="col">
+          <div class="bg-gray p-4 rounded-3">
+            <div class="row">
+              <div class="col-9">
+                <div classw="w-50">Today, {{ getToday() }}</div>
+              </div>
+              <div class="col-3">
+                <div class="fw-bold lh-lg">Search all Students:</div>
+                <div>
+                  <student-search></student-search>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
         <div class="col">
           <axdd-card>
             <template #heading-action>
               <axdd-card-heading :level="2"
-                >Today, {{ getToday() }}</axdd-card-heading
+                >Recent contacts (3 days)</axdd-card-heading
               >
-              <axdd-card-action>
-                <student-search></student-search>
-              </axdd-card-action>
             </template>
             <template #body>
               <table-loading v-if="isLoading"></table-loading>
               <table-display v-else :persons="persons"></table-display>
-
-              <div>
-                <p>No contacts (admins)</p>
-              </div>
-
+              <div class="mt-5 text-secondary">No students to meet with.</div>
             </template>
           </axdd-card>
         </div>

@@ -5,11 +5,13 @@
     </template>
     <template #body>
       <ul v-if="person.employee.adviser" class="list-unstyled">
-        <li class="fw-bold">{{person.display_name}}</li>
+        <li class="fw-bold">{{ person.display_name }}</li>
         <li>he/him</li>
-        <li>Email: {{person.employee.adviser.advising_email}}</li>
-        <li>Phone: {{person.employee.adviser.advising_phone_number}}</li>
-        <li class="border-top mt-2 pt-2">Dept Name: {{person.employee.adviser.advising_program}}</li>
+        <li>Email: {{ person.employee.adviser.advising_email }}</li>
+        <li>Phone: {{ person.employee.adviser.advising_phone_number }}</li>
+        <li class="border-top mt-2 pt-2">
+          Dept Name: {{ person.employee.adviser.advising_program }}
+        </li>
         <li>Campus location: MGH 123</li>
         <li>
           <a href="#" class="small">Edit adviser (ADMIN)</a>

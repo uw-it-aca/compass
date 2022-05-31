@@ -1,32 +1,24 @@
 <template>
   <axdd-card>
     <template #heading>
-      <axdd-card-heading :level="2">Programs</axdd-card-heading>
+      <axdd-card-heading :level="2">Special Programs</axdd-card-heading>
     </template>
     <template #body>
-      <p>UW Programs (from EDW?)</p>
+      <p class="small">https://studentdata.washington.edu/sdb-code-manual/student/sdb-special-program-codes/</p>
       <ul>
-        <li>Dean's List</li>
+        <li>Honor's</li>
         <li>Athletics</li>
         <li>EOP</li>
       </ul>
+    </template>
+  </axdd-card>
 
-      <hr />
-
-      <p>OMAD Programs (if EOP yes)</p>
-      <ul>
-        <li>Pre-professional: yes/no</li>
-        <li>IC Eligible: yes/no</li>
-        <li>
-          <template v-if="latestTranscript.special_program">
-            <b>yes</b>/no
-          </template>
-          <template v-else>CAMP, TRIO SSS, Champions</template>
-        </li>
-      </ul>
-      <p>
-        <a href="#" class="small">Edit Programs (ADMIN)</a>
-      </p>
+  <axdd-card>
+    <template #heading>
+      <axdd-card-heading :level="2">Programs (compass)</axdd-card-heading>
+    </template>
+    <template #body>
+      <p>OMAD Programs</p>
       <div class="border border-danger">
         <div class="form-check">
           <input
@@ -44,17 +36,9 @@
             value
             id="defaultCheck2"
           />
-          <label class="form-check-label" for="defaultCheck2">TRIO</label>
+          <label class="form-check-label" for="defaultCheck2">TRIO SSS</label>
         </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            value
-            id="defaultCheck3"
-          />
-          <label class="form-check-label" for="defaultCheck3">SSS</label>
-        </div>
+
         <div class="form-check">
           <input
             class="form-check-input"
@@ -74,6 +58,15 @@
           <label class="form-check-label" for="defaultCheck5"
             >IC Eligible</label
           >
+        </div>
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            value
+            id="defaultCheck3"
+          />
+          <label class="form-check-label" for="defaultCheck3">Pre-professional</label>
         </div>
         <div class="text-end">
           <button type="button" class="btn btn-outline-dark-beige btn-sm">

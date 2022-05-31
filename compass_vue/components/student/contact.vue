@@ -1,9 +1,9 @@
 <template>
   <axdd-card>
     <template #heading-action>
-      <axdd-card-heading :level="2">Contact</axdd-card-heading>
+      <axdd-card-heading :level="2">Contacts (compass)</axdd-card-heading>
       <axdd-card-action>
-        <AddContact
+        <AddContact class="btn btn-sm btn-outline-dark-beige"
           ><i class="bi bi-plus-square-dotted me-2"></i>Record new
           contact</AddContact
         >
@@ -22,16 +22,25 @@
             </tr>
           </thead>
           <tbody>
+             <tr>
+              <td scope="row">05/26/2022</td>
+              <td>2:30PM</td>
+              <td>Appointment</td>
+              <td>You (jadviser)</td>
+              <td>
+                <p class="text-muted">No notes entered!</p>
+                <p class="text-end small">
+                  <a href="#">Edit contact</a>
+                </p>
+              </td>
+            </tr>
             <tr>
               <td scope="row">09/23/2020</td>
               <td>1:55PM</td>
               <td>Drop-in</td>
-              <td>Jon Average</td>
+              <td>You (jadviser)</td>
               <td>
                 <p>
-                  <span class="badge bg-beige text-dark fw-normal">
-                    <i class="bi bi-lock-fill"></i> Restricted
-                  </span>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa
                   beatae omnis doloribus expedita iure fuga obcaecati modi
@@ -60,12 +69,9 @@
               <td scope="row">06/29/2020</td>
               <td>3:15PM</td>
               <td>Appointment</td>
-              <td>Jon Average</td>
+              <td>You (jadviser)</td>
               <td>
                 <p>
-                  <span class="badge bg-beige text-dark fw-normal">
-                    <i class="bi bi-lock-fill"></i> Restricted
-                  </span>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
                   Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa
                   beatae omnis doloribus expedita iure fuga obcaecati modi
