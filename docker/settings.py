@@ -2,6 +2,7 @@ from .base_settings import *
 
 INSTALLED_APPS += [
     'compass.apps.CompassConfig',
+    'simple_history',
     'webpack_loader',
 ]
 
@@ -11,6 +12,13 @@ if os.getenv("ENV") == "localdev":
     WEBPACK_LOADER = {
         'DEFAULT': {
             'STATS_FILE': os.path.join(BASE_DIR, 'compass/static/webpack-stats.json'),
+        }
+    }
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(os.path.join(BASE_DIR, "compass"),
+                                 'db.sqlite3'),
         }
     }
 else:
