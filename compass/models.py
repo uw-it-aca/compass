@@ -44,7 +44,6 @@ class Group(models.Model):
     slug = models.TextField(unique=True)
     programs = models.ManyToManyField('Program')
     contact_topics = models.ManyToManyField('ContactTopic')
-    contact_types = models.ManyToManyField('ContactType')
 
 
 class Program(models.Model):
@@ -58,7 +57,6 @@ class Contact(models.Model):
     """
     Contact with a student
     """
-    group = models.ForeignKey('Group', on_delete=models.CASCADE)
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
     time = models.TimeField(auto_now=False, auto_now_add=False)
     notes = models.TextField()
