@@ -22,9 +22,8 @@ class User(models.Model):
     uwnetid = models.TextField(unique=True)
     uwregid = models.TextField(unique=True)
     # A user's Group affiliation is derived at login via GWS Groups. A GWS
-    # group key is generated using the pattern <access-id-prefix>_<Group.slug>.
-    # The <access-id-prefix> value is a stored secret. It is important to note
-    # thatUW Group memberships are managed externally from the Compass app.
+    # group key is generated using the <access_id>. It is important to note
+    # that UW Group memberships are managed externally from the Compass app.
 
     class Meta:
         indexes = [
@@ -33,15 +32,14 @@ class User(models.Model):
         ]
 
 
-class Group(models.Model):
+class AccessGroup(models.Model):
     """
-    Groups manage their Program, ContactTopic, and ContactType
-    lists. Group members are defined externally and determined via a
-    request to the GWS at login. Every student Contact has both an author User
-    and a Group relationship.
+    AccessGroups manage their Program, ContactTopic, and ContactType
+    lists. AccessGroup membership is defined externally but determined for a
+    User via a request to the GWS at login.
     """
     name = models.TextField(unique=True)
-    slug = models.TextField(unique=True)
+    access_id = models.TextField(unique=True)
     programs = models.ManyToManyField('Program')
     contact_topics = models.ManyToManyField('ContactTopic')
 

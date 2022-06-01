@@ -1,0 +1,30 @@
+[
+ {
+  "model": "compass.contacttype",
+  "pk": 1,
+  "fields": {
+   "name": "Quick Question"
+  }
+ },
+ {
+  "model": "compass.contacttype",
+  "pk": 2,
+  "fields": {
+   "name": "Appointment"
+  }
+ },
+ {
+  "model": "compass.contacttype",
+  "pk": 3,
+  "fields": {
+   "name": "Drop-in"
+  }
+ },
+ {
+  "model": "compass.contacttype",
+  "pk": 4,
+  "fields": {
+   "name": "Telephone"
+  }
+ }
+]

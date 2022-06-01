@@ -31,6 +31,9 @@ else:
 # If you have file data, define the path here
 DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 
+# Override default django User model
+AUTH_USER_MODEL = 'compass.User'
+
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
 LOGOUT_URL = os.getenv("LOGOUT_URL", default="")
 
