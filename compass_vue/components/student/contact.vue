@@ -14,86 +14,94 @@
         <table class="table m-0">
           <thead class="small">
             <tr>
-              <th>Date</th>
-              <th>Time</th>
-              <th class="text-nowrap">Contact Type</th>
-              <th>Staff</th>
-              <th>Notes</th>
+              <th style="width: 33%">Details</th>
+              <th>Notes/Actions</th>
             </tr>
           </thead>
           <tbody>
-             <tr>
-              <td scope="row">05/26/2022</td>
-              <td>2:30PM</td>
-              <td>Appointment</td>
-              <td>You (jadviser)</td>
-              <td>
-                <p class="text-muted">No notes entered!</p>
-                <p class="text-end small">
-                  <a href="#">Edit contact</a>
+            <tr>
+              <td scope="row">
+                <p>
+                  05/26/2022 2:30PM Appointment<br />
+                  You - <a href="#">edit contact</a>
                 </p>
+                <div class="small">topics: asdflk, asdlfj, lajsdf, asdlfkj</div>
+              </td>
+              <td>
+                <p class="text-muted">notes: No notes entered!</p>
+                <p class="text-muted">action: no actions</p>
               </td>
             </tr>
             <tr>
-              <td scope="row">09/23/2020</td>
-              <td>1:55PM</td>
-              <td>Drop-in</td>
-              <td>You (jadviser)</td>
+              <td scope="row">
+                <p>
+                  09/23/2020 1:55PM Drop-in<br />
+                  You - <a href="#">edit contact</a>
+                </p>
+                <div class="small">topics: asdflk, asdlfj, lajsdf, asdlfkj</div>
+              </td>
               <td>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa
-                  beatae omnis doloribus expedita iure fuga obcaecati modi
+                  notes: Lorem ipsum dolor sit amet consectetur adipisicing
+                  elit. Totam, ducimus mollitia! Maiores suscipit tempore sunt,
+                  ipsa beatae omnis doloribus expedita iure fuga obcaecati modi
                   incidunt. Repellendus velit asperiores dolores excepturi?
                 </p>
-                <p class="text-end small">
-                  <a href="#">Edit contact</a>
-                </p>
+                <p>action: student needs to do this</p>
               </td>
             </tr>
             <tr>
-              <td scope="row">07/04/2020</td>
-              <td>10:52AM</td>
-              <td>Quick Question</td>
-              <td>Boris Washington</td>
+              <td scope="row">
+                <p>
+                  07/04/2020 10:52AM Quick Question<br />
+                  Boris Washington
+                </p>
+                <div class="small">topics: asdflk, asdlfj, lajsdf, asdlfkj</div>
+              </td>
               <td>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa
-                  beatae omnis doloribus expedita iure fuga obcaecati modi
+                  notes: Lorem ipsum dolor sit amet consectetur adipisicing
+                  elit. Totam, ducimus mollitia! Maiores suscipit tempore sunt,
+                  ipsa beatae omnis doloribus expedita iure fuga obcaecati modi
                   incidunt. Repellendus velit asperiores dolores excepturi?
                 </p>
+                <p>action: student needs to do this</p>
               </td>
             </tr>
             <tr>
-              <td scope="row">06/29/2020</td>
-              <td>3:15PM</td>
-              <td>Appointment</td>
-              <td>You (jadviser)</td>
+              <td scope="row">
+                <p>
+                  06/29/2020 3:15PM Appointment<br />
+                  You - <a href="#">edit contact</a>
+                </p>
+                <div class="small">topics: asdflk, asdlfj, lajsdf, asdlfkj</div>
+              </td>
               <td>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa
-                  beatae omnis doloribus expedita iure fuga obcaecati modi
+                  notes: Lorem ipsum dolor sit amet consectetur adipisicing
+                  elit. Totam, ducimus mollitia! Maiores suscipit tempore sunt,
+                  ipsa beatae omnis doloribus expedita iure fuga obcaecati modi
                   incidunt. Repellendus velit asperiores dolores excepturi?
                 </p>
-                <p class="text-end small">
-                  <a href="#">Edit contact</a>
-                </p>
+                <p>action: student needs to do this</p>
               </td>
             </tr>
             <tr>
-              <td scope="row">5/14/2020</td>
-              <td>2:15PM</td>
-              <td>Telephone</td>
-              <td>Otto Wilson</td>
+              <td scope="row">
+                <p>
+                  5/14/2020 2:15PM Telephone<br />
+                  Otto Wilson
+                </p>
+                <div class="small">topics: asdflk, asdlfj, lajsdf, asdlfkj</div>
+              </td>
               <td>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Totam, ducimus mollitia! Maiores suscipit tempore sunt, ipsa
-                  beatae omnis doloribus expedita iure fuga obcaecati modi
+                  notes: Lorem ipsum dolor sit amet consectetur adipisicing
+                  elit. Totam, ducimus mollitia! Maiores suscipit tempore sunt,
+                  ipsa beatae omnis doloribus expedita iure fuga obcaecati modi
                   incidunt. Repellendus velit asperiores dolores excepturi?
                 </p>
+                <p>action: student needs to do this</p>
               </td>
             </tr>
           </tbody>
