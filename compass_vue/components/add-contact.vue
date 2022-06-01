@@ -4,7 +4,8 @@
     role="button"
     data-bs-toggle="modal"
     data-bs-target="#exampleModal"
-    class="btn btn-sm btn-outline-dark-beige text-nowrap"
+    class="btn text-nowrap"
+    :class="[buttonType === 'button' ? 'btn-sm btn-outline-dark-beige' : 'small p-0 btn-sm btn-link']"
     ><slot>Add Contact</slot></a
   >
 
@@ -192,3 +193,18 @@
   </div>
   <!-- end visit modal -->
 </template>
+
+<script>
+export default {
+  props: {
+    buttonType: {
+      type: String,
+      required: true,
+    },
+  },
+  components: {},
+  data() {
+    return {};
+  },
+};
+</script>
