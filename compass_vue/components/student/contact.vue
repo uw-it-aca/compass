@@ -3,9 +3,9 @@
     <template #heading-action>
       <axdd-card-heading :level="2">Contacts (compass)</axdd-card-heading>
       <axdd-card-action>
-        <AddContact class="btn btn-sm btn-outline-dark-beige"
+        <AddEditContact :button-type="'button'"
           ><i class="bi bi-plus-square-dotted me-2"></i>Record new
-          contact</AddContact
+          contact</AddEditContact
         >
       </axdd-card-action>
     </template>
@@ -23,7 +23,10 @@
               <td scope="row">
                 <p>
                   05/26/2022 2:30PM Appointment<br />
-                  You - <a href="#">edit contact</a>
+                  You -
+                  <AddEditContact :button-type="'link'"
+                    >edit contact</AddEditContact
+                  >
                 </p>
                 <div class="small">topics: asdflk, asdlfj, lajsdf, asdlfkj</div>
               </td>
@@ -36,7 +39,10 @@
               <td scope="row">
                 <p>
                   09/23/2020 1:55PM Drop-in<br />
-                  You - <a href="#">edit contact</a>
+                  You -
+                  <AddEditContact :button-type="'link'"
+                    >edit contact</AddEditContact
+                  >
                 </p>
                 <div class="small">topics: asdflk, asdlfj, lajsdf, asdlfkj</div>
               </td>
@@ -72,7 +78,10 @@
               <td scope="row">
                 <p>
                   06/29/2020 3:15PM Appointment<br />
-                  You - <a href="#">edit contact</a>
+                  You -
+                  <AddEditContact :button-type="'link'"
+                    >edit contact</AddEditContact
+                  >
                 </p>
                 <div class="small">topics: asdflk, asdlfj, lajsdf, asdlfkj</div>
               </td>
@@ -113,11 +122,11 @@
 
 <script>
 import { Card, CardHeading, CardAction } from "axdd-components";
-import AddContact from "../add-contact.vue";
+import AddEditContact from "../add-contact.vue";
 
 export default {
   components: {
-    AddContact,
+    AddEditContact,
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
     "axdd-card-action": CardAction,
