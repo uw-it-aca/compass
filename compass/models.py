@@ -3,19 +3,10 @@
 
 from django.db import models
 from simple_history.models import HistoricalRecords
+from django.contrib.auth.models import AbstractBaseUser
 
 
-class Student(models.Model):
-    system_key = models.TextField(unique=True)
-    programs = models.ManyToManyField('Program')
-
-    class Meta:
-        indexes = [
-            models.Index(fields=['system_key']),
-        ]
-
-
-class User(models.Model):
+class User(AbstractBaseUser):
     """
     Authenticated user
     """
@@ -32,6 +23,15 @@ class User(models.Model):
         ]
 
 
+class Student(models.Model):
+    system_key = models.TextField(unique=True)
+    programs = models.ManyToManyField('Program')
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['system_key']),
+        ]
+
 class AccessGroup(models.Model):
     """
     AccessGroups manage their Program, ContactTopic, and ContactType
@@ -39,9 +39,12 @@ class AccessGroup(models.Model):
     User via a request to the GWS at login.
     """
     name = models.TextField(unique=True)
-    access_id = models.TextField(unique=True)
+    access_id = models.SlugField(unique=True)
     programs = models.ManyToManyField('Program')
     contact_topics = models.ManyToManyField('ContactTopic')
+
+    def __str__(self):
+        return self.name
 
 
 class Program(models.Model):
@@ -49,6 +52,9 @@ class Program(models.Model):
     Departmental/Group Program (e.g. CAMP, TRIO, SSS, Champions, IC Eligible)
     """
     name = models.TextField(unique=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Contact(models.Model):
@@ -81,9 +87,15 @@ class ContactType(models.Model):
     """
     name = models.TextField(unique=True)
 
+    def __str__(self):
+        return self.name
+
 
 class ContactTopic(models.Model):
     """
     Topic discussed in a Contact
     """
     name = models.TextField(unique=True)
+
+    def __str__(self):
+        return self.name
