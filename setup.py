@@ -31,6 +31,7 @@ setup(
         'Django-UserService~=3.1',
         'djangorestframework~=3.12',
         'UW-RestClients-SWS~=2.3',
+        'UW-RestClients-GWS~=2.3',
         'UW-Django-SAML2~=1.5',
         'urllib3~=1.25',
         'axdd-person-client'

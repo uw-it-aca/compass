@@ -2,24 +2,22 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin
 from simple_history.admin import SimpleHistoryAdmin
-from django.contrib.auth.models import User as AuthUser
-from django.contrib.auth.models import Group
-from compass.models import User, Student, AccessGroup, Program, Contact, \
-    ContactType, ContactTopic
+from django.contrib.auth.models import Group, User
+from compass.models import AppUser, Student, AccessGroup, \
+    Program, Contact, ContactType, ContactTopic
 
 
 class AccessUser:
-    has_module_perms = has_perm = __getattr__ = lambda s, *a ,**kw: True
+    has_module_perms = has_perm = __getattr__ = lambda s, *a, **kw: True
 
 
 admin.site.has_permission = lambda r: setattr(r, 'user', AccessUser()) or True
 
-admin.site.unregister(AuthUser)
+admin.site.unregister(User)
 admin.site.unregister(Group)
 
-admin.site.register(User)
+admin.site.register(AppUser)
 admin.site.register(Student)
 admin.site.register(AccessGroup)
 admin.site.register(Program)

@@ -5,7 +5,7 @@ from django.db import models
 from simple_history.models import HistoricalRecords
 
 
-class User(models.Model):
+class AppUser(models.Model):
     """
     Authenticated user
     """
@@ -32,12 +32,24 @@ class Student(models.Model):
             models.Index(fields=['system_key']),
         ]
 
+
+class AccessGroupManager(models.Manager):
+
+    @property
+    def access_group_ids(self):
+        return list(
+            super().get_queryset().values_list('access_group_id', flat=True))
+
+
 class AccessGroup(models.Model):
     """
     AccessGroups manage their Program, ContactTopic, and ContactType
     lists. AccessGroup membership is defined externally but determined for a
-    User via a request to the GWS at login.
+    AppUser via a request to the GWS at login.
     """
+
+    objects = AccessGroupManager()
+
     name = models.CharField(unique=True, max_length=50)
     access_group_id = models.CharField(unique=True, max_length=50)
     programs = models.ManyToManyField('Program')
@@ -69,7 +81,7 @@ class Contact(models.Model):
     contact_topics = models.ManyToManyField('ContactTopic')
     # contact history fields
     pub_date = models.DateTimeField('date published')
-    author = models.ForeignKey('User', on_delete=models.CASCADE)
+    author = models.ForeignKey('AppUser', on_delete=models.CASCADE)
     history = HistoricalRecords()
 
     @property
