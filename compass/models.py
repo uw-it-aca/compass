@@ -3,15 +3,15 @@
 
 from django.db import models
 from simple_history.models import HistoricalRecords
-from django.contrib.auth.models import AbstractBaseUser
 
 
-class User(AbstractBaseUser):
+class User(models.Model):
     """
     Authenticated user
     """
     uwnetid = models.TextField(unique=True)
     uwregid = models.TextField(unique=True)
+
     # A user's Group affiliation is derived at login via GWS Groups. A GWS
     # group key is generated using the <access_id>. It is important to note
     # that UW Group memberships are managed externally from the Compass app.

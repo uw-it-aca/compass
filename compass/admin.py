@@ -4,6 +4,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from simple_history.admin import SimpleHistoryAdmin
+from django.contrib.auth.models import User as AuthUser
 from django.contrib.auth.models import Group
 from compass.models import User, Student, AccessGroup, Program, Contact, \
     ContactType, ContactTopic
@@ -15,9 +16,10 @@ class AccessUser:
 
 admin.site.has_permission = lambda r: setattr(r, 'user', AccessUser()) or True
 
+admin.site.unregister(AuthUser)
 admin.site.unregister(Group)
 
-admin.site.register(User, UserAdmin)
+admin.site.register(User)
 admin.site.register(Student)
 admin.site.register(AccessGroup)
 admin.site.register(Program)
