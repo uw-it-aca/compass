@@ -9,8 +9,8 @@ class User(models.Model):
     """
     Authenticated user
     """
-    uwnetid = models.TextField(unique=True)
-    uwregid = models.TextField(unique=True)
+    uwnetid = models.CharField(unique=True, max_length=50)
+    uwregid = models.CharField(unique=True, max_length=50)
 
     # A user's Group affiliation is derived at login via GWS Groups. A GWS
     # group key is generated using the <access_id>. It is important to note
@@ -24,7 +24,7 @@ class User(models.Model):
 
 
 class Student(models.Model):
-    system_key = models.TextField(unique=True)
+    system_key = models.CharField(unique=True, max_length=50)
     programs = models.ManyToManyField('Program')
 
     class Meta:
@@ -38,8 +38,8 @@ class AccessGroup(models.Model):
     lists. AccessGroup membership is defined externally but determined for a
     User via a request to the GWS at login.
     """
-    name = models.TextField(unique=True)
-    access_id = models.SlugField(unique=True)
+    name = models.CharField(unique=True, max_length=50)
+    access_group_id = models.CharField(unique=True, max_length=50)
     programs = models.ManyToManyField('Program')
     contact_topics = models.ManyToManyField('ContactTopic')
 
@@ -51,7 +51,7 @@ class Program(models.Model):
     """
     Departmental/Group Program (e.g. CAMP, TRIO, SSS, Champions, IC Eligible)
     """
-    name = models.TextField(unique=True)
+    name = models.CharField(unique=True, max_length=50)
 
     def __str__(self):
         return self.name
@@ -85,7 +85,7 @@ class ContactType(models.Model):
     """
     Type of Contact
     """
-    name = models.TextField(unique=True)
+    name = models.CharField(unique=True, max_length=50)
 
     def __str__(self):
         return self.name
@@ -95,7 +95,7 @@ class ContactTopic(models.Model):
     """
     Topic discussed in a Contact
     """
-    name = models.TextField(unique=True)
+    name = models.CharField(unique=True, max_length=50)
 
     def __str__(self):
         return self.name
