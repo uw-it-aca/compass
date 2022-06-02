@@ -24,7 +24,6 @@ else:
 DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
-LOGOUT_URL = os.getenv("LOGOUT_URL", default="")
 
 TEMPLATES[0]["OPTIONS"]["context_processors"].extend(
     [
@@ -36,6 +35,8 @@ TEMPLATES[0]["OPTIONS"]["context_processors"].extend(
 
 if os.getenv("ENV") == "localdev":
     DEBUG = True
-    COMPASS_USERS_GROUP = "u_test_group"
+    COMPASS_ADMIN_GROUP = 'u_test_group'
+    COMPASS_SUPPORT_GROUP = 'u_test_group'
 else:
-    COMPASS_USERS_GROUP = os.getenv('ACCESS_GROUP', '')
+    COMPASS_ADMIN_GROUP = os.getenv('ADMIN_GROUP', '')
+    COMPASS_SUPPORT_GROUP = os.getenv('SUPPORT_GROUP', '')
