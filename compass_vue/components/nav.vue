@@ -17,6 +17,14 @@
           ><i class="bi bi-people-fill me-2"></i>Caseload</router-link
         >
       </li>
+      <li class="nav-item mb-2 bg-dark-purple-hover rounded">
+        <router-link
+          :to="'/admin'"
+          active-class="bg-dark-purple rounded"
+          class="nav-link text-gray d-block px-2 py-1"
+          ><i class="bi bi-gear-wide-connected me-2"></i>Admin</router-link
+        >
+      </li>
     </ul>
 
     <p

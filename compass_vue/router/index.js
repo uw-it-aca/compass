@@ -35,7 +35,7 @@ const routes = [
     pathToRegexpOptions: { strict: true },
     props: true,
     beforeEnter(to, from, next) {
-      if (isAuthenticated()) {
+      if (isAuthorized()) {
         // got to admin page
         next();
       } else {
@@ -46,7 +46,7 @@ const routes = [
   },
 ];
 
-function isAuthenticated() {
+function isAuthorized() {
   // get user?
   return false;
 }
