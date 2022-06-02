@@ -5,7 +5,7 @@ INSTALLED_APPS += [
     'webpack_loader',
 ]
 
-# Location of stats file that can be accessed during local development and 
+# Location of stats file that can be accessed during local development and
 # collected from during production build process
 if os.getenv("ENV") == "localdev":
     WEBPACK_LOADER = {
@@ -29,7 +29,6 @@ LOGOUT_URL = os.getenv("LOGOUT_URL", default="")
 TEMPLATES[0]["OPTIONS"]["context_processors"].extend(
     [
         "compass.context_processors.google_analytics",
-        "compass.context_processors.logout_url",
         "compass.context_processors.django_debug",
     ]
 )

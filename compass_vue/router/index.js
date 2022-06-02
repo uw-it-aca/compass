@@ -5,6 +5,7 @@ import { trackRouter } from "vue-gtag-next";
 import Home from "../pages/home.vue";
 import Caseload from "../pages/caseload.vue";
 import Student from "../pages/student.vue";
+import Admin from "../pages/admin.vue";
 
 const routes = [
   {
@@ -27,7 +28,28 @@ const routes = [
     pathToRegexpOptions: { strict: true },
     props: true,
   },
+  {
+    path: "/admin",
+    name: "Admin",
+    component: Admin,
+    pathToRegexpOptions: { strict: true },
+    props: true,
+    beforeEnter(to, from, next) {
+      if (isAuthenticated()) {
+        // got to admin page
+        next();
+      } else {
+        // go to 'not authorized'
+        next("/not-authorized");
+      }
+    },
+  },
 ];
+
+function isAuthenticated() {
+  // get user?
+  return false;
+}
 
 const router = createRouter({
   history: createWebHistory(),
