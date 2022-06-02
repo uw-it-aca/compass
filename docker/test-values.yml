@@ -43,13 +43,31 @@ instance: test
 memcached:
   enabled: false
 
+certs:
+  mounted: true
+  certPath: /certs/test.compass.uw.edu-ic.cert
+  keyPath: /certs/test.compass.uw.edu-ic.key
+  secretName: test.compass.uw.edu-ic-certs
+
 environmentVariables:
   - name: ENV
     value: test
+
+  - name: SWS_ENV
+    value: PROD
+  - name: SWS_TIMEOUT
+    value: "10"
+
+  - name: GWS_ENV
+    value: PROD
+  - name: GWS_TIMEOUT
+    value: "5"
+
   - name: AUTH
     value: SAML
   - name: SAML_ENTITY_ID
     value: https://test.compass.uw.edu/saml2
+
   - name: CLUSTER_CNAME
     value: test.compass.uw.edu
 
@@ -61,8 +79,10 @@ externalSecrets:
       data:
         - name: django-secret
           property: django-secret
-        - name: access-group-id
-          property: access-group-id
+        - name: group-id-admin
+          property: group-id-admin
+        - name: group-id-support
+          property: group-id-support
         - name: google-analytics-key
           property: google-analytics-key
     - name: test.compass.uw.edu-sql-secrets
@@ -77,6 +97,8 @@ externalSecrets:
       data:
         - name: test.compass.uw.edu-ic.cert
           property: test.compass.uw.edu-ic.cert
+        - name: test.compass.uw.edu-ic.key
+          property: test.compass.uw.edu-ic.key
     - name: test.compass.uw.edu-uw-idp-cert
       externalKey: idp-cert
       data:
@@ -88,10 +110,14 @@ environmentVariablesSecrets:
     name: DJANGO_SECRET
     secretName: test.compass.uw.edu-secrets
     secretKey: django-secret
-  accessGroup:
-    name: ACCESS_GROUP
+  adminGroup:
+    name: ADMIN_GROUP
     secretName: test.compass.uw.edu-secrets
-    secretKey: access-group-id
+    secretKey: group-id-admin
+  supportGroup:
+    name: SUPPORT_GROUP
+    secretName: test.compass.uw.edu-secrets
+    secretKey: group-id-support
   googleAnalyticsKey:
     name: GOOGLE_ANALYTICS_KEY
     secretName: test.compass.uw.edu-secrets
