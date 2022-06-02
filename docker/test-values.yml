@@ -52,10 +52,22 @@ certs:
 environmentVariables:
   - name: ENV
     value: test
+
+  - name: SWS_ENV
+    value: PROD
+  - name: SWS_TIMEOUT
+    value: "10"
+
+  - name: GWS_ENV
+    value: PROD
+  - name: GWS_TIMEOUT
+    value: "5"
+
   - name: AUTH
     value: SAML
   - name: SAML_ENTITY_ID
     value: https://test.compass.uw.edu/saml2
+
   - name: CLUSTER_CNAME
     value: test.compass.uw.edu
 
