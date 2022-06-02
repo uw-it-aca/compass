@@ -4,13 +4,10 @@ INSTALLED_APPS += [
     'compass.apps.CompassConfig',
     'simple_history',
     'webpack_loader',
-    'supporttools',
     'userservice',
-    'django_user_agents',
 ]
 
-MIDDLEWARE += ['userservice.user.UserServiceMiddleware',
-               'django_user_agents.middleware.UserAgentMiddleware']
+MIDDLEWARE += ['userservice.user.UserServiceMiddleware']
 
 TEMPLATES = [
     {
@@ -20,13 +17,10 @@ TEMPLATES = [
             'debug':  True,
             'context_processors': [
                 "compass.context_processors.google_analytics",
-                "compass.context_processors.logout_url",
                 "compass.context_processors.django_debug",
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'supporttools.context_processors.supportools_globals',
-                'supporttools.context_processors.has_less_compiled',
             ],
         }
     }
@@ -71,6 +65,3 @@ else:
     }
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
-
-SUPPORTTOOLS_PARENT_APP = "compass"
-SUPPORTTOOLS_PARENT_APP_URL = "/"

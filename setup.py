@@ -24,10 +24,8 @@ setup(
     include_package_data=True,
     install_requires = [
         'django~=3.2',
-        'django-compressor==4.0',
         'django-simple-history==3.1.1',
         'django-webpack-loader',
-        'Django-SupportTools~=3.5',
         'Django-UserService~=3.1',
         'djangorestframework~=3.12',
         'UW-RestClients-SWS~=2.3',
