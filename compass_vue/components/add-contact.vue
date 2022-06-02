@@ -4,7 +4,8 @@
     role="button"
     data-bs-toggle="modal"
     data-bs-target="#exampleModal"
-    class="btn btn-sm btn-outline-dark-beige text-nowrap"
+    class="btn text-nowrap"
+    :class="[buttonType === 'button' ? 'btn-sm btn-outline-dark-beige' : 'small p-0 btn-sm btn-link']"
     ><slot>Add Contact</slot></a
   >
 
@@ -56,19 +57,6 @@
                     value="13:30"
                     class="form-control"
                   />
-                </div>
-
-                <div class="col">
-                  <label class="form-label">Duration:</label>
-                  <select
-                    class="form-select"
-                    aria-label="Default select example"
-                  >
-                    <option selected>15</option>
-                    <option value="1">30</option>
-                    <option value="2">60</option>
-                    <option value="3">90</option>
-                  </select>
                 </div>
               </div>
             </div>
@@ -188,18 +176,35 @@
             ></textarea>
           </div>
         </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-          <button type="button" class="btn btn-primary">Save contact</button>
+        <div class="modal-footer text-end">
+          <div>
+            <button
+              type="button"
+              class="btn btn-secondary me-2"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-primary">Save contact</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <!-- end visit modal -->
 </template>
+
+<script>
+export default {
+  props: {
+    buttonType: {
+      type: String,
+      required: true,
+    },
+  },
+  components: {},
+  data() {
+    return {};
+  },
+};
+</script>

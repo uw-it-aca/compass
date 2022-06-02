@@ -1,7 +1,7 @@
 <template>
   <axdd-card>
     <template #heading>
-      <axdd-card-heading :level="2">Schedule</axdd-card-heading>
+      <axdd-card-heading :level="2">Schedule (sws)</axdd-card-heading>
     </template>
     <template #body>
       <axdd-tabs :tabs-id="'schedule'">

@@ -8,35 +8,25 @@
         <div class="col">
           <div class="bg-gray p-4 rounded-3">
             <div class="row">
-              <div class="col-5 d-flex justify-content-between">
+              <div class="col-9 border-end d-flex justify-content-between">
                 <div class="flex-fill me-3">
-                  <div class="fw-bold lh-lg">Show week:</div>
-                  <select
-                    class="form-select form-select-sm"
-                    aria-label="Default select example"
-                  >
-                    <option selected>Current Week</option>
-                    <option value="1">Autumn 2021: Week 4</option>
-                    <option value="2">Autumn 2021: Week 3</option>
-                    <option value="3">Autumn 2021: Week 2</option>
-                    <option value="4">Autumn 2021: Week 1</option>
-                  </select>
-                </div>
-                <div class="flex-fill">
                   <div class="fw-bold lh-lg">Display caseload for:</div>
                   <select
                     class="form-select form-select-sm"
                     aria-label="Default select example"
                   >
-                    <option selected>All advisers</option>
+                    <option>All advisers</option>
                     <option>All un-assigned (ADMIN)</option>
-                    <option v-for="adviser in advisers" :key="adviser.id" value="adviser.uwnetid">
-                      {{adviser.display_name}}
+                    <option selected
+                      v-for="adviser in advisers"
+                      :key="adviser.id"
+                      value="adviser.uwnetid"
+                    >
+                      {{ adviser.display_name }}
                     </option>
                   </select>
                 </div>
-              </div>
-              <div class="col-7 border-start d-flex justify-content-between">
+
                 <div class="flex-fill me-3">
                   <div class="fw-bold lh-lg">Class Standing:</div>
                   <select
@@ -50,43 +40,18 @@
                     <option value="4">Senior</option>
                   </select>
                 </div>
-
-                <div class="me-3">
-                  <div class="fw-bold lh-lg">Population:</div>
-                  <select
-                    class="form-select form-select-sm"
-                    aria-label=".form-select-sm example"
-                  >
-                    <option selected>All</option>
-                    <option value="1">Atheletes</option>
-                    <option value="2">Pre-Engineering</option>
-                    <option value="3">STEM</option>
-                  </select>
-                </div>
-                <div class="me-3">
-                  <div class="fw-bold lh-lg">Sport (if Athelete):</div>
-                  <select
-                    class="form-select form-select-sm"
-                    aria-label=".form-select-sm example"
-                  >
-                    <option selected>All</option>
-                    <option value="1">Football</option>
-                    <option value="2">Baseball</option>
-                    <option value="3">Volleyball</option>
-                  </select>
-                </div>
-
                 <div class="flex-fill">
-                  <div class="fw-bold lh-lg">Status:</div>
+                  <div class="fw-bold lh-lg">Enrollment Status:</div>
                   <div class="form-check form-check-inline">
                     <input
                       class="form-check-input"
                       type="radio"
                       name="flexRadioDefault"
                       id="flexRadioDefault1"
+                      checked
                     />
                     <label class="form-check-label" for="flexRadioDefault1"
-                      >Active</label
+                      >Enrolled</label
                     >
                   </div>
                   <div class="form-check form-check-inline">
@@ -95,227 +60,18 @@
                       type="radio"
                       name="flexRadioDefault"
                       id="flexRadioDefault2"
-                      checked
                     />
                     <label class="form-check-label" for="flexRadioDefault2"
-                      >Inactive</label
+                      >Not Enrolled</label
                     >
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- Retention Filters-->
-            <div class="row mt-4">
-              <div class="col-4">
-                <div class="d-flex">
-                  <div class="fw-bold me-3">Priority:</div>
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value
-                      id="defaultCheck1"
-                    />
-                    <label class="form-check-label" for="defaultCheck1">
-                      <span class="badge rounded-pill bg-danger">Top</span>
-                    </label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value
-                      id="defaultCheck2"
-                    />
-                    <label class="form-check-label" for="defaultCheck2">
-                      <span class="badge rounded-pill bg-warning">Middle</span>
-                    </label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value
-                      id="defaultCheck2"
-                    />
-                    <label class="form-check-label" for="defaultCheck2">
-                      <span class="badge rounded-pill border text-muted"
-                        >Bottom</span
-                      >
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div class="col-8 border-start">
-                <div class>
-                  <a
-                    class
-                    data-bs-toggle="collapse"
-                    href="#collapseExample"
-                    role="button"
-                    aria-expanded="false"
-                    aria-controls="collapseExample"
-                    >Show Retention filters</a
-                  >
-                </div>
-                <div class="collapse" id="collapseExample">
-                  <div class="d-flex pt-3">
-                    <div class="flex-fill">
-                      <div class="fw-bold">Sign-ins</div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value
-                          id="defaultCheck1"
-                        />
-                        <label class="form-check-label" for="defaultCheck1"
-                          >High</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value
-                          id="defaultCheck2"
-                        />
-                        <label class="form-check-label" for="defaultCheck2"
-                          >Average</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value
-                          id="defaultCheck2"
-                        />
-                        <label class="form-check-label" for="defaultCheck2"
-                          >Low</label
-                        >
-                      </div>
-                    </div>
-                    <div class="flex-fill">
-                      <div class="fw-bold">Activity</div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value
-                          id="defaultCheck3"
-                        />
-                        <label class="form-check-label" for="defaultCheck3"
-                          >High</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value
-                          id="defaultCheck4"
-                        />
-                        <label class="form-check-label" for="defaultCheck4"
-                          >Average</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value
-                          id="defaultCheck5"
-                        />
-                        <label class="form-check-label" for="defaultCheck5"
-                          >Low</label
-                        >
-                      </div>
-                    </div>
-                    <div class="flex-fill">
-                      <div class="fw-bold">Assignments</div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value
-                          id="defaultCheck6"
-                        />
-                        <label class="form-check-label" for="defaultCheck6"
-                          >High</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value
-                          id="defaultCheck7"
-                        />
-                        <label class="form-check-label" for="defaultCheck7"
-                          >Average</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value
-                          id="defaultCheck8"
-                        />
-                        <label class="form-check-label" for="defaultCheck8"
-                          >Low</label
-                        >
-                      </div>
-                    </div>
-                    <div class="flex-fill">
-                      <div class="fw-bold">Grades</div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value
-                          id="defaultCheck9"
-                        />
-                        <label class="form-check-label" for="defaultCheck9"
-                          >High</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value
-                          id="defaultCheck10"
-                        />
-                        <label class="form-check-label" for="defaultCheck10"
-                          >Average</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value
-                          id="defaultCheck11"
-                        />
-                        <label class="form-check-label" for="defaultCheck11"
-                          >Low</label
-                        >
-                      </div>
-                    </div>
-                  </div>
-                  <ul class="mt-3 mb-0 list-inline">
-                    <li class="list-inline-item">
-                      <strong>Low</strong> -5 to -3
-                    </li>
-                    <li class="list-inline-item">
-                      <strong>Average</strong> -2.9 to +2.9
-                    </li>
-                    <li class="list-inline-item">
-                      <strong>High</strong> +3 to +5
-                    </li>
-                  </ul>
+
+              <div class="col-3">
+                <div class="fw-bold lh-lg">Search all Students:</div>
+                <div>
+                  <student-search></student-search>
                 </div>
               </div>
             </div>
@@ -328,9 +84,6 @@
           <axdd-card>
             <template #heading-action>
               <axdd-card-heading :level="2">My Caseload</axdd-card-heading>
-              <axdd-card-action>
-                <student-search></student-search>
-              </axdd-card-action>
             </template>
             <template #body>
               <table-loading v-if="isLoading"></table-loading>
@@ -367,11 +120,7 @@
                                   item.id +
                                   '.jpg'
                                 "
-                                class="
-                                  img-fluid
-                                  rounded-circle
-                                  border border-white border-2
-                                "
+                                class="img-fluid rounded-circle border border-white border-2"
                               />
                               <img
                                 v-else
@@ -380,11 +129,7 @@
                                   item.id +
                                   '.jpg'
                                 "
-                                class="
-                                  img-fluid
-                                  rounded-circle
-                                  border border-white border-2
-                                "
+                                class="img-fluid rounded-circle border border-white border-2"
                               />
                             </div>
                           </div>
@@ -395,23 +140,11 @@
                                 {{ item.student_preferred_first_name }}
                               </span>
                               <span
-                                class="
-                                  badge
-                                  rounded-pill
-                                  border border-muted
-                                  text-dark
-                                  small
-                                "
+                                class="badge rounded-pill border border-muted text-dark small"
                                 >{{ item.gender }}</span
                               >
                               <span
-                                class="
-                                  badge
-                                  rounded-pill
-                                  border border-muted
-                                  text-dark
-                                  small
-                                "
+                                class="badge rounded-pill border border-muted text-dark small"
                               >
                                 <i class="bi bi-trophy-fill text-purple"></i>
                               </span>
@@ -441,9 +174,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <div v-else>
-                  no students in your caseload
-                </div>
+                <div v-else>no students in your caseload</div>
               </div>
             </template>
             <template v-if="!isLoading && studentsCount > 0" #footer>
@@ -538,15 +269,13 @@ export default {
         }
       );
     },
-    loadAdviserList: function() {
+    loadAdviserList: function () {
       let _this = this;
-      this.getAdviserList().then(
-        (response) => {
-          if (response.data) {
-            _this.advisers = response.data;
-          }
+      this.getAdviserList().then((response) => {
+        if (response.data) {
+          _this.advisers = response.data;
         }
-      );
+      });
     },
     showPriorityRing: function (priorityValue) {
       // mocked display

@@ -39,18 +39,15 @@
                         class="
                           img-fluid
                           rounded-circle
-                          border border-light border-3
+                          border border-gray border-3
                         "
                       />
-                    </div>
-                    <div class="text-center mb-4">
-                      <span class="fw-bold">Priority</span>
                     </div>
                   </div>
                   <div class="flex-fill ps-4 mb-4">
                     <div class="h3 text-dark axdd-font-encode-sans">
                       <template v-if="person.preferred_first_name">
-                        {{ person.preferred_last_name }}
+                        {{ person.preferred_first_name }}
                       </template>
                       <template v-else> {{ person.first_name }} </template
                       >&nbsp;
@@ -117,7 +114,7 @@
                     <li>
                       Local Phone: {{ person.student.local_phone_number }}
                     </li>
-                    <li>
+                    <li class="mt-2">
                       Perm Address:<br />
                       {{ person.student.perm_addr_line1 }}<br />
                       {{ person.student.perm_addr_line2 }}<br />
@@ -127,11 +124,8 @@
                         person.student.perm_addr_4digit_zip
                       }}, {{ person.student.perm_addr_country }}
                     </li>
-                    <li>
-                      Local Address:<br />
-                      <a href="#" class="small" role="button"
-                        >Edit address (ALL)</a
-                      >
+                    <li class="mt-2">
+                      Local Address: tbd<br />
                     </li>
                   </ul>
                 </div>
@@ -144,7 +138,7 @@
           <div class="col-xl-9">
             <StudentContact></StudentContact>
             <StudentSchedule></StudentSchedule>
-            <StudentHistory></StudentHistory>
+            <StudentHistory :person="person"></StudentHistory>
           </div>
           <div class="col-xl-3">
             <StudentAdviser
@@ -154,7 +148,6 @@
             ></StudentAdviser>
             <StudentPrograms :person="person"></StudentPrograms>
             <StudentAcademics :person="person"></StudentAcademics>
-            <StudentMajors :person="person"></StudentMajors>
           </div>
         </div>
       </div>
@@ -172,7 +165,6 @@ import StudentHistory from "../components/student/history.vue";
 import StudentAdviser from "../components/student/adviser.vue";
 import StudentPrograms from "../components/student/programs.vue";
 import StudentAcademics from "../components/student/academics.vue";
-import StudentMajors from "../components/student/majors.vue";
 
 export default {
   mixins: [dataMixin],
@@ -184,7 +176,6 @@ export default {
     StudentAdviser,
     StudentPrograms,
     StudentAcademics,
-    StudentMajors,
   },
   created: function () {
     this.loadStudent(this.$route.params.id);
