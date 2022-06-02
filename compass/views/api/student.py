@@ -1,16 +1,14 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from django.conf import settings
+from compass.decorators import verify_access
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views import View
-from uw_saml.decorators import group_required
 from uw_person_client import UWPersonClient
 
 
-@method_decorator(group_required(settings.COMPASS_USERS_GROUP),
-                  name='dispatch')
+@method_decorator(verify_access(), name='dispatch')
 class StudentListView(View):
     '''
     API endpoint returning a list of students
@@ -25,8 +23,7 @@ class StudentListView(View):
         return JsonResponse([item.to_dict() for item in data], safe=False)
 
 
-@method_decorator(group_required(settings.COMPASS_USERS_GROUP),
-                  name='dispatch')
+@method_decorator(verify_access(), name='dispatch')
 class StudentDetailView(View):
     '''
     API endpoint returning a student's details
