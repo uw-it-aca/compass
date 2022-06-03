@@ -7,10 +7,6 @@ INSTALLED_APPS += [
     'userservice',
 ]
 
-<<<<<<< HEAD
-# Location of stats file that can be accessed during local development and
-# collected from during production build process
-=======
 MIDDLEWARE += ['userservice.user.UserServiceMiddleware']
 
 TEMPLATES = [
@@ -33,7 +29,6 @@ TEMPLATES = [
 # If you have file data, define the path here
 DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 
->>>>>>> develop
 if os.getenv("ENV") == "localdev":
     DEBUG = True
 
@@ -70,20 +65,3 @@ else:
     }
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
-<<<<<<< HEAD
-LOGOUT_URL = os.getenv("LOGOUT_URL", default="")
-
-TEMPLATES[0]["OPTIONS"]["context_processors"].extend(
-    [
-        "compass.context_processors.google_analytics",
-        "compass.context_processors.django_debug",
-    ]
-)
-
-if os.getenv("ENV") == "localdev":
-    DEBUG = True
-    COMPASS_USERS_GROUP = "u_test_group"
-else:
-    COMPASS_USERS_GROUP = os.getenv('ACCESS_GROUP', '')
-=======
->>>>>>> develop
