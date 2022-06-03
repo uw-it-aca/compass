@@ -5,7 +5,8 @@ import { trackRouter } from "vue-gtag-next";
 import Home from "../pages/home.vue";
 import Caseload from "../pages/caseload.vue";
 import Student from "../pages/student.vue";
-import Admin from "../pages/admin.vue";
+import Reports from "../pages/reports.vue";
+import Settings from "../pages/settings.vue";
 
 const routes = [
   {
@@ -29,25 +30,41 @@ const routes = [
     props: true,
   },
   {
-    path: "/admin",
-    name: "Admin",
-    component: Admin,
+    path: "/reports",
+    name: "Reports",
+    component: Reports,
     pathToRegexpOptions: { strict: true },
     props: true,
     beforeEnter(to, from, next) {
       if (isAuthorized()) {
-        // got to admin page
+        // got to reports page
         next();
       } else {
-        // go to 'not authorized'
-        next("/not-authorized");
+        // redirect to 'not authorized' page in django
+        window.location.replace("/not-authorized");
+      }
+    },
+  },
+  {
+    path: "/settings",
+    name: "Settings",
+    component: Settings,
+    pathToRegexpOptions: { strict: true },
+    props: true,
+    beforeEnter(to, from, next) {
+      if (isAuthorized()) {
+        // got to reports page
+        next();
+      } else {
+        // redirect to 'not authorized' page in django
+        window.location.replace("/not-authorized");
       }
     },
   },
 ];
 
 function isAuthorized() {
-  // get user?
+  // get user roles?
   return false;
 }
 

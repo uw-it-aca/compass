@@ -19,10 +19,18 @@
       </li>
       <li class="nav-item mb-2 bg-dark-purple-hover rounded">
         <router-link
-          :to="'/admin'"
+          :to="'/reports'"
           active-class="bg-dark-purple rounded"
           class="nav-link text-gray d-block px-2 py-1"
-          ><i class="bi bi-gear-wide-connected me-2"></i>Admin</router-link
+          ><i class="bi bi-bar-chart-fill me-2"></i>Reports</router-link
+        >
+      </li>
+      <li class="nav-item mb-2 bg-dark-purple-hover rounded">
+        <router-link
+          :to="'/settings'"
+          active-class="bg-dark-purple rounded"
+          class="nav-link text-gray d-block px-2 py-1"
+          ><i class="bi bi-gear-wide-connected me-2"></i>Settings</router-link
         >
       </li>
     </ul>
@@ -49,4 +57,3 @@
     <br /><br />
   </div>
 </template>
-

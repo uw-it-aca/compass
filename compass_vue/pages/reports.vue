@@ -1,4 +1,4 @@
-// admin.vue
+// reports.vue
 
 <template>
   <layout :page-title="pageTitle">
@@ -18,7 +18,7 @@ export default {
   },
   data() {
     return {
-      pageTitle: "Admin",
+      pageTitle: "Reports",
       isLoading: true,
     };
   },
