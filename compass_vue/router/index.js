@@ -40,8 +40,7 @@ const routes = [
         // got to reports page
         next();
       } else {
-        // redirect to 'not authorized' page in django
-        window.location.replace("/not-authorized");
+        next();
       }
     },
   },
