@@ -3,7 +3,7 @@
 <template>
   <layout :page-title="pageTitle">
     <!-- page content -->
-    <template #content> this is for admins only</template>
+    <template #content> this page is for Super and Support roles only</template>
   </layout>
 </template>
 

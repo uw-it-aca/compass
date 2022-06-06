@@ -8,6 +8,9 @@ import Student from "../pages/student.vue";
 import Reports from "../pages/reports.vue";
 import Settings from "../pages/settings.vue";
 
+// utils
+import { getUserRole } from "../helpers/utils";
+
 // MARK: user roles
 export const Role = {
   Super: "Super",
@@ -38,7 +41,7 @@ const routes = [
   {
     path: "/reports",
     component: Reports,
-    meta: { authorize: [Role.Support] },
+    meta: { authorize: [Role.Super, Role.Support] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
@@ -69,7 +72,7 @@ router.beforeEach((to, from, next) => {
   const { authorize } = to.meta;
 
   // TODO: get the authenticated users roles from api/endpoint
-  let currentUser = { role: Role.User };
+  let currentUser = getUserRole();
 
   // check if authorization is required for this route
   if (authorize) {

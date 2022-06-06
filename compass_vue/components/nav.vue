@@ -35,6 +35,14 @@
       </li>
     </ul>
 
+     <p
+      v-show="userRole.role == 'Super'"
+      class="text-light-gray bg-dark-purple rounded-3 p-3 small"
+    >
+      Your role <strong>{{ userRole.role }}</strong
+      >... go forth and do super things!
+    </p>
+
     <p
       v-show="$route.path == '/'"
       class="text-light-gray bg-dark-purple rounded-3 p-3 small"
@@ -54,6 +62,16 @@
       dolore quod incidunt error reiciendis nesciunt ex atque, amet culpa quia
       ullam sit. Deleniti id at odit!
     </p>
-    <br /><br />
+
   </div>
 </template>
+
+<script>
+import { getUserRole } from "../helpers/utils";
+
+export default {
+  computed: {
+    userRole: getUserRole,
+  },
+};
+</script>

@@ -43,10 +43,7 @@ const dataMixin = {
           "X-CSRFToken": csrfToken,
         },
       };
-      return axios.get(
-        "/api/internal/adviser/",
-        axiosConfig
-      );
+      return axios.get("/api/internal/adviser/", axiosConfig);
     },
   },
 };
