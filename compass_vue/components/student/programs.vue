@@ -5,11 +5,9 @@
     </template>
     <template #body>
       <p class="small">https://studentdata.washington.edu/sdb-code-manual/student/sdb-special-program-codes/</p>
-      <ul>
-        <li>Honor's</li>
-        <li>Athletics</li>
-        <li>EOP</li>
-      </ul>
+
+      special program code: {{ person.student.transcripts[0].special_program }}
+
     </template>
   </axdd-card>
 
