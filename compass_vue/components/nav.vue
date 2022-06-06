@@ -17,7 +17,31 @@
           ><i class="bi bi-people-fill me-2"></i>Caseload</router-link
         >
       </li>
+      <li class="nav-item mb-2 bg-dark-purple-hover rounded">
+        <router-link
+          :to="'/reports'"
+          active-class="bg-dark-purple rounded"
+          class="nav-link text-gray d-block px-2 py-1"
+          ><i class="bi bi-bar-chart-fill me-2"></i>Reports</router-link
+        >
+      </li>
+      <li class="nav-item mb-2 bg-dark-purple-hover rounded">
+        <router-link
+          :to="'/settings'"
+          active-class="bg-dark-purple rounded"
+          class="nav-link text-gray d-block px-2 py-1"
+          ><i class="bi bi-gear-wide-connected me-2"></i>Settings</router-link
+        >
+      </li>
     </ul>
+
+     <p
+      v-show="userRole.role == 'Admin'"
+      class="text-light-gray bg-dark-purple rounded-3 p-3 small"
+    >
+      Your role <strong>{{ userRole.role }}</strong
+      >... go forth and do admin related things!
+    </p>
 
     <p
       v-show="$route.path == '/'"
@@ -38,7 +62,16 @@
       dolore quod incidunt error reiciendis nesciunt ex atque, amet culpa quia
       ullam sit. Deleniti id at odit!
     </p>
-    <br /><br />
+
   </div>
 </template>
 
+<script>
+import { getUserRole } from "../helpers/utils";
+
+export default {
+  computed: {
+    userRole: getUserRole,
+  },
+};
+</script>
