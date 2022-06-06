@@ -13,9 +13,9 @@ import { getUserRole } from "../helpers/utils";
 
 // MARK: user roles
 export const Role = {
-  Super: "Super",
   Admin: "Admin",
   Support: "Support",
+  GroupAdmin: "GroupAdmin",
   User: "User",
 };
 
@@ -41,14 +41,14 @@ const routes = [
   {
     path: "/reports",
     component: Reports,
-    meta: { authorize: [Role.Super, Role.Support] },
+    meta: { authorize: [Role.Admin, Role.Support, Role.GroupAdmin] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/settings",
     component: Settings,
-    meta: { authorize: [Role.Super, Role.Admin] },
+    meta: { authorize: [Role.Admin, Role.Support, Role.GroupAdmin] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },

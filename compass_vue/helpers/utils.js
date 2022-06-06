@@ -18,7 +18,7 @@ function getYesterday() {
 
 function getUserRole() {
   // mock a user role for dev and testing
-  return { role: "Super" };
+  return { role: "Admin" };
 }
 
 export { formatDate, getToday, getYesterday, getUserRole };

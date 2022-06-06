@@ -36,11 +36,11 @@
     </ul>
 
      <p
-      v-show="userRole.role == 'Super'"
+      v-show="userRole.role == 'Admin'"
       class="text-light-gray bg-dark-purple rounded-3 p-3 small"
     >
       Your role <strong>{{ userRole.role }}</strong
-      >... go forth and do super things!
+      >... go forth and do admin related things!
     </p>
 
     <p
