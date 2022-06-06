@@ -36,11 +36,12 @@ const routes = [
     pathToRegexpOptions: { strict: true },
     props: true,
     beforeEnter(to, from, next) {
-      if (isAuthorized()) {
+      if (hasPermissions()) {
         // got to reports page
         next();
       } else {
-        next();
+        // redirect to 'not authorized' page in django
+        window.location.replace("/not-authorized");
       }
     },
   },
@@ -51,7 +52,7 @@ const routes = [
     pathToRegexpOptions: { strict: true },
     props: true,
     beforeEnter(to, from, next) {
-      if (isAuthorized()) {
+      if (hasPermissions()) {
         // got to reports page
         next();
       } else {
@@ -62,9 +63,9 @@ const routes = [
   },
 ];
 
-function isAuthorized() {
-  // get user roles?
-  return false;
+function hasPermissions() {
+  // get user permssions from /api/endpoint
+  return true;
 }
 
 const router = createRouter({

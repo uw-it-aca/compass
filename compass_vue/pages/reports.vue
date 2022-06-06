@@ -3,19 +3,7 @@
 <template>
   <layout :page-title="pageTitle">
     <!-- page content -->
-    <template #content>
-      <div class="row my-4 small">
-        <div class="col">
-          <div class="bg-danger p-4 rounded-3">
-            <div class="row">
-              <div class="col text-white">
-                this is for admins only... you do not have proper authorization
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </template>
+    <template #content> this is for admins only</template>
   </layout>
 </template>
 
