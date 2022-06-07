@@ -4,6 +4,7 @@
       <axdd-card-heading :level="2">Adviser</axdd-card-heading>
     </template>
     <template #body>
+      <p class="small">current user: {{ userNetid }}</p>
       <div class="border p-1 mb-2 small">
         <p class="text-muted">if has advisers</p>
         <ul v-for="adviser in advisers" :key="adviser.id" class="list-unstyled">
@@ -17,19 +18,19 @@
         </ul>
       </div>
 
-      <div class="border border-danger p-1 mb-2 small">
+      <div class="border border-danger p-1 mb-5 small">
         <p class="text-danger">else (empty)</p>
         <p>This student does not have an assigned adviser.</p>
-
-        <div>current user: {{ userNetid }}</div>
         <button type="button" class="btn btn-outline-dark-beige btn-sm">
           Add to your caseload
         </button>
+        <div class="small text-danger">
+          This should write back to SWS. Student must either be EOP1 or EOP3.
+        </div>
       </div>
 
       <div class="border border-danger p-1 small">
         <p class="text-danger">if (role == group admin)</p>
-
         <p>Assign a new adviser for this student!</p>
         <select
           class="form-select form-select-sm mb-2"
@@ -45,6 +46,9 @@
         <button type="button" class="btn btn-outline-dark-beige btn-sm">
           Update adviser
         </button>
+        <div class="small text-danger">
+          This should write back to SWS. Student must either be EOP1 or EOP3.
+        </div>
       </div>
     </template>
   </axdd-card>
