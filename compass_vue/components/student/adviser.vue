@@ -9,6 +9,7 @@
         <ul v-for="adviser in advisers" :key="adviser.id" class="list-unstyled">
           <li>Display name: {{ adviser.display_name }}</li>
           <li>Pronouns: {{ adviser.pronouns }}</li>
+          <li>Netid: <span class="text-danger">netid</span></li>
           <li>Email: {{ adviser.employee.adviser.advising_email }}</li>
           <li>Phone: {{ adviser.employee.adviser.advising_phone_number }}</li>
           <li>Dept Name: {{ adviser.employee.adviser.advising_program }}</li>
@@ -19,6 +20,8 @@
       <div class="border border-danger p-1 mb-2 small">
         <p class="text-danger">else (empty)</p>
         <p>This student does not have an assigned adviser.</p>
+
+        <div>current user: {{ userNetid }}</div>
         <button type="button" class="btn btn-outline-dark-beige btn-sm">
           Add to your caseload
         </button>
@@ -58,12 +61,20 @@ export default {
       required: true,
     },
   },
+  data() {
+    return {
+      userNetid: document.body.getAttribute("data-user-netid"),
+    };
+  },
   components: {
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
   },
   computed: {
     userRole: getUserRole,
+  },
+  methods: {
+    //getUser,
   },
 };
 </script>
