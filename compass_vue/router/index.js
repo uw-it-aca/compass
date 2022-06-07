@@ -8,9 +8,6 @@ import Student from "../pages/student.vue";
 import Reports from "../pages/reports.vue";
 import Settings from "../pages/settings.vue";
 
-// utils
-import { getUserRole } from "../helpers/utils";
-
 // MARK: user roles
 export const Role = {
   Admin: "admin",
