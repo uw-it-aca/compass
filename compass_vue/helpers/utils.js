@@ -16,6 +16,11 @@ function getYesterday() {
   return tomorrow.format("MMMM D, YYYY");
 }
 
+function getUser() {
+  // mock a user
+  return "jadviserssss";
+}
+
 function getUserRole() {
   // mock a user role for dev and testing
   return { role: "Admin" };

@@ -27,20 +27,12 @@
                       <img
                         v-if="person.gender === 'F'"
                         src="https://randomuser.me/api/portraits/women/4.jpg"
-                        class="
-                          img-fluid
-                          rounded-circle
-                          border border-light border-3
-                        "
+                        class="img-fluid rounded-circle border border-light border-3"
                       />
                       <img
                         v-else
                         src="https://randomuser.me/api/portraits/men/4.jpg"
-                        class="
-                          img-fluid
-                          rounded-circle
-                          border border-gray border-3
-                        "
+                        class="img-fluid rounded-circle border border-gray border-3"
                       />
                     </div>
                   </div>
@@ -64,13 +56,7 @@
                     </div>
                     <p>
                       <span
-                        class="
-                          badge
-                          rounded-pill
-                          border border-muted
-                          text-dark
-                          me-1
-                        "
+                        class="badge rounded-pill border border-muted text-dark me-1"
                         >{{ person.gender }}</span
                       >
                       <span
@@ -124,9 +110,7 @@
                         person.student.perm_addr_4digit_zip
                       }}, {{ person.student.perm_addr_country }}
                     </li>
-                    <li class="mt-2">
-                      Local Address: tbd<br />
-                    </li>
+                    <li class="mt-2">Local Address: tbd<br /></li>
                   </ul>
                 </div>
               </div>
@@ -142,9 +126,7 @@
           </div>
           <div class="col-xl-3">
             <StudentAdviser
-              v-for="adviser in person.student.advisers"
-              :key="adviser.id"
-              :person="adviser"
+              :advisers="person.student.advisers"
             ></StudentAdviser>
             <StudentPrograms :person="person"></StudentPrograms>
             <StudentAcademics :person="person"></StudentAcademics>
