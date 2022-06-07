@@ -13,42 +13,45 @@ import { getUserRole } from "../helpers/utils";
 
 // MARK: user roles
 export const Role = {
-  Admin: "Admin",
-  Support: "Support",
-  GroupAdmin: "GroupAdmin",
-  User: "User",
+  Admin: "admin",
+  Support: "support",
+  Manager: "manager",
+  User: "user",
 };
 
 const routes = [
   {
     path: "/",
     component: Home,
+    meta: { authorize: [Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/caseload",
     component: Caseload,
+    meta: { authorize: [Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/student/:id?",
     component: Student,
+    meta: { authorize: [Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/reports",
     component: Reports,
-    meta: { authorize: [Role.Admin, Role.Support, Role.GroupAdmin] },
+    meta: { authorize: [Role.Manager] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/settings",
     component: Settings,
-    meta: { authorize: [Role.Admin, Role.Support, Role.GroupAdmin] },
+    meta: { authorize: [Role.Manager] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },

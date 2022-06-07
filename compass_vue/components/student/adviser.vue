@@ -30,7 +30,7 @@
       </div>
 
       <div class="border border-danger p-1 small">
-        <p class="text-danger">if (role == group admin)</p>
+        <p class="text-danger">if (role == manager)</p>
         <p>Assign a new adviser for this student!</p>
         <select
           class="form-select form-select-sm mb-2"
