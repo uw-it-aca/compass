@@ -55,19 +55,9 @@
 import { Card, CardHeading } from "axdd-components";
 
 export default {
-  props: {
-    person: {
-      type: Object,
-      required: true,
-    },
-  },
-  computed: {},
   components: {
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
-  },
-  data() {
-    return {};
   },
 };
 </script>
