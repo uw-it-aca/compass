@@ -24,6 +24,7 @@
             <StudentContact></StudentContact>
             <StudentSchedule></StudentSchedule>
             <StudentHistory :person="person"></StudentHistory>
+            <StudentVisits></StudentVisits>
           </div>
           <div class="col-xl-3">
             <StudentAdviser
@@ -50,6 +51,7 @@ import StudentHistory from "../components/student/history.vue";
 import StudentAdviser from "../components/student/adviser.vue";
 import StudentPrograms from "../components/student/programs.vue";
 import StudentAcademics from "../components/student/academics.vue";
+import StudentVisits from "../components/student/visits.vue";
 
 export default {
   mixins: [dataMixin],
@@ -62,6 +64,7 @@ export default {
     StudentAdviser,
     StudentPrograms,
     StudentAcademics,
+    StudentVisits,
   },
   created: function () {
     this.loadStudent(this.$route.params.id);
