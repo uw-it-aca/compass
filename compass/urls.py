@@ -46,7 +46,7 @@ urlpatterns += [
     re_path(
         r"^not-authorized$",
         TemplateView.as_view(template_name="403.html"),
-        name="403_response",
+        name="not_authorized",
     ),
     # vue-router paths
     re_path(r"^(student|caseload|reports|settings)$", LandingView.as_view()),
