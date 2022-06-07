@@ -35,11 +35,11 @@
       </li>
     </ul>
 
-     <p
-      v-show="userRole.role == 'Admin'"
+    <p
+      v-show="userRole === 'manager'"
       class="text-light-gray bg-dark-purple rounded-3 p-3 small"
     >
-      Your role <strong>{{ userRole.role }}</strong
+      Your role <strong>{{ userRole }}</strong
       >... go forth and do admin related things!
     </p>
 
@@ -62,16 +62,15 @@
       dolore quod incidunt error reiciendis nesciunt ex atque, amet culpa quia
       ullam sit. Deleniti id at odit!
     </p>
-
   </div>
 </template>
 
 <script>
-import { getUserRole } from "../helpers/utils";
-
 export default {
-  computed: {
-    userRole: getUserRole,
+  data() {
+    return {
+      userRole: document.body.getAttribute("data-user-role"),
+    };
   },
 };
 </script>

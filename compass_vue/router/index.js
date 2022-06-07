@@ -74,13 +74,14 @@ router.beforeEach((to, from, next) => {
   // get the authorization settings from the meta field for the route
   const { authorize } = to.meta;
 
-  // TODO: get the authenticated users roles from api/endpoint
-  let currentUser = getUserRole();
+  // get the authenticated user role from django context
+  let userRole = document.body.getAttribute("data-user-role");
+  // console.log(userRole);
 
   // check if authorization is required for this route
   if (authorize) {
     // check to see if current user's role is authorized to view page
-    if (authorize.length && !authorize.includes(currentUser.role)) {
+    if (authorize.length && !authorize.includes(userRole)) {
       // redirect to 'not authorized' page in django
       window.location.replace("/not-authorized");
     }

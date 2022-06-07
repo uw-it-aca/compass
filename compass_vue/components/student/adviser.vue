@@ -4,7 +4,7 @@
       <axdd-card-heading :level="2">Adviser</axdd-card-heading>
     </template>
     <template #body>
-      <p class="small">current user: {{ userNetid }}</p>
+      <p class="small">current user: {{ userNetid }}, {{ userRole }}</p>
       <div class="border p-1 mb-2 small">
         <p class="text-muted">if has advisers</p>
         <ul v-for="adviser in advisers" :key="adviser.id" class="list-unstyled">
@@ -56,7 +56,6 @@
 
 <script>
 import { Card, CardHeading } from "axdd-components";
-import { getUser, getUserRole } from "../../helpers/utils";
 
 export default {
   props: {
@@ -68,17 +67,12 @@ export default {
   data() {
     return {
       userNetid: document.body.getAttribute("data-user-netid"),
+      userRole: document.body.getAttribute("data-user-role"),
     };
   },
   components: {
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
-  },
-  computed: {
-    userRole: getUserRole,
-  },
-  methods: {
-    //getUser,
   },
 };
 </script>
