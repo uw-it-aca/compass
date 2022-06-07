@@ -3,11 +3,7 @@
     <div class="row">
       <div class="col-lg-6 pe-4 d-flex small">
         <div>
-          <div
-            :class="priorityRing"
-            class="rounded-circle border border-4"
-            style="width: 140px"
-          >
+          <div class="rounded-circle border border-4" style="width: 140px">
             <img
               v-if="person.gender === 'F'"
               src="https://randomuser.me/api/portraits/women/4.jpg"
