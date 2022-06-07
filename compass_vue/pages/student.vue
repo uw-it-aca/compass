@@ -124,9 +124,7 @@
                         person.student.perm_addr_4digit_zip
                       }}, {{ person.student.perm_addr_country }}
                     </li>
-                    <li class="mt-2">
-                      Local Address: tbd<br />
-                    </li>
+                    <li class="mt-2">Local Address: tbd<br /></li>
                   </ul>
                 </div>
               </div>
@@ -136,7 +134,7 @@
 
         <div class="row">
           <div class="col-xl-9">
-            <StudentContact></StudentContact>
+            <StudentContact :contacts="contacts"></StudentContact>
             <StudentSchedule></StudentSchedule>
             <StudentHistory :person="person"></StudentHistory>
           </div>
@@ -183,6 +181,7 @@ export default {
   data() {
     return {
       person: {},
+      contacts: {},
     };
   },
   computed: {
@@ -202,11 +201,20 @@ export default {
     },
   },
   methods: {
-    loadStudent: function (studentNumber) {
+    loadStudent: function (studentNetID) {
       let _this = this;
-      this.getStudentDetail(studentNumber).then((response) => {
+      this.getStudentDetail(studentNetID).then((response) => {
         if (response.data) {
           _this.person = response.data;
+          this.loadStudentContacts(_this.person.student.system_key);
+        }
+      });
+    },
+    loadStudentContacts: function (studentSystemKey) {
+      let _this = this;
+      this.getStudentContacts(studentSystemKey).then((response) => {
+        if (response.data) {
+          _this.contacts = response.data.results;
         }
       });
     },

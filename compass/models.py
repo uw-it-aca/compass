@@ -22,6 +22,9 @@ class AppUser(models.Model):
             models.Index(fields=['uwregid']),
         ]
 
+    def __str__(self):
+        return f"{self.uwnetid} - {self.uwregid}"
+
 
 class Student(models.Model):
     system_key = models.CharField(unique=True, max_length=50)
@@ -31,6 +34,9 @@ class Student(models.Model):
         indexes = [
             models.Index(fields=['system_key']),
         ]
+
+    def __str__(self):
+        return self.system_key
 
 
 class AccessGroupManager(models.Manager):
@@ -74,6 +80,7 @@ class Contact(models.Model):
     Contact with a student
     """
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    date = models.DateField(auto_now=False, auto_now_add=False)
     time = models.TimeField(auto_now=False, auto_now_add=False)
     notes = models.TextField()
     actions = models.TextField()
@@ -82,7 +89,7 @@ class Contact(models.Model):
     # contact history fields
     pub_date = models.DateTimeField('date published')
     author = models.ForeignKey('AppUser', on_delete=models.CASCADE)
-    history = HistoricalRecords()
+    history = HistoricalRecords(history_user_id_field='author')
 
     @property
     def _history_user(self):
@@ -91,6 +98,9 @@ class Contact(models.Model):
     @_history_user.setter
     def _history_user(self, value):
         self.author = value
+
+    def __str__(self):
+        return f"{self.author} w/ {self.student} @ {self.date}T{self.time}"
 
 
 class ContactType(models.Model):

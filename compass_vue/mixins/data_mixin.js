@@ -19,7 +19,7 @@ const dataMixin = {
         axiosConfig
       );
     },
-    getStudentDetail: async function (studentNumber) {
+    getStudentDetail: async function (uwnetid) {
       const csrfToken = this.$store.state.csrfToken;
       const axiosConfig = {
         headers: {
@@ -29,7 +29,22 @@ const dataMixin = {
         },
       };
       return axios.get(
-        "/api/internal/student/" + studentNumber + "/",
+        "/api/internal/student/" + uwnetid + "/",
+        {},
+        axiosConfig
+      );
+    },
+    getStudentContacts: async function (systemkey) {
+      const csrfToken = this.$store.state.csrfToken;
+      const axiosConfig = {
+        headers: {
+          "Content-Type": "application/json;charset=UTF-8",
+          "Access-Control-Allow-Origin": "*",
+          "X-CSRFToken": csrfToken,
+        },
+      };
+      return axios.get(
+        "/api/internal/student/" + systemkey + "/contacts/",
         {},
         axiosConfig
       );
@@ -43,10 +58,7 @@ const dataMixin = {
           "X-CSRFToken": csrfToken,
         },
       };
-      return axios.get(
-        "/api/internal/adviser/",
-        axiosConfig
-      );
+      return axios.get("/api/internal/adviser/", axiosConfig);
     },
   },
 };

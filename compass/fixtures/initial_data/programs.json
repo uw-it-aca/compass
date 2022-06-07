@@ -33,5 +33,12 @@
   "fields": {
    "name": "IC Eligible"
   }
+ },
+ {
+  "model": "compass.program",
+  "pk": 6,
+  "fields": {
+   "name": "Pre-Professional"
+  }
  }
 ]
