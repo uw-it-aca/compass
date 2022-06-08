@@ -30,9 +30,19 @@
           :to="'/settings'"
           active-class="bg-dark-purple rounded"
           class="nav-link text-gray d-block px-2 py-1"
-          ><i class="bi bi-gear-wide-connected me-2"></i>Settings</router-link
+          ><i class="bi bi-tools me-2"></i>Settings</router-link
         >
       </li>
+      <!-- if admin or support -->
+      <li aria-hidden="true" class="nav-item mb-2">
+        <a
+          href="#"
+          class="nav-link disabled text-gray d-block p-0 internal-link"
+          ><hr class="m-0 bg-gray" />
+          <span class="visually-hidden">Navigation separator</span></a
+        >
+      </li>
+
       <li class="nav-item mb-2 bg-dark-purple-hover rounded">
         <router-link
           :to="'/support'"
