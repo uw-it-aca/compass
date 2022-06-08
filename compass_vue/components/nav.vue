@@ -33,6 +33,14 @@
           ><i class="bi bi-gear-wide-connected me-2"></i>Settings</router-link
         >
       </li>
+      <li class="nav-item mb-2 bg-dark-purple-hover rounded">
+        <router-link
+          :to="'/support'"
+          active-class="bg-dark-purple rounded"
+          class="nav-link text-gray d-block px-2 py-1"
+          ><i class="bi bi-question-diamond-fill me-2"></i>Support</router-link
+        >
+      </li>
     </ul>
 
     <p

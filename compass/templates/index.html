@@ -18,7 +18,7 @@
 
 </head>
 
-<body{% if google_analytics %} data-google-analytics="{{ google_analytics }}"{% endif %} data-logout-url="{{ signout_url }}" data-user-netid="{{ user_netid }}" data-user-role="{{ user_role }}" data-django-debug="{{ django_debug|lower}}" class="bg-light">
+<body{% if google_analytics %} data-google-analytics="{{ google_analytics }}"{% endif %} data-signout-url="{{ signout_url }}" data-user-netid="{{ user_netid }}" data-user-role="{{ user_role }}" data-django-debug="{{ django_debug|lower}}" class="bg-light">
     {% csrf_token %}
 
     <!-- vue app will be injected here -->
