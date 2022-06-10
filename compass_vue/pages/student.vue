@@ -134,7 +134,10 @@
 
         <div class="row">
           <div class="col-xl-9">
-            <StudentContact :contacts="contacts"></StudentContact>
+            <StudentContact
+              :person="person"
+              :contacts="contacts"
+            ></StudentContact>
             <StudentSchedule></StudentSchedule>
             <StudentHistory :person="person"></StudentHistory>
           </div>
@@ -214,7 +217,7 @@ export default {
       let _this = this;
       this.getStudentContacts(studentSystemKey).then((response) => {
         if (response.data) {
-          _this.contacts = response.data.results;
+          _this.contacts = response.data;
         }
       });
     },

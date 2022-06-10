@@ -88,14 +88,6 @@ export default {
       required: true,
     },
   },
-  computed: {
-    latestTranscript() {
-      if (this.person.student.transcripts)
-        return this.person.student.transcripts[0];
-      else
-        return null
-    },
-  },
   components: {
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,

@@ -6,7 +6,7 @@ from compass.models import AppUser, Student, AccessGroup, \
 from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponseRedirect
-from simple_history.admin import SimpleHistoryAdmin
+from django.urls import reverse
 from uw_saml.utils import is_member_of_group
 
 
@@ -33,6 +33,7 @@ class AbstractSAMLAdminModel():
     def has_add_permission(self, request):
         return is_member_of_group(request,
                                   settings.COMPASS_ADMIN_GROUP)
+
     def has_change_permission(self, request, obj=None):
         return is_member_of_group(request,
                                   settings.COMPASS_ADMIN_GROUP)
@@ -41,7 +42,7 @@ class AbstractSAMLAdminModel():
         return is_member_of_group(request,
                                   settings.COMPASS_ADMIN_GROUP)
 
-    def has_module_permission(self,request):
+    def has_module_permission(self, request):
         return is_member_of_group(request,
                                   settings.COMPASS_ADMIN_GROUP)
 

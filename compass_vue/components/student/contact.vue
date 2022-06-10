@@ -3,7 +3,7 @@
     <template #heading-action>
       <axdd-card-heading :level="2">Contacts (compass)</axdd-card-heading>
       <axdd-card-action>
-        <AddEditContact :button-type="'button'"
+        <AddEditContact :button-type="'button'" :person="person"
           ><i class="bi bi-plus-square-dotted me-2"></i>Record new
           contact</AddEditContact
         >
@@ -22,10 +22,13 @@
             <tr v-for="contact in contacts" :key="contact.id">
               <td scope="row">
                 <p>
-                  {{ contact.pub_date }} {{ contact.time }}
+                  {{ contact.date }} {{ contact.time }}
                   {{ contact.contact_type.name }}<br />
                   You -
-                  <AddEditContact :button-type="'link'"
+                  <AddEditContact
+                    :button-type="'link'"
+                    :person="person"
+                    :contact="contact"
                     >edit contact</AddEditContact
                   >
                 </p>
@@ -40,7 +43,7 @@
               </td>
               <td>
                 <p class="text-muted">notes: No notes entered!</p>
-                <p class="text-muted">action: no actions</p>
+                <p class="text-muted">actions: No actions</p>
               </td>
             </tr>
           </tbody>
@@ -61,7 +64,19 @@ export default {
     "axdd-card-heading": CardHeading,
     "axdd-card-action": CardAction,
   },
-  props: ["contacts"],
+  props: {
+    person: {
+      type: Object,
+      required: true,
+    },
+    contacts: {
+      type: Object,
+      required: true,
+      default: function () {
+        return {};
+      },
+    },
+  },
   data() {
     return {};
   },

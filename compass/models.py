@@ -3,14 +3,41 @@
 
 from django.db import models
 from simple_history.models import HistoricalRecords
+from uw_person_client import UWPersonClient
+
+
+class AppUserManager(models.Manager):
+
+    def upsert_appuser(self, uwnetid):
+        # request the current person object for the user
+        client = UWPersonClient()
+        person = client.get_person_by_uwnetid(uwnetid)
+        # check the AppUser table to see if they have an existing entry
+        persons_netids = person.prior_uwnetids + [person.uwnetid]
+        for netid in persons_netids:
+            try:
+                # update the AppUsers uwnetid
+                user = AppUser.objects.get(uwnetid=netid)
+                user.uwnetid = person.uwnetid
+                user.save()
+                return user
+            except AppUser.DoesNotExist:
+                continue
+        else:
+            # if no user is found, then create one
+            user = AppUser(uwnetid=uwnetid)
+            user.save()
+            return user
 
 
 class AppUser(models.Model):
     """
     Authenticated user
     """
+
+    objects = AppUserManager()
+
     uwnetid = models.CharField(unique=True, max_length=50)
-    uwregid = models.CharField(unique=True, max_length=50)
 
     # A user's Group affiliation is derived at login via GWS Groups. A GWS
     # group key is generated using the <access_id>. It is important to note
@@ -19,11 +46,10 @@ class AppUser(models.Model):
     class Meta:
         indexes = [
             models.Index(fields=['uwnetid']),
-            models.Index(fields=['uwregid']),
         ]
 
     def __str__(self):
-        return f"{self.uwnetid} - {self.uwregid}"
+        return f"{self.uwnetid}"
 
 
 class Student(models.Model):
@@ -80,14 +106,14 @@ class Contact(models.Model):
     Contact with a student
     """
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
-    date = models.DateField(auto_now=False, auto_now_add=False)
-    time = models.TimeField(auto_now=False, auto_now_add=False)
+    date = models.DateField(auto_now=False)
+    time = models.TimeField(auto_now=False)
     notes = models.TextField()
-    actions = models.TextField()
+    actions = models.TextField(default=None, blank=True, null=True)
     contact_type = models.ForeignKey('ContactType', on_delete=models.CASCADE)
     contact_topics = models.ManyToManyField('ContactTopic')
     # contact history fields
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField(auto_now=True)
     author = models.ForeignKey('AppUser', on_delete=models.CASCADE)
     history = HistoricalRecords(history_user_id_field='author')
 
