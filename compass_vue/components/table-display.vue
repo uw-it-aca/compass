@@ -6,6 +6,7 @@
         <th scope="col">Date</th>
         <th scope="col">Time</th>
         <th scope="col">Contact Type</th>
+        <th scope="col">Adviser</th>
       </tr>
     </thead>
     <tbody>
@@ -16,6 +17,7 @@
         <td>May 26, 2022</td>
         <td>2:30pm</td>
         <td>Appointment</td>
+        <td>Jay Adviser</td>
       </tr>
     </tbody>
   </table>

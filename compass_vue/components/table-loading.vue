@@ -6,6 +6,7 @@
         <th scope="col">Date</th>
         <th scope="col">Time</th>
         <th scope="col">Contact Type</th>
+        <th scope="col">Adviser</th>
       </tr>
     </thead>
     <tbody>
@@ -28,6 +29,9 @@
         </td>
         <td class="placeholder-glow">
           <div><span class="placeholder bg-light-gray col-10"></span></div>
+        </td>
+        <td class="placeholder-glow">
+          <div><span class="placeholder bg-light-gray col-7"></span></div>
         </td>
         <td class="placeholder-glow">
           <div><span class="placeholder bg-light-gray col-7"></span></div>

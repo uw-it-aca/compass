@@ -3,9 +3,7 @@
 <template>
   <layout :page-title="pageTitle">
     <!-- page content -->
-    <template #content>
-      this page is for Admin, Support, and Group Admin roles only</template
-    >
+    <template #content> this page is for Manager roles only</template>
   </layout>
 </template>
 
