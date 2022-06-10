@@ -4,7 +4,6 @@
 from django.urls import re_path
 from compass.admin import admin_site
 from django.conf import settings
-from django.urls import re_path
 from django.views.generic import TemplateView
 from compass.views.pages import LandingView
 from compass.views.api.student import StudentListView, StudentDetailView

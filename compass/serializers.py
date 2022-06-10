@@ -66,6 +66,7 @@ class ContactReadSerializer(serializers.ModelSerializer):
         fields = ['id', 'author', 'student', 'pub_date', 'date', 'time',
                   'notes', 'actions', 'contact_type', 'contact_topics']
 
+
 class ContactWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
