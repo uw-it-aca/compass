@@ -8,47 +8,47 @@ import Student from "../pages/student.vue";
 import Reports from "../pages/reports.vue";
 import Settings from "../pages/settings.vue";
 
-// utils
-import { getUserRole } from "../helpers/utils";
-
 // MARK: user roles
 export const Role = {
-  Admin: "Admin",
-  Support: "Support",
-  GroupAdmin: "GroupAdmin",
-  User: "User",
+  Admin: "admin",
+  Support: "support",
+  Manager: "manager",
+  User: "user",
 };
 
 const routes = [
   {
     path: "/",
     component: Home,
+    meta: { authorize: [Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/caseload",
     component: Caseload,
+    meta: { authorize: [Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/student/:id?",
     component: Student,
+    meta: { authorize: [Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/reports",
     component: Reports,
-    meta: { authorize: [Role.Admin, Role.Support, Role.GroupAdmin] },
+    meta: { authorize: [Role.Manager] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/settings",
     component: Settings,
-    meta: { authorize: [Role.Admin, Role.Support, Role.GroupAdmin] },
+    meta: { authorize: [Role.Manager] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
@@ -71,13 +71,14 @@ router.beforeEach((to, from, next) => {
   // get the authorization settings from the meta field for the route
   const { authorize } = to.meta;
 
-  // TODO: get the authenticated users roles from api/endpoint
-  let currentUser = getUserRole();
+  // get the authenticated user role from django context
+  let userRole = document.body.getAttribute("data-user-role");
+  // console.log(userRole);
 
   // check if authorization is required for this route
   if (authorize) {
     // check to see if current user's role is authorized to view page
-    if (authorize.length && !authorize.includes(currentUser.role)) {
+    if (authorize.length && !authorize.includes(userRole)) {
       // redirect to 'not authorized' page in django
       window.location.replace("/not-authorized");
     }

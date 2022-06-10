@@ -30,16 +30,34 @@
           :to="'/settings'"
           active-class="bg-dark-purple rounded"
           class="nav-link text-gray d-block px-2 py-1"
-          ><i class="bi bi-gear-wide-connected me-2"></i>Settings</router-link
+          ><i class="bi bi-tools me-2"></i>Settings</router-link
+        >
+      </li>
+      <!-- if admin or support -->
+      <li aria-hidden="true" class="nav-item mb-2">
+        <a
+          href="#"
+          class="nav-link disabled text-gray d-block p-0 internal-link"
+          ><hr class="m-0 bg-gray" />
+          <span class="visually-hidden">Navigation separator</span></a
+        >
+      </li>
+
+      <li class="nav-item mb-2 bg-dark-purple-hover rounded">
+        <router-link
+          :to="'/support'"
+          active-class="bg-dark-purple rounded"
+          class="nav-link text-gray d-block px-2 py-1"
+          ><i class="bi bi-question-diamond-fill me-2"></i>Support</router-link
         >
       </li>
     </ul>
 
-     <p
-      v-show="userRole.role == 'Admin'"
+    <p
+      v-show="userRole === 'manager'"
       class="text-light-gray bg-dark-purple rounded-3 p-3 small"
     >
-      Your role <strong>{{ userRole.role }}</strong
+      Your role <strong>{{ userRole }}</strong
       >... go forth and do admin related things!
     </p>
 
@@ -62,16 +80,15 @@
       dolore quod incidunt error reiciendis nesciunt ex atque, amet culpa quia
       ullam sit. Deleniti id at odit!
     </p>
-
   </div>
 </template>
 
 <script>
-import { getUserRole } from "../helpers/utils";
-
 export default {
-  computed: {
-    userRole: getUserRole,
+  data() {
+    return {
+      userRole: document.body.getAttribute("data-user-role"),
+    };
   },
 };
 </script>

@@ -8,8 +8,18 @@
         <div class="col">
           <div class="bg-gray p-4 rounded-3">
             <div class="row">
-              <div class="col-9">
-                <div classw="w-50">Today, {{ getToday() }}</div>
+              <div class="col-9 border-end">
+                <div class="w-50 me-3">
+                  <div class="fw-bold lh-lg">Display contacts for:</div>
+                  <select
+                    class="form-select form-select-sm"
+                    aria-label="Default select example"
+                  >
+                    <option>All advisers</option>
+                    <option>Jay Adviser</option>
+                    <option>Billy Bonkers</option>
+                  </select>
+                </div>
               </div>
               <div class="col-3">
                 <div class="fw-bold lh-lg">Search all Students:</div>
@@ -30,6 +40,7 @@
               >
             </template>
             <template #body>
+              <p>Today, {{ getToday() }}</p>
               <table-loading v-if="isLoading"></table-loading>
               <table-display v-else :persons="persons"></table-display>
               <div class="mt-5 text-secondary">No students to meet with.</div>
