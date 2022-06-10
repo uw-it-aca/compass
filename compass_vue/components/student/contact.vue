@@ -24,7 +24,7 @@
                 <p>
                   {{ contact.date }} {{ contact.time }}
                   {{ contact.contact_type.name }}<br />
-                  You -
+                  {{ contact.author.uwnetid }} -
                   <AddEditContact
                     :button-type="'link'"
                     :person="person"
@@ -33,17 +33,20 @@
                   >
                 </p>
                 <div class="small">
-                  topics:
+                  Topics:
                   <span
-                    v-for="topic in contact.contact_topics"
+                    v-for="(topic, index) in contact.contact_topics"
                     :key="topic.id"
-                    >{{ topic.name }}</span
-                  >
+                    >{{ topic.name }}
+                    <span v-if="index + 1 < contact.contact_topics.length"
+                      >,&nbsp;</span
+                    >
+                  </span>
                 </div>
               </td>
               <td>
-                <p class="text-muted">notes: No notes entered!</p>
-                <p class="text-muted">actions: No actions</p>
+                <p class="text-muted">notes: {{ contact.notes }}</p>
+                <p class="text-muted">actions: {{ contact.actions }}</p>
               </td>
             </tr>
           </tbody>

@@ -4,8 +4,8 @@
 from compass.decorators import verify_access
 from compass.models import AccessGroup, AppUser, Contact, ContactType, \
     Student
-from compass.serializers import ContactSerializer, ContactTopicSerializer, \
-    ContactTypeSerializer
+from compass.serializers import ContactReadSerializer, \
+    ContactWriteSerializer, ContactTopicSerializer, ContactTypeSerializer
 from django.utils.decorators import method_decorator
 from rest_framework.generics import GenericAPIView
 from rest_framework.renderers import JSONRenderer
@@ -27,7 +27,7 @@ class ContactListView(GenericAPIView):
     def get(self, request, systemkey):
         queryset = Contact.objects.filter(
             student__system_key=systemkey).order_by('-date', '-time')
-        serializer = ContactSerializer(queryset, many=True)
+        serializer = ContactReadSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, systemkey):
@@ -36,7 +36,7 @@ class ContactListView(GenericAPIView):
             AppUser.objects.upsert_appuser(uwnetid=request.user).id
         student, _ = Student.objects.get_or_create(system_key=systemkey)
         contact_record['student'] = student.id
-        serializer = ContactSerializer(data=contact_record)
+        serializer = ContactWriteSerializer(data=contact_record)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
