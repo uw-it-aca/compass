@@ -10,7 +10,7 @@
             <div class="row">
               <div class="col-9 border-end">
                 <div class="w-50 me-3">
-                  <div class="fw-bold lh-lg">Display contacts for:</div>
+                  <div class="fw-bold lh-lg">Display check-ins for:</div>
                   <select
                     class="form-select form-select-sm"
                     aria-label="Default select example"
@@ -36,11 +36,34 @@
           <axdd-card>
             <template #heading-action>
               <axdd-card-heading :level="2"
-                >Recent contacts (3 days)</axdd-card-heading
+                >Recent Check-Ins (3 days)</axdd-card-heading
               >
             </template>
             <template #body>
               <p>Today, {{ getToday() }}</p>
+              <axdd-tabs :tabs-id="'checkins'">
+                <template #items>
+                  <axdd-tab-item
+                    :tabs-id="'checkins'"
+                    :panel-id="'group'"
+                    :active-tab="true"
+                    >my groups</axdd-tab-item
+                  >
+                  <axdd-tab-item :tabs-id="'checkins'" :panel-id="'mine'"
+                    >my checkins</axdd-tab-item
+                  >
+                </template>
+                <template #panels>
+                  <axdd-tab-panel :panel-id="'group'" :active-panel="true">
+                  all checkins for the group
+                  </axdd-tab-panel>
+
+                  <axdd-tab-panel :panel-id="'mine'">
+                   all my checkins
+                  </axdd-tab-panel>
+                </template>
+              </axdd-tabs>
+
               <table-loading v-if="isLoading"></table-loading>
               <table-display v-else :persons="persons"></table-display>
               <div class="mt-5 text-secondary">No students to meet with.</div>
@@ -53,7 +76,14 @@
 </template>
 
 <script>
-import { Card, CardHeading, CardAction } from "axdd-components";
+import {
+  Card,
+  CardHeading,
+  CardAction,
+  Tabs,
+  TabItem,
+  TabPanel,
+} from "axdd-components";
 import StudentSearch from "../components/student-search.vue";
 import TableLoading from "../components/table-loading.vue";
 import TableDisplay from "../components/table-display.vue";
@@ -72,7 +102,9 @@ export default {
     "table-display": TableDisplay,
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
-    "axdd-card-action": CardAction,
+    "axdd-tabs": Tabs,
+    "axdd-tab-item": TabItem,
+    "axdd-tab-panel": TabPanel,
   },
   data() {
     return {
