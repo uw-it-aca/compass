@@ -8,23 +8,20 @@
         <div class="col">
           <div class="bg-gray p-4 rounded-3">
             <div class="row">
-              <div class="col-9 border-end">
-                <div class="w-50 me-3">
-                  <div class="fw-bold lh-lg">Display check-ins for:</div>
-                  <select
-                    class="form-select form-select-sm"
-                    aria-label="Default select example"
-                  >
-                    <option>All advisers</option>
-                    <option>Jay Adviser</option>
-                    <option>Billy Bonkers</option>
-                  </select>
+              <div class="col-3">
+                <div class="fw-bold lh-lg">Filter by adviser:</div>
+                <div>
+                  <search-adviser></search-adviser>
                 </div>
               </div>
-              <div class="col-3">
+              <div class="col-6">
+                <div class="fw-bold lh-lg">Last updated:</div>
+                <div class="h4">Today, {{ getToday() }}</div>
+              </div>
+              <div class="col-3 border-start ms-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
-                  <student-search></student-search>
+                  <search-student></search-student>
                 </div>
               </div>
             </div>
@@ -40,32 +37,31 @@
               >
             </template>
             <template #body>
-              <p>Today, {{ getToday() }}</p>
               <axdd-tabs :tabs-id="'checkins'">
                 <template #items>
                   <axdd-tab-item
                     :tabs-id="'checkins'"
                     :panel-id="'group'"
                     :active-tab="true"
-                    >my groups</axdd-tab-item
+                    >All</axdd-tab-item
                   >
                   <axdd-tab-item :tabs-id="'checkins'" :panel-id="'mine'"
-                    >my checkins</axdd-tab-item
+                    >My Check-ins</axdd-tab-item
                   >
                 </template>
                 <template #panels>
                   <axdd-tab-panel :panel-id="'group'" :active-panel="true">
-                  all checkins for the group
+                    <table-loading v-if="isLoading"></table-loading>
+                    <table-display v-else :persons="persons"></table-display>
                   </axdd-tab-panel>
 
                   <axdd-tab-panel :panel-id="'mine'">
-                   all my checkins
+                    <table-loading v-if="isLoading"></table-loading>
+                    <table-display v-else :persons="persons"></table-display>
                   </axdd-tab-panel>
                 </template>
               </axdd-tabs>
 
-              <table-loading v-if="isLoading"></table-loading>
-              <table-display v-else :persons="persons"></table-display>
               <div class="mt-5 text-secondary">No students to meet with.</div>
             </template>
           </axdd-card>
@@ -84,7 +80,8 @@ import {
   TabItem,
   TabPanel,
 } from "axdd-components";
-import StudentSearch from "../components/student-search.vue";
+import SearchAdviser from "../components/search-adviser.vue";
+import SearchStudent from "../components/search-student.vue";
 import TableLoading from "../components/table-loading.vue";
 import TableDisplay from "../components/table-display.vue";
 
@@ -96,8 +93,8 @@ export default {
   mixins: [dataMixin],
   components: {
     layout: Layout,
-    "student-search": StudentSearch,
-
+    "search-adviser": SearchAdviser,
+    "search-student": SearchStudent,
     "table-loading": TableLoading,
     "table-display": TableDisplay,
     "axdd-card": Card,
