@@ -11,6 +11,26 @@
       <navigation></navigation>
     </template>
     <template #main>
+
+      <div class="toast show w-100 mt-3 bg-danger text-white border-0 shadow-none">
+        <div class="toast-header bg-danger text-white">
+          <strong class="me-auto">System Message</strong>
+          <small>11 mins ago, June 20, 2022</small>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="toast"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="toast-body">
+          Hello, world! This is a toast message. Lorem, ipsum dolor sit amet
+          consectetur adipisicing elit. Nisi, accusamus! Consectetur hic ex esse
+          ipsam veniam, est commodi doloribus, quas nostrum tenetur, accusamus
+          eveniet voluptas laboriosam amet quam quibusdam libero.
+        </div>
+      </div>
+
       <slot name="title">
         <h1 class="visually-hidden">{{ pageTitle }}</h1>
       </slot>
