@@ -8,25 +8,13 @@
         <div class="col">
           <div class="bg-gray p-4 rounded-3">
             <div class="row">
-              <div class="col-9 border-end d-flex justify-content-between">
-                <div class="flex-fill me-3">
-                  <div class="fw-bold lh-lg">Display caseload for:</div>
-                  <select
-                    class="form-select form-select-sm"
-                    aria-label="Default select example"
-                  >
-                    <option>All advisers</option>
-                    <option>All un-assigned (ADMIN)</option>
-                    <option selected
-                      v-for="adviser in advisers"
-                      :key="adviser.id"
-                      value="adviser.uwnetid"
-                    >
-                      {{ adviser.display_name }}
-                    </option>
-                  </select>
+              <div class="col-3">
+                <div class="fw-bold lh-lg">Filter by adviser:</div>
+                <div>
+                  <search-adviser></search-adviser>
                 </div>
-
+              </div>
+              <div class="col-6 d-flex">
                 <div class="flex-fill me-3">
                   <div class="fw-bold lh-lg">Class Standing:</div>
                   <select
@@ -68,10 +56,10 @@
                 </div>
               </div>
 
-              <div class="col-3">
+              <div class="col-3 border-start ms-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
-                  <student-search></student-search>
+                  <search-student></search-student>
                 </div>
               </div>
             </div>
@@ -197,7 +185,8 @@
 <script>
 import { markRaw } from "vue";
 import { Card, CardHeading, CardAction } from "axdd-components";
-import StudentSearch from "../components/student-search.vue";
+import SearchAdviser from "../components/search-adviser.vue";
+import SearchStudent from "../components/search-student.vue";
 import AddContact from "../components/add-contact.vue";
 import TableLoading from "../components/table-loading.vue";
 import Pagination from "v-pagination-3";
@@ -209,7 +198,8 @@ export default {
   mixins: [dataMixin],
   components: {
     layout: Layout,
-    "student-search": StudentSearch,
+    "search-adviser": SearchAdviser,
+    "search-student": SearchStudent,
     pagination: Pagination,
     "table-loading": TableLoading,
     "add-contact": AddContact,

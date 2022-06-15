@@ -6,7 +6,7 @@
           :to="'/'"
           active-class="bg-dark-purple rounded"
           class="nav-link text-gray d-block px-2 py-1"
-          ><i class="bi bi-calendar-check me-2"></i>Contacts</router-link
+          ><i class="bi bi-calendar-check me-2"></i>Check-Ins</router-link
         >
       </li>
       <li class="nav-item mb-2 bg-dark-purple-hover rounded">
@@ -30,7 +30,7 @@
           :to="'/settings'"
           active-class="bg-dark-purple rounded"
           class="nav-link text-gray d-block px-2 py-1"
-          ><i class="bi bi-tools me-2"></i>Settings</router-link
+          ><i class="bi bi-tools me-2"></i>Configure</router-link
         >
       </li>
       <!-- if admin or support -->

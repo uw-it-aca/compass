@@ -8,23 +8,20 @@
         <div class="col">
           <div class="bg-gray p-4 rounded-3">
             <div class="row">
-              <div class="col-9 border-end">
-                <div class="w-50 me-3">
-                  <div class="fw-bold lh-lg">Display contacts for:</div>
-                  <select
-                    class="form-select form-select-sm"
-                    aria-label="Default select example"
-                  >
-                    <option>All advisers</option>
-                    <option>Jay Adviser</option>
-                    <option>Billy Bonkers</option>
-                  </select>
+              <div class="col-3">
+                <div class="fw-bold lh-lg">Filter by adviser:</div>
+                <div>
+                  <search-adviser></search-adviser>
                 </div>
               </div>
-              <div class="col-3">
+              <div class="col-6">
+                <div class="fw-bold lh-lg">Last updated:</div>
+                <div class="h4">Today, {{ getToday() }}</div>
+              </div>
+              <div class="col-3 border-start ms-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
-                  <student-search></student-search>
+                  <search-student></search-student>
                 </div>
               </div>
             </div>
@@ -36,13 +33,35 @@
           <axdd-card>
             <template #heading-action>
               <axdd-card-heading :level="2"
-                >Recent contacts (3 days)</axdd-card-heading
+                >Recent Check-Ins (3 days)</axdd-card-heading
               >
             </template>
             <template #body>
-              <p>Today, {{ getToday() }}</p>
-              <table-loading v-if="isLoading"></table-loading>
-              <table-display v-else :persons="persons"></table-display>
+              <axdd-tabs :tabs-id="'checkins'">
+                <template #items>
+                  <axdd-tab-item
+                    :tabs-id="'checkins'"
+                    :panel-id="'group'"
+                    :active-tab="true"
+                    >All</axdd-tab-item
+                  >
+                  <axdd-tab-item :tabs-id="'checkins'" :panel-id="'mine'"
+                    >My Check-ins</axdd-tab-item
+                  >
+                </template>
+                <template #panels>
+                  <axdd-tab-panel :panel-id="'group'" :active-panel="true">
+                    <table-loading v-if="isLoading"></table-loading>
+                    <table-display v-else :persons="persons"></table-display>
+                  </axdd-tab-panel>
+
+                  <axdd-tab-panel :panel-id="'mine'">
+                    <table-loading v-if="isLoading"></table-loading>
+                    <table-display v-else :persons="persons"></table-display>
+                  </axdd-tab-panel>
+                </template>
+              </axdd-tabs>
+
               <div class="mt-5 text-secondary">No students to meet with.</div>
             </template>
           </axdd-card>
@@ -53,8 +72,16 @@
 </template>
 
 <script>
-import { Card, CardHeading, CardAction } from "axdd-components";
-import StudentSearch from "../components/student-search.vue";
+import {
+  Card,
+  CardHeading,
+  CardAction,
+  Tabs,
+  TabItem,
+  TabPanel,
+} from "axdd-components";
+import SearchAdviser from "../components/search-adviser.vue";
+import SearchStudent from "../components/search-student.vue";
 import TableLoading from "../components/table-loading.vue";
 import TableDisplay from "../components/table-display.vue";
 
@@ -66,13 +93,15 @@ export default {
   mixins: [dataMixin],
   components: {
     layout: Layout,
-    "student-search": StudentSearch,
-
+    "search-adviser": SearchAdviser,
+    "search-student": SearchStudent,
     "table-loading": TableLoading,
     "table-display": TableDisplay,
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
-    "axdd-card-action": CardAction,
+    "axdd-tabs": Tabs,
+    "axdd-tab-item": TabItem,
+    "axdd-tab-panel": TabPanel,
   },
   data() {
     return {
