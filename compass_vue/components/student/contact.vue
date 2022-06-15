@@ -3,7 +3,7 @@
     <template #heading-action>
       <axdd-card-heading :level="2">Contacts (compass)</axdd-card-heading>
       <axdd-card-action>
-        <AddEditContact :button-type="'button'"
+        <AddEditContact :button-type="'button'" :person="person"
           ><i class="bi bi-plus-square-dotted me-2"></i>Record new
           contact</AddEditContact
         >
@@ -19,98 +19,34 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr v-for="contact in contacts" :key="contact.id">
               <td scope="row">
                 <p>
-                  05/26/2022 2:30PM Appointment<br />
-                  You -
-                  <AddEditContact :button-type="'link'"
+                  {{ contact.date }} {{ contact.time }}
+                  {{ contact.contact_type.name }}<br />
+                  {{ contact.author.uwnetid }} -
+                  <AddEditContact
+                    :button-type="'link'"
+                    :person="person"
+                    :contact-id="contact.id"
                     >edit contact</AddEditContact
                   >
                 </p>
-                <div class="small">topics: asdflk, asdlfj, lajsdf, asdlfkj</div>
+                <div class="small">
+                  Topics:
+                  <span
+                    v-for="(topic, index) in contact.contact_topics"
+                    :key="topic.id"
+                    >{{ topic.name }}
+                    <span v-if="index + 1 < contact.contact_topics.length"
+                      >,&nbsp;</span
+                    >
+                  </span>
+                </div>
               </td>
               <td>
-                <p class="text-muted">notes: No notes entered!</p>
-                <p class="text-muted">action: no actions</p>
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">
-                <p>
-                  09/23/2020 1:55PM Drop-in<br />
-                  You -
-                  <AddEditContact :button-type="'link'"
-                    >edit contact</AddEditContact
-                  >
-                </p>
-                <div class="small">topics: asdflk, asdlfj, lajsdf, asdlfkj</div>
-              </td>
-              <td>
-                <p>
-                  notes: Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Totam, ducimus mollitia! Maiores suscipit tempore sunt,
-                  ipsa beatae omnis doloribus expedita iure fuga obcaecati modi
-                  incidunt. Repellendus velit asperiores dolores excepturi?
-                </p>
-                <p>action: student needs to do this</p>
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">
-                <p>
-                  07/04/2020 10:52AM Quick Question<br />
-                  Boris Washington
-                </p>
-                <div class="small">topics: asdflk, asdlfj, lajsdf, asdlfkj</div>
-              </td>
-              <td>
-                <p>
-                  notes: Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Totam, ducimus mollitia! Maiores suscipit tempore sunt,
-                  ipsa beatae omnis doloribus expedita iure fuga obcaecati modi
-                  incidunt. Repellendus velit asperiores dolores excepturi?
-                </p>
-                <p>action: student needs to do this</p>
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">
-                <p>
-                  06/29/2020 3:15PM Appointment<br />
-                  You -
-                  <AddEditContact :button-type="'link'"
-                    >edit contact</AddEditContact
-                  >
-                </p>
-                <div class="small">topics: asdflk, asdlfj, lajsdf, asdlfkj</div>
-              </td>
-              <td>
-                <p>
-                  notes: Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Totam, ducimus mollitia! Maiores suscipit tempore sunt,
-                  ipsa beatae omnis doloribus expedita iure fuga obcaecati modi
-                  incidunt. Repellendus velit asperiores dolores excepturi?
-                </p>
-                <p>action: student needs to do this</p>
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">
-                <p>
-                  5/14/2020 2:15PM Telephone<br />
-                  Otto Wilson
-                </p>
-                <div class="small">topics: asdflk, asdlfj, lajsdf, asdlfkj</div>
-              </td>
-              <td>
-                <p>
-                  notes: Lorem ipsum dolor sit amet consectetur adipisicing
-                  elit. Totam, ducimus mollitia! Maiores suscipit tempore sunt,
-                  ipsa beatae omnis doloribus expedita iure fuga obcaecati modi
-                  incidunt. Repellendus velit asperiores dolores excepturi?
-                </p>
-                <p>action: student needs to do this</p>
+                <p class="text-muted">notes: {{ contact.notes }}</p>
+                <p class="text-muted">actions: {{ contact.actions }}</p>
               </td>
             </tr>
           </tbody>
@@ -130,6 +66,19 @@ export default {
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
     "axdd-card-action": CardAction,
+  },
+  props: {
+    person: {
+      type: Object,
+      required: true,
+    },
+    contacts: {
+      type: Object,
+      required: true,
+      default: function () {
+        return {};
+      },
+    },
   },
   data() {
     return {};

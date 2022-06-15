@@ -3,6 +3,7 @@
   "model": "compass.program",
   "pk": 1,
   "fields": {
+   "access_group": 1,
    "name": "CAMP"
   }
  },
@@ -10,6 +11,7 @@
   "model": "compass.program",
   "pk": 2,
   "fields": {
+   "access_group": 1,
    "name": "TRIO"
   }
  },
@@ -17,6 +19,7 @@
   "model": "compass.program",
   "pk": 3,
   "fields": {
+   "access_group": 1,
    "name": "SSS"
   }
  },
@@ -24,6 +27,7 @@
   "model": "compass.program",
   "pk": 4,
   "fields": {
+   "access_group": 1,
    "name": "Champions"
   }
  },
@@ -31,7 +35,16 @@
   "model": "compass.program",
   "pk": 5,
   "fields": {
+   "access_group": 1,
    "name": "IC Eligible"
+  }
+ },
+ {
+  "model": "compass.program",
+  "pk": 6,
+  "fields": {
+   "access_group": 1,
+   "name": "Pre-Professional"
   }
  }
 ]

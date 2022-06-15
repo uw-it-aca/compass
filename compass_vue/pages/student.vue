@@ -21,7 +21,10 @@
 
         <div class="row">
           <div class="col-xl-9">
-            <StudentContact></StudentContact>
+            <StudentContact
+              :person="person"
+              :contacts="contacts"
+            ></StudentContact>
             <StudentSchedule></StudentSchedule>
             <StudentHistory :person="person"></StudentHistory>
             <StudentVisits></StudentVisits>
@@ -72,6 +75,7 @@ export default {
   data() {
     return {
       person: {},
+      contacts: {},
     };
   },
   computed: {
@@ -91,11 +95,20 @@ export default {
     },
   },
   methods: {
-    loadStudent: function (studentNumber) {
+    loadStudent: function (studentNetID) {
       let _this = this;
-      this.getStudentDetail(studentNumber).then((response) => {
+      this.getStudentDetail(studentNetID).then((response) => {
         if (response.data) {
           _this.person = response.data;
+          this.loadStudentContacts(_this.person.student.system_key);
+        }
+      });
+    },
+    loadStudentContacts: function (studentSystemKey) {
+      let _this = this;
+      this.getStudentContacts(studentSystemKey).then((response) => {
+        if (response.data) {
+          _this.contacts = response.data;
         }
       });
     },

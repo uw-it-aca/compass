@@ -3,7 +3,7 @@ import axios from "axios";
 
 const dataMixin = {
   methods: {
-    getStudentList: async function (paginationOptions, searchOptions) {
+    _getAxiosConfig: function () {
       const csrfToken = this.$store.state.csrfToken;
       const axiosConfig = {
         headers: {
@@ -12,38 +12,60 @@ const dataMixin = {
           "X-CSRFToken": csrfToken,
         },
       };
+      return axiosConfig;
+    },
+    getStudentList: async function (paginationOptions, searchOptions) {
       let options = Object.assign({}, paginationOptions, searchOptions);
       return axios.get(
         "/api/internal/student/",
         { params: options },
-        axiosConfig
+        this._getAxiosConfig()
       );
     },
-    getStudentDetail: async function (studentNumber) {
-      const csrfToken = this.$store.state.csrfToken;
-      const axiosConfig = {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*",
-          "X-CSRFToken": csrfToken,
-        },
-      };
+    getStudentDetail: async function (uwnetid) {
       return axios.get(
-        "/api/internal/student/" + studentNumber + "/",
+        "/api/internal/student/" + uwnetid + "/",
         {},
-        axiosConfig
+        this._getAxiosConfig()
+      );
+    },
+    getStudentContacts: async function (systemkey) {
+      return axios.get(
+        "/api/internal/student/" + systemkey + "/contacts/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    saveStudentContact: async function (systemkey, contact) {
+      return axios.post(
+        "/api/internal/contact/save/",
+        { contact: contact, system_key: systemkey },
+        this._getAxiosConfig()
+      );
+    },
+    getStudentContact: async function (contactId) {
+      return axios.get(
+        "/api/internal/contact/" + contactId + "/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    getStudentContactTopics: async function (systemkey) {
+      return axios.get(
+        "/api/internal/contact/topics/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    getStudentContactTypes: async function (systemkey) {
+      return axios.get(
+        "/api/internal/contact/types/",
+        {},
+        this._getAxiosConfig()
       );
     },
     getAdviserList: async function () {
-      const csrfToken = this.$store.state.csrfToken;
-      const axiosConfig = {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*",
-          "X-CSRFToken": csrfToken,
-        },
-      };
-      return axios.get("/api/internal/adviser/", axiosConfig);
+      return axios.get("/api/internal/adviser/", {}, this._getAxiosConfig());
     },
   },
 };

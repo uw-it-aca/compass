@@ -28,9 +28,9 @@ class StudentDetailView(View):
     '''
     API endpoint returning a student's details
 
-    /api/internal/student/<student-number>
+    /api/internal/student/[uwnetid]/
     '''
-    def get(self, request, student_number):
+    def get(self, request, uwnetid):
         client = UWPersonClient()
-        data = client.get_person_by_student_number(student_number)
+        data = client.get_person_by_uwnetid(uwnetid)
         return JsonResponse(data.to_dict(), safe=False)

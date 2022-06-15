@@ -1,26 +1,32 @@
 <template>
   <a
-    href="#"
     role="button"
     data-bs-toggle="modal"
-    data-bs-target="#exampleModal"
+    :data-bs-target="'#contactModal' + contactId"
     class="btn text-nowrap"
-    :class="[buttonType === 'button' ? 'btn-sm btn-outline-dark-beige' : 'small p-0 btn-sm btn-link']"
-    ><slot>Add Contact</slot></a
+    @click="getFormData()"
+    :class="[
+      buttonType === 'button'
+        ? 'btn-sm btn-outline-dark-beige'
+        : 'small p-0 btn-sm btn-link',
+    ]"
   >
+    <slot>Add Contact</slot>
+  </a>
 
   <!-- contact modal -->
   <div
+    ref="contactModal"
     class="modal fade text-start"
-    id="exampleModal"
+    :id="'contactModal' + contactId"
     tabindex="-1"
-    aria-labelledby="exampleModalLabel"
+    aria-labelledby="contactModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Record a contact</h5>
+          <h5 class="modal-title" id="contactModalLabel">Record a contact</h5>
           <button
             type="button"
             class="btn-close"
@@ -28,21 +34,45 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" v-if="contact">
           <div class="row mb-3">
             <div class="col">
               <label for="date" class="form-label">Date:</label>
-              <input type="date" id="date" class="form-control" />
+              <input
+                type="date"
+                id="date"
+                v-model="contact.date"
+                :class="
+                  formErrors.date ? 'is-invalid form-control' : 'form-control'
+                "
+              />
+              <small class="text-danger" v-if="formErrors.date">
+                required
+              </small>
             </div>
             <div class="col">
               <label class="form-label">Contact type:</label>
-              <select class="form-select" aria-label="Default select example">
-                <option selected disabled>Choose one...</option>
-                <option value="1">Quick Question</option>
-                <option value="2">Appointment</option>
-                <option value="3">Drop-in</option>
-                <option value="4">Telephone</option>
+              <select
+                aria-label="Contact type"
+                v-model="contact.contact_type"
+                :class="
+                  formErrors.time ? 'is-invalid form-select' : 'form-select'
+                "
+              >
+                <option selected disabled :value="undefined">
+                  Choose one...
+                </option>
+                <option
+                  v-for="contactType in contactTypes"
+                  :key="contactType.id"
+                  :value="contactType.id"
+                >
+                  {{ contactType.name }}
+                </option>
               </select>
+              <small class="text-danger" v-if="formErrors.contact_type">
+                required
+              </small>
             </div>
             <div class="col">
               <div class="row">
@@ -54,125 +84,72 @@
                     id="appt-time"
                     type="time"
                     name="appt-time"
-                    value="13:30"
-                    class="form-control"
+                    v-model="contact.time"
+                    :class="
+                      formErrors.time
+                        ? 'is-invalid form-control'
+                        : 'form-control'
+                    "
                   />
+                  <small class="text-danger" v-if="formErrors.time">
+                    required
+                  </small>
                 </div>
               </div>
             </div>
           </div>
           <div class="mb-3">
             <label class="form-label">Topics Covered:</label>
+            <small class="text-danger" v-if="formErrors.contact_topics">
+              required
+            </small>
             <div style="column-count: 3">
-              <div class="form-check">
+              <div
+                class="form-check"
+                v-for="topic in contactTopics"
+                :key="topic.id"
+              >
                 <input
-                  class="form-check-input"
                   type="checkbox"
-                  value
-                  id="flexCheck1"
+                  v-model="contact.contact_topics"
+                  :class="
+                    formErrors.contact_topics
+                      ? 'is-invalid form-check-input'
+                      : 'form-check-input'
+                  "
+                  :value="topic.id"
+                  :id="topic.id"
                 />
-                <label class="form-check-label" for="flexCheck1"
-                  >Add/Drop Class</label
-                >
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value
-                  id="flexCheck2"
-                />
-                <label class="form-check-label" for="flexCheck2"
-                  >Join/Affiliate</label
-                >
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value
-                  id="flexCheck3"
-                />
-                <label class="form-check-label" for="flexCheck3"
-                  >Academic Difficulties</label
-                >
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value
-                  id="flexCheck4"
-                />
-                <label class="form-check-label" for="flexCheck4"
-                  >Hardship Withdrawl</label
-                >
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value
-                  id="flexCheck5"
-                />
-                <label class="form-check-label" for="flexCheck5"
-                  >Internships</label
-                >
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value
-                  id="flexCheck6"
-                />
-                <label class="form-check-label" for="flexCheck6"
-                  >Research Opportunities</label
-                >
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value
-                  id="flexCheck7"
-                />
-                <label class="form-check-label" for="flexCheck7"
-                  >Graduate Professional School</label
-                >
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value
-                  id="flexCheck8"
-                />
-                <label class="form-check-label" for="flexCheck8"
-                  >Testing/Assessment</label
-                >
+                <label class="form-check-label" :for="topic.id">{{
+                  topic.name
+                }}</label>
               </div>
             </div>
           </div>
           <div class="mb-3">
-            <label for="exampleFormControlTextarea1" class="form-label"
-              >Notes</label
-            >
+            <label for="notesTextarea" class="form-label">Notes</label>
             <textarea
-              class="form-control"
-              id="exampleFormControlTextarea1"
+              :class="
+                formErrors.notes ? 'is-invalid form-control' : 'form-control'
+              "
+              id="notesTextarea"
               rows="3"
+              v-model="contact.notes"
             ></textarea>
+            <small class="text-danger" v-if="formErrors.notes">
+              required
+            </small>
           </div>
 
           <div class="mb-3">
-            <label for="exampleFormControlTextarea2" class="form-label"
+            <label for="actionsAndRecomendationsTextarea" class="form-label"
               >Actions and Recommmendations</label
             >
             <textarea
               class="form-control"
-              id="exampleFormControlTextarea2"
+              id="actionsAndRecomendationsTextarea"
               rows="3"
+              v-model="contact.actions"
             ></textarea>
           </div>
         </div>
@@ -185,7 +162,13 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary">Save contact</button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              @click="saveContact()"
+            >
+              Save contact
+            </button>
           </div>
         </div>
       </div>
@@ -195,16 +178,124 @@
 </template>
 
 <script>
+import dataMixin from "../mixins/data_mixin.js";
+import { Modal } from "bootstrap";
+
 export default {
+  mixins: [dataMixin],
   props: {
     buttonType: {
       type: String,
       required: true,
     },
+    person: {
+      type: Object,
+      required: true,
+    },
+    contactId: {
+      type: Number,
+      default: null,
+    },
   },
-  components: {},
   data() {
-    return {};
+    return {
+      contactTopics: [],
+      contactTypes: [],
+      contact: this.getDefaultContact(),
+      formErrors: {},
+    };
+  },
+  created() {
+    this.getContactTopics();
+    this.getContactTypes();
+  },
+  mounted() {
+    this.$refs.contactModal.addEventListener(
+      "shown.bs.modal",
+      this.clearFormErrors
+    );
+    this.$refs.contactModal.addEventListener("hidden.bs.modal", this.resetForm);
+  },
+  methods: {
+    getFormData() {
+      if (this.contactId != null) {
+        this.getContact(this.contactId);
+      }
+    },
+    saveContact() {
+      var contactModal = Modal.getInstance(
+        document.getElementById("contactModal" + this.contactId)
+      );
+      this.saveStudentContact(this.person.student.system_key, this.contact)
+        .then(() => {
+          contactModal.hide();
+        })
+        .catch((error) => {
+          this.formErrors = error.response.data;
+        });
+    },
+    getDefaultContact() {
+      var today = new Date();
+
+      function zPad(value) {
+        if (value <= 9) value = "0" + value;
+        return value;
+      }
+
+      function getCurrentDateStr() {
+        let curMonth = zPad(today.getMonth() + 1);
+        let curDay = zPad(today.getDate());
+        return today.getFullYear() + "-" + curMonth + "-" + curDay;
+      }
+
+      function getCurrentTimeStr() {
+        let curHour = zPad(today.getHours());
+        let curMinutes = zPad(today.getMinutes());
+        let curSeconds = zPad(today.getSeconds());
+        return curHour + ":" + curMinutes + ":" + curSeconds;
+      }
+
+      return {
+        contact_topics: [],
+        date: getCurrentDateStr(),
+        time: getCurrentTimeStr(),
+      };
+    },
+    getContact(contactId) {
+      this.getStudentContact(contactId).then((response) => {
+        if (response.data) {
+          // we need to map the contact type and topic ids to the data object
+          let newContact = response.data;
+          newContact.contact_type = newContact.contact_type.id;
+          newContact.contact_topics = newContact.contact_topics.map(
+            (ct) => ct.id
+          );
+          // update the current contact
+          this.contact = newContact;
+        }
+      });
+    },
+    getContactTopics() {
+      this.getStudentContactTopics().then((response) => {
+        if (response.data) {
+          this.contactTopics = response.data;
+        }
+      });
+    },
+    getContactTypes() {
+      this.getStudentContactTypes().then((response) => {
+        if (response.data) {
+          this.contactTypes = response.data;
+        }
+      });
+    },
+    clearFormErrors() {
+      this.formErrors = {};
+    },
+    resetForm() {
+      this.clearFormErrors();
+      this.contact = this.getDefaultContact();
+    },
   },
 };
 </script>
