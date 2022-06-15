@@ -91,4 +91,5 @@ class ContactWriteSerializer(serializers.ModelSerializer):
             validated_data.get('contact_type', instance.contact_type)
         instance.contact_topics.set(
             validated_data.get('contact_topics', instance.contact_topics))
+        instance.save()
         return instance

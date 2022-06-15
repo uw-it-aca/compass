@@ -31,29 +31,36 @@ const dataMixin = {
     },
     getStudentContacts: async function (systemkey) {
       return axios.get(
-        "/api/internal/student/" + systemkey + "/contact/",
-        {},
-        this._getAxiosConfig()
-      );
-    },
-    getStudentContactTopics: async function (systemkey) {
-      return axios.get(
-        "/api/internal/student/" + systemkey + "/contact/topics/",
-        {},
-        this._getAxiosConfig()
-      );
-    },
-    getStudentContactTypes: async function (systemkey) {
-      return axios.get(
-        "/api/internal/student/" + systemkey + "/contact/types/",
+        "/api/internal/student/" + systemkey + "/contacts/",
         {},
         this._getAxiosConfig()
       );
     },
     saveStudentContact: async function (systemkey, contact) {
       return axios.post(
-        "/api/internal/student/" + systemkey + "/contact/",
-        contact,
+        "/api/internal/contact/save/",
+        { contact: contact, system_key: systemkey },
+        this._getAxiosConfig()
+      );
+    },
+    getStudentContact: async function (contactId) {
+      return axios.get(
+        "/api/internal/contact/" + contactId + "/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    getStudentContactTopics: async function (systemkey) {
+      return axios.get(
+        "/api/internal/contact/topics/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    getStudentContactTypes: async function (systemkey) {
+      return axios.get(
+        "/api/internal/contact/types/",
+        {},
         this._getAxiosConfig()
       );
     },

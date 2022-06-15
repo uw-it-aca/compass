@@ -1,10 +1,10 @@
 <template>
   <a
-    href="#"
     role="button"
     data-bs-toggle="modal"
-    data-bs-target="#contactModal"
+    :data-bs-target="'#contactModal' + contactId"
     class="btn text-nowrap"
+    @click="getFormData()"
     :class="[
       buttonType === 'button'
         ? 'btn-sm btn-outline-dark-beige'
@@ -16,9 +16,9 @@
 
   <!-- contact modal -->
   <div
-    ref="modal"
+    ref="contactModal"
     class="modal fade text-start"
-    id="contactModal"
+    :id="'contactModal' + contactId"
     tabindex="-1"
     aria-labelledby="contactModalLabel"
     aria-hidden="true"
@@ -34,14 +34,14 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" v-if="contact">
           <div class="row mb-3">
             <div class="col">
               <label for="date" class="form-label">Date:</label>
               <input
                 type="date"
                 id="date"
-                v-model="contactModel.date"
+                v-model="contact.date"
                 :class="
                   formErrors.date ? 'is-invalid form-control' : 'form-control'
                 "
@@ -54,7 +54,7 @@
               <label class="form-label">Contact type:</label>
               <select
                 aria-label="Contact type"
-                v-model="contactModel.contact_type"
+                v-model="contact.contact_type"
                 :class="
                   formErrors.time ? 'is-invalid form-select' : 'form-select'
                 "
@@ -84,7 +84,7 @@
                     id="appt-time"
                     type="time"
                     name="appt-time"
-                    v-model="contactModel.time"
+                    v-model="contact.time"
                     :class="
                       formErrors.time
                         ? 'is-invalid form-control'
@@ -111,7 +111,7 @@
               >
                 <input
                   type="checkbox"
-                  v-model="contactModel.contact_topics"
+                  v-model="contact.contact_topics"
                   :class="
                     formErrors.contact_topics
                       ? 'is-invalid form-check-input'
@@ -134,7 +134,7 @@
               "
               id="notesTextarea"
               rows="3"
-              v-model="contactModel.notes"
+              v-model="contact.notes"
             ></textarea>
             <small class="text-danger" v-if="formErrors.notes">
               required
@@ -149,7 +149,7 @@
               class="form-control"
               id="actionsAndRecomendationsTextarea"
               rows="3"
-              v-model="contactModel.actions"
+              v-model="contact.actions"
             ></textarea>
           </div>
         </div>
@@ -179,6 +179,7 @@
 
 <script>
 import dataMixin from "../mixins/data_mixin.js";
+import { Modal } from "bootstrap";
 
 export default {
   mixins: [dataMixin],
@@ -191,43 +192,16 @@ export default {
       type: Object,
       required: true,
     },
-    contact: {
-      type: Object,
-      required: false,
-      default: function () {
-        var today = new Date();
-
-        function zPad(value) {
-          if (value <= 9) value = "0" + value;
-          return value;
-        }
-
-        function getCurrentDateStr() {
-          let curMonth = zPad(today.getMonth() + 1);
-          let curDay = zPad(today.getDate());
-          return today.getFullYear() + "-" + curMonth + "-" + curDay;
-        }
-
-        function getCurrentTimeStr() {
-          let curHour = zPad(today.getHours());
-          let curMinutes = zPad(today.getMinutes());
-          let curSeconds = zPad(today.getSeconds());
-          return curHour + ":" + curMinutes + ":" + curSeconds;
-        }
-
-        return {
-          contact_topics: [],
-          date: getCurrentDateStr(),
-          time: getCurrentTimeStr(),
-        };
-      },
+    contactId: {
+      type: Number,
+      default: null,
     },
   },
   data() {
     return {
       contactTopics: [],
       contactTypes: [],
-      contactModel: this.contact,
+      contact: this.getDefaultContact(),
       formErrors: {},
     };
   },
@@ -236,38 +210,91 @@ export default {
     this.getContactTypes();
   },
   mounted() {
-    this.$refs.modal.addEventListener("shown.bs.modal", this.clearFormErrors);
-    this.$refs.modal.addEventListener("hidden.bs.modal", this.clearFormErrors);
+    this.$refs.contactModal.addEventListener(
+      "shown.bs.modal",
+      this.clearFormErrors
+    );
+    this.$refs.contactModal.addEventListener("hidden.bs.modal", this.resetForm);
   },
   methods: {
+    getFormData() {
+      if (this.contactId != null) {
+        this.getContact(this.contactId);
+      }
+    },
     saveContact() {
-      let _this = this;
-      this.saveStudentContact(this.person.student.system_key, this.contactModel)
+      var contactModal = Modal.getInstance(
+        document.getElementById("contactModal" + this.contactId)
+      );
+      this.saveStudentContact(this.person.student.system_key, this.contact)
         .then(() => {
-          _this.$refs.modal.style.display = "none";
+          contactModal.hide();
         })
         .catch((error) => {
-          _this.formErrors = error.response.data;
+          this.formErrors = error.response.data;
         });
     },
+    getDefaultContact() {
+      var today = new Date();
+
+      function zPad(value) {
+        if (value <= 9) value = "0" + value;
+        return value;
+      }
+
+      function getCurrentDateStr() {
+        let curMonth = zPad(today.getMonth() + 1);
+        let curDay = zPad(today.getDate());
+        return today.getFullYear() + "-" + curMonth + "-" + curDay;
+      }
+
+      function getCurrentTimeStr() {
+        let curHour = zPad(today.getHours());
+        let curMinutes = zPad(today.getMinutes());
+        let curSeconds = zPad(today.getSeconds());
+        return curHour + ":" + curMinutes + ":" + curSeconds;
+      }
+
+      return {
+        contact_topics: [],
+        date: getCurrentDateStr(),
+        time: getCurrentTimeStr(),
+      };
+    },
+    getContact(contactId) {
+      this.getStudentContact(contactId).then((response) => {
+        if (response.data) {
+          // we need to map the contact type and topic ids to the data object
+          let newContact = response.data;
+          newContact.contact_type = newContact.contact_type.id;
+          newContact.contact_topics = newContact.contact_topics.map(
+            (ct) => ct.id
+          );
+          // update the current contact
+          this.contact = newContact;
+        }
+      });
+    },
     getContactTopics() {
-      let _this = this;
       this.getStudentContactTopics().then((response) => {
         if (response.data) {
-          _this.contactTopics = response.data;
+          this.contactTopics = response.data;
         }
       });
     },
     getContactTypes() {
-      let _this = this;
       this.getStudentContactTypes().then((response) => {
         if (response.data) {
-          _this.contactTypes = response.data;
+          this.contactTypes = response.data;
         }
       });
     },
     clearFormErrors() {
       this.formErrors = {};
+    },
+    resetForm() {
+      this.clearFormErrors();
+      this.contact = this.getDefaultContact();
     },
   },
 };

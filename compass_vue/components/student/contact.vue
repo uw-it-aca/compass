@@ -28,7 +28,7 @@
                   <AddEditContact
                     :button-type="'link'"
                     :person="person"
-                    :contact="contact"
+                    :contact-id="contact.id"
                     >edit contact</AddEditContact
                   >
                 </p>

@@ -9,7 +9,7 @@ from compass.views.pages import LandingView
 from compass.views.api.student import StudentListView, StudentDetailView
 from compass.views.api.adviser import AdviserListView
 from compass.views.api.contact import ContactListView, ContactTopicsView, \
-    ContactTypesView
+    ContactTypesView, ContactSaveView, ContactDetailView
 
 
 # start with an empty url array
@@ -42,12 +42,16 @@ urlpatterns = [
             StudentListView.as_view()),
     re_path(r'^api/internal/student/(?P<uwnetid>[-@:\w]+)/$',
             StudentDetailView.as_view()),
-    re_path(r'^api/internal/student/(?P<systemkey>[-@:\w]+)/contact/$',
+    re_path(r'^api/internal/student/(?P<systemkey>[\w]+)/contacts/$',
             ContactListView.as_view()),
-    re_path(r'^api/internal/student/(?P<systemkey>[-@:\w]+)/contact/topics/$',
+    re_path(r'^api/internal/contact/save/$',
+            ContactSaveView.as_view()),
+    re_path(r'^api/internal/contact/topics/$',
             ContactTopicsView.as_view()),
-    re_path(r'^api/internal/student/(?P<systemkey>[-@:\w]+)/contact/types/$',
+    re_path(r'^api/internal/contact/types/$',
             ContactTypesView.as_view()),
+    re_path(r'^api/internal/contact/(?P<contactid>[\w]+)/$',
+            ContactDetailView.as_view()),
     re_path(r'^api/internal/adviser/$',
             AdviserListView.as_view()),
     # not authorized page that responds as 403
