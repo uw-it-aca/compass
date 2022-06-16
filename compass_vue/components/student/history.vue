@@ -13,7 +13,7 @@
             >Majors</axdd-tab-item
           >
           <axdd-tab-item :tabs-id="'history'" :panel-id="'transcript'"
-            >Unoffical Transcript (sws)</axdd-tab-item
+            >Unoffical Transcript (PDS+SWS)</axdd-tab-item
           >
         </template>
         <template #panels>
@@ -50,47 +50,6 @@
               <h3
                 class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
               >
-                Intended Major (compass)
-              </h3>
-              <table class="table table-hover table-striped m-0 mb-5">
-                <thead class="small">
-                  <tr>
-                    <th>Code</th>
-                    <th class="w-50">Major</th>
-                    <th>Status</th>
-                    <th class="text-nowrap">Source</th>
-                  </tr>
-                </thead>
-                <tbody class="mb-3">
-                  <tr>
-                    <td>ENG</td>
-                    <td>Computer Engineering</td>
-                    <td>Intended</td>
-                    <td>DawgPath</td>
-                  </tr>
-                  <tr>
-                    <td>HCDE</td>
-                    <td>Human Centered Design &amp; Engineering</td>
-                    <td>Intended</td>
-                    <td>Compass</td>
-                  </tr>
-                  <tr>
-                    <td>ACCT</td>
-                    <td>Accounting</td>
-                    <td>Intended</td>
-                    <td>Compass</td>
-                  </tr>
-                  <tr>
-                    <td>ECON</td>
-                    <td>Economics</td>
-                    <td>Intended</td>
-                    <td>DawgPath</td>
-                  </tr>
-                </tbody>
-              </table>
-              <h3
-                class="h6 text-uppercase fw-bold text-uppercase axdd-font-encode-sans text-dark-beige"
-              >
                 Intended Major upon Admission to UW
               </h3>
               <table class="table table-hover table-striped m-0">
@@ -122,42 +81,79 @@
             <p class="text-danger small">
               Previous Registrations and Grade transcript
             </p>
-            <div class="table-responsive">
-              <table class="table table-hover table-striped m-0">
-                <thead class="small">
-                  <tr>
-                    <th>Course</th>
-                    <th>Credits</th>
-                    <th>Grade</th>
-                    <th>Year</th>
-                    <th>Quarter</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>BIOL 350</td>
-                    <td>3</td>
-                    <td>3.8</td>
-                    <td>2021</td>
-                    <td>Spring</td>
-                  </tr>
-                  <tr>
-                    <td>CHEM 238</td>
-                    <td>4</td>
-                    <td>4.0</td>
-                    <td>2021</td>
-                    <td>Autumn</td>
-                  </tr>
-                  <tr>
-                    <td>MATH 210</td>
-                    <td>5.0</td>
-                    <td>W4</td>
-                    <td>2021</td>
-                    <td>Autumn</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            <table class="table m-0">
+              <thead class="small">
+                <tr>
+                  <th>Course Code</th>
+                  <th class="w-50">Title</th>
+                  <th>Credits</th>
+                  <th class="text-nowrap">Grade</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="4" class="fw-bold bg-light">Autumn 1995</td>
+                </tr>
+                <tr>
+                  <td>ANTH 100</td>
+                  <td>Intro to Anthropology</td>
+                  <td>5.0</td>
+                  <td>3.2</td>
+                </tr>
+                <tr>
+                  <td>ENG 104</td>
+                  <td>Introductory Composition</td>
+                  <td>5.0</td>
+                  <td>3.3</td>
+                </tr>
+                <tr>
+                  <td>MATH 102</td>
+                  <td>Algebra</td>
+                  <td>5.0</td>
+                  <td>2.6</td>
+                </tr>
+                <tr>
+                  <td colspan="4">
+                    QTR ATTEMPTED: 15.0 EARNED: 15.0 GPA: 3.03 QTR GRADED AT:
+                    15.0 GRADE POINTS: 45.5 CUM ATTEMPTED: 15.0 UW EARNED: 15.0
+                    TTL EARNED: 15.0 CUM GRADED AT: 15.0 GRADE PTS: 45.5 CUM
+                    GPA: 3.03
+                  </td>
+                </tr>
+              </tbody>
+              <!-- new quarter -->
+              <tbody>
+                <tr>
+                  <td colspan="4" class="fw-bold bg-light">Winter 1995</td>
+                </tr>
+                <tr>
+                  <td>AAS 206</td>
+                  <td>Contemporary Problems Asian American History</td>
+                  <td>5.0</td>
+                  <td>2.5</td>
+                </tr>
+                <tr>
+                  <td>ENG 105</td>
+                  <td>Introductory Composition</td>
+                  <td>5.0</td>
+                  <td>3.3</td>
+                </tr>
+                <tr>
+                  <td>MATH 103</td>
+                  <td>Introduction Elementary Function</td>
+                  <td>5.0</td>
+                  <td>3.2</td>
+                </tr>
+                <tr>
+                  <td colspan="4">
+                    QTR ATTEMPTED: 15.0 EARNED: 15.0 GPA: 3.03 QTR GRADED AT:
+                    15.0 GRADE POINTS: 45.5 CUM ATTEMPTED: 15.0 UW EARNED: 15.0
+                    TTL EARNED: 15.0 CUM GRADED AT: 15.0 GRADE PTS: 45.5 CUM
+                    GPA: 3.03
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </axdd-tab-panel>
         </template>
       </axdd-tabs>
