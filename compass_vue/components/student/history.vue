@@ -113,11 +113,11 @@
                   <td>2.6</td>
                 </tr>
                 <tr>
-                  <td colspan="4">
-                    QTR ATTEMPTED: 15.0 EARNED: 15.0 GPA: 3.03 QTR GRADED AT:
-                    15.0 GRADE POINTS: 45.5 CUM ATTEMPTED: 15.0 UW EARNED: 15.0
-                    TTL EARNED: 15.0 CUM GRADED AT: 15.0 GRADE PTS: 45.5 CUM
-                    GPA: 3.03
+                  <td colspan="4" class="text-end small">
+                    <div>QTR ATTEMPTED: 15.0 EARNED: 15.0 GPA: 3.03</div>
+                    <div>QTR GRADED AT: 15.0 GRADE POINTS: 45.5</div>
+                    <div>CUM ATTEMPTED: 15.0 UW EARNED: 15.0 TTL EARNED: 15.0</div>
+                    <div>CUM GRADED AT: 15.0 GRADE PTS: 45.5 CUM GPA: 3.03</div>
                   </td>
                 </tr>
               </tbody>
@@ -145,11 +145,11 @@
                   <td>3.2</td>
                 </tr>
                 <tr>
-                  <td colspan="4">
-                    QTR ATTEMPTED: 15.0 EARNED: 15.0 GPA: 3.03 QTR GRADED AT:
-                    15.0 GRADE POINTS: 45.5 CUM ATTEMPTED: 15.0 UW EARNED: 15.0
-                    TTL EARNED: 15.0 CUM GRADED AT: 15.0 GRADE PTS: 45.5 CUM
-                    GPA: 3.03
+                  <td colspan="4" class="text-end small">
+                    <div>QTR ATTEMPTED: 15.0 EARNED: 15.0 GPA: 2.17</div>
+                    <div>QTR GRADED AT: 15.0 GRADE POINTS: 32.5</div>
+                    <div>CUM ATTEMPTED: 30.0 UW EARNED: 30.0 TTL EARNED: 30.0</div>
+                    <div>CUM GRADED AT: 30.0 GRADE PTS: 78.0 CUM GPA: 2.60</div>
                   </td>
                 </tr>
               </tbody>
