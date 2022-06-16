@@ -25,7 +25,7 @@
               :person="person"
               :contacts="contacts"
             ></StudentContact>
-            <StudentSchedule></StudentSchedule>
+            <StudentSchedule :schedules="schedules"></StudentSchedule>
             <StudentHistory :person="person"></StudentHistory>
             <StudentVisits></StudentVisits>
           </div>
@@ -76,6 +76,7 @@ export default {
     return {
       person: {},
       contacts: {},
+      schedules: {},
     };
   },
   computed: {
@@ -101,6 +102,7 @@ export default {
         if (response.data) {
           _this.person = response.data;
           this.loadStudentContacts(_this.person.student.system_key);
+          this.loadStudentSchedules(_this.person.uwregid);
         }
       });
     },
@@ -109,6 +111,14 @@ export default {
       this.getStudentContacts(studentSystemKey).then((response) => {
         if (response.data) {
           _this.contacts = response.data;
+        }
+      });
+    },
+    loadStudentSchedules: function (studentRegID) {
+      let _this = this;
+      this.getStudentSchedules(studentRegID).then((response) => {
+        if (response.data) {
+          _this.schedules = response.data;
         }
       });
     },
