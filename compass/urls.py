@@ -36,7 +36,7 @@ if settings.DEBUG:
     ]
 
 
-urlpatterns = [
+urlpatterns += [
     re_path(r'^admin', admin_site.urls),
     re_path(r'^api/internal/student/$',
             StudentListView.as_view()),
@@ -54,14 +54,14 @@ urlpatterns = [
             ContactDetailView.as_view()),
     re_path(r'^api/internal/adviser/$',
             AdviserListView.as_view()),
+    # vue-router paths
+    re_path(r"^(student|caseload|reports|settings)$", LandingView.as_view()),
     # not authorized page that responds as 403
     re_path(
         r"^not-authorized$",
         TemplateView.as_view(template_name="403.html"),
         name="403_response",
     ),
-    # vue-router paths
-    re_path(r"^(student|caseload|reports|settings)$", LandingView.as_view()),
     # default landing
     re_path(r"^.*$", LandingView.as_view(), name="index"),
 ]
