@@ -10,48 +10,53 @@
       </axdd-card-action>
     </template>
     <template #body>
-      <div class="table-responsive">
-        <table class="table m-0">
-          <thead class="small">
-            <tr>
-              <th style="width: 33%">Details</th>
-              <th>Notes/Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="contact in contacts" :key="contact.id">
-              <td scope="row">
-                <p>
-                  {{ contact.date }} {{ contact.time }}
-                  {{ contact.contact_type.name }}<br />
-                  {{ contact.author.uwnetid }} -
-                  <AddEditContact
-                    :button-type="'link'"
-                    :person="person"
-                    :contact-id="contact.id"
-                    >edit contact</AddEditContact
-                  >
-                </p>
-                <div class="small">
-                  Topics:
-                  <span
-                    v-for="(topic, index) in contact.contact_topics"
-                    :key="topic.id"
-                    >{{ topic.name }}
-                    <span v-if="index + 1 < contact.contact_topics.length"
-                      >,&nbsp;</span
+      <template v-if="contacts.length > 0">
+        <div class="table-responsive">
+          <table class="table m-0">
+            <thead class="small">
+              <tr>
+                <th style="width: 33%">Details</th>
+                <th>Notes/Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="contact in contacts" :key="contact.id">
+                <td scope="row">
+                  <p>
+                    {{ contact.date }} {{ contact.time }}
+                    {{ contact.contact_type.name }}<br />
+                    {{ contact.author.uwnetid }} -
+                    <AddEditContact
+                      :button-type="'link'"
+                      :person="person"
+                      :contact-id="contact.id"
+                      >edit contact</AddEditContact
                     >
-                  </span>
-                </div>
-              </td>
-              <td>
-                <p class="text-muted">notes: {{ contact.notes }}</p>
-                <p class="text-muted">actions: {{ contact.actions }}</p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+                  </p>
+                  <div class="small">
+                    Topics:
+                    <span
+                      v-for="(topic, index) in contact.contact_topics"
+                      :key="topic.id"
+                      >{{ topic.name }}
+                      <span v-if="index + 1 < contact.contact_topics.length"
+                        >,&nbsp;</span
+                      >
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <p class="text-muted">notes: {{ contact.notes }}</p>
+                  <p class="text-muted">actions: {{ contact.actions }}</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </template>
+      <template v-else>
+        <p>No contacts found</p>
+      </template>
     </template>
   </axdd-card>
 </template>

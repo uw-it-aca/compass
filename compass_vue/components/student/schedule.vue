@@ -48,7 +48,9 @@
               </table>
             </axdd-tab-panel>
           </template>
-          <template v-else> Schedule information not available </template>
+          <template v-else>
+            <p>No schedules found</p>
+          </template>
         </template>
       </axdd-tabs>
     </template>
