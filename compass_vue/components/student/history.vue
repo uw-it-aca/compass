@@ -84,7 +84,7 @@
             <table class="table m-0">
               <thead class="small">
                 <tr>
-                  <th>Course Code</th>
+                  <th>Course</th>
                   <th class="w-50">Title</th>
                   <th>Credits</th>
                   <th class="text-nowrap">Grade</th>

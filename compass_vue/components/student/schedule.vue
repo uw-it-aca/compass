@@ -27,7 +27,7 @@
                 <thead class="small">
                   <tr>
                     <th>Course</th>
-                    <th>Course Number</th>
+                    <th>Title</th>
                     <th>Credits</th>
                     <th>Grade</th>
                   </tr>
@@ -37,10 +37,10 @@
                     v-for="(section, index) in schedule.sections"
                     :key="index"
                   >
-                    <td>{{ section.course_title }}</td>
                     <td>
                       {{ section.curriculum_abbr }} {{ section.course_number }}
                     </td>
+                    <td>{{ section.course_title }}</td>
                     <td>{{ section.credits }}</td>
                     <td>{{ section.grade }}</td>
                   </tr>
