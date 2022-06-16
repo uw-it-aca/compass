@@ -6,7 +6,8 @@ from compass.admin import admin_site
 from django.conf import settings
 from django.views.generic import TemplateView
 from compass.views.pages import LandingView
-from compass.views.api.student import StudentListView, StudentDetailView
+from compass.views.api.student import StudentListView, StudentDetailView, \
+        StudentScheduleView
 from compass.views.api.adviser import AdviserListView
 from compass.views.api.contact import ContactListView, ContactTopicsView, \
     ContactTypesView, ContactSaveView, ContactDetailView
@@ -42,6 +43,8 @@ urlpatterns = [
             StudentListView.as_view()),
     re_path(r'^api/internal/student/(?P<uwnetid>[-@:\w]+)/$',
             StudentDetailView.as_view()),
+    re_path(r'^api/internal/student/(?P<uwregid>[-@:\w]+)/schedules/$',
+            StudentScheduleView.as_view()),
     re_path(r'^api/internal/student/(?P<systemkey>[\w]+)/contacts/$',
             ContactListView.as_view()),
     re_path(r'^api/internal/contact/save/$',
