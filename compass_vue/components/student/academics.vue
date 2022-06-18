@@ -21,8 +21,18 @@
           <span class="text-danger">tbd</span>
         </li>
         <li>GPA: {{ person.student.cumulative_gpa }}</li>
-        <li class="border-top mt-2 pt-2">Scholarships: <span class="text-danger">tbd</span></li>
-        <li>Yearly Honors: <span class="text-danger">tbd</span></li>
+        <li class="border-top mt-2 pt-2">
+          Scholarship Type:
+          <template v-if="person.student.transcripts">
+            {{ person.student.transcripts[0].scholarship_type }}
+          </template>
+        </li>
+        <li>
+          Yearly Honors Type:
+          <template v-if="person.student.transcripts">
+            {{ person.student.transcripts[0].yearly_honor_type }}
+          </template>
+        </li>
       </ul>
     </template>
   </axdd-card>

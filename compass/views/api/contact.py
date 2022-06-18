@@ -1,57 +1,18 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.decorators import verify_access
-from compass.models import AccessGroup, AppUser, Contact, ContactTopic, \
+from compass.views.api import BaseAPIView
+from compass.models import AppUser, Contact, ContactTopic, \
     ContactType, Student
 from compass.serializers import ContactReadSerializer, \
     ContactWriteSerializer, ContactTopicSerializer, ContactTypeSerializer
-from django.utils.decorators import method_decorator
-from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from uw_saml.utils import get_attribute
 
 
-@method_decorator(verify_access(), name='dispatch')
-class BaseView(GenericAPIView):
-
-    def get_access_groups(self, request):
-        groups = get_attribute(request, 'isMemberOf') or []
-        access_groups = AccessGroup.objects.filter(access_group_id__in=groups)
-        return access_groups
-
-
-class ContactListView(BaseView):
+class ContactSaveView(BaseAPIView):
     '''
-    API endpoint returning a list of contacts for a student
-
-    /api/internal/student/[systemkey]/contact/
-    '''
-
-    def get(self, request, systemkey):
-        queryset = Contact.objects.filter(
-            student__system_key=systemkey).order_by('-date', '-time')
-        serializer = ContactReadSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-class ContactDetailView(BaseView):
-    '''
-    API endpoint returning a list of contacts for a student
-
-    /api/internal/contact/[contactid]/
-    '''
-
-    def get(self, request, contactid):
-        queryset = Contact.objects.filter(id=contactid).get()
-        serializer = ContactReadSerializer(queryset, many=False)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-class ContactSaveView(BaseView):
-    '''
-    API endpoint for saving a student contact
+    API endpoint for saving a contact
 
     /api/internal/contact/save/
     '''
@@ -79,9 +40,22 @@ class ContactSaveView(BaseView):
                             status=status.HTTP_400_BAD_REQUEST)
 
 
-class ContactTopicsView(BaseView):
+class ContactDetailView(BaseAPIView):
     '''
-    API endpoint returning a list of contacts for a student
+    API endpoint returning a list of contacts for the user's access group
+
+    /api/internal/contact/[contactid]/
+    '''
+
+    def get(self, request, contactid):
+        queryset = Contact.objects.filter(id=contactid).get()
+        serializer = ContactReadSerializer(queryset, many=False)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ContactTopicsView(BaseAPIView):
+    '''
+    API endpoint returning a list of contacts for the user's access group
 
     /api/internal/contact/topics/
     '''
@@ -94,9 +68,9 @@ class ContactTopicsView(BaseView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class ContactTypesView(BaseView):
+class ContactTypesView(BaseAPIView):
     '''
-    API endpoint returning a list of contacts for a student
+    API endpoint returning a list of contacts for the user's access group
 
     /api/internal/contact/types/
     '''

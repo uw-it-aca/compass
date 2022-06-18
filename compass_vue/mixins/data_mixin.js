@@ -36,6 +36,30 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
+    getStudentPrograms: async function (systemkey) {
+      return axios.get(
+        "/api/internal/student/" + systemkey + "/programs/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    getStudentSpecialPrograms: async function (systemkey) {
+      return axios.get(
+        "/api/internal/student/" + systemkey + "/specialprograms/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    getPrograms: async function () {
+      return axios.get("/api/internal/programs/", {}, this._getAxiosConfig());
+    },
+    getSpecialPrograms: async function () {
+      return axios.get(
+        "/api/internal/specialprograms/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
     getStudentSchedules: async function (uwregid) {
       return axios.get(
         "/api/internal/student/" + uwregid + "/schedules/",
