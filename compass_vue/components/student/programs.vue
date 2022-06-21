@@ -4,7 +4,42 @@
       <axdd-card-heading :level="2">Programs</axdd-card-heading>
     </template>
     <template #body>
-      <div class="border p-1 small mt-3">
+      <div
+        class="alert alert-success py-2 small"
+        role="alert"
+        v-show="updateSuccessful"
+      >
+        Update Successful!
+      </div>
+      <div v-if="groupedSpecialPrograms" class="border p-1 mb-3 small">
+        <template
+          v-for="(groupPrograms, accessGroupName) in groupedSpecialPrograms"
+          :key="accessGroupName"
+        >
+          <div class="fw-bold">{{ accessGroupName }} Special Programs</div>
+          <div
+            class="form-check"
+            v-for="program in groupPrograms"
+            :key="program.name"
+          >
+            <input
+              class="form-check-input"
+              type="checkbox"
+              v-model="studentSpecialPrograms"
+              :value="program.id"
+              :id="'defaultCheck' + program.name"
+            />
+            <label
+              class="form-check-label"
+              :for="'defaultCheck' + program.name"
+            >
+              {{ program.name }}
+            </label>
+          </div>
+        </template>
+      </div>
+
+      <div v-if="groupedPrograms" class="border p-1 mb-3 small">
         <template
           v-for="(groupPrograms, accessGroupName) in groupedPrograms"
           :key="accessGroupName"
@@ -30,18 +65,15 @@
             </label>
           </div>
         </template>
-        <div class="mt-3">
-          <button
-            @click="saveStudentData()"
-            type="button"
-            class="btn btn-outline-dark-beige btn-sm"
-          >
-            Update programs
-          </button>
-          <span class="mt-3 badge alert-success" v-show="updateSuccessful">
-            Update Successful
-          </span>
-        </div>
+      </div>
+      <div>
+        <button
+          @click="saveStudentData()"
+          type="button"
+          class="btn btn-outline-dark-beige btn-sm"
+        >
+          Update programs
+        </button>
       </div>
     </template>
   </axdd-card>
