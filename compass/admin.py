@@ -1,8 +1,8 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.models import AppUser, Student, AccessGroup, \
-    SpecialProgram, Program, Contact, ContactType, ContactTopic
+from compass.models import AppUser, Student, AccessGroup, Program, Contact, \
+    ContactType, ContactTopic
 from django.conf import settings
 from django.contrib import admin
 from django.http import HttpResponseRedirect
@@ -56,7 +56,6 @@ admin_site.register(AppUser, SAMLAdminModel)
 admin_site.register(Student, SAMLAdminModel)
 admin_site.register(AccessGroup, SAMLAdminModel)
 admin_site.register(Program, SAMLAdminModel)
-admin_site.register(SpecialProgram, SAMLAdminModel)
 admin_site.register(ContactType, SAMLAdminModel)
 admin_site.register(ContactTopic, SAMLAdminModel)
 admin_site.register(Contact, SAMLAdminModel)

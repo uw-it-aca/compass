@@ -11,7 +11,7 @@ from compass.views.api.student import StudentListView, StudentDetailView, \
 from compass.views.api.adviser import AdviserListView
 from compass.views.api.contact import ContactTopicsView, ContactTypesView, \
         ContactSaveView, ContactDetailView
-from compass.views.api.program import ProgramsView, SpecialProgramsView
+from compass.views.api.program import ProgramsView
 
 
 # start with an empty url array
@@ -52,8 +52,6 @@ urlpatterns += [
             StudentContactsView.as_view()),
     re_path(r'^api/internal/programs/$',
             ProgramsView.as_view()),
-    re_path(r'^api/internal/specialprograms/$',
-            SpecialProgramsView.as_view()),
     re_path(r'^api/internal/contact/save/$',
             ContactSaveView.as_view()),
     re_path(r'^api/internal/contact/topics/$',

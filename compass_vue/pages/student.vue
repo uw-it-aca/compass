@@ -115,22 +115,6 @@ export default {
         }
       });
     },
-    loadStudentPrograms: function (studentSystemKey) {
-      let _this = this;
-      this.getStudentPrograms(studentSystemKey).then((response) => {
-        if (response.data) {
-          _this.programs = response.data;
-        }
-      });
-    },
-    loadStudentSpecialPrograms: function (studentSystemKey) {
-      let _this = this;
-      this.getStudentSpecialPrograms(studentSystemKey).then((response) => {
-        if (response.data) {
-          _this.specialPrograms = response.data;
-        }
-      });
-    },
     loadStudentSchedules: function (studentRegID) {
       let _this = this;
       this.getStudentSchedules(studentRegID).then((response) => {

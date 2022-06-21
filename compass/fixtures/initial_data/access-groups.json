@@ -4,7 +4,7 @@
   "pk": 1,
   "fields": {
    "name": "OMAD",
-   "access_group_id": ""
+   "access_group_id": "u_astra_group1"
   }
  }
 ]
