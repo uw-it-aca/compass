@@ -92,23 +92,21 @@ export default {
       }, {});
     },
     loadPrograms: function () {
-      let _this = this;
       this.getPrograms().then((response) => {
         if (response.data) {
-          _this.programs = response.data;
+          this.programs = response.data;
         }
       });
     },
     saveStudentData: function () {
-      let _this = this;
       this.saveStudent(
         this.person.student.system_key,
         this.studentPrograms
       ).then((response) => {
         if (response.data) {
           // show and update successful message for 3 seconds
-          _this.updateSuccessful = true;
-          setTimeout(() => (_this.updateSuccessful = false), 3000);
+          this.updateSuccessful = true;
+          setTimeout(() => (this.updateSuccessful = false), 3000);
         }
       });
     },
