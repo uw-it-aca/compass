@@ -183,6 +183,7 @@ import { Modal } from "bootstrap";
 
 export default {
   mixins: [dataMixin],
+  emits: ["contactUpdated"],
   props: {
     buttonType: {
       type: String,
@@ -228,6 +229,7 @@ export default {
       );
       this.saveStudentContact(this.person.student.system_key, this.contact)
         .then(() => {
+          this.$emit("contactUpdated");
           contactModal.hide();
         })
         .catch((error) => {
