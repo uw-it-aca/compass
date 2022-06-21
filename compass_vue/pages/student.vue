@@ -21,12 +21,9 @@
 
         <div class="row">
           <div class="col-xl-9">
-             <StudentAcademics :person="person"></StudentAcademics>
-            <StudentContact
-              :person="person"
-              :contacts="contacts"
-            ></StudentContact>
-            <StudentSchedule :schedules="schedules"></StudentSchedule>
+            <StudentContact :person="person"></StudentContact>
+            <StudentSchedule :person="person"></StudentSchedule>
+            <StudentAcademics :person="person"></StudentAcademics>
             <StudentVisits></StudentVisits>
           </div>
           <div class="col-xl-3">
@@ -45,7 +42,6 @@
 <script>
 import Layout from "../layout.vue";
 import dataMixin from "../mixins/data_mixin.js";
-
 
 import StudentProfile from "../components/student/profile.vue";
 import StudentAcademics from "../components/student/academics.vue";
@@ -73,10 +69,6 @@ export default {
   data() {
     return {
       person: {},
-      contacts: {},
-      schedules: {},
-      programs: {},
-      specialPrograms: {},
     };
   },
   computed: {
@@ -97,46 +89,9 @@ export default {
   },
   methods: {
     loadStudent: function (studentNetID) {
-      let _this = this;
       this.getStudentDetail(studentNetID).then((response) => {
         if (response.data) {
-          _this.person = response.data;
-          this.loadStudentContacts(_this.person.student.system_key);
-          this.loadStudentSchedules(_this.person.uwregid);
-          this.loadStudentPrograms(_this.person.student.system_key);
-          this.loadStudentSpecialPrograms(_this.person.student.system_key);
-        }
-      });
-    },
-    loadStudentContacts: function (studentSystemKey) {
-      let _this = this;
-      this.getStudentContacts(studentSystemKey).then((response) => {
-        if (response.data) {
-          _this.contacts = response.data;
-        }
-      });
-    },
-    loadStudentPrograms: function (studentSystemKey) {
-      let _this = this;
-      this.getStudentPrograms(studentSystemKey).then((response) => {
-        if (response.data) {
-          _this.programs = response.data;
-        }
-      });
-    },
-    loadStudentSpecialPrograms: function (studentSystemKey) {
-      let _this = this;
-      this.getStudentSpecialPrograms(studentSystemKey).then((response) => {
-        if (response.data) {
-          _this.specialPrograms = response.data;
-        }
-      });
-    },
-    loadStudentSchedules: function (studentRegID) {
-      let _this = this;
-      this.getStudentSchedules(studentRegID).then((response) => {
-        if (response.data) {
-          _this.schedules = response.data;
+          this.person = response.data;
         }
       });
     },

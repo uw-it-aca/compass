@@ -55,7 +55,6 @@ class AppUser(models.Model):
 class Student(models.Model):
     system_key = models.CharField(unique=True, max_length=50)
     programs = models.ManyToManyField('Program')
-    special_programs = models.ManyToManyField('SpecialProgram')
 
     class Meta:
         indexes = [
@@ -90,23 +89,13 @@ class AccessGroup(models.Model):
         return self.name
 
 
-class SpecialProgram(models.Model):
-    """
-    Special program (e.g. EOP)
-    """
-    access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-
-    def __str__(self):
-        return self.name
-
-
 class Program(models.Model):
     """
     Departmental/Group Program (e.g. CAMP, TRIO, SSS, Champions, IC Eligible)
     """
     access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
     name = models.CharField(unique=True, max_length=50)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -152,6 +141,7 @@ class ContactType(models.Model):
     """
     access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
     name = models.CharField(unique=True, max_length=50)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -163,6 +153,7 @@ class ContactTopic(models.Model):
     """
     access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
     name = models.CharField(unique=True, max_length=50)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name

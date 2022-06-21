@@ -58,9 +58,11 @@
 </template>
 
 <script>
+import dataMixin from "../../mixins/data_mixin.js";
 import { Card, CardHeading, Tabs, TabItem, TabPanel } from "axdd-components";
 
 export default {
+  mixins: [dataMixin],
   components: {
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
@@ -69,13 +71,27 @@ export default {
     "axdd-tab-panel": TabPanel,
   },
   props: {
-    schedules: {
+    person: {
       type: Object,
       required: true,
     },
   },
   data() {
-    return {};
+    return {
+      schedules: {},
+    };
+  },
+  created() {
+    this.loadStudentSchedules();
+  },
+  methods: {
+    loadStudentSchedules: function () {
+      this.getStudentSchedules(this.person.uwregid).then((response) => {
+        if (response.data) {
+          this.schedules = response.data;
+        }
+      });
+    },
   },
 };
 </script>

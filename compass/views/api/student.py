@@ -46,11 +46,8 @@ class StudentDetailView(View):
                 system_key=data.student.system_key)
             data.student.compass_programs = [
                 program.id for program in local_student.programs.all()]
-            data.student.compass_special_programs = [
-                sp.id for sp in local_student.special_programs.all()]
         except Student.DoesNotExist:
             data.student.compass_programs = []
-            data.student.compass_special_programs = []
         return JsonResponse(data.to_dict(), safe=False)
 
 
@@ -67,7 +64,6 @@ class StudentSaveView(BaseAPIView):
         student_record = {}
         student_record['system_key'] = system_key
         student_record['programs'] = data['programs']
-        student_record['special_programs'] = data['special_programs']
         try:
             # update existing student record if one exists
             student, _ = Student.objects.get_or_create(system_key=system_key)

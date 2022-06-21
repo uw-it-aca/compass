@@ -3,7 +3,10 @@
     <template #heading-action>
       <axdd-card-heading :level="2">Contacts (compass)</axdd-card-heading>
       <axdd-card-action>
-        <AddEditContact :button-type="'button'" :person="person"
+        <AddEditContact
+          :button-type="'button'"
+          :person="person"
+          @contactUpdated="loadStudentContacts()"
           ><i class="bi bi-plus-square-dotted me-2"></i>Record new
           contact</AddEditContact
         >
@@ -30,6 +33,7 @@
                       :button-type="'link'"
                       :person="person"
                       :contact-id="contact.id"
+                      @contactUpdated="loadStudentContacts()"
                       >edit contact</AddEditContact
                     >
                   </p>
@@ -62,10 +66,12 @@
 </template>
 
 <script>
+import dataMixin from "../../mixins/data_mixin.js";
 import { Card, CardHeading, CardAction } from "axdd-components";
 import AddEditContact from "../add-contact.vue";
 
 export default {
+  mixins: [dataMixin],
   components: {
     AddEditContact,
     "axdd-card": Card,
@@ -77,16 +83,25 @@ export default {
       type: Object,
       required: true,
     },
-    contacts: {
-      type: Object,
-      required: true,
-      default: function () {
-        return {};
-      },
-    },
   },
   data() {
-    return {};
+    return {
+      contacts: {},
+    };
+  },
+  created() {
+    this.loadStudentContacts();
+  },
+  methods: {
+    loadStudentContacts: function () {
+      this.getStudentContacts(this.person.student.system_key).then(
+        (response) => {
+          if (response.data) {
+            this.contacts = response.data;
+          }
+        }
+      );
+    },
   },
 };
 </script>

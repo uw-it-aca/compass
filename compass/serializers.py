@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from compass.models import AppUser, AccessGroup, Contact, ContactTopic, \
-    ContactType, Program, SpecialProgram, Student
+    ContactType, Program, Student
 from rest_framework import serializers
 
 
@@ -32,23 +32,14 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Program
-        fields = ['id', 'access_group', 'name']
-
-
-class SpecialProgramSerializer(serializers.ModelSerializer):
-
-    access_group = AccessGroupSerializer(many=False, read_only=False)
-
-    class Meta:
-        model = SpecialProgram
-        fields = ['id', 'access_group', 'name']
+        fields = ['id', 'access_group', 'name', 'active']
 
 
 class ContactTopicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ContactTopic
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'active']
         extra_kwargs = {
             'name': {'validators': []},
         }
@@ -66,7 +57,7 @@ class ContactTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ContactType
-        fields = ['id', 'name']
+        fields = ['id', 'name', 'active']
         extra_kwargs = {
             'name': {'validators': []},
         }
@@ -124,17 +115,14 @@ class StudentWriteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ['id', 'system_key', 'programs', 'special_programs']
+        fields = ['id', 'system_key', 'programs']
 
     def create(self, validated_data):
         student_programs = validated_data['programs']
-        student_special_programs = validated_data['special_programs']
         del validated_data['programs']
-        del validated_data['special_programs']
         student = Student(**validated_data)
         student.save()
         student.programs.set(student_programs)
-        student.special_programs.set(student_special_programs)
         return student
 
     def update(self, instance, validated_data):
@@ -142,7 +130,5 @@ class StudentWriteSerializer(serializers.ModelSerializer):
             'system_key', instance.system_key)
         instance.programs.set(
             validated_data.get('programs', instance.programs))
-        instance.special_programs.set(
-            validated_data.get('special_programs', instance.special_programs))
         instance.save()
         return instance

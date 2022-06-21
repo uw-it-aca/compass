@@ -4,7 +4,8 @@
   "pk": 1,
   "fields": {
    "access_group": 1,
-   "name": "Add/Drop Class"
+   "name": "Add/Drop Class",
+   "active": true
   }
  },
  {
@@ -12,7 +13,8 @@
   "pk": 2,
   "fields": {
    "access_group": 1,
-   "name": "Join/Affiliate"
+   "name": "Join/Affiliate",
+   "active": true
   }
  },
  {
@@ -20,7 +22,8 @@
   "pk": 3,
   "fields": {
    "access_group": 1,
-   "name": "Academic Difficulties"
+   "name": "Academic Difficulties",
+   "active": true
   }
  },
  {
@@ -28,7 +31,8 @@
   "pk": 4,
   "fields": {
    "access_group": 1,
-   "name": "Hardship Withdrawl"
+   "name": "Hardship Withdrawl",
+   "active": true
   }
  },
  {
@@ -36,7 +40,8 @@
   "pk": 5,
   "fields": {
    "access_group": 1,
-   "name": "Internships"
+   "name": "Internships",
+   "active": true
   }
  },
  {
@@ -44,7 +49,8 @@
   "pk": 6,
   "fields": {
    "access_group": 1,
-   "name": "Research Opportunities"
+   "name": "Research Opportunities",
+   "active": true
   }
  },
  {
@@ -52,7 +58,8 @@
   "pk": 7,
   "fields": {
    "access_group": 1,
-   "name": "Graduate Professional School"
+   "name": "Graduate Professional School",
+   "active": true
   }
  },
  {
@@ -60,7 +67,8 @@
   "pk": 8,
   "fields": {
    "access_group": 1,
-   "name": "Testing/Assessment"
+   "name": "Testing/Assessment",
+   "active": true
   }
  }
 ]
