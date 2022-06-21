@@ -111,6 +111,12 @@
                       CUM ATTEMPTED: 15.0 UW EARNED: 15.0 TTL EARNED: 15.0
                     </div>
                     <div>CUM GRADED AT: 15.0 GRADE PTS: 45.5 CUM GPA: 3.03</div>
+                    <div class="border-top mt-3">
+                      Special Program Code:
+                      <template v-if="person.student.transcripts">
+                        {{ person.student.transcripts[0].special_program }}
+                      </template>
+                    </div>
                     <div>
                       Scholarships: <span class="text-danger">tbd</span>
                     </div>
@@ -151,6 +157,12 @@
                       CUM ATTEMPTED: 30.0 UW EARNED: 30.0 TTL EARNED: 30.0
                     </div>
                     <div>CUM GRADED AT: 30.0 GRADE PTS: 78.0 CUM GPA: 2.60</div>
+                    <div class="border-top mt-3">
+                      Special Program Code:
+                      <template v-if="person.student.transcripts">
+                        {{ person.student.transcripts[0].special_program }}
+                      </template>
+                    </div>
                     <div>
                       Scholarships: <span class="text-danger">tbd</span>
                     </div>
