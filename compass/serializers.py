@@ -1,8 +1,47 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.models import AppUser, Contact, ContactTopic, ContactType
+from compass.models import AppUser, AccessGroup, Contact, ContactTopic, \
+    ContactType, Program, SpecialProgram, Student
 from rest_framework import serializers
+
+
+class AppUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AppUser
+        fields = ['id', 'uwnetid']
+        extra_kwargs = {
+            'uwnetid': {'validators': []},
+        }
+
+
+class AccessGroupSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = AccessGroup
+        fields = ['id', 'name', 'access_group_id']
+        extra_kwargs = {
+            'uwnetid': {'validators': []},
+        }
+
+
+class ProgramSerializer(serializers.ModelSerializer):
+
+    access_group = AccessGroupSerializer(many=False, read_only=False)
+
+    class Meta:
+        model = Program
+        fields = ['id', 'access_group', 'name']
+
+
+class SpecialProgramSerializer(serializers.ModelSerializer):
+
+    access_group = AccessGroupSerializer(many=False, read_only=False)
+
+    class Meta:
+        model = SpecialProgram
+        fields = ['id', 'access_group', 'name']
 
 
 class ContactTopicSerializer(serializers.ModelSerializer):
@@ -15,11 +54,9 @@ class ContactTopicSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        print("CREATE CONTACT TOPICS")
         return ContactTopic.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        print("UPDATE CONTACT TOPICS")
         instance.name = validated_data.get('name', instance.name)
         instance.save()
         return instance
@@ -35,24 +72,12 @@ class ContactTypeSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        print("CREATE CONTACT TYPE")
         return ContactType.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        print("UPDATE CONTACT TYPE")
         instance.name = validated_data.get('name', instance.name)
         instance.save()
         return instance
-
-
-class AppUserSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = AppUser
-        fields = ['id', 'uwnetid']
-        extra_kwargs = {
-            'uwnetid': {'validators': []},
-        }
 
 
 class ContactReadSerializer(serializers.ModelSerializer):
@@ -91,5 +116,33 @@ class ContactWriteSerializer(serializers.ModelSerializer):
             validated_data.get('contact_type', instance.contact_type)
         instance.contact_topics.set(
             validated_data.get('contact_topics', instance.contact_topics))
+        instance.save()
+        return instance
+
+
+class StudentWriteSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Student
+        fields = ['id', 'system_key', 'programs', 'special_programs']
+
+    def create(self, validated_data):
+        student_programs = validated_data['programs']
+        student_special_programs = validated_data['special_programs']
+        del validated_data['programs']
+        del validated_data['special_programs']
+        student = Student(**validated_data)
+        student.save()
+        student.programs.set(student_programs)
+        student.special_programs.set(student_special_programs)
+        return student
+
+    def update(self, instance, validated_data):
+        instance.system_key = validated_data.get(
+            'system_key', instance.system_key)
+        instance.programs.set(
+            validated_data.get('programs', instance.programs))
+        instance.special_programs.set(
+            validated_data.get('special_programs', instance.special_programs))
         instance.save()
         return instance

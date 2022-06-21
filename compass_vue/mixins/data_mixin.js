@@ -29,9 +29,37 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
-    getStudentContacts: async function (systemkey) {
+    saveStudent: async function (systemkey, programs, specialPrograms) {
+      return axios.post(
+        "/api/internal/student/save/",
+        {
+          system_key: systemkey,
+          programs: programs,
+          special_programs: specialPrograms,
+        },
+        this._getAxiosConfig()
+      );
+    },
+    getStudentPrograms: async function (systemkey) {
       return axios.get(
-        "/api/internal/student/" + systemkey + "/contacts/",
+        "/api/internal/student/" + systemkey + "/programs/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    getStudentSpecialPrograms: async function (systemkey) {
+      return axios.get(
+        "/api/internal/student/" + systemkey + "/specialprograms/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    getPrograms: async function () {
+      return axios.get("/api/internal/programs/", {}, this._getAxiosConfig());
+    },
+    getSpecialPrograms: async function () {
+      return axios.get(
+        "/api/internal/specialprograms/",
         {},
         this._getAxiosConfig()
       );
@@ -47,6 +75,13 @@ const dataMixin = {
       return axios.post(
         "/api/internal/contact/save/",
         { contact: contact, system_key: systemkey },
+        this._getAxiosConfig()
+      );
+    },
+    getStudentContacts: async function (systemkey) {
+      return axios.get(
+        "/api/internal/student/" + systemkey + "/contacts/",
+        {},
         this._getAxiosConfig()
       );
     },

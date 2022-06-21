@@ -55,6 +55,7 @@ class AppUser(models.Model):
 class Student(models.Model):
     system_key = models.CharField(unique=True, max_length=50)
     programs = models.ManyToManyField('Program')
+    special_programs = models.ManyToManyField('SpecialProgram')
 
     class Meta:
         indexes = [
@@ -84,6 +85,17 @@ class AccessGroup(models.Model):
 
     name = models.CharField(unique=True, max_length=50)
     access_group_id = models.CharField(unique=True, max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
+class SpecialProgram(models.Model):
+    """
+    Special program (e.g. EOP)
+    """
+    access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
+    name = models.CharField(unique=True, max_length=50)
 
     def __str__(self):
         return self.name
