@@ -4,60 +4,14 @@
       <axdd-card-heading :level="2">Types</axdd-card-heading>
     </template>
     <template #body>
-      <div class="alert alert-success py-2 small" role="alert">Added!</div>
-      <ul class="list-unstyled border-bottom pb-3">
-        <li class="mb-1">
-          <div class="input-group input-group-sm">
-            <input
-              type="text"
-              value="Hello"
-              class="form-control"
-              aria-label="tbd"
-            />
-            <button class="btn btn-outline-purple" type="button">
-              <i class="bi bi-trash-fill"></i>
-            </button>
-            <button class="btn btn-outline-purple" type="button">
-              <i class="bi bi-save-fill"></i>
-            </button>
-          </div>
-        </li>
-        <li class="mb-1">
-          <div class="input-group input-group-sm">
-            <input
-              type="text"
-              value="World"
-              class="form-control"
-              aria-label="tbd"
-            />
-            <button class="btn btn-outline-purple" type="button">
-              <i class="bi bi-trash-fill"></i>
-            </button>
-            <button class="btn btn-outline-purple" type="button">
-              <i class="bi bi-save-fill"></i>
-            </button>
-          </div>
-        </li>
-      </ul>
-
-      <div class="input-group input-group-sm">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Add new contact type..."
-          aria-label="Type label"
-          aria-describedby="button-addon2"
-        />
-        <button class="btn btn-purple" type="button" id="button-addon2">
-          Add
-        </button>
-      </div>
+      <AddCustomField :field-type="'type'"></AddCustomField>
     </template>
   </axdd-card>
 </template>
 
 <script>
 import { Card, CardHeading } from "axdd-components";
+import AddCustomField from "../add-custom-field.vue";
 
 export default {
   props: {
@@ -69,6 +23,7 @@ export default {
   components: {
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
+    AddCustomField,
   },
   data() {
     return {};

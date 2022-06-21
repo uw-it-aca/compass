@@ -1,10 +1,10 @@
 <template>
   <axdd-card>
     <template #heading>
-      <axdd-card-heading :level="2">Topics</axdd-card-heading>
+      <axdd-card-heading :level="2">Programs</axdd-card-heading>
     </template>
     <template #body>
-      <AddCustomField :field-type="'topic'"></AddCustomField>
+      <AddCustomField :field-type="'program'"></AddCustomField>
     </template>
   </axdd-card>
 </template>

@@ -7,10 +7,14 @@
     </template>
     <template #content>
       <div class="row my-4">
-        <div class="col-xl-7">batch assignment</div>
-        <div class="col-xl-5">
+        <div class="col-xl-6">
+          <SettingsPrograms></SettingsPrograms>
+          <p>batch assignment</p>
+        </div>
+        <div class="col-xl-6">
           <SettingsTopics></SettingsTopics>
           <SettingsTypes></SettingsTypes>
+
         </div>
       </div>
     </template>
@@ -23,6 +27,7 @@ import dataMixin from "../mixins/data_mixin.js";
 
 import SettingsTopics from "../components/settings/topics.vue";
 import SettingsTypes from "../components/settings/types.vue";
+import SettingsPrograms from "../components/settings/programs.vue";
 
 export default {
   mixins: [dataMixin],
@@ -30,6 +35,7 @@ export default {
     layout: Layout,
     SettingsTopics,
     SettingsTypes,
+    SettingsPrograms,
   },
   data() {
     return {
