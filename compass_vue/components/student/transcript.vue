@@ -1,9 +1,47 @@
 <template>
   <axdd-card>
     <template #heading>
-      <axdd-card-heading :level="2">History</axdd-card-heading>
+      <axdd-card-heading :level="2">Transcript</axdd-card-heading>
     </template>
     <template #body>
+      <div class="d-flex">
+        <div class="flex-fill">
+          <ul class="list-unstyled small">
+            <li>
+              Enrollment Status:
+              <template v-if="person.student.registered_in_quarter">
+                Registered
+              </template>
+              <template v-else> Unregistered </template
+              >{{ person.student.enrollment_desc }}
+            </li>
+            <li>Class standing: {{ person.student.class_desc }}</li>
+            <li>GPA: {{ person.student.cumulative_gpa }}</li>
+          </ul>
+        </div>
+        <div class="flex-fill">
+          <ul class="list-unstyled small">
+            <li>Total Credits: {{ person.student.total_credits }}</li>
+            <li>Total UW Credits: {{ person.student.total_uw_credits }}</li>
+            <li>
+              Transfer credits:
+              <span class="text-danger">tbd</span>
+            </li>
+          </ul>
+        </div>
+        <div class="flex-fill">
+          <ul class="list-unstyled small">
+            <li>Scholarships: <span class="text-danger">tbd</span></li>
+            <li>Yearly Honors: <span class="text-danger">tbd</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <h3
+        class="h6 m-0 text-uppercase fw-bold text-uppercase axdd-font-encode-sans"
+      >
+        History
+      </h3>
       <axdd-tabs :tabs-id="'history'">
         <template #items>
           <axdd-tab-item
@@ -13,7 +51,7 @@
             >Majors</axdd-tab-item
           >
           <axdd-tab-item :tabs-id="'history'" :panel-id="'transcript'"
-            >Unoffical Transcript (PDS+SWS)</axdd-tab-item
+            >Grades</axdd-tab-item
           >
         </template>
         <template #panels>
@@ -116,7 +154,9 @@
                   <td colspan="4" class="text-end small">
                     <div>QTR ATTEMPTED: 15.0 EARNED: 15.0 GPA: 3.03</div>
                     <div>QTR GRADED AT: 15.0 GRADE POINTS: 45.5</div>
-                    <div>CUM ATTEMPTED: 15.0 UW EARNED: 15.0 TTL EARNED: 15.0</div>
+                    <div>
+                      CUM ATTEMPTED: 15.0 UW EARNED: 15.0 TTL EARNED: 15.0
+                    </div>
                     <div>CUM GRADED AT: 15.0 GRADE PTS: 45.5 CUM GPA: 3.03</div>
                   </td>
                 </tr>
@@ -148,7 +188,9 @@
                   <td colspan="4" class="text-end small">
                     <div>QTR ATTEMPTED: 15.0 EARNED: 15.0 GPA: 2.17</div>
                     <div>QTR GRADED AT: 15.0 GRADE POINTS: 32.5</div>
-                    <div>CUM ATTEMPTED: 30.0 UW EARNED: 30.0 TTL EARNED: 30.0</div>
+                    <div>
+                      CUM ATTEMPTED: 30.0 UW EARNED: 30.0 TTL EARNED: 30.0
+                    </div>
                     <div>CUM GRADED AT: 30.0 GRADE PTS: 78.0 CUM GPA: 2.60</div>
                   </td>
                 </tr>
