@@ -12,7 +12,7 @@
           </template>
         </li>
       </ul>
-      <div class="border p-1 small mt-3">
+      <div v-if="groupedSpecialPrograms" class="border p-1 small mt-3">
         <template
           v-for="(groupPrograms, accessGroupName) in groupedSpecialPrograms"
           :key="accessGroupName"
@@ -26,7 +26,8 @@
             <input
               class="form-check-input"
               type="checkbox"
-              value
+              v-model="studentSpecialPrograms"
+              :value="program.id"
               :id="'defaultCheck' + program.name"
             />
             <label
@@ -37,14 +38,9 @@
             </label>
           </div>
         </template>
-        <div class="mt-3">
-          <button type="button" class="btn btn-outline-dark-beige btn-sm">
-            Update programs
-          </button>
-        </div>
       </div>
 
-      <div class="border p-1 small mt-3">
+      <div v-if="groupedPrograms" class="border p-1 small mt-3">
         <template
           v-for="(groupPrograms, accessGroupName) in groupedPrograms"
           :key="accessGroupName"
@@ -58,7 +54,8 @@
             <input
               class="form-check-input"
               type="checkbox"
-              value
+              v-model="studentPrograms"
+              :value="program.id"
               :id="'defaultCheck' + program.name"
             />
             <label
@@ -69,11 +66,18 @@
             </label>
           </div>
         </template>
-        <div class="mt-3">
-          <button type="button" class="btn btn-outline-dark-beige btn-sm">
-            Update programs
-          </button>
-        </div>
+      </div>
+      <div class="mt-3">
+        <button
+          @click="saveStudentData()"
+          type="button"
+          class="btn btn-outline-dark-beige btn-sm"
+        >
+          Update programs
+        </button>
+        <span class="mt-3 badge alert-success" v-show="updateSuccessful">
+          Update Successful
+        </span>
       </div>
     </template>
   </axdd-card>
@@ -90,14 +94,6 @@ export default {
       type: Object,
       required: true,
     },
-    studentPrograms: {
-      type: Object,
-      required: true,
-    },
-    studentSpecialPrograms: {
-      type: Object,
-      required: true,
-    },
   },
   components: {
     "axdd-card": Card,
@@ -107,6 +103,9 @@ export default {
     return {
       programs: {},
       specialPrograms: {},
+      studentPrograms: this.person.student.compass_programs,
+      studentSpecialPrograms: this.person.student.compass_special_programs,
+      updateSuccessful: false,
     };
   },
   created: function () {
@@ -151,6 +150,20 @@ export default {
       this.getSpecialPrograms().then((response) => {
         if (response.data) {
           _this.specialPrograms = response.data;
+        }
+      });
+    },
+    saveStudentData: function () {
+      let _this = this;
+      this.saveStudent(
+        this.person.student.system_key,
+        this.studentPrograms,
+        this.studentSpecialPrograms
+      ).then((response) => {
+        if (response.data) {
+          // show and update successful message for 3 seconds
+          _this.updateSuccessful = true;
+          setTimeout(() => (_this.updateSuccessful = false), 3000);
         }
       });
     },

@@ -29,10 +29,14 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
-    getStudentContacts: async function (systemkey) {
-      return axios.get(
-        "/api/internal/student/" + systemkey + "/contacts/",
-        {},
+    saveStudent: async function (systemkey, programs, specialPrograms) {
+      return axios.post(
+        "/api/internal/student/save/",
+        {
+          system_key: systemkey,
+          programs: programs,
+          special_programs: specialPrograms,
+        },
         this._getAxiosConfig()
       );
     },
@@ -71,6 +75,13 @@ const dataMixin = {
       return axios.post(
         "/api/internal/contact/save/",
         { contact: contact, system_key: systemkey },
+        this._getAxiosConfig()
+      );
+    },
+    getStudentContacts: async function (systemkey) {
+      return axios.get(
+        "/api/internal/student/" + systemkey + "/contacts/",
+        {},
         this._getAxiosConfig()
       );
     },

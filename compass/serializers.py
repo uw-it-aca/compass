@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from compass.models import AppUser, AccessGroup, Contact, ContactTopic, \
-    ContactType, Program, SpecialProgram
+    ContactType, Program, SpecialProgram, Student
 from rest_framework import serializers
 
 
@@ -116,5 +116,33 @@ class ContactWriteSerializer(serializers.ModelSerializer):
             validated_data.get('contact_type', instance.contact_type)
         instance.contact_topics.set(
             validated_data.get('contact_topics', instance.contact_topics))
+        instance.save()
+        return instance
+
+
+class StudentWriteSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Student
+        fields = ['id', 'system_key', 'programs', 'special_programs']
+
+    def create(self, validated_data):
+        student_programs = validated_data['programs']
+        student_special_programs = validated_data['special_programs']
+        del validated_data['programs']
+        del validated_data['special_programs']
+        student = Student(**validated_data)
+        student.save()
+        student.programs.set(student_programs)
+        student.special_programs.set(student_special_programs)
+        return student
+
+    def update(self, instance, validated_data):
+        instance.system_key = validated_data.get(
+            'system_key', instance.system_key)
+        instance.programs.set(
+            validated_data.get('programs', instance.programs))
+        instance.special_programs.set(
+            validated_data.get('special_programs', instance.special_programs))
         instance.save()
         return instance

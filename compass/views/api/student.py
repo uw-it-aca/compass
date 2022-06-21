@@ -4,7 +4,7 @@
 from compass.views.api import BaseAPIView
 from compass.decorators import verify_access
 from compass.models import Student, Contact
-from compass.serializers import ContactReadSerializer, ProgramSerializer
+from compass.serializers import ContactReadSerializer, StudentWriteSerializer
 from django.http import JsonResponse
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -41,7 +41,46 @@ class StudentDetailView(View):
     def get(self, request, uwnetid):
         client = UWPersonClient()
         data = client.get_person_by_uwnetid(uwnetid)
+        try:
+            local_student = Student.objects.get(
+                system_key=data.student.system_key)
+            data.student.compass_programs = [
+                program.id for program in local_student.programs.all()]
+            data.student.compass_special_programs = [
+                sp.id for sp in local_student.special_programs.all()]
+        except Student.DoesNotExist:
+            data.student.compass_programs = []
+            data.student.compass_special_programs = []
         return JsonResponse(data.to_dict(), safe=False)
+
+
+class StudentSaveView(BaseAPIView):
+    '''
+    API endpoint for saving student programs
+
+    /api/internal/student/save/
+    '''
+
+    def post(self, request):
+        data = request.data
+        system_key = data["system_key"]
+        student_record = {}
+        student_record['system_key'] = system_key
+        student_record['programs'] = data['programs']
+        student_record['special_programs'] = data['special_programs']
+        try:
+            # update existing student record if one exists
+            student, _ = Student.objects.get_or_create(system_key=system_key)
+            serializer = StudentWriteSerializer(student, data=student_record)
+        except Student.DoesNotExist:
+            # create new student record
+            serializer = StudentWriteSerializer(data=student_record)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
 
 
 @method_decorator(verify_access(), name='dispatch')
@@ -64,34 +103,6 @@ class StudentSchedulesView(View):
             except DataFailureException:
                 continue
         return JsonResponse(schedules, safe=False)
-
-
-@method_decorator(verify_access(), name='dispatch')
-class StudentProgramsView(BaseAPIView):
-    '''
-    API endpoint returning a student's programs
-
-    /api/internal/student/[systemkey]/programs/
-    '''
-    def get(self, request, systemkey):
-        student = Student.objects.filter(system_key=systemkey).get()
-        programs = student.programs.all()
-        serializer = ProgramSerializer(programs, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-
-
-@method_decorator(verify_access(), name='dispatch')
-class StudentSpecialProgramsView(BaseAPIView):
-    '''
-    API endpoint returning a student's programs
-
-    /api/internal/student/[systemkey]/programs/
-    '''
-    def get(self, request, systemkey):
-        student = Student.objects.filter(system_key=systemkey).get()
-        special_programs = student.special_programs.all()
-        serializer = ProgramSerializer(special_programs, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class StudentContactsView(BaseAPIView):
