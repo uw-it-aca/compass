@@ -1,5 +1,5 @@
 <template>
-  <axdd-card v-if="groupedPrograms.length">
+  <axdd-card v-if="groupedPrograms">
     <template #heading>
       <axdd-card-heading :level="2">Programs</axdd-card-heading>
     </template>
@@ -11,35 +11,7 @@
       >
         Update Successful!
       </div>
-      <div v-if="groupedSpecialPrograms" class="border p-1 mb-3 small">
-        <template
-          v-for="(groupPrograms, accessGroupName) in groupedSpecialPrograms"
-          :key="accessGroupName"
-        >
-          <div class="fw-bold">{{ accessGroupName }} Special Programs</div>
-          <div
-            class="form-check"
-            v-for="program in groupPrograms"
-            :key="program.name"
-          >
-            <input
-              class="form-check-input"
-              type="checkbox"
-              v-model="studentSpecialPrograms"
-              :value="program.id"
-              :id="'defaultCheck' + program.name"
-            />
-            <label
-              class="form-check-label"
-              :for="'defaultCheck' + program.name"
-            >
-              {{ program.name }}
-            </label>
-          </div>
-        </template>
-      </div>
-
-      <div v-if="groupedPrograms" class="border p-1 mb-3 small">
+      <div class="border p-1 mb-3 small">
         <template
           v-for="(groupPrograms, accessGroupName) in groupedPrograms"
           :key="accessGroupName"
