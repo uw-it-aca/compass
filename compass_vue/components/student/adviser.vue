@@ -10,7 +10,7 @@
         <ul v-for="adviser in advisers" :key="adviser.id" class="list-unstyled">
           <li>Display name: {{ adviser.display_name }}</li>
           <li>Pronouns: {{ adviser.pronouns }}</li>
-          <li>Netid: <span class="text-danger">netid</span></li>
+          <li>Netid: {{ adviser.uwnetid }}</li>
           <li>Email: {{ adviser.employee.adviser.advising_email }}</li>
           <li>Phone: {{ adviser.employee.adviser.advising_phone_number }}</li>
           <li>Dept Name: {{ adviser.employee.adviser.advising_program }}</li>

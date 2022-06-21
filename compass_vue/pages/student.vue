@@ -74,6 +74,8 @@ export default {
       person: {},
       contacts: {},
       schedules: {},
+      programs: {},
+      specialPrograms: {},
     };
   },
   computed: {
@@ -100,6 +102,8 @@ export default {
           _this.person = response.data;
           this.loadStudentContacts(_this.person.student.system_key);
           this.loadStudentSchedules(_this.person.uwregid);
+          this.loadStudentPrograms(_this.person.student.system_key);
+          this.loadStudentSpecialPrograms(_this.person.student.system_key);
         }
       });
     },
@@ -108,6 +112,22 @@ export default {
       this.getStudentContacts(studentSystemKey).then((response) => {
         if (response.data) {
           _this.contacts = response.data;
+        }
+      });
+    },
+    loadStudentPrograms: function (studentSystemKey) {
+      let _this = this;
+      this.getStudentPrograms(studentSystemKey).then((response) => {
+        if (response.data) {
+          _this.programs = response.data;
+        }
+      });
+    },
+    loadStudentSpecialPrograms: function (studentSystemKey) {
+      let _this = this;
+      this.getStudentSpecialPrograms(studentSystemKey).then((response) => {
+        if (response.data) {
+          _this.specialPrograms = response.data;
         }
       });
     },

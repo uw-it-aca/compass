@@ -7,10 +7,11 @@ from django.conf import settings
 from django.views.generic import TemplateView
 from compass.views.pages import LandingView
 from compass.views.api.student import StudentListView, StudentDetailView, \
-        StudentScheduleView
+        StudentContactsView, StudentSchedulesView, StudentSaveView
 from compass.views.api.adviser import AdviserListView
-from compass.views.api.contact import ContactListView, ContactTopicsView, \
-    ContactTypesView, ContactSaveView, ContactDetailView
+from compass.views.api.contact import ContactTopicsView, ContactTypesView, \
+        ContactSaveView, ContactDetailView
+from compass.views.api.program import ProgramsView, SpecialProgramsView
 
 
 # start with an empty url array
@@ -41,12 +42,18 @@ urlpatterns += [
     re_path(r'^admin', admin_site.urls),
     re_path(r'^api/internal/student/$',
             StudentListView.as_view()),
+    re_path(r'^api/internal/student/save/$',
+            StudentSaveView.as_view()),
     re_path(r'^api/internal/student/(?P<uwnetid>[-@:\w]+)/$',
             StudentDetailView.as_view()),
     re_path(r'^api/internal/student/(?P<uwregid>[-@:\w]+)/schedules/$',
-            StudentScheduleView.as_view()),
+            StudentSchedulesView.as_view()),
     re_path(r'^api/internal/student/(?P<systemkey>[\w]+)/contacts/$',
-            ContactListView.as_view()),
+            StudentContactsView.as_view()),
+    re_path(r'^api/internal/programs/$',
+            ProgramsView.as_view()),
+    re_path(r'^api/internal/specialprograms/$',
+            SpecialProgramsView.as_view()),
     re_path(r'^api/internal/contact/save/$',
             ContactSaveView.as_view()),
     re_path(r'^api/internal/contact/topics/$',
