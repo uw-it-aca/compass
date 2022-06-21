@@ -4,9 +4,7 @@
       <axdd-card-heading :level="2">Adviser</axdd-card-heading>
     </template>
     <template #body>
-      <p class="small">current user: {{ userNetid }}, {{ userRole }}</p>
-      <div class="border p-1 mb-2 small">
-        <p class="text-muted">if has advisers</p>
+      <div v-if="advisers" class="mb-2">
         <ul v-for="adviser in advisers" :key="adviser.id" class="list-unstyled">
           <li>Display name: {{ adviser.display_name }}</li>
           <li>Pronouns: {{ adviser.pronouns }}</li>
@@ -17,39 +15,7 @@
           <li>Campus location: <span class="text-danger">MGH 123</span></li>
         </ul>
       </div>
-
-      <div class="border border-danger p-1 mb-5 small">
-        <p class="text-danger">else (empty)</p>
-        <p>This student does not have an assigned adviser.</p>
-        <button type="button" class="btn btn-outline-dark-beige btn-sm">
-          Add to your caseload
-        </button>
-        <div class="small text-danger">
-          This should write back to SWS. Student must either be EOP1 or EOP3.
-        </div>
-      </div>
-
-      <div class="border border-danger p-1 small">
-        <p class="text-danger">if (role == manager)</p>
-        <p>Assign a new adviser for this student!</p>
-        <select
-          class="form-select form-select-sm mb-2"
-          aria-label=".form-select-sm example"
-        >
-          <option selected>Select group adviser</option>
-          <option value="1">Bob</option>
-          <option value="2">Tim</option>
-          <option value="3">Joe</option>
-          <option value="4">Jay</option>
-        </select>
-
-        <button type="button" class="btn btn-outline-dark-beige btn-sm">
-          Update adviser
-        </button>
-        <div class="small text-danger">
-          This should write back to SWS. Student must either be EOP1 or EOP3.
-        </div>
-      </div>
+      <div v-else>No adviser assigned to this student.</div>
     </template>
   </axdd-card>
 </template>
