@@ -11,38 +11,46 @@
       >
         Update Successful!
       </div>
-      <div class="border p-1 mb-3 small">
+      <div class="mb-3">
         <template
           v-for="(groupPrograms, accessGroupName) in groupedPrograms"
           :key="accessGroupName"
         >
-          <div class="fw-bold">{{ accessGroupName }} Programs</div>
-          <div
-            class="form-check"
-            v-for="program in groupPrograms"
-            :key="program.name"
-          >
-            <input
-              class="form-check-input"
-              type="checkbox"
-              v-model="studentPrograms"
-              :value="program.id"
-              :id="'defaultCheck' + program.name"
-            />
-            <label
-              class="form-check-label"
-              :for="'defaultCheck' + program.name"
-            >
-              {{ program.name }}
-            </label>
+          <div class="fw-bold text-muted mb-2">
+            {{ accessGroupName }} Programs
           </div>
+
+          <ul class="list-group list-group-flush mb-4">
+            <li
+              v-for="program in groupPrograms"
+              :key="program.name"
+              class="list-group-item border-0 px-0 py-1 d-flex"
+            >
+              <label
+                class="form-check-label flex-fill"
+                :for="'defaultCheck' + program.name"
+              >
+                {{ program.name }}
+              </label>
+              <div class="form-check form-switch m-0">
+                <input
+                  class="form-check-input flex-fill"
+                  type="checkbox"
+                  role="switch"
+                  v-model="studentPrograms"
+                  :value="program.id"
+                  :id="'defaultCheck' + program.name"
+                />
+              </div>
+            </li>
+          </ul>
         </template>
       </div>
-      <div>
+      <div class="text-end">
         <button
           @click="saveStudentData()"
           type="button"
-          class="btn btn-outline-dark-beige btn-sm"
+          class="btn btn-purple rounded-3 btn-sm"
         >
           Update programs
         </button>
@@ -117,3 +125,10 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.form-switch .form-check-input:checked {
+  background-color: #4d307f;
+  border-color: #4d307f;
+}
+</style>
