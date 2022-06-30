@@ -30,7 +30,7 @@
           :to="'/settings'"
           active-class="bg-dark-purple rounded"
           class="nav-link text-gray d-block px-2 py-1"
-          ><i class="bi bi-tools me-2"></i>Configure</router-link
+          ><i class="bi bi-tools me-2"></i>Settings</router-link
         >
       </li>
       <!-- if admin or support -->
