@@ -7,6 +7,7 @@
     :user-name="userName"
     :sign-out-url="signOutUrl"
   >
+    <template #profile>{{ userName }}</template>
     <template #navigation>
       <navigation></navigation>
     </template>
@@ -25,7 +26,7 @@ import { Sidebar } from "axdd-components";
 import Nav from "./components/nav.vue";
 
 export default {
-  name: "Compass",
+  name: "CompassApp",
   components: {
     "axdd-sidebar": Sidebar,
     navigation: Nav,
