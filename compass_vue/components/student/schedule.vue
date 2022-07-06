@@ -23,29 +23,32 @@
               :panel-id="'panel' + scheduleIndex"
               :active-panel="scheduleIndex == 0"
             >
-              <table class="table table-hover m-0 mb-5">
-                <thead class="small">
-                  <tr>
-                    <th>Course</th>
-                    <th>Title</th>
-                    <th>Credits</th>
-                    <th>Grade</th>
-                  </tr>
-                </thead>
-                <tbody class="table-group-divider mb-3">
-                  <tr
-                    v-for="(section, index) in schedule.sections"
-                    :key="index"
-                  >
-                    <td>
-                      {{ section.curriculum_abbr }} {{ section.course_number }}
-                    </td>
-                    <td>{{ section.course_title }}</td>
-                    <td>{{ section.credits }}</td>
-                    <td>{{ section.grade }}</td>
-                  </tr>
-                </tbody>
-              </table>
+              <div class="table-responsive mx-n3">
+                <table class="table m-0">
+                  <thead class="small bg-light text-secondary">
+                    <tr>
+                      <th class="ps-3">Course</th>
+                      <th>Title</th>
+                      <th>Credits</th>
+                      <th>Grade</th>
+                    </tr>
+                  </thead>
+                  <tbody class="mb-3">
+                    <tr
+                      v-for="(section, index) in schedule.sections"
+                      :key="index"
+                    >
+                      <td class="ps-3">
+                        {{ section.curriculum_abbr }}
+                        {{ section.course_number }}
+                      </td>
+                      <td>{{ section.course_title }}</td>
+                      <td>{{ section.credits }}</td>
+                      <td>{{ section.grade }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </axdd-tab-panel>
           </template>
           <template v-else>

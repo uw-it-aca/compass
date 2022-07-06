@@ -7,24 +7,24 @@
           :button-type="'button'"
           :person="person"
           @contactUpdated="loadStudentContacts()"
-          ><i class="bi bi-plus-square-dotted me-2"></i>Record new
+          ><i class="bi bi-plus-square text-secondary me-2"></i>Record new
           contact</AddEditContact
         >
       </axdd-card-action>
     </template>
     <template #body>
       <template v-if="contacts.length > 0">
-        <div class="table-responsive">
-          <table class="table table-hover m-0">
-            <thead class="small">
+        <div class="table-responsive mx-n3">
+          <table class="table m-0">
+            <thead class="small bg-light text-secondary">
               <tr>
-                <th style="width: 33%">Details</th>
+                <th class="ps-3" style="width: 33%">Details</th>
                 <th>Notes/Actions</th>
               </tr>
             </thead>
-            <tbody class="table-group-divider">
+            <tbody class="">
               <tr v-for="contact in contacts" :key="contact.id">
-                <td scope="row">
+                <td scope="row" class="ps-3">
                   <p>
                     {{ contact.date }} {{ contact.time }}
                     {{ contact.contact_type.name }}<br />
