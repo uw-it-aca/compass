@@ -1,6 +1,6 @@
 <template>
   <div class="text-light">
-    <ul class="nav flex-column my-4">
+    <ul class="nav flex-column mb-5">
       <li class="nav-item mb-1">
         <router-link
           :to="'/'"
