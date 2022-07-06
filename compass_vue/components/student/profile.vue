@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray p-4 rounded-3">
+  <div class="bg-gray p-3 rounded-3">
     <div class="row">
       <div class="col-lg-6 pe-4 d-flex small">
         <div>

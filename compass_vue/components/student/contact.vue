@@ -15,14 +15,14 @@
     <template #body>
       <template v-if="contacts.length > 0">
         <div class="table-responsive">
-          <table class="table m-0">
+          <table class="table table-hover m-0">
             <thead class="small">
               <tr>
                 <th style="width: 33%">Details</th>
                 <th>Notes/Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="table-group-divider">
               <tr v-for="contact in contacts" :key="contact.id">
                 <td scope="row">
                   <p>

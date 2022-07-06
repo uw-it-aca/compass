@@ -5,7 +5,7 @@
     </template>
     <template #body>
       <div class="table-responsive">
-        <table class="table table-hover table-striped m-0">
+        <table class="table table-hover m-0">
           <thead class="small">
             <tr>
               <th>Date</th>
@@ -15,7 +15,7 @@
               <th>Duration</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="table-group-divider">
             <tr>
               <td scope="row">09/23/2020</td>
               <td>BUS 220</td>

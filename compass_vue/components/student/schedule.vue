@@ -23,7 +23,7 @@
               :panel-id="'panel' + scheduleIndex"
               :active-panel="scheduleIndex == 0"
             >
-              <table class="table table-hover table-striped m-0 mb-5">
+              <table class="table table-hover m-0 mb-5">
                 <thead class="small">
                   <tr>
                     <th>Course</th>
@@ -32,7 +32,7 @@
                     <th>Grade</th>
                   </tr>
                 </thead>
-                <tbody class="mb-3">
+                <tbody class="table-group-divider mb-3">
                   <tr
                     v-for="(section, index) in schedule.sections"
                     :key="index"
