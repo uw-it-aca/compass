@@ -3,7 +3,7 @@
     <template #heading-tabs>
       <axdd-card-heading :level="2">Schedule (sws)</axdd-card-heading>
       <axdd-card-tabs>
-        <axdd-tabs-list :tabs-id="'schedule'">
+        <axdd-tabs-list :tabs-id="'schedule'" :variant="'pills'">
           <template #items>
             <axdd-tabs-item
               v-for="(schedule, index) in schedules"
@@ -11,6 +11,7 @@
               :tabs-id="'schedule'"
               :panel-id="'panel' + index"
               :active-tab="index == 0"
+              :variant="'pills'"
               >{{ schedule.term.quarter }}
               {{ schedule.term.year }}</axdd-tabs-item
             >
