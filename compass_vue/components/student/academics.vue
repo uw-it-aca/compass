@@ -1,23 +1,27 @@
 <template>
   <axdd-card>
-    <template #heading>
+    <template #heading-tabs>
       <axdd-card-heading :level="2">Academics</axdd-card-heading>
+      <axdd-card-tabs>
+        <axdd-tabs-list :tabs-id="'history'">
+          <template #items>
+            <axdd-tabs-item
+              :tabs-id="'history'"
+              :panel-id="'major'"
+              :active-tab="true"
+              >Current</axdd-tabs-item
+            >
+            <axdd-tabs-item :tabs-id="'history'" :panel-id="'transcript'"
+              >Unofficial Transcript</axdd-tabs-item
+            >
+          </template>
+        </axdd-tabs-list>
+      </axdd-card-tabs>
     </template>
     <template #body>
-      <axdd-tabs :tabs-id="'history'">
-        <template #items>
-          <axdd-tab-item
-            :tabs-id="'history'"
-            :panel-id="'major'"
-            :active-tab="true"
-            >Current</axdd-tab-item
-          >
-          <axdd-tab-item :tabs-id="'history'" :panel-id="'transcript'"
-            >Unofficial Transcript</axdd-tab-item
-          >
-        </template>
+      <axdd-tabs-display :tabs-id="'history'">
         <template #panels>
-          <axdd-tab-panel :panel-id="'major'" :active-panel="true">
+          <axdd-tabs-panel :panel-id="'major'" :active-panel="true">
             <div class="d-flex">
               <div class="flex-fill">
                 <ul class="list-unstyled small">
@@ -69,9 +73,9 @@
                 </div>
               </div>
             </div>
-          </axdd-tab-panel>
+          </axdd-tabs-panel>
 
-          <axdd-tab-panel :panel-id="'transcript'">
+          <axdd-tabs-panel :panel-id="'transcript'">
             <table class="table m-0">
               <thead class="small">
                 <tr>
@@ -173,15 +177,23 @@
                 </tr>
               </tbody>
             </table>
-          </axdd-tab-panel>
+          </axdd-tabs-panel>
         </template>
-      </axdd-tabs>
+      </axdd-tabs-display>
     </template>
   </axdd-card>
 </template>
 
 <script>
-import { Card, CardHeading, Tabs, TabItem, TabPanel } from "axdd-components";
+import {
+  Card,
+  CardTabs,
+  CardHeading,
+  TabsList,
+  TabsDisplay,
+  TabsItem,
+  TabsPanel,
+} from "axdd-components";
 
 export default {
   props: {
@@ -193,9 +205,11 @@ export default {
   components: {
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
-    "axdd-tabs": Tabs,
-    "axdd-tab-item": TabItem,
-    "axdd-tab-panel": TabPanel,
+    "axdd-card-tabs": CardTabs,
+    "axdd-tabs-list": TabsList,
+    "axdd-tabs-display": TabsDisplay,
+    "axdd-tabs-item": TabsItem,
+    "axdd-tabs-panel": TabsPanel,
   },
   data() {
     return {};
