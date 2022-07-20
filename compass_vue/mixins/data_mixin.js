@@ -50,6 +50,13 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
+    getStudentTranscripts: async function (uwregid) {
+      return axios.get(
+        "/api/internal/student/" + uwregid + "/transcripts/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
     saveStudentContact: async function (systemkey, contact) {
       return axios.post(
         "/api/internal/contact/save/",

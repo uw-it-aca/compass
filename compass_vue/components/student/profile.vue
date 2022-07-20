@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gray p-3 rounded-3">
     <div class="row">
-      <div class="col-lg-6 pe-4 d-flex small">
+      <div class="col-lg-4 pe-4 d-flex small">
         <div>
           <div class="rounded-circle border border-4" style="width: 140px">
             <img
@@ -54,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="col-6 col-lg-3 px-4 small">
+      <div class="col-6 col-lg-4 px-4 small">
         <ul class="list-unstyled m-0">
           <li>
             Preferred name: {{ person.preferred_first_name }}
@@ -63,25 +63,39 @@
           </li>
           <li>Ethnicity: {{ person.student.assigned_ethnic_desc }}</li>
           <li>Citizenship: {{ person.student.resident_desc }}</li>
+          <li>
+            Visa Type:
+            <span v-if="person.student.visa_type">
+              {{ person.student.visa_type }}
+            </span>
+            <span v-else> N/A </span>
+          </li>
           <li>DOB: {{ person.student.birthdate }}</li>
         </ul>
       </div>
-      <div class="col-6 col-lg-3 ps-4 small">
+      <div class="col-6 col-lg-4 ps-4 small">
         <ul class="list-unstyled m-0">
           <li>UW Email: {{ person.student.student_email }}</li>
           <li>Personal email: {{ person.student.personal_email }}</li>
           <li>Local Phone: {{ person.student.local_phone_number }}</li>
           <li class="mt-2">
             Perm Address:<br />
-            {{ person.student.perm_addr_line1 }}<br />
-            {{ person.student.perm_addr_line2 }}<br />
+            {{ person.student.perm_addr_line1 }},
+            {{ person.student.perm_addr_line2 }},
             {{ person.student.perm_addr_city }},
             {{ person.student.perm_addr_state }}
-            {{ person.student.perm_addr_5digit_zip }}-{{
-              person.student.perm_addr_4digit_zip
-            }}, {{ person.student.perm_addr_country }}
+            {{ person.student.perm_addr_5digit_zip }},
+            {{ person.student.perm_addr_country }}
           </li>
-          <li class="mt-2">Local Address: tbd<br /></li>
+          <li class="mt-2">
+            Local Address:<br />
+            {{ person.student.local_addr_line1 }},
+            {{ person.student.local_addr_line2 }},
+            {{ person.student.local_addr_city }},
+            {{ person.student.local_addr_state }}
+            {{ person.student.local_addr_5digit_zip }},
+            {{ person.student.local_addr_country }}
+          </li>
         </ul>
       </div>
     </div>

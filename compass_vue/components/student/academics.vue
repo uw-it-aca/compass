@@ -25,7 +25,7 @@
           <axdd-tabs-panel :panel-id="'major'" :active-panel="true">
             <div class="d-flex">
               <div class="flex-fill">
-                <ul class="list-unstyled small">
+                <ul class="list-unstyled">
                   <li>
                     Enrollment Status:
                     <template v-if="person.student.registered_in_quarter">
@@ -36,42 +36,67 @@
                   </li>
                   <li>Class standing: {{ person.student.class_desc }}</li>
                   <li>GPA: {{ person.student.cumulative_gpa }}</li>
+                  <li>
+                    Current Majors:
+                    <ul>
+                      <li
+                        v-for="(major, index) in person.student.majors"
+                        :key="index"
+                      >
+                        {{ major.major_abbr_code }}, {{ major.major_name }}
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    Desired Majors (upon admission):
+                    <ul>
+                      <li
+                        v-for="(intendedMajor, index) in person.student
+                          .intended_majors"
+                        :key="index"
+                      >
+                        {{ intendedMajor.major_abbr_code }},
+                        {{ intendedMajor.major_name }}
+                      </li>
+                    </ul>
+                  </li>
                 </ul>
               </div>
               <div class="flex-fill">
-                <ul class="list-unstyled small">
+                <ul class="list-unstyled">
                   <li>Total Credits: {{ person.student.total_credits }}</li>
                   <li>
                     Total UW Credits: {{ person.student.total_uw_credits }}
                   </li>
                   <li>
-                    Transfer credits:
-                    <span class="text-danger">tbd</span>
+                    Total Deductible Credits:
+                    {{ person.student.total_deductible_credits }}
+                  </li>
+                  <li>
+                    Total Extension Credits:
+                    {{ person.student.total_extension_credits }}
+                  </li>
+                  <li>
+                    Total Non-Graded Credits:
+                    {{ person.student.total_non_graded_credits }}
+                  </li>
+                  <li>
+                    Total Registered Credits:
+                    {{ person.student.total_registered_credits }}
+                  </li>
+                  <li>
+                    Total Transfer Credits:
+                    {{ person.student.total_transfer_credits }}
+                  </li>
+                  <li>
+                    Total Lower Division Transfer Credits:
+                    {{ person.student.total_lower_div_transfer_credits }}
+                  </li>
+                  <li>
+                    Total Upper Division Transfer Credits:
+                    {{ person.student.total_upper_div_transfer_credits }}
                   </li>
                 </ul>
-              </div>
-              <div class="flex-fill small">
-                <div class="mb-3">
-                  Current Majors:
-
-                  <div
-                    v-for="(major, index) in person.student.majors"
-                    :key="index"
-                  >
-                    {{ major.major_abbr_code }}, {{ major.major_name }}
-                  </div>
-                </div>
-                <div>
-                  Desired Majors (3 upon admission):
-                  <div
-                    v-for="(intendedMajor, index) in person.student
-                      .intended_majors"
-                    :key="index"
-                  >
-                    {{ intendedMajor.major_abbr_code }},
-                    {{ intendedMajor.major_name }}
-                  </div>
-                </div>
               </div>
             </div>
           </axdd-tabs-panel>
@@ -83,100 +108,78 @@
                   <th>Course</th>
                   <th class="w-50">Title</th>
                   <th>Credits</th>
-                  <th class="text-nowrap">Grade</th>
+                  <th>Grade</th>
+                  <th class="text-nowrap">For Credit</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td colspan="4" class="fw-bold bg-light">Autumn 1995</td>
-                </tr>
-                <tr>
-                  <td>ANTH 100</td>
-                  <td>Intro to Anthropology</td>
-                  <td>5.0</td>
-                  <td>3.2</td>
-                </tr>
-                <tr>
-                  <td>ENG 104</td>
-                  <td>Introductory Composition</td>
-                  <td>5.0</td>
-                  <td>3.3</td>
-                </tr>
-                <tr>
-                  <td>MATH 102</td>
-                  <td>Algebra</td>
-                  <td>5.0</td>
-                  <td>2.6</td>
-                </tr>
-                <tr>
-                  <td colspan="4" class="text-end small">
-                    <div>QTR ATTEMPTED: 15.0 EARNED: 15.0 GPA: 3.03</div>
-                    <div>QTR GRADED AT: 15.0 GRADE POINTS: 45.5</div>
-                    <div>
-                      CUM ATTEMPTED: 15.0 UW EARNED: 15.0 TTL EARNED: 15.0
-                    </div>
-                    <div>CUM GRADED AT: 15.0 GRADE PTS: 45.5 CUM GPA: 3.03</div>
-                    <div class="border-top mt-3">
-                      Special Program Code:
-                      <template v-if="person.student.transcripts">
-                        {{ person.student.transcripts[0].special_program }}
-                      </template>
-                    </div>
-                    <div>
-                      Scholarships: <span class="text-danger">tbd</span>
-                    </div>
-                    <div>
-                      Yearly Honors: <span class="text-danger">tbd</span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-              <!-- new quarter -->
-              <tbody>
-                <tr>
-                  <td colspan="4" class="fw-bold bg-light">Winter 1995</td>
-                </tr>
-                <tr>
-                  <td>AAS 206</td>
-                  <td>Contemporary Problems Asian American History</td>
-                  <td>5.0</td>
-                  <td>2.5</td>
-                </tr>
-                <tr>
-                  <td>ENG 105</td>
-                  <td>Introductory Composition</td>
-                  <td>5.0</td>
-                  <td>3.3</td>
-                </tr>
-                <tr>
-                  <td>MATH 103</td>
-                  <td>Introduction Elementary Function</td>
-                  <td>5.0</td>
-                  <td>3.2</td>
-                </tr>
-                <tr>
-                  <td colspan="4" class="text-end small">
-                    <div>QTR ATTEMPTED: 15.0 EARNED: 15.0 GPA: 2.17</div>
-                    <div>QTR GRADED AT: 15.0 GRADE POINTS: 32.5</div>
-                    <div>
-                      CUM ATTEMPTED: 30.0 UW EARNED: 30.0 TTL EARNED: 30.0
-                    </div>
-                    <div>CUM GRADED AT: 30.0 GRADE PTS: 78.0 CUM GPA: 2.60</div>
-                    <div class="border-top mt-3">
-                      Special Program Code:
-                      <template v-if="person.student.transcripts">
-                        {{ person.student.transcripts[0].special_program }}
-                      </template>
-                    </div>
-                    <div>
-                      Scholarships: <span class="text-danger">tbd</span>
-                    </div>
-                    <div>
-                      Yearly Honors: <span class="text-danger">tbd</span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+              <template
+                v-for="(transcript, index1) in transcripts"
+                :key="index1"
+              >
+                <tbody>
+                  <tr>
+                    <td colspan="5" class="fw-bold bg-light">
+                      {{ transcript.class_schedule.term.quarter }}
+                      {{ transcript.class_schedule.term.year }}
+                    </td>
+                  </tr>
+                  <tr
+                    v-for="(section, index3) in transcript.class_schedule
+                      .sections"
+                    :key="index3"
+                  >
+                    <td>
+                      {{ section.curriculum_abbr }} {{ section.course_number }}
+                    </td>
+                    <td>{{ section.course_title }}</td>
+                    <td>{{ section.credits }}</td>
+                    <td>{{ section.grade }}</td>
+                    <td>{{ section.for_credit }}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="5" class="text-end small">
+                      <div>
+                        QTR ATTEMPTED: {{ transcript.qtr_graded_attmp }} QTR
+                        EARNED: {{ transcript.qtr_grade_points }}
+                      </div>
+                      <div class="row border-top mt-3">
+                        <div class="col">
+                          <div>
+                            Class Code:
+                            {{ transcript.special_program }}
+                          </div>
+                          <div>
+                            Enrollment Status: {{ transcript.enroll_status }}
+                          </div>
+                          <div>
+                            Exemption Code: {{ transcript.exemption_code }}
+                          </div>
+                          <div>Grad status: {{ transcript.grad_status }}</div>
+                          <div>
+                            Honors Program: {{ transcript.honors_program }}
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div>
+                            Number Courses: {{ transcript.num_courses }}
+                          </div>
+                          <div>
+                            Scholarships: {{ transcript.scholarship_type }}
+                          </div>
+                          <div>
+                            Special Program Code:
+                            {{ transcript.special_program }}
+                          </div>
+                          <div>Veteran: {{ transcript.veteran }}</div>
+                          <div>
+                            Veteran Benefit: {{ transcript.veteran_benefit }}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </template>
             </table>
           </axdd-tabs-panel>
         </template>
@@ -186,6 +189,7 @@
 </template>
 
 <script>
+
 import {
   Card,
   CardTabs,
@@ -196,7 +200,10 @@ import {
   TabsPanel,
 } from "axdd-components";
 
+import dataMixin from "../../mixins/data_mixin.js";
+
 export default {
+  mixins: [dataMixin],
   props: {
     person: {
       type: Object,
@@ -213,7 +220,21 @@ export default {
     "axdd-tabs-panel": TabsPanel,
   },
   data() {
-    return {};
+    return {
+      transcripts: {},
+    };
+  },
+  created() {
+    this.loadStudentTranscripts();
+  },
+  methods: {
+    loadStudentTranscripts: function () {
+      this.getStudentTranscripts(this.person.uwregid).then((response) => {
+        if (response.data) {
+          this.transcripts = response.data;
+        }
+      });
+    },
   },
 };
 </script>
