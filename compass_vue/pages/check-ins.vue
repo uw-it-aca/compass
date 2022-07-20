@@ -1,5 +1,3 @@
-// home.vue
-
 <template>
   <layout :page-title="pageTitle">
     <!-- page content -->
@@ -54,12 +52,12 @@
                 <template #panels>
                   <axdd-tabs-panel :panel-id="'group'" :active-panel="true">
                     <table-loading v-if="isLoading"></table-loading>
-                    <table-display v-else :persons="persons"></table-display>
+                    <table-display v-else :contacts="contacts"></table-display>
                   </axdd-tabs-panel>
 
                   <axdd-tabs-panel :panel-id="'mine'">
                     <table-loading v-if="isLoading"></table-loading>
-                    <table-display v-else :persons="persons"></table-display>
+                    <table-display v-else :contacts="contacts"></table-display>
                   </axdd-tabs-panel>
                 </template>
               </axdd-tabs-display>
@@ -102,7 +100,6 @@ export default {
     "table-display": TableDisplay,
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
-
     "axdd-tabs-list": TabsList,
     "axdd-tabs-display": TabsDisplay,
     "axdd-tabs-item": TabsItem,
@@ -112,26 +109,26 @@ export default {
     return {
       pageTitle: "Contacts",
       isLoading: true,
-      persons: [],
+      contacts: [],
       today: "",
+      userNetId: document.body.getAttribute("data-user-netid"),
     };
   },
   computed: {},
   methods: {
     getToday,
-    loadStudentList: function (studentNumber) {
+    loadAdviserContactsList: function (adviserNetId) {
       let _this = this;
-      this.getStudentList().then((response) => {
+      this.getAdviserContacts(adviserNetId).then((response) => {
         if (response.data) {
-          _this.persons = response.data;
+          _this.contacts = response.data;
           _this.isLoading = false;
         }
       });
     },
   },
   mounted() {
-    //this.loadStudentList()
-    setTimeout(this.loadStudentList, 2000);
+    this.loadAdviserContactsList(this.userNetId);
   },
 };
 </script>

@@ -1,5 +1,3 @@
-// home.vue
-
 <template>
   <layout :page-title="pageTitle">
     <!-- page content -->
@@ -172,7 +170,7 @@
                 :records="studentsCount"
                 :per-page="pageSize"
                 :options="pageOptions"
-                @paginate="loadStudentList"
+                @paginate="loadAdviserCaseload"
               ></pagination>
             </template>
           </axdd-card>
@@ -208,8 +206,7 @@ export default {
     "axdd-card-action": CardAction,
   },
   created: function () {
-    this.loadStudentList();
-    this.loadAdviserList();
+    this.loadAdviserCaseload();
   },
   data() {
     return {
@@ -243,9 +240,9 @@ export default {
     },
   },
   methods: {
-    loadStudentList: function () {
+    loadAdviserCaseload: function () {
       let _this = this;
-      this.getStudentList(this.paginationOptions, this.searchOptions).then(
+      this.getAdviserCaseload(this.paginationOptions, this.searchOptions).then(
         (response) => {
           if (response.data) {
             _this.students = response.data["results"];
@@ -258,14 +255,6 @@ export default {
           this.isLoading = false;
         }
       );
-    },
-    loadAdviserList: function () {
-      let _this = this;
-      this.getAdviserList().then((response) => {
-        if (response.data) {
-          _this.advisers = response.data;
-        }
-      });
     },
     showPriorityRing: function (priorityValue) {
       // mocked display

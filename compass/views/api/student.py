@@ -18,21 +18,6 @@ from uw_sws.registration import get_schedule_by_regid_and_term
 
 
 @method_decorator(verify_access(), name='dispatch')
-class StudentListView(View):
-    '''
-    API endpoint returning a list of students
-
-    /api/internal/student/
-    '''
-    def get(self, request, *args, **kwargs):
-        page = request.GET.get("page")
-        page_size = request.GET.get("page_size")
-        client = UWPersonClient()
-        data = client.get_active_students(page=page, page_size=page_size)
-        return JsonResponse([item.to_dict() for item in data], safe=False)
-
-
-@method_decorator(verify_access(), name='dispatch')
 class StudentDetailView(View):
     '''
     API endpoint returning a student's details

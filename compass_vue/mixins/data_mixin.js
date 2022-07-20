@@ -14,14 +14,6 @@ const dataMixin = {
       };
       return axiosConfig;
     },
-    getStudentList: async function (paginationOptions, searchOptions) {
-      let options = Object.assign({}, paginationOptions, searchOptions);
-      return axios.get(
-        "/api/internal/student/",
-        { params: options },
-        this._getAxiosConfig()
-      );
-    },
     getStudentDetail: async function (uwnetid) {
       return axios.get(
         "/api/internal/student/" + uwnetid + "/",
@@ -92,8 +84,19 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
-    getAdviserList: async function () {
-      return axios.get("/api/internal/adviser/", {}, this._getAxiosConfig());
+    getAdviserCaseload: async function (adviserNetId) {
+      return axios.get(
+        "/api/internal/adviser/" + adviserNetId + "/caseload/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    getAdviserContacts: async function (adviserNetId) {
+      return axios.get(
+        "/api/internal/adviser/" + adviserNetId + "/contacts/",
+        {},
+        this._getAxiosConfig()
+      );
     },
   },
 };
