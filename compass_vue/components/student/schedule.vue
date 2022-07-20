@@ -1,9 +1,9 @@
 <template>
   <axdd-card>
-    <template #heading-tabs>
+    <template #heading-action>
       <axdd-card-heading :level="2">Schedule (sws)</axdd-card-heading>
       <axdd-card-tabs>
-        <axdd-tabs-list :tabs-id="'schedule'" :variant="'pills'">
+        <axdd-tabs-list :tabs-id="'schedule'" :variant="'pills'" class="small">
           <template #items>
             <axdd-tabs-item
               v-for="(schedule, index) in schedules"
@@ -29,7 +29,7 @@
               :panel-id="'panel' + scheduleIndex"
               :active-panel="scheduleIndex == 0"
             >
-              <div class="table-responsive mx-n3 my-n3">
+              <div class="table-responsive mx-n3 mb-n3">
                 <table class="table m-0">
                   <thead class="small bg-light text-secondary">
                     <tr>

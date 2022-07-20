@@ -1,17 +1,18 @@
 <template>
   <axdd-card>
-    <template #heading-tabs>
+    <template #heading-action>
       <axdd-card-heading :level="2">Academics</axdd-card-heading>
       <axdd-card-tabs>
-        <axdd-tabs-list :tabs-id="'history'">
+        <axdd-tabs-list :tabs-id="'history'" :variant="'pills'" class="small">
           <template #items>
             <axdd-tabs-item
               :tabs-id="'history'"
               :panel-id="'major'"
               :active-tab="true"
+              :variant="'pills'"
               >Current</axdd-tabs-item
             >
-            <axdd-tabs-item :tabs-id="'history'" :panel-id="'transcript'"
+            <axdd-tabs-item :tabs-id="'history'" :panel-id="'transcript'" :variant="'pills'"
               >Unofficial Transcript</axdd-tabs-item
             >
           </template>

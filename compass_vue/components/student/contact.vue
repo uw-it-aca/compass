@@ -7,7 +7,7 @@
           :button-type="'button'"
           :person="person"
           @contactUpdated="loadStudentContacts()"
-          ><i class="bi bi-plus-square text-secondary me-2"></i>Record new
+          ><i class="bi bi-plus-square text-white me-2"></i>Record new
           contact</AddEditContact
         >
       </axdd-card-action>
