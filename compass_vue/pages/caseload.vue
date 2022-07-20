@@ -6,7 +6,7 @@
     <template #content>
       <div class="row my-4 small">
         <div class="col">
-          <div class="bg-gray p-4 rounded-3">
+          <div class="bg-gray p-3 rounded-3">
             <div class="row">
               <div class="col-3">
                 <div class="fw-bold lh-lg">Filter by adviser:</div>

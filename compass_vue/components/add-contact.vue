@@ -7,7 +7,7 @@
     @click="getFormData()"
     :class="[
       buttonType === 'button'
-        ? 'btn-sm btn-outline-dark-beige'
+        ? 'btn-sm btn-purple text-white rounded-3 px-3 py-2'
         : 'small p-0 btn-sm btn-link',
     ]"
   >

@@ -1,10 +1,11 @@
 @use "sass:map";
-@import 'axdd-components/src/assets/css/custom';
+@import 'axdd-components/src/assets/css/theme';
 
 // https://getbootstrap.com/docs/5.1/customize/options/
 // TODO: enable bootstrap options for the app
 // $enable-cssgrid: true;
 // $enable-gradients: true;
+$enable-negative-margins: true;
 
 // compass custom colors
 $custom-colors: (

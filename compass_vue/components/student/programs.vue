@@ -50,7 +50,7 @@
         <button
           @click="saveStudentData()"
           type="button"
-          class="btn btn-purple rounded-3 btn-sm"
+          class="btn btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2"
         >
           Update programs
         </button>

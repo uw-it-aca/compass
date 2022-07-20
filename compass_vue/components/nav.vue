@@ -1,35 +1,35 @@
 <template>
   <div class="text-light">
-    <ul class="nav flex-column my-4">
-      <li class="nav-item mb-1 bg-dark-purple-hover rounded">
+    <ul class="nav flex-column mb-5">
+      <li class="nav-item mb-1">
         <router-link
           :to="'/'"
-          active-class="bg-dark-purple rounded"
-          class="nav-link text-gray d-block px-2 py-1"
+          active-class="bg-dark-purple rounded-3"
+          class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
           ><i class="bi bi-calendar-check me-2"></i>Check-Ins</router-link
         >
       </li>
-      <li class="nav-item mb-2 bg-dark-purple-hover rounded">
+      <li class="nav-item mb-1">
         <router-link
           :to="'/caseload'"
-          active-class="bg-dark-purple rounded"
-          class="nav-link text-gray d-block px-2 py-1"
+          active-class="bg-dark-purple rounded-3"
+          class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
           ><i class="bi bi-people-fill me-2"></i>Caseload</router-link
         >
       </li>
-      <li class="nav-item mb-2 bg-dark-purple-hover rounded">
+      <li class="nav-item mb-1">
         <router-link
           :to="'/reports'"
-          active-class="bg-dark-purple rounded"
-          class="nav-link text-gray d-block px-2 py-1"
+          active-class="bg-dark-purple rounded-3"
+          class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
           ><i class="bi bi-bar-chart-fill me-2"></i>Reports</router-link
         >
       </li>
-      <li class="nav-item mb-2 bg-dark-purple-hover rounded">
+      <li class="nav-item mb-2">
         <router-link
           :to="'/settings'"
-          active-class="bg-dark-purple rounded"
-          class="nav-link text-gray d-block px-2 py-1"
+          active-class="bg-dark-purple rounded-3"
+          class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
           ><i class="bi bi-tools me-2"></i>Settings</router-link
         >
       </li>
@@ -43,11 +43,11 @@
         >
       </li>
 
-      <li class="nav-item mb-2 bg-dark-purple-hover rounded">
+      <li class="nav-item mb-1">
         <a
           href="/support"
-          active-class="bg-dark-purple rounded"
-          class="nav-link text-gray d-block px-2 py-1"
+          active-class="bg-dark-purple rounded-3"
+          class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
           ><i class="bi bi-question-diamond-fill me-2"></i>Support</a
         >
       </li>

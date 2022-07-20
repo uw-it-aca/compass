@@ -10,8 +10,12 @@ from compass.views.api.student import StudentListView, StudentDetailView, \
         StudentContactsView, StudentSchedulesView, StudentSaveView, \
         StudentTranscriptsView
 from compass.views.api.adviser import AdviserListView
-from compass.views.api.contact import ContactTopicsView, ContactTypesView, \
-        ContactSaveView, ContactDetailView
+from compass.views.api.contact import (
+    ContactTopicsView,
+    ContactTypesView,
+    ContactSaveView,
+    ContactDetailView,
+)
 from compass.views.api.program import ProgramsView
 
 

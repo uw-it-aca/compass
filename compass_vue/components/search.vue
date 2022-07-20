@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray p-4 rounded-3">
+  <div class="bg-gray p-3 rounded-3">
     <div class="small lh-lg">
       <div class="d-inline me-3 text-nowrap fw-bold">Find student by:</div>
       <div class="d-inline text-nowrap">

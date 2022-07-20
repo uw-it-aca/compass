@@ -37,30 +37,32 @@
               >
             </template>
             <template #body>
-              <axdd-tabs :tabs-id="'checkins'">
+              <axdd-tabs-list :tabs-id="'checkins'">
                 <template #items>
-                  <axdd-tab-item
+                  <axdd-tabs-item
                     :tabs-id="'checkins'"
                     :panel-id="'group'"
                     :active-tab="true"
-                    >All</axdd-tab-item
+                    >All</axdd-tabs-item
                   >
-                  <axdd-tab-item :tabs-id="'checkins'" :panel-id="'mine'"
-                    >My Check-ins</axdd-tab-item
+                  <axdd-tabs-item :tabs-id="'checkins'" :panel-id="'mine'"
+                    >My Check-ins</axdd-tabs-item
                   >
                 </template>
+              </axdd-tabs-list>
+              <axdd-tabs-display :tabs-id="'checkins'">
                 <template #panels>
-                  <axdd-tab-panel :panel-id="'group'" :active-panel="true">
+                  <axdd-tabs-panel :panel-id="'group'" :active-panel="true">
                     <table-loading v-if="isLoading"></table-loading>
                     <table-display v-else :persons="persons"></table-display>
-                  </axdd-tab-panel>
+                  </axdd-tabs-panel>
 
-                  <axdd-tab-panel :panel-id="'mine'">
+                  <axdd-tabs-panel :panel-id="'mine'">
                     <table-loading v-if="isLoading"></table-loading>
                     <table-display v-else :persons="persons"></table-display>
-                  </axdd-tab-panel>
+                  </axdd-tabs-panel>
                 </template>
-              </axdd-tabs>
+              </axdd-tabs-display>
 
               <div class="mt-5 text-secondary">No students to meet with.</div>
             </template>
@@ -76,9 +78,10 @@ import {
   Card,
   CardHeading,
   CardAction,
-  Tabs,
-  TabItem,
-  TabPanel,
+  TabsList,
+  TabsDisplay,
+  TabsItem,
+  TabsPanel,
 } from "axdd-components";
 import SearchAdviser from "../components/search-adviser.vue";
 import SearchStudent from "../components/search-student.vue";
@@ -99,9 +102,11 @@ export default {
     "table-display": TableDisplay,
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
-    "axdd-tabs": Tabs,
-    "axdd-tab-item": TabItem,
-    "axdd-tab-panel": TabPanel,
+
+    "axdd-tabs-list": TabsList,
+    "axdd-tabs-display": TabsDisplay,
+    "axdd-tabs-item": TabsItem,
+    "axdd-tabs-panel": TabsPanel,
   },
   data() {
     return {

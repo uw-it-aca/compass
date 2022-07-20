@@ -1,74 +1,93 @@
 <template>
   <axdd-card>
-    <template #heading>
+    <template #heading-action>
       <axdd-card-heading :level="2">Schedule (sws)</axdd-card-heading>
+      <axdd-card-tabs>
+        <axdd-tabs-list :tabs-id="'schedule'" :variant="'pills'" class="small">
+          <template #items>
+            <axdd-tabs-item
+              v-for="(schedule, index) in schedules"
+              :key="index"
+              :tabs-id="'schedule'"
+              :panel-id="'panel' + index"
+              :active-tab="index == 0"
+              :variant="'pills'"
+              >{{ schedule.term.quarter }}
+              {{ schedule.term.year }}</axdd-tabs-item
+            >
+          </template>
+        </axdd-tabs-list>
+      </axdd-card-tabs>
     </template>
     <template #body>
-      <axdd-tabs :tabs-id="'schedule'">
-        <template #items>
-          <axdd-tab-item
-            v-for="(schedule, index) in schedules"
-            :key="index"
-            :tabs-id="'schedule'"
-            :panel-id="'panel' + index"
-            :active-tab="index == 0"
-            >{{ schedule.term.quarter }} {{ schedule.term.year }}</axdd-tab-item
-          >
-        </template>
+      <axdd-tabs-display :tabs-id="'schedule'">
         <template #panels>
           <template v-if="Object.keys(schedules).length">
-            <axdd-tab-panel
+            <axdd-tabs-panel
               v-for="(schedule, scheduleIndex) in schedules"
               :key="scheduleIndex"
               :panel-id="'panel' + scheduleIndex"
               :active-panel="scheduleIndex == 0"
             >
-              <table class="table table-hover table-striped m-0 mb-5">
-                <thead class="small">
-                  <tr>
-                    <th>Course</th>
-                    <th>Title</th>
-                    <th>Credits</th>
-                    <th>Grade</th>
-                  </tr>
-                </thead>
-                <tbody class="mb-3">
-                  <tr
-                    v-for="(section, index) in schedule.sections"
-                    :key="index"
-                  >
-                    <td>
-                      {{ section.curriculum_abbr }} {{ section.course_number }}
-                    </td>
-                    <td>{{ section.course_title }}</td>
-                    <td>{{ section.credits }}</td>
-                    <td>{{ section.grade }}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </axdd-tab-panel>
+              <div class="table-responsive mx-n3 mb-n3">
+                <table class="table m-0">
+                  <thead class="small bg-light text-secondary">
+                    <tr>
+                      <th class="ps-3">Course</th>
+                      <th>Title</th>
+                      <th>Credits</th>
+                      <th>Grade</th>
+                    </tr>
+                  </thead>
+                  <tbody class="mb-3">
+                    <tr
+                      v-for="(section, index) in schedule.sections"
+                      :key="index"
+                    >
+                      <td class="ps-3">
+                        {{ section.curriculum_abbr }}
+                        {{ section.course_number }}
+                      </td>
+                      <td>{{ section.course_title }}</td>
+                      <td>{{ section.credits }}</td>
+                      <td>{{ section.grade }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </axdd-tabs-panel>
           </template>
           <template v-else>
             <p>No schedules found</p>
           </template>
         </template>
-      </axdd-tabs>
+      </axdd-tabs-display>
     </template>
   </axdd-card>
 </template>
 
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
-import { Card, CardHeading, Tabs, TabItem, TabPanel } from "axdd-components";
+import {
+  Card,
+  CardHeading,
+  CardTabs,
+  TabsList,
+  TabsDisplay,
+  TabsItem,
+  TabsPanel,
+} from "axdd-components";
 
 export default {
   mixins: [dataMixin],
   components: {
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
-    "axdd-tabs": Tabs,
-    "axdd-tab-item": TabItem,
-    "axdd-tab-panel": TabPanel,
+    "axdd-card-tabs": CardTabs,
+    "axdd-tabs-list": TabsList,
+    "axdd-tabs-display": TabsDisplay,
+    "axdd-tabs-item": TabsItem,
+    "axdd-tabs-panel": TabsPanel,
   },
   props: {
     person: {
