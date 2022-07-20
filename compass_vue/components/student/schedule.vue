@@ -36,7 +36,6 @@
                       <th class="ps-3">Course</th>
                       <th>Title</th>
                       <th>Credits</th>
-                      <th>Grade</th>
                     </tr>
                   </thead>
                   <tbody class="mb-3">
@@ -50,7 +49,6 @@
                       </td>
                       <td>{{ section.course_title }}</td>
                       <td>{{ section.credits }}</td>
-                      <td>{{ section.grade }}</td>
                     </tr>
                   </tbody>
                 </table>
