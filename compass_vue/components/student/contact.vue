@@ -14,7 +14,7 @@
     </template>
     <template #body>
       <template v-if="contacts.length > 0">
-        <div class="table-responsive mx-n3">
+        <div class="table-responsive border rounded-3">
           <table class="table m-0">
             <thead class="small bg-light text-secondary">
               <tr>
