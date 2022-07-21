@@ -113,10 +113,10 @@
                 </tr>
               </thead>
               <template
-                v-for="(transcript, index1) in transcripts"
-                :key="index1"
+                v-for="(transcript, transIndex) in transcripts"
+                :key="transIndex"
               >
-                <tbody>
+                <tbody v-if="transcript.class_schedule">
                   <tr>
                     <td colspan="5" class="fw-bold bg-light">
                       {{ transcript.class_schedule.term.quarter }}

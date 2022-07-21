@@ -10,14 +10,14 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="person in persons" :key="person.id">
+      <tr v-for="contact in contacts" :key="contact.id">
         <td>
-          <profile-mini :person="person"></profile-mini>
+          <profile-mini :person="contact.student"></profile-mini>
         </td>
-        <td>May 26, 2022</td>
-        <td>2:30pm</td>
-        <td>Appointment</td>
-        <td>Jay Adviser</td>
+        <td>{{ contact.date }}</td>
+        <td>{{ contact.time }}</td>
+        <td>{{ contact.contact_type.name }}</td>
+        <td>{{ contact.author.uwnetid }}</td>
       </tr>
     </tbody>
   </table>
@@ -31,7 +31,7 @@ export default {
     "profile-mini": ProfileMini,
   },
   props: {
-    persons: {
+    contacts: {
       type: Object,
       required: true,
     },

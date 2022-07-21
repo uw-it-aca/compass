@@ -5,27 +5,40 @@
       class="form-control form-control-sm"
       placeholder="Student netid..."
       aria-label="Recipient's username"
-      aria-describedby="button-addon2"
+      v-model="searchValue"
     />
     <button
+      :disabled="searchValue.length == 0"
       class="btn btn-sm btn-outline-dark-beige"
       type="button"
-      @click="findStudent"
+      @click="searchByStudent"
     >
       Search
     </button>
   </div>
+  <div v-if="!studentExists">No student found</div>
 </template>
 
 <script>
+import dataMixin from "../mixins/data_mixin.js";
+
 export default {
+  mixins: [dataMixin],
   data() {
-    return {};
+    return {
+      studentExists: true,
+      searchValue: "",
+    };
   },
   methods: {
-    findStudent: function () {
-      // push to search page
-      this.$router.push("/student/javerage");
+    searchByStudent: function () {
+      this.getStudentDetail(this.searchValue)
+        .then(() => {
+          this.$router.push("/student/" + this.searchValue);
+        })
+        .catch(() => {
+          this.studentExists = false;
+        });
     },
   },
 };

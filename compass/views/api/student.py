@@ -5,31 +5,17 @@ from compass.views.api import BaseAPIView
 from compass.decorators import verify_access
 from compass.models import Student, Contact
 from compass.serializers import ContactReadSerializer, StudentWriteSerializer
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotFound
 from django.utils.decorators import method_decorator
 from django.views import View
 from restclients_core.exceptions import DataFailureException
 from rest_framework.response import Response
 from rest_framework import status
 from uw_person_client import UWPersonClient
+from uw_person_client.exceptions import PersonNotFoundException
 from uw_sws.term import get_current_term, get_next_term, get_term_after, \
     get_term_by_year_and_quarter
 from uw_sws.registration import get_schedule_by_regid_and_term
-
-
-@method_decorator(verify_access(), name='dispatch')
-class StudentListView(View):
-    '''
-    API endpoint returning a list of students
-
-    /api/internal/student/
-    '''
-    def get(self, request, *args, **kwargs):
-        page = request.GET.get("page")
-        page_size = request.GET.get("page_size")
-        client = UWPersonClient()
-        data = client.get_active_students(page=page, page_size=page_size)
-        return JsonResponse([item.to_dict() for item in data], safe=False)
 
 
 @method_decorator(verify_access(), name='dispatch')
@@ -41,15 +27,18 @@ class StudentDetailView(View):
     '''
     def get(self, request, uwnetid):
         client = UWPersonClient()
-        data = client.get_person_by_uwnetid(uwnetid)
         try:
-            local_student = Student.objects.get(
-                system_key=data.student.system_key)
-            data.student.compass_programs = [
-                program.id for program in local_student.programs.all()]
-        except Student.DoesNotExist:
-            data.student.compass_programs = []
-        return JsonResponse(data.to_dict(), safe=False)
+            data = client.get_person_by_uwnetid(uwnetid)
+            try:
+                local_student = Student.objects.get(
+                    system_key=data.student.system_key)
+                data.student.compass_programs = [
+                    program.id for program in local_student.programs.all()]
+            except Student.DoesNotExist:
+                data.student.compass_programs = []
+            return JsonResponse(data.to_dict(), safe=False)
+        except PersonNotFoundException:
+            return HttpResponseNotFound()
 
 
 class StudentSaveView(BaseAPIView):
@@ -143,6 +132,6 @@ class StudentTranscriptsView(BaseAPIView):
                     uwregid, term)
                 transcript.class_schedule = class_schedule.json_data()
             except DataFailureException:
-                pass
+                transcript.class_schedule = None
             transcripts.append(transcript.to_dict())
         return JsonResponse(transcripts, safe=False)

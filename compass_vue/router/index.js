@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import { trackRouter } from "vue-gtag-next";
 
 // page components
-import Home from "../pages/home.vue";
+import CheckIn from "../pages/check-ins.vue";
 import Caseload from "../pages/caseload.vue";
 import Student from "../pages/student.vue";
 import Reports from "../pages/reports.vue";
@@ -19,13 +19,13 @@ export const Role = {
 const routes = [
   {
     path: "/",
-    component: Home,
+    component: CheckIn,
     meta: { authorize: [Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
-    path: "/caseload",
+    path: "/caseload/:id?",
     component: Caseload,
     meta: { authorize: [Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
