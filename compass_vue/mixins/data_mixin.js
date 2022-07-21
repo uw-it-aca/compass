@@ -70,14 +70,14 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
-    getStudentContactTopics: async function (systemkey) {
+    getStudentContactTopics: async function () {
       return axios.get(
         "/api/internal/contact/topics/",
         {},
         this._getAxiosConfig()
       );
     },
-    getStudentContactTypes: async function (systemkey) {
+    getStudentContactTypes: async function () {
       return axios.get(
         "/api/internal/contact/types/",
         {},

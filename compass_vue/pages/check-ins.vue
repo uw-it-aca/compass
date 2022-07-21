@@ -6,22 +6,19 @@
         <div class="col">
           <div class="bg-gray p-4 rounded-3">
             <div class="row">
-              <div class="col-3">
+              <div class="col-4">
                 <div class="fw-bold lh-lg">Filter by adviser:</div>
                 <div>
                   <search-adviser></search-adviser>
                 </div>
               </div>
-              <div class="col-6">
-                <div class="fw-bold lh-lg">Last updated:</div>
-                <div class="h4">Today, {{ getToday() }}</div>
-              </div>
-              <div class="col-3 border-start ms-auto">
+              <div class="col-4 border-start ms-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
                   <search-student></search-student>
                 </div>
               </div>
+              <div class="col-4"></div>
             </div>
           </div>
         </div>

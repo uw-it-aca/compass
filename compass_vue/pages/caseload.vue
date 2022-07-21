@@ -6,13 +6,19 @@
         <div class="col">
           <div class="bg-gray p-3 rounded-3">
             <div class="row">
-              <div class="col-3">
+              <div class="col-4">
                 <div class="fw-bold lh-lg">Filter by adviser:</div>
                 <div>
                   <search-adviser></search-adviser>
                 </div>
               </div>
-              <div class="col-6 d-flex">
+              <div class="col-4 border-start ms-auto">
+                <div class="fw-bold lh-lg">Search all Students:</div>
+                <div>
+                  <search-student></search-student>
+                </div>
+              </div>
+              <div class="col-4 d-flex border-start">
                 <div class="flex-fill me-3">
                   <div class="fw-bold lh-lg">Class Standing:</div>
                   <select
@@ -25,39 +31,6 @@
                     <option value="3">Junior</option>
                     <option value="4">Senior</option>
                   </select>
-                </div>
-                <div class="flex-fill">
-                  <div class="fw-bold lh-lg">Enrollment Status:</div>
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault1"
-                      checked
-                    />
-                    <label class="form-check-label" for="flexRadioDefault1"
-                      >Enrolled</label
-                    >
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="flexRadioDefault"
-                      id="flexRadioDefault2"
-                    />
-                    <label class="form-check-label" for="flexRadioDefault2"
-                      >Not Enrolled</label
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-3 border-start ms-auto">
-                <div class="fw-bold lh-lg">Search all Students:</div>
-                <div>
-                  <search-student></search-student>
                 </div>
               </div>
             </div>
@@ -74,104 +47,41 @@
             <template #body>
               <table-loading v-if="isLoading"></table-loading>
               <div v-else class="table-responsive">
-                <table v-if="studentsCount > 0" class="table mb-0">
+                <table v-if="persons" class="table mb-0">
                   <thead class="small">
                     <tr>
-                      <th scope="col" class="ps-0">Name</th>
-                      <th scope="col">Student Number</th>
-                      <th scope="col">Priority</th>
+                      <th scope="col" class="ps-0">Student</th>
                       <th scope="col">Class</th>
-                      <th scope="col" class="text-nowrap">Enroll Status</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">&nbsp;</th>
+                      <th scope="col">Campus</th>
+                      <th scope="col" class="text-nowrap">Enrollment Status</th>
+                      <th scope="col">Adviser</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr
-                      v-for="item in students"
-                      :key="item.SystemKey"
+                      v-for="person in persons"
+                      :key="person.uwnetid"
                       class="bg-light-hover"
                     >
                       <td>
-                        <div class="d-flex">
-                          <div class="me-2" style="min-width: 55px">
-                            <div
-                              :class="showPriorityRing(item.retention.priority)"
-                              class="rounded-circle border border-3"
-                            >
-                              <img
-                                v-if="item.gender === 'F'"
-                                :src="
-                                  'https://randomuser.me/api/portraits/thumb/women/' +
-                                  item.id +
-                                  '.jpg'
-                                "
-                                class="img-fluid rounded-circle border border-white border-2"
-                              />
-                              <img
-                                v-else
-                                :src="
-                                  'https://randomuser.me/api/portraits/thumb/men/' +
-                                  item.id +
-                                  '.jpg'
-                                "
-                                class="img-fluid rounded-circle border border-white border-2"
-                              />
-                            </div>
-                          </div>
-                          <div class="flex-fill">
-                            <div class="text-nowrap">
-                              <span>
-                                {{ item.student_preferred_last_name }},
-                                {{ item.student_preferred_first_name }}
-                              </span>
-                              <span
-                                class="badge rounded-pill border border-muted text-dark small"
-                                >{{ item.gender }}</span
-                              >
-                              <span
-                                class="badge rounded-pill border border-muted text-dark small"
-                              >
-                                <i class="bi bi-trophy-fill text-purple"></i>
-                              </span>
-                            </div>
-                            <div class="small text-secondary">
-                              {{ item.uw_net_id }}
-                            </div>
-                          </div>
-                        </div>
+                        <profile-mini :person="person"></profile-mini>
                       </td>
+                      <td>{{ person.student.class_desc }}</td>
+                      <td>{{ person.student.campus_desc }}</td>
+                      <td>{{ person.student.enrollment_status_desc }}</td>
                       <td>
-                        <router-link
-                          :to="{
-                            name: 'Student',
-                            params: { id: item.student_number },
-                          }"
-                          >{{ item.student_number }}</router-link
+                        <div
+                          v-for="adviser in person.student.advisers"
+                          :key="adviser.id"
                         >
-                      </td>
-                      <td>top/middle/bottom {{ item.retention.priority }}</td>
-                      <td>{{ item.class_desc }}</td>
-                      <td>Enrolled{{ item.enrollment_status_desc }}</td>
-                      <td>Active</td>
-                      <td class="align-middle text-end">
-                        <add-contact></add-contact>
+                          {{ adviser.uwnetid }}
+                        </div>
                       </td>
                     </tr>
                   </tbody>
                 </table>
                 <div v-else>no students in your caseload</div>
               </div>
-            </template>
-            <template v-if="!isLoading && studentsCount > 0" #footer>
-              <pagination
-                v-if="studentsCount > 0"
-                v-model="currentPage"
-                :records="studentsCount"
-                :per-page="pageSize"
-                :options="pageOptions"
-                @paginate="loadAdviserCaseload"
-              ></pagination>
             </template>
           </axdd-card>
         </div>
@@ -182,50 +92,38 @@
 
 <script>
 import { markRaw } from "vue";
-import { Card, CardHeading, CardAction } from "axdd-components";
+import { Card, CardHeading } from "axdd-components";
 import SearchAdviser from "../components/search-adviser.vue";
 import SearchStudent from "../components/search-student.vue";
 import AddContact from "../components/add-contact.vue";
 import TableLoading from "../components/table-loading.vue";
-import Pagination from "v-pagination-3";
-import MyPagination from "../components/pagination.vue";
 import Layout from "../layout.vue";
 import dataMixin from "../mixins/data_mixin.js";
+import ProfileMini from "../components/student/profile-mini.vue";
 
 export default {
   mixins: [dataMixin],
   components: {
     layout: Layout,
+    "profile-mini": ProfileMini,
     "search-adviser": SearchAdviser,
     "search-student": SearchStudent,
-    pagination: Pagination,
     "table-loading": TableLoading,
     "add-contact": AddContact,
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
-    "axdd-card-action": CardAction,
-  },
-  created: function () {
-    this.loadAdviserCaseload();
   },
   data() {
     return {
       pageTitle: "Caseload",
-
       isLoading: true,
-
       // data
       students: [],
-      advisers: [],
-      // pagination
-      studentsCount: 0,
-      currentPage: 1,
-      pageSize: 30,
-      pageOptions: {
-        theme: "bootstrap4",
-        template: markRaw(MyPagination),
-      },
+      userNetId: document.body.getAttribute("data-user-netid"),
     };
+  },
+  created: function () {
+    this.loadAdviserCaseload(this.userNetId);
   },
   computed: {
     paginationOptions: function () {
@@ -240,21 +138,13 @@ export default {
     },
   },
   methods: {
-    loadAdviserCaseload: function () {
+    loadAdviserCaseload: function (netid) {
       let _this = this;
-      this.getAdviserCaseload(this.paginationOptions, this.searchOptions).then(
-        (response) => {
-          if (response.data) {
-            _this.students = response.data["results"];
-            _this.studentsCount = response.data["count"];
-            if (_this.currentPage > _this.numPages) {
-              _this.currentPage = 1;
-            }
-          }
-
-          this.isLoading = false;
-        }
-      );
+      this.getAdviserCaseload(netid).then((response) => {
+        _this.persons = response.data;
+        console.log(_this.persons);
+        _this.isLoading = false;
+      });
     },
     showPriorityRing: function (priorityValue) {
       // mocked display
@@ -266,12 +156,6 @@ export default {
         return "";
       }
     },
-    showResults: function () {
-      this.isLoading = false;
-    },
-  },
-  mounted() {
-    //setTimeout(this.showResults, 4000);
   },
 };
 </script>
