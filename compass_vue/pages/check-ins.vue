@@ -51,26 +51,22 @@
 import {
   Card,
   CardHeading,
-  CardAction,
   TabsList,
   TabsDisplay,
   TabsItem,
   TabsPanel,
 } from "axdd-components";
-import SearchAdviser from "../components/search-adviser.vue";
 import SearchStudent from "../components/search-student.vue";
 import CheckInTableLoading from "../components/checkin-table-loading.vue";
 import CheckInTableDisplay from "../components/checkin-table-display.vue";
 
 import Layout from "../layout.vue";
 import dataMixin from "../mixins/data_mixin.js";
-import { getToday, getYesterday } from "../helpers/utils";
 
 export default {
   mixins: [dataMixin],
   components: {
     layout: Layout,
-    "search-adviser": SearchAdviser,
     "search-student": SearchStudent,
     "table-loading": CheckInTableLoading,
     "table-display": CheckInTableDisplay,
@@ -92,7 +88,6 @@ export default {
   },
   computed: {},
   methods: {
-    getToday,
     loadAdviserContactsList: function (adviserNetId) {
       let _this = this;
       this.getAdviserContacts(adviserNetId).then((response) => {
