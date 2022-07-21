@@ -68,10 +68,5 @@ if os.getenv("ENV") == "localdev":
 else:
     COMPASS_ADMIN_GROUP = os.getenv('ADMIN_GROUP', '')
     COMPASS_SUPPORT_GROUP = os.getenv('SUPPORT_GROUP', '')
-    WEBPACK_LOADER = {
-        'DEFAULT': {
-            'STATS_FILE': os.path.join(BASE_DIR, '/static/webpack-stats.json'),
-        }
-    }
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
