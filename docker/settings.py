@@ -7,6 +7,21 @@ INSTALLED_APPS += [
     'userservice',
 ]
 
+# Location of stats file that can be accessed during local development and
+# collected from during production build process
+if os.getenv("ENV") == "localdev":
+    WEBPACK_LOADER = {
+        'DEFAULT': {
+            'STATS_FILE': os.path.join(BASE_DIR, 'compass/static/webpack-stats.json'),
+        }
+    }
+else:
+    WEBPACK_LOADER = {
+        'DEFAULT': {
+            'STATS_FILE': os.path.join(BASE_DIR, '/static/webpack-stats.json'),
+        }
+    }
+
 MIDDLEWARE += ['userservice.user.UserServiceMiddleware']
 
 TEMPLATES = [
@@ -32,11 +47,6 @@ DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 if os.getenv("ENV") == "localdev":
     DEBUG = True
 
-    WEBPACK_LOADER = {
-        'DEFAULT': {
-            'STATS_FILE': os.path.join(BASE_DIR, 'compass/static/webpack-stats.json'),
-        }
-    }
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
