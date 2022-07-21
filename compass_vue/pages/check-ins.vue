@@ -80,8 +80,8 @@ import {
 } from "axdd-components";
 import SearchAdviser from "../components/search-adviser.vue";
 import SearchStudent from "../components/search-student.vue";
-import TableLoading from "../components/table-loading.vue";
-import TableDisplay from "../components/table-display.vue";
+import CheckInTableLoading from "../components/checkin-table-loading.vue";
+import CheckInTableDisplay from "../components/checkin-table-display.vue";
 
 import Layout from "../layout.vue";
 import dataMixin from "../mixins/data_mixin.js";
@@ -93,8 +93,8 @@ export default {
     layout: Layout,
     "search-adviser": SearchAdviser,
     "search-student": SearchStudent,
-    "table-loading": TableLoading,
-    "table-display": TableDisplay,
+    "table-loading": CheckInTableLoading,
+    "table-display": CheckInTableDisplay,
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
     "axdd-tabs-list": TabsList,
