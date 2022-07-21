@@ -1,7 +1,9 @@
 <template>
   <axdd-card>
     <template #heading>
-      <axdd-card-heading :level="2">Visits (compass)</axdd-card-heading>
+      <axdd-card-heading :level="2"
+        >Instruction Center Visits</axdd-card-heading
+      >
     </template>
     <template #body>
       <div class="table-responsive mx-n3">

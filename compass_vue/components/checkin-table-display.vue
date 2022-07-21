@@ -1,12 +1,13 @@
 <template>
-  <table class="table mb-0">
+  <table v-if="contacts.length > 0" class="table mb-0">
     <thead class="small">
       <tr>
         <th scope="col" class="w-50">Student</th>
         <th scope="col">Date</th>
         <th scope="col">Time</th>
         <th scope="col">Contact Type</th>
-        <th scope="col">Adviser</th>
+        <th scope="col">Meeting With</th>
+        <th scope="col">Assigned Adviser</th>
       </tr>
     </thead>
     <tbody>
@@ -18,9 +19,15 @@
         <td>{{ contact.time }}</td>
         <td>{{ contact.contact_type.name }}</td>
         <td>{{ contact.author.uwnetid }}</td>
+        <td>
+          <ul class="list-unstyled">
+            <li v-for="(adviser, index) in contact.student.student.advisers" :key="index">{{ adviser.uwnetid }}</li>
+          </ul>
+        </td>
       </tr>
     </tbody>
   </table>
+  <div v-else class="mt-5 text-secondary">No students to meet with.</div>
 </template>
 
 <script>

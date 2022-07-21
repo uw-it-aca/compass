@@ -1,7 +1,7 @@
 <template>
   <axdd-card>
     <template #heading-action>
-      <axdd-card-heading :level="2">Contacts (compass)</axdd-card-heading>
+      <axdd-card-heading :level="2">Contacts</axdd-card-heading>
       <axdd-card-action>
         <AddEditContact
           :button-type="'button'"

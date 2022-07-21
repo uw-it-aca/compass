@@ -11,34 +11,9 @@
               >
             </template>
             <template #body>
-              <axdd-tabs-list :tabs-id="'checkins'">
-                <template #items>
-                  <axdd-tabs-item
-                    :tabs-id="'checkins'"
-                    :panel-id="'group'"
-                    :active-tab="true"
-                    >All</axdd-tabs-item
-                  >
-                  <axdd-tabs-item :tabs-id="'checkins'" :panel-id="'mine'"
-                    >My Check-ins</axdd-tabs-item
-                  >
-                </template>
-              </axdd-tabs-list>
-              <axdd-tabs-display :tabs-id="'checkins'">
-                <template #panels>
-                  <axdd-tabs-panel :panel-id="'group'" :active-panel="true">
-                    <table-loading v-if="isLoading"></table-loading>
-                    <table-display v-else :contacts="contacts"></table-display>
-                  </axdd-tabs-panel>
-
-                  <axdd-tabs-panel :panel-id="'mine'">
-                    <table-loading v-if="isLoading"></table-loading>
-                    <table-display v-else :contacts="contacts"></table-display>
-                  </axdd-tabs-panel>
-                </template>
-              </axdd-tabs-display>
-
-              <div class="mt-5 text-secondary">No students to meet with.</div>
+              <p>if manager... show all checkins, else, only show checkins assigned to logged in user.</p>
+              <table-loading v-if="isLoading"></table-loading>
+              <table-display v-else :contacts="contacts"></table-display>
             </template>
           </axdd-card>
         </div>

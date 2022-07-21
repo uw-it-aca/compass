@@ -1,6 +1,6 @@
 <template>
   <axdd-card>
-    <template #heading-tabs>
+    <template #heading-tabs v-if="Object.keys(schedules).length">
       <axdd-card-heading :level="2">Schedule</axdd-card-heading>
       <axdd-card-tabs>
         <axdd-tabs-list :tabs-id="'schedule'" :variant="'tabs'" class="small">
@@ -18,6 +18,9 @@
           </template>
         </axdd-tabs-list>
       </axdd-card-tabs>
+    </template>
+    <template v-else #heading>
+      <axdd-card-heading :level="2">Schedule</axdd-card-heading>
     </template>
     <template #body>
       <axdd-tabs-display :tabs-id="'schedule'">
