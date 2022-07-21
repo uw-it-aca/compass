@@ -5,6 +5,7 @@ FROM gcr.io/uwit-mci-axdd/django-container:${DJANGO_CONTAINER_VERSION} as app-pr
 USER root
 
 RUN apt-get update && apt-get install libpq-dev -y
+COPY docker/locations.conf /etc/nginx/includes/locations.conf
 
 USER acait
 
