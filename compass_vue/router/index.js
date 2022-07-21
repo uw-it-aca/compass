@@ -25,7 +25,7 @@ const routes = [
     props: true,
   },
   {
-    path: "/caseload",
+    path: "/caseload/:id?",
     component: Caseload,
     meta: { authorize: [Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },

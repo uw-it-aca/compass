@@ -2,28 +2,7 @@
   <layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
-      <div class="row my-4 small">
-        <div class="col">
-          <div class="bg-gray p-4 rounded-3">
-            <div class="row">
-              <div class="col-4">
-                <div class="fw-bold lh-lg">Filter by adviser:</div>
-                <div>
-                  <search-adviser></search-adviser>
-                </div>
-              </div>
-              <div class="col-4 border-start ms-auto">
-                <div class="fw-bold lh-lg">Search all Students:</div>
-                <div>
-                  <search-student></search-student>
-                </div>
-              </div>
-              <div class="col-4"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="row">
+      <div class="row my-4">
         <div class="col">
           <axdd-card>
             <template #heading-action>
