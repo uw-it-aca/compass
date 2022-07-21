@@ -33,9 +33,9 @@ def verify_access():
                                              UserService().get_user()):
                     return view_func(request, *args, **kwargs)
 
-                return render(request,
-                              'uw_saml/access_denied.html',
-                              status=401)
+            return render(request,
+                          'uw_saml/access_denied.html',
+                          status=401)
 
         return login_required(function=wrapper)
 
