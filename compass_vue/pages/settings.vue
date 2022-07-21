@@ -6,6 +6,7 @@
       <h1>Settings</h1>
     </template>
     <template #content>
+      <p>need to handle IF user belongs to multiple advising groups!</p>
       <div class="row my-4">
         <div class="col-xl-6">
           <SettingsPrograms></SettingsPrograms>
