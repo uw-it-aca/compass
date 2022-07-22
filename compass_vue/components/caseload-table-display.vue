@@ -1,6 +1,6 @@
 <template>
   <div v-if="persons.length > 0" class="table-responsive mx-n3 mb-n3">
-    <table class="table table-striped table-borderless m-0">
+    <table class="table table-striped table-borderless m-0 small">
       <thead class="">
         <tr>
           <th scope="col" style="width: 33%" class="ps-3">Student</th>
@@ -11,11 +11,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="person in persons"
-          :key="person.uwnetid"
-          class="bg-light-hover"
-        >
+        <tr v-for="person in persons" :key="person.uwnetid">
           <td>
             <profile-mini :person="person"></profile-mini>
           </td>

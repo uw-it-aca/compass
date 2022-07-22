@@ -19,18 +19,18 @@
         </span>
         <span
           v-if="person.student.gender === 'M'"
-          class="badge rounded-pill border border-muted text-dark small"
+          class="badge rounded-pill border border-muted text-dark"
           >M</span
         >
         <span
           v-if="person.student.gender === 'F'"
-          class="badge rounded-pill border border-muted text-dark small"
+          class="badge rounded-pill border border-muted text-dark"
           >F</span
         >
 
         <span
           v-if="person.student.sports.length > 0"
-          class="badge rounded-pill border border-muted text-dark small"
+          class="badge rounded-pill border border-muted text-dark"
         >
           <i class="bi bi-trophy-fill text-purple"></i> Sport:
           <span
@@ -42,7 +42,7 @@
           </span>
         </span>
       </div>
-      <div class="small text-secondary">
+      <div class="text-secondary">
         {{ person.student.student_number }}, {{ person.student.class_desc }},
         <template v-if="person.student.registered_in_quarter">
           Registered
