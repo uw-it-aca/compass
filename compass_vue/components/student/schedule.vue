@@ -32,9 +32,9 @@
               :panel-id="'panel' + scheduleIndex"
               :active-panel="scheduleIndex == 0"
             >
-              <div class="table-responsive border rounded-3">
-                <table class="table m-0">
-                  <thead class="small bg-light text-secondary">
+              <div class="table-responsive m-n3">
+                <table class="table table-striped table-borderless m-0 small">
+                  <thead class="">
                     <tr>
                       <th class="ps-3">Course</th>
                       <th>Title</th>

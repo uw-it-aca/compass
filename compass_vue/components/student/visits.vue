@@ -7,8 +7,8 @@
     </template>
     <template #body>
       <div class="table-responsive mx-n3 mb-n3">
-        <table class="table m-0">
-          <thead class="small bg-light text-secondary">
+        <table class="table table-striped table-borderless m-0">
+          <thead class="small">
             <tr>
               <th class="ps-3">Date</th>
               <th>Course</th>

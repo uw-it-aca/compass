@@ -12,7 +12,10 @@
               :variant="'tabs'"
               >Current</axdd-tabs-item
             >
-            <axdd-tabs-item :tabs-id="'history'" :panel-id="'transcript'" :variant="'tabs'"
+            <axdd-tabs-item
+              :tabs-id="'history'"
+              :panel-id="'transcript'"
+              :variant="'tabs'"
               >Unofficial Transcript</axdd-tabs-item
             >
           </template>
@@ -102,85 +105,88 @@
           </axdd-tabs-panel>
 
           <axdd-tabs-panel :panel-id="'transcript'">
-            <table class="table m-0">
-              <thead class="small">
-                <tr>
-                  <th>Course</th>
-                  <th class="w-50">Title</th>
-                  <th>Credits</th>
-                  <th>Grade</th>
-                  <th class="text-nowrap">For Credit</th>
-                </tr>
-              </thead>
-              <template
-                v-for="(transcript, transIndex) in transcripts"
-                :key="transIndex"
-              >
-                <tbody v-if="transcript.class_schedule">
+            <div class="table-responsive m-n3">
+              <table class="table table-striped table-borderless m-0 small">
+                <thead class="">
                   <tr>
-                    <td colspan="5" class="fw-bold bg-light">
-                      {{ transcript.class_schedule.term.quarter }}
-                      {{ transcript.class_schedule.term.year }}
-                    </td>
+                    <th class="ps-3">Course</th>
+                    <th>Title</th>
+                    <th>Credits</th>
+                    <th>Grade</th>
+                    <th class="text-nowrap">For Credit</th>
                   </tr>
-                  <tr
-                    v-for="(section, index3) in transcript.class_schedule
-                      .sections"
-                    :key="index3"
-                  >
-                    <td>
-                      {{ section.curriculum_abbr }} {{ section.course_number }}
-                    </td>
-                    <td>{{ section.course_title }}</td>
-                    <td>{{ section.credits }}</td>
-                    <td>{{ section.grade }}</td>
-                    <td>{{ section.for_credit }}</td>
-                  </tr>
-                  <tr>
-                    <td colspan="5" class="text-end small">
-                      <div>
-                        QTR ATTEMPTED: {{ transcript.qtr_graded_attmp }} QTR
-                        EARNED: {{ transcript.qtr_grade_points }}
-                      </div>
-                      <div class="row border-top mt-3">
-                        <div class="col">
-                          <div>
-                            Class Code:
-                            {{ transcript.special_program }}
+                </thead>
+                <template
+                  v-for="(transcript, transIndex) in transcripts"
+                  :key="transIndex"
+                >
+                  <tbody v-if="transcript.class_schedule">
+                    <tr>
+                      <td colspan="5" class="fw-bold ps-3">
+                        {{ transcript.class_schedule.term.quarter }}
+                        {{ transcript.class_schedule.term.year }}
+                      </td>
+                    </tr>
+                    <tr
+                      v-for="(section, index3) in transcript.class_schedule
+                        .sections"
+                      :key="index3"
+                    >
+                      <td class="ps-3">
+                        {{ section.curriculum_abbr }}
+                        {{ section.course_number }}
+                      </td>
+                      <td>{{ section.course_title }}</td>
+                      <td>{{ section.credits }}</td>
+                      <td>{{ section.grade }}</td>
+                      <td>{{ section.for_credit }}</td>
+                    </tr>
+                    <tr>
+                      <td colspan="5" class="text-end small">
+                        <div>
+                          QTR ATTEMPTED: {{ transcript.qtr_graded_attmp }} QTR
+                          EARNED: {{ transcript.qtr_grade_points }}
+                        </div>
+                        <div class="row">
+                          <div class="col">
+                            <div>
+                              Class Code:
+                              {{ transcript.special_program }}
+                            </div>
+                            <div>
+                              Enrollment Status: {{ transcript.enroll_status }}
+                            </div>
+                            <div>
+                              Exemption Code: {{ transcript.exemption_code }}
+                            </div>
+                            <div>Grad status: {{ transcript.grad_status }}</div>
+                            <div>
+                              Honors Program: {{ transcript.honors_program }}
+                            </div>
                           </div>
-                          <div>
-                            Enrollment Status: {{ transcript.enroll_status }}
-                          </div>
-                          <div>
-                            Exemption Code: {{ transcript.exemption_code }}
-                          </div>
-                          <div>Grad status: {{ transcript.grad_status }}</div>
-                          <div>
-                            Honors Program: {{ transcript.honors_program }}
+                          <div class="col">
+                            <div>
+                              Number Courses: {{ transcript.num_courses }}
+                            </div>
+                            <div>
+                              Scholarships: {{ transcript.scholarship_type }}
+                            </div>
+                            <div>
+                              Special Program Code:
+                              {{ transcript.special_program }}
+                            </div>
+                            <div>Veteran: {{ transcript.veteran }}</div>
+                            <div>
+                              Veteran Benefit: {{ transcript.veteran_benefit }}
+                            </div>
                           </div>
                         </div>
-                        <div class="col">
-                          <div>
-                            Number Courses: {{ transcript.num_courses }}
-                          </div>
-                          <div>
-                            Scholarships: {{ transcript.scholarship_type }}
-                          </div>
-                          <div>
-                            Special Program Code:
-                            {{ transcript.special_program }}
-                          </div>
-                          <div>Veteran: {{ transcript.veteran }}</div>
-                          <div>
-                            Veteran Benefit: {{ transcript.veteran_benefit }}
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </template>
-            </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </template>
+              </table>
+            </div>
           </axdd-tabs-panel>
         </template>
       </axdd-tabs-display>
@@ -189,7 +195,6 @@
 </template>
 
 <script>
-
 import {
   Card,
   CardTabs,
