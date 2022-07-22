@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from compass.views.api import BaseAPIView
+from compass.dao import PhotoDAO
 from compass.decorators import verify_access
 from compass.models import Contact
 from compass.serializers import ContactReadSerializer
@@ -23,11 +24,13 @@ class AdviserContactsView(BaseAPIView):
         contact_queryset = Contact.objects.filter(
             author__uwnetid=adviser_netid).all()
         contacts = []
+        photo_dao = PhotoDAO()
         for contact in contact_queryset:
             contact_dict = ContactReadSerializer(contact, many=False).data
-            student = client.get_person_by_system_key(
+            person = client.get_person_by_system_key(
                 contact.student.system_key)
-            contact_dict["student"] = student.to_dict()
+            person.photo_url = photo_dao.get_photo_url(person.uwregid)
+            contact_dict["student"] = person.to_dict()
             contacts.append(contact_dict)
         return JsonResponse([contact for contact in contacts], safe=False)
 
@@ -43,5 +46,8 @@ class AdviserCaseloadView(BaseAPIView):
     def get(self, request, adviser_netid):
         client = UWPersonClient()
         persons = client.get_persons_by_adviser_netid(adviser_netid)
+        photo_dao = PhotoDAO()
+        for person in persons:
+            person.photo_url = photo_dao.get_photo_url(person.uwregid)
         return JsonResponse([person.to_dict() for person in persons],
                             safe=False)

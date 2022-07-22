@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from compass.views.api import BaseAPIView
+from compass.dao import PhotoDAO
 from compass.decorators import verify_access
 from compass.models import Student, Contact
 from compass.serializers import ContactReadSerializer, StudentWriteSerializer
@@ -28,15 +29,17 @@ class StudentDetailView(View):
     def get(self, request, uwnetid):
         client = UWPersonClient()
         try:
-            data = client.get_person_by_uwnetid(uwnetid)
+            person = client.get_person_by_uwnetid(uwnetid)
             try:
                 local_student = Student.objects.get(
-                    system_key=data.student.system_key)
-                data.student.compass_programs = [
+                    system_key=person.student.system_key)
+                person.student.compass_programs = [
                     program.id for program in local_student.programs.all()]
+                person.photo_url = PhotoDAO().get_photo_url(
+                    person.uwregid, "medium")
             except Student.DoesNotExist:
-                data.student.compass_programs = []
-            return JsonResponse(data.to_dict(), safe=False)
+                person.student.compass_programs = []
+            return JsonResponse(person.to_dict(), safe=False)
         except PersonNotFoundException:
             return HttpResponseNotFound()
 

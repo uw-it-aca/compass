@@ -3,13 +3,7 @@
     <div class="me-2" style="min-width: 55px">
       <div class="rounded-circle border border-light border-3">
         <img
-          v-if="person.student.gender === 'M'"
-          src="https://randomuser.me/api/portraits/thumb/men/1.jpg"
-          class="img-fluid rounded-circle border border-white border-2"
-        />
-        <img
-          v-else
-          src="https://randomuser.me/api/portraits/thumb/women/1.jpg"
+          :src="person.photo_url"
           class="img-fluid rounded-circle border border-white border-2"
         />
       </div>
