@@ -3,9 +3,13 @@
     <div class="row">
       <div class="col-lg-4 pe-4 d-flex small">
         <div>
-          <div class="rounded-circle border border-4" style="width: 140px">
+          <div class="rounded-circle border border-4">
             <img
               :src="person.photo_url"
+              @error="
+                $event.target.src = '/static/compass/img/placeholder.jpeg'
+              "
+              style="width: 140px"
               class="img-fluid rounded-circle border border-white border-2"
             />
           </div>

@@ -1,9 +1,11 @@
 <template>
   <div class="d-flex">
-    <div class="me-2" style="min-width: 55px">
+    <div class="me-2">
       <div class="rounded-circle border border-light border-3">
         <img
           :src="person.photo_url"
+          @error="$event.target.src = '/static/compass/img/placeholder.jpeg'"
+          style="width: 60px"
           class="img-fluid rounded-circle border border-white border-2"
         />
       </div>
@@ -39,7 +41,6 @@
             <span v-if="index + 1 < person.student.sports.length">, </span>
           </span>
         </span>
-
       </div>
       <div class="small text-secondary">
         {{ person.student.student_number }}, {{ person.student.class_desc }},
