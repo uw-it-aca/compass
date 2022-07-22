@@ -11,7 +11,6 @@
               >
             </template>
             <template #body>
-              <p>if manager... show all checkins, else, only show checkins assigned to logged in user.</p>
               <table-loading v-if="isLoading"></table-loading>
               <table-display v-else :contacts="contacts"></table-display>
             </template>
@@ -81,7 +80,7 @@ export default {
 
 <style lang="scss">
 .table {
-  tr:last-of-type {
+  tbody tr:last-of-type {
     border-color: transparent !important;
   }
 }

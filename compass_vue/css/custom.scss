@@ -53,6 +53,9 @@ $utilities: (
     )
 );
 
+// override table stripe background
+$table-striped-bg: rgba($purple-400, $table-striped-bg-factor);
+
 // additional non-bootstrap styles
 
 .blah { color: purple; }

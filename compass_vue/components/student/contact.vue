@@ -14,9 +14,9 @@
     </template>
     <template #body>
       <template v-if="contacts.length > 0">
-        <div class="table-responsive mx-n3">
-          <table class="table m-0">
-            <thead class="small bg-light text-secondary">
+        <div class="table-responsive m-n3">
+          <table class="table table-striped table-borderless m-0 small">
+            <thead class="">
               <tr>
                 <th class="ps-3" style="width: 33%">Details</th>
                 <th>Notes/Actions</th>
@@ -37,7 +37,7 @@
                       >edit contact</AddEditContact
                     >
                   </p>
-                  <div class="small">
+                  <div>
                     Topics:
                     <span
                       v-for="(topic, index) in contact.contact_topics"

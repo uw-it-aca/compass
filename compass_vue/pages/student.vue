@@ -101,7 +101,7 @@ export default {
 
 <style lang="scss">
 .table {
-  tr:last-of-type {
+  tbody tr:last-of-type {
     border-color: transparent !important;
   }
 }
