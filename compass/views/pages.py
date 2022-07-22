@@ -9,6 +9,7 @@ from django.views.generic import TemplateView
 from uw_saml.utils import get_user
 
 
+@method_decorator(verify_access(), name='dispatch')
 class LandingView(TemplateView):
     template_name = "index.html"
 

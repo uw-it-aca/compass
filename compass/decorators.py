@@ -19,6 +19,12 @@ def verify_access():
     """
     def decorator(view_func):
         def wrapper(request, *args, **kwargs):
+            logging.info(f"settings.COMPASS_ADMIN_GROUP =  "
+                         f"{settings.COMPASS_ADMIN_GROUP}")
+            logging.info(f"settings.COMPASS_SUPPORT_GROUP =  "
+                         f"{settings.COMPASS_SUPPORT_GROUP}")
+            logging.info(
+                f"isMemberOf = {get_attribute(request, 'isMemberOf')}")
             if UserService().get_override_user() is None:
                 # check saml for admin and support group memberships
                 if (is_member_of_group(request,
