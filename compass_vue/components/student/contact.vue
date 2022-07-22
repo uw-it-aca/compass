@@ -19,7 +19,7 @@
             <thead class="">
               <tr>
                 <th class="ps-3" style="width: 33%">Details</th>
-                <th>Notes/Actions</th>
+                <th>Notes/Actions/Topics</th>
               </tr>
             </thead>
             <tbody class="">
@@ -37,21 +37,18 @@
                       >edit contact</AddEditContact
                     >
                   </p>
-                  <div>
-                    Topics:
-                    <span
-                      v-for="(topic, index) in contact.contact_topics"
-                      :key="topic.id"
-                      >{{ topic.name }}
-                      <span v-if="index + 1 < contact.contact_topics.length"
-                        >,&nbsp;</span
-                      >
-                    </span>
-                  </div>
                 </td>
                 <td>
                   <p class="text-muted">notes: {{ contact.notes }}</p>
                   <p class="text-muted">actions: {{ contact.actions }}</p>
+                  <div>
+                    <span
+                      v-for="topic in contact.contact_topics"
+                      :key="topic.id"
+                      class="badge rounded-pill alert alert-success border-0 px-2 py-1 me-1"
+                      >{{ topic.name }}
+                    </span>
+                  </div>
                 </td>
               </tr>
             </tbody>
