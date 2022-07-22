@@ -1,14 +1,14 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-
+import logging
 from compass.models import AccessGroup
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from userservice.user import UserService
 from uw_gws import GWS
-from uw_saml.utils import is_member_of_group
+from uw_saml.utils import is_member_of_group, get_attribute
 
 
 def verify_access():
