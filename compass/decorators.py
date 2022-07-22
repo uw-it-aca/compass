@@ -1,7 +1,6 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-
 from compass.models import AccessGroup
 from django.conf import settings
 from django.contrib.auth.decorators import login_required

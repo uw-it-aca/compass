@@ -3,16 +3,14 @@
     <div class="row">
       <div class="col-lg-4 pe-4 d-flex small">
         <div>
-          <div class="rounded-circle border border-4" style="width: 140px">
+          <div class="rounded-circle border border-4">
             <img
-              v-if="person.gender === 'F'"
-              src="https://randomuser.me/api/portraits/women/4.jpg"
-              class="img-fluid rounded-circle border border-light border-3"
-            />
-            <img
-              v-else
-              src="https://randomuser.me/api/portraits/men/4.jpg"
-              class="img-fluid rounded-circle border border-gray border-3"
+              :src="person.photo_url"
+              @error="
+                $event.target.src = '/static/compass/img/placeholder.jpeg'
+              "
+              style="width: 140px"
+              class="img-fluid rounded-circle border border-white border-2"
             />
           </div>
         </div>
