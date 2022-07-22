@@ -18,16 +18,17 @@
           <table class="table table-striped table-borderless m-0 small">
             <thead class="">
               <tr>
-                <th class="ps-3" style="width: 33%">Details</th>
-                <th>Notes/Actions/Topics</th>
+                <th class="ps-3">Date</th>
+                <th>Type</th>
+                <th>Details</th>
               </tr>
             </thead>
             <tbody class="">
               <tr v-for="contact in contacts" :key="contact.id">
-                <td scope="row" class="ps-3">
+                <td scope="row" class="ps-3" style="width:25%;">
                   <p>
                     {{ contact.date }} {{ contact.time }}
-                    {{ contact.contact_type.name }}<br />
+                    <br />
                     {{ contact.author.uwnetid }} -
                     <AddEditContact
                       :button-type="'link'"
@@ -39,8 +40,12 @@
                   </p>
                 </td>
                 <td>
-                  <p class="text-muted">notes: {{ contact.notes }}</p>
-                  <p class="text-muted">actions: {{ contact.actions }}</p>
+                  <span
+                    class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 me-1"
+                    >{{ contact.contact_type.name }}</span
+                  >
+                </td>
+                <td>
                   <div>
                     <span
                       v-for="topic in contact.contact_topics"
@@ -49,6 +54,8 @@
                       >{{ topic.name }}
                     </span>
                   </div>
+                  <p class="text-muted">notes: {{ contact.notes }}</p>
+                  <p class="text-muted">actions: {{ contact.actions }}</p>
                 </td>
               </tr>
             </tbody>
