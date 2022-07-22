@@ -25,7 +25,7 @@
             </thead>
             <tbody class="">
               <tr v-for="contact in contacts" :key="contact.id">
-                <td scope="row" class="ps-3" style="width:25%;">
+                <td scope="row" class="ps-3" style="width: 25%">
                   <p>
                     {{ contact.date }} {{ contact.time }}
                     <br />
