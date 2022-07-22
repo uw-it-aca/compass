@@ -11,6 +11,7 @@ from compass.views.api.student import StudentDetailView, StudentContactsView, \
 from compass.views.api.adviser import AdviserContactsView, AdviserCaseloadView
 from compass.views.api.contact import ContactTopicsView, ContactTypesView, \
     ContactSaveView, ContactDetailView
+from compass.views.api.photo import PhotoView
 from compass.views.api.program import ProgramsView
 
 
@@ -64,6 +65,8 @@ urlpatterns += [
             AdviserContactsView.as_view()),
     re_path(r'^api/internal/adviser/(?P<adviser_netid>[\w]+)/caseload/$',
             AdviserCaseloadView.as_view()),
+    re_path(r'^api/internal/photo/(?P<photo_key>[a-z0-9]*)/$',
+            PhotoView.as_view(), name='photo'),
     # not authorized page that responds as 403
     re_path(
         r"^not-authorized$",
