@@ -7,7 +7,7 @@
           :button-type="'button'"
           :person="person"
           @contactUpdated="loadStudentContacts()"
-          ><i class="bi bi-plus-square text-white me-2"></i>Record new
+          ><i class="bi bi-plus-square text-dark me-2"></i>Record new
           contact</AddEditContact
         >
       </axdd-card-action>
@@ -39,22 +39,13 @@
                     >
                   </p>
                 </td>
-                <td>
+                <td class="align-bottom">
                   <span
                     class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 me-1"
                     >{{ contact.contact_type.name }}</span
                   >
                 </td>
-                <td>
-                  <div>
-                    <span
-                      v-for="topic in contact.contact_topics"
-                      :key="topic.id"
-                      class="badge rounded-pill alert alert-dark-beige border-0 px-2 py-1 me-1"
-                      >{{ topic.name }}
-                    </span>
-                  </div>
-
+                <td class="align-bottom">
                   <div v-if="contact.notes">
                     <span class="fs-11 fw-bold text-muted">Notes</span>
                     <p class="text-dark">
@@ -67,6 +58,15 @@
                     <p class="text-dark">
                       {{ contact.actions }}
                     </p>
+                  </div>
+
+                  <div>
+                    <span
+                      v-for="topic in contact.contact_topics"
+                      :key="topic.id"
+                      class="badge rounded-pill alert alert-dark-beige border-0 px-2 py-1 me-1"
+                      >{{ topic.name }}
+                    </span>
                   </div>
                 </td>
               </tr>
