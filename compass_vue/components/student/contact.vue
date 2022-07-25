@@ -50,12 +50,24 @@
                     <span
                       v-for="topic in contact.contact_topics"
                       :key="topic.id"
-                      class="badge rounded-pill alert alert-success border-0 px-2 py-1 me-1"
+                      class="badge rounded-pill alert alert-dark-beige border-0 px-2 py-1 me-1"
                       >{{ topic.name }}
                     </span>
                   </div>
-                  <p class="text-muted">notes: {{ contact.notes }}</p>
-                  <p class="text-muted">actions: {{ contact.actions }}</p>
+
+                  <div v-if="contact.notes">
+                    <span class="fs-11 fw-bold text-muted">Notes</span>
+                    <p class="text-dark">
+                      {{ contact.notes }}
+                    </p>
+                  </div>
+
+                  <div v-if="contact.actions">
+                    <span class="fs-11 fw-bold text-muted">Actions</span>
+                    <p class="text-dark">
+                      {{ contact.actions }}
+                    </p>
+                  </div>
                 </td>
               </tr>
             </tbody>
