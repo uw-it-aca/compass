@@ -1,7 +1,7 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from django.urls import re_path
+from django.urls import re_path, include
 from compass.admin import admin_site
 from django.conf import settings
 from django.views.generic import TemplateView
@@ -41,6 +41,7 @@ if settings.DEBUG:
 
 urlpatterns += [
     re_path(r'^admin', admin_site.urls),
+    re_path(r'^support', include('userservice.urls')),
     re_path(r'^api/internal/student/save/$',
             StudentSaveView.as_view()),
     re_path(r'^api/internal/student/(?P<uwnetid>[-@:\w]+)/$',

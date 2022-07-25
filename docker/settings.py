@@ -2,9 +2,12 @@ from .base_settings import *
 
 INSTALLED_APPS += [
     'compass.apps.CompassConfig',
+    'compressor',
+    'django_user_agents',
     'simple_history',
-    'webpack_loader',
+    'supporttools',
     'userservice',
+    'webpack_loader',
 ]
 
 # Location of stats file that can be accessed during local development and
@@ -22,7 +25,10 @@ else:
         }
     }
 
-MIDDLEWARE += ['userservice.user.UserServiceMiddleware']
+MIDDLEWARE += [
+    'userservice.user.UserServiceMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
+]
 
 TEMPLATES = [
     {
@@ -36,6 +42,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'supporttools.context_processors.supportools_globals',
+                'supporttools.context_processors.has_less_compiled',
             ],
         }
     }
@@ -70,3 +78,11 @@ else:
     COMPASS_SUPPORT_GROUP = os.getenv('SUPPORT_GROUP', '')
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
+
+# Where the back link should go, and how it's labeled.
+SUPPORTTOOLS_PARENT_APP = "Compass"
+SUPPORTTOOLS_PARENT_APP_URL = "/"
+
+USERSERVICE_VALIDATION_MODULE = 'compass.dao.UserServiceDAO.is_netid'
+USERSERVICE_OVERRIDE_AUTH_MODULE = 'compass.views.can_override_user'
+RESTCLIENTS_ADMIN_AUTH_MODULE = 'compass.views.can_proxy_restclient'
