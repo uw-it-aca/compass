@@ -1,14 +1,14 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
-from compass.dao import PhotoDAO
+from compass.views.api import BaseAPIView
+from compass.dao.photo import PhotoDAO
 from datetime import datetime, timedelta
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, StreamingHttpResponse
-from django.views.generic import View
 from restclients_core.exceptions import DataFailureException
 
 
-class PhotoView(View):
+class PhotoView(BaseAPIView):
     cache_time = 60 * 60 * 4
     date_format = '%a, %d %b %Y %H:%M:%S GMT'
 

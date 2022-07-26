@@ -18,13 +18,12 @@ def verify_access():
     """
     def decorator(view_func):
         def wrapper(request, *args, **kwargs):
-            if UserService().get_override_user() is None:
-                # check saml for admin and support group memberships
-                if (is_member_of_group(request,
-                                       settings.COMPASS_ADMIN_GROUP) or
-                    is_member_of_group(request,
-                                       settings.COMPASS_SUPPORT_GROUP)):
-                    return view_func(request, *args, **kwargs)
+            # check saml for admin and support group memberships
+            if (is_member_of_group(request,
+                                   settings.COMPASS_ADMIN_GROUP) or
+                is_member_of_group(request,
+                                   settings.COMPASS_SUPPORT_GROUP)):
+                return view_func(request, *args, **kwargs)
 
             for group_id in AccessGroup.objects.access_group_ids:
                 # check the gws for astra group memberships

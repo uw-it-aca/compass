@@ -2,16 +2,13 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from compass.views.api import BaseAPIView
-from compass.dao import PhotoDAO
-from compass.decorators import verify_access
+from compass.dao.photo import PhotoDAO
 from compass.models import Contact
 from compass.serializers import ContactReadSerializer
 from django.http import JsonResponse
-from django.utils.decorators import method_decorator
 from uw_person_client import UWPersonClient
 
 
-@method_decorator(verify_access(), name='dispatch')
 class AdviserContactsView(BaseAPIView):
     '''
     API endpoint returning a list of contacts of an adviser
@@ -35,7 +32,6 @@ class AdviserContactsView(BaseAPIView):
         return JsonResponse([contact for contact in contacts], safe=False)
 
 
-@method_decorator(verify_access(), name='dispatch')
 class AdviserCaseloadView(BaseAPIView):
     '''
     API endpoint returning a list of contacts of an adviser
