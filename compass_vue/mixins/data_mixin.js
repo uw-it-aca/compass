@@ -21,13 +21,12 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
-    saveStudent: async function (systemkey, programs, specialProgram) {
+    saveStudent: async function (systemkey, programs) {
       return axios.post(
         "/api/internal/student/save/",
         {
           system_key: systemkey,
           programs: programs,
-          special_program: specialProgram,
         },
         this._getAxiosConfig()
       );
