@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from compass.views.api import BaseAPIView
-from compass.dao import PhotoDAO
+from compass.dao.photo import PhotoDAO
 from compass.decorators import verify_access
 from compass.models import Contact
 from compass.serializers import ContactReadSerializer

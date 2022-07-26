@@ -8,7 +8,6 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
 from uw_pws import PWS
 from urllib.parse import urlparse, urlunparse
-from restclients_core.exceptions import DataFailureException, InvalidNetID
 
 
 class PhotoDAO():
@@ -50,24 +49,3 @@ class PhotoDAO():
                 query='s={}&d=mm'.format(image_size))
             return urlunparse(new_parts)
         return url
-
-
-class UserServiceDAO():
-
-    @classmethod
-    def is_netid(cls, username):
-        pws = PWS()
-        error_msg = "No override user supplied, please enter a UWNetID"
-        if username is not None and len(username) > 0:
-            try:
-                user = pws.get_entity_by_netid(username.lower())
-                if username.lower() == user.uwnetid:
-                    error_msg = None
-                else:
-                    error_msg = "Current netid: {}, Prior netid: ".format(
-                        user.uwnetid)
-            except InvalidNetID:
-                error_msg = "Not a valid UWNetID: "
-            except DataFailureException as err:
-                error_msg = "Error ({}) {}: ".format(err.status, err.msg)
-        return error_msg
