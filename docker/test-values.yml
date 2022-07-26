@@ -58,6 +58,11 @@ environmentVariables:
   - name: SWS_TIMEOUT
     value: "10"
 
+  - name: PWS_ENV
+    value: PROD
+  - name: PWS_TIMEOUT
+    value: "10"
+
   - name: GWS_ENV
     value: PROD
   - name: GWS_TIMEOUT
