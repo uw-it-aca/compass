@@ -3,12 +3,9 @@
 
 from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
-from compass.decorators import verify_access
 from compass.models import Student, Contact
 from compass.serializers import ContactReadSerializer, StudentWriteSerializer
 from django.http import JsonResponse, HttpResponseNotFound
-from django.utils.decorators import method_decorator
-from django.views import View
 from restclients_core.exceptions import DataFailureException
 from rest_framework.response import Response
 from rest_framework import status
@@ -19,8 +16,7 @@ from uw_sws.term import get_current_term, get_next_term, get_term_after, \
 from uw_sws.registration import get_schedule_by_regid_and_term
 
 
-@method_decorator(verify_access(), name='dispatch')
-class StudentDetailView(View):
+class StudentDetailView(BaseAPIView):
     '''
     API endpoint returning a student's details
 
@@ -72,8 +68,7 @@ class StudentSaveView(BaseAPIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
 
-@method_decorator(verify_access(), name='dispatch')
-class StudentSchedulesView(View):
+class StudentSchedulesView(BaseAPIView):
     '''
     API endpoint returning a student's class schedule details
 

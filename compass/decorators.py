@@ -19,9 +19,9 @@ def verify_access():
     def decorator(view_func):
         def wrapper(request, *args, **kwargs):
             # check saml for admin and support group memberships
-            if (is_member_of_group(UserService().get_original_user(),
+            if (is_member_of_group(request,
                                    settings.COMPASS_ADMIN_GROUP) or
-                is_member_of_group(UserService().get_original_user(),
+                is_member_of_group(request,
                                    settings.COMPASS_SUPPORT_GROUP)):
                 return view_func(request, *args, **kwargs)
 
