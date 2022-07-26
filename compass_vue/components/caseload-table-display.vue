@@ -1,6 +1,6 @@
 <template>
   <div v-if="persons.length > 0" class="table-responsive mx-n3 mb-n3">
-    <table class="table table-striped table-borderless m-0 small">
+    <table class="table table-striped table-borderless m-0">
       <thead class="">
         <tr>
           <th scope="col" style="width: 33%" class="ps-3">Student</th>

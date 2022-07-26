@@ -7,7 +7,7 @@
     @click="getFormData()"
     :class="[
       buttonType === 'button'
-        ? 'btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2'
+        ? 'btn-sm btn-purple text-white rounded-3 px-3 py-2'
         : 'small p-0 btn-sm btn-link',
     ]"
   >
@@ -46,9 +46,7 @@
                   formErrors.date ? 'is-invalid form-control' : 'form-control'
                 "
               />
-              <small class="text-danger" v-if="formErrors.date">
-                required
-              </small>
+              <span class="text-danger" v-if="formErrors.date"> required </span>
             </div>
             <div class="col">
               <label class="form-label">Contact type:</label>
@@ -70,9 +68,9 @@
                   {{ contactType.name }}
                 </option>
               </select>
-              <small class="text-danger" v-if="formErrors.contact_type">
+              <span class="text-danger" v-if="formErrors.contact_type">
                 required
-              </small>
+              </span>
             </div>
             <div class="col">
               <div class="row">
@@ -91,18 +89,18 @@
                         : 'form-control'
                     "
                   />
-                  <small class="text-danger" v-if="formErrors.time">
+                  <span class="text-danger" v-if="formErrors.time">
                     required
-                  </small>
+                  </span>
                 </div>
               </div>
             </div>
           </div>
           <div class="mb-3">
             <label class="form-label">Topics Covered:</label>
-            <small class="text-danger" v-if="formErrors.contact_topics">
+            <span class="text-danger" v-if="formErrors.contact_topics">
               required
-            </small>
+            </span>
             <div style="column-count: 3">
               <div
                 class="form-check"
@@ -136,9 +134,7 @@
               rows="3"
               v-model="contact.notes"
             ></textarea>
-            <small class="text-danger" v-if="formErrors.notes">
-              required
-            </small>
+            <span class="text-danger" v-if="formErrors.notes"> required </span>
           </div>
 
           <div class="mb-3">

@@ -7,7 +7,7 @@
           :button-type="'button'"
           :person="person"
           @contactUpdated="loadStudentContacts()"
-          ><i class="bi bi-plus-square text-dark me-2"></i>Record new
+          ><i class="bi bi-plus-square text-white me-2"></i>Record new
           contact</AddEditContact
         >
       </axdd-card-action>
@@ -15,7 +15,7 @@
     <template #body>
       <template v-if="contacts.length > 0">
         <div class="table-responsive m-n3">
-          <table class="table table-striped table-borderless m-0 small">
+          <table class="table table-striped table-borderless m-0">
             <thead class="">
               <tr>
                 <th class="ps-3">Date</th>
@@ -40,34 +40,37 @@
                   </p>
                 </td>
                 <td class="align-bottom">
+
                   <span
-                    class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 me-1"
+                    class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-1"
                     >{{ contact.contact_type.name }}</span
                   >
                 </td>
                 <td class="align-bottom">
                   <div v-if="contact.notes">
-                    <span class="fs-11 fw-bold text-muted">Notes</span>
+                    <span class="small text-muted">Notes</span>
                     <p class="text-dark">
                       {{ contact.notes }}
                     </p>
                   </div>
 
                   <div v-if="contact.actions">
-                    <span class="fs-11 fw-bold text-muted">Actions</span>
+                    <span class="small text-muted">Actions</span>
                     <p class="text-dark">
                       {{ contact.actions }}
                     </p>
                   </div>
 
-                  <div>
-                    <span
+                  <ul v-if="contact.contact_topics" class="list-unstyled m-0">
+                    <li
                       v-for="topic in contact.contact_topics"
                       :key="topic.id"
-                      class="badge rounded-pill alert alert-dark-beige border-0 px-2 py-1 me-1"
-                      >{{ topic.name }}
-                    </span>
-                  </div>
+                      class="badge rounded-pill alert alert-dark-beige border-0 px-2 py-1 mb-0 me-1"
+                    >
+                      {{ topic.name }}
+                    </li>
+                  </ul>
+
                 </td>
               </tr>
             </tbody>

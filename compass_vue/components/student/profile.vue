@@ -1,8 +1,8 @@
 <template>
   <div class="bg-gray p-3 rounded-3">
     <div class="row">
-      <div class="col-lg-4 pe-4 d-flex small">
-        <div>
+      <div class="col-lg-4 mb-3 d-flex">
+        <div class="pe-3">
           <div class="rounded-circle border border-4">
             <img
               :src="person.photo_url"
@@ -14,7 +14,7 @@
             />
           </div>
         </div>
-        <div class="flex-fill ps-4 mb-4">
+        <div class="flex-fill">
           <div class="h3 text-dark axdd-font-encode-sans">
             <template v-if="person.preferred_first_name">
               {{ person.preferred_first_name }}
@@ -29,7 +29,7 @@
           </div>
           <div class="h5">
             {{ person.student.student_number }},
-            <small>{{ person.uwnetid }}</small>
+            {{ person.uwnetid }}
           </div>
           <p>
             <span
@@ -52,7 +52,7 @@
           </div>
         </div>
       </div>
-      <div class="col-6 col-lg-4 px-4 small">
+      <div class="col-12 col-lg-4 mb-3">
         <ul class="list-unstyled m-0">
           <li>
             Preferred name: {{ person.preferred_first_name }}
@@ -71,7 +71,7 @@
           <li>DOB: {{ person.student.birthdate }}</li>
         </ul>
       </div>
-      <div class="col-6 col-lg-4 ps-4 small">
+      <div class="col-12 col-lg-4">
         <ul class="list-unstyled m-0">
           <li>UW Email: {{ person.student.student_email }}</li>
           <li>Personal email: {{ person.student.personal_email }}</li>
