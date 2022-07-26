@@ -5,7 +5,6 @@ from compass.dao.photo import PhotoDAO
 from datetime import datetime, timedelta
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, StreamingHttpResponse
-from django.views.generic import View
 from restclients_core.exceptions import DataFailureException
 
 
