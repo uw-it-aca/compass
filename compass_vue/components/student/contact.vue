@@ -1,113 +1,123 @@
 <template>
   <axdd-card>
     <template #heading-action>
-      <axdd-card-heading :level="2">Contact</axdd-card-heading>
+      <axdd-card-heading :level="2">Contacts</axdd-card-heading>
       <axdd-card-action>
-        <AddContact><i class="bi bi-plus-square-dotted me-2"></i>Record new contact</AddContact>
+        <AddEditContact
+          :button-type="'button'"
+          :person="person"
+          @contactUpdated="loadStudentContacts()"
+          ><i class="bi bi-plus-square text-dark me-2"></i>Record new
+          contact</AddEditContact
+        >
       </axdd-card-action>
     </template>
     <template #body>
-      <div class="table-responsive">
-        <table class="table m-0">
-          <thead class="small">
-            <tr>
-              <th>Date</th>
-              <th>Time</th>
-              <th class="text-nowrap">Contact Type</th>
-              <th>Staff</th>
-              <th>Notes</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td scope="row">09/23/2020</td>
-              <td>1:55PM</td>
-              <td>Drop-in</td>
-              <td>Jon Average</td>
-              <td>
-                <p>
-                  <span class="badge bg-beige text-dark fw-normal">
-                    <i class="bi bi-lock-fill"></i> Restricted
-                  </span>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
-                  mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
-                  expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                  dolores excepturi?
-                </p>
-                <p class="text-end small">
-                  <a href="#">Edit contact</a>
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">07/04/2020</td>
-              <td>10:52AM</td>
-              <td>Quick Question</td>
-              <td>Boris Washington</td>
-              <td>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
-                  mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
-                  expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                  dolores excepturi?
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">06/29/2020</td>
-              <td>3:15PM</td>
-              <td>Appointment</td>
-              <td>Jon Average</td>
-              <td>
-                <p>
-                  <span class="badge bg-beige text-dark fw-normal">
-                    <i class="bi bi-lock-fill"></i> Restricted
-                  </span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
-                  mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
-                  expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                  dolores excepturi?
-                </p>
-                <p class="text-end small">
-                  <a href="#">Edit contact</a>
-                </p>
-              </td>
-            </tr>
-            <tr>
-              <td scope="row">5/14/2020</td>
-              <td>2:15PM</td>
-              <td>Telephone</td>
-              <td>Otto Wilson</td>
-              <td>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam, ducimus
-                  mollitia! Maiores suscipit tempore sunt, ipsa beatae omnis doloribus
-                  expedita iure fuga obcaecati modi incidunt. Repellendus velit asperiores
-                  dolores excepturi?
-                </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <template v-if="contacts.length > 0">
+        <div class="table-responsive m-n3">
+          <table class="table table-striped table-borderless m-0 small">
+            <thead class="">
+              <tr>
+                <th class="ps-3">Date</th>
+                <th>Type</th>
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody class="">
+              <tr v-for="contact in contacts" :key="contact.id">
+                <td scope="row" class="ps-3" style="width: 25%">
+                  <p>
+                    {{ contact.date }} {{ contact.time }}
+                    <br />
+                    {{ contact.author.uwnetid }} -
+                    <AddEditContact
+                      :button-type="'link'"
+                      :person="person"
+                      :contact-id="contact.id"
+                      @contactUpdated="loadStudentContacts()"
+                      >edit contact</AddEditContact
+                    >
+                  </p>
+                </td>
+                <td class="align-bottom">
+                  <span
+                    class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 me-1"
+                    >{{ contact.contact_type.name }}</span
+                  >
+                </td>
+                <td class="align-bottom">
+                  <div v-if="contact.notes">
+                    <span class="fs-11 fw-bold text-muted">Notes</span>
+                    <p class="text-dark">
+                      {{ contact.notes }}
+                    </p>
+                  </div>
+
+                  <div v-if="contact.actions">
+                    <span class="fs-11 fw-bold text-muted">Actions</span>
+                    <p class="text-dark">
+                      {{ contact.actions }}
+                    </p>
+                  </div>
+
+                  <div>
+                    <span
+                      v-for="topic in contact.contact_topics"
+                      :key="topic.id"
+                      class="badge rounded-pill alert alert-dark-beige border-0 px-2 py-1 me-1"
+                      >{{ topic.name }}
+                    </span>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </template>
+      <template v-else>
+        <p>No contacts found</p>
+      </template>
     </template>
   </axdd-card>
 </template>
 
-
 <script>
-import { Card, CardHeading, CardAction } from 'axdd-components';
-import AddContact from '../add-contact.vue';
+import dataMixin from "../../mixins/data_mixin.js";
+import { Card, CardHeading, CardAction } from "axdd-components";
+import AddEditContact from "../add-contact.vue";
 
 export default {
+  mixins: [dataMixin],
   components: {
-    AddContact,
-    'axdd-card': Card,
-    'axdd-card-heading': CardHeading,
-    'axdd-card-action': CardAction
+    AddEditContact,
+    "axdd-card": Card,
+    "axdd-card-heading": CardHeading,
+    "axdd-card-action": CardAction,
+  },
+  props: {
+    person: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
-    return { };
+    return {
+      contacts: {},
+    };
   },
-}
-
+  created() {
+    this.loadStudentContacts();
+  },
+  methods: {
+    loadStudentContacts: function () {
+      this.getStudentContacts(this.person.student.system_key).then(
+        (response) => {
+          if (response.data) {
+            this.contacts = response.data;
+          }
+        }
+      );
+    },
+  },
+};
 </script>

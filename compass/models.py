@@ -1,208 +1,159 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass import utilities
-from datetime import datetime, date
 from django.db import models
-from django.utils import timezone
-from django.conf import settings
-from uw_sws.term import get_current_term, get_term_by_year_and_quarter
-from uw_sws import SWS_TIMEZONE
+from simple_history.models import HistoricalRecords
+from uw_person_client import UWPersonClient
 
 
-class TermManager(models.Manager):
+class AppUserManager(models.Manager):
 
-    def get_current_term(self):
-        curr_date = timezone.now()
-        return self.get_term_for_date(curr_date)
-
-    def get_term_for_date(self, date):
-        """
-        Return term intersecting with supplied date
-
-        :param date: date to return term for
-        :type date: datetime.datetime
-        """
-        term = (Term.objects
-                .filter(first_day_quarter__lte=date)
-                .filter(grade_submission_deadline__gte=date)).first()
-        return term
-
-    def get_or_create_term_from_sis_term_id(self, sis_term_id=None):
-        """
-        Creates and/or queries for Term matching sis_term_id. If sis_term_id
-        is not defined, creates and/or queries for Term object for current
-        sws term.
-
-        :param sis_term_id: sis term id to return Term object for
-        :type sis_term_id: str
-        """
-        if sis_term_id is None:
-            # try to lookup the current term based on the date
-            term = self.get_current_term()
-            if term:
-                # return current term
-                return term, False
-
-        if sis_term_id:
-            # lookup sws term object for supplied sis term id
-            year, quarter = sis_term_id.split("-")
-            sws_term = get_term_by_year_and_quarter(int(year), quarter)
+    def upsert_appuser(self, uwnetid):
+        # request the current person object for the user
+        client = UWPersonClient()
+        person = client.get_person_by_uwnetid(uwnetid)
+        # check the AppUser table to see if they have an existing entry
+        persons_netids = person.prior_uwnetids + [person.uwnetid]
+        for netid in persons_netids:
+            try:
+                # update the AppUsers uwnetid
+                user = AppUser.objects.get(uwnetid=netid)
+                user.uwnetid = person.uwnetid
+                user.save()
+                return user
+            except AppUser.DoesNotExist:
+                continue
         else:
-            # lookup sws term object for current term
-            sws_term = get_current_term()
-        return self.get_or_create_from_sws_term(sws_term)
-
-    def get_or_create_from_sws_term(self, sws_term):
-        """
-        Creates and/or queries for Term for sws_term object. If Term for
-        sws_term is not defined in the database, a Term object is created.
-
-        :param sws_term: sws_term object to create and or load
-        :type sws_term: uw_sws.term
-        """
-
-        def sws_to_utc(dt):
-            if isinstance(dt, date):
-                # convert date to datetime
-                dt = datetime.combine(dt, datetime.min.time())
-                SWS_TIMEZONE.localize(dt)
-                return dt.astimezone(timezone.utc)
-
-        # get/create model for the term
-        term, created = \
-            Term.objects.get_or_create(sis_term_id=sws_term.canvas_sis_id())
-        if created:
-            # add current term info for course
-            term.sis_term_id = sws_term.canvas_sis_id()
-            term.year = sws_term.year
-            term.quarter = sws_term.quarter
-            term.label = sws_term.term_label()
-            term.last_day_add = sws_to_utc(sws_term.last_day_add)
-            term.last_day_drop = sws_to_utc(sws_term.last_day_drop)
-            term.first_day_quarter = sws_to_utc(sws_term.first_day_quarter)
-            term.census_day = sws_to_utc(sws_term.census_day)
-            term.last_day_instruction = \
-                sws_to_utc(sws_term.last_day_instruction)
-            term.grading_period_open = sws_to_utc(sws_term.grading_period_open)
-            term.aterm_grading_period_open = \
-                sws_to_utc(sws_term.aterm_grading_period_open)
-            term.grade_submission_deadline = \
-                sws_to_utc(sws_term.grade_submission_deadline)
-            term.last_final_exam_date = \
-                sws_to_utc(sws_term.last_final_exam_date)
-            term.save()
-        return term, created
+            # if no user is found, then create one
+            user = AppUser(uwnetid=uwnetid)
+            user.save()
+            return user
 
 
-class Term(models.Model):
+class AppUser(models.Model):
+    """
+    Authenticated user
+    """
 
-    objects = TermManager()
-    sis_term_id = models.TextField(null=True)
-    year = models.IntegerField(null=True)
-    quarter = models.TextField(null=True)
-    label = models.TextField(null=True)
-    last_day_add = models.DateField(null=True)
-    last_day_drop = models.DateField(null=True)
-    first_day_quarter = models.DateField(null=True)
-    census_day = models.DateField(null=True)
-    last_day_instruction = models.DateField(null=True)
-    grading_period_open = models.DateTimeField(null=True)
-    aterm_grading_period_open = models.DateTimeField(null=True)
-    grade_submission_deadline = models.DateTimeField(null=True)
-    last_final_exam_date = models.DateTimeField(null=True)
+    objects = AppUserManager()
 
-    @property
-    def term_number(self):
-        return utilities.get_term_number(self.quarter)
+    uwnetid = models.CharField(unique=True, max_length=50)
 
+    # A user's Group affiliation is derived at login via GWS Groups. A GWS
+    # group key is generated using the <access_id>. It is important to note
+    # that UW Group memberships are managed externally from the Compass app.
 
-class Adviser(models.Model):
+    class Meta:
+        indexes = [
+            models.Index(fields=['uwnetid']),
+        ]
 
-    is_active = models.BooleanField(null=True)
-    is_dept_adviser = models.BooleanField(null=True)
-    full_name = models.TextField(null=True)
-    pronouns = models.TextField(null=True)
-    email_address = models.TextField(null=True)
-    phone_number = models.TextField(null=True)
-    uwnetid = models.TextField(null=True)
-    regid = models.TextField(null=True)
-    program = models.TextField(null=True)
-    booking_url = models.TextField(null=True)
-    metadata = models.TextField(null=True)
-    timestamp = models.DateTimeField(null=True)
-
-
-class Major(models.Model):
-
-    major_abbr_code = models.TextField(null=True)
-    major_full_code = models.TextField(null=True)
-    major_name = models.TextField(null=True)
-    major_full_name = models.TextField(null=True)
-    major_short_name = models.TextField(null=True)
-
-
-class SpecialProgram(models.Model):
-
-    special_program_code = models.TextField(null=True)
-    special_program_desc = models.TextField(null=True)
-
-
-class Retention(models.Model):
-
-    priority = models.TextField(null=True)
-    sign_in = models.TextField(null=True)
-    activity = models.TextField(null=True)
-    assignment = models.TextField(null=True)
-    grade = models.TextField(null=True)
+    def __str__(self):
+        return f"{self.uwnetid}"
 
 
 class Student(models.Model):
+    system_key = models.CharField(unique=True, max_length=50)
+    programs = models.ManyToManyField('Program')
 
-    student_number = models.BigIntegerField(unique=True)
-    uw_net_id = models.TextField(null=True)
-    student_name = models.TextField(null=True)
-    student_preferred_first_name = models.TextField(null=True)
-    student_preferred_middle_name = models.TextField(null=True)
-    student_preferred_last_name = models.TextField(null=True)
-    birthdate = models.DateField(null=True)
-    student_email = models.TextField(null=True)
-    external_email = models.TextField(null=True)
-    local_phone_number = models.TextField(null=True)
-    gender = models.TextField(null=True)
-    gpa = models.TextField(null=True)
-    total_credits = models.TextField(null=True)
-    total_uw_credits = models.TextField(null=True)
-    campus_code = models.TextField(null=True)
-    campus_desc = models.TextField(null=True)
-    class_code = models.TextField(null=True)
-    class_desc = models.TextField(null=True)
-    enrollment_status_code = models.TextField(null=True)
-    exemption_code = models.TextField(null=True)
-    exemption_desc = models.TextField(null=True)
-    honors_program_code = models.TextField(null=True)
-    honors_program_ind = models.TextField(null=True)
-    resident_code = models.TextField(null=True)
-    resident_desc = models.TextField(null=True)
-    perm_addr_line1 = models.TextField(null=True)
-    perm_addr_line2 = models.TextField(null=True)
-    perm_addr_city = models.TextField(null=True)
-    perm_addr_state = models.TextField(null=True)
-    perm_addr_5digit_zip = models.TextField(null=True)
-    perm_addr_4digit_zip = models.TextField(null=True)
-    perm_addr_country = models.TextField(null=True)
-    perm_addr_postal_code = models.TextField(null=True)
-    registered_in_quarter = models.BooleanField(null=True)
-    special_program = models.ManyToManyField(SpecialProgram)
-    retention = models.ForeignKey(Retention, on_delete=models.CASCADE,
-                                  default=1)
-    adviser = models.ManyToManyField(Adviser)
-    intended_major = models.ManyToManyField(
-        Major, related_name="intended_major")  # edited by compass
-    major = models.ManyToManyField(Major, related_name="major")
+    class Meta:
+        indexes = [
+            models.Index(fields=['system_key']),
+        ]
+
+    def __str__(self):
+        return self.system_key
+
+
+class AccessGroupManager(models.Manager):
 
     @property
-    def enrollment_desc(self):
-        enrollment_map = settings.ENROLLMENT_STATUS_MAPPING
-        return enrollment_map.get(int(self.enrollment_status_code),
-                                  "Unknown").title()
+    def access_group_ids(self):
+        return list(
+            super().get_queryset().values_list('access_group_id', flat=True))
+
+
+class AccessGroup(models.Model):
+    """
+    AccessGroups manage their Program, ContactTopic, and ContactType
+    lists. AccessGroup membership is defined externally but determined for a
+    AppUser via a request to the GWS at login.
+    """
+
+    objects = AccessGroupManager()
+
+    name = models.CharField(unique=True, max_length=50)
+    access_group_id = models.CharField(unique=True, max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
+class Program(models.Model):
+    """
+    Departmental/Group Program (e.g. CAMP, TRIO, SSS, Champions, IC Eligible)
+    """
+    access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
+    name = models.CharField(unique=True, max_length=50)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Contact(models.Model):
+    """
+    Contact with a student
+    """
+    # required fields
+    author = models.ForeignKey('AppUser', on_delete=models.CASCADE)
+    access_group = models.ManyToManyField('AccessGroup')
+    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    contact_type = models.ForeignKey('ContactType', on_delete=models.CASCADE)
+    date = models.DateField(auto_now=False)
+    time = models.TimeField(auto_now=False)
+    # optional fields
+    noshow = models.BooleanField(default=False)
+    notes = models.TextField(default=None, blank=True, null=True)
+    actions = models.TextField(default=None, blank=True, null=True)
+    contact_topics = models.ManyToManyField('ContactTopic')
+    # generated by check-in queue system
+    source = models.CharField(default='Compass', max_length=50)
+    # contact history fields
+    pub_date = models.DateTimeField(auto_now=True)
+    history = HistoricalRecords(history_user_id_field='author')
+
+    @property
+    def _history_user(self):
+        return self.author
+
+    @_history_user.setter
+    def _history_user(self, value):
+        self.author = value
+
+    def __str__(self):
+        return f"{self.author} w/ {self.student} @ {self.date}T{self.time}"
+
+
+class ContactType(models.Model):
+    """
+    Type of Contact
+    """
+    access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
+    name = models.CharField(unique=True, max_length=50)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+
+class ContactTopic(models.Model):
+    """
+    Topic discussed in a Contact
+    """
+    access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
+    name = models.CharField(unique=True, max_length=50)
+    active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name

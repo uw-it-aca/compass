@@ -1,68 +1,117 @@
 <template>
   <axdd-card>
-    <template #heading>
+    <template #heading-tabs v-if="Object.keys(schedules).length">
+      <axdd-card-heading :level="2">Schedule</axdd-card-heading>
+      <axdd-card-tabs>
+        <axdd-tabs-list :tabs-id="'schedule'" :variant="'tabs'" class="small">
+          <template #items>
+            <axdd-tabs-item
+              v-for="(schedule, index) in schedules"
+              :key="index"
+              :tabs-id="'schedule'"
+              :panel-id="'panel' + index"
+              :active-tab="index == 0"
+              :variant="'tabs'"
+              >{{ schedule.term.quarter }}
+              {{ schedule.term.year }}</axdd-tabs-item
+            >
+          </template>
+        </axdd-tabs-list>
+      </axdd-card-tabs>
+    </template>
+    <template v-else #heading>
       <axdd-card-heading :level="2">Schedule</axdd-card-heading>
     </template>
     <template #body>
-      <axdd-tabs :tabs-id="'schedule'">
-        <template #items>
-          <axdd-tab-item :tabs-id="'schedule'" :panel-id="'current'" :active-tab="true"
-            >Current</axdd-tab-item
-          >
-          <axdd-tab-item :tabs-id="'schedule'" :panel-id="'next'">Next</axdd-tab-item>
-          <axdd-tab-item :tabs-id="'schedule'" :panel-id="'after'">After</axdd-tab-item>
-          <axdd-tab-item :tabs-id="'schedule'" :panel-id="'further'">Further</axdd-tab-item>
-        </template>
+      <axdd-tabs-display :tabs-id="'schedule'">
         <template #panels>
-          <axdd-tab-panel :panel-id="'current'" :active-panel="true">
-            <p>
-              <strong>current</strong> Lorem ipsum dolor sit amet consectetur adipisicing elit. Id
-              aperiam dolores harum doloribus libero sapiente corrupti sint rerum incidunt. Qui quia
-              hic ipsam culpa laudantium delectus sapiente tempore, eveniet modi.
-            </p>
-          </axdd-tab-panel>
-          <axdd-tab-panel :panel-id="'next'">
-            <p>
-              <strong>next</strong> Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Repellendus iste, expedita, vitae voluptatibus nobis amet eligendi consectetur
-              repudiandae aut ut vel? Amet nesciunt culpa non molestiae enim consequuntur provident
-              sit.
-            </p>
-          </axdd-tab-panel>
-          <axdd-tab-panel :panel-id="'after'">
-            <p>
-              <strong>after</strong>, ipsum dolor sit amet consectetur adipisicing elit. Doloremque
-              est totam, ipsa corporis molestias, temporibus maiores ex enim error perferendis ad
-              veritatis tenetur dicta laboriosam nam eaque eum minus distinctio.
-            </p>
-          </axdd-tab-panel>
-          <axdd-tab-panel :panel-id="'further'">
-            <p>
-              <strong>further</strong>, ipsum dolor sit amet consectetur adipisicing elit.
-              Doloremque est totam, ipsa corporis molestias, temporibus maiores ex enim error
-              perferendis ad veritatis tenetur dicta laboriosam nam eaque eum minus distinctio.
-            </p>
-          </axdd-tab-panel>
+          <template v-if="Object.keys(schedules).length">
+            <axdd-tabs-panel
+              v-for="(schedule, scheduleIndex) in schedules"
+              :key="scheduleIndex"
+              :panel-id="'panel' + scheduleIndex"
+              :active-panel="scheduleIndex == 0"
+            >
+              <div class="table-responsive m-n3">
+                <table class="table table-striped table-borderless m-0 small">
+                  <thead class="">
+                    <tr>
+                      <th class="ps-3">Course</th>
+                      <th>Title</th>
+                      <th>Credits</th>
+                    </tr>
+                  </thead>
+                  <tbody class="mb-3">
+                    <tr
+                      v-for="(section, index) in schedule.sections"
+                      :key="index"
+                    >
+                      <td class="ps-3">
+                        {{ section.curriculum_abbr }}
+                        {{ section.course_number }}
+                      </td>
+                      <td>{{ section.course_title }}</td>
+                      <td>{{ section.credits }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </axdd-tabs-panel>
+          </template>
+          <template v-else>
+            <p>No schedules found</p>
+          </template>
         </template>
-      </axdd-tabs>
+      </axdd-tabs-display>
     </template>
   </axdd-card>
 </template>
 
 <script>
-import { Card, CardHeading, CardAction, Tabs, TabItem, TabPanel } from 'axdd-components';
+import dataMixin from "../../mixins/data_mixin.js";
+import {
+  Card,
+  CardHeading,
+  CardTabs,
+  TabsList,
+  TabsDisplay,
+  TabsItem,
+  TabsPanel,
+} from "axdd-components";
 
 export default {
+  mixins: [dataMixin],
   components: {
-    'axdd-card': Card,
-    'axdd-card-heading': CardHeading,
-    'axdd-card-action': CardAction,
-    'axdd-tabs': Tabs,
-    'axdd-tab-item': TabItem,
-    'axdd-tab-panel': TabPanel,
+    "axdd-card": Card,
+    "axdd-card-heading": CardHeading,
+    "axdd-card-tabs": CardTabs,
+    "axdd-tabs-list": TabsList,
+    "axdd-tabs-display": TabsDisplay,
+    "axdd-tabs-item": TabsItem,
+    "axdd-tabs-panel": TabsPanel,
+  },
+  props: {
+    person: {
+      type: Object,
+      required: true,
+    },
   },
   data() {
-    return {};
+    return {
+      schedules: {},
+    };
+  },
+  created() {
+    this.loadStudentSchedules();
+  },
+  methods: {
+    loadStudentSchedules: function () {
+      this.getStudentSchedules(this.person.uwregid).then((response) => {
+        if (response.data) {
+          this.schedules = response.data;
+        }
+      });
+    },
   },
 };
 </script>

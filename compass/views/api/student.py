@@ -1,64 +1,135 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.models import Student
-from compass.serializers import StudentSerializer
-from django.conf import settings
-from django.utils.decorators import method_decorator
-from rest_framework import status
+from compass.views.api import BaseAPIView
+from compass.dao.photo import PhotoDAO
+from compass.models import Student, Contact
+from compass.serializers import ContactReadSerializer, StudentWriteSerializer
+from django.http import JsonResponse, HttpResponseNotFound
+from restclients_core.exceptions import DataFailureException
 from rest_framework.response import Response
-from rest_framework.generics import GenericAPIView
-from rest_framework.pagination import LimitOffsetPagination
-from rest_framework.renderers import JSONRenderer
-from uw_saml.decorators import group_required
+from rest_framework import status
+from uw_person_client import UWPersonClient
+from uw_person_client.exceptions import PersonNotFoundException
+from uw_sws.term import get_current_term, get_next_term, get_term_after, \
+    get_term_by_year_and_quarter
+from uw_sws.registration import get_schedule_by_regid_and_term
 
 
-@method_decorator(group_required(settings.COMPASS_USERS_GROUP),
-                  name='dispatch')
-class BasePaginatedAPIView(GenericAPIView):
-
-    renderer_classes = [JSONRenderer]
-    pagination_class = LimitOffsetPagination
-
-
-class StudentListView(BasePaginatedAPIView):
-    '''
-    API endpoint returning a list of students
-
-    /api/internal/student/list/
-
-    HTTP POST accepts the following dictionary parameters:
-    * filters: dictionary of request filters
-    '''
-    def get(self, request, *args, **kwargs):
-        student_qs = Student.objects.all()
-        if request.query_params:
-            filter_text = request.query_params.get("filter_text")
-            filter_type = request.query_params.get("filter_type")
-            if filter_type == "student-number":
-                student_qs = student_qs.filter(
-                    student_number__icontains=filter_text)
-            elif filter_type == "student-name":
-                student_qs = student_qs.filter(
-                    student_name__icontains=filter_text)
-            elif filter_type == "student-email":
-                student_qs = student_qs.filter(
-                    student_email__icontains=filter_text)
-        paginated_queryset = self.paginate_queryset(student_qs)
-        serializer = StudentSerializer(paginated_queryset, many=True)
-        return self.get_paginated_response(serializer.data)
-
-
-class StudentDetailView(BasePaginatedAPIView):
+class StudentDetailView(BaseAPIView):
     '''
     API endpoint returning a student's details
 
-    /api/internal/student/detail/<student-number>
-
-    HTTP POST accepts the following dictionary parameters:
-    * filters: dictionary of request filters
+    /api/internal/student/[uwnetid]/
     '''
-    def get(self, request, student_number):
-        student_qs = Student.objects.filter(student_number=student_number)
-        serializer = StudentSerializer(student_qs, many=True)
+    def get(self, request, uwnetid):
+        client = UWPersonClient()
+        try:
+            person = client.get_person_by_uwnetid(uwnetid)
+            try:
+                local_student = Student.objects.get(
+                    system_key=person.student.system_key)
+                person.student.compass_programs = [
+                    program.id for program in local_student.programs.all()]
+                person.photo_url = PhotoDAO().get_photo_url(
+                    person.uwregid, "medium")
+            except Student.DoesNotExist:
+                person.student.compass_programs = []
+            return JsonResponse(person.to_dict(), safe=False)
+        except PersonNotFoundException:
+            return HttpResponseNotFound()
+
+
+class StudentSaveView(BaseAPIView):
+    '''
+    API endpoint for saving student programs
+
+    /api/internal/student/save/
+    '''
+
+    def post(self, request):
+        data = request.data
+        system_key = data["system_key"]
+        student_record = {}
+        student_record['system_key'] = system_key
+        student_record['programs'] = data['programs']
+        try:
+            # update existing student record if one exists
+            student, _ = Student.objects.get_or_create(system_key=system_key)
+            serializer = StudentWriteSerializer(student, data=student_record)
+        except Student.DoesNotExist:
+            # create new student record
+            serializer = StudentWriteSerializer(data=student_record)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors,
+                            status=status.HTTP_400_BAD_REQUEST)
+
+
+class StudentSchedulesView(BaseAPIView):
+    '''
+    API endpoint returning a student's class schedule details
+
+    /api/internal/student/[uwregid]/schedules/
+    '''
+    def get(self, request, uwregid):
+        cur_term = get_current_term()
+        next_term = get_next_term()
+        term_after = get_term_after(next_term)
+        terms = [cur_term, next_term, term_after]
+        schedules = {}
+        for index, term in enumerate(terms):
+            try:
+                schedules[index] = \
+                    get_schedule_by_regid_and_term(uwregid, term).json_data()
+            except DataFailureException:
+                continue
+        return JsonResponse(schedules, safe=False)
+
+
+class StudentContactsView(BaseAPIView):
+    '''
+    API endpoint returning a list of contacts for a student
+
+    /api/internal/student/[systemkey]/contacts/
+    '''
+
+    def get(self, request, systemkey):
+        queryset = Contact.objects.filter(
+            student__system_key=systemkey).order_by('-date', '-time')
+        serializer = ContactReadSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class StudentTranscriptsView(BaseAPIView):
+    '''
+    API endpoint returning a list of transcripts for a student
+
+    /api/internal/student/[uwregid]/transcripts/
+    '''
+    def get(self, request, uwregid):
+        client = UWPersonClient()
+        person = client.get_person_by_uwregid(uwregid)
+
+        quarter_definitions = {
+            1: "Winter",
+            2: "Spring",
+            3: "Summer",
+            4: "Autumn",
+        }
+
+        transcripts = []
+        for transcript in person.student.transcripts:
+            term = get_term_by_year_and_quarter(
+                transcript.tran_term.year,
+                quarter_definitions[transcript.tran_term.quarter])
+            try:
+                class_schedule = get_schedule_by_regid_and_term(
+                    uwregid, term)
+                transcript.class_schedule = class_schedule.json_data()
+            except DataFailureException:
+                transcript.class_schedule = None
+            transcripts.append(transcript.to_dict())
+        return JsonResponse(transcripts, safe=False)

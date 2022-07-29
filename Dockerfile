@@ -1,10 +1,11 @@
-ARG DJANGO_CONTAINER_VERSION=1.4.0
+ARG DJANGO_CONTAINER_VERSION=1.4.1
 
 FROM gcr.io/uwit-mci-axdd/django-container:${DJANGO_CONTAINER_VERSION} as app-prewebpack-container
 
 USER root
 
 RUN apt-get update && apt-get install libpq-dev -y
+# COPY docker/locations.conf /etc/nginx/includes/locations.conf
 
 USER acait
 

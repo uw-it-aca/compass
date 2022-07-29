@@ -2,10 +2,15 @@ from .base_settings import *
 
 INSTALLED_APPS += [
     'compass.apps.CompassConfig',
+    'compressor',
+    'django_user_agents',
+    'simple_history',
+    'supporttools',
+    'userservice',
     'webpack_loader',
 ]
 
-# Location of stats file that can be accessed during local development and 
+# Location of stats file that can be accessed during local development and
 # collected from during production build process
 if os.getenv("ENV") == "localdev":
     WEBPACK_LOADER = {
@@ -20,39 +25,72 @@ else:
         }
     }
 
+MIDDLEWARE += [
+    'userservice.user.UserServiceMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
+]
+
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'debug':  True,
+            'context_processors': [
+                "compass.context_processors.google_analytics",
+                "compass.context_processors.django_debug",
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'supporttools.context_processors.supportools_globals',
+                'supporttools.context_processors.has_less_compiled',
+            ],
+        }
+    }
+]
+
 # If you have file data, define the path here
 DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 
-GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
-LOGOUT_URL = os.getenv("LOGOUT_URL", default="")
-
-TEMPLATES[0]["OPTIONS"]["context_processors"].extend(
-    [
-        "compass.context_processors.google_analytics",
-        "compass.context_processors.logout_url",
-        "compass.context_processors.django_debug",
-    ]
-)
-
-DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
-
 if os.getenv("ENV") == "localdev":
     DEBUG = True
-    COMPASS_USERS_GROUP = "u_test_group"
-else:
-    COMPASS_USERS_GROUP = os.getenv('ACCESS_GROUP', '')
 
-ENROLLMENT_STATUS_MAPPING = {
-    12: "REGISTERED",
-    81: "CANCL-NSF CK",
-    82: "CANCL-REGIST",
-    83: "CANCL-LOW SC",
-    84: "CANCL-HFS",
-    85: "CANCL-NONPAY",
-    86: "CANCL-SC LN",
-    90: "MIL BEF 9TH",
-    92: "MIL 2ND 1/3",
-    93: "MIL LAST 1/3",
-    95: "WTHDR BEF QT",
-    96: "WITHDRAWAL"
-}
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(os.path.join(BASE_DIR, "compass"),
+                                 'db.sqlite3'),
+        }
+    }
+    TEST_ACCESS_GROUP = 'u_test_group'
+    COMPASS_ADMIN_GROUP = TEST_ACCESS_GROUP
+    COMPASS_SUPPORT_GROUP = TEST_ACCESS_GROUP
+    MOCK_SAML_ATTRIBUTES = {
+        'uwnetid': ['jadviser'],
+        'affiliations': ['student', 'member', 'alum', 'staff', 'employee'],
+        'eppn': ['jadviser@uw.edu'],
+        'scopedAffiliations': ['student@washington.edu',
+                               'member@washington.edu'],
+        'isMemberOf': [TEST_ACCESS_GROUP, 'u_astra_group1'],
+    }
+else:
+    COMPASS_ADMIN_GROUP = os.getenv('ADMIN_GROUP', '')
+    COMPASS_SUPPORT_GROUP = os.getenv('SUPPORT_GROUP', '')
+
+GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
+
+# Where the back link should go, and how it's labeled.
+SUPPORTTOOLS_PARENT_APP = "Compass"
+SUPPORTTOOLS_PARENT_APP_URL = "/"
+
+USERSERVICE_VALIDATION_MODULE = 'compass.dao.person.is_netid'
+USERSERVICE_OVERRIDE_AUTH_MODULE = 'compass.views.can_override_user'
+RESTCLIENTS_ADMIN_AUTH_MODULE = 'compass.views.can_proxy_restclient'
+
+# PDS config
+AXDD_PERSON_CLIENT_ENV = os.getenv('AXDD_PERSON_CLIENT_ENV', '')
+UW_PERSON_DB_USERNAME = os.getenv('UW_PERSON_DB_USERNAME', '')
+UW_PERSON_DB_PASSWORD = os.getenv('UW_PERSON_DB_PASSWORD', '')
+UW_PERSON_DB_HOSTNAME = os.getenv('UW_PERSON_DB_HOSTNAME', '')
+UW_PERSON_DB_DATABASE = os.getenv('UW_PERSON_DB_DATABASE', '')
+UW_PERSON_DB_PORT = os.getenv('UW_PERSON_DB_PORT', '')

@@ -1,2 +1,1 @@
 -e .
--e git+https://github.com/uw-it-aca/edw-clients.git@compass-dev-v1.2#egg=edw-clients

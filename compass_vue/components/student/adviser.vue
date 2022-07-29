@@ -4,47 +4,41 @@
       <axdd-card-heading :level="2">Adviser</axdd-card-heading>
     </template>
     <template #body>
-      <ul class="list-unstyled">
-        <li class="fw-bold">John Average</li>
-        <li>he/him</li>
-        <li>Email</li>
-        <li>Phone</li>
-        <li class="border-top mt-2 pt-2">Dept Name: OMAD</li>
-        <li>Campus location: MGH 123</li>
-        <li>
-          <a href="#" class="small">Edit adviser (ADMIN)</a>
-        </li>
-      </ul>
-
-      <div class="border border-danger">
-        <ul class="list-unstyled text-muted">
-          <li>
-            <p>This student does not have an assigned adviser.</p>
-          </li>
-          <li>
-            <select class="form-select form-select-sm mb-2" aria-label=".form-select-sm example">
-              <option selected>Select adviser</option>
-              <option value="1">Bob</option>
-              <option value="2">Tim</option>
-              <option value="3">Joe</option>
-            </select>
-          </li>
-          <li class="text-end">
-            <button type="button" class="btn btn-outline-dark-beige btn-sm">Update adviser</button>
-          </li>
+      <div v-if="advisers" class="mb-2">
+        <ul v-for="adviser in advisers" :key="adviser.id" class="list-unstyled">
+          <li>Display name: {{ adviser.display_name }}</li>
+          <li>Pronouns: {{ adviser.pronouns }}</li>
+          <li>Netid: {{ adviser.uwnetid }}</li>
+          <li>Email: {{ adviser.employee.adviser.advising_email }}</li>
+          <li>Phone: {{ adviser.employee.adviser.advising_phone_number }}</li>
+          <li>Dept Name: {{ adviser.employee.adviser.advising_program }}</li>
+          <li>Campus location: <span class="text-danger">MGH 123</span></li>
         </ul>
       </div>
+      <div v-else>No adviser assigned to this student.</div>
     </template>
   </axdd-card>
 </template>
 
 <script>
-import { Card, CardHeading } from 'axdd-components';
+import { Card, CardHeading } from "axdd-components";
 
 export default {
+  props: {
+    advisers: {
+      type: Object,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      userNetid: document.body.getAttribute("data-user-netid"),
+      userRole: document.body.getAttribute("data-user-role"),
+    };
+  },
   components: {
-    'axdd-card': Card,
-    'axdd-card-heading': CardHeading,
+    "axdd-card": Card,
+    "axdd-card-heading": CardHeading,
   },
 };
 </script>
