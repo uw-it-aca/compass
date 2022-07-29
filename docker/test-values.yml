@@ -81,6 +81,9 @@ environmentVariables:
 
   - name: UW_PERSON_DB_HOSTNAME
     value: 172.18.1.67
+  
+  - name: UW_PERSON_DB_PORT
+    value: '5432'
 
   - name: UW_PERSON_DB_DATABASE
     value: uw-person-prod
