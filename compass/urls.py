@@ -11,6 +11,7 @@ from compass.views.api.student import StudentDetailView, StudentContactsView, \
 from compass.views.api.adviser import AdviserContactsView, AdviserCaseloadView
 from compass.views.api.contact import ContactTopicsView, ContactTypesView, \
     ContactSaveView, ContactDetailView
+from compass.views.api.settings import SettingsView
 from compass.views.api.photo import PhotoView
 from compass.views.api.program import ProgramsView
 
@@ -52,6 +53,8 @@ urlpatterns += [
             StudentTranscriptsView.as_view()),
     re_path(r'^api/internal/student/(?P<systemkey>[\w]+)/contacts/$',
             StudentContactsView.as_view()),
+    re_path(r'^api/internal/settings/$',
+            SettingsView.as_view()),
     re_path(r'^api/internal/programs/$',
             ProgramsView.as_view()),
     re_path(r'^api/internal/contact/save/$',

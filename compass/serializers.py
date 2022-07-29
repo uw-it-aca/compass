@@ -21,9 +21,6 @@ class AccessGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = AccessGroup
         fields = ['id', 'name', 'access_group_id']
-        extra_kwargs = {
-            'uwnetid': {'validators': []},
-        }
 
 
 class ProgramSerializer(serializers.ModelSerializer):
@@ -33,13 +30,25 @@ class ProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = Program
         fields = ['id', 'access_group', 'name', 'active']
+        extra_kwargs = {
+            'name': {'validators': []},
+        }
 
+    def create(self, validated_data):
+        return Program.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.save()
+        return instance
 
 class ContactTopicSerializer(serializers.ModelSerializer):
 
+    access_group = AccessGroupSerializer(many=False, read_only=False)
+
     class Meta:
         model = ContactTopic
-        fields = ['id', 'name', 'active']
+        fields = ['id', 'access_group', 'name', 'active']
         extra_kwargs = {
             'name': {'validators': []},
         }
@@ -55,9 +64,11 @@ class ContactTopicSerializer(serializers.ModelSerializer):
 
 class ContactTypeSerializer(serializers.ModelSerializer):
 
+    access_group = AccessGroupSerializer(many=False, read_only=False)
+
     class Meta:
         model = ContactType
-        fields = ['id', 'name', 'active']
+        fields = ['id', 'access_group', 'name', 'active']
         extra_kwargs = {
             'name': {'validators': []},
         }

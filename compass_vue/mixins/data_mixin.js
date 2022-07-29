@@ -34,6 +34,9 @@ const dataMixin = {
     getPrograms: async function () {
       return axios.get("/api/internal/programs/", {}, this._getAxiosConfig());
     },
+    getSettings: async function () {
+      return axios.get("/api/internal/settings/", {}, this._getAxiosConfig());
+    },
     getStudentSchedules: async function (uwregid) {
       return axios.get(
         "/api/internal/student/" + uwregid + "/schedules/",
