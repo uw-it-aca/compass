@@ -29,3 +29,13 @@
     </p>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      userRole: document.body.getAttribute("data-user-role"),
+    };
+  },
+};
+</script>
