@@ -1,7 +1,7 @@
 <template>
   <div v-if="contacts.length > 0" class="table-responsive mx-n3 mb-n3">
     <table class="table table-striped table-borderless m-0">
-      <thead class="">
+      <thead class="table-light">
         <tr>
           <th class="ps-3" style="width: 33%" scope="col">Student</th>
           <th scope="col">Date</th>

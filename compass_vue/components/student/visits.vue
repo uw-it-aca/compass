@@ -7,8 +7,8 @@
     </template>
     <template #body>
       <div class="table-responsive mx-n3 mb-n3">
-        <table class="table table-striped table-borderless m-0">
-          <thead class="">
+        <table class="table table-hover m-0">
+          <thead class="table-light">
             <tr>
               <th class="ps-3">Date</th>
               <th>Course</th>
@@ -17,7 +17,7 @@
               <th>Duration</th>
             </tr>
           </thead>
-          <tbody class="">
+          <tbody>
             <tr>
               <td scope="row" class="ps-3">09/23/2020</td>
               <td>BUS 220</td>

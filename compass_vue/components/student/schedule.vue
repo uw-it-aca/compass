@@ -34,7 +34,7 @@
             >
               <div class="table-responsive mx-n3 mb-n3">
                 <table class="table table-striped table-borderless m-0">
-                  <thead class="">
+                  <thead class="table-light">
                     <tr>
                       <th class="ps-3">Course</th>
                       <th>Title</th>
