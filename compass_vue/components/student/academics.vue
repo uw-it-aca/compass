@@ -1,21 +1,21 @@
 <template>
   <axdd-card>
-    <template #heading-tabs>
+    <template #heading-action>
       <axdd-card-heading :level="2">Academics</axdd-card-heading>
       <axdd-card-tabs>
-        <axdd-tabs-list :tabs-id="'history'" :variant="'tabs'" class="small">
+        <axdd-tabs-list :tabs-id="'history'" :variant="'pills'" class="small">
           <template #items>
             <axdd-tabs-item
               :tabs-id="'history'"
               :panel-id="'major'"
               :active-tab="true"
-              :variant="'tabs'"
+              :variant="'pills'"
               >Current</axdd-tabs-item
             >
             <axdd-tabs-item
               :tabs-id="'history'"
               :panel-id="'transcript'"
-              :variant="'tabs'"
+              :variant="'pills'"
               >Unofficial Transcript</axdd-tabs-item
             >
           </template>
@@ -105,9 +105,9 @@
           </axdd-tabs-panel>
 
           <axdd-tabs-panel :panel-id="'transcript'">
-            <div class="table-responsive m-n3">
-              <table class="table table-striped table-borderless m-0 small">
-                <thead class="">
+            <div class="table-responsive mx-n3 mb-n3">
+              <table class="table table-striped table-borderless m-0">
+                <thead class="table-light">
                   <tr>
                     <th class="ps-3">Course</th>
                     <th>Title</th>
@@ -142,7 +142,7 @@
                       <td>{{ section.for_credit }}</td>
                     </tr>
                     <tr>
-                      <td colspan="5" class="text-end small">
+                      <td colspan="5" class="text-end">
                         <div>
                           QTR ATTEMPTED: {{ transcript.qtr_graded_attmp }} QTR
                           EARNED: {{ transcript.qtr_grade_points }}

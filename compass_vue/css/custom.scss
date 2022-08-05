@@ -55,6 +55,8 @@ $utilities: (
 
 // override table stripe background
 $table-striped-bg: rgba($purple-300, $table-striped-bg-factor);
+$table-hover-bg: rgba($purple-500, $table-striped-bg-factor);
+$table-striped-order: even;
 
 // additional non-bootstrap styles
 

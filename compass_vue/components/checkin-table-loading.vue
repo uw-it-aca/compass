@@ -1,6 +1,6 @@
 <template>
   <table class="table mb-0">
-    <thead class="small">
+    <thead class="table-light">
       <tr>
         <th scope="col" class="w-50">Student</th>
         <th scope="col">Date</th>

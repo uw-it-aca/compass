@@ -9,7 +9,10 @@
   >
     <template #profile>{{ userName }}</template>
     <template #navigation>
-      <navigation></navigation>
+      <NavMenu />
+    </template>
+    <template #aside>
+      <NavMessage />
     </template>
     <template #main>
       <slot name="title">
@@ -23,13 +26,15 @@
 
 <script>
 import { Sidebar } from "axdd-components";
-import Nav from "./components/nav.vue";
+import NavMenu from "./components/nav-menu.vue";
+import NavMessage from "./components/nav-message.vue";
 
 export default {
   name: "CompassApp",
   components: {
     "axdd-sidebar": Sidebar,
-    navigation: Nav,
+    NavMenu,
+    NavMessage,
   },
   props: {
     pageTitle: {
