@@ -5,7 +5,7 @@
         <img
           :src="person.photo_url"
           @error="$event.target.src = '/static/compass/img/placeholder.jpeg'"
-          style="width: 60px"
+          style="min-width: 60px; width: 60px"
           class="img-fluid rounded-circle border border-white border-2"
         />
       </div>
