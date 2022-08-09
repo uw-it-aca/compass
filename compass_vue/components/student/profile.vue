@@ -1,100 +1,106 @@
 <template>
-  <div class="bg-gray p-3 rounded-3">
+  <div class="bg-gray rounded-3">
     <div class="row">
-      <div class="col-lg-4 mb-3 d-flex">
-        <div class="pe-3">
-          <div class="rounded-circle border border-4">
-            <img
-              :src="person.photo_url"
-              @error="
-                $event.target.src = '/static/compass/img/placeholder.jpeg'
-              "
-              style="width: 140px"
-              class="img-fluid rounded-circle border border-white border-2"
-            />
+      <div class="col-xl-4 mb-3">
+        <div class="d-flex p-3">
+          <div class="pe-3">
+            <div class="rounded-circle border border-4">
+              <img
+                :src="person.photo_url"
+                @error="
+                  $event.target.src = '/static/compass/img/placeholder.jpeg'
+                "
+                style="width: 140px"
+                class="img-fluid rounded-circle border border-white border-2"
+              />
+            </div>
           </div>
-        </div>
-        <div class="flex-fill">
-          <div class="h3 text-dark axdd-font-encode-sans">
-            <template v-if="person.preferred_first_name">
-              {{ person.preferred_first_name }}
-            </template>
-            <template v-else> {{ person.first_name }} </template>&nbsp;
-            <template v-if="person.preferred_surname">
-              {{ person.preferred_surname }}
-            </template>
-            <template v-else>
-              {{ person.surname }}
-            </template>
-          </div>
-          <div class="h5">
-            {{ person.student.student_number }},
-            {{ person.uwnetid }}
-          </div>
-          <p>
-            <span
-              class="badge rounded-pill border border-muted text-dark me-1"
-              >{{ person.gender }}</span
-            >
-            <span class="badge rounded-pill border border-muted text-dark">
-              {{ person.pronouns }}
-            </span>
-          </p>
-          <div v-if="person.student.sports.length > 0">
-            <i class="bi bi-trophy-fill text-purple"></i> Sport:
-            <span
-              v-for="(sport, index) in person.student.sports"
-              :key="sport.code"
-            >
-              {{ sport.sport_code }}
-              <span v-if="index + 1 < person.student.sports.length">, </span>
-            </span>
+          <div class="flex-fill">
+            <div class="h3 text-dark axdd-font-encode-sans">
+              <template v-if="person.preferred_first_name">
+                {{ person.preferred_first_name }}
+              </template>
+              <template v-else> {{ person.first_name }} </template>&nbsp;
+              <template v-if="person.preferred_surname">
+                {{ person.preferred_surname }}
+              </template>
+              <template v-else>
+                {{ person.surname }}
+              </template>
+            </div>
+            <div class="h5">
+              {{ person.student.student_number }},
+              {{ person.uwnetid }}
+            </div>
+            <p>
+              <span
+                class="badge rounded-pill border border-muted text-dark me-1"
+                >{{ person.gender }}</span
+              >
+              <span class="badge rounded-pill border border-muted text-dark">
+                {{ person.pronouns }}
+              </span>
+            </p>
+            <div v-if="person.student.sports.length > 0">
+              <i class="bi bi-trophy-fill text-purple"></i> Sport:
+              <span
+                v-for="(sport, index) in person.student.sports"
+                :key="sport.code"
+              >
+                {{ sport.sport_code }}
+                <span v-if="index + 1 < person.student.sports.length">, </span>
+              </span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-12 col-lg-4 mb-3">
-        <ul class="list-unstyled m-0">
-          <li>
-            Preferred name: {{ person.preferred_first_name }}
-            {{ person.preferred_middle_name }}
-            {{ person.preferred_last_name }}
-          </li>
-          <li>Ethnicity: {{ person.student.assigned_ethnic_desc }}</li>
-          <li>Citizenship: {{ person.student.resident_desc }}</li>
-          <li>
-            Visa Type:
-            <span v-if="person.student.visa_type">
-              {{ person.student.visa_type }}
-            </span>
-            <span v-else> N/A </span>
-          </li>
-          <li>DOB: {{ person.student.birthdate }}</li>
-        </ul>
+      <div class="col-12 col-xl-4 mb-3">
+        <div class="p-3">
+          <ul class="list-unstyled m-0">
+            <li>
+              Preferred name: {{ person.preferred_first_name }}
+              {{ person.preferred_middle_name }}
+              {{ person.preferred_last_name }}
+            </li>
+            <li>Ethnicity: {{ person.student.assigned_ethnic_desc }}</li>
+            <li>Citizenship: {{ person.student.resident_desc }}</li>
+            <li>
+              Visa Type:
+              <span v-if="person.student.visa_type">
+                {{ person.student.visa_type }}
+              </span>
+              <span v-else> N/A </span>
+            </li>
+            <li>DOB: {{ person.student.birthdate }}</li>
+          </ul>
+        </div>
       </div>
-      <div class="col-12 col-lg-4">
-        <ul class="list-unstyled m-0">
-          <li>UW Email: {{ person.student.student_email }}</li>
-          <li>Personal email: {{ person.student.personal_email }}</li>
-          <li>Local Phone: {{ person.student.local_phone_number }}</li>
-          <li class="mt-2">
-            Perm Address:<br />
-            {{ person.student.perm_addr_line1 }},
-            {{ person.student.perm_addr_line2 }},
-            {{ person.student.perm_addr_city }},
-            {{ person.student.perm_addr_state }}
-            {{ person.student.perm_addr_5digit_zip }},
-            {{ person.student.perm_addr_country }}
-          </li>
-          <li class="mt-2">
-            Local Address:<br />
-            {{ person.student.local_addr_line1 }},
-            {{ person.student.local_addr_line2 }},
-            {{ person.student.local_addr_city }},
-            {{ person.student.local_addr_state }}
-            {{ person.student.local_addr_5digit_zip }},
-            {{ person.student.local_addr_country }}
-          </li>
-        </ul>
+      <div class="col-12 col-xl-4">
+        <div class="p-3">
+          <ul class="list-unstyled m-0">
+            <li>UW Email: {{ person.student.student_email }}</li>
+            <li>Personal email: {{ person.student.personal_email }}</li>
+            <li>Local Phone: {{ person.student.local_phone_number }}</li>
+            <li class="mt-2">
+              Perm Address:<br />
+              {{ person.student.perm_addr_line1 }},
+              {{ person.student.perm_addr_line2 }},
+              {{ person.student.perm_addr_city }},
+              {{ person.student.perm_addr_state }}
+              {{ person.student.perm_addr_5digit_zip }},
+              {{ person.student.perm_addr_country }}
+            </li>
+            <li class="mt-2">
+              Local Address:<br />
+              {{ person.student.local_addr_line1 }},
+              {{ person.student.local_addr_line2 }},
+              {{ person.student.local_addr_city }},
+              {{ person.student.local_addr_state }}
+              {{ person.student.local_addr_5digit_zip }},
+              {{ person.student.local_addr_country }}
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

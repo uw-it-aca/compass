@@ -20,13 +20,13 @@
         </div>
 
         <div class="row">
-          <div class="col-xl-9">
+          <div class="col-xl-8">
             <StudentContact :person="person"></StudentContact>
             <StudentSchedule :person="person"></StudentSchedule>
             <StudentAcademics :person="person"></StudentAcademics>
             <StudentVisits></StudentVisits>
           </div>
-          <div class="col-xl-3">
+          <div class="col-xl-4">
             <StudentAdviser
               :advisers="person.student.advisers"
             ></StudentAdviser>
