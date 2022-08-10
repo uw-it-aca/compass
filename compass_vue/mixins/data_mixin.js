@@ -34,8 +34,22 @@ const dataMixin = {
     getPrograms: async function () {
       return axios.get("/api/internal/programs/", {}, this._getAxiosConfig());
     },
-    getSettings: async function () {
-      return axios.get("/api/internal/settings/", {}, this._getAxiosConfig());
+    getSettings: async function (accessGroup, settingType) {
+      return axios.get(
+        "/api/internal/settings/" + accessGroup + "/" + settingType + "/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    saveSettings: async function (accessGroup, settingType) {
+      return axios.post(
+        "/api/internal/settings/save/",
+        {
+          access_group: accessGroup,
+          setting_type: settingType,
+        },
+        this._getAxiosConfig()
+      );
     },
     getStudentSchedules: async function (uwregid) {
       return axios.get(
@@ -96,6 +110,13 @@ const dataMixin = {
     getAdviserContacts: async function (adviserNetId) {
       return axios.get(
         "/api/internal/adviser/" + adviserNetId + "/contacts/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    getAccessGroups: async function () {
+      return axios.get(
+        "/api/internal/accessgroup/",
         {},
         this._getAxiosConfig()
       );

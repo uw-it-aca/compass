@@ -1,7 +1,7 @@
 <template>
   <axdd-card>
     <template #heading>
-      <axdd-card-heading :level="2">{{ modelLabel }}</axdd-card-heading>
+      <axdd-card-heading :level="2">{{ settingLabel }}</axdd-card-heading>
     </template>
     <template #body>
       <div
@@ -13,16 +13,20 @@
       </div>
 
       <ul class="list-unstyled mb-4">
-        <li v-for="item in items" :key="item.name" class="mb-1">
+        <li v-for="setting in settings" :key="setting.name" class="mb-1">
           <div class="input-group input-group-sm">
             <input
               type="text"
-              :value="item.name"
+              :value="setting.name"
               class="form-control"
-              aria-label="tbd"
+              :aria-label="setting.name"
             />
-            <button class="btn btn-outline-secondary" type="button">
-              <i v-if="item.active" class="bi bi-eye-fill"></i>
+            <button
+              @click="toggleSettingVisibility(setting)"
+              class="btn btn-outline-secondary"
+              type="button"
+            >
+              <i v-if="setting.active" class="bi bi-eye-fill"></i>
               <i v-else class="bi bi-eye-slash-fill"></i>
             </button>
           </div>
@@ -32,7 +36,7 @@
         <input
           type="text"
           class="form-control"
-          :placeholder="'Add new ' + modelLabel + '...'"
+          :placeholder="'Add new ' + settingLabel + '...'"
           aria-label="Topic label"
           aria-describedby="button-addon2"
         />
@@ -46,9 +50,15 @@
       </div>
 
       <div class="d-grid gap-1 d-md-flex justify-content-end mt-4">
-        <button class="btn btn-sm btn-light me-1" type="button">Cancel</button>
         <button
-          @click="saveSettings"
+          @click="loadSettings"
+          class="btn btn-sm btn-light me-1"
+          type="button"
+        >
+          Cancel
+        </button>
+        <button
+          @click="submitSettingsForm"
           class="btn btn-sm btn-purple"
           type="button"
         >
@@ -61,21 +71,22 @@
 
 <script>
 import { Card, CardHeading } from "axdd-components";
+import dataMixin from "../../mixins/data_mixin.js";
 
 export default {
+  mixins: [dataMixin],
   props: {
-    items: {
-      type: Array,
-      required: true,
-    },
-    modelLabel: {
+    settingLabel: {
       type: String,
       required: true,
     },
-    updateSuccessful: {
-      type: Boolean,
-      required: false,
-      default: false,
+    settingType: {
+      type: String,
+      required: true,
+    },
+    accessGroup: {
+      type: Object,
+      required: true,
     },
   },
   components: {
@@ -84,15 +95,37 @@ export default {
   },
   data() {
     return {
-      originalItems: this.items,
+      settings: {},
+      updateSuccessful: false,
     };
   },
+  created() {
+    this.loadSettings();
+  },
   methods: {
-    saveSettings() {
-      this.$emit("saveSettings", this.modelLabel);
+    loadSettings() {
+      this.getSettings(this.accessGroup.access_group_id, this.settingType).then(
+        (response) => {
+          if (response.data) {
+            this.settings = response.data;
+          }
+        }
+      );
     },
-    clearSettings() {
-      this.items = this.originalItems;
+    submitSettingsForm() {
+      this.saveSettings(
+        this.accessGroup.access_group_id,
+        this.settingType
+      ).then((response) => {
+        if (response.data) {
+          // show and update successful message for 3 seconds
+          this.updateSuccessful = true;
+          setTimeout(() => (this.updateSuccessful = false), 3000);
+        }
+      });
+    },
+    toggleSettingVisibility(setting) {
+      setting.active = !setting.active;
     },
   },
 };

@@ -4,25 +4,29 @@
       <h1>Settings</h1>
     </template>
     <template #content>
-      <div v-for="(item, group) in settings" :key="group" class="row my-4">
-        <h2>{{ group }}</h2>
+      <div
+        v-for="group in accessGroups"
+        :key="group.access_group_id"
+        class="row my-4"
+      >
+        <h2>{{ group.name }}</h2>
         <div class="col-xl-6">
           <SettingsForm
-            :items="item.programs"
-            :updateSuccessful="false"
-            modelLabel="program"
+            settingLabel="program"
+            settingType="program"
+            :accessGroup="group"
           ></SettingsForm>
         </div>
         <div class="col-xl-6">
           <SettingsForm
-            :items="item.contact_topics"
-            :updateSuccessful="false"
-            modelLabel="contact topic"
+            settingLabel="contact topic"
+            settingType="contact_topic"
+            :accessGroup="group"
           ></SettingsForm>
           <SettingsForm
-            :items="item.contact_types"
-            :updateSuccessful="false"
-            modelLabel="contact type"
+            settingLabel="contact type"
+            settingType="contact_topic"
+            :accessGroup="group"
           ></SettingsForm>
         </div>
       </div>
@@ -46,17 +50,18 @@ export default {
     return {
       pageTitle: "Settings",
       isLoading: true,
-      settings: {},
+      accessGroups: [],
     };
   },
-  created() {
-    this.loadSettings();
+  created: function () {
+    this.loadAccessGroups();
   },
   methods: {
-    loadSettings: function () {
-      this.getSettings().then((response) => {
+    loadAccessGroups: function () {
+      this.getAccessGroups().then((response) => {
         if (response.data) {
-          this.settings = response.data;
+          this.accessGroups = response.data;
+          console.log(this.accessGroups);
         }
       });
     },
