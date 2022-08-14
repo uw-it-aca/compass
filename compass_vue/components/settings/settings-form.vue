@@ -34,6 +34,7 @@
       </ul>
       <div class="input-group input-group-sm">
         <input
+          v-model="newSettingName"
           type="text"
           class="form-control"
           :placeholder="'Add new ' + settingLabel + '...'"
@@ -41,6 +42,7 @@
           aria-describedby="button-addon2"
         />
         <button
+          @click="addSetting"
           class="btn btn-outline-secondary"
           type="button"
           id="button-addon2"
@@ -95,8 +97,8 @@ export default {
   },
   data() {
     return {
-      settings: {},
-      updateSuccessful: false,
+      settings: [],
+      newSettingName: "",
     };
   },
   created() {
@@ -123,6 +125,16 @@ export default {
           setTimeout(() => (this.updateSuccessful = false), 3000);
         }
       });
+    },
+    addSetting() {
+      if (this.newSettingName.length) {
+        var setting = {};
+        setting.id = null;
+        setting.name = this.newSettingName;
+        setting.active = true;
+        setting.access_group = this.accessGroup;
+        this.settings.push(setting);
+      }
     },
     toggleSettingVisibility(setting) {
       setting.active = !setting.active;
