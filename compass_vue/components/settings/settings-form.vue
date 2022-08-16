@@ -132,6 +132,8 @@ export default {
         setting.active = true;
         setting.access_group = this.accessGroup;
         this.settings.push(setting);
+        // clear the add new setting input
+        this.newSettingName = "";
       }
     },
     toggleSettingVisibility(setting) {
