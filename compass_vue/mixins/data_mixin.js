@@ -34,6 +34,23 @@ const dataMixin = {
     getPrograms: async function () {
       return axios.get("/api/internal/programs/", {}, this._getAxiosConfig());
     },
+    getSettings: async function (accessGroup, settingType) {
+      return axios.get(
+        "/api/internal/settings/" + accessGroup + "/" + settingType + "/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    saveSettings: async function (settingType, settingValues) {
+      return axios.post(
+        "/api/internal/settings/save/",
+        {
+          setting_type: settingType,
+          setting_values: settingValues,
+        },
+        this._getAxiosConfig()
+      );
+    },
     getStudentSchedules: async function (uwregid) {
       return axios.get(
         "/api/internal/student/" + uwregid + "/schedules/",
@@ -93,6 +110,13 @@ const dataMixin = {
     getAdviserContacts: async function (adviserNetId) {
       return axios.get(
         "/api/internal/adviser/" + adviserNetId + "/contacts/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    getAccessGroups: async function () {
+      return axios.get(
+        "/api/internal/accessgroup/",
         {},
         this._getAxiosConfig()
       );
