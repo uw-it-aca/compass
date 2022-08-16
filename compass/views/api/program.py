@@ -15,19 +15,6 @@ class ProgramsView(BaseAPIView):
     /api/internal/programs/
     '''
 
-    def post(self, request):
-        data = request.data
-        program_records = data['programs']
-        serializer = ProgramWriteSerializer(contact, data=program_records)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data,
-                            many=True,
-                            status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors,
-                            status=status.HTTP_400_BAD_REQUEST)
-
     def get(self, request):
         access_groups = self.get_access_groups(request)
         programs = Program.objects.filter(access_group__in=access_groups).all()

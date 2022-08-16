@@ -41,12 +41,12 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
-    saveSettings: async function (accessGroup, settingType) {
+    saveSettings: async function (settingType, settingValues) {
       return axios.post(
         "/api/internal/settings/save/",
         {
-          access_group: accessGroup,
           setting_type: settingType,
+          setting_values: settingValues,
         },
         this._getAxiosConfig()
       );

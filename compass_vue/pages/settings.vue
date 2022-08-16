@@ -25,7 +25,7 @@
           ></SettingsForm>
           <SettingsForm
             settingLabel="contact type"
-            settingType="contact_topic"
+            settingType="contact_type"
             :accessGroup="group"
           ></SettingsForm>
         </div>
@@ -61,7 +61,6 @@ export default {
       this.getAccessGroups().then((response) => {
         if (response.data) {
           this.accessGroups = response.data;
-          console.log(this.accessGroups);
         }
       });
     },

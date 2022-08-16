@@ -13,11 +13,11 @@
       </div>
 
       <ul class="list-unstyled mb-4">
-        <li v-for="setting in settings" :key="setting.name" class="mb-1">
+        <li v-for="setting in settings" :key="setting.id" class="mb-1">
           <div class="input-group input-group-sm">
             <input
               type="text"
-              :value="setting.name"
+              v-model="setting.name"
               class="form-control"
               :aria-label="setting.name"
             />
@@ -99,6 +99,7 @@ export default {
     return {
       settings: [],
       newSettingName: "",
+      updateSuccessful: false,
     };
   },
   created() {
@@ -115,10 +116,7 @@ export default {
       );
     },
     submitSettingsForm() {
-      this.saveSettings(
-        this.accessGroup.access_group_id,
-        this.settingType
-      ).then((response) => {
+      this.saveSettings(this.settingType, this.settings).then((response) => {
         if (response.data) {
           // show and update successful message for 3 seconds
           this.updateSuccessful = true;

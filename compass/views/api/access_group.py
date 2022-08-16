@@ -1,7 +1,6 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.models import Program
 from compass.serializers import AccessGroupSerializer
 from compass.views.api import BaseAPIView
 from rest_framework.response import Response
