@@ -45,7 +45,6 @@ class ProgramSerializer(serializers.ModelSerializer):
         return Program.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
-        validated_data.pop('access_group_id', None)
         instance.name = validated_data.get('name', instance.name)
         instance.active = validated_data.get('active', instance.active)
         instance.save()
