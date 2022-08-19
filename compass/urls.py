@@ -76,6 +76,7 @@ urlpatterns += [
     ),
     # vue-router paths
     re_path(r"^(student|caseload|reports|settings)$", LandingView.as_view()),
+
     # default landing
-    re_path(r"^.*$", LandingView.as_view(), name="index"),
+    re_path(r"^$", LandingView.as_view(), name="index"),
 ]
