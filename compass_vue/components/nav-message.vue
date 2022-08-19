@@ -1,14 +1,6 @@
 <template>
   <div class="text-light">
     <p
-      v-show="userRole === 'manager'"
-      class="text-light-gray bg-dark-purple rounded-3 p-3 small"
-    >
-      Your role <strong>{{ userRole }}</strong
-      >... go forth and do admin related things!
-    </p>
-
-    <p
       v-show="$route.path == '/'"
       class="text-light-gray bg-dark-purple rounded-3 p-3 small"
     >
@@ -32,10 +24,14 @@
 
 <script>
 export default {
+  props: {
+    userRole: {
+      type: String,
+      required: true,
+    },
+  },
   data() {
-    return {
-      userRole: document.body.getAttribute("data-user-role"),
-    };
+    return {};
   },
 };
 </script>

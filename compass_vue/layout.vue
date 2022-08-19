@@ -7,12 +7,12 @@
     :user-name="userName"
     :sign-out-url="signOutUrl"
   >
-    <template #profile>{{ userName }}</template>
+    <template #profile>{{ userName }} ({{ userRole }})</template>
     <template #navigation>
-      <NavMenu />
+      <NavMenu :user-role="userRole" />
     </template>
     <template #aside>
-      <NavMessage />
+      <NavMessage :user-role="userRole" />
     </template>
     <template #main>
       <slot name="title">
@@ -49,6 +49,7 @@ export default {
       appRootUrl: "/",
       userName: document.body.getAttribute("data-user-netid"),
       signOutUrl: document.body.getAttribute("data-signout-url"),
+      userRole: document.body.getAttribute("data-user-role"),
       // automatically set year
       currentYear: new Date().getFullYear(),
     };
