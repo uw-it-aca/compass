@@ -20,35 +20,35 @@ const routes = [
   {
     path: "/",
     component: CheckIn,
-    meta: { authorize: [Role.Manager, Role.User] },
+    meta: { authorize: [Role.Admin, Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/caseload/:id?",
     component: Caseload,
-    meta: { authorize: [Role.Manager, Role.User] },
+    meta: { authorize: [Role.Admin, Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/student/:id?",
     component: Student,
-    meta: { authorize: [Role.Manager, Role.User] },
+    meta: { authorize: [Role.Admin, Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/reports",
     component: Reports,
-    meta: { authorize: [Role.Manager] },
+    meta: { authorize: [Role.Admin, Role.Manager] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/settings",
     component: Settings,
-    meta: { authorize: [Role.Manager] },
+    meta: { authorize: [Role.Admin, Role.Manager] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
@@ -73,7 +73,6 @@ router.beforeEach((to, from, next) => {
 
   // get the authenticated user role from django context
   let userRole = document.body.getAttribute("data-user-role");
-  // console.log(userRole);
 
   // check if authorization is required for this route
   if (authorize) {
