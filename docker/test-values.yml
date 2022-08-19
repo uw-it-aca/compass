@@ -54,12 +54,12 @@ environmentVariables:
     value: test
 
   - name: SWS_ENV
-    value: PROD
+    value: TEST
   - name: SWS_TIMEOUT
     value: "10"
 
   - name: PWS_ENV
-    value: PROD
+    value: TEST
   - name: PWS_TIMEOUT
     value: "10"
 
@@ -81,7 +81,7 @@ environmentVariables:
 
   - name: UW_PERSON_DB_HOSTNAME
     value: 172.18.1.67
-  
+
   - name: UW_PERSON_DB_PORT
     value: '5432'
 
