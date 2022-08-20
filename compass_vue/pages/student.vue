@@ -23,10 +23,11 @@
           <div class="col-xl-8">
             <StudentContact :person="person"></StudentContact>
             <StudentSchedule :person="person"></StudentSchedule>
-            <StudentAcademics :person="person"></StudentAcademics>
+            <StudentTranscript :person="person"></StudentTranscript>
             <StudentVisits></StudentVisits>
           </div>
           <div class="col-xl-4">
+            <StudentAcademics :person="person"></StudentAcademics>
             <StudentAdviser
               :advisers="person.student.advisers"
             ></StudentAdviser>
@@ -45,6 +46,7 @@ import dataMixin from "../mixins/data_mixin.js";
 
 import StudentProfile from "../components/student/profile.vue";
 import StudentAcademics from "../components/student/academics.vue";
+import StudentTranscript from "../components/student/transcript.vue";
 import StudentContact from "../components/student/contact.vue";
 import StudentSchedule from "../components/student/schedule.vue";
 import StudentAdviser from "../components/student/adviser.vue";
@@ -57,6 +59,7 @@ export default {
     layout: Layout,
     StudentProfile,
     StudentAcademics,
+    StudentTranscript,
     StudentContact,
     StudentSchedule,
     StudentAdviser,
