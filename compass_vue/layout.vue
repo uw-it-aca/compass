@@ -7,7 +7,12 @@
     :user-name="userName"
     :sign-out-url="signOutUrl"
   >
-    <template #profile>{{ userName }} ({{ userRole }})</template>
+    <template #profile>
+      <axdd-profile
+        :user-netid="userName + ' (' + userRole + ')'"
+        :signout-url="signOutUrl"
+      ></axdd-profile>
+    </template>
     <template #navigation>
       <NavMenu :user-role="userRole" />
     </template>
@@ -25,7 +30,7 @@
 </template>
 
 <script>
-import { Sidebar } from "axdd-components";
+import { Sidebar, Profile } from "axdd-components";
 import NavMenu from "./components/nav-menu.vue";
 import NavMessage from "./components/nav-message.vue";
 
@@ -33,6 +38,7 @@ export default {
   name: "CompassApp",
   components: {
     "axdd-sidebar": Sidebar,
+    "axdd-profile": Profile,
     NavMenu,
     NavMessage,
   },
