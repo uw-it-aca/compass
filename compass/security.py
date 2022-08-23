@@ -45,4 +45,4 @@ def get_user_roles(request):
             roles.add(roles.Manager)
         if is_access_group_user(group_id):
             roles.add(roles.User)
-    return list(roles)
+    return sorted(list(roles))

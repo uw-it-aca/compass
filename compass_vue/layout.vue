@@ -9,15 +9,15 @@
   >
     <template #profile>
       <axdd-profile
-        :user-netid="userName + ' (' + userRole + ')'"
+        :user-netid="userName + ' (' + userRoles + ')'"
         :signout-url="signOutUrl"
       ></axdd-profile>
     </template>
     <template #navigation>
-      <NavMenu :user-role="userRole" />
+      <NavMenu :user-roles="userRoles" />
     </template>
     <template #aside>
-      <NavMessage :user-role="userRole" />
+      <NavMessage />
     </template>
     <template #main>
       <slot name="title">
@@ -55,7 +55,7 @@ export default {
       appRootUrl: "/",
       userName: document.body.getAttribute("data-user-netid"),
       signOutUrl: document.body.getAttribute("data-signout-url"),
-      userRole: document.body.getAttribute("data-user-role"),
+      userRoles: document.body.getAttribute("data-user-role"),
       // automatically set year
       currentYear: new Date().getFullYear(),
     };
