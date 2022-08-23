@@ -71,7 +71,7 @@ if os.getenv("ENV") == "localdev":
         'eppn': ['jadviser@uw.edu'],
         'scopedAffiliations': ['student@washington.edu',
                                'member@washington.edu'],
-        'isMemberOf': [TEST_ACCESS_GROUP, 'u_astra_group1'],
+        'isMemberOf': [TEST_ACCESS_GROUP, 'u_astra_group1-manager'],
     }
 else:
     COMPASS_ADMIN_GROUP = os.getenv('ADMIN_GROUP', '')

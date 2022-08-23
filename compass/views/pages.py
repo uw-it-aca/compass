@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from compass.decorators import verify_access
+from compass.security import get_user_roles
 from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.urls import reverse
@@ -16,7 +17,7 @@ class LandingView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['user_netid'] = UserService().get_user()
-        context['user_role'] = "user"
+        context['user_role'] = get_user_roles(self.request)
         context['signout_url'] = reverse('saml_logout')
         context['ga_key'] = getattr(settings, "GOOGLE_ANALYTICS_KEY", None)
         return context
