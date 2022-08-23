@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 import { trackRouter } from "vue-gtag-next";
+import { Role } from "../helpers/roles.js";
 
 // page components
 import CheckIn from "../pages/check-ins.vue";
@@ -7,14 +8,6 @@ import Caseload from "../pages/caseload.vue";
 import Student from "../pages/student.vue";
 import Reports from "../pages/reports.vue";
 import Settings from "../pages/settings.vue";
-
-// MARK: user roles
-export const Role = {
-  Admin: "admin",
-  Support: "support",
-  Manager: "manager",
-  User: "user",
-};
 
 const routes = [
   {
@@ -77,7 +70,7 @@ router.beforeEach((to, from, next) => {
   // check if authorization is required for this route
   if (authorize) {
     // check to see if current user's role is authorized to view page
-    if (authorize.length && !authorize.some(r => userRoles.includes(r))) {
+    if (authorize.length && !authorize.some((r) => userRoles.includes(r))) {
       // redirect to 'not authorized' page in django
       window.location.replace("/not-authorized");
     }
