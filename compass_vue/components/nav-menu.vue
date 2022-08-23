@@ -17,7 +17,7 @@
           ><i class="bi bi-people-fill me-2"></i>Caseload</router-link
         >
       </li>
-      <li v-show="userRole === 'manager'" class="nav-item mb-2">
+      <li v-show="userRole.includes('manager')" class="nav-item mb-2">
         <router-link
           :to="'/settings'"
           active-class="bg-dark-purple rounded-3"
@@ -27,7 +27,7 @@
       </li>
       <!-- if admin or support -->
       <li
-        v-show="userRole === 'admin' || userRole === 'support'"
+        v-show="userRole.includes('admin') || userRole.includes('support')"
         aria-hidden="true"
         class="nav-item mb-2"
       >
@@ -39,7 +39,7 @@
         >
       </li>
       <li
-        v-show="userRole === 'admin' || userRole === 'support'"
+        v-show="userRole.includes('admin') || userRole.includes('support')"
         class="nav-item mb-1"
       >
         <a
