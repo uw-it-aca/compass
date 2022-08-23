@@ -3,8 +3,6 @@
 
 from django.urls import re_path, include
 from compass.admin import admin_site
-from django.conf import settings
-from django.views.generic import TemplateView
 from compass.views.pages import LandingView
 from compass.views.api.student import StudentDetailView, StudentContactsView, \
         StudentSchedulesView, StudentSaveView, StudentTranscriptsView
@@ -19,27 +17,6 @@ from compass.views.api.program import ProgramsView
 
 # start with an empty url array
 urlpatterns = []
-
-# add debug routes for developing error pages
-if settings.DEBUG:
-    urlpatterns += [
-        re_path(
-            r"^500$",
-            TemplateView.as_view(template_name="500.html"),
-            name="500_response",
-        ),
-        re_path(
-            r"^404$",
-            TemplateView.as_view(template_name="404.html"),
-            name="404_response",
-        ),
-        re_path(
-            r"^403$",
-            TemplateView.as_view(template_name="403.html"),
-            name="403_response",
-        ),
-    ]
-
 
 urlpatterns += [
     re_path(r'^admin', admin_site.urls),
@@ -77,12 +54,6 @@ urlpatterns += [
             AdviserCaseloadView.as_view()),
     re_path(r'^api/internal/photo/(?P<photo_key>[a-z0-9]*)/$',
             PhotoView.as_view(), name='photo'),
-    # not authorized page that responds as 403
-    re_path(
-        r"^not-authorized$",
-        TemplateView.as_view(template_name="403.html"),
-        name="403_response",
-    ),
     # vue-router paths
     re_path(r"^(student|caseload|reports|settings).*$", LandingView.as_view()),
 

@@ -7,6 +7,8 @@ import Caseload from "../pages/caseload.vue";
 import Student from "../pages/student.vue";
 import Reports from "../pages/reports.vue";
 import Settings from "../pages/settings.vue";
+import PageNotFound from "../pages/page-not-found.vue";
+import NotAuthorized from "../pages/page-not-authorized.vue";
 
 // MARK: user roles
 export const Role = {
@@ -52,6 +54,14 @@ const routes = [
     pathToRegexpOptions: { strict: true },
     props: true,
   },
+  {
+    path: "/not-authorized",
+    component: NotAuthorized,
+  },
+  {
+    path: "/:catchAll(.*)", // HTTP 404 Error
+    component: PageNotFound,
+  },
 ];
 
 const router = createRouter({
@@ -79,7 +89,7 @@ router.beforeEach((to, from, next) => {
     // check to see if current user's role is authorized to view page
     if (authorize.length && !authorize.includes(userRole)) {
       // redirect to 'not authorized' page in django
-      window.location.replace("/not-authorized");
+      next("/not-authorized");
     }
   }
   next();
