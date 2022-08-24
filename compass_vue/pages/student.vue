@@ -20,18 +20,57 @@
         </div>
 
         <div class="row">
-          <div class="col-xl-8">
-            <StudentContact :person="person"></StudentContact>
-            <StudentSchedule :person="person"></StudentSchedule>
-            <StudentTranscript :person="person"></StudentTranscript>
-            <StudentVisits></StudentVisits>
-          </div>
-          <div class="col-xl-4">
-            <StudentAcademics :person="person"></StudentAcademics>
-            <StudentAdviser
-              :advisers="person.student.advisers"
-            ></StudentAdviser>
-            <StudentPrograms :person="person"></StudentPrograms>
+          <div class="col">
+            <axdd-tabs-list :tabs-id="'example'">
+              <template #items>
+                <axdd-tabs-item
+                  :tabs-id="'example'"
+                  :panel-id="'overview'"
+                  :active-tab="true"
+                >
+                  Academics
+                </axdd-tabs-item>
+                <axdd-tabs-item :tabs-id="'example'" :panel-id="'advising'">
+                  Advising
+                </axdd-tabs-item>
+                <axdd-tabs-item :tabs-id="'example'" :panel-id="'misc'">
+                  Misc.
+                </axdd-tabs-item>
+              </template>
+            </axdd-tabs-list>
+
+            <axdd-tabs-display :tabs-id="'example'">
+              <template #panels>
+                <axdd-tabs-panel :panel-id="'overview'" :active-panel="true">
+                  <div class="row mt-4">
+                    <div class="col-xl-9">
+                      <StudentSchedule :person="person"></StudentSchedule>
+                      <StudentTranscript :person="person"></StudentTranscript>
+                    </div>
+                    <div class="col-xl-3">
+                      <StudentAcademics :person="person"></StudentAcademics>
+                    </div>
+                  </div>
+                </axdd-tabs-panel>
+                <axdd-tabs-panel :panel-id="'advising'">
+                  <div class="row mt-4">
+                    <div class="col-xl-9">
+                      <StudentContact :person="person"></StudentContact>
+                      <StudentVisits></StudentVisits>
+                    </div>
+                    <div class="col-xl-3">
+                      <StudentAdviser
+                        :advisers="person.student.advisers"
+                      ></StudentAdviser>
+                      <StudentPrograms :person="person"></StudentPrograms>
+                    </div>
+                  </div>
+                </axdd-tabs-panel>
+                <axdd-tabs-panel :panel-id="'misc'">
+                  misc stuff ...
+                </axdd-tabs-panel>
+              </template>
+            </axdd-tabs-display>
           </div>
         </div>
       </div>
@@ -41,6 +80,8 @@
 </template>
 
 <script>
+import { TabsList, TabsDisplay, TabsItem, TabsPanel } from "axdd-components";
+
 import Layout from "../layout.vue";
 import dataMixin from "../mixins/data_mixin.js";
 
@@ -57,6 +98,10 @@ export default {
   mixins: [dataMixin],
   components: {
     layout: Layout,
+    "axdd-tabs-list": TabsList,
+    "axdd-tabs-display": TabsDisplay,
+    "axdd-tabs-item": TabsItem,
+    "axdd-tabs-panel": TabsPanel,
     StudentProfile,
     StudentAcademics,
     StudentTranscript,

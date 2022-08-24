@@ -4,9 +4,9 @@
       <axdd-card-heading :level="2">Unofficial Transcript</axdd-card-heading>
     </template>
     <template #body>
-      <div class="table-responsive mx-n3 mb-n3">
-        <table class="table table-striped table-borderless m-0">
-          <thead class="table-light">
+      <div class="table-responsive border-top mx-n3 mb-n3">
+        <table class="table m-0">
+          <thead class="table-light text-muted small">
             <tr>
               <th class="ps-3">Course</th>
               <th>Title</th>

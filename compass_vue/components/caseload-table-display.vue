@@ -1,7 +1,10 @@
 <template>
-  <div v-if="persons.length > 0" class="table-responsive mx-n3 mb-n3">
-    <table class="table table-striped table-borderless m-0">
-      <thead class="table-light">
+  <div
+    v-if="persons.length > 0"
+    class="table-responsive border-top mx-n3 mb-n3"
+  >
+    <table class="table m-0">
+      <thead class="table-light text-muted small">
         <tr>
           <th scope="col" style="width: 33%" class="ps-3">Student</th>
           <th scope="col">Class</th>
@@ -12,7 +15,7 @@
       </thead>
       <tbody>
         <tr v-for="person in persons" :key="person.uwnetid">
-          <td>
+          <td class="ps-3">
             <profile-mini :person="person"></profile-mini>
           </td>
           <td>{{ person.student.class_desc }}</td>

@@ -41,15 +41,10 @@ export default {
   mixins: [dataMixin],
   components: {
     layout: Layout,
-    "search-student": SearchStudent,
     "table-loading": CheckInTableLoading,
     "table-display": CheckInTableDisplay,
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
-    "axdd-tabs-list": TabsList,
-    "axdd-tabs-display": TabsDisplay,
-    "axdd-tabs-item": TabsItem,
-    "axdd-tabs-panel": TabsPanel,
   },
   data() {
     return {
