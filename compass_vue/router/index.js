@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 import { trackRouter } from "vue-gtag-next";
+import { Role } from "../helpers/roles.js";
 
 // page components
 import CheckIn from "../pages/check-ins.vue";
@@ -7,14 +8,8 @@ import Caseload from "../pages/caseload.vue";
 import Student from "../pages/student.vue";
 import Reports from "../pages/reports.vue";
 import Settings from "../pages/settings.vue";
-
-// MARK: user roles
-export const Role = {
-  Admin: "admin",
-  Support: "support",
-  Manager: "manager",
-  User: "user",
-};
+import PageNotFound from "../pages/page-not-found.vue";
+import NotAuthorized from "../pages/page-not-authorized.vue";
 
 const routes = [
   {
@@ -52,6 +47,14 @@ const routes = [
     pathToRegexpOptions: { strict: true },
     props: true,
   },
+  {
+    path: "/not-authorized",
+    component: NotAuthorized,
+  },
+  {
+    path: "/:catchAll(.*)", // HTTP 404 Error
+    component: PageNotFound,
+  },
 ];
 
 const router = createRouter({
@@ -72,14 +75,14 @@ router.beforeEach((to, from, next) => {
   const { authorize } = to.meta;
 
   // get the authenticated user role from django context
-  let userRole = document.body.getAttribute("data-user-role");
+  let userRoles = document.body.getAttribute("data-user-role");
 
   // check if authorization is required for this route
   if (authorize) {
     // check to see if current user's role is authorized to view page
-    if (authorize.length && !authorize.includes(userRole)) {
+    if (authorize.length && !authorize.some((r) => userRoles.includes(r))) {
       // redirect to 'not authorized' page in django
-      window.location.replace("/not-authorized");
+      next("/not-authorized");
     }
   }
   next();
