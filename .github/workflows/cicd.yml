@@ -35,7 +35,6 @@ env:
   # Release name must match "repo" value in docker/*-values.yml
   RELEASE_NAME: compass
   DJANGO_APP: compass
-  HELM_CHART_BRANCH: bug/autoscaling-validation-errors
 
 # Be sure that branches defined here have corresponding steps
 # defined in the "deploy" job
