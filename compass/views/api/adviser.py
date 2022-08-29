@@ -3,6 +3,7 @@
 
 from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
+from compass.clients import CompassPersonClient
 from compass.models import Contact
 from compass.serializers import ContactReadSerializer
 from django.http import JsonResponse
@@ -40,8 +41,8 @@ class AdviserCaseloadView(BaseAPIView):
     '''
 
     def get(self, request, adviser_netid):
-        client = UWPersonClient()
-        persons = client.get_persons_by_adviser_netid(adviser_netid)
+        client = CompassPersonClient()
+        persons = client.get_adviser_caseload(adviser_netid)
         photo_dao = PhotoDAO()
         for person in persons:
             person.photo_url = photo_dao.get_photo_url(person.uwregid)
