@@ -6,7 +6,6 @@
         <th scope="col">Class</th>
         <th scope="col">Campus</th>
         <th scope="col" class="text-nowrap">Enrollment Status</th>
-        <th scope="col">Adviser</th>
       </tr>
     </thead>
     <tbody>
@@ -29,9 +28,6 @@
         </td>
         <td class="placeholder-glow">
           <div><span class="placeholder bg-light-gray col-10"></span></div>
-        </td>
-        <td class="placeholder-glow">
-          <div><span class="placeholder bg-light-gray col-7"></span></div>
         </td>
         <td class="placeholder-glow">
           <div><span class="placeholder bg-light-gray col-7"></span></div>
