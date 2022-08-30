@@ -1,7 +1,7 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from django.conf import  settings
+from django.conf import settings
 from uw_person_client.clients.core_client import UWPersonClient
 from uw_person_client.components import Person, Student, Adviser
 from uw_person_client.databases.uwpds import UWPDS
