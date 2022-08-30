@@ -8,6 +8,7 @@ from compass.models import Contact
 from compass.serializers import ContactReadSerializer
 from django.http import JsonResponse
 from uw_person_client import UWPersonClient
+from uw_person_client.exceptions import AdviserNotFoundException
 
 
 class AdviserContactsView(BaseAPIView):
@@ -42,7 +43,10 @@ class AdviserCaseloadView(BaseAPIView):
 
     def get(self, request, adviser_netid):
         client = CompassPersonClient()
-        persons = client.get_adviser_caseload(adviser_netid)
+        try:
+            persons = client.get_adviser_caseload(adviser_netid)
+        except AdviserNotFoundException:
+            persons = []
         photo_dao = PhotoDAO()
         for person in persons:
             person.photo_url = photo_dao.get_photo_url(person.uwregid)
