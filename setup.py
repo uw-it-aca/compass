@@ -24,6 +24,7 @@ setup(
     include_package_data=True,
     install_requires = [
         'django~=3.2',
+        'uw-memcached-clients~=1.0',
         'django-user-agents',
         'django-simple-history==3.1.1',
         'Django-UserService~=3.1',
