@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gray rounded-3">
     <div class="row">
-      <div class="col-xl-4 mb-3">
+      <div class="col-xl-6 mb-3">
         <div class="d-flex p-3">
           <div class="pe-3">
             <div class="rounded-circle border border-4">
@@ -27,11 +27,19 @@
               <template v-else>
                 {{ person.surname }}
               </template>
+              <span class="ms-2">(he/him)</span>
             </div>
             <div class="h5">
               {{ person.student.student_number }},
               {{ person.uwnetid }}
             </div>
+            <ul>
+              <li>
+              Preferred name: {{ person.preferred_first_name }}
+              {{ person.preferred_middle_name }}
+              {{ person.preferred_last_name }}
+            </li>
+            </ul>
             <p>
               <span
                 class="badge rounded-pill border border-muted text-dark me-1"
@@ -54,14 +62,10 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-xl-4 mb-3">
+      <div class="col-12 col-xl-3 mb-3">
         <div class="p-3">
           <ul class="list-unstyled m-0">
-            <li>
-              Preferred name: {{ person.preferred_first_name }}
-              {{ person.preferred_middle_name }}
-              {{ person.preferred_last_name }}
-            </li>
+
             <li>Ethnicity: {{ person.student.assigned_ethnic_desc }}</li>
             <li>Citizenship: {{ person.student.resident_desc }}</li>
             <li>
@@ -75,30 +79,12 @@
           </ul>
         </div>
       </div>
-      <div class="col-12 col-xl-4">
+      <div class="col-12 col-xl-3">
         <div class="p-3">
           <ul class="list-unstyled m-0">
             <li>UW Email: {{ person.student.student_email }}</li>
             <li>Personal email: {{ person.student.personal_email }}</li>
             <li>Local Phone: {{ person.student.local_phone_number }}</li>
-            <li class="mt-2">
-              Perm Address:<br />
-              {{ person.student.perm_addr_line1 }},
-              {{ person.student.perm_addr_line2 }},
-              {{ person.student.perm_addr_city }},
-              {{ person.student.perm_addr_state }}
-              {{ person.student.perm_addr_5digit_zip }},
-              {{ person.student.perm_addr_country }}
-            </li>
-            <li class="mt-2">
-              Local Address:<br />
-              {{ person.student.local_addr_line1 }},
-              {{ person.student.local_addr_line2 }},
-              {{ person.student.local_addr_city }},
-              {{ person.student.local_addr_state }}
-              {{ person.student.local_addr_5digit_zip }},
-              {{ person.student.local_addr_country }}
-            </li>
           </ul>
         </div>
       </div>

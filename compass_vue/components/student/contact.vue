@@ -14,16 +14,16 @@
     </template>
     <template #body>
       <template v-if="contacts.length > 0">
-        <div class="table-responsive mx-n3 mb-n3">
-          <table class="table table-borderless table-hover m-0">
-            <thead class="table-light">
+        <div class="table-responsive border-top mx-n3 mb-n3">
+          <table class="table m-0">
+            <thead class="table-light text-muted small">
               <tr>
                 <th class="ps-3">Date</th>
                 <th>Type</th>
                 <th>Details</th>
               </tr>
             </thead>
-            <tbody class="">
+            <tbody>
               <tr v-for="contact in contacts" :key="contact.id">
                 <td scope="row" class="ps-3" style="width: 25%">
                   <p>
@@ -40,7 +40,6 @@
                   </p>
                 </td>
                 <td class="align-bottom">
-
                   <span
                     class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-1"
                     >{{ contact.contact_type.name }}</span
@@ -70,7 +69,6 @@
                       {{ topic.name }}
                     </li>
                   </ul>
-
                 </td>
               </tr>
             </tbody>
@@ -124,3 +122,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+tbody {
+  td {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+}
+</style>

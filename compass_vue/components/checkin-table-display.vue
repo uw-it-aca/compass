@@ -1,7 +1,10 @@
 <template>
-  <div v-if="contacts.length > 0" class="table-responsive mx-n3 mb-n3">
-    <table class="table table-striped table-borderless m-0">
-      <thead class="table-light">
+  <div
+    v-if="contacts.length > 0"
+    class="table-responsive border-top mx-n3 mb-n3"
+  >
+    <table class="table m-0">
+      <thead class="table-light text-muted small">
         <tr>
           <th class="ps-3" style="width: 33%" scope="col">Student</th>
           <th scope="col">Date</th>
@@ -13,7 +16,7 @@
       </thead>
       <tbody>
         <tr v-for="contact in contacts" :key="contact.id">
-          <td>
+          <td class="ps-3">
             <profile-mini :person="contact.student"></profile-mini>
           </td>
           <td>{{ contact.date }}</td>
