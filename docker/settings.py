@@ -54,6 +54,7 @@ DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 
 if os.getenv("ENV") == "localdev":
     DEBUG = True
+    RESTCLIENTS_DAO_CACHE_CLASS = None
 
     DATABASES = {
         'default': {
@@ -74,6 +75,7 @@ if os.getenv("ENV") == "localdev":
         'isMemberOf': [TEST_ACCESS_GROUP, 'u_astra_group1-manager'],
     }
 else:
+    RESTCLIENTS_DAO_CACHE_CLASS = 'compass.cache.CompassRestclientCache'
     COMPASS_ADMIN_GROUP = os.getenv('ADMIN_GROUP', '')
     COMPASS_SUPPORT_GROUP = os.getenv('SUPPORT_GROUP', '')
 
@@ -94,3 +96,7 @@ UW_PERSON_DB_PASSWORD = os.getenv('UW_PERSON_DB_PASSWORD', '')
 UW_PERSON_DB_HOSTNAME = os.getenv('UW_PERSON_DB_HOSTNAME', '')
 UW_PERSON_DB_DATABASE = os.getenv('UW_PERSON_DB_DATABASE', '')
 UW_PERSON_DB_PORT = os.getenv('UW_PERSON_DB_PORT', '')
+
+# IDCard photo config
+IDCARD_PHOTO_EXPIRES = 60 * 60 * 4
+IDCARD_TOKEN_EXPIRES = 60 * 60

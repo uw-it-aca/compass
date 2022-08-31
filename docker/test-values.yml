@@ -41,7 +41,10 @@ repo: compass
 instance: test
 
 memcached:
-  enabled: false
+  enabled: true
+  replicaCount: 1
+  updateStrategy:
+    type: RollingUpdate
 
 certs:
   mounted: true
