@@ -10,7 +10,6 @@
           <th scope="col">Class</th>
           <th scope="col">Campus</th>
           <th scope="col" class="text-nowrap">Enrollment Status</th>
-          <th scope="col">Adviser</th>
         </tr>
       </thead>
       <tbody>
@@ -20,12 +19,7 @@
           </td>
           <td>{{ person.student.class_desc }}</td>
           <td>{{ person.student.campus_desc }}</td>
-          <td>{{ person.student.enrollment_status_desc }}</td>
-          <td>
-            <div v-for="adviser in person.student.advisers" :key="adviser.id">
-              {{ adviser.uwnetid }}
-            </div>
-          </td>
+          <td>{{ person.student.enroll_status_code }}</td>
         </tr>
       </tbody>
     </table>
@@ -47,7 +41,7 @@ export default {
     },
     persons: {
       type: Object,
-      required: true,
+      required: true
     },
   },
   data() {

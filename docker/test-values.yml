@@ -59,7 +59,7 @@ environmentVariables:
     value: "10"
 
   - name: PWS_ENV
-    value: TEST
+    value: PROD
   - name: PWS_TIMEOUT
     value: "10"
 

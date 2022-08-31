@@ -24,10 +24,8 @@ setup(
     include_package_data=True,
     install_requires = [
         'django~=3.2',
-        'django-compressor',
         'django-user-agents',
         'django-simple-history==3.1.1',
-        'django-webpack-loader',
         'Django-UserService~=3.1',
         'Django-SupportTools',
         'djangorestframework~=3.12',
@@ -36,7 +34,7 @@ setup(
         'UW-RestClients-PWS~=2.1',
         'UW-Django-SAML2~=1.5',
         'urllib3~=1.25',
-        'axdd-person-client==1.0.6'
+        'axdd-person-client==1.0.8'
     ],
     license="Apache License, Version 2.0",
     description="A application for managing student advising information.",

@@ -29,7 +29,7 @@
         >
 
         <span
-          v-if="person.student.sports.length > 0"
+          v-if="person.student.sports"
           class="badge rounded-pill border border-muted text-dark"
         >
           <i class="bi bi-trophy-fill text-purple"></i> Sport:
