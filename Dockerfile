@@ -32,9 +32,6 @@ RUN npm run build
 
 FROM app-prewebpack-container as app-container
 
-#ADD --chown=acait:acait . /app/
-#ADD --chown=acait:acait docker/ project/
-
 COPY --chown=acait:acait --from=node-bundler /app/compass/static /app/compass/static
 
 RUN /app/bin/python manage.py collectstatic --noinput
