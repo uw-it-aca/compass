@@ -22,7 +22,7 @@ Clone the repository
 
         $ git clone git@github.com:uw-it-aca/compass.git
 
-Go to your working director
+Go to your working directory
 
         $ cd compass
 
@@ -42,14 +42,14 @@ View your application using your specified port number in the .env file
 
         Demo: http://localhost:8000/
 
-## Testing (using Vitest)
+### Testing (using Vitest)
 
 Run Vitest test scripts and generate coverage report
 
         $ npm run test
         $ npm run coverage
 
-## Linting (using ESLint and Stylelint)
+### Linting (using ESLint and Stylelint)
 
 Run ESLint for JS linting
 
@@ -58,3 +58,5 @@ Run ESLint for JS linting
 Run Stylelint for CSS linting
 
          $ npm run stylelint
+
+## Development (using Virtualenv)
