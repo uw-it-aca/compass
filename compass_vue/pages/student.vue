@@ -28,13 +28,13 @@
                   :panel-id="'overview'"
                   :active-tab="true"
                 >
-                  Academics
+                  Overview
                 </axdd-tabs-item>
                 <axdd-tabs-item :tabs-id="'example'" :panel-id="'advising'">
                   Advising
                 </axdd-tabs-item>
-                <axdd-tabs-item :tabs-id="'example'" :panel-id="'misc'">
-                  Misc.
+                <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
+                  Transcript
                 </axdd-tabs-item>
               </template>
             </axdd-tabs-list>
@@ -45,9 +45,9 @@
                   <div class="row mt-4">
                     <div class="col-xl-9">
                       <StudentSchedule :person="person"></StudentSchedule>
-                      <StudentTranscript :person="person"></StudentTranscript>
                     </div>
                     <div class="col-xl-3">
+                      <StudentAddress :person="person"></StudentAddress>
                       <StudentAcademics :person="person"></StudentAcademics>
                     </div>
                   </div>
@@ -66,8 +66,12 @@
                     </div>
                   </div>
                 </axdd-tabs-panel>
-                <axdd-tabs-panel :panel-id="'misc'">
-                  misc stuff ...
+                <axdd-tabs-panel :panel-id="'transcript'">
+                  <div class="row mt-4">
+                    <div class="col">
+                      <StudentTranscript :person="person"></StudentTranscript>
+                    </div>
+                  </div>
                 </axdd-tabs-panel>
               </template>
             </axdd-tabs-display>
@@ -86,6 +90,7 @@ import Layout from "../layout.vue";
 import dataMixin from "../mixins/data_mixin.js";
 
 import StudentProfile from "../components/student/profile.vue";
+import StudentAddress from "../components/student/address.vue";
 import StudentAcademics from "../components/student/academics.vue";
 import StudentTranscript from "../components/student/transcript.vue";
 import StudentContact from "../components/student/contact.vue";
@@ -103,6 +108,7 @@ export default {
     "axdd-tabs-item": TabsItem,
     "axdd-tabs-panel": TabsPanel,
     StudentProfile,
+    StudentAddress,
     StudentAcademics,
     StudentTranscript,
     StudentContact,
