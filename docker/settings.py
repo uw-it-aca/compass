@@ -2,28 +2,22 @@ from .base_settings import *
 
 INSTALLED_APPS += [
     'compass.apps.CompassConfig',
-    'compressor',
     'django_user_agents',
     'simple_history',
     'supporttools',
     'userservice',
-    'webpack_loader',
 ]
 
-# Location of stats file that can be accessed during local development and
-# collected from during production build process
 if os.getenv("ENV") == "localdev":
-    WEBPACK_LOADER = {
-        'DEFAULT': {
-            'STATS_FILE': os.path.join(BASE_DIR, 'compass/static/webpack-stats.json'),
-        }
-    }
+    DEBUG = True
+
+if os.getenv("ENV") == "localdev":
+    VITE_MANIFEST_PATH = os.path.join(
+        BASE_DIR, "compass", "static", "manifest.json"
+    )
 else:
-    WEBPACK_LOADER = {
-        'DEFAULT': {
-            'STATS_FILE': os.path.join(BASE_DIR, '/static/webpack-stats.json'),
-        }
-    }
+    VITE_MANIFEST_PATH = os.path.join(os.sep, "static", "manifest.json")
+
 
 MIDDLEWARE += [
     'userservice.user.UserServiceMiddleware',

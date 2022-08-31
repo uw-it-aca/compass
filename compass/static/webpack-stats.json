@@ -1,0 +1,64 @@
+{
+  "status": "done",
+  "assets": {
+    "844b947b0afe572d002e.png": {
+      "name": "844b947b0afe572d002e.png",
+      "path": "/app/compass/static/compass/bundles/844b947b0afe572d002e.png",
+      "publicPath": "/static/compass/bundles/844b947b0afe572d002e.png"
+    },
+    "ea98e12d2d58747f9fc5.woff2?8d200481aa7f02a2d63a331fc782cfaf": {
+      "name": "ea98e12d2d58747f9fc5.woff2?8d200481aa7f02a2d63a331fc782cfaf",
+      "path": "/app/compass/static/compass/bundles/ea98e12d2d58747f9fc5.woff2",
+      "publicPath": "/static/compass/bundles/ea98e12d2d58747f9fc5.woff2?8d200481aa7f02a2d63a331fc782cfaf"
+    },
+    "e559bf06bc84fd9525e6.woff?8d200481aa7f02a2d63a331fc782cfaf": {
+      "name": "e559bf06bc84fd9525e6.woff?8d200481aa7f02a2d63a331fc782cfaf",
+      "path": "/app/compass/static/compass/bundles/e559bf06bc84fd9525e6.woff",
+      "publicPath": "/static/compass/bundles/e559bf06bc84fd9525e6.woff?8d200481aa7f02a2d63a331fc782cfaf"
+    },
+    "main-79932f943deac58dd904.css": {
+      "name": "main-79932f943deac58dd904.css",
+      "path": "/app/compass/static/compass/bundles/main-79932f943deac58dd904.css",
+      "publicPath": "/static/compass/bundles/main-79932f943deac58dd904.css"
+    },
+    "main-229016fcdfa9d1160f45.js": {
+      "name": "main-229016fcdfa9d1160f45.js",
+      "path": "/app/compass/static/compass/bundles/main-229016fcdfa9d1160f45.js",
+      "publicPath": "/static/compass/bundles/main-229016fcdfa9d1160f45.js"
+    },
+    "vendors-node_modules_axdd-components_index_js-node_modules_axios_index_js-node_modules_bootst-233eba-5df18ce6df7745c60cab.css": {
+      "name": "vendors-node_modules_axdd-components_index_js-node_modules_axios_index_js-node_modules_bootst-233eba-5df18ce6df7745c60cab.css",
+      "path": "/app/compass/static/compass/bundles/vendors-node_modules_axdd-components_index_js-node_modules_axios_index_js-node_modules_bootst-233eba-5df18ce6df7745c60cab.css",
+      "publicPath": "/static/compass/bundles/vendors-node_modules_axdd-components_index_js-node_modules_axios_index_js-node_modules_bootst-233eba-5df18ce6df7745c60cab.css"
+    },
+    "vendors-node_modules_axdd-components_index_js-node_modules_axios_index_js-node_modules_bootst-233eba-608b63a66fe481c0a59f.js": {
+      "name": "vendors-node_modules_axdd-components_index_js-node_modules_axios_index_js-node_modules_bootst-233eba-608b63a66fe481c0a59f.js",
+      "path": "/app/compass/static/compass/bundles/vendors-node_modules_axdd-components_index_js-node_modules_axios_index_js-node_modules_bootst-233eba-608b63a66fe481c0a59f.js",
+      "publicPath": "/static/compass/bundles/vendors-node_modules_axdd-components_index_js-node_modules_axios_index_js-node_modules_bootst-233eba-608b63a66fe481c0a59f.js"
+    },
+    "main-29b95d9919e3dd2f5a04.css": {
+      "name": "main-29b95d9919e3dd2f5a04.css",
+      "path": "/app/compass/static/compass/bundles/main-29b95d9919e3dd2f5a04.css",
+      "publicPath": "/static/compass/bundles/main-29b95d9919e3dd2f5a04.css"
+    },
+    "main-908bd726fa4302b7d67d.js": {
+      "name": "main-908bd726fa4302b7d67d.js",
+      "path": "/app/compass/static/compass/bundles/main-908bd726fa4302b7d67d.js",
+      "publicPath": "/static/compass/bundles/main-908bd726fa4302b7d67d.js"
+    },
+    "main-e53080c206bf1976f812.js": {
+      "name": "main-e53080c206bf1976f812.js",
+      "path": "/app/compass/static/compass/bundles/main-e53080c206bf1976f812.js",
+      "publicPath": "/static/compass/bundles/main-e53080c206bf1976f812.js"
+    }
+  },
+  "chunks": {
+    "main": [
+      "vendors-node_modules_axdd-components_index_js-node_modules_axios_index_js-node_modules_bootst-233eba-5df18ce6df7745c60cab.css",
+      "vendors-node_modules_axdd-components_index_js-node_modules_axios_index_js-node_modules_bootst-233eba-608b63a66fe481c0a59f.js",
+      "main-29b95d9919e3dd2f5a04.css",
+      "main-e53080c206bf1976f812.js"
+    ]
+  },
+  "publicPath": "/static/compass/bundles/"
+}
