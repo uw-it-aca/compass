@@ -1,9 +1,8 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from django.conf import settings
 from uw_person_client.clients.core_client import UWPersonClient
-from uw_person_client.components import Person, Student, Adviser
+from uw_person_client.components import Person, Student
 from uw_person_client.databases.uwpds import UWPDS
 from uw_person_client.exceptions import AdviserNotFoundException
 
@@ -31,7 +30,9 @@ class CompassPersonClient(UWPersonClient):
              self.DB.Student.campus_desc,
              self.DB.Student.enroll_status_code).join(
             self.DB.Student).join(self.DB.StudentToAdviser).join(
-            self.DB.Adviser).filter(self.DB.Adviser.id == sqla_adviser.id)
+            self.DB.Adviser).filter(
+                self.DB.Adviser.id == sqla_adviser.id).order_by(
+            self.DB.Person.display_name)
         persons = []
         for item in sqla_persons.all():
             person = Person()
