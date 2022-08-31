@@ -66,7 +66,10 @@ def vite_styles(*entries_names):
     """
     _, styles = vite_manifest(entries_names)
     styles = map(lambda href: static(href), styles)
-    as_link_tag = lambda href: f'<link rel="stylesheet" href="{href}" />'
+
+    def as_link_tag(href):
+        return f'<link rel="stylesheet" href="{href}" />'
+
     return mark_safe("\n".join(map(as_link_tag, styles)))
 
 
@@ -87,5 +90,8 @@ def vite_scripts(*entries_names):
     """
     scripts, _ = vite_manifest(entries_names)
     scripts = map(lambda src: static(src), scripts)
-    as_script_tag = lambda src: f'<script type="module" src="{src}"></script>'
+
+    def as_script_tag(src):
+        return f'<script type="module" src="{src}"></script>'
+
     return mark_safe("\n".join(map(as_script_tag, scripts)))
