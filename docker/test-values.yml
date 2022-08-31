@@ -41,7 +41,10 @@ repo: compass
 instance: test
 
 memcached:
-  enabled: false
+  enabled: true
+  replicaCount: 1
+  updateStrategy:
+    type: RollingUpdate
 
 certs:
   mounted: true
@@ -52,6 +55,9 @@ certs:
 environmentVariables:
   - name: ENV
     value: test
+
+  - name: SESSION_BACKEND
+    value: MEMCACHED
 
   - name: SWS_ENV
     value: TEST
