@@ -72,7 +72,7 @@ router.beforeEach((to, from, next) => {
     // check to see if current user's role is authorized to view page
     if (authorize.length && !authorize.some((r) => userRoles.includes(r))) {
       // redirect to 'unauthorized' page in django/nginx
-      window.location.replace("/unauthorized-user");
+      //window.location.replace("/unauthorized-user");
     }
   }
   next();
