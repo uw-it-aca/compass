@@ -74,9 +74,9 @@ class AccessGroupManager(models.Manager):
         roles = []
         for group in super().get_queryset().all():
             for role in AccessGroup.ROLES:
-                if role not in roles:
-                    if is_group_member(request, group.authz_group_id):
-                        roles.append(role)
+                if (role not in roles and is_group_member(
+                        request, group.authz_group_id(role))):
+                    roles.append(role)
         return roles
 
 
@@ -96,7 +96,6 @@ class AccessGroup(models.Model):
     name = models.CharField(unique=True, max_length=50)
     access_group_id = models.CharField(unique=True, max_length=50)
 
-    @property
     def authz_group_id(self, role):
         return '{}-{}'.format(self.access_group_id, role)
 
