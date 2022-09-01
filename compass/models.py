@@ -4,6 +4,7 @@
 from django.db import models
 from simple_history.models import HistoricalRecords
 from uw_person_client import UWPersonClient
+from compass.dao.group import is_group_member
 
 
 class AppUserManager(models.Manager):
@@ -66,11 +67,17 @@ class Student(models.Model):
 
 
 class AccessGroupManager(models.Manager):
-
-    @property
-    def access_group_ids(self):
-        return list(
-            super().get_queryset().values_list('access_group_id', flat=True))
+    def get_roles_for_user(self, request):
+        """
+        Return the unique roles for a user, without group context.
+        """
+        roles = []
+        for group in super().get_queryset().all():
+            for role in AccessGroup.ROLES:
+                if role not in roles:
+                    if is_group_member(request, group.authz_group_id):
+                        roles.append(role)
+        return roles
 
 
 class AccessGroup(models.Model):
@@ -80,13 +87,24 @@ class AccessGroup(models.Model):
     AppUser via a request to the GWS at login.
     """
 
+    ROLE_MANAGER = 'manager'
+    ROLE_USER = 'user'
+    ROLES = [ROLE_MANAGER, ROLE_USER]
+
     objects = AccessGroupManager()
 
     name = models.CharField(unique=True, max_length=50)
     access_group_id = models.CharField(unique=True, max_length=50)
 
+    @property
+    def authz_group_id(self, role):
+        return '{}-{}'.format(self.access_group_id, role)
+
     def __str__(self):
         return self.name
+
+    def has_role(self, request, role):
+        return is_group_member(request, self.authz_group_id)
 
 
 class Program(models.Model):
