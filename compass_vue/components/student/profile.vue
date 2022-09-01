@@ -10,7 +10,7 @@
                 @error="
                   $event.target.src = '/static/compass/img/placeholder.jpeg'
                 "
-                style="min-width: 140px; width: 140px"
+                style="min-width: 120px; width: 120px"
                 class="img-fluid rounded-circle border border-white border-2"
               />
             </div>

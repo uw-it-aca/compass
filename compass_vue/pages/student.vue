@@ -34,7 +34,7 @@
                   Advising
                 </axdd-tabs-item>
                 <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
-                  Transcript
+                  Unofficial Transcript
                 </axdd-tabs-item>
               </template>
             </axdd-tabs-list>
@@ -44,11 +44,12 @@
                 <axdd-tabs-panel :panel-id="'overview'" :active-panel="true">
                   <div class="row mt-4">
                     <div class="col-xl-9">
+                      <StudentAcademics :person="person"></StudentAcademics>
                       <StudentSchedule :person="person"></StudentSchedule>
                     </div>
                     <div class="col-xl-3">
                       <StudentAddress :person="person"></StudentAddress>
-                      <StudentAcademics :person="person"></StudentAcademics>
+                      <StudentEmergencyContact :person="person"></StudentEmergencyContact>
                     </div>
                   </div>
                 </axdd-tabs-panel>
@@ -68,8 +69,11 @@
                 </axdd-tabs-panel>
                 <axdd-tabs-panel :panel-id="'transcript'">
                   <div class="row mt-4">
-                    <div class="col">
+                    <div class="col-xl-9">
                       <StudentTranscript :person="person"></StudentTranscript>
+                    </div>
+                    <div class="col-xl-3">
+                      <StudentTranscriptCredits></StudentTranscriptCredits>
                     </div>
                   </div>
                 </axdd-tabs-panel>
@@ -91,13 +95,16 @@ import dataMixin from "../mixins/data_mixin.js";
 
 import StudentProfile from "../components/student/profile.vue";
 import StudentAddress from "../components/student/address.vue";
+import StudentEmergencyContact from "../components/student/emergency.vue";
 import StudentAcademics from "../components/student/academics.vue";
 import StudentTranscript from "../components/student/transcript.vue";
+import StudentTranscriptCredits from "../components/student/transcript-credits.vue";
 import StudentContact from "../components/student/contact.vue";
 import StudentSchedule from "../components/student/schedule.vue";
 import StudentAdviser from "../components/student/adviser.vue";
 import StudentPrograms from "../components/student/programs.vue";
 import StudentVisits from "../components/student/visits.vue";
+import TranscriptCredits from "../components/student/transcript-credits.vue";
 
 export default {
   mixins: [dataMixin],
@@ -109,14 +116,17 @@ export default {
     "axdd-tabs-panel": TabsPanel,
     StudentProfile,
     StudentAddress,
+    StudentEmergencyContact,
     StudentAcademics,
     StudentTranscript,
+    StudentTranscriptCredits,
     StudentContact,
     StudentSchedule,
     StudentAdviser,
     StudentPrograms,
     StudentVisits,
-  },
+    TranscriptCredits
+},
   created: function () {
     this.loadStudent(this.$route.params.id);
   },
