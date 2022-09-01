@@ -6,10 +6,16 @@ from django.conf import settings
 from memcached_clients import RestclientPymemcacheClient
 import re
 
+ONE_MINUTE = 60
+ONE_HOUR = 60 * 60
+
 
 class CompassRestclientCache(RestclientPymemcacheClient):
     def get_cache_expiration_time(self, service, url, status=None):
-        if 'pws' == service and re.match(r'^/idcard/v\d/photo', url):
-            return getattr(settings, 'IDCARD_PHOTO_EXPIRES', 60 * 60 * 4)
+        if 'pws' == service:
+            return ONE_HOUR * 4
 
-        return 60 * 60 * 2
+        elif 'gws' == service:
+            return ONE_MINUTE * 15
+
+        return ONE_HOUR

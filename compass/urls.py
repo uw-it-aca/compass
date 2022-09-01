@@ -46,6 +46,10 @@ if settings.DEBUG:
             TemplateView.as_view(template_name="403.html"),
             name="403_response",
         ),
+        re_path(
+            r"^unauthorized-user$",
+            TemplateView.as_view(template_name="unauthorized-user.html")
+        ),
     ]
 
 urlpatterns += [

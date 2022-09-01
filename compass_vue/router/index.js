@@ -13,21 +13,18 @@ const routes = [
   {
     path: "/",
     component: CheckIn,
-    meta: { authorize: [Role.Admin, Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/caseload/:id?",
     component: Caseload,
-    meta: { authorize: [Role.Admin, Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/student/:id?",
     component: Student,
-    meta: { authorize: [Role.Admin, Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
@@ -71,8 +68,8 @@ router.beforeEach((to, from, next) => {
   if (authorize) {
     // check to see if current user's role is authorized to view page
     if (authorize.length && !authorize.some((r) => userRoles.includes(r))) {
-      // redirect to 'not authorized' page in django
-      window.location.replace("/not-authorized");
+      // redirect to 'unauthorized' page in django/nginx
+      window.location.replace("/unauthorized-user");
     }
   }
   next();
