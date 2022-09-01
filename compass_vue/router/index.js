@@ -13,21 +13,18 @@ const routes = [
   {
     path: "/",
     component: CheckIn,
-    meta: { authorize: [Role.Admin, Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/caseload/:id?",
     component: Caseload,
-    meta: { authorize: [Role.Admin, Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/student/:id?",
     component: Student,
-    meta: { authorize: [Role.Admin, Role.Manager, Role.User] },
     pathToRegexpOptions: { strict: true },
     props: true,
   },
