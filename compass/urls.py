@@ -48,7 +48,7 @@ if settings.DEBUG:
         ),
         re_path(
             r"^unauthorized-user$",
-            TemplateView.as_view(template_name="unauthorized.html")
+            TemplateView.as_view(template_name="unauthorized-user.html")
         ),
     ]
 
