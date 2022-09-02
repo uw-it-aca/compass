@@ -40,7 +40,7 @@ class StudentView(BaseAPIView):
         except PersonNotFoundException:
             return HttpResponseNotFound()
 
-    def post(self, request, uwnetid):
+    def post(self, request, uwnetid=None):
         access_groups = self.get_access_groups(request)
         try:
             # check user permissions for every group that the user belongs to

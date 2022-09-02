@@ -67,10 +67,5 @@ export default {
   data() {
     return {};
   },
-  mounted() {
-    settimeout(() => {
-
-    }, 100)
-  }
 };
 </script>

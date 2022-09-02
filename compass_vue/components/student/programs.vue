@@ -11,6 +11,13 @@
       >
         Update Successful!
       </div>
+      <div
+        class="alert alert-danger py-2 small"
+        role="alert"
+        v-show="updatePermissionDenied"
+      >
+        You don't have permission to update programs.
+      </div>
       <div class="mb-3">
         <template
           v-for="(groupPrograms, accessGroupName) in groupedPrograms"
@@ -80,6 +87,7 @@ export default {
       groupedPrograms: {},
       studentPrograms: this.person.student.compass_programs,
       updateSuccessful: false,
+      updatePermissionDenied: false,
     };
   },
   created: function () {
@@ -118,6 +126,11 @@ export default {
           // show and update successful message for 3 seconds
           this.updateSuccessful = true;
           setTimeout(() => (this.updateSuccessful = false), 3000);
+        }
+      }).catch((error) => {
+        if (error.response.status == 401) {
+          this.updatePermissionDenied = true;
+          setTimeout(() => (this.updatePermissionDenied = false), 3000);
         }
       });
     },
