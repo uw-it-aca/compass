@@ -5,6 +5,7 @@ INSTALLED_APPS += [
     'django_user_agents',
     'simple_history',
     'supporttools',
+    'rc_django',
     'userservice',
 ]
 
