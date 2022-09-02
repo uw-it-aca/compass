@@ -32,3 +32,11 @@ def is_support_user(request):
     This check is always a SAML-asserted group membership.
     """
     return is_member_of_group(request, settings.COMPASS_SUPPORT_GROUP)
+
+
+def can_override_user(request):
+    return is_admin_user(request) or is_support_user(request)
+
+
+def can_proxy_restclient(request, service, url):
+    return is_admin_user(request) or is_support_user(request)
