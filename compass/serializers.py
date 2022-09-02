@@ -75,7 +75,6 @@ class ContactTopicSerializer(serializers.ModelSerializer):
         return instance
 
 
-
 class ContactTypeSerializer(serializers.ModelSerializer):
 
     access_group = AccessGroupSerializer(many=False, read_only=False)
