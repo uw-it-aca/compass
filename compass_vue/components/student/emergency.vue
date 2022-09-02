@@ -4,7 +4,10 @@
       <axdd-card-heading :level="2">Emergency Contact</axdd-card-heading>
     </template>
     <template #body>
-      <p>Emergency contanct info</p>
+      <div class="mb-4">
+        <p class="small text-uppercase text-muted mb-2">Perm Address</p>
+        <div>{{ person.student.emergency_name }}, {{ person.student.emergency_phone }}, {{ person.student.emergency_email }}</div>
+      </div>
     </template>
   </axdd-card>
 </template>

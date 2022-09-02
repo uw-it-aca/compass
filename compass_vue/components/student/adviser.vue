@@ -4,15 +4,36 @@
       <axdd-card-heading :level="2">Adviser</axdd-card-heading>
     </template>
     <template #body>
-      <div v-if="advisers" class="mb-2">
-        <ul v-for="adviser in advisers" :key="adviser.id" class="list-unstyled">
-          <li>Display name: {{ adviser.display_name }}</li>
-          <li>Pronouns: {{ adviser.pronouns }}</li>
-          <li>Netid: {{ adviser.uwnetid }}</li>
-          <li>Email: {{ adviser.employee.adviser.advising_email }}</li>
-          <li>Phone: {{ adviser.employee.adviser.advising_phone_number }}</li>
-          <li>Dept Name: {{ adviser.employee.adviser.advising_program }}</li>
-          <li>Campus location: <span class="text-danger">MGH 123</span></li>
+      <div v-if="advisers">
+        <ul
+          v-for="adviser in advisers"
+          :key="adviser.id"
+          class="list-unstyled mb-0"
+        >
+          <li class="mb-1">
+            <i class="bi bi-person-circle text-muted me-3"></i>
+            <span
+              ><strong>{{ adviser.display_name }}</strong> ({{
+                adviser.uwnetid
+              }})</span
+            >
+          </li>
+          <li class="mb-1">
+            <i class="bi bi-chat-square-quote text-muted me-3"></i>
+            <span>{{ adviser.pronouns }}</span>
+          </li>
+          <li class="mb-1">
+            <i class="bi bi-envelope-fill text-muted me-3"></i>
+            <span>{{ adviser.employee.adviser.advising_email }}</span>
+          </li>
+          <li class="mb-1">
+            <i class="bi bi-telephone text-muted me-3"></i>
+            <span>{{ adviser.employee.adviser.advising_phone_number }}</span>
+          </li>
+          <li class="mb-1">
+            <i class="bi bi-building text-muted me-3"></i>
+            <span>{{ adviser.employee.adviser.advising_program }}</span>
+          </li>
         </ul>
       </div>
       <div v-else>No adviser assigned to this student.</div>

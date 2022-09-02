@@ -43,8 +43,10 @@
               <template #panels>
                 <axdd-tabs-panel :panel-id="'overview'" :active-panel="true">
                   <div class="row mt-4">
-                    <div class="col-xl-9">
+                    <div class="col-xl-12">
                       <StudentAcademics :person="person"></StudentAcademics>
+                    </div>
+                    <div class="col-xl-9">
                       <StudentSchedule :person="person"></StudentSchedule>
                     </div>
                     <div class="col-xl-3">
