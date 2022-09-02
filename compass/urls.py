@@ -54,7 +54,6 @@ if settings.DEBUG:
 
 urlpatterns += [
     re_path(r"^admin", admin_site.urls),
-    re_path(r"^support", include("userservice.urls")),
     re_path(r"^api/internal/student/save/$", StudentSaveView.as_view()),
     re_path(
         r"^api/internal/student/(?P<uwnetid>[-@:\w]+)/$",
