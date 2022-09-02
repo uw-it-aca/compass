@@ -107,7 +107,7 @@ export default {
   },
   methods: {
     loadSettings() {
-      this.getSettings(this.accessGroup.access_group_id, this.settingType).then(
+      this.getSettings(this.accessGroup.id, this.settingType).then(
         (response) => {
           if (response.data) {
             this.settings = response.data;
@@ -116,7 +116,11 @@ export default {
       );
     },
     submitSettingsForm() {
-      this.saveSettings(this.settingType, this.settings).then((response) => {
+      this.saveSettings(
+        this.accessGroup.id,
+        this.settingType,
+        this.settings
+      ).then((response) => {
         if (response.data) {
           // show and update successful message for 3 seconds
           this.updateSuccessful = true;

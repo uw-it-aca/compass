@@ -21,9 +21,9 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
-    saveStudent: async function (systemkey, programs) {
+    saveStudent: async function (systemkey, uwnetid, programs) {
       return axios.post(
-        "/api/internal/student/save/",
+        "/api/internal/student/" + uwnetid + "/",
         {
           system_key: systemkey,
           programs: programs,
@@ -31,19 +31,31 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
-    getPrograms: async function () {
-      return axios.get("/api/internal/programs/", {}, this._getAxiosConfig());
-    },
-    getSettings: async function (accessGroup, settingType) {
+    getPrograms: async function (accessGroupPk) {
       return axios.get(
-        "/api/internal/settings/" + accessGroup + "/" + settingType + "/",
+        "/api/internal/accessgroup/" + accessGroupPk + "/programs/",
         {},
         this._getAxiosConfig()
       );
     },
-    saveSettings: async function (settingType, settingValues) {
+    getSettings: async function (accessGroupPk, settingType) {
+      return axios.get(
+        "/api/internal/accessgroup/" +
+          accessGroupPk +
+          "/settings/" +
+          settingType +
+          "/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    saveSettings: async function (accessGroupPk, settingType, settingValues) {
       return axios.post(
-        "/api/internal/settings/save/",
+        "/api/internal/accessgroup/" +
+          accessGroupPk +
+          "/settings/" +
+          settingType +
+          "/",
         {
           setting_type: settingType,
           setting_values: settingValues,
@@ -67,7 +79,7 @@ const dataMixin = {
     },
     saveStudentContact: async function (systemkey, contact) {
       return axios.post(
-        "/api/internal/contact/save/",
+        "/api/internal/contact/",
         { contact: contact, system_key: systemkey },
         this._getAxiosConfig()
       );

@@ -59,16 +59,21 @@ class ContactTopicSerializer(serializers.ModelSerializer):
         model = ContactTopic
         fields = ['id', 'access_group', 'name', 'active']
         extra_kwargs = {
-            'name': {'validators': []},
+            'access_group_id': {'validators': []},
         }
 
     def create(self, validated_data):
+        access_group = AccessGroup.objects.get(
+            access_group_id=validated_data['access_group']['access_group_id'])
+        validated_data["access_group"] = access_group
         return ContactTopic.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
+        instance.active = validated_data.get('active', instance.active)
         instance.save()
         return instance
+
 
 
 class ContactTypeSerializer(serializers.ModelSerializer):
@@ -79,14 +84,18 @@ class ContactTypeSerializer(serializers.ModelSerializer):
         model = ContactType
         fields = ['id', 'access_group', 'name', 'active']
         extra_kwargs = {
-            'name': {'validators': []},
+            'access_group_id': {'validators': []},
         }
 
     def create(self, validated_data):
+        access_group = AccessGroup.objects.get(
+            access_group_id=validated_data['access_group']['access_group_id'])
+        validated_data["access_group"] = access_group
         return ContactType.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)
+        instance.active = validated_data.get('active', instance.active)
         instance.save()
         return instance
 

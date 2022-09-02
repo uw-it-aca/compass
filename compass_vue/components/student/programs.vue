@@ -77,7 +77,7 @@ export default {
   },
   data() {
     return {
-      programs: {},
+      groupedPrograms: {},
       studentPrograms: this.person.student.compass_programs,
       updateSuccessful: false,
     };
@@ -85,18 +85,9 @@ export default {
   created: function () {
     this.loadPrograms();
   },
-  computed: {
-    groupedPrograms() {
-      if (this.programs.length) {
-        return this._groupAccessGroup(this.programs);
-      } else {
-        return {};
-      }
-    },
-  },
   methods: {
-    _groupAccessGroup: function (accessGroup) {
-      return accessGroup.reduce((groups, item) => {
+    _groupProgramsByAccessGroup: function (programs) {
+      return programs.reduce((groups, item) => {
         const group = groups[item.access_group.name] || [];
         group.push(item);
         groups[item.access_group.name] = group;
@@ -104,15 +95,23 @@ export default {
       }, {});
     },
     loadPrograms: function () {
-      this.getPrograms().then((response) => {
-        if (response.data) {
-          this.programs = response.data;
-        }
+      var _this = this;
+      this.getAccessGroups().then((accessGroups) => {
+        accessGroups.data.forEach(function (accessGroup) {
+          _this.getPrograms(accessGroup.id).then((response) => {
+            if (response.data) {
+              _this.groupedPrograms = Object.assign(
+                {}, _this.groupedPrograms,
+                _this._groupProgramsByAccessGroup(response.data));
+            }
+          });
+        });
       });
     },
     saveStudentData: function () {
       this.saveStudent(
         this.person.student.system_key,
+        this.person.uwnetid,
         this.studentPrograms
       ).then((response) => {
         if (response.data) {

@@ -12,12 +12,11 @@ class ProgramsView(BaseAPIView):
     '''
     API endpoint returning a list of programs for the user's access group
 
-    /api/internal/programs/
+    /api/internal/accessgroup/[access_group_pk]/programs/
     '''
 
-    def get(self, request):
-        access_groups = self.get_access_groups(request)
+    def get(self, request, access_group_pk):
         programs = Program.objects.filter(
-            access_group__in=access_groups).filter(active=True).all()
+            access_group=access_group_pk).filter(active=True).all()
         serializer = ProgramSerializer(programs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
