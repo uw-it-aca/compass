@@ -8,9 +8,10 @@
         <ul
           v-for="adviser in advisers"
           :key="adviser.id"
-          class="list-unstyled mb-0"
+          class="list-unstyled"
+          :class="advisers[advisers.length - 1] ? 'mb-0' : 'mb-4'"
         >
-          <li class="mb-1 d-flex">
+          <li class="d-flex">
             <i class="bi bi-person-circle text-gray me-3"></i>
             <div class="flex-fill">
               <strong>{{ adviser.display_name }}</strong> ({{
@@ -18,15 +19,15 @@
               }})<br />{{ adviser.pronouns }}
             </div>
           </li>
-          <li class="mb-1">
+          <li class="">
             <i class="bi bi-envelope-fill text-gray me-3"></i>
             <span>{{ adviser.employee.adviser.advising_email }}</span>
           </li>
-          <li class="mb-1">
+          <li class="">
             <i class="bi bi-telephone text-gray me-3"></i>
             <span>{{ adviser.employee.adviser.advising_phone_number }}</span>
           </li>
-          <li class="mb-1">
+          <li class="">
             <i class="bi bi-building text-gray me-3"></i>
             <span>{{ adviser.employee.adviser.advising_program }}</span>
           </li>
