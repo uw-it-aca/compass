@@ -7,14 +7,14 @@
           :button-type="'button'"
           :person="person"
           @contactUpdated="loadStudentContacts()"
-          ><i class="bi bi-plus-square text-white me-2"></i>Record new
+          ><i class="bi bi-plus-square text-dark me-2"></i>Record new
           contact</AddEditContact
         >
       </axdd-card-action>
     </template>
     <template #body>
       <template v-if="contacts.length > 0">
-        <div class="table-responsive border-top mx-n3 mb-n3">
+        <div class="table-responsive m-n3">
           <table class="table m-0">
             <thead class="table-light text-muted small">
               <tr>

@@ -10,7 +10,7 @@
                 @error="
                   $event.target.src = '/static/compass/img/placeholder.jpeg'
                 "
-                style="min-width: 140px; width: 140px"
+                style="min-width: 120px; width: 120px"
                 class="img-fluid rounded-circle border border-white border-2"
               />
             </div>
@@ -35,10 +35,12 @@
             </div>
             <ul>
               <li>
-              Preferred name: {{ person.preferred_first_name }}
-              {{ person.preferred_middle_name }}
-              {{ person.preferred_last_name }}
-            </li>
+                Preferred name: {{ person.preferred_first_name }}
+                {{ person.preferred_middle_name }}
+                {{ person.preferred_last_name }}
+              </li>
+              <li>DOB: {{ person.student.birthdate }}</li>
+              <li>Ethnicity: {{ person.student.assigned_ethnic_desc }}</li>
             </ul>
             <p>
               <span
@@ -65,8 +67,6 @@
       <div class="col-12 col-xl-3 mb-3">
         <div class="p-3">
           <ul class="list-unstyled m-0">
-
-            <li>Ethnicity: {{ person.student.assigned_ethnic_desc }}</li>
             <li>Citizenship: {{ person.student.resident_desc }}</li>
             <li>
               Visa Type:
@@ -75,7 +75,6 @@
               </span>
               <span v-else> N/A </span>
             </li>
-            <li>DOB: {{ person.student.birthdate }}</li>
           </ul>
         </div>
       </div>

@@ -6,7 +6,7 @@
       >
     </template>
     <template #body>
-      <div class="table-responsive border-top mx-n3 mb-n3">
+      <div class="table-responsive m-n3">
         <table class="table m-0">
           <thead class="table-light text-muted small">
             <tr>

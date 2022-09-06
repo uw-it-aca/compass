@@ -2,17 +2,16 @@
 
 <template>
   <layout
-    v-if="person.display_name !== undefined"
+    v-if="$route.params.id && person.display_name !== undefined"
     :page-title="person.display_name"
   >
     <template #title>
-      <h1 v-if="$route.params.id" class="visually-hidden">
+      <h1 class="visually-hidden">
         {{ person.display_name }}
       </h1>
-      <h1 v-else>Student</h1>
     </template>
     <template #content>
-      <div v-if="$route.params.id">
+      <div>
         <div class="row my-4">
           <div class="col">
             <StudentProfile :person="person"></StudentProfile>
@@ -30,11 +29,11 @@
                 >
                   Overview
                 </axdd-tabs-item>
-                <axdd-tabs-item :tabs-id="'example'" :panel-id="'advising'">
-                  Advising
+                <axdd-tabs-item :tabs-id="'example'" :panel-id="'history'">
+                  History
                 </axdd-tabs-item>
                 <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
-                  Transcript
+                  Unofficial Transcript
                 </axdd-tabs-item>
               </template>
             </axdd-tabs-list>
@@ -43,33 +42,43 @@
               <template #panels>
                 <axdd-tabs-panel :panel-id="'overview'" :active-panel="true">
                   <div class="row mt-4">
-                    <div class="col-xl-9">
-                      <StudentSchedule :person="person"></StudentSchedule>
-                    </div>
-                    <div class="col-xl-3">
-                      <StudentAddress :person="person"></StudentAddress>
+                    <div class="col-xl-12">
                       <StudentAcademics :person="person"></StudentAcademics>
                     </div>
-                  </div>
-                </axdd-tabs-panel>
-                <axdd-tabs-panel :panel-id="'advising'">
-                  <div class="row mt-4">
                     <div class="col-xl-9">
-                      <StudentContact :person="person"></StudentContact>
-                      <StudentVisits></StudentVisits>
+                      <StudentSchedule :person="person"></StudentSchedule>
                     </div>
                     <div class="col-xl-3">
                       <StudentAdviser
                         :advisers="person.student.advisers"
                       ></StudentAdviser>
                       <StudentPrograms :person="person"></StudentPrograms>
+                      <StudentAddress :person="person"></StudentAddress>
+                      <StudentEmergencyContact
+                        :person="person"
+                      ></StudentEmergencyContact>
+                    </div>
+                  </div>
+                </axdd-tabs-panel>
+                <axdd-tabs-panel :panel-id="'history'">
+                  <div class="row mt-4">
+                    <div class="col-xl-9">
+                      <StudentContact :person="person"></StudentContact>
+                    </div>
+                    <div class="col-xl-3">
+                      <StudentVisits></StudentVisits>
                     </div>
                   </div>
                 </axdd-tabs-panel>
                 <axdd-tabs-panel :panel-id="'transcript'">
                   <div class="row mt-4">
-                    <div class="col">
+                    <div class="col-xl-9">
                       <StudentTranscript :person="person"></StudentTranscript>
+                    </div>
+                    <div class="col-xl-3">
+                      <StudentTranscriptCredits
+                        :person="person"
+                      ></StudentTranscriptCredits>
                     </div>
                   </div>
                 </axdd-tabs-panel>
@@ -78,7 +87,29 @@
           </div>
         </div>
       </div>
-      <div v-else>No student</div>
+    </template>
+  </layout>
+  <layout v-else :page-title="'Search Student'">
+    <template #title>
+      <h1 class="visually-hidden">Search Student</h1>
+    </template>
+    <template #content>
+      <div class="row my-4 small">
+        <div class="col">
+          <div class="bg-gray p-3 rounded-3">
+            <div class="row">
+              <div class="col-4 ms-auto">
+                <div class="fw-bold lh-lg">Search all Students:</div>
+                <div>
+                  <SearchStudent></SearchStudent>
+                </div>
+              </div>
+              <div class="col-4"></div>
+              <div class="col-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </template>
   </layout>
 </template>
@@ -91,13 +122,17 @@ import dataMixin from "../mixins/data_mixin.js";
 
 import StudentProfile from "../components/student/profile.vue";
 import StudentAddress from "../components/student/address.vue";
+import StudentEmergencyContact from "../components/student/emergency.vue";
 import StudentAcademics from "../components/student/academics.vue";
 import StudentTranscript from "../components/student/transcript.vue";
+import StudentTranscriptCredits from "../components/student/transcript-credits.vue";
 import StudentContact from "../components/student/contact.vue";
 import StudentSchedule from "../components/student/schedule.vue";
 import StudentAdviser from "../components/student/adviser.vue";
 import StudentPrograms from "../components/student/programs.vue";
 import StudentVisits from "../components/student/visits.vue";
+import TranscriptCredits from "../components/student/transcript-credits.vue";
+import SearchStudent from "../components/search-student.vue";
 
 export default {
   mixins: [dataMixin],
@@ -109,13 +144,17 @@ export default {
     "axdd-tabs-panel": TabsPanel,
     StudentProfile,
     StudentAddress,
+    StudentEmergencyContact,
     StudentAcademics,
     StudentTranscript,
+    StudentTranscriptCredits,
     StudentContact,
     StudentSchedule,
     StudentAdviser,
     StudentPrograms,
     StudentVisits,
+    TranscriptCredits,
+    SearchStudent,
   },
   created: function () {
     this.loadStudent(this.$route.params.id);
