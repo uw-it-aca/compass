@@ -1,10 +1,11 @@
 <template>
   <axdd-card v-for="(transcript, transIndex) in transcripts" :key="transIndex">
     <template #heading-action>
-      <axdd-card-heading :level="2"
+      <axdd-card-heading v-if="transcript.class_schedule" :level="2"
         >{{ transcript.class_schedule.term.quarter }}
         {{ transcript.class_schedule.term.year }}</axdd-card-heading
       >
+      <div v-else>no term data</div>
     </template>
     <template #body>
       <div v-if="transcript.class_schedule" class="table-responsive m-n3">
@@ -58,7 +59,7 @@
           </tbody>
         </table>
       </div>
-      <div v-else><p>no transcript</p></div>
+      <div v-else><p>no transcript for this term</p></div>
     </template>
   </axdd-card>
 </template>

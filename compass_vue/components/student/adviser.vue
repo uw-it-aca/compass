@@ -10,28 +10,24 @@
           :key="adviser.id"
           class="list-unstyled mb-0"
         >
-          <li class="mb-1">
-            <i class="bi bi-person-circle text-muted me-3"></i>
-            <span
-              ><strong>{{ adviser.display_name }}</strong> ({{
+          <li class="mb-1 d-flex">
+            <i class="bi bi-person-circle text-gray me-3"></i>
+            <div class="flex-fill">
+              <strong>{{ adviser.display_name }}</strong> ({{
                 adviser.uwnetid
-              }})</span
-            >
+              }})<br />{{ adviser.pronouns }}
+            </div>
           </li>
           <li class="mb-1">
-            <i class="bi bi-chat-square-quote text-muted me-3"></i>
-            <span>{{ adviser.pronouns }}</span>
-          </li>
-          <li class="mb-1">
-            <i class="bi bi-envelope-fill text-muted me-3"></i>
+            <i class="bi bi-envelope-fill text-gray me-3"></i>
             <span>{{ adviser.employee.adviser.advising_email }}</span>
           </li>
           <li class="mb-1">
-            <i class="bi bi-telephone text-muted me-3"></i>
+            <i class="bi bi-telephone text-gray me-3"></i>
             <span>{{ adviser.employee.adviser.advising_phone_number }}</span>
           </li>
           <li class="mb-1">
-            <i class="bi bi-building text-muted me-3"></i>
+            <i class="bi bi-building text-gray me-3"></i>
             <span>{{ adviser.employee.adviser.advising_program }}</span>
           </li>
         </ul>
