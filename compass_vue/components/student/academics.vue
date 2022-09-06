@@ -17,6 +17,7 @@
           </li>
           <li>Class standing: {{ person.student.class_desc }}</li>
           <li>GPA: {{ person.student.cumulative_gpa }}</li>
+          <li>Campus: {{ person.student.campus_desc }}</li>
           <li>
             Veterans: {{ person.student.veteran_benefit_code }},
             {{ person.student.veteran_benefit_desc }},

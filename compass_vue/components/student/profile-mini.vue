@@ -1,15 +1,6 @@
 <template>
   <div class="d-flex">
-    <div class="me-2">
-      <div class="rounded-circle border border-light border-3">
-        <img
-          :src="person.placeholder_photo_url"
-          @error="$event.target.src = person.placeholder_photo_url"
-          style="min-width: 60px; width: 60px"
-          class="img-fluid rounded-circle border border-white border-2"
-        />
-      </div>
-    </div>
+
     <div class="flex-fill">
       <div class="text-nowrap">
         <span class="me-2">
