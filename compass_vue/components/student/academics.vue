@@ -17,6 +17,11 @@
           </li>
           <li>Class standing: {{ person.student.class_desc }}</li>
           <li>GPA: {{ person.student.cumulative_gpa }}</li>
+          <li>
+            Veterans: {{ person.student.veteran_benefit_code }},
+            {{ person.student.veteran_benefit_desc }},
+            {{ person.student.veteran_desc }}
+          </li>
         </ul>
       </div>
     </div>
@@ -78,14 +83,6 @@
               {{ person.student.total_registered_credits }}
             </li>
             <li>
-              Total Lower Division Transfer Credits:
-              {{ person.student.total_lower_div_transfer_credits }}
-            </li>
-            <li>
-              Total Upper Division Transfer Credits:
-              {{ person.student.total_upper_div_transfer_credits }}
-            </li>
-            <li>
               Total Transfer Credits:
               {{ person.student.total_transfer_credits }}
             </li>
@@ -103,9 +100,28 @@
       <div class="card shadow-sm flex-fill">
         <div class="card-body">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">
-            Other
+            Programs Summary
           </p>
-          <p>salkdjsalfk</p>
+
+          <div>
+            <p class="small text-uppercase text-muted mb-2">Special Programs</p>
+            <ul class="list-unstyled">
+              <li>
+                {{ person.student.special_program_code }},
+                {{ person.student.special_program_desc }}
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p class="small text-uppercase text-muted mb-2">Honors</p>
+            <ul class="list-unstyled">
+              <li>
+                {{ person.student.honors_program_code }},
+                {{ person.student.honors_program_ind }}
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
