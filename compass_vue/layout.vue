@@ -55,7 +55,7 @@ export default {
       appRootUrl: "/",
       userName: document.body.getAttribute("data-user-netid"),
       signOutUrl: document.body.getAttribute("data-signout-url"),
-      userRoles: document.body.getAttribute("data-user-role"),
+      userRoles: document.body.getAttribute("data-user-role").split(','),
       // automatically set year
       currentYear: new Date().getFullYear(),
     };

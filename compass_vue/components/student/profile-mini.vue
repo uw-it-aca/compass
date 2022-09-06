@@ -3,8 +3,8 @@
     <div class="me-2">
       <div class="rounded-circle border border-light border-3">
         <img
-          :src="person.photo_url"
-          @error="$event.target.src = '/static/compass/img/placeholder.jpeg'"
+          :src="person.placeholder_photo_url"
+          @error="$event.target.src = person.placeholder_photo_url"
           style="min-width: 60px; width: 60px"
           class="img-fluid rounded-circle border border-white border-2"
         />

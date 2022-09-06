@@ -7,19 +7,17 @@ from django.conf import settings
 from django.views.generic import TemplateView
 from compass.views.pages import LandingView
 from compass.views.api.student import (
-    StudentDetailView,
     StudentContactsView,
     StudentSchedulesView,
-    StudentSaveView,
     StudentTranscriptsView,
+    StudentView,
 )
 from compass.views.api.access_group import AccessGroupView
 from compass.views.api.adviser import AdviserContactsView, AdviserCaseloadView
 from compass.views.api.contact import (
     ContactTopicsView,
     ContactTypesView,
-    ContactSaveView,
-    ContactDetailView,
+    ContactView,
 )
 from compass.views.api.settings import SettingsView
 from compass.views.api.photo import PhotoView
@@ -54,10 +52,9 @@ if settings.DEBUG:
 
 urlpatterns += [
     re_path(r"^admin", admin_site.urls),
-    re_path(r"^api/internal/student/save/$", StudentSaveView.as_view()),
     re_path(
         r"^api/internal/student/(?P<uwnetid>[-@:\w]+)/$",
-        StudentDetailView.as_view(),
+        StudentView.as_view(),
     ),
     re_path(
         r"^api/internal/student/(?P<uwregid>[-@:\w]+)/schedules/$",
@@ -72,20 +69,18 @@ urlpatterns += [
         StudentContactsView.as_view(),
     ),
     re_path(
-        r"^api/internal/settings/(?P<access_group_id>[\w]+)/"
+        r"^api/internal/accessgroup/(?P<access_group_pk>[\w]+)/settings/"
         r"(?P<setting_type>[\w]+)/$",
         SettingsView.as_view(),
     ),
-    re_path(r"^api/internal/settings/save/$", SettingsView.as_view()),
+    re_path(r"^api/internal/accessgroup/(?P<access_group_pk>[\w]+)/programs/$",
+            ProgramsView.as_view()),
     re_path(r"^api/internal/accessgroup/$", AccessGroupView.as_view()),
-    re_path(r"^api/internal/programs/$", ProgramsView.as_view()),
-    re_path(r"^api/internal/contact/save/$", ContactSaveView.as_view()),
     re_path(r"^api/internal/contact/topics/$", ContactTopicsView.as_view()),
     re_path(r"^api/internal/contact/types/$", ContactTypesView.as_view()),
-    re_path(
-        r"^api/internal/contact/(?P<contactid>[\w]+)/$",
-        ContactDetailView.as_view(),
-    ),
+    re_path(r"^api/internal/contact/(?P<contactid>[\w]+)/$",
+            ContactView.as_view()),
+    re_path(r"^api/internal/contact/$",  ContactView.as_view()),
     re_path(
         r"^api/internal/adviser/(?P<adviser_netid>[\w]+)/contacts/$",
         AdviserContactsView.as_view(),
@@ -101,6 +96,7 @@ urlpatterns += [
     ),
     # vue-router paths
     re_path(r"^(student|caseload|reports|settings).*$", LandingView.as_view()),
+    re_path(r'^saml/', include('uw_saml.urls')),
     # default landing
     re_path(r"^$", LandingView.as_view(), name="index"),
 ]

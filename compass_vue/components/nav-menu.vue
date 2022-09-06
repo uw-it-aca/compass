@@ -17,10 +17,9 @@
           ><i class="bi bi-people-fill me-2"></i>Caseload</router-link
         >
       </li>
+      <!-- if manager -->
       <li
-        v-show="
-          userRoles.includes(Role.Admin) || userRoles.includes(Role.Manager)
-        "
+        v-show="userRoles.includes(Role.Manager)"
         class="nav-item mb-2"
       >
         <router-link

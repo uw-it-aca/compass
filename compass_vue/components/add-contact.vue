@@ -35,6 +35,17 @@
           ></button>
         </div>
         <div class="modal-body" v-if="contact">
+          <div class="row">
+            <div class="col">
+              <div
+                class="alert alert-danger py-2 small"
+                role="alert"
+                v-show="updatePermissionDenied"
+              >
+                You don't have permission to create or update contacts.
+              </div>
+            </div>
+          </div>
           <div class="row mb-3">
             <div class="col">
               <label for="date" class="form-label">Date:</label>
@@ -200,6 +211,7 @@ export default {
       contactTypes: [],
       contact: this.getDefaultContact(),
       formErrors: {},
+      updatePermissionDenied: false,
     };
   },
   created() {
@@ -229,7 +241,12 @@ export default {
           contactModal.hide();
         })
         .catch((error) => {
-          this.formErrors = error.response.data;
+          if (error.response.status == 401) {
+            this.updatePermissionDenied = true;
+            setTimeout(() => (this.updatePermissionDenied = false), 3000);
+          } else {
+            this.formErrors = error.response.data;
+          }
         });
     },
     getDefaultContact() {

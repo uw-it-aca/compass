@@ -3,11 +3,10 @@
 
 from compass.models import AppUser, Student, AccessGroup, Program, Contact, \
     ContactType, ContactTopic
-from django.conf import settings
+from compass.dao.group import is_admin_user
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from uw_saml.utils import is_member_of_group
 
 
 class SAMLAdminSite(admin.AdminSite):
@@ -18,8 +17,7 @@ class SAMLAdminSite(admin.AdminSite):
         self._registry.update(admin.site._registry)
 
     def has_permission(self, request):
-        return is_member_of_group(request,
-                                  settings.COMPASS_ADMIN_GROUP)
+        return is_admin_user(request)
 
     def login(self, request, extra_context=None):
         if self.has_permission(request):
@@ -31,20 +29,16 @@ class SAMLAdminSite(admin.AdminSite):
 
 class AbstractSAMLAdminModel():
     def has_add_permission(self, request):
-        return is_member_of_group(request,
-                                  settings.COMPASS_ADMIN_GROUP)
+        return is_admin_user(request)
 
     def has_change_permission(self, request, obj=None):
-        return is_member_of_group(request,
-                                  settings.COMPASS_ADMIN_GROUP)
+        return is_admin_user(request)
 
     def has_delete_permission(self, request, obj=None):
-        return is_member_of_group(request,
-                                  settings.COMPASS_ADMIN_GROUP)
+        return is_admin_user(request)
 
     def has_module_permission(self, request):
-        return is_member_of_group(request,
-                                  settings.COMPASS_ADMIN_GROUP)
+        return is_admin_user(request)
 
 
 class SAMLAdminModel(AbstractSAMLAdminModel, admin.ModelAdmin):

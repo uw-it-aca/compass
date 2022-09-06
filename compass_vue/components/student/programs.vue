@@ -11,6 +11,13 @@
       >
         Update Successful!
       </div>
+      <div
+        class="alert alert-danger py-2 small"
+        role="alert"
+        v-show="updatePermissionDenied"
+      >
+        You don't have permission to update programs.
+      </div>
       <div class="mb-3">
         <template
           v-for="(groupPrograms, accessGroupName) in groupedPrograms"
@@ -77,26 +84,18 @@ export default {
   },
   data() {
     return {
-      programs: {},
+      groupedPrograms: {},
       studentPrograms: this.person.student.compass_programs,
       updateSuccessful: false,
+      updatePermissionDenied: false,
     };
   },
   created: function () {
     this.loadPrograms();
   },
-  computed: {
-    groupedPrograms() {
-      if (this.programs.length) {
-        return this._groupAccessGroup(this.programs);
-      } else {
-        return {};
-      }
-    },
-  },
   methods: {
-    _groupAccessGroup: function (accessGroup) {
-      return accessGroup.reduce((groups, item) => {
+    _groupProgramsByAccessGroup: function (programs) {
+      return programs.reduce((groups, item) => {
         const group = groups[item.access_group.name] || [];
         group.push(item);
         groups[item.access_group.name] = group;
@@ -104,21 +103,34 @@ export default {
       }, {});
     },
     loadPrograms: function () {
-      this.getPrograms().then((response) => {
-        if (response.data) {
-          this.programs = response.data;
-        }
+      var _this = this;
+      this.getAccessGroups().then((accessGroups) => {
+        accessGroups.data.forEach(function (accessGroup) {
+          _this.getPrograms(accessGroup.id).then((response) => {
+            if (response.data) {
+              _this.groupedPrograms = Object.assign(
+                {}, _this.groupedPrograms,
+                _this._groupProgramsByAccessGroup(response.data));
+            }
+          });
+        });
       });
     },
     saveStudentData: function () {
       this.saveStudent(
         this.person.student.system_key,
+        this.person.uwnetid,
         this.studentPrograms
       ).then((response) => {
         if (response.data) {
           // show and update successful message for 3 seconds
           this.updateSuccessful = true;
           setTimeout(() => (this.updateSuccessful = false), 3000);
+        }
+      }).catch((error) => {
+        if (error.response.status == 401) {
+          this.updatePermissionDenied = true;
+          setTimeout(() => (this.updatePermissionDenied = false), 3000);
         }
       });
     },

@@ -11,7 +11,13 @@
       >
         Update successful!
       </div>
-
+      <div
+        class="alert alert-danger py-2 small"
+        role="alert"
+        v-show="updatePermissionDenied"
+      >
+        You don't have permission to update settings.
+      </div>
       <ul class="list-unstyled mb-4">
         <li v-for="setting in settings" :key="setting.id" class="mb-1">
           <div class="input-group input-group-sm">
@@ -100,6 +106,7 @@ export default {
       settings: [],
       newSettingName: "",
       updateSuccessful: false,
+      updatePermissionDenied: false,
     };
   },
   created() {
@@ -107,20 +114,33 @@ export default {
   },
   methods: {
     loadSettings() {
-      this.getSettings(this.accessGroup.access_group_id, this.settingType).then(
+      this.getSettings(this.accessGroup.id, this.settingType).then(
         (response) => {
           if (response.data) {
             this.settings = response.data;
           }
         }
-      );
+      ).catch((error) => {
+        if (error.response.status == 401) {
+          this.updatePermissionDenied = true;
+        }
+      });
     },
     submitSettingsForm() {
-      this.saveSettings(this.settingType, this.settings).then((response) => {
+      this.saveSettings(
+        this.accessGroup.id,
+        this.settingType,
+        this.settings
+      ).then((response) => {
         if (response.data) {
           // show and update successful message for 3 seconds
           this.updateSuccessful = true;
           setTimeout(() => (this.updateSuccessful = false), 3000);
+        }
+      }).catch((error) => {
+        if (error.response.status == 401) {
+          this.updatePermissionDenied = true;
+          setTimeout(() => (this.updatePermissionDenied = false), 3000);
         }
       });
     },
