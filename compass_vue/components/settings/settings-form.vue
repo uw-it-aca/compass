@@ -16,7 +16,7 @@
         role="alert"
         v-show="updatePermissionDenied"
       >
-        You don't have permission to update settings.
+        You don't have permission to update {{ settingLabel }}s.
       </div>
       <ul class="list-unstyled mb-4">
         <li v-for="setting in settings" :key="setting.id" class="mb-1">
