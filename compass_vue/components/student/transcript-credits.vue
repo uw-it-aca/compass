@@ -13,7 +13,7 @@
         <li>UW Grade Point Average: xxx</li>
         <li>Extension Credits: xxx</li>
         <li>Transfer Credits: {{ person.student.total_transfer_credits }}</li>
-        <li>Total Credits Earned: {{ person.student.total_uw_credits }}</li>
+        <li>Total UW Credits Earned: {{ person.student.total_uw_credits }}</li>
       </ul>
       <ul class="list-unstyled">
         <li>
@@ -39,8 +39,8 @@
         <li><hr /></li>
         <li>
           <div class="d-flex justify-content-between">
-            <span>Total UW Credits</span>
-            <span>{{ person.student.total_uw_credits }}</span>
+            <span>Total Credits</span>
+            <span>{{ person.student.total_credits }}</span>
           </div>
         </li>
       </ul>

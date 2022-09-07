@@ -2,31 +2,32 @@
   <div class="row mb-4">
     <h2 class="h6 m-0 fw-bold mb-4">Academic Summary</h2>
     <div class="col-3 d-flex flex-column">
-      <div class="card p-3 shadow-sm flex-fill">
-        <p class="text-uppercase text-dark-beige fs-8 fw-bold">
-          Current Status
-        </p>
-        <ul class="list-unstyled">
-          <li>
-            Enrollment Status:
-            <template v-if="person.student.registered_in_quarter">
-              Registered
-            </template>
-            <template v-else> Unregistered </template
-            >{{ person.student.enrollment_desc }}
-          </li>
-          <li>Class standing: {{ person.student.class_desc }}</li>
-          <li>GPA: {{ person.student.cumulative_gpa }}</li>
-          <li>Campus: {{ person.student.campus_desc }}</li>
-          <li>
-            Veterans: {{ person.student.veteran_benefit_code }},
-            {{ person.student.veteran_benefit_desc }},
-            {{ person.student.veteran_desc }}
-          </li>
-        </ul>
+      <div class="card shadow-sm flex-fill">
+        <div class="card-body">
+          <p class="text-uppercase text-dark-beige fs-8 fw-bold">
+            Status
+          </p>
+          <ul class="list-unstyled">
+            <li>
+              Enrollment Status:
+              <template v-if="person.student.registered_in_quarter">
+                Registered
+              </template>
+              <template v-else> Unregistered </template
+              >{{ person.student.enrollment_desc }}
+            </li>
+            <li>Class standing: {{ person.student.class_desc }}</li>
+            <li>Campus: {{ person.student.campus_desc }}</li>
+          </ul>
+        </div>
+        <div class="card-footer bg-white">
+          <div class="d-flex justify-content-between">
+            <span>Grade Point Average (GPA)</span>
+            <span>{{ person.student.cumulative_gpa }}</span>
+          </div>
+        </div>
       </div>
     </div>
-
     <div class="col-3 d-flex flex-column">
       <div class="card p-3 shadow-sm flex-fill">
         <p class="text-uppercase text-dark-beige fs-8 fw-bold">Majors</p>
@@ -58,50 +59,7 @@
       <div class="card shadow-sm flex-fill">
         <div class="card-body">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">
-            Credit Summary
-          </p>
-          <ul class="list-unstyled">
-            <li>
-              <div class="d-flex justify-content-between">
-                <span>Total UW Credits</span>
-                <span>{{ person.student.total_uw_credits }}</span>
-              </div>
-            </li>
-            <li>
-              Total Deductible Credits:
-              {{ person.student.total_deductible_credits }}
-            </li>
-            <li>
-              Total Extension Credits:
-              {{ person.student.total_extension_credits }}
-            </li>
-            <li>
-              Total Non-Graded Credits:
-              {{ person.student.total_non_graded_credits }}
-            </li>
-            <li>
-              Total Registered Credits:
-              {{ person.student.total_registered_credits }}
-            </li>
-            <li>
-              Total Transfer Credits:
-              {{ person.student.total_transfer_credits }}
-            </li>
-          </ul>
-        </div>
-        <div class="card-footer bg-white">
-          <div class="d-flex justify-content-between">
-            <span>Total Credits</span>
-            <span>{{ person.student.total_credits }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-3 d-flex flex-column">
-      <div class="card shadow-sm flex-fill">
-        <div class="card-body">
-          <p class="text-uppercase text-dark-beige fs-8 fw-bold">
-            Programs Summary
+            Programs
           </p>
 
           <div>
@@ -122,6 +80,41 @@
                 {{ person.student.honors_program_ind }}
               </li>
             </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 d-flex flex-column">
+      <div class="card shadow-sm flex-fill">
+        <div class="card-body">
+          <p class="text-uppercase text-dark-beige fs-8 fw-bold">
+            Credits
+          </p>
+          <ul class="list-unstyled">
+            <li>
+              <div class="d-flex justify-content-between">
+                <span>Total Extension Credits</span>
+                <span>{{ person.student.total_extension_credits }}</span>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex justify-content-between">
+                <span>Total Transfer Credits</span>
+                <span>{{ person.student.total_transfer_credits }}</span>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex justify-content-between">
+                <span>Total UW Credits</span>
+                <span>{{ person.student.total_uw_credits }}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="card-footer bg-white">
+          <div class="d-flex justify-content-between">
+            <span>Total Credits</span>
+            <span>{{ person.student.total_credits }}</span>
           </div>
         </div>
       </div>
