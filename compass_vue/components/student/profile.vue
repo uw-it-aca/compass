@@ -131,9 +131,14 @@ export default {
   },
   created: function () {
     var _this = this;
-    this.getStudentPhoto(this.person.photo_url).then((photo) => {
-      _this.photo = photo.data;
-    });
+    this.getStudentPhoto(this.person.photo_url)
+      .then((photo) => {
+        _this.photo = photo.data;
+      })
+      .catch(() => {
+        console.log("photo error");
+        _this.photo = "/static/compass/img/photo.jpg";
+      });
   },
 };
 </script>
