@@ -2,11 +2,10 @@
   <div class="row mb-4">
     <h2 class="h6 m-0 fw-bold mb-4">Academic Summary</h2>
     <div class="col-3 d-flex flex-column">
-      <div class="card shadow-sm flex-fill">
-        <div class="card-body">
-          <p class="text-uppercase text-dark-beige fs-8 fw-bold">
-            Status
-          </p>
+
+      <div class="alert alert-beige d-flex flex-column flex-fill m-0 small">
+        <div class="flex-fill">
+          <p class="text-uppercase text-dark-beige fs-8 fw-bold">Status</p>
           <ul class="list-unstyled">
             <li>
               Enrollment Status:
@@ -20,13 +19,14 @@
             <li>Campus: {{ person.student.campus_desc }}</li>
           </ul>
         </div>
-        <div class="card-footer bg-white">
+        <div>
           <div class="d-flex justify-content-between">
-            <span>Grade Point Average (GPA)</span>
+            <span class="fw-bold">Grade Point Average (GPA)</span>
             <span>{{ person.student.cumulative_gpa }}</span>
           </div>
         </div>
       </div>
+
     </div>
     <div class="col-3 d-flex flex-column">
       <div class="card p-3 shadow-sm flex-fill">
@@ -58,9 +58,7 @@
     <div class="col-3 d-flex flex-column">
       <div class="card shadow-sm flex-fill">
         <div class="card-body">
-          <p class="text-uppercase text-dark-beige fs-8 fw-bold">
-            Programs
-          </p>
+          <p class="text-uppercase text-dark-beige fs-8 fw-bold">Programs</p>
 
           <div>
             <p class="small text-uppercase text-muted mb-2">Special Programs</p>
@@ -87,9 +85,7 @@
     <div class="col-3 d-flex flex-column">
       <div class="card shadow-sm flex-fill">
         <div class="card-body">
-          <p class="text-uppercase text-dark-beige fs-8 fw-bold">
-            Credits
-          </p>
+          <p class="text-uppercase text-dark-beige fs-8 fw-bold">Credits</p>
           <ul class="list-unstyled">
             <li>
               <div class="d-flex justify-content-between">
