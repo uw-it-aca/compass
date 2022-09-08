@@ -103,7 +103,7 @@ class AccessGroup(models.Model):
         return self.name
 
     def has_role(self, request, role):
-        return is_group_member(request, self.authz_group_id)
+        return is_group_member(request, self.authz_group_id(role))
 
 
 class Program(models.Model):

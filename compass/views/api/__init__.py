@@ -15,7 +15,7 @@ class BaseAPIView(GenericAPIView):
     def get_access_groups(self, request):
         groups = get_attribute(request, 'isMemberOf') or []
         # removed -manager and -user from group name
-        groups = [g.split("-")[0] for g in groups]
+        groups = [g.rsplit("-", 1)[0] for g in groups]
         access_groups = AccessGroup.objects.filter(access_group_id__in=groups)
         return access_groups
 

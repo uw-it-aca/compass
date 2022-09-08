@@ -32,10 +32,10 @@ class StudentView(BaseAPIView):
                     system_key=person.student.system_key)
                 person.student.compass_programs = [
                     program.id for program in local_student.programs.all()]
-                person.photo_url = PhotoDAO().get_photo_url(
-                    person.uwregid, "medium")
             except Student.DoesNotExist:
                 person.student.compass_programs = []
+            person.photo_url = PhotoDAO().get_photo_url(
+                person.uwregid, "medium")
             return JsonResponse(person.to_dict(), safe=False)
         except PersonNotFoundException:
             return HttpResponseNotFound()

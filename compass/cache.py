@@ -1,10 +1,7 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-
-from django.conf import settings
 from memcached_clients import RestclientPymemcacheClient
-import re
 
 ONE_MINUTE = 60
 ONE_HOUR = 60 * 60
