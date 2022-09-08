@@ -16,7 +16,10 @@
           </td>
           <td>{{ person.student.class_desc }}</td>
           <td>{{ person.student.campus_desc }}</td>
-          <td>{{ person.student.enroll_status_code }}</td>
+          <td>
+            {{ person.student.enroll_status_code }},
+            {{ person.student.registered_in_quarter }}
+          </td>
         </tr>
       </tbody>
     </table>

@@ -4,15 +4,8 @@
       <div class="col-xl-6 mb-3">
         <div class="d-flex p-3">
           <div class="pe-3">
-            <div class="rounded-circle border border-4">
-              <img
-                :src="person.photo_url"
-                @error="
-                  $event.target.src = '/static/compass/img/placeholder.jpeg'
-                "
-                style="min-width: 120px; width: 120px"
-                class="img-fluid rounded-circle border border-white border-2"
-              />
+            <div class="rounded-circle border border-4" :style="profileStyles">
+              &nbsp;
             </div>
           </div>
           <div class="flex-fill">
@@ -98,7 +91,9 @@
 </template>
 
 <script>
+import dataMixin from "../../mixins/data_mixin.js";
 export default {
+  mixins: [dataMixin],
   props: {
     person: {
       type: Object,
@@ -107,7 +102,38 @@ export default {
   },
   components: {},
   data() {
-    return {};
+    return {
+      photo: null,
+    };
+  },
+  computed: {
+    profileStyles() {
+      console.log({
+        background: "url('" + this.photo + "') no-repeat center",
+        // else... use url '/static/compass/img/photo.jpg'
+        "background-size": "cover",
+        width: "120px",
+        height: "120px",
+      });
+      return {
+        background: "url('" + this.photo + "') no-repeat center",
+        // else... use url '/static/compass/img/photo.jpg'
+        "background-size": "cover",
+        width: "120px",
+        height: "120px",
+      };
+    },
+    personPhotoUrl() {
+      return this.person.photo_url
+        ? this.person.photo_url
+        : "/static/compass/img/photo.jpg";
+    },
+  },
+  created: function () {
+    var _this = this;
+    this.getStudentPhoto(this.person.photo_url).then((photo) => {
+      _this.photo = photo.data;
+    });
   },
 };
 </script>

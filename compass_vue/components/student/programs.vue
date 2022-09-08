@@ -109,8 +109,10 @@ export default {
           _this.getPrograms(accessGroup.id).then((response) => {
             if (response.data) {
               _this.groupedPrograms = Object.assign(
-                {}, _this.groupedPrograms,
-                _this._groupProgramsByAccessGroup(response.data));
+                {},
+                _this.groupedPrograms,
+                _this._groupProgramsByAccessGroup(response.data)
+              );
             }
           });
         });
@@ -121,18 +123,20 @@ export default {
         this.person.student.system_key,
         this.person.uwnetid,
         this.studentPrograms
-      ).then((response) => {
-        if (response.data) {
-          // show and update successful message for 3 seconds
-          this.updateSuccessful = true;
-          setTimeout(() => (this.updateSuccessful = false), 3000);
-        }
-      }).catch((error) => {
-        if (error.response.status == 401) {
-          this.updatePermissionDenied = true;
-          setTimeout(() => (this.updatePermissionDenied = false), 3000);
-        }
-      });
+      )
+        .then((response) => {
+          if (response.data) {
+            // show and update successful message for 3 seconds
+            this.updateSuccessful = true;
+            setTimeout(() => (this.updateSuccessful = false), 3000);
+          }
+        })
+        .catch((error) => {
+          if (error.response.status == 401) {
+            this.updatePermissionDenied = true;
+            setTimeout(() => (this.updatePermissionDenied = false), 3000);
+          }
+        });
     },
   },
 };
