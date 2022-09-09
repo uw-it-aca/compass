@@ -2,107 +2,79 @@
   <div class="row mb-4">
     <h2 class="h6 m-0 fw-bold mb-4">Academic Summary</h2>
     <div class="col-3 d-flex flex-column">
-      <div class="card p-3 shadow-sm flex-fill">
-        <p class="text-uppercase text-dark-beige fs-8 fw-bold">
-          Current Status
-        </p>
-        <ul class="list-unstyled">
-          <li>
-            Enrollment Status:
-            <template v-if="person.student.registered_in_quarter">
-              Registered
-            </template>
-            <template v-else> Unregistered </template
-            >{{ person.student.enrollment_desc }}
-          </li>
-          <li>Class standing: {{ person.student.class_desc }}</li>
-          <li>GPA: {{ person.student.cumulative_gpa }}</li>
-          <li>Campus: {{ person.student.campus_desc }}</li>
-          <li>
-            Veterans: {{ person.student.veteran_benefit_code }},
-            {{ person.student.veteran_benefit_desc }},
-            {{ person.student.veteran_desc }}
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="col-3 d-flex flex-column">
-      <div class="card p-3 shadow-sm flex-fill">
-        <p class="text-uppercase text-dark-beige fs-8 fw-bold">Majors</p>
-
-        <div>
-          <p class="small text-uppercase text-muted mb-2">Current Majors</p>
+      <div class="alert alert-gray d-flex flex-column flex-fill m-0 small">
+        <div class="flex-fill">
+          <p class="text-uppercase text-dark-beige fs-8 fw-bold">Status</p>
           <ul class="list-unstyled">
-            <li v-for="(major, index) in person.student.majors" :key="index">
-              {{ major.major_abbr_code }}, {{ major.major_name }}
+            <li>
+              <KeyValue>
+                <template #key>Enrollment Status</template>
+                <template #value>
+                  <template v-if="person.student.registered_in_quarter">
+                    Registered
+                  </template>
+                  <template v-else> Unregistered </template
+                  >{{ person.student.enrollment_desc }}
+                </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key>Class standing</template>
+                <template #value>{{ person.student.class_desc }}</template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key>Campus</template>
+                <template #value>{{ person.student.campus_desc }}</template>
+              </KeyValue>
             </li>
           </ul>
         </div>
-
         <div>
-          <p class="small text-uppercase text-muted mb-2">Intended Majors</p>
-          <ul class="list-unstyled">
-            <li
-              v-for="(intendedMajor, index) in person.student.intended_majors"
-              :key="index"
+          <KeyValue>
+            <template #key
+              ><span class="fw-bold">Grade Point Average (GPA)</span></template
             >
-              {{ intendedMajor.major_abbr_code }},
-              {{ intendedMajor.major_name }}
-            </li>
-          </ul>
+            <template #value>{{ person.student.cumulative_gpa }}</template>
+          </KeyValue>
         </div>
       </div>
     </div>
     <div class="col-3 d-flex flex-column">
-      <div class="card shadow-sm flex-fill">
-        <div class="card-body">
-          <p class="text-uppercase text-dark-beige fs-8 fw-bold">
-            Credit Summary
-          </p>
-          <ul class="list-unstyled">
-            <li>
-              <div class="d-flex justify-content-between">
-                <span>Total UW Credits</span>
-                <span>{{ person.student.total_uw_credits }}</span>
-              </div>
-            </li>
-            <li>
-              Total Deductible Credits:
-              {{ person.student.total_deductible_credits }}
-            </li>
-            <li>
-              Total Extension Credits:
-              {{ person.student.total_extension_credits }}
-            </li>
-            <li>
-              Total Non-Graded Credits:
-              {{ person.student.total_non_graded_credits }}
-            </li>
-            <li>
-              Total Registered Credits:
-              {{ person.student.total_registered_credits }}
-            </li>
-            <li>
-              Total Transfer Credits:
-              {{ person.student.total_transfer_credits }}
-            </li>
-          </ul>
-        </div>
-        <div class="card-footer bg-white">
-          <div class="d-flex justify-content-between">
-            <span>Total Credits</span>
-            <span>{{ person.student.total_credits }}</span>
+      <div class="alert alert-gray d-flex flex-column flex-fill m-0 small">
+        <div class="flex-fill">
+          <p class="text-uppercase text-dark-beige fs-8 fw-bold">Majors</p>
+
+          <div>
+            <p class="small text-uppercase text-muted mb-2">Current Majors</p>
+            <ul class="list-unstyled">
+              <li v-for="(major, index) in person.student.majors" :key="index">
+                {{ major.major_abbr_code }}, {{ major.major_name }}
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p class="small text-uppercase text-muted mb-2">Intended Majors</p>
+            <ul class="list-unstyled">
+              <li
+                v-for="(intendedMajor, index) in person.student.intended_majors"
+                :key="index"
+              >
+                {{ intendedMajor.major_abbr_code }},
+                {{ intendedMajor.major_name }}
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
     <div class="col-3 d-flex flex-column">
-      <div class="card shadow-sm flex-fill">
-        <div class="card-body">
-          <p class="text-uppercase text-dark-beige fs-8 fw-bold">
-            Programs Summary
-          </p>
+      <div class="alert alert-gray d-flex flex-column flex-fill m-0 small">
+        <div class="flex-fill">
+          <p class="text-uppercase text-dark-beige fs-8 fw-bold">Programs</p>
 
           <div>
             <p class="small text-uppercase text-muted mb-2">Special Programs</p>
@@ -126,11 +98,51 @@
         </div>
       </div>
     </div>
+    <div class="col-3 d-flex flex-column">
+      <div class="alert alert-gray d-flex flex-column flex-fill m-0 small">
+        <div class="flex-fill">
+          <p class="text-uppercase text-dark-beige fs-8 fw-bold">Credits</p>
+          <ul class="list-unstyled">
+            <li>
+              <KeyValue>
+                <template #key>Total Extension Credits</template>
+                <template #value>{{
+                  person.student.total_extension_credits
+                }}</template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key>Total Transfer Credits</template>
+                <template #value>{{
+                  person.student.total_transfer_credits
+                }}</template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key>Total UW Credits</template>
+                <template #value>{{
+                  person.student.total_uw_credits
+                }}</template>
+              </KeyValue>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <KeyValue>
+            <template #key><span class="fw-bold">Total Credits</span></template>
+            <template #value>{{ person.student.total_credits }}</template>
+          </KeyValue>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { Card, CardHeading } from "axdd-components";
+import KeyValue from "../../components/_common/key-value.vue";
 import dataMixin from "../../mixins/data_mixin.js";
 
 export default {
@@ -144,6 +156,7 @@ export default {
   components: {
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
+    KeyValue,
   },
   data() {
     return {};

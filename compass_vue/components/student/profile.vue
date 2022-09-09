@@ -7,10 +7,8 @@
             <div class="rounded-circle border border-4">
               <img
                 :src="person.photo_url"
-                @error="
-                  $event.target.src = '/static/compass/img/placeholder.jpeg'
-                "
-                style="min-width: 120px; width: 120px"
+                @error="$event.target.src = '/static/compass/img/photo.jpg'"
+                style="height: 120px; width: 120px; object-fit: cover"
                 class="img-fluid rounded-circle border border-white border-2"
               />
             </div>
@@ -27,20 +25,25 @@
               <template v-else>
                 {{ person.surname }}
               </template>
-              <span class="ms-2">(he/him)</span>
+              <span class="ms-2">({{ person.pronouns }})</span>
             </div>
             <div class="h5">
               {{ person.student.student_number }},
               {{ person.uwnetid }}
             </div>
             <ul>
+              <li>Full name: {{ person.full_name }}</li>
               <li>
-                Preferred name: {{ person.preferred_first_name }}
-                {{ person.preferred_middle_name }}
-                {{ person.preferred_last_name }}
+                First and last: {{ person.first_name }} {{ person.surname }}
               </li>
               <li>DOB: {{ person.student.birthdate }}</li>
               <li>Ethnicity: {{ person.student.assigned_ethnic_desc }}</li>
+              <li>Disability: {{ person.student.disability_ind }}</li>
+              <li>
+                Veterans: {{ person.student.veteran_benefit_code }},
+                {{ person.student.veteran_benefit_desc }},
+                {{ person.student.veteran_desc }}
+              </li>
             </ul>
             <p>
               <span
@@ -67,7 +70,7 @@
       <div class="col-12 col-xl-3 mb-3">
         <div class="p-3">
           <ul class="list-unstyled m-0">
-            <li>Citizenship: {{ person.student.resident_desc }}</li>
+            <li>Citizenship: {{ person.student.citizen_country }}</li>
             <li>
               Visa Type:
               <span v-if="person.student.visa_type">
@@ -75,6 +78,7 @@
               </span>
               <span v-else> N/A </span>
             </li>
+            <li>Resident status: {{ person.student.resident_desc }}</li>
           </ul>
         </div>
       </div>

@@ -6,17 +6,19 @@
     <template #body>
       <div v-if="advisers">
         <ul
-          v-for="adviser in advisers"
+          v-for="(adviser, index) in advisers"
           :key="adviser.id"
           class="list-unstyled"
-          :class="advisers[advisers.length - 1] ? 'mb-0' : 'mb-4'"
+          :class="index == advisers.length - 1 ? 'mb-0' : 'mb-4'"
         >
-          <li class="d-flex">
-            <i class="bi bi-person-circle text-gray me-3"></i>
-            <div class="flex-fill">
-              <strong>{{ adviser.display_name }}</strong> ({{
-                adviser.uwnetid
-              }})<br />{{ adviser.pronouns }}
+          <li>
+            <div class="d-flex">
+              <i class="bi bi-person-circle text-gray me-3"></i>
+              <div class="flex-fill">
+                <strong>{{ adviser.display_name }}</strong> ({{
+                  adviser.uwnetid
+                }})<br />{{ adviser.pronouns }}
+              </div>
             </div>
           </li>
           <li class="">
