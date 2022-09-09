@@ -133,9 +133,6 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
-    getStudentPhoto: async function (photoUrl) {
-      return axios.get(photoUrl, {}, this._getAxiosConfig());
-    },
   },
 };
 

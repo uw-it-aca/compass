@@ -96,9 +96,7 @@
 </template>
 
 <script>
-import dataMixin from "../../mixins/data_mixin.js";
 export default {
-  mixins: [dataMixin],
   props: {
     person: {
       type: Object,
