@@ -7,7 +7,7 @@
             <div class="rounded-circle border border-4">
               <img
                 :src="person.photo_url"
-                @error="$event.target.src = '/static/compass/img/photo.jpg'"
+                @error="$event.target.src = '/static/compass/img/placeholder.gif'"
                 class="img-profile rounded-circle border border-white border-2"
               />
             </div>

@@ -1,6 +1,13 @@
 <template>
   <div class="d-flex">
-
+    <div class="me-2">
+      <div class="rounded-circle border border-light border-3">
+        <img
+          :src="'/static/compass/img/placeholder.gif'"
+          class="img-profile rounded-circle border border-white border-2"
+        />
+      </div>
+    </div>
     <div class="flex-fill">
       <div class="text-nowrap">
         <span class="me-2">
@@ -46,3 +53,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+  .img-profile {
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    object-position: top;
+  }
+  </style>
