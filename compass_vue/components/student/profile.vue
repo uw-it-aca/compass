@@ -8,8 +8,7 @@
               <img
                 :src="person.photo_url"
                 @error="$event.target.src = '/static/compass/img/photo.jpg'"
-                style="height: 120px; width: 120px; object-fit: cover"
-                class="img-fluid rounded-circle border border-white border-2"
+                class="img-profile rounded-circle border border-white border-2"
               />
             </div>
           </div>
@@ -109,3 +108,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.img-profile {
+  height: 120px;
+  width: 120px;
+  object-fit: cover;
+  object-position: top;
+}
+</style>
