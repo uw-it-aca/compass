@@ -133,6 +133,13 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
+    clearOverride: async function () {
+      return axios.post(
+        "/api/internal/support/",
+        { clear_override: true },
+        this._getAxiosConfig()
+      );
+    },
   },
 };
 

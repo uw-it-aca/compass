@@ -22,6 +22,7 @@ from compass.views.api.contact import (
 from compass.views.api.settings import SettingsView
 from compass.views.api.photo import PhotoView
 from compass.views.api.program import ProgramsView
+from compass.views.api.support import SupportView
 
 # start with an empty url array
 urlpatterns = []
@@ -93,6 +94,10 @@ urlpatterns += [
         r"^api/internal/photo/(?P<photo_key>[a-z0-9]*)/$",
         PhotoView.as_view(),
         name="photo",
+    ),
+    re_path(
+        r"^api/internal/support/$",
+        SupportView.as_view(),
     ),
     # vue-router paths
     re_path(r"^(student|caseload|reports|settings).*$", LandingView.as_view()),
