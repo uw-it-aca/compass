@@ -3,8 +3,8 @@
     <div class="me-2">
       <div class="rounded-circle border border-light border-3">
         <img
-          :src="'/static/compass/img/placeholder.gif'"
-          class="img-profile rounded-circle border border-white border-2"
+          :src="'/static/compass/img/placeholder.png'"
+          class="img-profile rounded-circle bg-light border border-white border-2"
         />
       </div>
     </div>
