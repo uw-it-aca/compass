@@ -12,6 +12,22 @@
         :user-netid="userName + ' (' + userRoles + ')'"
         :signout-url="signOutUrl"
       ></axdd-profile>
+      <div
+        class="gp-admin-bar"
+        role="complementary"
+        aria-label="Admin Override Status"
+        v-if="userName != userOverride"
+      >
+        Overriding as <strong>{{ userOverride }}</strong>
+        <input type="hidden" value="1" name="clear_override" />
+        <button
+          class="btn btn-danger btn-xs"
+          value="Clear override"
+          @click="clearUserOverride()"
+        >
+          <i class="fas fa-times-circle"></i> Clear
+        </button>
+      </div>
     </template>
     <template #navigation>
       <NavMenu :user-roles="userRoles" />
@@ -33,9 +49,11 @@
 import { Sidebar, Profile } from "axdd-components";
 import NavMenu from "./components/nav-menu.vue";
 import NavMessage from "./components/nav-message.vue";
+import dataMixin from "./mixins/data_mixin.js";
 
 export default {
   name: "CompassApp",
+  mixins: [dataMixin],
   components: {
     "axdd-sidebar": Sidebar,
     "axdd-profile": Profile,
@@ -54,8 +72,9 @@ export default {
       appName: "Compass",
       appRootUrl: "/",
       userName: document.body.getAttribute("data-user-netid"),
+      userOverride: document.body.getAttribute("data-user-override"),
       signOutUrl: document.body.getAttribute("data-signout-url"),
-      userRoles: document.body.getAttribute("data-user-role").split(','),
+      userRoles: document.body.getAttribute("data-user-role").split(","),
       // automatically set year
       currentYear: new Date().getFullYear(),
     };
@@ -63,6 +82,13 @@ export default {
   created: function () {
     // constructs page title in the following format "Page Title - AppName"
     document.title = this.pageTitle + " - " + this.appName;
+  },
+  methods: {
+    clearUserOverride: function () {
+      this.clearOverride().then(() => {
+        window.location.href = "/support";
+      });
+    },
   },
 };
 </script>

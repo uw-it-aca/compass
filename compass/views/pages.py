@@ -18,8 +18,9 @@ class LandingView(TemplateView):
         roles = AccessGroup.objects.get_roles_for_user(self.request)
 
         context = super().get_context_data(**kwargs)
-        context['user_netid'] = UserService().get_user()
+        context['user_netid'] = UserService().get_original_user()
         context['user_role'] = ','.join(sorted(roles))
         context['signout_url'] = reverse('saml_logout')
         context['ga_key'] = getattr(settings, 'GOOGLE_ANALYTICS_KEY', None)
+        context['user_override'] = UserService().get_user()
         return context
