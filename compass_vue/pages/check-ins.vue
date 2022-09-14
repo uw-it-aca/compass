@@ -22,15 +22,7 @@
 </template>
 
 <script>
-import {
-  Card,
-  CardHeading,
-  TabsList,
-  TabsDisplay,
-  TabsItem,
-  TabsPanel,
-} from "axdd-components";
-import SearchStudent from "../components/search-student.vue";
+import { Card, CardHeading } from "axdd-components";
 import CheckInTableLoading from "../components/checkin-table-loading.vue";
 import CheckInTableDisplay from "../components/checkin-table-display.vue";
 
@@ -52,7 +44,9 @@ export default {
       isLoading: true,
       contacts: [],
       today: "",
-      userNetId: document.body.getAttribute("data-user-netid"),
+      userNetId: document.body.getAttribute("data-user-override")
+        ? document.body.getAttribute("data-user-override")
+        : document.body.getAttribute("data-user-netid"),
     };
   },
   computed: {},
