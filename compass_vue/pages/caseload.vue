@@ -66,6 +66,8 @@ export default {
       persons: [],
       adviserNetId: this.$route.params.id
         ? this.$route.params.id
+        : document.body.getAttribute("data-user-override")
+        ? document.body.getAttribute("data-user-override")
         : document.body.getAttribute("data-user-netid"),
     };
   },
