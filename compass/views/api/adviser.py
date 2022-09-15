@@ -27,7 +27,7 @@ class AdviserContactsView(BaseAPIView):
             person = client.get_person_by_system_key(
                 contact.student.system_key)
             person.photo_url = photo_dao.get_photo_url(
-                person.uwregid, "small")
+                person.uwregid)
             contact_dict["student"] = person.to_dict()
             contacts.append(contact_dict)
         return JsonResponse([contact for contact in contacts], safe=False)
