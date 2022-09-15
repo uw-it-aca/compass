@@ -63,7 +63,7 @@ router.beforeEach((to, from, next) => {
 
   // get the authenticated user role from django context
   let userRoles = document.body.getAttribute("data-user-role").split(',');
- 
+
   // check if authorization is required for this route
   if (authorize) {
     // check to see if current user's role is authorized to view page
