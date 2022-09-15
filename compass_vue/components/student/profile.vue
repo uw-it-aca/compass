@@ -7,8 +7,16 @@
             <div class="rounded-circle border border-4">
               <img
                 :src="person.photo_url"
-                @error="$event.target.src = '/static/compass/img/placeholder.png'"
-                class="img-profile rounded-circle border bg-light border-white border-2"
+                @error="
+                  $event.target.src = '/static/compass/img/placeholder.png'
+                "
+                class="
+                  img-profile
+                  rounded-circle
+                  border
+                  bg-light
+                  border-white border-2
+                "
               />
             </div>
           </div>
@@ -24,7 +32,12 @@
               <template v-else>
                 {{ person.surname }}
               </template>
-              <span class="ms-2">({{ person.pronouns }})</span>
+              <span class="ms-2 text-muted"
+                >(<template v-if="person.pronouns">
+                  {{ person.pronouns }}
+                </template>
+                <template v-else>not specified</template>)</span
+              >
             </div>
             <div class="h5">
               {{ person.student.student_number }},
@@ -35,6 +48,7 @@
               <li>
                 First and last: {{ person.first_name }} {{ person.surname }}
               </li>
+              <li>Gender: {{ person.student.gender }}</li>
               <li>DOB: {{ person.student.birthdate }}</li>
               <li>Ethnicity: {{ person.student.assigned_ethnic_desc }}</li>
               <li>Disability: {{ person.student.disability_ind }}</li>

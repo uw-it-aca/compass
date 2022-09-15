@@ -19,26 +19,18 @@
       <div class="text-nowrap">
         <span class="me-2">
           <router-link :to="{ path: '/student/' + person.uwnetid }"
-            >{{ person.display_name }} ({{ person.uwnetid }})</router-link
+            >{{ person.display_name }}
+          </router-link>
+          <span class="ms-2 text-muted"
+            >(<template v-if="person.pronouns">
+              {{ person.pronouns }}
+            </template>
+            <template v-else>not specified</template>)</span
           >
         </span>
-        <span
-          v-if="person.student.gender === 'M'"
-          class="badge rounded-pill border border-muted text-dark"
-          >M</span
-        >
-        <span
-          v-if="person.student.gender === 'F'"
-          class="badge rounded-pill border border-muted text-dark"
-          >F</span
-        >
       </div>
       <div class="text-secondary">
-        {{ person.student.student_number }}, {{ person.student.class_desc }},
-        <template v-if="person.student.registered_in_quarter">
-          Registered
-        </template>
-        <template v-else> Unregistered </template>
+        {{ person.student.student_number }}, {{ person.uwnetid }}
       </div>
     </div>
   </div>

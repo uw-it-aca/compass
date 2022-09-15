@@ -34,7 +34,7 @@
       </tbody>
     </table>
   </div>
-  <div v-else class="mt-5 text-secondary">No students to meet with.</div>
+  <div v-else>No students to meet with.</div>
 </template>
 
 <script>

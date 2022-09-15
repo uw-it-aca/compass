@@ -57,16 +57,12 @@
           </div>
 
           <div>
-            <p class="small text-uppercase text-muted mb-2">Intended Majors</p>
-            <ul class="list-unstyled">
-              <li
-                v-for="(intendedMajor, index) in person.student.intended_majors"
-                :key="index"
-              >
-                {{ intendedMajor.major_abbr_code }},
-                {{ intendedMajor.major_name }}
-              </li>
-            </ul>
+            <p class="small text-uppercase text-muted mb-2">Intended Majors (upon admission)</p>
+            <ol>
+              <li>{{ person.student.intended_major1_code }}</li>
+              <li>{{ person.student.intended_major2_code }}</li>
+              <li>{{ person.student.intended_major3_code }}</li>
+            </ol>
           </div>
         </div>
       </div>

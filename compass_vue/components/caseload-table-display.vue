@@ -17,8 +17,10 @@
           <td>{{ person.student.class_desc }}</td>
           <td>{{ person.student.campus_desc }}</td>
           <td>
-            {{ person.student.enroll_status_code }},
-            {{ person.student.registered_in_quarter }}
+            <template v-if="person.student.registered_in_quarter">
+              Registered
+            </template>
+            <template v-else> Unregistered </template>
           </td>
         </tr>
       </tbody>
