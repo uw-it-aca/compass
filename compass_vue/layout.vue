@@ -8,27 +8,22 @@
     :sign-out-url="signOutUrl"
   >
     <template #profile>
-      <div class="d-flex" v-if="userName != userOverride">
-        <div class="flex-fill">
-          <span class="me-1">{{ userName }}</span>
-          <i class="bi bi-arrow-right text-danger"></i> {{ userOverride }}
-        </div>
-        <div class="flex-fill text-end">
-          <input type="hidden" value="1" name="clear_override" />
-          <button
-            class="btn btn-link btn-sm text-danger p-0 m-0 border-0"
-            value="Clear override"
-            @click="clearUserOverride()"
-          >
-            <i class="fas fa-times-circle"></i> Clear
-          </button>
-        </div>
-      </div>
       <axdd-profile
-        v-else
+        v-if="userName != userOverride"
         :user-netid="userName"
-        :signout-url="signOutUrl"
-      ></axdd-profile>
+        :user-override="userOverride"
+      >
+        <button
+          class="btn btn-link btn-sm text-danger p-0 m-0 border-0"
+          value="Clear override"
+          @click="clearUserOverride()"
+        >
+          Clear
+        </button>
+      </axdd-profile>
+      <axdd-profile v-else :user-netid="userName">
+        <a :href="signOutUrl" class="text-white">Sign out</a>
+      </axdd-profile>
     </template>
     <template #navigation>
       <NavMenu :user-roles="userRoles" />

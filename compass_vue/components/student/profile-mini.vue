@@ -55,8 +55,8 @@ export default {
 
 <style lang="scss" scoped>
 .img-profile {
-  height: 50px;
-  width: 50px;
+  height: 45px;
+  width: 45px;
   object-fit: cover;
   object-position: top;
 }
