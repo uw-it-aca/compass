@@ -3,8 +3,15 @@
     <div class="me-2">
       <div class="rounded-circle border border-light border-3">
         <img
-          :src="'/static/compass/img/placeholder.png'"
-          class="img-profile rounded-circle bg-light border border-white border-2"
+          :src="person.photo_url"
+          @error="$event.target.src = '/static/compass/img/placeholder.png'"
+          class="
+            img-profile
+            rounded-circle
+            border
+            bg-light
+            border-white border-2
+          "
         />
       </div>
     </div>
@@ -55,10 +62,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .img-profile {
-    height: 60px;
-    width: 60px;
-    object-fit: cover;
-    object-position: top;
-  }
-  </style>
+.img-profile {
+  height: 55px;
+  width: 55px;
+  object-fit: cover;
+  object-position: top;
+}
+</style>
