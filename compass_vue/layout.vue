@@ -9,25 +9,21 @@
   >
     <template #profile>
       <axdd-profile
-        :user-netid="userName + ' (' + userRoles + ')'"
-        :signout-url="signOutUrl"
-      ></axdd-profile>
-      <div
-        class="gp-admin-bar"
-        role="complementary"
-        aria-label="Admin Override Status"
         v-if="userName != userOverride"
+        :user-netid="userName"
+        :user-override="userOverride"
       >
-        Overriding as <strong>{{ userOverride }}</strong>
-        <input type="hidden" value="1" name="clear_override" />
         <button
-          class="btn btn-danger btn-xs"
+          class="btn btn-link btn-sm text-danger p-0 m-0 border-0"
           value="Clear override"
           @click="clearUserOverride()"
         >
-          <i class="fas fa-times-circle"></i> Clear
+          Clear
         </button>
-      </div>
+      </axdd-profile>
+      <axdd-profile v-else :user-netid="userName">
+        <a :href="signOutUrl" class="text-white">Sign out</a>
+      </axdd-profile>
     </template>
     <template #navigation>
       <NavMenu :user-roles="userRoles" />
