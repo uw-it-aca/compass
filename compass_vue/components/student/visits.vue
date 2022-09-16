@@ -6,30 +6,50 @@
       >
     </template>
     <template #body>
-      <div class="d-flex">
-        <div class="vr text-purple" aria-hidden="true"></div>
-        <ul class="list-unstyled mb-0" style="margin-left: -6px; z-index: 1">
+      <div class="d-flex ps-2">
+        <div class="vr text-muted" aria-hidden="true"></div>
+        <ul class="list-unstyled mb-0" style="margin-left: -11px; z-index: 1">
           <li class="d-flex mb-2">
-            <i class="bi bi-circle-fill text-purple fs-10 mt-1 me-2"></i>
+            <span
+              ><i
+                class="bi bi-calendar-check-fill text-gray fs-7 mt-1 me-2 rounded-circle p-1 bg-white"
+              ></i
+            ></span>
             <span
               >09/23/2020, BUS 220 <br />
               10:35am - 11:42am</span
             >
           </li>
           <li class="d-flex mb-2">
-            <i class="bi bi-circle-fill text-purple fs-10 mt-1 me-2"></i>
+            <span
+              ><i
+                class="bi bi-calendar-check-fill text-gray fs-7 mt-1 me-2 rounded-circle p-1 bg-white"
+              ></i
+            ></span>
             <span>09/23/2020, CSE 143<br />10:35am - 11:42am</span>
           </li>
           <li class="d-flex mb-2">
-            <i class="bi bi-circle-fill text-purple fs-10 mt-1 me-2"></i>
+            <span
+              ><i
+                class="bi bi-calendar-check-fill text-gray fs-7 mt-1 me-2 rounded-circle p-1 bg-white"
+              ></i
+            ></span>
             <span>09/23/2020, CSE 143<br />10:35am - 11:42am</span>
           </li>
           <li class="d-flex mb-2">
-            <i class="bi bi-circle-fill text-purple fs-10 mt-1 me-2"></i>
+            <span
+              ><i
+                class="bi bi-calendar-check-fill text-gray fs-7 mt-1 me-2 rounded-circle p-1 bg-white"
+              ></i
+            ></span>
             <span>09/23/2020, CSE 143<br />10:35am - 11:42am</span>
           </li>
           <li class="d-flex">
-            <i class="bi bi-circle-fill text-purple fs-10 mt-1 me-2"></i>
+            <span
+              ><i
+                class="bi bi-calendar-check-fill text-gray fs-7 mt-1 me-2 rounded-circle p-1 bg-white"
+              ></i
+            ></span>
             <span>09/23/2020, CSE 143<br />10:35am - 11:42am</span>
           </li>
         </ul>
