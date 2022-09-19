@@ -4,6 +4,7 @@
       <axdd-card-heading :level="2">Contacts</axdd-card-heading>
       <axdd-card-action>
         <AddEditContact
+          v-if="userName == userOverride"
           :button-type="'button'"
           :person="person"
           @contactUpdated="loadStudentContacts()"
@@ -29,14 +30,17 @@
                   <p>
                     {{ contact.date }} {{ contact.time }}
                     <br />
-                    {{ contact.author.uwnetid }} -
+                    {{ contact.author.uwnetid }}
+
                     <AddEditContact
+                      v-if="contact.author.uwnetid == userName && !userOverride"
                       :button-type="'link'"
                       :person="person"
                       :contact-id="contact.id"
                       @contactUpdated="loadStudentContacts()"
                       >edit contact</AddEditContact
                     >
+
                   </p>
                 </td>
                 <td class="align-bottom">
@@ -104,6 +108,8 @@ export default {
   data() {
     return {
       contacts: {},
+      userName: document.body.getAttribute("data-user-netid"),
+      userOverride: document.body.getAttribute("data-user-override"),
     };
   },
   created() {

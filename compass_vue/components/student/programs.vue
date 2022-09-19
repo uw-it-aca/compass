@@ -47,6 +47,7 @@
                   v-model="studentPrograms"
                   :value="program.id"
                   :id="'defaultCheck' + program.name"
+                  :disabled="userName != userOverride"
                 />
               </div>
             </li>
@@ -55,6 +56,7 @@
       </div>
       <div class="text-end">
         <button
+          v-if="userName == userOverride"
           @click="saveStudentData()"
           type="button"
           class="btn btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2"
@@ -88,6 +90,9 @@ export default {
       studentPrograms: this.person.student.compass_programs,
       updateSuccessful: false,
       updatePermissionDenied: false,
+      userName: document.body.getAttribute("data-user-netid"),
+      userOverride: document.body.getAttribute("data-user-override"),
+
     };
   },
   created: function () {
