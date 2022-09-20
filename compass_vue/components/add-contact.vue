@@ -238,23 +238,30 @@ export default {
         return value;
       }
 
-      function getCurrentDateStr() {
+      function getCurrentDateTimeStr() {
         let curMonth = zPad(today.getMonth() + 1);
         let curDay = zPad(today.getDate());
-        return today.getFullYear() + "-" + curMonth + "-" + curDay;
-      }
-
-      function getCurrentTimeStr() {
         let curHour = zPad(today.getHours());
         let curMinutes = zPad(today.getMinutes());
         let curSeconds = zPad(today.getSeconds());
-        return curHour + ":" + curMinutes + ":" + curSeconds;
+        return (
+          today.getFullYear() +
+          "-" +
+          curMonth +
+          "-" +
+          curDay +
+          "T" +
+          curHour +
+          ":" +
+          curMinutes +
+          ":" +
+          curSeconds
+        );
       }
 
       return {
         contact_topics: [],
-        date: getCurrentDateStr(),
-        time: getCurrentTimeStr(),
+        checkin_date: getCurrentDateTimeStr(),
       };
     },
     getContact(contactId) {
@@ -262,6 +269,8 @@ export default {
         if (response.data) {
           // we need to map the contact type and topic ids to the data object
           let newContact = response.data;
+          newContact.checkin_date =
+            newContact.checkin_date.split(/\-(?=[^\-]+$)/)[0];
           newContact.contact_type = newContact.contact_type.id;
           newContact.contact_topics = newContact.contact_topics.map(
             (ct) => ct.id

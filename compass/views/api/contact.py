@@ -22,7 +22,8 @@ class ContactView(BaseAPIView):
     def get(self, request, contactid):
         contact = Contact.objects.filter(id=contactid).get()
         access_groups = self.get_access_groups(request)
-        if contact.access_group in access_groups:
+        if any(app_user_group in contact.access_group.all() for
+               app_user_group in access_groups):
             serializer = ContactReadSerializer(contact, many=False)
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
@@ -50,6 +51,8 @@ class ContactView(BaseAPIView):
                 student, _ = Student.objects.get_or_create(
                     system_key=system_key)
                 contact_record['student'] = student.id
+                contact_record['access_group'] = [
+                    access_group.pk for access_group in access_groups]
                 try:
                     # update existing contact record if one exists
                     contact = Contact.objects.get(id=contactid)
@@ -131,7 +134,7 @@ class ContactOMADView(BaseAPIView):
                 f"The specified app-user '{new_contact.adviser_netid}' is "
                 f"not a member of the OMAD access group.",
                 status=status.HTTP_400_BAD_REQUEST)
-        # if the adviser is a member of the omad group, create a app-user and
+        # if the adviser is a member of the omad group, create an app-user and
         # student record for them if one doesn't already exist
         app_user = AppUser.objects.upsert_appuser(new_contact.adviser_netid)
         student, _ = Student.objects.get_or_create(
@@ -147,7 +150,7 @@ class ContactOMADView(BaseAPIView):
                 f"'{new_contact.contact_type}' does not exist for the OMAD"
                 f"access group.",
                 status=status.HTTP_400_BAD_REQUEST)
-        # parse checkin date was specified
+        # parse checkin date if one was specified
         if new_contact.get("checkin_date") is None:
             return Response("Check-in date not specified",
                             status=status.HTTP_400_BAD_REQUEST)

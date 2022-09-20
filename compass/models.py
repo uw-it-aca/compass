@@ -106,7 +106,7 @@ class AccessGroupManager(models.Manager):
                 member=uwnetid,
                 name=f'{access_group.access_group_id}*')
             if groups:
-                access_groups.append(access_group) 
+                access_groups.append(access_group)
         return access_groups
 
 

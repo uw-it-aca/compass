@@ -116,14 +116,18 @@ class ContactWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
         fields = ['id', 'app_user', 'student', 'created_date', 'checkin_date',
-                  'notes', 'actions', 'contact_type', 'contact_topics']
+                  'notes', 'actions', 'contact_type', 'contact_topics',
+                  'access_group']
 
     def create(self, validated_data):
         contact_topics = validated_data['contact_topics']
+        access_groups = validated_data['access_group']
         del validated_data['contact_topics']
+        del validated_data['access_group']
         contact = Contact(**validated_data)
         contact.save()
         contact.contact_topics.set(contact_topics)
+        contact.access_group.set(access_groups)
         return contact
 
     def update(self, instance, validated_data):
