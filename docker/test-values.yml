@@ -94,6 +94,9 @@ environmentVariables:
   - name: UW_PERSON_DB_DATABASE
     value: uw-person-prod
 
+  - name: OMAD_ACCESS_GROUP_ID
+    value: 'u_astra_compass_omad'
+
 externalSecrets:
   enabled: true
   secrets:

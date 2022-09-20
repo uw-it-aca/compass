@@ -18,7 +18,7 @@
           <table class="table m-0">
             <thead class="table-light text-muted small">
               <tr>
-                <th class="ps-3">Date</th>
+                <th class="ps-3">Checkin Date</th>
                 <th>Type</th>
                 <th>Details</th>
               </tr>
@@ -27,9 +27,9 @@
               <tr v-for="contact in contacts" :key="contact.id">
                 <td scope="row" class="ps-3" style="width: 25%">
                   <p>
-                    {{ contact.date }} {{ contact.time }}
+                    {{ contact.checkin_date }}
                     <br />
-                    {{ contact.author.uwnetid }} -
+                    {{ contact.app_user.uwnetid }} -
                     <AddEditContact
                       :button-type="'link'"
                       :person="person"
@@ -41,7 +41,16 @@
                 </td>
                 <td class="align-bottom">
                   <span
-                    class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-1"
+                    class="
+                      badge
+                      rounded-pill
+                      alert alert-dark-purple
+                      border-0
+                      px-2
+                      py-1
+                      m-0
+                      me-1
+                    "
                     >{{ contact.contact_type.name }}</span
                   >
                 </td>
@@ -64,7 +73,16 @@
                     <li
                       v-for="topic in contact.contact_topics"
                       :key="topic.id"
-                      class="badge rounded-pill alert alert-dark-beige border-0 px-2 py-1 mb-0 me-1"
+                      class="
+                        badge
+                        rounded-pill
+                        alert alert-dark-beige
+                        border-0
+                        px-2
+                        py-1
+                        mb-0
+                        me-1
+                      "
                     >
                       {{ topic.name }}
                     </li>

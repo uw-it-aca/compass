@@ -48,16 +48,20 @@
           </div>
           <div class="row mb-3">
             <div class="col">
-              <label for="date" class="form-label">Date:</label>
+              <label for="checkin_date" class="form-label">Checkin Date:</label>
               <input
-                type="date"
-                id="date"
-                v-model="contact.date"
+                type="datetime-local"
+                id="checkin_date"
+                v-model="contact.checkin_date"
                 :class="
-                  formErrors.date ? 'is-invalid form-control' : 'form-control'
+                  formErrors.checkin_date
+                    ? 'is-invalid form-control'
+                    : 'form-control'
                 "
               />
-              <span class="text-danger" v-if="formErrors.date"> required </span>
+              <span class="text-danger" v-if="formErrors.checkin_date">
+                required
+              </span>
             </div>
             <div class="col">
               <label class="form-label">Contact type:</label>
@@ -82,29 +86,6 @@
               <span class="text-danger" v-if="formErrors.contact_type">
                 required
               </span>
-            </div>
-            <div class="col">
-              <div class="row">
-                <div class="col">
-                  <label for="appt-time" class="form-label"
-                    >Check in time:</label
-                  >
-                  <input
-                    id="appt-time"
-                    type="time"
-                    name="appt-time"
-                    v-model="contact.time"
-                    :class="
-                      formErrors.time
-                        ? 'is-invalid form-control'
-                        : 'form-control'
-                    "
-                  />
-                  <span class="text-danger" v-if="formErrors.time">
-                    required
-                  </span>
-                </div>
-              </div>
             </div>
           </div>
           <div class="mb-3">
