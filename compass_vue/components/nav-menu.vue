@@ -52,14 +52,8 @@
           ><i class="bi bi-tools me-2"></i>Settings</router-link
         >
       </li>
-      <!-- if admin or support -->
-      <li
-        v-show="
-          userRoles.includes(Role.Admin) || userRoles.includes(Role.Support)
-        "
-        aria-hidden="true"
-        class="nav-item mb-2"
-      >
+
+      <li aria-hidden="true" class="nav-item mb-2">
         <a
           href="#"
           class="nav-link disabled text-gray d-block p-0 internal-link"
@@ -67,15 +61,10 @@
           <span class="visually-hidden">Navigation separator</span></a
         >
       </li>
-      <li
-        v-show="
-          userRoles.includes(Role.Admin) || userRoles.includes(Role.Support)
-        "
-        class="nav-item mb-1"
-      >
+
+      <li class="nav-item mb-1">
         <a
-          href="/support"
-          active-class="bg-dark-purple rounded-3"
+          href="https://sdb.admin.uw.edu/sisAdvising/securid/overview.aspx"
           class="
             nav-link
             text-gray
@@ -85,7 +74,22 @@
             bg-dark-purple-hover
             rounded-3
           "
-          ><i class="bi bi-question-diamond-fill me-2"></i>Support</a
+          ><i class="bi bi-ear me-2"></i>Academic Records (EARS)</a
+        >
+      </li>
+      <li class="nav-item mb-2">
+        <a
+          href="https://retention.uw.edu"
+          class="
+            nav-link
+            text-gray
+            d-block
+            px-3
+            py-2
+            bg-dark-purple-hover
+            rounded-3
+          "
+          ><i class="bi bi-bar-chart-fill me-2"></i>Retention Analytics (RAD)</a
         >
       </li>
     </ul>
