@@ -9,6 +9,9 @@ from compass.serializers import ContactReadSerializer, \
 from dateutil import parser
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -107,7 +110,8 @@ class ContactTypesView(BaseAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-class ContactOMADView(BaseAPIView):
+@method_decorator(csrf_exempt, name='dispatch')
+class ContactOMADView(GenericAPIView):
     '''
     API endpoint for ingesting OMAD contacts from the check-ins system
 
