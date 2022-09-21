@@ -122,50 +122,78 @@ class ContactOMADView(BaseAPIView):
     }
     '''
 
-    def post(self, request):
-        new_contact = request.data
-        # confirm that the adviser is a member of the OMAD access group
-        omad_access_group = AccessGroup.objects.get(
-            access_group_id=settings.OMAD_ACCESS_GROUP_ID)
-        user_access_groups = AccessGroup.objects.get_access_groups_for_netid(
-            new_contact.adviser_netid)
-        if omad_access_group not in user_access_groups:
-            return Response(
-                f"The specified app-user '{new_contact.adviser_netid}' is "
-                f"not a member of the OMAD access group.",
-                status=status.HTTP_400_BAD_REQUEST)
-        # if the adviser is a member of the omad group, create an app-user and
-        # student record for them if one doesn't already exist
-        app_user = AppUser.objects.upsert_appuser(new_contact.adviser_netid)
-        student, _ = Student.objects.get_or_create(
-            system_key=new_contact.student_systemkey)
-        # verify that the specified contact type exists in OMAD
+    def parse_contact_type_str(self, contact_type_str, omad_access_group):
         try:
             contact_type, _ = ContactType.objects.get(
                 access_group=omad_access_group,
-                name=new_contact.contact_type)
+                name=contact_type_str)
+            return contact_type
         except ContactType.DoesNotExist:
-            return Response(
+            raise ValueError(
                 f"The specified contact type "
-                f"'{new_contact.contact_type}' does not exist for the OMAD"
-                f"access group.",
-                status=status.HTTP_400_BAD_REQUEST)
-        # parse checkin date if one was specified
-        if new_contact.get("checkin_date") is None:
-            return Response("Check-in date not specified",
-                            status=status.HTTP_400_BAD_REQUEST)
+                f"'{contact_type_str}' does not exist for the OMAD"
+                f"access group.")
+
+    def parse_checkin_date_str(self, checkin_date_str):
+        # parse checkin date
+        if checkin_date_str is None:
+            raise ValueError("Check-in date not specified")
         else:
             try:
-                checkin_date = parser.parse(new_contact["checkin_date"])
+                return parser.parse(checkin_date_str)
             except parser.ParserError:
-                return Response("Invalid check-in date",
-                                status=status.HTTP_400_BAD_REQUEST)
+                raise ValueError("Invalid check-in date")
+
+    def validate_adviser_netid(self, adviser_netid):
+        if adviser_netid is None:
+            raise ValueError("Adviser netid is not specified")
+
+    def validate_student_systemkey(self, student_systemkey):
+        if student_systemkey is None:
+            raise ValueError("Student systemkey is not specified")
+        else:
+            if not student_systemkey.isdigit():
+                raise ValueError("Student systemkey is not a positive integer")
+
+    def post(self, request):
+        contact_dict = request.data
+        # confirm that the adviser is a member of the OMAD access group
+        omad_access_group = AccessGroup.objects.get(
+            access_group_id=settings.OMAD_ACCESS_GROUP_ID)
+        if not AccessGroup.objects.is_access_group_member(
+                contact_dict["adviser_netid"], omad_access_group):
+            return Response(
+                f"The specified app-user '{contact_dict['adviser_netid']}' is "
+                f"not a member of the OMAD access group.",
+                status=status.HTTP_400_BAD_REQUEST)
+        # parse the contact dictionary
+        try:
+            # check that adviser netid is defined
+            self.validate_adviser_netid(contact_dict.get("adviser_netid"))
+            # check that system key is defined
+            self.validate_student_systemkey(
+                contact_dict.get("student_systemkey"))
+            # parse checkin date to ensure it is in the correct format
+            contact_dict["checkin_date"] = self.parse_checkin_date_str(
+                contact_dict.get("checkin_date"))
+            # verify that the specified contact type exists in OMAD
+            contact_dict["contact_type"] = self.parse_contact_type_str(
+                contact_dict.get("contact_type"), omad_access_group)
+        except ValueError as e:
+            return Response(e, status=status.HTTP_400_BAD_REQUEST)
+        # if the adviser is a member of the omad group and the contact record
+        # was successfully parsed, create an app-user and a student record for
+        # them if one doesn't already exist
+        app_user = AppUser.objects.upsert_appuser(
+            contact_dict["adviser_netid"])
+        student, _ = Student.objects.get_or_create(
+            system_key=contact_dict["student_systemkey"])
         # create the new contact record
         contact = Contact()
         contact.app_user = app_user
-        contact.access_group = omad_access_group
         contact.student = student
-        contact.contact_type = contact_type
-        contact.checkin_date = checkin_date
+        contact.contact_type = contact_dict["contact_type"]
+        contact.checkin_date = contact_dict["checkin_date"]
         contact.save()
+        contact.access_group.add(omad_access_group)
         return Response(status=status.HTTP_201_CREATED)

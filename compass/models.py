@@ -109,6 +109,13 @@ class AccessGroupManager(models.Manager):
                 access_groups.append(access_group)
         return access_groups
 
+    def is_access_group_member(self, uwnetid, access_group):
+        user_access_groups = self.get_access_groups_for_netid(
+            uwnetid)
+        if access_group in user_access_groups:
+            return True
+        return False
+
 
 class AccessGroup(models.Model):
     """
