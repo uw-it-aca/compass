@@ -32,7 +32,7 @@
                     {{ contact.author.uwnetid }}
 
                     <AddEditContact
-                      v-if="contact.author.uwnetid == userName && !userOverride"
+                      v-if="contact.author.uwnetid == userName"
                       :button-type="'link'"
                       :person="person"
                       :contact-id="contact.id"
