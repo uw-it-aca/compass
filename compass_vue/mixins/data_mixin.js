@@ -78,8 +78,12 @@ const dataMixin = {
       );
     },
     saveStudentContact: async function (systemkey, contact) {
+      let postUrl = "/api/internal/contact/";
+      if (contact.id != undefined) {
+        postUrl += contact.id + "/";
+      }
       return axios.post(
-        "/api/internal/contact/",
+        postUrl,
         { contact: contact, system_key: systemkey },
         this._getAxiosConfig()
       );

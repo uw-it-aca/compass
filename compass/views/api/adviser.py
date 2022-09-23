@@ -20,8 +20,7 @@ class AdviserContactsView(BaseAPIView):
     def get(self, request, adviser_netid):
         client = UWPersonClient()
         contact_queryset = Contact.objects.filter(
-            author__uwnetid=adviser_netid
-        ).all()
+            app_user__uwnetid=adviser_netid).all()
         contacts = []
         photo_dao = PhotoDAO()
         for contact in contact_queryset:

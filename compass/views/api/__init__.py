@@ -1,7 +1,7 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.models import AccessGroup
+from compass.models import AccessGroup, AppUser
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
@@ -18,6 +18,12 @@ class BaseAPIView(GenericAPIView):
         groups = [g.rsplit("-", 1)[0] for g in groups]
         access_groups = AccessGroup.objects.filter(access_group_id__in=groups)
         return access_groups
+
+    def get_access_groups_for_user(self, uwnetid):
+        try:
+            AppUser.objects.upsert_appuser(uwnetid)
+        except AppUser.DoesNotExist:
+            raise ValueError(f"No error found for uwnetid={uwnetid}")
 
     def validate_settings_access(self, request, access_group_pk,
                                  roles):

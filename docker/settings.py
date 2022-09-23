@@ -73,6 +73,7 @@ else:
     RESTCLIENTS_DAO_CACHE_CLASS = 'compass.cache.CompassRestclientCache'
     COMPASS_ADMIN_GROUP = os.getenv('ADMIN_GROUP', '')
     COMPASS_SUPPORT_GROUP = os.getenv('SUPPORT_GROUP', '')
+    OMAD_ACCESS_GROUP_ID = os.getenv('OMAD_ACCESS_GROUP_ID', '')
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
 

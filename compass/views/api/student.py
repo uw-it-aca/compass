@@ -101,7 +101,7 @@ class StudentContactsView(BaseAPIView):
 
     def get(self, request, systemkey):
         queryset = Contact.objects.filter(
-            student__system_key=systemkey).order_by('-date', '-time')
+            student__system_key=systemkey).order_by('-checkin_date')
         serializer = ContactReadSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

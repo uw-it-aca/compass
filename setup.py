@@ -36,7 +36,8 @@ setup(
         'UW-RestClients-PWS~=2.1',
         'UW-Django-SAML2~=1.5',
         'urllib3~=1.25',
-        'axdd-person-client==1.0.8'
+        'axdd-person-client==1.0.8',
+        'python-dateutil~=2.8'
     ],
     license="Apache License, Version 2.0",
     description="A application for managing student advising information.",
