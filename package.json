@@ -1,7 +1,7 @@
 {
   "name": "compass",
   "version": "1.0.0",
-  "description": "compass some description text",
+  "description": "",
   "scripts": {
     "build": "vite build",
     "watch": "vite build --watch --mode development",
@@ -14,7 +14,7 @@
     "type": "git",
     "url": "git+https://github.com/uw-it-aca/compass.git"
   },
-  "author": "Your Name Here",
+  "author": "University of Washington IT - AXDD",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/uw-it-aca/compass/issues"

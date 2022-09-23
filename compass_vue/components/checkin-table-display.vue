@@ -4,8 +4,7 @@
       <thead class="table-light text-muted small">
         <tr>
           <th class="ps-3" style="width: 33%" scope="col">Student</th>
-          <th scope="col">Date</th>
-          <th scope="col">Time</th>
+          <th scope="col">Check-in Date</th>
           <th scope="col">Contact Type</th>
           <th scope="col">Meeting With</th>
           <th scope="col">Assigned Adviser</th>
@@ -16,10 +15,9 @@
           <td class="ps-3">
             <profile-mini :person="contact.student"></profile-mini>
           </td>
-          <td>{{ contact.date }}</td>
-          <td>{{ contact.time }}</td>
+          <td>{{ contact.checkin_date }}</td>
           <td>{{ contact.contact_type.name }}</td>
-          <td>{{ contact.author.uwnetid }}</td>
+          <td>{{ contact.app_user.uwnetid }}</td>
           <td>
             <ul class="list-unstyled">
               <li

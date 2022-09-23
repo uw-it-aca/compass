@@ -4,8 +4,7 @@
       <thead class="table-light text-muted small">
         <tr>
           <th scope="col" class="ps-3 w-50">Student</th>
-          <th scope="col">Date</th>
-          <th scope="col">Time</th>
+          <th scope="col">Check-in Date</th>
           <th scope="col">Contact Type</th>
           <th scope="col">Meeting With</th>
           <th scope="col">Adviser</th>
@@ -25,9 +24,6 @@
               <span class="placeholder bg-light-gray col-10"></span>
               <span class="placeholder bg-light-gray col-4"></span>
             </div>
-          </td>
-          <td class="placeholder-glow">
-            <div><span class="placeholder bg-light-gray col-12"></span></div>
           </td>
           <td class="placeholder-glow">
             <div><span class="placeholder bg-light-gray col-10"></span></div>
