@@ -4,7 +4,6 @@
       <axdd-card-heading :level="2">Contacts</axdd-card-heading>
       <axdd-card-action>
         <AddEditContact
-          v-if="userName == userOverride"
           :button-type="'button'"
           :person="person"
           @contactUpdated="loadStudentContacts()"
