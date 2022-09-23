@@ -8,7 +8,7 @@
     </p>
 
     <p
-      v-show="$route.path == '/caseload'"
+      v-show="$route.path.includes('/caseload')"
       class="text-light-gray bg-dark-purple rounded-3 p-3 small"
     >
       Welcome to <strong>caseloads</strong>. View all students in your current
