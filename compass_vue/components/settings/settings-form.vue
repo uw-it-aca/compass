@@ -26,11 +26,13 @@
               v-model="setting.name"
               class="form-control"
               :aria-label="setting.name"
+              :disabled="!setting.editable"
             />
             <button
               @click="toggleSettingVisibility(setting)"
               class="btn btn-outline-secondary"
               type="button"
+              :disabled="!setting.editable"
             >
               <i v-if="setting.active" class="bi bi-eye-fill"></i>
               <i v-else class="bi bi-eye-slash-fill"></i>
@@ -46,12 +48,14 @@
           :placeholder="'Add new ' + settingLabel + '...'"
           aria-label="Topic label"
           aria-describedby="button-addon2"
+          :disabled="!setting.editable"
         />
         <button
           @click="addSetting"
           class="btn btn-outline-secondary"
           type="button"
           id="button-addon2"
+          :disabled="!setting.editable"
         >
           <i class="bi bi-plus-square-fill"></i>
         </button>

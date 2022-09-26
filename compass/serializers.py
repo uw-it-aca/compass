@@ -33,7 +33,7 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Program
-        fields = ['id', 'access_group', 'name', 'active']
+        fields = ['id', 'access_group', 'name', 'slug', 'active', 'editable']
         extra_kwargs = {
             'access_group_id': {'validators': []},
         }
@@ -57,7 +57,7 @@ class ContactTopicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ContactTopic
-        fields = ['id', 'access_group', 'name', 'active']
+        fields = ['id', 'access_group', 'name', 'slug', 'active', 'editable']
         extra_kwargs = {
             'access_group_id': {'validators': []},
         }
@@ -81,7 +81,7 @@ class ContactTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ContactType
-        fields = ['id', 'access_group', 'name', 'active']
+        fields = ['id', 'access_group', 'name', 'slug', 'active', 'editable']
         extra_kwargs = {
             'access_group_id': {'validators': []},
         }
