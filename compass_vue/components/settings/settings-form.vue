@@ -48,14 +48,12 @@
           :placeholder="'Add new ' + settingLabel + '...'"
           aria-label="Topic label"
           aria-describedby="button-addon2"
-          :disabled="!setting.editable"
         />
         <button
           @click="addSetting"
           class="btn btn-outline-secondary"
           type="button"
           id="button-addon2"
-          :disabled="!setting.editable"
         >
           <i class="bi bi-plus-square-fill"></i>
         </button>
