@@ -36,7 +36,7 @@
         >
       </li>
       <!-- if manager -->
-      <li v-show="userRoles.includes(Role.Manager)" class="nav-item mb-2">
+      <li v-show="userRoles.includes(Role.Manager)" class="nav-item mb-1">
         <router-link
           :to="'/settings'"
           active-class="bg-dark-purple rounded-3"
@@ -53,7 +53,7 @@
         >
       </li>
 
-      <li aria-hidden="true" class="nav-item mb-2">
+      <li aria-hidden="true" class="nav-item mt-1 mb-2">
         <a
           href="#"
           class="nav-link disabled text-gray d-block p-0 internal-link"

@@ -28,7 +28,7 @@ class PhotoDAO():
         return PWS().get_idcard_photo(
             data.get('reg_id'), size=data.get('image_size'))
 
-    def get_photo_url(self, reg_id, image_size="small"):
+    def get_photo_url(self, reg_id, image_size="medium"):
         """ Returns a url for the IDPhoto
         """
         if PWS().valid_uwregid(reg_id):

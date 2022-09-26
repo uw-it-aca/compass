@@ -42,7 +42,7 @@
                 role="alert"
                 v-show="updatePermissionDenied"
               >
-                You don't have permission to create or update contacts.
+                {{ errorResponse }}
               </div>
             </div>
           </div>
@@ -141,8 +141,8 @@
             ></textarea>
           </div>
         </div>
-        <div class="modal-footer text-end">
-          <div>
+        <div class="modal-footer">
+          <div class="text-end">
             <button
               type="button"
               class="btn btn-secondary me-2"
@@ -193,6 +193,7 @@ export default {
       contact: this.getDefaultContact(),
       formErrors: {},
       updatePermissionDenied: false,
+      errorResponse: "",
     };
   },
   created() {
@@ -224,6 +225,7 @@ export default {
         .catch((error) => {
           if (error.response.status == 401) {
             this.updatePermissionDenied = true;
+            this.errorResponse = error.response.data;
             setTimeout(() => (this.updatePermissionDenied = false), 3000);
           } else {
             this.formErrors = error.response.data;
