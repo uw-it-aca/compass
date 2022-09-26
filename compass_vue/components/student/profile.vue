@@ -10,13 +10,7 @@
                 @error="
                   $event.target.src = '/static/compass/img/placeholder.png'
                 "
-                class="
-                  img-profile
-                  rounded-circle
-                  border
-                  bg-light
-                  border-white border-2
-                "
+                class="img-profile rounded-circle border bg-light border-white border-2"
               />
             </div>
           </div>
@@ -45,9 +39,8 @@
             </div>
             <ul>
               <li>Full name: {{ person.full_name }}</li>
-              <li>
-                First and last: {{ person.first_name }} {{ person.surname }}
-              </li>
+              <li>First: {{ person.first_name }}</li>
+              <li>Last: {{ person.surname }}</li>
               <li>Gender: {{ person.student.gender }}</li>
               <li>DOB: {{ person.student.birthdate }}</li>
               <li>Ethnicity: {{ person.student.assigned_ethnic_desc }}</li>
