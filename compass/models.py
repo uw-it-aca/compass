@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from django.db import models
+from django.utils.text import slugify
 from simple_history.models import HistoricalRecords
 from uw_person_client import UWPersonClient
 from compass.dao.group import is_group_member
@@ -144,11 +145,41 @@ class AccessGroup(models.Model):
     name = models.CharField(unique=True, max_length=50)
     access_group_id = models.CharField(unique=True, max_length=50)
 
+    def save(self, *args, **kwargs):
+        created = not self.pk
+        super(AccessGroup, self).save(*args, **kwargs)
+        if created:
+            # set uneditable contact type presets
+            uneditable_contact_types = ["Quick Question", "Appointment",
+                                        "Drop-in", "Telephone"]
+            for contact_type_name in uneditable_contact_types:
+                ContactType(
+                    access_group=self,
+                    name=contact_type_name,
+                    editable=False
+                ).save()
+            # set default contact topics
+            default_contact_topics = [
+                "Add/Drop Class", "Join/Affiliate", "Academic Difficulties",
+                "Hardship Withdrawl", "Internships", "Research Opportunities",
+                "Graduate Professional School", "Testing/Assessment"]
+            for contact_topic_name in default_contact_topics:
+                ContactTopic(
+                    access_group=self,
+                    name=contact_topic_name
+                ).save()
+
     def authz_group_id(self, role):
         return '{}-{}'.format(self.access_group_id, role)
 
     def __str__(self):
         return self.name
+
+    def __repr__(self):
+        return f"<AccessGroup(name='{self.name}')>"
+
+    def __hash__(self):
+        return self.id
 
     def __eq__(self, other):
         if isinstance(other, AccessGroup):
@@ -157,18 +188,6 @@ class AccessGroup(models.Model):
 
     def has_role(self, request, role):
         return is_group_member(request, self.authz_group_id(role))
-
-
-class Program(models.Model):
-    """
-    Departmental/Group Program (e.g. CAMP, TRIO, SSS, Champions, IC Eligible)
-    """
-    access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-    active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.name
 
 
 class Contact(models.Model):
@@ -210,7 +229,33 @@ class Contact(models.Model):
         return f"{self.app_user} w/ {self.student} @ {self.checkin_date}"
 
 
-class ContactType(models.Model):
+class BaseAccessGroupContent(models.Model):
+
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        created = not self.pk
+        if created:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
+class Program(BaseAccessGroupContent):
+    """
+    Departmental/Group Program (e.g. CAMP, TRIO, SSS, Champions, IC Eligible)
+    """
+    access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
+    name = models.CharField(unique=True, max_length=50)
+    slug = models.SlugField(unique=True, max_length=50)
+    active = models.BooleanField(default=True)
+    editable = models.BooleanField(default=True)
+
+
+class ContactType(BaseAccessGroupContent):
     """
     Type of contact with a student. These are created for a given access group
     by the access group managers. Examples include Quick Question, Appointment,
@@ -218,13 +263,12 @@ class ContactType(models.Model):
     """
     access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
     name = models.CharField(unique=True, max_length=50)
+    slug = models.SlugField(unique=True, max_length=50)
     active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.name
+    editable = models.BooleanField(default=True)
 
 
-class ContactTopic(models.Model):
+class ContactTopic(BaseAccessGroupContent):
     """
     Topics discussed with a student. These are created for a given access group
     by the access group managers. Examples include Add/Drop Class,
@@ -234,7 +278,6 @@ class ContactTopic(models.Model):
     """
     access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
     name = models.CharField(unique=True, max_length=50)
+    slug = models.SlugField(unique=True, max_length=50)
     active = models.BooleanField(default=True)
-
-    def __str__(self):
-        return self.name
+    editable = models.BooleanField(default=True)
