@@ -31,7 +31,7 @@
                     <br />
                     {{ contact.app_user.uwnetid }} -
                     <AddEditContact
-                      v-if="contact.author.uwnetid == userName"
+                      v-if="contact.app_user.uwnetid == userName"
                       :button-type="'link'"
                       :person="person"
                       :contact-id="contact.id"

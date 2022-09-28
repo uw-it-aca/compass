@@ -245,7 +245,6 @@ export default {
         let curDay = zPad(today.getDate());
         let curHour = zPad(today.getHours());
         let curMinutes = zPad(today.getMinutes());
-        let curSeconds = zPad(today.getSeconds());
         return (
           today.getFullYear() +
           "-" +
@@ -255,9 +254,7 @@ export default {
           "T" +
           curHour +
           ":" +
-          curMinutes +
-          ":" +
-          curSeconds
+          curMinutes
         );
       }
 
