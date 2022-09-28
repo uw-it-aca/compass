@@ -153,6 +153,7 @@ export default {
         setting.name = this.newSettingName;
         setting.active = true;
         setting.access_group = this.accessGroup;
+        setting.editable = true;
         this.settings.push(setting);
         // clear the add new setting input
         this.newSettingName = "";
