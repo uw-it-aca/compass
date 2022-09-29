@@ -60,7 +60,7 @@ environmentVariables:
     value: MEMCACHED
 
   - name: SWS_ENV
-    value: TEST
+    value: PROD
   - name: SWS_TIMEOUT
     value: "10"
 
