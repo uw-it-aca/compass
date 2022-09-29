@@ -126,7 +126,7 @@ externalSecrets:
         - name: person-db-pass
           property: person-db-pass
     - name: test.compass.uw.edu-ic-certs
-      externalKey: compass/test/ic-certs
+      externalKey: compass/prod/ic-certs
       data:
         - name: test.compass.uw.edu-ic.cert
           property: test.compass.uw.edu-ic.cert
