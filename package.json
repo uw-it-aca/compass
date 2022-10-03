@@ -28,6 +28,7 @@
     "bootstrap-icons": "^1.9.1",
     "dayjs": "^1.11.0",
     "jquery": "^3.6.0",
+    "pinia": "^2.0.22",
     "regenerator-runtime": "^0.13.9",
     "vue": "^3.2.33",
     "vue-gtag": "^2.0.1",
