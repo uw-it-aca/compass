@@ -1,54 +1,79 @@
 <template>
   <div class="bg-gray rounded-3">
     <div class="row">
-      <div class="col-xl-6 mb-3">
-        <div class="d-flex p-3">
-          <div class="pe-3">
-            <div class="rounded-circle border border-4">
-              <img
-                :src="person.photo_url"
-                @error="
-                  $event.target.src = '/static/compass/img/placeholder.png'
-                "
-                class="img-profile rounded-circle border bg-light border-white border-2"
-              />
-            </div>
+      <div class="col-xl-3 mb-3">
+        <div class="p-3 text-center">
+          <div class="d-inline-block rounded-circle border border-4 mb-2">
+            <img
+              :src="person.photo_url"
+              @error="$event.target.src = '/static/compass/img/placeholder.png'"
+              class="img-profile rounded-circle border bg-light border-white border-2"
+            />
           </div>
-          <div class="flex-fill">
-            <div class="h3 text-dark axdd-font-encode-sans">
+          <!-- moved preferred name to under the profile photo -->
+          <div class="h3 text-dark-beige axdd-font-encode-sans">
+            <span class="me-1">
               <template v-if="person.preferred_first_name">
                 {{ person.preferred_first_name }}
               </template>
-              <template v-else> {{ person.first_name }} </template>&nbsp;
+              <template v-else>{{ person.first_name }}</template>
+            </span>
+
+            <span>
               <template v-if="person.preferred_surname">
                 {{ person.preferred_surname }}
               </template>
               <template v-else>
                 {{ person.surname }}
               </template>
-              <span class="ms-2 text-muted"
-                >(<template v-if="person.pronouns">
-                  {{ person.pronouns }}
-                </template>
-                <template v-else>not specified</template>)</span
-              >
-            </div>
-            <div class="h5">
-              {{ person.student.student_number }},
-              {{ person.uwnetid }}
-            </div>
-            <ul>
-              <li>Full name: {{ person.full_name }}</li>
-              <li>First: {{ person.first_name }}</li>
-              <li>Last: {{ person.surname }}</li>
-              <li>Gender: {{ person.student.gender }}</li>
-              <li>DOB: {{ person.student.birthdate }}</li>
-              <li>Ethnicity: {{ person.student.assigned_ethnic_desc }}</li>
-              <li>Disability: {{ person.student.disability_ind }}</li>
+            </span>
+          </div>
+          <!-- moved pronouns to under the preferred name -->
+          <div class="h3 text-dark axdd-font-encode-sans">
+            <template v-if="person.pronouns">
+              {{ person.pronouns }}
+            </template>
+            <template v-else>he/him</template>
+          </div>
+          <div class="">
+            {{ person.student.student_number }},
+            {{ person.student.student_email }}
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3">
+        <div class="p-3">
+          <div class="body-1 flex-fill">
+            <div class="fw-bold text-dark-beige mb-2">Personal Information</div>
+            <ul class="list-unstyled m-0">
+              <li><b>Full name: </b>{{ person.full_name }}</li>
+              <li><b>First: </b>{{ person.first_name }}</li>
+              <li><b>Last: </b>{{ person.surname }}</li>
+              <li><b>Gender: </b>{{ person.student.gender }}</li>
+              <li v-if="mq.xs" aria-hidden="true"><hr /></li>
+              <li><b>DOB: </b>{{ person.student.birthdate }}</li>
               <li>
-                Veterans: {{ person.student.veteran_benefit_code }},
-                {{ person.student.veteran_benefit_desc }},
-                {{ person.student.veteran_desc }}
+                <b>Ethnicity: </b>{{ person.student.assigned_ethnic_desc }}
+              </li>
+              <li>
+                <b>Disability: </b>
+                <span v-if="person.student.disability_ind"> Disabled </span>
+                <span v-else> Not Disabled </span>
+              </li>
+              <li>
+                <b>Veterans: </b>
+                <span v-if="person.student.veteran_benefit_code === '0'">
+                  Not A Vet
+                </span>
+                <span v-else>
+                  {{ person.student.veteran_benefit_code }},
+                  {{ person.student.veteran_benefit_desc }},
+                  {{ person.student.veteran_desc }}
+                </span>
+              </li>
+              <li>
+                <strong>Phone:</strong> +1
+                {{ person.student.local_phone_number }}
               </li>
             </ul>
             <p>
@@ -75,25 +100,61 @@
       </div>
       <div class="col-12 col-xl-3 mb-3">
         <div class="p-3">
+          <p class="text-dark-beige fs-6">
+            <b>Immigration Status</b>
+          </p>
           <ul class="list-unstyled m-0">
-            <li>Citizenship: {{ person.student.citizen_country }}</li>
+            <li><b>Citizenship: </b> {{ person.student.citizen_country }}</li>
             <li>
-              Visa Type:
+              <b>Visa Type: </b>
               <span v-if="person.student.visa_type">
                 {{ person.student.visa_type }}
               </span>
               <span v-else> N/A </span>
             </li>
-            <li>Resident status: {{ person.student.resident_desc }}</li>
+            <li><b>Residency: </b>{{ person.student.resident_desc }}</li>
           </ul>
         </div>
       </div>
-      <div class="col-12 col-xl-3">
+      <div class="body-1 col-12 col-xl-3">
         <div class="p-3">
+          <p class="text-dark-beige fs-6">
+            <b>Address</b>
+          </p>
           <ul class="list-unstyled m-0">
-            <li>UW Email: {{ person.student.student_email }}</li>
-            <li>Personal email: {{ person.student.personal_email }}</li>
-            <li>Local Phone: {{ person.student.local_phone_number }}</li>
+            <li>
+              <b>Local Address: </b>
+              <address>
+                {{ person.student.local_addr_line1 }}
+                {{ person.student.local_addr_line2 }},
+                {{ person.student.local_addr_city }},
+                {{ person.student.local_addr_state }}
+                {{ person.student.local_addr_5digit_zip }},
+                {{ person.student.local_addr_country }}
+              </address>
+            </li>
+            <li>
+              <b>Permanet Address: </b>
+              <address>
+                {{ person.student.perm_addr_line1 }}
+                {{ person.student.perm_addr_line2 }},
+                {{ person.student.perm_addr_city }},
+                {{ person.student.perm_addr_state }}
+                {{ person.student.perm_addr_5digit_zip }},
+                {{ person.student.perm_addr_country }}
+              </address>
+            </li>
+            <li>
+              <b>Parent Address: </b>
+              <address>
+                {{ person.student.parent_addr_line1 }}
+                {{ person.student.parent_addr_line2 }},
+                {{ person.student.parent_addr_city }},
+                {{ person.student.parent_addr_state }}
+                {{ person.student.parent_addr_5digit_zip }},
+                {{ person.student.parent_addr_country }}
+              </address>
+            </li>
           </ul>
         </div>
       </div>
