@@ -99,10 +99,12 @@
       </div>
     </div>
   </div>
+  {{ mq }}
 </template>
 
 <script>
 export default {
+  inject: ["mq"],
   props: {
     person: {
       type: Object,
