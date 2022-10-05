@@ -1,8 +1,8 @@
 <template>
   <div class="bg-gray rounded-3">
-    <div class="row">
-      <div class="col-xl-3 mb-3">
-        <div class="p-3 text-center">
+    <div class="p-3 row">
+      <div class="col-xl-3 my-auto">
+        <div class="text-center">
           <div class="d-inline-block rounded-circle border border-4 mb-2">
             <img
               :src="person.photo_url"
@@ -18,7 +18,6 @@
               </template>
               <template v-else>{{ person.first_name }}</template>
             </span>
-
             <span>
               <template v-if="person.preferred_surname">
                 {{ person.preferred_surname }}
@@ -29,11 +28,11 @@
             </span>
           </div>
           <!-- moved pronouns to under the preferred name -->
-          <div class="h3 text-dark axdd-font-encode-sans">
+          <div class="h4 text-dark-grey axdd-font-encode-sans mb-3">
             <template v-if="person.pronouns">
               {{ person.pronouns }}
             </template>
-            <template v-else>he/him</template>
+            <template v-else>He/Him</template>
           </div>
           <div class="">
             {{ person.student.student_number }},
@@ -43,14 +42,13 @@
       </div>
       <div class="col-xl-3">
         <div class="p-3">
-          <div class="body-1 flex-fill">
-            <div class="fw-bold text-dark-beige mb-2">Personal Information</div>
+          <div class="flex-fill">
+            <div class="fw-bold text-dark-beige mb-1">Personal Information</div>
             <ul class="list-unstyled m-0">
               <li><b>Full name: </b>{{ person.full_name }}</li>
               <li><b>First: </b>{{ person.first_name }}</li>
               <li><b>Last: </b>{{ person.surname }}</li>
               <li><b>Gender: </b>{{ person.student.gender }}</li>
-              <li v-if="mq.xs" aria-hidden="true"><hr /></li>
               <li><b>DOB: </b>{{ person.student.birthdate }}</li>
               <li>
                 <b>Ethnicity: </b>{{ person.student.assigned_ethnic_desc }}
@@ -98,29 +96,52 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-xl-3 mb-3">
+      <div class="m-0" v-if="mq.xs" aria-hidden="true"><hr /></div>
+      <div class="col-12 col-xl-3">
         <div class="p-3">
-          <p class="text-dark-beige fs-6">
-            <b>Immigration Status</b>
-          </p>
+          <div class="fw-bold text-dark-beige mb-1">Immigration Status</div>
           <ul class="list-unstyled m-0">
-            <li><b>Citizenship: </b> {{ person.student.citizen_country }}</li>
             <li>
-              <b>Visa Type: </b>
+              <strong>Citizenship: </strong>
+              {{ person.student.citizen_country }}
+            </li>
+            <li>
+              <strong>Visa Type: </strong>
               <span v-if="person.student.visa_type">
                 {{ person.student.visa_type }}
               </span>
               <span v-else> N/A </span>
             </li>
-            <li><b>Residency: </b>{{ person.student.resident_desc }}</li>
+            <li>
+              <strong>Residency: </strong>{{ person.student.resident_desc }}
+            </li>
+          </ul>
+        </div>
+        <div v-if="mq.xs" aria-hidden="true"><hr /></div>
+        <div class="p-3 mt-2">
+          <div class="fw-bold text-dark-beige mb-1">Emergency Contact</div>
+          <ul class="list-unstyled m-0">
+            <li><strong>Name: </strong> {{ person.student.emergency_name }}</li>
+            <li>
+              <strong>Phone: </strong>
+              <span v-if="person.student.visa_type">
+                {{ person.student.emergency_phone }}
+              </span>
+              <span v-else> N/A </span>
+            </li>
+            <li>
+              <span v-if="person.student.emergency_email">
+                <strong>Email: </strong>{{ person.student.emergency_email }}
+              </span>
+              <span v-else><strong>Email: </strong>N/A</span>
+            </li>
           </ul>
         </div>
       </div>
-      <div class="body-1 col-12 col-xl-3">
+      <div v-if="mq.xs" aria-hidden="true"><hr /></div>
+      <div class="col-12 col-xl-3">
         <div class="p-3">
-          <p class="text-dark-beige fs-6">
-            <b>Address</b>
-          </p>
+          <p class="text-dark-beige fw-bold mb-1">Address</p>
           <ul class="list-unstyled m-0">
             <li>
               <b>Local Address: </b>
@@ -129,7 +150,7 @@
                 {{ person.student.local_addr_line2 }},
                 {{ person.student.local_addr_city }},
                 {{ person.student.local_addr_state }}
-                {{ person.student.local_addr_5digit_zip }},
+                {{ person.student.local_addr_5digit_zip }}
                 {{ person.student.local_addr_country }}
               </address>
             </li>
@@ -140,20 +161,23 @@
                 {{ person.student.perm_addr_line2 }},
                 {{ person.student.perm_addr_city }},
                 {{ person.student.perm_addr_state }}
-                {{ person.student.perm_addr_5digit_zip }},
+                {{ person.student.perm_addr_5digit_zip }}
                 {{ person.student.perm_addr_country }}
               </address>
             </li>
             <li>
-              <b>Parent Address: </b>
-              <address>
-                {{ person.student.parent_addr_line1 }}
-                {{ person.student.parent_addr_line2 }},
-                {{ person.student.parent_addr_city }},
-                {{ person.student.parent_addr_state }}
-                {{ person.student.parent_addr_5digit_zip }},
-                {{ person.student.parent_addr_country }}
-              </address>
+              <strong>Parent Address: </strong><br />
+              <span v-if="person.student.parent_addr_line1">
+                <address>
+                  {{ person.student.parent_addr_line1 }}
+                  {{ person.student.parent_addr_line2 }},
+                  {{ person.student.parent_addr_city }},
+                  {{ person.student.parent_addr_state }}
+                  {{ person.student.parent_addr_5digit_zip }},
+                  {{ person.student.parent_addr_country }}
+                </address>
+              </span>
+              <span v-else>N/A</span>
             </li>
           </ul>
         </div>
