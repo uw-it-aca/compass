@@ -40,60 +40,92 @@
           </div>
         </div>
       </div>
+      <div v-if="!mq.xl" aria-hidden="true"><hr /></div>
       <div class="col-xl-3">
-        <div class="p-3 mt-2">
-          <div class="flex-fill">
-            <div class="fw-bold text-dark-beige mb-1" v-if="mq.xl">
-              Personal Information
-            </div>
-            <ul class="list-unstyled m-0">
-              <!-- {{ person.full_name }} -->
-              <li><b>Full name: </b>Jamesy Jimmy McJames</li>
-              <li><b>First: </b>{{ person.first_name }}</li>
-              <li><b>Last: </b>{{ person.surname }}</li>
-              <li><b>Gender: </b>{{ person.student.gender }}</li>
-              <li><b>DOB: </b>{{ person.student.birthdate }}</li>
-              <li>
-                <b>Ethnicity: </b>{{ person.student.assigned_ethnic_desc }}
-              </li>
-              <li>
-                <b>Disability: </b>
-                <span v-if="person.student.disability_ind"> Disabled </span>
-                <span v-else> Not Disabled </span>
-              </li>
-              <li>
-                <b>Veterans: </b>
-                <span v-if="person.student.veteran_benefit_code === '0'">
-                  Not A Vet
-                </span>
-                <span v-else>
-                  {{ person.student.veteran_benefit_code }},
-                  {{ person.student.veteran_benefit_desc }},
-                  {{ person.student.veteran_desc }}
-                </span>
-              </li>
-              <li>
-                <strong>Phone:</strong> +1
-                {{ person.student.local_phone_number }}
-              </li>
-            </ul>
-            <div v-if="person.student.sports.length > 0">
-              <i class="bi bi-trophy-fill text-purple"></i> Sport:
-              <span
-                v-for="(sport, index) in person.student.sports"
-                :key="sport.code"
-              >
-                {{ sport.sport_code }}
-                <span v-if="index + 1 < person.student.sports.length">, </span>
+        <div v-if="mq.xl" class="flex-fill p-3 mt-2">
+          <div class="fw-bold text-dark-beige mb-1">Personal Information</div>
+          <ul class="list-unstyled m-0">
+            <!-- {{ person.full_name }} -->
+            <li><strong>Full Name: </strong>Jamesy Jimmy McJames</li>
+            <li><strong>First: </strong>{{ person.first_name }}</li>
+            <li><strong>Last: </strong>{{ person.surname }}</li>
+            <li><strong>Gender: </strong>{{ person.student.gender }}</li>
+            <li><strong>DOB: </strong>{{ person.student.birthdate }}</li>
+            <li>
+              <strong>Ethnicity: </strong
+              >{{ person.student.assigned_ethnic_desc }}
+            </li>
+            <li>
+              <strong>Disability: </strong>
+              <span v-if="person.student.disability_ind"> Disabled </span>
+              <span v-else> Not Disabled </span>
+            </li>
+            <li>
+              <strong>Veterans: </strong>
+              <span v-if="person.student.veteran_benefit_code === '0'">
+                Not A Vet
               </span>
-            </div>
+              <span v-else>
+                {{ person.student.veteran_benefit_code }},
+                {{ person.student.veteran_benefit_desc }},
+                {{ person.student.veteran_desc }}
+              </span>
+            </li>
+            <li>
+              <strong>Phone:</strong> +1
+              {{ person.student.local_phone_number }}
+            </li>
+          </ul>
+          <div v-if="person.student.sports.length > 0">
+            <i class="bi bi-trophy-fill text-purple"></i> Sport:
+            <span
+              v-for="(sport, index) in person.student.sports"
+              :key="sport.code"
+            >
+              {{ sport.sport_code }}
+              <span v-if="index + 1 < person.student.sports.length">, </span>
+            </span>
           </div>
+        </div>
+        <div v-else class="flex-fill p-3">
+          <ul class="list-unstyled m-0">
+            <li>
+              <div class="d-flex justify-content-between">
+                <span> <strong>Full Name:</strong> </span>
+                <span>{{ person.full_name }}</span>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex justify-content-between">
+                <span> <strong>First Name:</strong> </span>
+                <span>{{ person.first_name }}</span>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex justify-content-between">
+                <span> <strong>Last Name:</strong> </span>
+                <span>{{ person.surname }}</span>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex justify-content-between">
+                <span> <strong>Gender:</strong> </span>
+                <span>{{ person.student.gender }}</span>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex justify-content-between">
+                <span> <strong>DOB:</strong> </span>
+                <span>{{ person.student.birthdate }}</span>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
       <!-- show line during mobile view-->
       <div class="m-0" v-if="!mq.xl" aria-hidden="true"><hr /></div>
       <div class="col-12 col-xl-3">
-        <div class="p-3 mt-2 v-if="!mq.xl"">
+        <div class="p-3 mt-2">
           <div class="fw-bold text-dark-beige mb-1" v-if="mq.xl">
             Immigration Status
           </div>
