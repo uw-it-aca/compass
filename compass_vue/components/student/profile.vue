@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray rounded-3">
+  <div class="bg-light-gray rounded-3">
     <div class="p-3 row">
       <div class="col-xl-3 my-auto">
         <div class="text-center">
@@ -28,24 +28,27 @@
             </span>
           </div>
           <!-- moved pronouns to under the preferred name -->
-          <div class="h4 text-dark-grey axdd-font-encode-sans mb-3">
+          <div class="h4 text-secondary axdd-font-encode-sans mb-2">
             <template v-if="person.pronouns">
               {{ person.pronouns }}
             </template>
             <template v-else>He/Him</template>
           </div>
-          <div class="">
+          <div class="mt-3">
             {{ person.student.student_number }},
             {{ person.student.student_email }}
           </div>
         </div>
       </div>
       <div class="col-xl-3">
-        <div class="p-3">
+        <div class="p-3 mt-2">
           <div class="flex-fill">
-            <div class="fw-bold text-dark-beige mb-1">Personal Information</div>
+            <div class="fw-bold text-dark-beige mb-1" v-if="mq.xl">
+              Personal Information
+            </div>
             <ul class="list-unstyled m-0">
-              <li><b>Full name: </b>{{ person.full_name }}</li>
+              <!-- {{ person.full_name }} -->
+              <li><b>Full name: </b>Jamesy Jimmy McJames</li>
               <li><b>First: </b>{{ person.first_name }}</li>
               <li><b>Last: </b>{{ person.surname }}</li>
               <li><b>Gender: </b>{{ person.student.gender }}</li>
@@ -74,15 +77,6 @@
                 {{ person.student.local_phone_number }}
               </li>
             </ul>
-            <p>
-              <span
-                class="badge rounded-pill border border-muted text-dark me-1"
-                >{{ person.gender }}</span
-              >
-              <span class="badge rounded-pill border border-muted text-dark">
-                {{ person.pronouns }}
-              </span>
-            </p>
             <div v-if="person.student.sports.length > 0">
               <i class="bi bi-trophy-fill text-purple"></i> Sport:
               <span
@@ -96,10 +90,13 @@
           </div>
         </div>
       </div>
-      <div class="m-0" v-if="mq.xs" aria-hidden="true"><hr /></div>
+      <!-- show line during mobile view-->
+      <div class="m-0" v-if="!mq.xl" aria-hidden="true"><hr /></div>
       <div class="col-12 col-xl-3">
-        <div class="p-3">
-          <div class="fw-bold text-dark-beige mb-1">Immigration Status</div>
+        <div class="p-3 mt-2 v-if="!mq.xl"">
+          <div class="fw-bold text-dark-beige mb-1" v-if="mq.xl">
+            Immigration Status
+          </div>
           <ul class="list-unstyled m-0">
             <li>
               <strong>Citizenship: </strong>
@@ -117,9 +114,11 @@
             </li>
           </ul>
         </div>
-        <div v-if="mq.xs" aria-hidden="true"><hr /></div>
+        <div v-if="!mq.xl" aria-hidden="true"><hr /></div>
         <div class="p-3 mt-2">
-          <div class="fw-bold text-dark-beige mb-1">Emergency Contact</div>
+          <div class="fw-bold text-dark-beige mb-1" v-if="mq.xl">
+            Emergency Contact
+          </div>
           <ul class="list-unstyled m-0">
             <li><strong>Name: </strong> {{ person.student.emergency_name }}</li>
             <li>
@@ -133,15 +132,17 @@
               <span v-if="person.student.emergency_email">
                 <strong>Email: </strong>{{ person.student.emergency_email }}
               </span>
-              <span v-else><strong>Email: </strong>N/A</span>
+              <span v-else
+                ><strong>Email: </strong>hossain.anowar78@yahoo.com</span
+              >
             </li>
           </ul>
         </div>
       </div>
-      <div v-if="mq.xs" aria-hidden="true"><hr /></div>
+      <div v-if="!mq.xl" aria-hidden="true"><hr /></div>
       <div class="col-12 col-xl-3">
-        <div class="p-3">
-          <p class="text-dark-beige fw-bold mb-1">Address</p>
+        <div class="p-3 mt-2">
+          <p class="text-dark-beige fw-bold mb-1" v-if="mq.xl">Address</p>
           <ul class="list-unstyled m-0">
             <li>
               <b>Local Address: </b>
