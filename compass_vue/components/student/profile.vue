@@ -7,7 +7,13 @@
             <img
               :src="person.photo_url"
               @error="$event.target.src = '/static/compass/img/placeholder.png'"
-              class="img-profile rounded-circle border bg-light border-white border-2"
+              class="
+                img-profile
+                rounded-circle
+                border
+                bg-light
+                border-white border-2
+              "
             />
           </div>
           <!-- moved preferred name to under the profile photo -->
@@ -39,16 +45,17 @@
             {{ person.student.student_email }}
           </div>
         </div>
+
+        <div v-if="!mq.xlPlus" aria-hidden="true">
+          <hr class="text-muted" />
+        </div>
       </div>
 
-
-
       <div class="col-xl-3">
-
-        <div v-if="!mq.xl" aria-hidden="true"><hr /></div>
-
-        <div class="flex-fill p-3 mt-2">
-          <div class="fw-bold text-dark-beige mb-1">Personal Information</div>
+        <div class="flex-fill p-3">
+          <div v-if="!mq.xlPlus" class="fw-bold text-dark-beige mb-1">
+            Personal Information
+          </div>
           <ul class="list-unstyled m-0">
             <!-- {{ person.full_name }} -->
             <li><strong>Full Name: </strong>Jamesy Jimmy McJames</li>
@@ -77,31 +84,30 @@
               </span>
             </li>
             <li>
+              <strong>Athelete: </strong>
+              <span
+                v-for="(sport, index) in person.student.sports"
+                :key="sport.code"
+              >
+                {{ sport.sport_code }}
+                <span v-if="index + 1 < person.student.sports.length">, </span>
+              </span>
+            </li>
+            <li>
               <strong>Phone:</strong> +1
               {{ person.student.local_phone_number }}
             </li>
           </ul>
-          <div v-if="person.student.sports.length > 0">
-            <i class="bi bi-trophy-fill text-purple"></i> Sport:
-            <span
-              v-for="(sport, index) in person.student.sports"
-              :key="sport.code"
-            >
-              {{ sport.sport_code }}
-              <span v-if="index + 1 < person.student.sports.length">, </span>
-            </span>
-          </div>
         </div>
 
+        <div v-if="!mq.xlPlus" aria-hidden="true">
+          <hr class="text-muted" />
+        </div>
       </div>
 
       <div class="col-12 col-xl-3">
-
-        <!-- show line during mobile view-->
-      <div class="m-0" v-if="!mq.xl" aria-hidden="true"><hr /></div>
-
-        <div class="p-3 mt-2">
-          <div class="fw-bold text-dark-beige mb-1" v-if="mq.xl">
+        <div class="p-3">
+          <div v-if="!mq.xlPlus" class="fw-bold text-dark-beige mb-1">
             Immigration Status
           </div>
           <ul class="list-unstyled m-0">
@@ -121,9 +127,13 @@
             </li>
           </ul>
         </div>
-        <div v-if="!mq.xl" aria-hidden="true"><hr /></div>
-        <div class="p-3 mt-2">
-          <div class="fw-bold text-dark-beige mb-1" v-if="mq.xl">
+
+        <div v-if="!mq.xlPlus" aria-hidden="true">
+          <hr class="text-muted" />
+        </div>
+
+        <div class="p-3">
+          <div v-if="!mq.xlPlus" class="fw-bold text-dark-beige mb-1">
             Emergency Contact
           </div>
           <ul class="list-unstyled m-0">
@@ -145,13 +155,15 @@
             </li>
           </ul>
         </div>
+
+        <div v-if="!mq.xlPlus" aria-hidden="true">
+          <hr class="text-muted" />
+        </div>
       </div>
 
       <div class="col-12 col-xl-3">
-
-        <div v-if="!mq.xl" aria-hidden="true"><hr /></div>
-        <div class="p-3 mt-2">
-          <p class="text-dark-beige fw-bold mb-1" v-if="mq.xl">Address</p>
+        <div class="p-3">
+          <p v-if="!mq.xlPlus" class="text-dark-beige fw-bold mb-1">Address</p>
           <ul class="list-unstyled m-0">
             <li>
               <b>Local Address: </b>
