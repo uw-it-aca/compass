@@ -11,7 +11,7 @@
             />
           </div>
           <!-- moved preferred name to under the profile photo -->
-          <div class="h3 text-dark-beige axdd-font-encode-sans">
+          <div class="h2 text-dark-beige axdd-font-encode-sans">
             <span class="me-1">
               <template v-if="person.preferred_first_name">
                 {{ person.preferred_first_name }}
@@ -34,13 +34,19 @@
             </template>
             <template v-else>He/Him</template>
           </div>
-          <div class="mt-3">
+          <div v-if="mq.xl" class="mt-3">
+            {{ person.student.student_number }},
+            {{ person.student.student_email }}
+          </div>
+          <div v-else class="mt-2">
             {{ person.student.student_number }},
             {{ person.student.student_email }}
           </div>
         </div>
       </div>
-      <div v-if="!mq.xl" aria-hidden="true"><hr /></div>
+      <div v-if="!mq.xl" aria-hidden="true">
+        <hr />
+      </div>
       <div class="col-xl-3">
         <div v-if="mq.xl" class="flex-fill p-3 mt-2">
           <div class="fw-bold text-dark-beige mb-1">Personal Information</div>
@@ -76,6 +82,7 @@
               {{ person.student.local_phone_number }}
             </li>
           </ul>
+          <!-- what does this look like -->
           <div v-if="person.student.sports.length > 0">
             <i class="bi bi-trophy-fill text-purple"></i> Sport:
             <span
@@ -87,7 +94,7 @@
             </span>
           </div>
         </div>
-        <div v-else class="flex-fill p-3">
+        <div v-else class="flex-fill mx-4">
           <ul class="list-unstyled m-0">
             <li>
               <div class="d-flex justify-content-between">
@@ -117,6 +124,38 @@
               <div class="d-flex justify-content-between">
                 <span> <strong>DOB:</strong> </span>
                 <span>{{ person.student.birthdate }}</span>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex justify-content-between">
+                <span> <strong>Ethnicity:</strong> </span>
+                <span>{{ person.student.assigned_ethnic_desc }}</span>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex justify-content-between">
+                <span> <strong>Disability: </strong> </span>
+                <span v-if="person.student.disability_ind"> Disabled </span>
+                <span v-else> Not Disabled </span>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex justify-content-between">
+                <span> <strong>Veterans:</strong> </span>
+                <span v-if="person.student.veteran_benefit_code === '0'">
+                  Not A Vet
+                </span>
+                <span v-else>
+                  {{ person.student.veteran_benefit_code }},
+                  {{ person.student.veteran_benefit_desc }},
+                  {{ person.student.veteran_desc }}
+                </span>
+              </div>
+            </li>
+            <li>
+              <div class="d-flex justify-content-between">
+                <span> <strong>Phone:</strong> </span>
+                <span>{{ person.student.local_phone_number }}</span>
               </div>
             </li>
           </ul>
