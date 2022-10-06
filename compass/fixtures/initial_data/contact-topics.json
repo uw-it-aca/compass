@@ -184,7 +184,16 @@
     "pk": 21,
     "fields": {
       "access_group": 1,
-      "name": "Workshops",
+      "name": "Group Advising",
+      "active": true
+    }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 22,
+    "fields": {
+      "access_group": 1,
+      "name": "SSS Intake",
       "active": true
     }
   }
