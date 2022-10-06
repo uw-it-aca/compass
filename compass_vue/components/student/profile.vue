@@ -40,9 +40,14 @@
           </div>
         </div>
       </div>
-      <div v-if="!mq.xl" aria-hidden="true"><hr /></div>
+
+
+
       <div class="col-xl-3">
-        <div v-if="mq.xl" class="flex-fill p-3 mt-2">
+
+        <div v-if="!mq.xl" aria-hidden="true"><hr /></div>
+
+        <div class="flex-fill p-3 mt-2">
           <div class="fw-bold text-dark-beige mb-1">Personal Information</div>
           <ul class="list-unstyled m-0">
             <!-- {{ person.full_name }} -->
@@ -87,44 +92,14 @@
             </span>
           </div>
         </div>
-        <div v-else class="flex-fill p-3">
-          <ul class="list-unstyled m-0">
-            <li>
-              <div class="d-flex justify-content-between">
-                <span> <strong>Full Name:</strong> </span>
-                <span>{{ person.full_name }}</span>
-              </div>
-            </li>
-            <li>
-              <div class="d-flex justify-content-between">
-                <span> <strong>First Name:</strong> </span>
-                <span>{{ person.first_name }}</span>
-              </div>
-            </li>
-            <li>
-              <div class="d-flex justify-content-between">
-                <span> <strong>Last Name:</strong> </span>
-                <span>{{ person.surname }}</span>
-              </div>
-            </li>
-            <li>
-              <div class="d-flex justify-content-between">
-                <span> <strong>Gender:</strong> </span>
-                <span>{{ person.student.gender }}</span>
-              </div>
-            </li>
-            <li>
-              <div class="d-flex justify-content-between">
-                <span> <strong>DOB:</strong> </span>
-                <span>{{ person.student.birthdate }}</span>
-              </div>
-            </li>
-          </ul>
-        </div>
+
       </div>
-      <!-- show line during mobile view-->
-      <div class="m-0" v-if="!mq.xl" aria-hidden="true"><hr /></div>
+
       <div class="col-12 col-xl-3">
+
+        <!-- show line during mobile view-->
+      <div class="m-0" v-if="!mq.xl" aria-hidden="true"><hr /></div>
+
         <div class="p-3 mt-2">
           <div class="fw-bold text-dark-beige mb-1" v-if="mq.xl">
             Immigration Status
@@ -171,8 +146,10 @@
           </ul>
         </div>
       </div>
-      <div v-if="!mq.xl" aria-hidden="true"><hr /></div>
+
       <div class="col-12 col-xl-3">
+
+        <div v-if="!mq.xl" aria-hidden="true"><hr /></div>
         <div class="p-3 mt-2">
           <p class="text-dark-beige fw-bold mb-1" v-if="mq.xl">Address</p>
           <ul class="list-unstyled m-0">
