@@ -163,7 +163,7 @@
   },
   {
     "model": "compass.contacttopic",
-    "pk": 17,
+    "pk": 19,
     "fields": {
       "access_group": 1,
       "name": "Supplemental Grant",
@@ -172,7 +172,7 @@
   },
   {
     "model": "compass.contacttopic",
-    "pk": 17,
+    "pk": 20,
     "fields": {
       "access_group": 1,
       "name": "Housing/HFS",
@@ -181,7 +181,7 @@
   },
   {
     "model": "compass.contacttopic",
-    "pk": 17,
+    "pk": 21,
     "fields": {
       "access_group": 1,
       "name": "Workshops",
