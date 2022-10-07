@@ -227,9 +227,7 @@
           <p v-if="mq.xlPlus" class="text-dark-beige fw-bold mb-1">Address</p>
           <ul class="list-unstyled m-0">
             <li>
-              <KeyValue>
-                <template #kAdress> Local Adress: </template>
-                <template #vAdress>
+                <template> Local Adress: </template>
                   <address>
                     {{ person.student.local_addr_line1 }}
                     {{ person.student.local_addr_line2 }},
@@ -238,11 +236,12 @@
                     {{ person.student.local_addr_5digit_zip }}
                     {{ person.student.local_addr_country }}
                   </address>
-                </template>
-              </KeyValue>
+
             </li>
             <li>
-              <b>Permanet Address: </b>
+            <KeyValue :variant="'address'">
+                <template #key> Permanent Address: </template>
+                <template #value>
               <address>
                 {{ person.student.perm_addr_line1 }}
                 {{ person.student.perm_addr_line2 }},
@@ -251,9 +250,13 @@
                 {{ person.student.perm_addr_5digit_zip }}
                 {{ person.student.perm_addr_country }}
               </address>
+              </template>
+              </KeyValue>
             </li>
             <li>
-              <strong>Parent Address: </strong><br />
+            <KeyValue>
+                <template #kAdress> Parent Address: </template>
+                <template #vAdress>
               <span v-if="person.student.parent_addr_line1">
                 <address>
                   {{ person.student.parent_addr_line1 }}
@@ -263,6 +266,8 @@
                   {{ person.student.parent_addr_5digit_zip }},
                   {{ person.student.parent_addr_country }}
                 </address>
+                </template>
+              </KeyValue>
               </span>
               <span v-else>N/A</span>
             </li>
