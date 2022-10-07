@@ -40,56 +40,102 @@
           </div>
         </div>
 
-        <div v-if="!mq.xlPlus" aria-hidden="true">
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mt-4">
           <hr class="text-muted" />
         </div>
       </div>
 
       <div class="col-xl-3">
         <div class="flex-fill p-3">
-          <div v-if="!mq.xlPlus" class="fw-bold text-dark-beige mb-1">
+          <div v-if="mq.xlPlus" class="fw-bold text-dark-beige mb-1">
             Personal Information
           </div>
           <ul class="list-unstyled m-0">
-            <!-- {{ person.full_name }} -->
-            <li><strong>Full Name: </strong>Jamesy Jimmy McJames</li>
-            <li><strong>First: </strong>{{ person.first_name }}</li>
-            <li><strong>Last: </strong>{{ person.surname }}</li>
-            <li><strong>Gender: </strong>{{ person.student.gender }}</li>
-            <li><strong>DOB: </strong>{{ person.student.birthdate }}</li>
             <li>
-              <strong>Ethnicity: </strong
-              >{{ person.student.assigned_ethnic_desc }}
+              <KeyValue>
+                <template #key> Full Name</template>
+                <template #value> {{ person.full_name }} </template>
+              </KeyValue>
             </li>
             <li>
-              <strong>Disability: </strong>
-              <span v-if="person.student.disability_ind"> Disabled </span>
-              <span v-else> Not Disabled </span>
+              <KeyValue>
+                <template #key> First Name: </template>
+                <template #value> {{ person.first_name }} </template>
+              </KeyValue>
             </li>
             <li>
-              <strong>Veterans: </strong>
-              <span v-if="person.student.veteran_benefit_code === '0'">
-                Not A Vet
-              </span>
-              <span v-else>
-                {{ person.student.veteran_benefit_code }},
-                {{ person.student.veteran_benefit_desc }},
-                {{ person.student.veteran_desc }}
-              </span>
+              <KeyValue>
+                <template #key> Last Name: </template>
+                <template #value> {{ person.surname }} </template>
+              </KeyValue>
             </li>
             <li>
-              <strong>Athelete: </strong>
-              <span
-                v-for="(sport, index) in person.student.sports"
-                :key="sport.code"
-              >
-                {{ sport.sport_code }}
-                <span v-if="index + 1 < person.student.sports.length">, </span>
-              </span>
+              <KeyValue>
+                <template #key> Gender: </template>
+                <template #value> {{ person.gender }} </template>
+              </KeyValue>
             </li>
             <li>
-              <strong>Phone:</strong> +1
-              {{ person.student.local_phone_number }}
+              <KeyValue>
+                <template #key> DOB: </template>
+                <template #value> {{ person.student.birthdate }} </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key> Ethnicity: </template>
+                <template #value>
+                  {{ person.student.assigned_ethnic_desc }}
+                </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key> Disabled: </template>
+                <template #value>
+                  <span v-if="person.student.disability_ind"> Disabled</span>
+                  <span v-else> Not Disabled </span>
+                </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key> Veterans: </template>
+                <template #value>
+                  <span v-if="person.student.veteran_benefit_code === '0'">
+                    Not A Vet</span
+                  >
+                  <span v-else>
+                    {{ person.student.veteran_benefit_code }},
+                    {{ person.student.veteran_benefit_desc }},
+                    {{ person.student.veteran_desc }}
+                  </span>
+                </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key> Athelete: </template>
+                <template #value>
+                  <span
+                    v-for="(sport, index) in person.student.sports"
+                    :key="sport.code"
+                  >
+                    {{ sport.sport_code }}
+                    <span v-if="index + 1 < person.student.sports.length"
+                      >,
+                    </span>
+                  </span>
+                </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key> Phone: </template>
+                <template #value>
+                  +1 {{ person.student.local_phone_number }}
+                </template>
+              </KeyValue>
             </li>
           </ul>
         </div>
@@ -101,23 +147,36 @@
 
       <div class="col-12 col-xl-3">
         <div class="p-3">
-          <div v-if="!mq.xlPlus" class="fw-bold text-dark-beige mb-1">
+          <div v-if="mq.xlPlus" class="fw-bold text-dark-beige mb-1">
             Immigration Status
           </div>
           <ul class="list-unstyled m-0">
             <li>
-              <strong>Citizenship: </strong>
-              {{ person.student.citizen_country }}
+              <KeyValue>
+                <template #key> Citizenship: </template>
+                <template #value>
+                  {{ person.student.citizen_country }}
+                </template>
+              </KeyValue>
             </li>
             <li>
-              <strong>Visa Type: </strong>
-              <span v-if="person.student.visa_type">
-                {{ person.student.visa_type }}
-              </span>
-              <span v-else> N/A </span>
+              <KeyValue>
+                <template #key> Visa Typw: </template>
+                <template #value>
+                  <span v-if="person.student.visa_type">
+                    {{ person.student.visa_type }}
+                  </span>
+                  <span v-else> N/A </span>
+                </template>
+              </KeyValue>
             </li>
             <li>
-              <strong>Residency: </strong>{{ person.student.resident_desc }}
+              <KeyValue>
+                <template #key> Citizenship: </template>
+                <template #value>
+                  {{ person.student.resident_desc }}
+                </template>
+              </KeyValue>
             </li>
           </ul>
         </div>
@@ -127,48 +186,60 @@
         </div>
 
         <div class="p-3">
-          <div v-if="!mq.xlPlus" class="fw-bold text-dark-beige mb-1">
+          <div v-if="mq.xlPlus" class="fw-bold text-dark-beige mb-1">
             Emergency Contact
           </div>
           <ul class="list-unstyled m-0">
-            <li><strong>Name: </strong> {{ person.student.emergency_name }}</li>
             <li>
-              <strong>Phone: </strong>
-              <span v-if="person.student.visa_type">
-                {{ person.student.emergency_phone }}
-              </span>
-              <span v-else> N/A </span>
+              <KeyValue>
+                <template #key> Name: </template>
+                <template #value>
+                  {{ person.student.emergency_name }}
+                </template>
+              </KeyValue>
             </li>
             <li>
-              <span v-if="person.student.emergency_email">
-                <strong>Email: </strong>{{ person.student.emergency_email }}
-              </span>
-              <span v-else
-                ><strong>Email: </strong>hossain.anowar78@yahoo.com</span
-              >
+              <KeyValue>
+                <template #key> Phone: </template>
+                <template #value>
+                  {{ person.student.emergency_phone }}
+                </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key> Email: </template>
+                <template #value>
+                  {{ person.student.emergency_email }}
+                </template>
+              </KeyValue>
             </li>
           </ul>
         </div>
 
         <div v-if="!mq.xlPlus" aria-hidden="true">
-          <hr class="text-muted" />
+          <hr class="text-muted" s />
         </div>
       </div>
 
       <div class="col-12 col-xl-3">
         <div class="p-3">
-          <p v-if="!mq.xlPlus" class="text-dark-beige fw-bold mb-1">Address</p>
+          <p v-if="mq.xlPlus" class="text-dark-beige fw-bold mb-1">Address</p>
           <ul class="list-unstyled m-0">
             <li>
-              <b>Local Address: </b>
-              <address>
-                {{ person.student.local_addr_line1 }}
-                {{ person.student.local_addr_line2 }},
-                {{ person.student.local_addr_city }},
-                {{ person.student.local_addr_state }}
-                {{ person.student.local_addr_5digit_zip }}
-                {{ person.student.local_addr_country }}
-              </address>
+              <KeyValue>
+                <template #kAdress> Local Adress: </template>
+                <template #vAdress>
+                  <address>
+                    {{ person.student.local_addr_line1 }}
+                    {{ person.student.local_addr_line2 }},
+                    {{ person.student.local_addr_city }},
+                    {{ person.student.local_addr_state }}
+                    {{ person.student.local_addr_5digit_zip }}
+                    {{ person.student.local_addr_country }}
+                  </address>
+                </template>
+              </KeyValue>
             </li>
             <li>
               <b>Permanet Address: </b>
@@ -204,6 +275,8 @@
 </template>
 
 <script>
+import KeyValue from "../../components/_common/key-value.vue";
+
 export default {
   inject: ["mq"],
   props: {
@@ -212,7 +285,7 @@ export default {
       required: true,
     },
   },
-  components: {},
+  components: { KeyValue },
   data() {
     return {};
   },
