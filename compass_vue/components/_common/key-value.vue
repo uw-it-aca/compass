@@ -6,12 +6,11 @@
         : '',
       mq.lgPlus && variant != 'address' ? 'd-flex' : '',
     ]"
-    class="mx-2"
   >
     <div v-if="$slots['key']" class="fw-bold text-nowrap me-2">
       <slot name="key"></slot>
     </div>
-    <div v-if="$slots['value']" :class="[variant == 'address' ? '' : '']">
+    <div v-if="$slots['value']">
       <slot name="value"></slot>
     </div>
   </div>
