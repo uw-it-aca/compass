@@ -1,13 +1,16 @@
 <template>
-  <div :class="[mq.lgMinus ? 'justify-content-between' : '']" class="d-flex">
-    <div
-      v-if="$slots['key']"
-      :class="[variant == 'address' ? 'text-danger' : '']"
-      class="fw-bold text-nowrap me-2"
-    >
+  <div
+    :class="[
+      mq.lgMinus && variant != 'address'
+        ? 'justify-content-between d-flex'
+        : '',
+      mq.lgPlus && variant != 'address' ? 'd-flex' : '',
+    ]"
+  >
+    <div v-if="$slots['key']" class="fw-bold text-nowrap me-2">
       <slot name="key"></slot>
     </div>
-    <div v-if="$slots['value']" class="text-nowrap">
+    <div v-if="$slots['value']" :class="[variant == 'address' ? '' : '']">
       <slot name="value"></slot>
     </div>
   </div>
