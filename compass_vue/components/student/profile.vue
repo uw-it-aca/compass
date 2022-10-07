@@ -260,17 +260,14 @@
               <KeyValue variant="address">
                 <template #key> Parent Address: </template>
                 <template #value>
-                  <span v-if="person.student.parent_addr_line1">
-                    <address>
-                      {{ person.student.parent_addr_line1 }}
-                      {{ person.student.parent_addr_line2 }},
-                      {{ person.student.parent_addr_city }},
-                      {{ person.student.parent_addr_state }}
-                      {{ person.student.parent_addr_5digit_zip }},
-                      {{ person.student.parent_addr_country }}
-                    </address>
-                  </span>
-                  <span v-else>N/A</span>
+                  <address>
+                    {{ person.student.parent_addr_line1 }}
+                    {{ person.student.parent_addr_line2 }},
+                    {{ person.student.parent_addr_city }},
+                    {{ person.student.parent_addr_state }}
+                    {{ person.student.parent_addr_5digit_zip }},
+                    {{ person.student.parent_addr_country }}
+                  </address>
                 </template>
               </KeyValue>
             </li>
