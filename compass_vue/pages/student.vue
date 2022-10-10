@@ -53,10 +53,6 @@
                         :advisers="person.student.advisers"
                       ></StudentAdviser>
                       <StudentPrograms :person="person"></StudentPrograms>
-                      <StudentAddress :person="person"></StudentAddress>
-                      <StudentEmergencyContact
-                        :person="person"
-                      ></StudentEmergencyContact>
                     </div>
                   </div>
                 </axdd-tabs-panel>
@@ -98,7 +94,7 @@
         <div class="col">
           <div class="bg-gray p-3 rounded-3">
             <div class="row">
-              <div class="col-4 ms-auto">
+              <div class="col-xl-4 ms-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
                   <SearchStudent></SearchStudent>
@@ -121,8 +117,6 @@ import Layout from "../layout.vue";
 import dataMixin from "../mixins/data_mixin.js";
 
 import StudentProfile from "../components/student/profile.vue";
-import StudentAddress from "../components/student/address.vue";
-import StudentEmergencyContact from "../components/student/emergency.vue";
 import StudentAcademics from "../components/student/academics.vue";
 import StudentTranscript from "../components/student/transcript.vue";
 import StudentTranscriptCredits from "../components/student/transcript-credits.vue";
@@ -143,8 +137,6 @@ export default {
     "axdd-tabs-item": TabsItem,
     "axdd-tabs-panel": TabsPanel,
     StudentProfile,
-    StudentAddress,
-    StudentEmergencyContact,
     StudentAcademics,
     StudentTranscript,
     StudentTranscriptCredits,
@@ -164,22 +156,22 @@ export default {
       person: {},
     };
   },
-  computed: {
-    studentAddress: function () {
-      let addr = "";
-      if (this.student.perm_addr_line1)
-        addr += this.student.perm_addr_line1 + " ";
-      if (this.student.perm_addr_line2)
-        addr += this.student.perm_addr_line2 + " ";
-      if (this.student.perm_addr_city) addr += this.student.perm_addr_city;
-      if (this.student.perm_addr_state)
-        addr += ", " + this.student.perm_addr_state;
-      if (this.student.perm_addr_line1)
-        addr += " " + this.student.perm_addr_postal_code;
-      if (addr) return addr;
-      else return "N/A";
-    },
-  },
+  //  computed: {
+  //    studentAddress: function () {
+  //      let addr = "";
+  //      if (this.student.perm_addr_line1)
+  //        addr += this.student.perm_addr_line1 + " ";
+  //      if (this.student.perm_addr_line2)
+  //        addr += this.student.perm_addr_line2 + " ";
+  //      if (this.student.perm_addr_city) addr += this.student.perm_addr_city;
+  //      if (this.student.perm_addr_state)
+  //        addr += ", " + this.student.perm_addr_state;
+  //      if (this.student.perm_addr_line1)
+  //        addr += " " + this.student.perm_addr_postal_code;
+  //      if (addr) return addr;
+  //      else return "N/A";
+  //    },
+  //  },
   methods: {
     loadStudent: function (studentNetID) {
       this.getStudentDetail(studentNetID).then((response) => {
