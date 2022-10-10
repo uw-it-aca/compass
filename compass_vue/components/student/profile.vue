@@ -32,7 +32,7 @@
             <template v-if="person.pronouns">
               {{ person.pronouns }}
             </template>
-            <template v-else>He/Him</template>
+            <template v-else>not specified</template>
           </div>
           <div class="mt-3">
             {{ person.student.student_number }},
