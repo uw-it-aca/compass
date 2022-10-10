@@ -68,9 +68,15 @@
               <template #key> Intended Majors (upon admission)</template>
               <template #value>
                 <ol>
-                  <li>{{ person.student.intended_major1_code }}</li>
-                  <li>{{ person.student.intended_major2_code }}</li>
-                  <li>{{ person.student.intended_major3_code }}</li>
+                  <li v-if="person.student.intended_major1_code">
+                    {{ person.student.intended_major1_code }}
+                  </li>
+                  <li v-if="person.student.intended_major1_code">
+                    {{ person.student.intended_major2_code }}
+                  </li>
+                  <li v-if="person.student.intended_major3_code">
+                    {{ person.student.intended_major3_code }}
+                  </li>
                 </ol>
               </template>
             </KeyValue>

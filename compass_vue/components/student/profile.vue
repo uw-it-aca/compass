@@ -36,7 +36,7 @@
           </div>
           <div class="mt-3">
             {{ person.student.student_number }},
-            {{ person.uwnetid }}
+            {{ person.student.student_email }}
           </div>
         </div>
 
