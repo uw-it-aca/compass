@@ -156,6 +156,22 @@ export default {
       person: {},
     };
   },
+  //  computed: {
+  //    studentAddress: function () {
+  //      let addr = "";
+  //      if (this.student.perm_addr_line1)
+  //        addr += this.student.perm_addr_line1 + " ";
+  //      if (this.student.perm_addr_line2)
+  //        addr += this.student.perm_addr_line2 + " ";
+  //      if (this.student.perm_addr_city) addr += this.student.perm_addr_city;
+  //      if (this.student.perm_addr_state)
+  //        addr += ", " + this.student.perm_addr_state;
+  //      if (this.student.perm_addr_line1)
+  //        addr += " " + this.student.perm_addr_postal_code;
+  //      if (addr) return addr;
+  //      else return "N/A";
+  //    },
+  //  },
   methods: {
     loadStudent: function (studentNetID) {
       this.getStudentDetail(studentNetID).then((response) => {
@@ -163,22 +179,6 @@ export default {
           this.person = response.data;
         }
       });
-    computed: {
-    studentAddress: function () {
-      let addr = "";
-      if (this.student.perm_addr_line1)
-        addr += this.student.perm_addr_line1 + " ";
-      if (this.student.perm_addr_line2)
-        addr += this.student.perm_addr_line2 + " ";
-      if (this.student.perm_addr_city) addr += this.student.perm_addr_city;
-      if (this.student.perm_addr_state)
-        addr += ", " + this.student.perm_addr_state;
-      if (this.student.perm_addr_line1)
-        addr += " " + this.student.perm_addr_postal_code;
-      if (addr) return addr;
-      else return "N/A";
-    },
-  },
     },
   },
 };

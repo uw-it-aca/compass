@@ -36,7 +36,7 @@
           </div>
           <div class="mt-3">
             {{ person.student.student_number }},
-            {{ person.student.student_email }}
+            {{ person.uwnetid }}
           </div>
         </div>
 
@@ -207,12 +207,22 @@
               </KeyValue>
             </li>
             <li>
-              <KeyValue>
-                <template #key> Email: </template>
-                <template #value>
-                  {{ person.student.emergency_email }}
-                </template>
-              </KeyValue>
+              <span v-if="person.student.emergency_email.length > 25">
+                <KeyValue variant="address">
+                  <template #key> Email: </template>
+                  <template #value>
+                    {{ person.student.emergency_email }}
+                  </template>
+                </KeyValue>
+              </span>
+              <span v-else>
+                <KeyValue>
+                  <template #key> Email: </template>
+                  <template #value>
+                    {{ person.student.emergency_email }}
+                  </template>
+                </KeyValue>
+              </span>
             </li>
           </ul>
         </div>
