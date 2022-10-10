@@ -53,7 +53,7 @@
           <ul class="list-unstyled m-0">
             <li>
               <KeyValue>
-                <template #key> Full Name</template>
+                <template #key> Full Name: </template>
                 <template #value> {{ person.full_name }} </template>
               </KeyValue>
             </li>
