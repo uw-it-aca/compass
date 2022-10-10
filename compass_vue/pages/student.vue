@@ -53,10 +53,6 @@
                         :advisers="person.student.advisers"
                       ></StudentAdviser>
                       <StudentPrograms :person="person"></StudentPrograms>
-                      <StudentAddress :person="person"></StudentAddress>
-                      <StudentEmergencyContact
-                        :person="person"
-                      ></StudentEmergencyContact>
                     </div>
                   </div>
                 </axdd-tabs-panel>
@@ -121,8 +117,6 @@ import Layout from "../layout.vue";
 import dataMixin from "../mixins/data_mixin.js";
 
 import StudentProfile from "../components/student/profile.vue";
-import StudentAddress from "../components/student/address.vue";
-import StudentEmergencyContact from "../components/student/emergency.vue";
 import StudentAcademics from "../components/student/academics.vue";
 import StudentTranscript from "../components/student/transcript.vue";
 import StudentTranscriptCredits from "../components/student/transcript-credits.vue";
@@ -143,8 +137,6 @@ export default {
     "axdd-tabs-item": TabsItem,
     "axdd-tabs-panel": TabsPanel,
     StudentProfile,
-    StudentAddress,
-    StudentEmergencyContact,
     StudentAcademics,
     StudentTranscript,
     StudentTranscriptCredits,
@@ -164,7 +156,14 @@ export default {
       person: {},
     };
   },
-  computed: {
+  methods: {
+    loadStudent: function (studentNetID) {
+      this.getStudentDetail(studentNetID).then((response) => {
+        if (response.data) {
+          this.person = response.data;
+        }
+      });
+    computed: {
     studentAddress: function () {
       let addr = "";
       if (this.student.perm_addr_line1)
@@ -180,13 +179,6 @@ export default {
       else return "N/A";
     },
   },
-  methods: {
-    loadStudent: function (studentNetID) {
-      this.getStudentDetail(studentNetID).then((response) => {
-        if (response.data) {
-          this.person = response.data;
-        }
-      });
     },
   },
 };
