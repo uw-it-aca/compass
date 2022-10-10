@@ -1,7 +1,7 @@
 <template>
   <div class="row mb-4">
     <h2 class="h6 m-0 fw-bold mb-4">Academic Summary</h2>
-    <div class="col-3 d-flex flex-column">
+    <div class="col-xl-3">
       <div class="alert alert-gray d-flex flex-column flex-fill m-0 small">
         <div class="flex-fill">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Status</p>
@@ -42,59 +42,89 @@
         </div>
       </div>
     </div>
-    <div class="col-3 d-flex flex-column">
+    <div class="col-xl-3">
       <div class="alert alert-gray d-flex flex-column flex-fill m-0 small">
         <div class="flex-fill">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Majors</p>
-
+          <!-- changed the formate into keyvalue -->
           <div>
-            <p class="small text-uppercase text-muted mb-2">Current Majors</p>
-            <ul class="list-unstyled">
-              <li v-for="(major, index) in person.student.majors" :key="index">
-                {{ major.major_abbr_code }}, {{ major.major_name }}
-              </li>
-            </ul>
+            <KeyValue variant="address">
+              <template #key>Current Majors</template>
+              <template #value>
+                <ul class="list-unstyled">
+                  <p
+                    v-for="(major, index) in person.student.majors"
+                    :key="index"
+                  >
+                    {{ major.major_abbr_code }}, {{ major.major_name }}
+                  </p>
+                </ul>
+              </template>
+            </KeyValue>
           </div>
-
+          <!-- changed the formate into keyvalue -->
           <div>
-            <p class="small text-uppercase text-muted mb-2">Intended Majors (upon admission)</p>
-            <ol>
-              <li>{{ person.student.intended_major1_code }}</li>
-              <li>{{ person.student.intended_major2_code }}</li>
-              <li>{{ person.student.intended_major3_code }}</li>
-            </ol>
+            <KeyValue variant="address">
+              <template #key> Intended Majors (upon admission)</template>
+              <template #value>
+                <ol>
+                  <li>{{ person.student.intended_major1_code }}</li>
+                  <li>{{ person.student.intended_major2_code }}</li>
+                  <li>{{ person.student.intended_major3_code }}</li>
+                </ol>
+              </template>
+            </KeyValue>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-3 d-flex flex-column">
+    <div class="col-xl-3">
       <div class="alert alert-gray d-flex flex-column flex-fill m-0 small">
         <div class="flex-fill">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Programs</p>
 
           <div>
-            <p class="small text-uppercase text-muted mb-2">Special Programs</p>
-            <ul class="list-unstyled">
-              <li>
-                {{ person.student.special_program_code }},
-                {{ person.student.special_program_desc }}
-              </li>
-            </ul>
+            <KeyValue>
+              <template #key> Special Programs </template>
+              <template #value>
+                <ul class="list-unstyled">
+                  <!-- show N/A when student isn't in any special program -->
+                  <span v-if="person.student.special_program_code === '0'">
+                    N/A</span
+                  >
+                  <span v-else>
+                    <li>
+                      {{ person.student.special_program_code }},
+                      {{ person.student.special_program_desc }}
+                    </li>
+                  </span>
+                </ul>
+              </template>
+            </KeyValue>
           </div>
-
+          <!-- show N/A when student isn't in any honors program -->
           <div>
-            <p class="small text-uppercase text-muted mb-2">Honors</p>
-            <ul class="list-unstyled">
-              <li>
-                {{ person.student.honors_program_code }},
-                {{ person.student.honors_program_ind }}
-              </li>
-            </ul>
+            <KeyValue>
+              <template #key> Honors </template>
+              <template #value>
+                <ul class="list-unstyled">
+                  <span v-if="person.student.honors_program_code === '0'"
+                    >N/A</span
+                  >
+                  <span v-else>
+                    <li>
+                      {{ person.student.honors_program_code }},
+                      {{ person.student.honors_program_ind }}
+                    </li></span
+                  >
+                </ul>
+              </template>
+            </KeyValue>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-3 d-flex flex-column">
+    <div class="col-xl-3">
       <div class="alert alert-gray d-flex flex-column flex-fill m-0 small">
         <div class="flex-fill">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Credits</p>
@@ -142,6 +172,7 @@ import KeyValue from "../../components/_common/key-value.vue";
 import dataMixin from "../../mixins/data_mixin.js";
 
 export default {
+  inject: ["mq"],
   mixins: [dataMixin],
   props: {
     person: {
