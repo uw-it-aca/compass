@@ -5,6 +5,7 @@
   "fields": {
    "access_group": 1,
    "name": "CAMP",
+   "slug": "camp",
    "active": true
   }
  },
@@ -14,6 +15,7 @@
   "fields": {
    "access_group": 1,
    "name": "TRIO",
+   "slug": "trio",
    "active": true
   }
  },
@@ -23,6 +25,7 @@
   "fields": {
    "access_group": 1,
    "name": "SSS",
+   "slug": "sss",
    "active": true
   }
  },
@@ -32,6 +35,7 @@
   "fields": {
    "access_group": 1,
    "name": "Champions",
+   "slug": "champions",
    "active": true
   }
  },
@@ -41,6 +45,7 @@
   "fields": {
    "access_group": 1,
    "name": "IC Eligible",
+   "slug": "ic-eligible",
    "active": true
   }
  },
@@ -50,6 +55,7 @@
   "fields": {
    "access_group": 1,
    "name": "Pre-Professional",
+   "slug": "pre-professional",
    "active": true
   }
  }

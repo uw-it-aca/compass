@@ -162,26 +162,6 @@ class AccessGroup(models.Model):
             # set default contact topics
             default_contact_topics = [
                 "Add/Drop a Class",
-                "Join/Affiliate",
-                "Academic Difficulties",
-                "S/NS",
-                "Internships, Research, and Career Exploration",
-                "A&O Appointment",
-                "Graduate & Professional School",
-                "Study Abroad",
-                "Academic Planning",
-                "Pre-Major Extension",
-                "Referral - Campus/Community",
-                "Workshops",
-                "Exit Interview",
-                "Reinstatement",
-                "Financial Aid",
-                "Personal/Family Hardship",
-                "Registration Hold",
-                "Supplemental Grant",
-                "Housing/NFS",
-                "Group Advising",
-                "SSS Intake",
             ]
             for contact_topic_name in default_contact_topics:
                 ContactTopic(access_group=self, name=contact_topic_name).save()
