@@ -115,7 +115,7 @@
             </li>
             <li>
               <KeyValue>
-                <template #key> Athelete: </template>
+                <template #key> Athlete: </template>
                 <template #value>
                   <span
                     v-for="(sport, index) in person.student.sports"
