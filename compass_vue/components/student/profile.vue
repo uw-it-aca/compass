@@ -32,7 +32,7 @@
             <template v-if="person.pronouns">
               {{ person.pronouns }}
             </template>
-            <template v-else>He/Him</template>
+            <template v-else>not specified</template>
           </div>
           <div class="mt-3">
             {{ person.student.student_number }},
@@ -53,25 +53,25 @@
           <ul class="list-unstyled m-0">
             <li>
               <KeyValue>
-                <template #key> Full Name</template>
+                <template #key>Full Name: </template>
                 <template #value> {{ person.full_name }} </template>
               </KeyValue>
             </li>
             <li>
               <KeyValue>
-                <template #key> First Name: </template>
+                <template #key>First Name: </template>
                 <template #value> {{ person.first_name }} </template>
               </KeyValue>
             </li>
             <li>
               <KeyValue>
-                <template #key> Last Name: </template>
+                <template #key>Last Name: </template>
                 <template #value> {{ person.surname }} </template>
               </KeyValue>
             </li>
             <li>
               <KeyValue>
-                <template #key> Gender: </template>
+                <template #key>Gender: </template>
                 <template #value> {{ person.gender }} </template>
               </KeyValue>
             </li>
@@ -115,7 +115,7 @@
             </li>
             <li>
               <KeyValue>
-                <template #key> Athelete: </template>
+                <template #key> Athlete: </template>
                 <template #value>
                   <span
                     v-for="(sport, index) in person.student.sports"
@@ -161,7 +161,7 @@
             </li>
             <li>
               <KeyValue>
-                <template #key> Visa Typw: </template>
+                <template #key> Visa Type: </template>
                 <template #value>
                   <span v-if="person.student.visa_type">
                     {{ person.student.visa_type }}
