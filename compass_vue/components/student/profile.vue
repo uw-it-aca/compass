@@ -161,7 +161,7 @@
             </li>
             <li>
               <KeyValue>
-                <template #key> Visa Typw: </template>
+                <template #key> Visa Type: </template>
                 <template #value>
                   <span v-if="person.student.visa_type">
                     {{ person.student.visa_type }}
