@@ -71,7 +71,7 @@
                   <li v-if="person.student.intended_major1_code">
                     {{ person.student.intended_major1_code }}
                   </li>
-                  <li v-if="person.student.intended_major1_code">
+                  <li v-if="person.student.intended_major2_code">
                     {{ person.student.intended_major2_code }}
                   </li>
                   <li v-if="person.student.intended_major3_code">
