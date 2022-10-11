@@ -2,7 +2,7 @@
   <div class="alert alert-secondary rounded-3 px-0 py-3 m-0">
     <div class="row">
       <div class="col-xl-3 my-auto">
-        <div class="text-center">
+        <div class="text-center mb-4">
           <div class="d-inline-block rounded-circle border border-4 mb-2">
             <img
               :src="person.photo_url"
@@ -40,7 +40,7 @@
           </div>
         </div>
 
-        <div v-if="!mq.xlPlus" aria-hidden="true" class="mt-4">
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
           <hr class="text-muted" />
         </div>
       </div>
@@ -140,7 +140,7 @@
           </ul>
         </div>
 
-        <div v-if="!mq.xlPlus" aria-hidden="true">
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
           <hr class="text-muted" />
         </div>
       </div>
@@ -181,7 +181,7 @@
           </ul>
         </div>
 
-        <div v-if="!mq.xlPlus" aria-hidden="true">
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
           <hr class="text-muted" />
         </div>
 
@@ -227,7 +227,7 @@
           </ul>
         </div>
 
-        <div v-if="!mq.xlPlus" aria-hidden="true">
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
           <hr class="text-muted" s />
         </div>
       </div>
