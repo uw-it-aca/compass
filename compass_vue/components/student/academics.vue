@@ -1,8 +1,14 @@
 <template>
   <div class="row mb-4">
     <h2 class="h6 m-0 fw-bold mb-4">Academic Summary</h2>
-    <div class="col-xl-3">
-      <div class="alert alert-gray d-flex flex-column flex-fill m-0 small">
+
+    <div
+      class="col-xl-3 d-flex flex-column"
+      :class="[mq.lgMinus ? 'mb-4' : '']"
+    >
+      <div
+        class="alert alert-beige rounded-3 d-flex flex-column flex-fill m-0 small"
+      >
         <div class="flex-fill">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Status</p>
           <ul class="list-unstyled">
@@ -42,8 +48,13 @@
         </div>
       </div>
     </div>
-    <div class="col-xl-3">
-      <div class="alert alert-gray d-flex flex-column flex-fill m-0 small">
+    <div
+      class="col-xl-3 d-flex flex-column"
+      :class="[mq.lgMinus ? 'mb-4' : '']"
+    >
+      <div
+        class="alert alert-beige rounded-3 d-flex flex-column flex-fill m-0 small"
+      >
         <div class="flex-fill">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Majors</p>
           <!-- changed the formate into keyvalue -->
@@ -84,8 +95,13 @@
         </div>
       </div>
     </div>
-    <div class="col-xl-3">
-      <div class="alert alert-gray d-flex flex-column flex-fill m-0 small">
+    <div
+      class="col-xl-3 d-flex flex-column"
+      :class="[mq.lgMinus ? 'mb-4' : '']"
+    >
+      <div
+        class="alert alert-beige rounded-3 d-flex flex-column flex-fill m-0 small"
+      >
         <div class="flex-fill">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Programs</p>
 
@@ -130,8 +146,10 @@
         </div>
       </div>
     </div>
-    <div class="col-xl-3">
-      <div class="alert alert-gray d-flex flex-column flex-fill m-0 small">
+    <div class="col-xl-3 d-flex flex-column">
+      <div
+        class="alert alert-beige rounded-3 d-flex flex-column flex-fill m-0 small"
+      >
         <div class="flex-fill">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Credits</p>
           <ul class="list-unstyled">
@@ -173,7 +191,6 @@
 </template>
 
 <script>
-import { Card, CardHeading } from "axdd-components";
 import KeyValue from "../../components/_common/key-value.vue";
 import dataMixin from "../../mixins/data_mixin.js";
 
@@ -187,8 +204,6 @@ export default {
     },
   },
   components: {
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
     KeyValue,
   },
   data() {
