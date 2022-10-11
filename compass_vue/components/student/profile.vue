@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-light-gray rounded-3">
-    <div class="p-3 row">
+  <div class="alert alert-secondary rounded-3 px-0 py-3 m-0">
+    <div class="row">
       <div class="col-xl-3 my-auto">
         <div class="text-center">
           <div class="d-inline-block rounded-circle border border-4 mb-2">
