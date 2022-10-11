@@ -36,7 +36,7 @@
           </div>
           <div class="mt-3">
             {{ person.student.student_number }},
-            {{ person.student.student_email }}
+            {{ person.uwnetid }}
           </div>
         </div>
 
@@ -102,7 +102,7 @@
               <KeyValue>
                 <template #key> Veterans: </template>
                 <template #value>
-                  <span v-if="person.student.veteran_benefit_code === '0'">
+                  <span v-if="person.student.veteran_benefit_code == '0'">
                     Not A Vet</span
                   >
                   <span v-else>
@@ -113,7 +113,7 @@
                 </template>
               </KeyValue>
             </li>
-            <li>
+            <li v-if="person.student.sports.length !== 0">
               <KeyValue>
                 <template #key> Athlete: </template>
                 <template #value>
@@ -133,7 +133,9 @@
               <KeyValue>
                 <template #key> Phone: </template>
                 <template #value>
-                  +1 {{ person.student.local_phone_number }}
+                  <span v-if="person.student.local_phone_number">
+                    +1 {{ person.student.local_phone_number }}
+                  </span>
                 </template>
               </KeyValue>
             </li>
@@ -172,7 +174,7 @@
             </li>
             <li>
               <KeyValue>
-                <template #key> Citizenship: </template>
+                <template #key> Residency: </template>
                 <template #value>
                   {{ person.student.resident_desc }}
                 </template>
@@ -266,7 +268,7 @@
                 </template>
               </KeyValue>
             </li>
-            <li>
+            <li v-if="person.student.parent_addr_line1 == ''">
               <KeyValue variant="address">
                 <template #key> Parent Address: </template>
                 <template #value>
