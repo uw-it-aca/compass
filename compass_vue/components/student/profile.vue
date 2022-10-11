@@ -102,7 +102,7 @@
               <KeyValue>
                 <template #key> Veterans: </template>
                 <template #value>
-                  <span v-if="person.student.veteran_benefit_code === '0'">
+                  <span v-if="person.student.veteran_benefit_code == '0'">
                     Not A Vet</span
                   >
                   <span v-else>
