@@ -14,24 +14,14 @@
   "pk": 2,
   "fields": {
    "access_group": 1,
-   "name": "TRIO",
-   "slug": "trio",
+   "name": "TRIO-SSS",
+   "slug": "trio-sss",
    "active": true
   }
  },
  {
   "model": "compass.program",
   "pk": 3,
-  "fields": {
-   "access_group": 1,
-   "name": "SSS",
-   "slug": "sss",
-   "active": true
-  }
- },
- {
-  "model": "compass.program",
-  "pk": 4,
   "fields": {
    "access_group": 1,
    "name": "Champions",
@@ -44,18 +34,8 @@
   "pk": 5,
   "fields": {
    "access_group": 1,
-   "name": "IC Eligible",
-   "slug": "ic-eligible",
-   "active": true
-  }
- },
- {
-  "model": "compass.program",
-  "pk": 6,
-  "fields": {
-   "access_group": 1,
-   "name": "Pre-Professional",
-   "slug": "pre-professional",
+   "name": "EOP Counseling",
+   "slug": "eop-counseling",
    "active": true
   }
  }
