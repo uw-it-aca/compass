@@ -5,7 +5,8 @@
   "fields": {
    "access_group": 1,
    "name": "Add/Drop Class",
-   "active": true
+   "active": true,
+   "slug": "adddrop"
   }
  },
  {
@@ -14,7 +15,8 @@
   "fields": {
    "access_group": 1,
    "name": "Join/Affiliate",
-   "active": true
+   "active": true,
+   "slug": "join"
   }
  },
  {
@@ -23,7 +25,8 @@
   "fields": {
    "access_group": 1,
    "name": "Academic Difficulties",
-   "active": true
+   "active": true,
+   "slug": "acadif"
   }
  },
  {
@@ -32,7 +35,8 @@
   "fields": {
    "access_group": 1,
    "name": "Hardship Withdrawl",
-   "active": true
+   "active": true,
+   "slug": "harship"
   }
  },
  {
@@ -41,7 +45,8 @@
   "fields": {
    "access_group": 1,
    "name": "Internships",
-   "active": true
+   "active": true,
+   "slug": "intern"
   }
  },
  {
@@ -50,7 +55,8 @@
   "fields": {
    "access_group": 1,
    "name": "Research Opportunities",
-   "active": true
+   "active": true,
+   "slug": "research"
   }
  },
  {
@@ -59,7 +65,8 @@
   "fields": {
    "access_group": 1,
    "name": "Graduate Professional School",
-   "active": true
+   "active": true,
+   "slug": "grad"
   }
  },
  {
@@ -68,7 +75,8 @@
   "fields": {
    "access_group": 1,
    "name": "Testing/Assessment",
-   "active": true
+   "active": true,
+   "slug": "test"
   }
  }
 ]
