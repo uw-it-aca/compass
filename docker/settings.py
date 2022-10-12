@@ -61,6 +61,7 @@ if os.getenv("ENV") == "localdev":
     TEST_ACCESS_GROUP = 'u_test_group'
     COMPASS_ADMIN_GROUP = TEST_ACCESS_GROUP
     COMPASS_SUPPORT_GROUP = TEST_ACCESS_GROUP
+    OMAD_ACCESS_GROUP_ID = 'u_astra_group1'
     MOCK_SAML_ATTRIBUTES = {
         'uwnetid': ['jadviser'],
         'affiliations': ['student', 'member', 'alum', 'staff', 'employee'],

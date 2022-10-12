@@ -115,7 +115,7 @@ class ContactOMADView(GenericAPIView):
     '''
     API endpoint for ingesting OMAD contacts from the check-ins system
 
-    /api/contact/omad/
+    /api/v1/contact/omad/
 
     {
         adviser_netid: ""
