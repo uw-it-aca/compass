@@ -5,6 +5,7 @@
   "fields": {
    "access_group": 1,
    "name": "Quick Question",
+   "slug": "quick-question",
    "active": true
   }
  },
@@ -14,6 +15,7 @@
   "fields": {
    "access_group": 1,
    "name": "Appointment",
+   "slug": "appointment",
    "active": true
   }
  },
@@ -23,6 +25,7 @@
   "fields": {
    "access_group": 1,
    "name": "Drop-in",
+   "slug": "drop-in",
    "active": true
   }
  },
@@ -32,6 +35,7 @@
   "fields": {
    "access_group": 1,
    "name": "Telephone",
+   "slug": "telephone",
    "active": true
   }
  }

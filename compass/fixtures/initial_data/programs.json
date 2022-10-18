@@ -5,6 +5,7 @@
   "fields": {
    "access_group": 1,
    "name": "CAMP",
+   "slug": "camp",
    "active": true
   }
  },
@@ -13,7 +14,8 @@
   "pk": 2,
   "fields": {
    "access_group": 1,
-   "name": "TRIO",
+   "name": "TRIO-SSS",
+   "slug": "trio-sss",
    "active": true
   }
  },
@@ -22,7 +24,8 @@
   "pk": 3,
   "fields": {
    "access_group": 1,
-   "name": "SSS",
+   "name": "Champions",
+   "slug": "champions",
    "active": true
   }
  },
@@ -31,25 +34,8 @@
   "pk": 4,
   "fields": {
    "access_group": 1,
-   "name": "Champions",
-   "active": true
-  }
- },
- {
-  "model": "compass.program",
-  "pk": 5,
-  "fields": {
-   "access_group": 1,
-   "name": "IC Eligible",
-   "active": true
-  }
- },
- {
-  "model": "compass.program",
-  "pk": 6,
-  "fields": {
-   "access_group": 1,
-   "name": "Pre-Professional",
+   "name": "EOP Counseling",
+   "slug": "eop-counseling",
    "active": true
   }
  }
