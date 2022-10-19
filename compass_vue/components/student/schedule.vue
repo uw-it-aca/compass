@@ -33,11 +33,14 @@
               :active-panel="scheduleIndex == 0"
             >
               <div class="table-responsive m-n3">
+                {{ schedule }}
                 <table class="table m-0">
                   <thead class="table-light text-muted small">
                     <tr>
                       <th class="ps-3">Course</th>
                       <th>Title</th>
+                      <th>Day</th>
+                      <th>Time</th>
                       <th>Credits</th>
                     </tr>
                   </thead>
@@ -49,8 +52,11 @@
                       <td class="ps-3">
                         {{ section.curriculum_abbr }}
                         {{ section.course_number }}
+                        <div>{{ section.section_type }} {{ section.sln }}</div>
                       </td>
                       <td>{{ section.course_title }}</td>
+                      <td v-for=""></td>
+                      <td>{{ section.credits }}</td>
                       <td>{{ section.credits }}</td>
                     </tr>
                   </tbody>
