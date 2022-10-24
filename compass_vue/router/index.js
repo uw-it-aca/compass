@@ -1,5 +1,4 @@
 import { createWebHistory, createRouter } from "vue-router";
-import { trackRouter } from "vue-gtag-next";
 import { Role } from "../helpers/roles.js";
 
 // page components
@@ -62,7 +61,7 @@ router.beforeEach((to, from, next) => {
   const { authorize } = to.meta;
 
   // get the authenticated user role from django context
-  let userRoles = document.body.getAttribute("data-user-role").split(',');
+  let userRoles = document.body.getAttribute("data-user-role").split(",");
 
   // check if authorization is required for this route
   if (authorize) {
@@ -74,8 +73,5 @@ router.beforeEach((to, from, next) => {
   }
   next();
 });
-
-// add router tracking to vue-gtag-next
-trackRouter(router);
 
 export default router;
