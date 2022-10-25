@@ -116,26 +116,27 @@ class ContactOMADView(GenericAPIView):
     API endpoint for ingesting OMAD contacts from the check-ins system
 
     /api/v1/contact/omad/
+    Content-Type: application/json
 
     {
-        adviser_netid: ""
-        student_systemkey: "",
-        contact_type: "",
-        checkin_date: <CURRENT_TIMESTAMP>,
-        source: "Compass"
+        "adviser_netid": "<UW NETID>",
+        "student_systemkey": "<System Key>",
+        "contact_type": "<ContactType Slug",
+        "checkin_date": "<CURRENT_TIMESTAMP>",
+        "source": "Compass"
     }
     '''
 
     def parse_contact_type_str(self, contact_type_str, omad_access_group):
         try:
-            contact_type, _ = ContactType.objects.get(
+            contact_type = ContactType.objects.get(
                 access_group=omad_access_group,
-                name=contact_type_str)
+                slug=contact_type_str)
             return contact_type
         except ContactType.DoesNotExist:
             raise ValueError(
                 f"The specified contact type "
-                f"'{contact_type_str}' does not exist for the OMAD"
+                f"'{contact_type_str}' does not exist for the OMAD "
                 f"access group.")
 
     def parse_checkin_date_str(self, checkin_date_str):
@@ -161,15 +162,18 @@ class ContactOMADView(GenericAPIView):
 
     def post(self, request):
         contact_dict = request.data
-        # confirm that the adviser is a member of the OMAD access group
-        omad_access_group = AccessGroup.objects.get(
-            access_group_id=settings.OMAD_ACCESS_GROUP_ID)
-        if not AccessGroup.objects.is_access_group_member(
-                contact_dict["adviser_netid"], omad_access_group):
-            return Response(
-                f"The specified app-user '{contact_dict['adviser_netid']}' is "
-                f"not a member of the OMAD access group.",
-                status=status.HTTP_400_BAD_REQUEST)
+        try:
+            # confirm that the adviser is a member of the OMAD access group
+            omad_access_group = AccessGroup.objects.get(
+                access_group_id=settings.OMAD_ACCESS_GROUP_ID)
+            if not AccessGroup.objects.is_access_group_member(
+                    contact_dict["adviser_netid"], omad_access_group):
+                return Response(
+                    f"The specified app-user '{contact_dict['adviser_netid']}'"
+                    f" is not a member of the OMAD access group.",
+                    status=status.HTTP_400_BAD_REQUEST)
+        except KeyError as e:
+            return Response(repr(e), status=status.HTTP_400_BAD_REQUEST)
         # parse the contact dictionary
         try:
             # check that adviser netid is defined
@@ -184,7 +188,7 @@ class ContactOMADView(GenericAPIView):
             contact_dict["contact_type"] = self.parse_contact_type_str(
                 contact_dict.get("contact_type"), omad_access_group)
         except ValueError as e:
-            return Response(e, status=status.HTTP_400_BAD_REQUEST)
+            return Response(repr(e), status=status.HTTP_400_BAD_REQUEST)
         # if the adviser is a member of the omad group and the contact record
         # was successfully parsed, create an app-user and a student record for
         # them if one doesn't already exist
