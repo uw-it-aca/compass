@@ -1,7 +1,7 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.views.api import BaseAPIView
+from compass.views.api import BaseAPIView, JSONClientContentNegotiation
 from compass.models import AccessGroup, AppUser, Contact, ContactTopic, \
     ContactType, Student
 from compass.serializers import ContactReadSerializer, \
@@ -126,6 +126,8 @@ class ContactOMADView(GenericAPIView):
         "source": "Compass"
     }
     '''
+    # Force JSON so clients aren't required to send ContentType header
+    content_negotiation_class = JSONClientContentNegotiation
 
     def parse_contact_type_str(self, contact_type_str, omad_access_group):
         try:
