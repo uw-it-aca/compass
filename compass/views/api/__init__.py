@@ -62,8 +62,8 @@ class TokenAPIView(GenericAPIView):
 
     def post(self, request, format=None):
         content = {
-            'user': str(request.user),  # `django.contrib.auth.User` instance.
-            'auth': str(request.auth),  # None
+            'user': str(request.user),
+            'auth': str(request.auth),
         }
         return Response(content)
 
@@ -77,7 +77,7 @@ class JSONClientContentNegotiation(BaseContentNegotiation):
 
     def select_renderer(self, request, renderers, format_suffix):
         """
-        Select the first renderer in the `.renderer_classes` list.
+        Select the JSON renderer.
         """
         renderer = JSONRenderer()
         return renderer, renderer.media_type
