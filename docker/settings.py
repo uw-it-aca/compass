@@ -7,6 +7,8 @@ INSTALLED_APPS += [
     'supporttools',
     'rc_django',
     'userservice',
+    'rest_framework',
+    'rest_framework.authtoken'
 ]
 
 if os.getenv("ENV") == "localdev":

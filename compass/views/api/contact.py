@@ -1,7 +1,8 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.views.api import BaseAPIView, JSONClientContentNegotiation
+from compass.views.api import BaseAPIView, JSONClientContentNegotiation, \
+    TokenAPIView
 from compass.models import AccessGroup, AppUser, Contact, ContactTopic, \
     ContactType, Student
 from compass.serializers import ContactReadSerializer, \
@@ -111,12 +112,11 @@ class ContactTypesView(BaseAPIView):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-class ContactOMADView(GenericAPIView):
+class ContactOMADView(TokenAPIView):
     '''
     API endpoint for ingesting OMAD contacts from the check-ins system
 
     /api/v1/contact/omad/
-    Content-Type: application/json
 
     {
         "adviser_netid": "<UW NETID>",
@@ -126,6 +126,7 @@ class ContactOMADView(GenericAPIView):
         "source": "Compass"
     }
     '''
+
     # Force JSON so clients aren't required to send ContentType header
     content_negotiation_class = JSONClientContentNegotiation
 
@@ -147,7 +148,11 @@ class ContactOMADView(GenericAPIView):
             raise ValueError("Check-in date not specified")
         else:
             try:
-                return parser.parse(checkin_date_str)
+                dt = parser.parse(checkin_date_str)
+                if dt.tzinfo is None:
+                    raise ValueError("Invalid check-in date, "
+                                     "timezone required")
+                return dt
             except parser.ParserError:
                 raise ValueError("Invalid check-in date")
 

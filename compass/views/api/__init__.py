@@ -9,6 +9,8 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.negotiation import BaseContentNegotiation
 from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from uw_saml.utils import get_attribute
 
 
@@ -52,6 +54,18 @@ class BaseAPIView(GenericAPIView):
         except PermissionDenied:
             return self.validate_settings_access(request, access_group_pk,
                                                  [AccessGroup.ROLE_USER])
+
+
+class TokenAPIView(GenericAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, format=None):
+        content = {
+            'user': str(request.user),  # `django.contrib.auth.User` instance.
+            'auth': str(request.auth),  # None
+        }
+        return Response(content)
 
 
 class JSONClientContentNegotiation(BaseContentNegotiation):

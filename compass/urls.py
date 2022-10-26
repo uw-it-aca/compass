@@ -103,6 +103,7 @@ urlpatterns += [
     re_path(
         r"^api/v1/contact/omad/$",
         ContactOMADView.as_view(),
+        name="contact_omad"
     ),
     # vue-router paths
     re_path(r"^(student|caseload|reports|settings).*$", LandingView.as_view()),
