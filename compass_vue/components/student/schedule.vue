@@ -38,7 +38,7 @@
                   <thead class="table-light text-muted small">
                     <tr>
                       <th class="ps-3">Course</th>
-                      <th>Title</th>
+                      <th>SLN</th>
                       <th>Day</th>
                       <th>Time</th>
                       <th>Credits</th>
@@ -52,10 +52,12 @@
                       <td class="ps-3">
                         {{ section.curriculum_abbr }}
                         {{ section.course_number }}
-                        <div>{{ section.section_type }} {{ section.sln }}</div>
+                        <div class="fs-8 text-secondary">
+                          {{ section.course_title }}
+                        </div>
                       </td>
-                      <td>{{ section.course_title }}</td>
-                      <td v-for=""></td>
+                      <td>{{ section.sln }}</td>
+                      <td>{{ section.sln }}</td>
                       <td>{{ section.credits }}</td>
                       <td>{{ section.credits }}</td>
                     </tr>
