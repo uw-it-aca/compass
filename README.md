@@ -1,6 +1,9 @@
 # Compass
 
-A application for managing student advising information.
+[![Build Status](https://github.com/uw-it-aca/compass/workflows/Build%2C%20Test%20and%20Deploy/badge.svg?branch=main)](https://github.com/uw-it-aca/compass/actions)
+[![Coverage Status](https://coveralls.io/repos/github/uw-it-aca/compass/badge.svg?branch=main)](https://coveralls.io/github/uw-it-aca/compass?branch=main)
+
+An application for managing student advising information.
 
 ## System Requirements
 
@@ -14,7 +17,11 @@ A application for managing student advising information.
 - Vue (3.2)
 - Vite (2.9)
 - Vitest (0.10.2)
+
+## Design Stack
+
 - Bootstrap (5.2)
+- Bootstrap Icons (1.9.0)
 
 ## Installation
 
