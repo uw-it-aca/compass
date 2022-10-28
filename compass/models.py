@@ -7,6 +7,7 @@ from simple_history.models import HistoricalRecords
 from uw_person_client import UWPersonClient
 from compass.dao.group import is_group_member
 from uw_gws import GWS
+from restclients_core.exceptions import DataFailureException
 
 
 class AppUserManager(models.Manager):
@@ -102,12 +103,15 @@ class AccessGroupManager(models.Manager):
         Returns the list of access groups that a uwnetid is a member of
         """
         access_groups = []
-        for access_group in AccessGroup.objects.all():
-            groups = GWS().search_groups(
-                member=uwnetid, name=f"{access_group.access_group_id}*"
-            )
-            if groups:
-                access_groups.append(access_group)
+        try:
+            for access_group in AccessGroup.objects.all():
+                groups = GWS().search_groups(
+                    member=uwnetid, name=f"{access_group.access_group_id}*"
+                )
+                if groups:
+                    access_groups.append(access_group)
+        except DataFailureException:
+            pass
         return access_groups
 
     def is_access_group_member(self, uwnetid, access_group):
