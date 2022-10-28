@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <axdd-card>
     <template #heading-action v-if="Object.keys(schedules).length">
@@ -57,8 +58,7 @@
                         </div>
                       </td>
                       <td>{{ section.sln }}</td>
-                      <td>{{ section.sln }}</td>
-                      <td>{{ section.credits }}</td>
+                      <td></td>
                       <td>{{ section.credits }}</td>
                     </tr>
                   </tbody>

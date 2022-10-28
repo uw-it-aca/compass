@@ -117,14 +117,9 @@
               <KeyValue>
                 <template #key> Athelete: </template>
                 <template #value>
-                  <span
-                    v-for="(sport, index) in person.student.sports"
-                    :key="sport.code"
-                  >
+                  <span v-for="(sport, index) in person.student.sports" :key="sport.code">
                     {{ sport.sport_code }}
-                    <span v-if="index + 1 < person.student.sports.length"
-                      >,
-                    </span>
+                    <span v-if="index + 1 < person.student.sports.length">, </span>
                   </span>
                 </template>
               </KeyValue>
