@@ -48,8 +48,8 @@ memcached:
 
 certs:
   mounted: true
-  certPath: /certs/test.compass.uw.edu-ic.cert
-  keyPath: /certs/test.compass.uw.edu-ic.key
+  certPath: /certs/compass.uw.edu-ic.cert
+  keyPath: /certs/compass.uw.edu-ic.key
   secretName: test.compass.uw.edu-ic-certs
 
 environmentVariables:
