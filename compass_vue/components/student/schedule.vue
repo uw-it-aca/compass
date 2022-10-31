@@ -13,8 +13,7 @@
               :panel-id="'panel' + index"
               :active-tab="index == 0"
               :variant="'pills'"
-              >{{ schedule.term.quarter }}
-              {{ schedule.term.year }}</axdd-tabs-item
+              >{{ schedule.term.quarter }} {{ schedule.term.year }}</axdd-tabs-item
             >
           </template>
         </axdd-tabs-list>
@@ -46,19 +45,16 @@
                     </tr>
                   </thead>
                   <tbody class="mb-3">
-                    <tr
-                      v-for="(section, index) in schedule.sections"
-                      :key="index"
-                    >
+                    <tr v-for="(section, index) in schedule.sections" :key="index">
                       <td class="ps-3">
                         {{ section.curriculum_abbr }}
                         {{ section.course_number }}
-                        <div class="fs-8 text-secondary">
+                        <div class="fs-8 text-secondary ps-1">
                           {{ section.course_title }}
                         </div>
                       </td>
                       <td>{{ section.sln }}</td>
-                      <td></td>
+                      <td>{{ section.section_id }}</td>
                       <td>{{ section.credits }}</td>
                     </tr>
                   </tbody>
