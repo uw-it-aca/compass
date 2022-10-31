@@ -134,6 +134,7 @@ externalSecrets:
           property: compass.uw.edu-ic.key
     - name: test.compass.uw.edu-sp-cert
       externalKey: compass/test/ic-certs
+      data:
         - name: test.compass.uw.edu-ic.cert
           property: test.compass.uw.edu-ic.cert
     - name: test.compass.uw.edu-uw-idp-cert
