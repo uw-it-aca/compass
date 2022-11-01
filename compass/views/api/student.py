@@ -21,12 +21,16 @@ class StudentView(BaseAPIView):
     '''
     API endpoint returning a student's details
 
-    /api/internal/student/[uwnetid]/
+    /api/internal/student/[student_number|uwnetid]/
     '''
-    def get(self, request, uwnetid):
+    def get(self, request, student_identifier):
         try:
             client = UWPersonClient()
-            person = client.get_person_by_uwnetid(uwnetid)
+            try:
+                person = client.get_person_by_uwnetid(student_identifier)
+            except PersonNotFoundException:
+                person = client.get_person_by_student_number(
+                    student_identifier)
             try:
                 local_student = Student.objects.get(
                     system_key=person.student.system_key)
