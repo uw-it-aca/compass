@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-light-gray rounded-3">
-    <div class="p-3 row">
+  <div class="alert alert-secondary rounded-3 px-0 py-3 m-0">
+    <div class="row">
       <div class="col-xl-3 my-auto">
-        <div class="text-center">
+        <div class="text-center mb-4">
           <div class="d-inline-block rounded-circle border border-4 mb-2">
             <img
               :src="person.photo_url"
@@ -40,7 +40,7 @@
           </div>
         </div>
 
-        <div v-if="!mq.xlPlus" aria-hidden="true" class="mt-4">
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
           <hr class="text-muted" />
         </div>
       </div>
@@ -53,25 +53,25 @@
           <ul class="list-unstyled m-0">
             <li>
               <KeyValue>
-                <template #key> Full Name: </template>
+                <template #key>Full Name: </template>
                 <template #value> {{ person.full_name }} </template>
               </KeyValue>
             </li>
             <li>
               <KeyValue>
-                <template #key> First Name: </template>
+                <template #key>First Name: </template>
                 <template #value> {{ person.first_name }} </template>
               </KeyValue>
             </li>
             <li>
               <KeyValue>
-                <template #key> Last Name: </template>
+                <template #key>Last Name: </template>
                 <template #value> {{ person.surname }} </template>
               </KeyValue>
             </li>
             <li>
               <KeyValue>
-                <template #key> Gender: </template>
+                <template #key>Gender: </template>
                 <template #value> {{ person.gender }} </template>
               </KeyValue>
             </li>
@@ -115,7 +115,7 @@
             </li>
             <li v-if="person.student.sports.length !== 0">
               <KeyValue>
-                <template #key> Athelete: </template>
+                <template #key> Athlete: </template>
                 <template #value>
                   <span v-for="(sport, index) in person.student.sports" :key="sport.code">
                     {{ sport.sport_code }}
@@ -137,7 +137,7 @@
           </ul>
         </div>
 
-        <div v-if="!mq.xlPlus" aria-hidden="true">
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
           <hr class="text-muted" />
         </div>
       </div>
@@ -178,7 +178,7 @@
           </ul>
         </div>
 
-        <div v-if="!mq.xlPlus" aria-hidden="true">
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
           <hr class="text-muted" />
         </div>
 
@@ -224,7 +224,7 @@
           </ul>
         </div>
 
-        <div v-if="!mq.xlPlus" aria-hidden="true">
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
           <hr class="text-muted" s />
         </div>
       </div>

@@ -18,7 +18,6 @@ $theme-colors-rgb: map-loop($theme-colors, to-rgb, "$value");
 $utilities-colors: map-merge($utilities-colors, $theme-colors-rgb);
 $utilities-text-colors: map-loop($utilities-colors, rgba-css-var, "$key", "text");
 $utilities-bg-colors: map-loop($utilities-colors, rgba-css-var, "$key", "bg");
-
 $utilities: (
   // MARK: bg-color-hover (changes bg-color on hover)
   "background-color":
@@ -54,11 +53,11 @@ $utilities: (
 );
 
 // override table stripe background
-//$table-striped-bg: rgba($purple-300, $table-striped-bg-factor);
-//$table-hover-bg: rgba($purple-500, $table-striped-bg-factor);
-//$table-striped-order: even;
-//$table-cell-padding-y:        1.5rem;
-//$table-cell-padding-x:        1.5rem;
+// $table-striped-bg: rgba($purple-300, $table-striped-bg-factor);
+// $table-hover-bg: rgba($purple-500, $table-striped-bg-factor);
+// $table-striped-order: even;
+// $table-cell-padding-y:        1.5rem;
+// $table-cell-padding-x:        1.5rem;
 
 // additional non-bootstrap styles
 

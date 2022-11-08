@@ -7,6 +7,7 @@ from compass.dao.group import is_admin_user
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from rest_framework.authtoken.models import Token, TokenProxy
 
 
 class SAMLAdminSite(admin.AdminSite):
@@ -53,3 +54,4 @@ admin_site.register(Program, SAMLAdminModel)
 admin_site.register(ContactType, SAMLAdminModel)
 admin_site.register(ContactTopic, SAMLAdminModel)
 admin_site.register(Contact, SAMLAdminModel)
+admin_site.register(TokenProxy, SAMLAdminModel)

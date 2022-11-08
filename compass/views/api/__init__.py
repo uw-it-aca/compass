@@ -6,6 +6,11 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from rest_framework.generics import GenericAPIView
+from rest_framework.negotiation import BaseContentNegotiation
+from rest_framework.parsers import JSONParser
+from rest_framework.renderers import JSONRenderer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from uw_saml.utils import get_attribute
 
 
@@ -49,3 +54,30 @@ class BaseAPIView(GenericAPIView):
         except PermissionDenied:
             return self.validate_settings_access(request, access_group_pk,
                                                  [AccessGroup.ROLE_USER])
+
+
+class TokenAPIView(GenericAPIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, format=None):
+        content = {
+            'user': str(request.user),
+            'auth': str(request.auth),
+        }
+        return Response(content)
+
+
+class JSONClientContentNegotiation(BaseContentNegotiation):
+    def select_parser(self, request, parsers):
+        """
+        Select the JSON parser.
+        """
+        return JSONParser()
+
+    def select_renderer(self, request, renderers, format_suffix):
+        """
+        Select the JSON renderer.
+        """
+        renderer = JSONRenderer()
+        return renderer, renderer.media_type

@@ -7,10 +7,10 @@ from simple_history.models import HistoricalRecords
 from uw_person_client import UWPersonClient
 from compass.dao.group import is_group_member
 from uw_gws import GWS
+from restclients_core.exceptions import DataFailureException
 
 
 class AppUserManager(models.Manager):
-
     def upsert_appuser(self, uwnetid):
         """
         New app users are created when they first create content in
@@ -56,7 +56,7 @@ class AppUser(models.Model):
 
     class Meta:
         indexes = [
-            models.Index(fields=['uwnetid']),
+            models.Index(fields=["uwnetid"]),
         ]
 
     def __str__(self):
@@ -71,12 +71,13 @@ class Student(models.Model):
     information is ever stored in the app, all student data is fetched directly
     from the PDS since it is kept up to date via automated jobs.
     """
+
     system_key = models.CharField(unique=True, max_length=50)
-    programs = models.ManyToManyField('Program')
+    programs = models.ManyToManyField("Program")
 
     class Meta:
         indexes = [
-            models.Index(fields=['system_key']),
+            models.Index(fields=["system_key"]),
         ]
 
     def __str__(self):
@@ -84,7 +85,6 @@ class Student(models.Model):
 
 
 class AccessGroupManager(models.Manager):
-
     def get_roles_for_user(self, request):
         """
         Return the unique roles for a user, without group context.
@@ -92,8 +92,9 @@ class AccessGroupManager(models.Manager):
         roles = []
         for group in super().get_queryset().all():
             for role in AccessGroup.ROLES:
-                if (role not in roles and is_group_member(
-                        request, group.authz_group_id(role))):
+                if role not in roles and is_group_member(
+                    request, group.authz_group_id(role)
+                ):
                     roles.append(role)
         return roles
 
@@ -102,17 +103,19 @@ class AccessGroupManager(models.Manager):
         Returns the list of access groups that a uwnetid is a member of
         """
         access_groups = []
-        for access_group in AccessGroup.objects.all():
-            groups = GWS().search_groups(
-                member=uwnetid,
-                name=f'{access_group.access_group_id}*')
-            if groups:
-                access_groups.append(access_group)
+        try:
+            for access_group in AccessGroup.objects.all():
+                groups = GWS().search_groups(
+                    member=uwnetid, name=f"{access_group.access_group_id}*"
+                )
+                if groups:
+                    access_groups.append(access_group)
+        except DataFailureException:
+            pass
         return access_groups
 
     def is_access_group_member(self, uwnetid, access_group):
-        user_access_groups = self.get_access_groups_for_netid(
-            uwnetid)
+        user_access_groups = self.get_access_groups_for_netid(uwnetid)
         if access_group in user_access_groups:
             return True
         return False
@@ -136,8 +139,8 @@ class AccessGroup(models.Model):
     access to content within the app.
     """
 
-    ROLE_MANAGER = 'manager'
-    ROLE_USER = 'user'
+    ROLE_MANAGER = "manager"
+    ROLE_USER = "user"
     ROLES = [ROLE_MANAGER, ROLE_USER]
 
     objects = AccessGroupManager()
@@ -150,27 +153,25 @@ class AccessGroup(models.Model):
         super(AccessGroup, self).save(*args, **kwargs)
         if created:
             # set uneditable contact type presets
-            uneditable_contact_types = ["Quick Question", "Appointment",
-                                        "Drop-in", "Telephone"]
+            uneditable_contact_types = [
+                "Quick Question",
+                "Appointment",
+                "Drop-in",
+                "Telephone",
+            ]
             for contact_type_name in uneditable_contact_types:
                 ContactType(
-                    access_group=self,
-                    name=contact_type_name,
-                    editable=False
+                    access_group=self, name=contact_type_name, editable=False
                 ).save()
             # set default contact topics
             default_contact_topics = [
-                "Add/Drop Class", "Join/Affiliate", "Academic Difficulties",
-                "Hardship Withdrawl", "Internships", "Research Opportunities",
-                "Graduate Professional School", "Testing/Assessment"]
+                "Add/Drop a Class",
+            ]
             for contact_topic_name in default_contact_topics:
-                ContactTopic(
-                    access_group=self,
-                    name=contact_topic_name
-                ).save()
+                ContactTopic(access_group=self, name=contact_topic_name).save()
 
     def authz_group_id(self, role):
-        return '{}-{}'.format(self.access_group_id, role)
+        return "{}-{}".format(self.access_group_id, role)
 
     def __str__(self):
         return self.name
@@ -196,22 +197,23 @@ class Contact(models.Model):
     via the automated check-in system and updated by advisers, or created
     manually by advisers.
     """
+
     # required fields
-    app_user = models.ForeignKey('AppUser', on_delete=models.CASCADE)
-    access_group = models.ManyToManyField('AccessGroup')
-    student = models.ForeignKey('Student', on_delete=models.CASCADE)
-    contact_type = models.ForeignKey('ContactType', on_delete=models.CASCADE)
+    app_user = models.ForeignKey("AppUser", on_delete=models.CASCADE)
+    access_group = models.ManyToManyField("AccessGroup")
+    student = models.ForeignKey("Student", on_delete=models.CASCADE)
+    contact_type = models.ForeignKey("ContactType", on_delete=models.CASCADE)
     checkin_date = models.DateTimeField()
     # optional fields
     noshow = models.BooleanField(default=False)
     notes = models.TextField(default=None, blank=True, null=True)
     actions = models.TextField(default=None, blank=True, null=True)
-    contact_topics = models.ManyToManyField('ContactTopic')
+    contact_topics = models.ManyToManyField("ContactTopic")
     # generated by check-in queue system
-    source = models.CharField(default='Compass', max_length=50)
+    source = models.CharField(default="Compass", max_length=50)
     # contact history fields
     created_date = models.DateTimeField(auto_now=True)
-    history = HistoricalRecords(history_user_id_field='app_user')
+    history = HistoricalRecords(history_user_id_field="app_user")
 
     # The history user feature is a Django App used to track changes to
     # contacts. Although we don't currently display this in the UW, it is
@@ -230,7 +232,6 @@ class Contact(models.Model):
 
 
 class BaseAccessGroupContent(models.Model):
-
     class Meta:
         abstract = True
 
@@ -248,6 +249,7 @@ class Program(BaseAccessGroupContent):
     """
     Departmental/Group Program (e.g. CAMP, TRIO, SSS, Champions, IC Eligible)
     """
+
     access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
     name = models.CharField(unique=True, max_length=50)
     slug = models.SlugField(unique=True, max_length=50)
@@ -261,6 +263,7 @@ class ContactType(BaseAccessGroupContent):
     by the access group managers. Examples include Quick Question, Appointment,
     Drop-in, and Telephone.
     """
+
     access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
     name = models.CharField(unique=True, max_length=50)
     slug = models.SlugField(unique=True, max_length=50)
@@ -276,6 +279,7 @@ class ContactTopic(BaseAccessGroupContent):
     Research Opportunities, Graduate Professional School, and
     Testing/Assessment.
     """
+
     access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
     name = models.CharField(unique=True, max_length=50)
     slug = models.SlugField(unique=True, max_length=50)

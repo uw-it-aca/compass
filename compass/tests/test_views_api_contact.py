@@ -3,11 +3,48 @@
 
 from datetime import datetime
 from unittest import TestCase
+from django.test import Client
+from django.contrib.auth.models import User
 from unittest.mock import MagicMock, patch
 from compass.views.api.contact import ContactOMADView
+from compass.tests import ApiTest
+from compass.models import AccessGroup, Contact
+from rest_framework.authtoken.models import Token
 
 
-class ContactAPITest(TestCase):
+class ContactAPITest(ApiTest):
+    API_TOKEN = None
+
+    def setUp(self):
+        super(ContactAPITest, self).setUp()
+        AccessGroup(name="Test OMAD Group",
+                    access_group_id="u_astra_group1").save()
+        user = User.objects.create_user(username='testuser', password='12345')
+        token = Token.objects.create(user=user)
+        self.API_TOKEN = token.key
+
+    def test_api_auth(self):
+        test_request = {
+            "adviser_netid": "javerage",
+            "student_systemkey": "12345",
+            "contact_type": "appointment",
+            "checkin_date": "2012-01-19 17:21:00 PDT",
+            "source": "Compass"
+        }
+
+        token_str = "Token %s" % self.API_TOKEN
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=token_str)
+
+        response = self.post_response('contact_omad',
+                                      test_request)
+        self.assertEqual(response.status_code, 201)
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION="BAD TOKEN")
+
+        response = self.post_response('contact_omad',
+                                      test_request)
+        self.assertEqual(response.status_code, 401)
 
     def test_parse_checkin_date_str(self):
         # no checkin date specified
@@ -16,6 +53,9 @@ class ContactAPITest(TestCase):
         # bad checkin format
         with self.assertRaises(ValueError):
             ContactOMADView().parse_checkin_date_str("2022-09-T::")
+        # Missing TZ info
+        with self.assertRaises(ValueError):
+            ContactOMADView().parse_checkin_date_str("2022-09-19T06:15:04")
         # correct checkin format
         checkin_date = ContactOMADView().parse_checkin_date_str(
             "2022-09-19T06:15:04Z")
