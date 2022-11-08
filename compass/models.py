@@ -156,8 +156,7 @@ class AccessGroup(models.Model):
             uneditable_contact_types = [
                 "Quick Question",
                 "Appointment",
-                "Drop-in",
-                "Telephone",
+                "Workshop",
             ]
             for contact_type_name in uneditable_contact_types:
                 ContactType(
