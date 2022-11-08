@@ -20,6 +20,7 @@
               <tr>
                 <th class="ps-3">Checkin Date</th>
                 <th>Type</th>
+                <th>Method</th>
                 <th>Details</th>
               </tr>
             </thead>
@@ -44,6 +45,12 @@
                   <span
                     class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-1"
                     >{{ contact.contact_type.name }}</span
+                  >
+                </td>
+                <td class="align-bottom">
+                  <span
+                    class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-1"
+                    >{{ contact.contact_method.name }}</span
                   >
                 </td>
                 <td class="align-bottom">

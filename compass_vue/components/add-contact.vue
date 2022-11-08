@@ -224,6 +224,7 @@ export default {
   created() {
     this.getContactTopics();
     this.getContactTypes();
+    this.getContactMethods();
   },
   mounted() {
     this.$refs.contactModal.addEventListener(
@@ -296,6 +297,7 @@ export default {
           newContact.checkin_date =
             newContact.checkin_date.split(/\-(?=[^\-]+$)/)[0];
           newContact.contact_type = newContact.contact_type.id;
+          newContact.contact_method = newContact.contact_method.id;
           newContact.contact_topics = newContact.contact_topics.map(
             (ct) => ct.id
           );
@@ -321,7 +323,7 @@ export default {
     getContactMethods() {
       this.getStudentContactMethods().then((response) => {
         if (response.data) {
-          this.contactTypes = response.data;
+          this.contactMethods = response.data;
         }
       });
     },

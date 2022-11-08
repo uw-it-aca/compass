@@ -213,7 +213,7 @@ class Contact(models.Model):
     student = models.ForeignKey("Student", on_delete=models.CASCADE)
     contact_type = models.ForeignKey("ContactType", on_delete=models.CASCADE)
     contact_method = models.ForeignKey("ContactMethod",
-                                       on_delete=models.CASCADE)
+                                       on_delete=models.CASCADE, null=True)
     checkin_date = models.DateTimeField()
     # optional fields
     noshow = models.BooleanField(default=False)
