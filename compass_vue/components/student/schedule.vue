@@ -33,11 +33,15 @@
               :active-panel="scheduleIndex == 0"
             >
               <div class="table-responsive m-n3">
-                {{ schedule }}
                 <table class="table m-0">
+                  <col style="width: 45%" />
+                  <col style="width: 12.5%" />
+                  <col style="width: 12.5%" />
+                  <col style="width: 20%" />
+                  <col style="width: 10%" />
                   <thead class="table-light text-muted small">
                     <tr>
-                      <th class="ps-3">Course</th>
+                      <th class="ps-4">Course</th>
                       <th>SLN</th>
                       <th>Day</th>
                       <th>Time</th>
@@ -46,15 +50,34 @@
                   </thead>
                   <tbody class="mb-3">
                     <tr v-for="(section, index) in schedule.sections" :key="index">
-                      <td class="ps-3">
+                      <td class="ps-4">
                         {{ section.curriculum_abbr }}
                         {{ section.course_number }}
-                        <div class="fs-8 text-secondary ps-1">
+                        <div class="fs-8 text-secondary">
                           {{ section.course_title }}
                         </div>
                       </td>
                       <td>{{ section.sln }}</td>
-                      <td>{{ section.section_id }}</td>
+                      <td>
+                        <div v-for="(meeting, index) in section.meetings" :key="index">
+                          <span v-for="(value, day) in meeting.meeting_days" :key="day">
+                            <span v-if="value">
+                              <span v-if="day == 'monday'">M </span>
+                              <span v-if="day == 'tuesday'">T </span>
+                              <span v-if="day == 'wednesday'">W </span>
+                              <span v-if="day == 'thursday'">Th </span>
+                              <span v-if="day == 'friday'">F </span>
+                            </span>
+                          </span>
+                        </div>
+                      </td>
+                      <td>
+                        <div v-for="(meeting, index) in section.meetings" :key="index">
+                          <span v-if="!meeting.no_meeting">
+                            {{ meeting.start_time }} - {{ meeting.end_time }}
+                          </span>
+                        </div>
+                      </td>
                       <td>{{ section.credits }}</td>
                     </tr>
                   </tbody>
