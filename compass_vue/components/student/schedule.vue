@@ -34,14 +34,14 @@
             >
               <div class="table-responsive m-n3">
                 <table class="table m-0">
-                  <col style="width: 45%" />
-                  <col style="width: 12.5%" />
-                  <col style="width: 12.5%" />
+                  <col style="width: 40%" />
+                  <col style="width: 15%" />
+                  <col style="width: 13%" />
                   <col style="width: 20%" />
-                  <col style="width: 10%" />
+                  <col style="width: 12%" />
                   <thead class="table-light text-muted small">
                     <tr>
-                      <th class="ps-4">Course</th>
+                      <th class="ps-3">Course</th>
                       <th>SLN</th>
                       <th>Day</th>
                       <th>Time</th>
@@ -50,7 +50,7 @@
                   </thead>
                   <tbody class="mb-3">
                     <tr v-for="(section, index) in schedule.sections" :key="index">
-                      <td class="ps-4">
+                      <td class="ps-3">
                         {{ section.curriculum_abbr }}
                         {{ section.course_number }}
                         <div class="fs-8 text-secondary">
