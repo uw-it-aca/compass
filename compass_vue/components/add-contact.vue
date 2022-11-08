@@ -87,6 +87,30 @@
                 required
               </span>
             </div>
+            <div class="col">
+              <label class="form-label">Contact method:</label>
+              <select
+                aria-label="Contact method"
+                v-model="contact.contact_method"
+                :class="
+                  formErrors.time ? 'is-invalid form-select' : 'form-select'
+                "
+              >
+                <option selected disabled :value="undefined">
+                  Choose one...
+                </option>
+                <option
+                  v-for="contactMethod in contactMethods"
+                  :key="contactMethod.id"
+                  :value="contactMethod.id"
+                >
+                  {{ contactMethod.name }}
+                </option>
+              </select>
+              <span class="text-danger" v-if="formErrors.contact_type">
+                required
+              </span>
+            </div>
           </div>
           <div class="mb-3">
             <label class="form-label">Topics Covered:</label>
@@ -189,6 +213,7 @@ export default {
   data() {
     return {
       contactTopics: [],
+      contactMethods: [],
       contactTypes: [],
       contact: this.getDefaultContact(),
       formErrors: {},
@@ -288,6 +313,13 @@ export default {
     },
     getContactTypes() {
       this.getStudentContactTypes().then((response) => {
+        if (response.data) {
+          this.contactTypes = response.data;
+        }
+      });
+    },
+    getContactMethods() {
+      this.getStudentContactMethods().then((response) => {
         if (response.data) {
           this.contactTypes = response.data;
         }

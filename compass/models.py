@@ -123,11 +123,11 @@ class AccessGroupManager(models.Manager):
 
 class AccessGroup(models.Model):
     """
-    AccessGroups manage their Program, ContactTopic, and ContactType
-    lists. AccessGroup membership is defined externally in UW groups (Astra)
-    and determined for a AppUser via a request to the GWS at login.
-    Contact records created by a member of one access group are only visible to
-    other members of that same access group.
+    AccessGroups manage their Program, ContactTopic, ContactType, and
+    ContactMethod lists. AccessGroup membership is defined externally in
+    UW groups (Astra) and determined for a AppUser via a request to the
+    GWS at login. Contact records created by a member of one access group
+    are only visible to other members of that same access group.
 
     Access groups for the app are created in the Django Admin. The
     access_group_id is the prefix of the uw-groups (user and manger) that it
@@ -161,6 +161,16 @@ class AccessGroup(models.Model):
             for contact_type_name in uneditable_contact_types:
                 ContactType(
                     access_group=self, name=contact_type_name, editable=False
+                ).save()
+            # set uneditable contact methods presets
+            uneditable_contact_methods = [
+                "In-person",
+                "Telephone",
+                "Video Conference",
+            ]
+            for contact_method_name in uneditable_contact_methods:
+                ContactMethod(
+                    access_group=self, name=contact_method_name, editable=False
                 ).save()
             # set default contact topics
             default_contact_topics = [
@@ -202,6 +212,8 @@ class Contact(models.Model):
     access_group = models.ManyToManyField("AccessGroup")
     student = models.ForeignKey("Student", on_delete=models.CASCADE)
     contact_type = models.ForeignKey("ContactType", on_delete=models.CASCADE)
+    contact_method = models.ForeignKey("ContactMethod",
+                                       on_delete=models.CASCADE)
     checkin_date = models.DateTimeField()
     # optional fields
     noshow = models.BooleanField(default=False)
@@ -260,7 +272,21 @@ class ContactType(BaseAccessGroupContent):
     """
     Type of contact with a student. These are created for a given access group
     by the access group managers. Examples include Quick Question, Appointment,
-    Drop-in, and Telephone.
+    and Workshop.
+    """
+
+    access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
+    name = models.CharField(unique=True, max_length=50)
+    slug = models.SlugField(unique=True, max_length=50)
+    active = models.BooleanField(default=True)
+    editable = models.BooleanField(default=True)
+
+
+class ContactMethod(BaseAccessGroupContent):
+    """
+    The method used in the contact. These are created for a given access group
+    by the access group managers. Examples include Telephone, In-Person,
+    and Video Conference.
     """
 
     access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
