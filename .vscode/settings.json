@@ -3,9 +3,5 @@
   "python.linting.enabled": true,
   "python.formatting.autopep8Args": ["--max-line-length=79"],
   "python.formatting.blackArgs": ["--line-length=79"],
-<<<<<<< HEAD
-  "vue3snippets.enable-compile-vue-file-on-did-save-code": true
-=======
   "stylelint.validate": ["vue", "scss"]
->>>>>>> 0ff5729cbbd79910db76054f6973456c755572c4
 }
