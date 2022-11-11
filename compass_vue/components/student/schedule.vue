@@ -13,7 +13,8 @@
               :panel-id="'panel' + index"
               :active-tab="index == 0"
               :variant="'pills'"
-              >{{ schedule.term.quarter }} {{ schedule.term.year }}</axdd-tabs-item
+              >{{ schedule.term.quarter }}
+              {{ schedule.term.year }}</axdd-tabs-item
             >
           </template>
         </axdd-tabs-list>
@@ -49,7 +50,10 @@
                     </tr>
                   </thead>
                   <tbody class="mb-3">
-                    <tr v-for="(section, index) in schedule.sections" :key="index">
+                    <tr
+                      v-for="(section, index) in schedule.sections"
+                      :key="index"
+                    >
                       <td class="ps-3">
                         {{ section.curriculum_abbr }}
                         {{ section.course_number }}
@@ -59,8 +63,14 @@
                       </td>
                       <td>{{ section.sln }}</td>
                       <td>
-                        <div v-for="(meeting, index) in section.meetings" :key="index">
-                          <span v-for="(value, day) in meeting.meeting_days" :key="day">
+                        <div
+                          v-for="(meeting, index) in section.meetings"
+                          :key="index"
+                        >
+                          <span
+                            v-for="(value, day) in meeting.meeting_days"
+                            :key="day"
+                          >
                             <span v-if="value">
                               <span v-if="day == 'monday'">M </span>
                               <span v-if="day == 'tuesday'">T </span>
@@ -72,7 +82,10 @@
                         </div>
                       </td>
                       <td>
-                        <div v-for="(meeting, index) in section.meetings" :key="index">
+                        <div
+                          v-for="(meeting, index) in section.meetings"
+                          :key="index"
+                        >
                           <span v-if="!meeting.no_meeting">
                             {{ meeting.start_time }} - {{ meeting.end_time }}
                           </span>
