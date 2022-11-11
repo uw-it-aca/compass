@@ -3,7 +3,7 @@
     <input
       type="text"
       class="form-control form-control-sm"
-      placeholder="Student netid..."
+      placeholder="Student number or netid..."
       aria-label="Recipient's username"
       v-model="searchValue"
     />
