@@ -72,7 +72,7 @@
             <li>
               <KeyValue>
                 <template #key>Gender: </template>
-                <template #value> {{ person.gender }} </template>
+                <template #value> {{ person.student.gender }} </template>
               </KeyValue>
             </li>
             <li>
@@ -81,33 +81,41 @@
                 <template #value> {{ person.student.birthdate }} </template>
               </KeyValue>
             </li>
-            <li>
+            <li
+              v-for="(ethinicity, index) in person.student.ethnicities"
+              :key="index"
+            >
               <KeyValue>
                 <template #key> Ethnicity: </template>
                 <template #value>
-                  {{ person.student.assigned_ethnic_desc }}
+                  {{ ethinicity.assigned_ethnic_group_desc }}
                 </template>
               </KeyValue>
             </li>
             <li>
               <KeyValue>
-                <template #key> Disabled: </template>
+                <template #key> Disability: </template>
                 <template #value>
-                  <span v-if="person.student.disability_ind"> Disabled</span>
-                  <span v-else> Not Disabled </span>
+                  {{ person.student.disability_ind }}
                 </template>
               </KeyValue>
             </li>
             <li>
               <KeyValue>
-                <template #key> Veterans: </template>
+                <template #key> Veteran Benefit: </template>
                 <template #value>
-                  <span v-if="person.student.veteran_benefit_code == '0'">
-                    Not A Vet</span
-                  >
-                  <span v-else>
+                  <span>
                     {{ person.student.veteran_benefit_code }},
                     {{ person.student.veteran_benefit_desc }},
+                  </span>
+                </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key> Veteran Status: </template>
+                <template #value>
+                  <span>
                     {{ person.student.veteran_desc }}
                   </span>
                 </template>
