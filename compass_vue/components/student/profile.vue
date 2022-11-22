@@ -1,5 +1,5 @@
 <template>
-  <div class="alert alert-secondary rounded-3 px-0 py-3 m-0">
+  <div class="bg-light rounded-3 border-0 px-0 py-3 m-0">
     <div class="row">
       <div class="col-xl-3 my-auto">
         <div class="text-center mb-4">
@@ -32,7 +32,7 @@
             <template v-if="person.pronouns">
               {{ person.pronouns }}
             </template>
-            <template v-else>not specified</template>
+            <template v-else>pronouns not specified</template>
           </div>
           <div class="mt-3">
             {{ person.student.student_number }},
