@@ -20,6 +20,9 @@
 
         <div class="row">
           <div class="col">
+
+            <div class="text-end">Put Current Quarter and Week here</div>
+
             <axdd-tabs-list :tabs-id="'example'">
               <template #items>
                 <axdd-tabs-item
