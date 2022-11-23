@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import { Card, CardHeading } from "axdd-components";
 import CheckInTableLoading from "../components/checkin-table-loading.vue";
 import CheckInTableDisplay from "../components/checkin-table-display.vue";
 
@@ -35,8 +34,6 @@ export default {
     layout: Layout,
     "table-loading": CheckInTableLoading,
     "table-display": CheckInTableDisplay,
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
   },
   data() {
     return {
