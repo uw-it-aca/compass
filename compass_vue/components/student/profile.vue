@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-light rounded-3 border-0 px-0 py-3 m-0">
+  <div class="bg-light rounded-3 border-0 px-0 py-4 m-0">
     <div class="row">
       <div class="col-xl-3 my-auto">
         <div class="text-center mb-4">
