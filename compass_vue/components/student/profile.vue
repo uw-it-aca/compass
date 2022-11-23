@@ -163,7 +163,7 @@
             v-if="mq.xlPlus"
             class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
           >
-            Immigration Status
+            Immigration
           </div>
           <ul class="list-unstyled m-0 mb-3 small">
             <li>
@@ -197,12 +197,12 @@
             v-if="mq.xlPlus"
             class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
           >
-            Residency Status
+            Residency
           </div>
           <ul class="list-unstyled m-0 small">
             <li class="mb-3">
               <KeyValue>
-                <template #key>Residency</template>
+                <template #key>Status</template>
                 <template #value>
                   {{ person.student.resident_desc }}
                 </template>
