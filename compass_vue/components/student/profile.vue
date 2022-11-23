@@ -18,13 +18,13 @@
             <template v-else>{{ person.full_name }}</template>
           </div>
           <!-- moved pronouns to under the preferred name -->
-          <div class="fs-5 text-secondary axdd-font-encode-sans mb-2">
+          <div class="text-secondary mb-2">
             <template v-if="person.pronouns">
               {{ person.pronouns }}
             </template>
             <template v-else>not/specified</template>
           </div>
-          <div class="mt-3">
+          <div class="mt-3 small">
             {{ person.student.student_number }}, {{ person.uwnetid }}<br />
             <span v-if="person.student.local_phone_number">
               +1 {{ person.student.local_phone_number }}
@@ -43,36 +43,45 @@
             v-if="mq.xlPlus"
             class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
           >
-            Personal Information
+            Legal Name
           </div>
-          <ul class="list-unstyled m-0 small">
+          <ul class="list-unstyled m-0 small mb-3">
             <li>
               <KeyValue>
-                <template #key>Legal Full Name: </template>
+                <template #key>Full Name </template>
                 <template #value> {{ person.full_name }} </template>
               </KeyValue>
             </li>
             <li>
               <KeyValue>
-                <template #key>Legal First Name: </template>
+                <template #key>First Name </template>
                 <template #value> {{ person.first_name }} </template>
               </KeyValue>
             </li>
             <li>
               <KeyValue>
-                <template #key>Legal Last Name: </template>
+                <template #key>Last Name </template>
                 <template #value> {{ person.surname }} </template>
               </KeyValue>
             </li>
-            <li class="mt-3">
+          </ul>
+
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
+            Personal Information
+          </div>
+          <ul class="list-unstyled m-0 small">
+            <li>
               <KeyValue>
-                <template #key>Gender: </template>
+                <template #key>Gender</template>
                 <template #value> {{ person.student.gender }} </template>
               </KeyValue>
             </li>
             <li>
               <KeyValue>
-                <template #key> DOB: </template>
+                <template #key>DOB</template>
                 <template #value> {{ person.student.birthdate }} </template>
               </KeyValue>
             </li>
@@ -81,74 +90,15 @@
               :key="index"
             >
               <KeyValue>
-                <template #key> Ethnicity: </template>
+                <template #key>Ethnicity</template>
                 <template #value>
                   {{ ethinicity.assigned_ethnic_group_desc }}
                 </template>
               </KeyValue>
             </li>
-          </ul>
-        </div>
-
-        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
-          <hr class="text-muted" />
-        </div>
-      </div>
-
-      <div class="col-12 col-xl-3">
-        <div class="px-3">
-          <div
-            v-if="mq.xlPlus"
-            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
-          >
-            Immigration Status
-          </div>
-          <ul class="list-unstyled m-0 mb-3 small">
-            <li>
+            <li class="mt-3">
               <KeyValue>
-                <template #key> Citizenship: </template>
-                <template #value>
-                  {{ person.student.citizen_country }}
-                </template>
-              </KeyValue>
-            </li>
-            <li>
-              <KeyValue>
-                <template #key> Visa Type: </template>
-                <template #value>
-                  <span v-if="person.student.visa_type">
-                    {{ person.student.visa_type }}
-                  </span>
-                  <span v-else> N/A </span>
-                </template>
-              </KeyValue>
-            </li>
-          </ul>
-        </div>
-
-        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
-          <hr class="text-muted" />
-        </div>
-
-        <div class="px-3">
-          <div
-            v-if="mq.xlPlus"
-            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
-          >
-            Other Status
-          </div>
-          <ul class="list-unstyled m-0 small">
-            <li>
-              <KeyValue>
-                <template #key> Residency: </template>
-                <template #value>
-                  {{ person.student.resident_desc }}
-                </template>
-              </KeyValue>
-            </li>
-            <li>
-              <KeyValue>
-                <template #key> Disability: </template>
+                <template #key>Disability</template>
                 <template #value>
                   {{ person.student.disability_ind }}
                 </template>
@@ -156,18 +106,7 @@
             </li>
             <li>
               <KeyValue>
-                <template #key> Veteran Benefit: </template>
-                <template #value>
-                  <span>
-                    {{ person.student.veteran_benefit_code }},
-                    {{ person.student.veteran_benefit_desc }},
-                  </span>
-                </template>
-              </KeyValue>
-            </li>
-            <li>
-              <KeyValue>
-                <template #key> Veteran Status: </template>
+                <template #key>Veteran Status</template>
                 <template #value>
                   <span>
                     {{ person.student.veteran_desc }}
@@ -175,9 +114,28 @@
                 </template>
               </KeyValue>
             </li>
-            <li>
+            <li class="mb-3">
               <KeyValue>
-                <template #key> Athletics: </template>
+                <template #key>Veteran Benefit</template>
+                <template #value>
+                  <span>{{ person.student.veteran_benefit_desc }}</span>
+                </template>
+              </KeyValue>
+            </li>
+          </ul>
+        </div>
+
+        <div class="px-3">
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
+            Athletics
+          </div>
+          <ul class="list-unstyled m-0 small">
+            <li class="mb-3">
+              <KeyValue>
+                <template #key>Sports</template>
                 <template #value>
                   <span
                     v-for="(sport, index) in person.student.sports"
@@ -205,51 +163,48 @@
             v-if="mq.xlPlus"
             class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
           >
-            Address
+            Immigration Status
+          </div>
+          <ul class="list-unstyled m-0 mb-3 small">
+            <li>
+              <KeyValue>
+                <template #key>Citizenship</template>
+                <template #value>
+                  {{ person.student.citizen_country }}
+                </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key>Visa Type</template>
+                <template #value>
+                  <span v-if="person.student.visa_type">
+                    {{ person.student.visa_type }}
+                  </span>
+                  <span v-else>N/A</span>
+                </template>
+              </KeyValue>
+            </li>
+          </ul>
+        </div>
+
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
+          <hr class="text-muted" />
+        </div>
+
+        <div class="px-3">
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
+            Residency Status
           </div>
           <ul class="list-unstyled m-0 small">
-            <li>
-              <KeyValue variant="address">
-                <template #key> Local Address: </template>
+            <li class="mb-3">
+              <KeyValue>
+                <template #key>Residency</template>
                 <template #value>
-                  <address>
-                    {{ person.student.local_addr_line1 }}
-                    {{ person.student.local_addr_line2 }},
-                    {{ person.student.local_addr_city }},
-                    {{ person.student.local_addr_state }}
-                    {{ person.student.local_addr_5digit_zip }}
-                    {{ person.student.local_addr_country }}
-                  </address>
-                </template>
-              </KeyValue>
-            </li>
-            <li>
-              <KeyValue variant="address">
-                <template #key> Permanent Address: </template>
-                <template #value>
-                  <address>
-                    {{ person.student.perm_addr_line1 }}
-                    {{ person.student.perm_addr_line2 }},
-                    {{ person.student.perm_addr_city }},
-                    {{ person.student.perm_addr_state }}
-                    {{ person.student.perm_addr_5digit_zip }}
-                    {{ person.student.perm_addr_country }}
-                  </address>
-                </template>
-              </KeyValue>
-            </li>
-            <li v-if="person.student.parent_addr_line1 == ''">
-              <KeyValue variant="address">
-                <template #key> Parent Address: </template>
-                <template #value>
-                  <address>
-                    {{ person.student.parent_addr_line1 }}
-                    {{ person.student.parent_addr_line2 }},
-                    {{ person.student.parent_addr_city }},
-                    {{ person.student.parent_addr_state }}
-                    {{ person.student.parent_addr_5digit_zip }},
-                    {{ person.student.parent_addr_country }}
-                  </address>
+                  {{ person.student.resident_desc }}
                 </template>
               </KeyValue>
             </li>
@@ -270,7 +225,7 @@
           <ul class="list-unstyled m-0 small">
             <li>
               <KeyValue>
-                <template #key> Name: </template>
+                <template #key>Name</template>
                 <template #value>
                   {{ person.student.emergency_name }}
                 </template>
@@ -278,7 +233,7 @@
             </li>
             <li>
               <KeyValue>
-                <template #key> Phone: </template>
+                <template #key>Phone</template>
                 <template #value>
                   {{ person.student.emergency_phone }}
                 </template>
@@ -287,7 +242,7 @@
             <li>
               <span v-if="person.student.emergency_email.length > 25">
                 <KeyValue variant="address">
-                  <template #key> Email: </template>
+                  <template #key>Email</template>
                   <template #value>
                     {{ person.student.emergency_email }}
                   </template>
@@ -295,7 +250,7 @@
               </span>
               <span v-else>
                 <KeyValue>
-                  <template #key> Email: </template>
+                  <template #key>Email</template>
                   <template #value>
                     {{ person.student.emergency_email }}
                   </template>
@@ -303,6 +258,72 @@
               </span>
             </li>
           </ul>
+        </div>
+
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
+          <hr class="text-muted" />
+        </div>
+      </div>
+
+      <div class="col-12 col-xl-3">
+        <div class="px-3">
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
+            Address
+          </div>
+          <ul class="list-unstyled m-0 small">
+            <li>
+              <KeyValue variant="address">
+                <template #key>Local Address</template>
+                <template #value>
+                  <address>
+                    {{ person.student.local_addr_line1 }}
+                    {{ person.student.local_addr_line2 }},
+                    {{ person.student.local_addr_city }},
+                    {{ person.student.local_addr_state }}
+                    {{ person.student.local_addr_5digit_zip }}
+                    {{ person.student.local_addr_country }}
+                  </address>
+                </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue variant="address">
+                <template #key>Permanent Address</template>
+                <template #value>
+                  <address>
+                    {{ person.student.perm_addr_line1 }}
+                    {{ person.student.perm_addr_line2 }},
+                    {{ person.student.perm_addr_city }},
+                    {{ person.student.perm_addr_state }}
+                    {{ person.student.perm_addr_5digit_zip }}
+                    {{ person.student.perm_addr_country }}
+                  </address>
+                </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue variant="address">
+                <template #key>Parent Address</template>
+                <template #value>
+                  <address>
+                    {{ person.student.parent_addr_line1 }}
+                    {{ person.student.parent_addr_line2 }},
+                    {{ person.student.parent_addr_city }},
+                    {{ person.student.parent_addr_state }}
+                    {{ person.student.parent_addr_5digit_zip }},
+                    {{ person.student.parent_addr_country }}
+                  </address>
+                </template>
+              </KeyValue>
+            </li>
+          </ul>
+        </div>
+
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
+          <hr class="text-muted" />
         </div>
       </div>
     </div>
