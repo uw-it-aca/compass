@@ -8,7 +8,6 @@ import AxddComponents from "axdd-components";
 
 import App from "./app.vue";
 import router from "./router";
-import store from "./stores";
 
 // bootstrap js + bootstrap-icons
 import "bootstrap";
@@ -22,9 +21,6 @@ const app = createApp(App);
 app.config.productionTip = false;
 
 // vue-gtag-next
-// TODO: un-commment to use Google Analytics for you app. also
-// configure trackRouter located in the router/index.js file
-
 const gaCode = document.body.getAttribute("data-google-analytics");
 const debugMode = document.body.getAttribute("data-django-debug");
 
@@ -44,9 +40,6 @@ app.use(Vue3Mq, {
   preset: "bootstrap5",
 });
 app.component("mq-responsive", MqResponsive);
-
-// vuex state management
-app.use(store);
 
 // pinia (vuex) state management
 const pinia = createPinia();
