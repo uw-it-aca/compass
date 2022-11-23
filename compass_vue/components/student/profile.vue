@@ -11,20 +11,18 @@
             />
           </div>
           <!-- moved preferred name to under the profile photo -->
-          <div class="h3 text-dark-beige axdd-font-encode-sans">
-            <span class="me-1">
-              <template v-if="person.display_name">
-                {{ person.display_name }}
-              </template>
-              <template v-else>{{ person.full_name }}</template>
-            </span>
+          <div class="h4 axdd-font-encode-sans mb-0">
+            <template v-if="person.display_name">
+              {{ person.display_name }}
+            </template>
+            <template v-else>{{ person.full_name }}</template>
           </div>
           <!-- moved pronouns to under the preferred name -->
-          <div class="h4 text-secondary axdd-font-encode-sans mb-2">
+          <div class="fs-5 text-secondary axdd-font-encode-sans mb-2">
             <template v-if="person.pronouns">
               {{ person.pronouns }}
             </template>
-            <template v-else>not set</template>
+            <template v-else>not/specified</template>
           </div>
           <div class="mt-3">
             {{ person.student.student_number }}, {{ person.uwnetid }}<br />
@@ -40,11 +38,14 @@
       </div>
 
       <div class="col-xl-3">
-        <div class="flex-fill p-3">
-          <div v-if="mq.xlPlus" class="fw-bold text-dark-beige mb-1">
+        <div class="flex-fill px-3">
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
             Personal Information
           </div>
-          <ul class="list-unstyled m-0">
+          <ul class="list-unstyled m-0 small">
             <li>
               <KeyValue>
                 <template #key>Legal Full Name: </template>
@@ -63,7 +64,7 @@
                 <template #value> {{ person.surname }} </template>
               </KeyValue>
             </li>
-            <li>
+            <li class="mt-3">
               <KeyValue>
                 <template #key>Gender: </template>
                 <template #value> {{ person.student.gender }} </template>
@@ -95,11 +96,14 @@
       </div>
 
       <div class="col-12 col-xl-3">
-        <div class="p-3">
-          <div v-if="mq.xlPlus" class="fw-bold text-dark-beige mb-1">
+        <div class="px-3">
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
             Immigration Status
           </div>
-          <ul class="list-unstyled m-0">
+          <ul class="list-unstyled m-0 mb-3 small">
             <li>
               <KeyValue>
                 <template #key> Citizenship: </template>
@@ -126,11 +130,14 @@
           <hr class="text-muted" />
         </div>
 
-        <div class="p-3">
-          <div v-if="mq.xlPlus" class="fw-bold text-dark-beige mb-1">
+        <div class="px-3">
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
             Other Status
           </div>
-          <ul class="list-unstyled m-0">
+          <ul class="list-unstyled m-0 small">
             <li>
               <KeyValue>
                 <template #key> Residency: </template>
@@ -170,7 +177,7 @@
             </li>
             <li>
               <KeyValue>
-                <template #key> Athlete: </template>
+                <template #key> Athletics: </template>
                 <template #value>
                   <span
                     v-for="(sport, index) in person.student.sports"
@@ -193,9 +200,14 @@
       </div>
 
       <div class="col-12 col-xl-3">
-        <div class="p-3">
-          <p v-if="mq.xlPlus" class="text-dark-beige fw-bold mb-1">Address</p>
-          <ul class="list-unstyled m-0">
+        <div class="px-3">
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
+            Address
+          </div>
+          <ul class="list-unstyled m-0 small">
             <li>
               <KeyValue variant="address">
                 <template #key> Local Address: </template>
@@ -248,11 +260,14 @@
           <hr class="text-muted" />
         </div>
 
-        <div class="p-3">
-          <div v-if="mq.xlPlus" class="fw-bold text-dark-beige mb-1">
+        <div class="px-3">
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
             Emergency Contact
           </div>
-          <ul class="list-unstyled m-0">
+          <ul class="list-unstyled m-0 small">
             <li>
               <KeyValue>
                 <template #key> Name: </template>

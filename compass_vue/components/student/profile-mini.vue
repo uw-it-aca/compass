@@ -14,10 +14,10 @@
         <span class="me-2">
           <span>{{ person.display_name }}</span>
           <span class="ms-2 text-muted"
-            >(<template v-if="person.pronouns">
+            ><template v-if="person.pronouns">
               {{ person.pronouns }}
             </template>
-            <template v-else>not specified</template>)</span
+            <template v-else>not/specified</template></span
           >
         </span>
       </div>
