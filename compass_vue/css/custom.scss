@@ -5,6 +5,12 @@
 
 // override bootstrap default theme colors
 
+// https://getbootstrap.com/docs/5.1/customize/options/
+// TODO: enable bootstrap options for the app
+// $enable-cssgrid: true;
+// $enable-gradients: true;
+$enable-negative-margins: true;
+
 /*
 $body-bg: #000;
 $body-color: #111;
