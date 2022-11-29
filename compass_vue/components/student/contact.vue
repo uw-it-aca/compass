@@ -126,7 +126,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 tbody {
   td {
     padding-top: 1rem !important;

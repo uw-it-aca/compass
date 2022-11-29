@@ -22,11 +22,14 @@
     tabindex="-1"
     aria-labelledby="contactModalLabel"
     aria-hidden="true"
+    data-bs-backdrop="static"
   >
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="contactModalLabel">Record a contact</h5>
+          <h5 class="modal-title h6 m-0 fw-bold" id="contactModalLabel">
+            Record a contact
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -34,7 +37,7 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body" v-if="contact">
+        <div class="modal-body">
           <div class="row">
             <div class="col">
               <div
@@ -49,6 +52,9 @@
           <div class="row mb-3">
             <div class="col">
               <label for="checkin_date" class="form-label">Checkin Date:</label>
+              <span class="text-danger" v-if="formErrors.checkin_date">
+                required
+              </span>
               <input
                 type="datetime-local"
                 id="checkin_date"
@@ -59,12 +65,12 @@
                     : 'form-control'
                 "
               />
-              <span class="text-danger" v-if="formErrors.checkin_date">
-                required
-              </span>
             </div>
             <div class="col">
               <label class="form-label">Contact type:</label>
+              <span class="text-danger" v-if="formErrors.contact_type">
+                required
+              </span>
               <select
                 aria-label="Contact type"
                 v-model="contact.contact_type"
@@ -83,9 +89,6 @@
                   {{ contactType.name }}
                 </option>
               </select>
-              <span class="text-danger" v-if="formErrors.contact_type">
-                required
-              </span>
             </div>
           </div>
           <div class="mb-3">
@@ -93,31 +96,32 @@
             <span class="text-danger" v-if="formErrors.contact_topics">
               required
             </span>
-            <div style="column-count: 3">
-              <div
-                class="form-check"
+            <ul class="list-inline">
+              <li
+                class="list-inline-item mb-1 me-1"
                 v-for="topic in contactTopics"
                 :key="topic.id"
               >
                 <input
                   type="checkbox"
                   v-model="contact.contact_topics"
-                  :class="
-                    formErrors.contact_topics
-                      ? 'is-invalid form-check-input'
-                      : 'form-check-input'
-                  "
+                  class="btn-check"
+                  :class="formErrors.contact_topics ? 'is-invalid' : ''"
                   :value="topic.id"
-                  :id="topic.id"
+                  :id="'#contactModal' + contactId + 'Topic' + topic.id"
+                  autocomplete="off"
                 />
-                <label class="form-check-label" :for="topic.id">{{
-                  topic.name
-                }}</label>
-              </div>
-            </div>
+                <label
+                  class="btn btn-sm btn-outline-dark-beige fs-9 rounded-pill"
+                  :for="'#contactModal' + contactId + 'Topic' + topic.id"
+                  >{{ topic.name }}</label
+                >
+              </li>
+            </ul>
           </div>
           <div class="mb-3">
             <label for="notesTextarea" class="form-label">Notes</label>
+            <span class="text-danger" v-if="formErrors.notes"> required </span>
             <textarea
               :class="
                 formErrors.notes ? 'is-invalid form-control' : 'form-control'
@@ -126,9 +130,7 @@
               rows="3"
               v-model="contact.notes"
             ></textarea>
-            <span class="text-danger" v-if="formErrors.notes"> required </span>
           </div>
-
           <div class="mb-3">
             <label for="actionsAndRecomendationsTextarea" class="form-label"
               >Actions and Recommmendations</label
@@ -145,16 +147,12 @@
           <div class="text-end">
             <button
               type="button"
-              class="btn btn-secondary me-2"
+              class="btn btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2 me-2"
               data-bs-dismiss="modal"
             >
               Close
             </button>
-            <button
-              type="button"
-              class="btn btn-primary"
-              @click="saveContact()"
-            >
+            <button type="button" class="btn btn-sm btn-purple rounded-3 px-3 py-2" @click="saveContact()">
               Save contact
             </button>
           </div>
@@ -210,6 +208,7 @@ export default {
   methods: {
     getFormData() {
       if (this.contactId != null) {
+        console.log("getContact for given id: " + this.contactId);
         this.getContact(this.contactId);
       }
     },
@@ -276,6 +275,9 @@ export default {
           );
           // update the current contact
           this.contact = newContact;
+
+          console.log("contact returned!");
+          console.log(this.contact);
         }
       });
     },
