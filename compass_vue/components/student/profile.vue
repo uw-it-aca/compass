@@ -1,5 +1,5 @@
 <template>
-  <div class="alert alert-secondary rounded-3 px-0 py-3 m-0">
+  <div class="bg-light rounded-3 border-0 px-0 py-4 m-0">
     <div class="row">
       <div class="col-xl-3 my-auto">
         <div class="text-center mb-4">
@@ -11,32 +11,24 @@
             />
           </div>
           <!-- moved preferred name to under the profile photo -->
-          <div class="h3 text-dark-beige axdd-font-encode-sans">
-            <span class="me-1">
-              <template v-if="person.preferred_first_name">
-                {{ person.preferred_first_name }}
-              </template>
-              <template v-else>{{ person.first_name }}</template>
-            </span>
-            <span>
-              <template v-if="person.preferred_surname">
-                {{ person.preferred_surname }}
-              </template>
-              <template v-else>
-                {{ person.surname }}
-              </template>
-            </span>
+          <div class="h4 axdd-font-encode-sans mb-0">
+            <template v-if="person.display_name">
+              {{ person.display_name }}
+            </template>
+            <template v-else>{{ person.full_name }}</template>
           </div>
           <!-- moved pronouns to under the preferred name -->
-          <div class="h4 text-secondary axdd-font-encode-sans mb-2">
+          <div class="text-secondary mb-2">
             <template v-if="person.pronouns">
               {{ person.pronouns }}
             </template>
-            <template v-else>not specified</template>
+            <template v-else>not/specified</template>
           </div>
-          <div class="mt-3">
-            {{ person.student.student_number }},
-            {{ person.uwnetid }}
+          <div class="mt-3 small">
+            {{ person.student.student_number }}, {{ person.uwnetid }}<br />
+            <span v-if="person.student.local_phone_number">
+              +1 {{ person.student.local_phone_number }}
+            </span>
           </div>
         </div>
 
@@ -46,90 +38,113 @@
       </div>
 
       <div class="col-xl-3">
-        <div class="flex-fill p-3">
-          <div v-if="mq.xlPlus" class="fw-bold text-dark-beige mb-1">
-            Personal Information
+        <div class="flex-fill px-3">
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
+            Legal Name
           </div>
-          <ul class="list-unstyled m-0">
+          <ul class="list-unstyled m-0 small mb-3">
             <li>
               <KeyValue>
-                <template #key>Full Name: </template>
+                <template #key>Full Name </template>
                 <template #value> {{ person.full_name }} </template>
               </KeyValue>
             </li>
             <li>
               <KeyValue>
-                <template #key>First Name: </template>
+                <template #key>First Name </template>
                 <template #value> {{ person.first_name }} </template>
               </KeyValue>
             </li>
             <li>
               <KeyValue>
-                <template #key>Last Name: </template>
+                <template #key>Last Name </template>
                 <template #value> {{ person.surname }} </template>
               </KeyValue>
             </li>
+          </ul>
+
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
+            Personal Information
+          </div>
+          <ul class="list-unstyled m-0 small">
             <li>
               <KeyValue>
-                <template #key>Gender: </template>
-                <template #value> {{ person.gender }} </template>
+                <template #key>Gender</template>
+                <template #value> {{ person.student.gender }} </template>
               </KeyValue>
             </li>
             <li>
               <KeyValue>
-                <template #key> DOB: </template>
+                <template #key>DOB</template>
                 <template #value> {{ person.student.birthdate }} </template>
               </KeyValue>
             </li>
-            <li>
+            <li
+              v-for="(ethinicity, index) in person.student.ethnicities"
+              :key="index"
+            >
               <KeyValue>
-                <template #key> Ethnicity: </template>
+                <template #key>Ethnicity</template>
                 <template #value>
-                  {{ person.student.assigned_ethnic_desc }}
+                  {{ ethinicity.assigned_ethnic_group_desc }}
+                </template>
+              </KeyValue>
+            </li>
+            <li class="mt-3">
+              <KeyValue>
+                <template #key>Disability</template>
+                <template #value>
+                  {{ person.student.disability_ind }}
                 </template>
               </KeyValue>
             </li>
             <li>
               <KeyValue>
-                <template #key> Disabled: </template>
+                <template #key>Veteran Status</template>
                 <template #value>
-                  <span v-if="person.student.disability_ind"> Disabled</span>
-                  <span v-else> Not Disabled </span>
-                </template>
-              </KeyValue>
-            </li>
-            <li>
-              <KeyValue>
-                <template #key> Veterans: </template>
-                <template #value>
-                  <span v-if="person.student.veteran_benefit_code == '0'">
-                    Not A Vet</span
-                  >
-                  <span v-else>
-                    {{ person.student.veteran_benefit_code }},
-                    {{ person.student.veteran_benefit_desc }},
+                  <span>
                     {{ person.student.veteran_desc }}
                   </span>
                 </template>
               </KeyValue>
             </li>
-            <li v-if="person.student.sports.length !== 0">
+            <li class="mb-3">
               <KeyValue>
-                <template #key> Athlete: </template>
+                <template #key>Veteran Benefit</template>
                 <template #value>
-                  <span v-for="(sport, index) in person.student.sports" :key="sport.code">
-                    {{ sport.sport_code }}
-                    <span v-if="index + 1 < person.student.sports.length">, </span>
-                  </span>
+                  <span>{{ person.student.veteran_benefit_desc }}</span>
                 </template>
               </KeyValue>
             </li>
-            <li>
+          </ul>
+        </div>
+
+        <div class="px-3">
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
+            Athletics
+          </div>
+          <ul class="list-unstyled m-0 small">
+            <li class="mb-3">
               <KeyValue>
-                <template #key> Phone: </template>
+                <template #key>Sports</template>
                 <template #value>
-                  <span v-if="person.student.local_phone_number">
-                    +1 {{ person.student.local_phone_number }}
+                  <span
+                    v-for="(sport, index) in person.student.sports"
+                    :key="sport.code"
+                  >
+                    {{ sport.sport_code }}
+                    <span v-if="index + 1 < person.student.sports.length"
+                      >,
+                    </span>
                   </span>
                 </template>
               </KeyValue>
@@ -143,14 +158,17 @@
       </div>
 
       <div class="col-12 col-xl-3">
-        <div class="p-3">
-          <div v-if="mq.xlPlus" class="fw-bold text-dark-beige mb-1">
-            Immigration Status
+        <div class="px-3">
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
+            Immigration
           </div>
-          <ul class="list-unstyled m-0">
+          <ul class="list-unstyled m-0 mb-3 small">
             <li>
               <KeyValue>
-                <template #key> Citizenship: </template>
+                <template #key>Citizenship</template>
                 <template #value>
                   {{ person.student.citizen_country }}
                 </template>
@@ -158,18 +176,33 @@
             </li>
             <li>
               <KeyValue>
-                <template #key> Visa Type: </template>
+                <template #key>Visa Type</template>
                 <template #value>
                   <span v-if="person.student.visa_type">
                     {{ person.student.visa_type }}
                   </span>
-                  <span v-else> N/A </span>
+                  <span v-else>N/A</span>
                 </template>
               </KeyValue>
             </li>
-            <li>
+          </ul>
+        </div>
+
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
+          <hr class="text-muted" />
+        </div>
+
+        <div class="px-3">
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
+            Residency
+          </div>
+          <ul class="list-unstyled m-0 small">
+            <li class="mb-3">
               <KeyValue>
-                <template #key> Residency: </template>
+                <template #key>Status</template>
                 <template #value>
                   {{ person.student.resident_desc }}
                 </template>
@@ -182,14 +215,17 @@
           <hr class="text-muted" />
         </div>
 
-        <div class="p-3">
-          <div v-if="mq.xlPlus" class="fw-bold text-dark-beige mb-1">
+        <div class="px-3">
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
             Emergency Contact
           </div>
-          <ul class="list-unstyled m-0">
+          <ul class="list-unstyled m-0 small">
             <li>
               <KeyValue>
-                <template #key> Name: </template>
+                <template #key>Name</template>
                 <template #value>
                   {{ person.student.emergency_name }}
                 </template>
@@ -197,7 +233,7 @@
             </li>
             <li>
               <KeyValue>
-                <template #key> Phone: </template>
+                <template #key>Phone</template>
                 <template #value>
                   {{ person.student.emergency_phone }}
                 </template>
@@ -206,7 +242,7 @@
             <li>
               <span v-if="person.student.emergency_email.length > 25">
                 <KeyValue variant="address">
-                  <template #key> Email: </template>
+                  <template #key>Email</template>
                   <template #value>
                     {{ person.student.emergency_email }}
                   </template>
@@ -214,7 +250,7 @@
               </span>
               <span v-else>
                 <KeyValue>
-                  <template #key> Email: </template>
+                  <template #key>Email</template>
                   <template #value>
                     {{ person.student.emergency_email }}
                   </template>
@@ -225,17 +261,22 @@
         </div>
 
         <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
-          <hr class="text-muted" s />
+          <hr class="text-muted" />
         </div>
       </div>
 
       <div class="col-12 col-xl-3">
-        <div class="p-3">
-          <p v-if="mq.xlPlus" class="text-dark-beige fw-bold mb-1">Address</p>
-          <ul class="list-unstyled m-0">
+        <div class="px-3">
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
+            Address
+          </div>
+          <ul class="list-unstyled m-0 small">
             <li>
               <KeyValue variant="address">
-                <template #key> Local Address: </template>
+                <template #key>Local Address</template>
                 <template #value>
                   <address>
                     {{ person.student.local_addr_line1 }}
@@ -250,7 +291,7 @@
             </li>
             <li>
               <KeyValue variant="address">
-                <template #key> Permanent Address: </template>
+                <template #key>Permanent Address</template>
                 <template #value>
                   <address>
                     {{ person.student.perm_addr_line1 }}
@@ -263,9 +304,9 @@
                 </template>
               </KeyValue>
             </li>
-            <li v-if="person.student.parent_addr_line1 == ''">
+            <li>
               <KeyValue variant="address">
-                <template #key> Parent Address: </template>
+                <template #key>Parent Address</template>
                 <template #value>
                   <address>
                     {{ person.student.parent_addr_line1 }}
@@ -279,6 +320,10 @@
               </KeyValue>
             </li>
           </ul>
+        </div>
+
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
+          <hr class="text-muted" />
         </div>
       </div>
     </div>
