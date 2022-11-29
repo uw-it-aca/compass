@@ -29,6 +29,13 @@
                   information may be released about this student. The
                   recommended response is, “I have no information about that
                   individual."
+                  <a
+                    href="https://registrar.washington.edu/staffandfaculty/ferpa/"
+                    class="link-dark"
+                    target="_blank"
+                  >
+                    Learn More</a
+                  >
                 </div>
               </span>
               <span v-else class="fw-bold">
@@ -38,6 +45,13 @@
                   information may be released about this student. The
                   recommended response is, “I have no information about that
                   individual."
+                  <a
+                    href="https://registrar.washington.edu/staffandfaculty/ferpa/"
+                    class="link-dark"
+                    target="_blank"
+                  >
+                    Learn More</a
+                  >
                 </div>
               </span>
             </div>
