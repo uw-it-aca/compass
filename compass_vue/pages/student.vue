@@ -18,8 +18,8 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="row px-4 py-2">
+        <div class="row px-2">
+          <div class="row py-2">
             <div class="col-8">
               Authorizes Release of Directory Information:
               <span v-if="person.student.directory_release_ind" class="fw-bold"
