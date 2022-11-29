@@ -51,7 +51,9 @@
           </div>
           <div class="row mb-3">
             <div class="col">
-              <label for="checkin_date" class="form-label">Checkin Date:</label>
+              <label for="checkin_date" class="form-label small fw-bold me-2"
+                >Checkin Date</label
+              >
               <span class="text-danger" v-if="formErrors.checkin_date">
                 required
               </span>
@@ -61,13 +63,13 @@
                 v-model="contact.checkin_date"
                 :class="
                   formErrors.checkin_date
-                    ? 'is-invalid form-control'
-                    : 'form-control'
+                    ? 'is-invalid form-control form-control-sm'
+                    : 'form-control '
                 "
               />
             </div>
             <div class="col">
-              <label class="form-label">Contact type:</label>
+              <label class="form-label small fw-bold me-2">Contact type</label>
               <span class="text-danger" v-if="formErrors.contact_type">
                 required
               </span>
@@ -92,7 +94,8 @@
             </div>
           </div>
           <div class="mb-3">
-            <label class="form-label">Topics Covered:</label>
+            <label class="form-label small fw-bold me-2">Topics Covered</label>
+            <span class="small text-muted">(choose all that apply)</span>
             <span class="text-danger" v-if="formErrors.contact_topics">
               required
             </span>
@@ -120,7 +123,9 @@
             </ul>
           </div>
           <div class="mb-3">
-            <label for="notesTextarea" class="form-label">Notes</label>
+            <label for="notesTextarea" class="form-label small fw-bold me-2"
+              >Notes</label
+            >
             <span class="text-danger" v-if="formErrors.notes"> required </span>
             <textarea
               :class="
@@ -132,7 +137,9 @@
             ></textarea>
           </div>
           <div class="mb-3">
-            <label for="actionsAndRecomendationsTextarea" class="form-label"
+            <label
+              for="actionsAndRecomendationsTextarea"
+              class="form-label small fw-bold me-2"
               >Actions and Recommmendations</label
             >
             <textarea
@@ -152,7 +159,11 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-sm btn-purple rounded-3 px-3 py-2" @click="saveContact()">
+            <button
+              type="button"
+              class="btn btn-sm btn-purple rounded-3 px-3 py-2"
+              @click="saveContact()"
+            >
               Save contact
             </button>
           </div>
