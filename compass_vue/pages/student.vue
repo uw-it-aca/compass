@@ -20,11 +20,11 @@
 
         <div class="row">
           <div class="row p-3">
-            <div class="col-8 fs-7">
+            <div class="col-8">
               Student Authorizes Release of Directory Information:
               <span v-if="person.student.directory_release_ind" class="fw-bold"
                 >Yes
-                <div class="fw-normal text-secondary">
+                <div class="fw-normal text-secondary fs-7">
                   Student has opt out of directory information release, no
                   information may be released about this student. The
                   recommended response is, “I have no information about that
@@ -40,7 +40,7 @@
               </span>
               <span v-else class="fw-bold">
                 No
-                <div class="fw-normal text-secondary">
+                <div class="fw-normal text-secondary fs-7">
                   Student has opt out of directory information release, no
                   information may be released about this student. The
                   recommended response is, “I have no information about that
