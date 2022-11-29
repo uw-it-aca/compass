@@ -19,7 +19,7 @@
         </div>
 
         <div class="row">
-          <div class="row py-2">
+          <div class="row p-3">
             <div class="col-8">
               Authorizes Release of Directory Information:
               <span v-if="person.student.directory_release_ind" class="fw-bold"
@@ -41,7 +41,7 @@
                 </div>
               </span>
             </div>
-            <div class="col-4 px-3">
+            <div class="col-4">
               <div class="fs-6 text-secondary text-end">
                 <i class="bi bi-calendar-week"></i>
                 Autumn 2022
@@ -50,66 +50,68 @@
             </div>
           </div>
 
-          <axdd-tabs-list :tabs-id="'example'">
-            <template #items>
-              <axdd-tabs-item
-                :tabs-id="'example'"
-                :panel-id="'overview'"
-                :active-tab="true"
-              >
-                Overview
-              </axdd-tabs-item>
-              <axdd-tabs-item :tabs-id="'example'" :panel-id="'history'">
-                History
-              </axdd-tabs-item>
-              <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
-                Unofficial Transcript
-              </axdd-tabs-item>
-            </template>
-          </axdd-tabs-list>
+          <div class="col">
+            <axdd-tabs-list :tabs-id="'example'">
+              <template #items>
+                <axdd-tabs-item
+                  :tabs-id="'example'"
+                  :panel-id="'overview'"
+                  :active-tab="true"
+                >
+                  Overview
+                </axdd-tabs-item>
+                <axdd-tabs-item :tabs-id="'example'" :panel-id="'history'">
+                  History
+                </axdd-tabs-item>
+                <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
+                  Unofficial Transcript
+                </axdd-tabs-item>
+              </template>
+            </axdd-tabs-list>
 
-          <axdd-tabs-display :tabs-id="'example'">
-            <template #panels>
-              <axdd-tabs-panel :panel-id="'overview'" :active-panel="true">
-                <div class="row mt-4">
-                  <div class="col-xl-12">
-                    <StudentAcademics :person="person"></StudentAcademics>
+            <axdd-tabs-display :tabs-id="'example'">
+              <template #panels>
+                <axdd-tabs-panel :panel-id="'overview'" :active-panel="true">
+                  <div class="row mt-4">
+                    <div class="col-xl-12">
+                      <StudentAcademics :person="person"></StudentAcademics>
+                    </div>
+                    <div class="col-xl-9">
+                      <StudentSchedule :person="person"></StudentSchedule>
+                    </div>
+                    <div class="col-xl-3">
+                      <StudentAdviser
+                        :advisers="person.student.advisers"
+                      ></StudentAdviser>
+                      <StudentPrograms :person="person"></StudentPrograms>
+                    </div>
                   </div>
-                  <div class="col-xl-9">
-                    <StudentSchedule :person="person"></StudentSchedule>
+                </axdd-tabs-panel>
+                <axdd-tabs-panel :panel-id="'history'">
+                  <div class="row mt-4">
+                    <div class="col-xl-9">
+                      <StudentContact :person="person"></StudentContact>
+                    </div>
+                    <div class="col-xl-3">
+                      <StudentVisits></StudentVisits>
+                    </div>
                   </div>
-                  <div class="col-xl-3">
-                    <StudentAdviser
-                      :advisers="person.student.advisers"
-                    ></StudentAdviser>
-                    <StudentPrograms :person="person"></StudentPrograms>
+                </axdd-tabs-panel>
+                <axdd-tabs-panel :panel-id="'transcript'">
+                  <div class="row mt-4">
+                    <div class="col-xl-9">
+                      <StudentTranscript :person="person"></StudentTranscript>
+                    </div>
+                    <div class="col-xl-3">
+                      <StudentTranscriptCredits
+                        :person="person"
+                      ></StudentTranscriptCredits>
+                    </div>
                   </div>
-                </div>
-              </axdd-tabs-panel>
-              <axdd-tabs-panel :panel-id="'history'">
-                <div class="row mt-4">
-                  <div class="col-xl-9">
-                    <StudentContact :person="person"></StudentContact>
-                  </div>
-                  <div class="col-xl-3">
-                    <StudentVisits></StudentVisits>
-                  </div>
-                </div>
-              </axdd-tabs-panel>
-              <axdd-tabs-panel :panel-id="'transcript'">
-                <div class="row mt-4">
-                  <div class="col-xl-9">
-                    <StudentTranscript :person="person"></StudentTranscript>
-                  </div>
-                  <div class="col-xl-3">
-                    <StudentTranscriptCredits
-                      :person="person"
-                    ></StudentTranscriptCredits>
-                  </div>
-                </div>
-              </axdd-tabs-panel>
-            </template>
-          </axdd-tabs-display>
+                </axdd-tabs-panel>
+              </template>
+            </axdd-tabs-display>
+          </div>
         </div>
       </div>
     </template>
