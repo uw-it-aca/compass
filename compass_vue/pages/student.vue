@@ -19,12 +19,18 @@
         </div>
 
         <div class="row">
-          <div class="row mx-1">
+          <div class="row px-4 py-2">
             <div class="col-8">
               Authorizes Release of Directory Information:
               <span v-if="person.student.directory_release_ind" class="fw-bold"
-                >Yes</span
-              >
+                >Yes
+                <div class="fw-normal text-secondary fs-7">
+                  Student has opt out of directory information release, no
+                  information may be released about this student. The
+                  recommended response is, “I have no information about that
+                  individual."
+                </div>
+              </span>
               <span v-else class="fw-bold">
                 No
                 <div class="fw-normal text-secondary fs-7">
@@ -35,7 +41,7 @@
                 </div>
               </span>
             </div>
-            <div class="col-4 px-4">
+            <div class="col-4 px-3">
               <div class="fs-6 text-secondary text-end">
                 <i class="bi bi-calendar-week"></i>
                 Autumn 2022
