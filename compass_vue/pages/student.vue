@@ -19,71 +19,91 @@
         </div>
 
         <div class="row">
-          <div class="col">
-
-            <div class="text-end">Put Current Quarter and Week here</div>
-
-            <axdd-tabs-list :tabs-id="'example'">
-              <template #items>
-                <axdd-tabs-item
-                  :tabs-id="'example'"
-                  :panel-id="'overview'"
-                  :active-tab="true"
-                >
-                  Overview
-                </axdd-tabs-item>
-                <axdd-tabs-item :tabs-id="'example'" :panel-id="'history'">
-                  History
-                </axdd-tabs-item>
-                <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
-                  Unofficial Transcript
-                </axdd-tabs-item>
-              </template>
-            </axdd-tabs-list>
-
-            <axdd-tabs-display :tabs-id="'example'">
-              <template #panels>
-                <axdd-tabs-panel :panel-id="'overview'" :active-panel="true">
-                  <div class="row mt-4">
-                    <div class="col-xl-12">
-                      <StudentAcademics :person="person"></StudentAcademics>
-                    </div>
-                    <div class="col-xl-9">
-                      <StudentSchedule :person="person"></StudentSchedule>
-                    </div>
-                    <div class="col-xl-3">
-                      <StudentAdviser
-                        :advisers="person.student.advisers"
-                      ></StudentAdviser>
-                      <StudentPrograms :person="person"></StudentPrograms>
-                    </div>
-                  </div>
-                </axdd-tabs-panel>
-                <axdd-tabs-panel :panel-id="'history'">
-                  <div class="row mt-4">
-                    <div class="col-xl-9">
-                      <StudentContact :person="person"></StudentContact>
-                    </div>
-                    <div class="col-xl-3">
-                      <StudentVisits></StudentVisits>
-                    </div>
-                  </div>
-                </axdd-tabs-panel>
-                <axdd-tabs-panel :panel-id="'transcript'">
-                  <div class="row mt-4">
-                    <div class="col-xl-9">
-                      <StudentTranscript :person="person"></StudentTranscript>
-                    </div>
-                    <div class="col-xl-3">
-                      <StudentTranscriptCredits
-                        :person="person"
-                      ></StudentTranscriptCredits>
-                    </div>
-                  </div>
-                </axdd-tabs-panel>
-              </template>
-            </axdd-tabs-display>
+          <div class="row mx-1">
+            <div class="col-8">
+              Authorizes Release of Directory Information:
+              <span v-if="person.student.directory_release_ind" class="fw-bold"
+                >Yes</span
+              >
+              <span v-else class="fw-bold">
+                No
+                <div class="fw-normal text-secondary fs-7">
+                  Student has opt out of directory information release, no
+                  information may be released about this student. The
+                  recommended response is, “I have no information about that
+                  individual."
+                </div>
+              </span>
+            </div>
+            <div class="col-4 px-4">
+              <div class="fs-6 text-secondary text-end">
+                <i class="bi bi-calendar-week"></i>
+                Autumn 2022
+              </div>
+              <div class="fs-6 text-end">Week 4 of 10</div>
+            </div>
           </div>
+
+          <axdd-tabs-list :tabs-id="'example'">
+            <template #items>
+              <axdd-tabs-item
+                :tabs-id="'example'"
+                :panel-id="'overview'"
+                :active-tab="true"
+              >
+                Overview
+              </axdd-tabs-item>
+              <axdd-tabs-item :tabs-id="'example'" :panel-id="'history'">
+                History
+              </axdd-tabs-item>
+              <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
+                Unofficial Transcript
+              </axdd-tabs-item>
+            </template>
+          </axdd-tabs-list>
+
+          <axdd-tabs-display :tabs-id="'example'">
+            <template #panels>
+              <axdd-tabs-panel :panel-id="'overview'" :active-panel="true">
+                <div class="row mt-4">
+                  <div class="col-xl-12">
+                    <StudentAcademics :person="person"></StudentAcademics>
+                  </div>
+                  <div class="col-xl-9">
+                    <StudentSchedule :person="person"></StudentSchedule>
+                  </div>
+                  <div class="col-xl-3">
+                    <StudentAdviser
+                      :advisers="person.student.advisers"
+                    ></StudentAdviser>
+                    <StudentPrograms :person="person"></StudentPrograms>
+                  </div>
+                </div>
+              </axdd-tabs-panel>
+              <axdd-tabs-panel :panel-id="'history'">
+                <div class="row mt-4">
+                  <div class="col-xl-9">
+                    <StudentContact :person="person"></StudentContact>
+                  </div>
+                  <div class="col-xl-3">
+                    <StudentVisits></StudentVisits>
+                  </div>
+                </div>
+              </axdd-tabs-panel>
+              <axdd-tabs-panel :panel-id="'transcript'">
+                <div class="row mt-4">
+                  <div class="col-xl-9">
+                    <StudentTranscript :person="person"></StudentTranscript>
+                  </div>
+                  <div class="col-xl-3">
+                    <StudentTranscriptCredits
+                      :person="person"
+                    ></StudentTranscriptCredits>
+                  </div>
+                </div>
+              </axdd-tabs-panel>
+            </template>
+          </axdd-tabs-display>
         </div>
       </div>
     </template>
