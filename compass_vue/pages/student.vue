@@ -20,15 +20,11 @@
 
         <div class="row">
           <div class="row p-3">
-            <div class="col-8">
+            <div class="col-9">
               Student Authorizes Release of Directory Information:
               <span v-if="person.student.directory_release_ind" class="fw-bold"
                 >Yes
                 <div class="fw-normal text-secondary fs-7">
-                  Student has opt out of directory information release, no
-                  information may be released about this student. The
-                  recommended response is, “I have no information about that
-                  individual."
                   <a
                     href="https://registrar.washington.edu/staffandfaculty/ferpa/"
                     class="link-dark"
@@ -41,10 +37,11 @@
               <span v-else class="fw-bold">
                 No
                 <div class="fw-normal text-secondary fs-7">
-                  Student has opt out of directory information release, no
-                  information may be released about this student. The
-                  recommended response is, “I have no information about that
-                  individual."
+                  This student has opted out and blocked the release of their
+                  directory information. No information may be released about
+                  this student. A recommended response is, "I have no
+                  information about that individual", if you are asked any
+                  personal questions regarding this student.
                   <a
                     href="https://registrar.washington.edu/staffandfaculty/ferpa/"
                     class="link-dark"
@@ -55,7 +52,7 @@
                 </div>
               </span>
             </div>
-            <div class="col-4">
+            <div class="col-3">
               <div class="fs-6 text-secondary text-end">
                 <i class="bi bi-calendar-week"></i>
                 Autumn 2022
