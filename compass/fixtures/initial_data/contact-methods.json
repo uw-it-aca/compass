@@ -1,0 +1,32 @@
+[
+  {
+   "model": "compass.contactmethod",
+   "pk": 1,
+   "fields": {
+    "access_group": 1,
+    "name": "In-Person",
+    "slug": "in-person",
+    "active": true
+   }
+  },
+  {
+   "model": "compass.contactmethod",
+   "pk": 2,
+   "fields": {
+    "access_group": 1,
+    "name": "Telephone",
+    "slug": "telephone",
+    "active": true
+   }
+  },
+  {
+   "model": "compass.contactmethod",
+   "pk": 3,
+   "fields": {
+    "access_group": 1,
+    "name": "Video Conference",
+    "slug": "video-conference",
+    "active": true
+   }
+  }
+ ]

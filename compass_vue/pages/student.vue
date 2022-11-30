@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <div class="row my-4">
+      <div class="row my-5">
         <div class="col-9">
           <div>
             Student Authorizes Release of Directory Information:

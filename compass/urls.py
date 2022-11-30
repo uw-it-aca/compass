@@ -17,6 +17,7 @@ from compass.views.api.adviser import AdviserContactsView, AdviserCaseloadView
 from compass.views.api.contact import (
     ContactTopicsView,
     ContactTypesView,
+    ContactMethodsView,
     ContactView,
     ContactOMADView
 )
@@ -80,6 +81,7 @@ urlpatterns += [
     re_path(r"^api/internal/accessgroup/$", AccessGroupView.as_view()),
     re_path(r"^api/internal/contact/topics/$", ContactTopicsView.as_view()),
     re_path(r"^api/internal/contact/types/$", ContactTypesView.as_view()),
+    re_path(r"^api/internal/contact/methods/$", ContactMethodsView.as_view()),
     re_path(r"^api/internal/contact/(?P<contactid>[\w]+)/$",
             ContactView.as_view()),
     re_path(r"^api/internal/contact/$",  ContactView.as_view()),

@@ -11,4 +11,5 @@ class Command(BaseCommand):
         call_command('loaddata', 'initial_data/access-groups.json')
         call_command('loaddata', 'initial_data/programs.json')
         call_command('loaddata', 'initial_data/contact-types.json')
+        call_command('loaddata', 'initial_data/contact-methods.json')
         call_command('loaddata', 'initial_data/contact-topics.json')
