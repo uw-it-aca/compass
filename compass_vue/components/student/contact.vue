@@ -27,7 +27,10 @@
               <tr v-for="contact in contacts" :key="contact.id">
                 <td scope="row" class="ps-3" style="width: 25%">
                   <div>{{ contact.checkin_date }}</div>
-                  <div class="text-muted small"><i class="bi bi-person-circle me-1"></i>{{ contact.app_user.uwnetid }}</div>
+                  <div class="text-muted small">
+                    <i class="bi bi-person-circle me-1"></i
+                    >{{ contact.app_user.uwnetid }}
+                  </div>
                 </td>
                 <td class="align-bottom">
                   <div
@@ -73,7 +76,8 @@
                     :person="person"
                     :contact-id="contact.id"
                     @contactUpdated="loadStudentContacts()"
-                    ><i class="bi bi-pencil text-dark me-2"></i>Edit contact</AddEditContact
+                    ><i class="bi bi-pencil text-dark me-2"></i>Edit
+                    contact</AddEditContact
                   >
                 </td>
               </tr>
