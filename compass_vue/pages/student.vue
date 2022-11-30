@@ -37,7 +37,7 @@
               <span v-else class="fw-bold">
                 No
                 <div class="fw-normal text-secondary fs-7">
-                  Student has opt out of directory information release, no
+                  Student has opted out of directory information release, no
                   information may be released about this student. The
                   recommended response is, “I have no information about that
                   individual."
