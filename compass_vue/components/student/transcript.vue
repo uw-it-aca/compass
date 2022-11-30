@@ -47,7 +47,9 @@
                   <li>Grad status: {{ transcript.grad_status }}</li>
                   <li>Honors Program: {{ transcript.honors_program }}</li>
                   <li>Scholarships: {{ transcript.scholarship_type }}</li>
-                  <li>Special Program Code: {{ transcript.special_program }}</li>
+                  <li>
+                    Special Program Code: {{ transcript.special_program }}
+                  </li>
                   <li>Veteran: {{ transcript.veteran }}</li>
                   <li>Veteran Benefit: {{ transcript.veteran_benefit }}</li>
                 </ul>
