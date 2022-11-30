@@ -8,7 +8,7 @@
     :class="[
       buttonType === 'button'
         ? 'btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2'
-        : 'small p-0 btn-sm btn-link',
+        : 'fs-9 btn-outline-gray text-dark rounded-3 px-2 py-1',
     ]"
   >
     <slot>Add Contact</slot>
