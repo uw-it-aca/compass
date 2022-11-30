@@ -14,13 +14,25 @@
           <ul class="list-unstyled">
             <li>
               <KeyValue>
-                <template #key>Enrollment Status</template>
+                <template #key>Registered in Quarter</template>
                 <template #value>
-                  <template v-if="person.student.registered_in_quarter">
-                    Registered
-                  </template>
-                  <template v-else> Unregistered </template
-                  >{{ person.student.enrollment_desc }}
+                  {{ person.student.registered_in_quarter }}
+                </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key>Registration Hold</template>
+                <template #value>
+                  {{ person.student.registration_hold_ind }}
+                </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key>Enrollment Status Code</template>
+                <template #value>
+                  {{ person.student.enroll_status_code }}
                 </template>
               </KeyValue>
             </li>
