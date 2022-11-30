@@ -7,7 +7,7 @@
       :class="[mq.lgMinus ? 'mb-4' : '']"
     >
       <div
-        class="alert alert-beige rounded-3 d-flex flex-column flex-fill m-0 small"
+        class="bg-light-beige rounded-3 p-3 border-0 d-flex flex-column flex-fill m-0 small"
       >
         <div class="flex-fill">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Status</p>
@@ -53,7 +53,7 @@
       :class="[mq.lgMinus ? 'mb-4' : '']"
     >
       <div
-        class="alert alert-beige rounded-3 d-flex flex-column flex-fill m-0 small"
+        class="bg-light-beige rounded-3 p-3 border-0 d-flex flex-column flex-fill m-0 small"
       >
         <div class="flex-fill">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Majors</p>
@@ -100,7 +100,7 @@
       :class="[mq.lgMinus ? 'mb-4' : '']"
     >
       <div
-        class="alert alert-beige rounded-3 d-flex flex-column flex-fill m-0 small"
+        class="bg-light-beige rounded-3 p-3 border-0 d-flex flex-column flex-fill m-0 small"
       >
         <div class="flex-fill">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Programs</p>
@@ -148,7 +148,7 @@
     </div>
     <div class="col-xl-3 d-flex flex-column">
       <div
-        class="alert alert-beige rounded-3 d-flex flex-column flex-fill m-0 small"
+        class="bg-light-beige rounded-3 p-3 border-0 d-flex flex-column flex-fill m-0 small"
       >
         <div class="flex-fill">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Credits</p>

@@ -40,7 +40,6 @@
                   <li>QTR EARNED: {{ transcript.qtr_grade_points }}</li>
                   <li>Number of Courses: {{ transcript.num_courses }}</li>
                 </ul>
-
                 <ul class="list-unstyled">
                   <li>Class Code: {{ transcript.special_program }}</li>
                   <li>Enrollment Status: {{ transcript.enroll_status }}</li>
@@ -48,9 +47,7 @@
                   <li>Grad status: {{ transcript.grad_status }}</li>
                   <li>Honors Program: {{ transcript.honors_program }}</li>
                   <li>Scholarships: {{ transcript.scholarship_type }}</li>
-                  <li>
-                    Special Program Code: {{ transcript.special_program }}
-                  </li>
+                  <li>Special Program Code: {{ transcript.special_program }}</li>
                   <li>Veteran: {{ transcript.veteran }}</li>
                   <li>Veteran Benefit: {{ transcript.veteran_benefit }}</li>
                 </ul>

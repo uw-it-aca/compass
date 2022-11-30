@@ -12,27 +12,28 @@
     <div class="flex-fill">
       <div class="text-nowrap">
         <span class="me-2">
-          <router-link :to="{ path: '/student/' + person.uwnetid }"
-            >{{ person.display_name }}
-          </router-link>
+          <span>{{ person.display_name }}</span>
           <span class="ms-2 text-muted"
-            >(<template v-if="person.pronouns">
+            ><template v-if="person.pronouns">
               {{ person.pronouns }}
             </template>
-            <template v-else>not specified</template>)</span
+            <template v-else>not/specified</template></span
           >
         </span>
       </div>
       <div class="text-secondary">
-        {{ person.student.student_number }}, {{ person.uwnetid }}
+        <router-link :to="{ path: '/student/' + person.student.student_number }"
+          >{{ person.student.student_number }} </router-link
+        >,
+        <router-link :to="{ path: '/student/' + person.uwnetid }"
+          >{{ person.uwnetid }}
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Card, CardHeading } from "axdd-components";
-
 export default {
   props: {
     person: {
