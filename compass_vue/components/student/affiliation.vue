@@ -4,11 +4,11 @@
       <axdd-card-heading :level="2">Affiliations</axdd-card-heading>
       <!-- need to change the button -->
       <axdd-card-action>
-        <AddEditContact
+        <EditAffiliation
           :button-type="'button'"
           :person="person"
           @contactUpdated="loadStudentContacts()"
-          >Edit Affiliations</AddEditContact
+          >Record new contact</EditAffiliation
         >
       </axdd-card-action>
     </template>
@@ -18,40 +18,42 @@
           <thead class="table-light text-muted small">
             <tr>
               <th class="ps-3">Type</th>
-              <th>Detials</th>
+              <th colspan="2">Detials</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td scope="row" class="ps-3" style="width: 25%">Cohort</td>
-              <td>
+              <td colspan="2">
                 <span
                   class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-1"
-                  >xx</span
+                  >2022-2023</span
                 >
               </td>
             </tr>
             <tr>
               <td scope="row" class="ps-3" style="width: 25%">Program</td>
-              <td>
+              <td colspan="2">
                 <span
                   class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-1"
-                  >xx</span
+                  >CHAMPION</span
                 >
               </td>
             </tr>
             <tr>
               <td scope="row" class="ps-3" style="width: 25%">Affiliations</td>
-              <td>
+              <td colspan="2">
                 <li
                   class="badge rounded-pill alert alert-dark-beige border-0 px-2 py-1 mb-0 me-1"
                 >
-                  eee
+                  EIO
                 </li>
               </td>
             </tr>
             <tr>
               <td scope="row" class="ps-3" style="width: 25%">Notes</td>
+              <td style="width: 20%">Date</td>
+              <td>Notes</td>
             </tr>
           </tbody>
         </table>
@@ -63,12 +65,12 @@
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
 import { Card, CardHeading, CardAction } from "axdd-components";
-import AddEditContact from "../add-contact.vue";
+import EditAffiliation from "../edit-affiliation.vue";
 
 export default {
   mixins: [dataMixin],
   components: {
-    AddEditContact,
+    EditAffiliation,
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
     "axdd-card-action": CardAction,
