@@ -25,10 +25,6 @@
               <span v-if="person.student.directory_release_ind" class="fw-bold"
                 >Yes
                 <div class="fw-normal text-secondary fs-7">
-                  Student has opt out of directory information release, no
-                  information may be released about this student. The
-                  recommended response is, “I have no information about that
-                  individual."
                   <a
                     href="https://registrar.washington.edu/staffandfaculty/ferpa/"
                     class="link-dark"
@@ -80,6 +76,9 @@
                 <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
                   Unofficial Transcript
                 </axdd-tabs-item>
+                <axdd-tabs-item :tabs-id="'example'" :panel-id="'affiliation'">
+                  Affiliations
+                </axdd-tabs-item>
               </template>
             </axdd-tabs-list>
 
@@ -120,6 +119,18 @@
                       <StudentTranscriptCredits
                         :person="person"
                       ></StudentTranscriptCredits>
+                    </div>
+                  </div>
+                </axdd-tabs-panel>
+                <axdd-tabs-panel :panel-id="'affiliation'">
+                  <div class="row mt-4">
+                    <div class="col-xl-9">
+                      <StudentAffiliations
+                        :person="person"
+                      ></StudentAffiliations>
+                    </div>
+                    <div class="col-xl-3">
+                      <StudentVisits></StudentVisits>
                     </div>
                   </div>
                 </axdd-tabs-panel>
@@ -166,6 +177,7 @@ import StudentAcademics from "../components/student/academics.vue";
 import StudentTranscript from "../components/student/transcript.vue";
 import StudentTranscriptCredits from "../components/student/transcript-credits.vue";
 import StudentContact from "../components/student/contact.vue";
+import StudentAffiliations from "../components/student/affiliation.vue";
 import StudentSchedule from "../components/student/schedule.vue";
 import StudentAdviser from "../components/student/adviser.vue";
 import StudentPrograms from "../components/student/programs.vue";
@@ -191,7 +203,7 @@ export default {
     StudentPrograms,
     StudentVisits,
     TranscriptCredits,
-    SearchStudent,
+    StudentAffiliations,
   },
   created: function () {
     this.loadStudent(this.$route.params.id);
