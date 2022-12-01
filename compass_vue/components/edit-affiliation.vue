@@ -97,10 +97,14 @@ export default {
       "shown.bs.modal",
       this.clearFormErrors
     );
-    this.$refs.affiliationsModal.addEventListener("hidden.bs.modal", this.resetForm);
+    this.$refs.affiliationsModal.addEventListener(
+      "hidden.bs.modal",
+      this.resetForm
+    );
   },
   methods: {
     getAffiliations() {
+      /*
       this.getStudentAffiliations(this.person.student.system_key).then(
         (response) => {
           if (response.data) {
@@ -109,12 +113,13 @@ export default {
             this.affiliations = newAffiliations;
           }
         }
-      );
+      );*/
     },
     saveAffiliations() {
       var affiliationsModal = Modal.getInstance(
         document.getElementById("affiliationsModal")
       );
+      /*
       this.saveStudentAffiliations(this.person.student.system_key)
         .then(() => {
           this.$emit("affiliationsUpdated");
@@ -129,13 +134,14 @@ export default {
             this.formErrors = error.response.data;
           }
         });
+        */
     },
     clearFormErrors() {
       this.formErrors = {};
     },
     resetForm() {
       this.clearFormErrors();
-      this.affiliations = this.getStudentAffiliations();
+      //this.affiliations = this.getStudentAffiliations();
     },
   },
 };

@@ -11,135 +11,131 @@
       </h1>
     </template>
     <template #content>
-      <div>
-        <div class="row my-4">
-          <div class="col">
-            <StudentProfile :person="person"></StudentProfile>
+      <div class="row my-4">
+        <div class="col">
+          <StudentProfile :person="person"></StudentProfile>
+        </div>
+      </div>
+
+      <div class="row my-5">
+        <div class="col-9">
+          <div>
+            Student Authorizes Release of Directory Information:
+            <span class="fw-bold">
+              <template v-if="person.student.directory_release_ind"
+                >Yes</template
+              >
+              <template v-else>No</template>
+            </span>
+          </div>
+          <div
+            v-if="!person.student.directory_release_ind"
+            class="fw-normal text-secondary small"
+          >
+            This student has opted out and blocked the release of their
+            directory information. No information may be released about this
+            student. A recommended response when asked about this student is, "I
+            have no information about that individual."
+          </div>
+          <div>
+            <a
+              href="https://registrar.washington.edu/staffandfaculty/ferpa/"
+              class="small"
+              target="_blank"
+            >
+              Learn More</a
+            >
           </div>
         </div>
-
-        <div class="row">
-          <div class="row p-3">
-            <div class="col-8">
-              Student Authorizes Release of Directory Information:
-              <span v-if="person.student.directory_release_ind" class="fw-bold"
-                >Yes
-                <div class="fw-normal text-secondary fs-7">
-                  <a
-                    href="https://registrar.washington.edu/staffandfaculty/ferpa/"
-                    class="link-dark fw-normal text-secondary fs-7"
-                    target="_blank"
-                  >
-                    Learn More</a
-                  >
-                </div>
-              </span>
-              <span v-else class="fw-bold">
-                No
-                <div class="fw-normal text-secondary fs-7">
-                  Student has opted out of directory information release, no
-                  information may be released about this student. The
-                  recommended response is, “I have no information about that
-                  individual."
-                  <a
-                    href="https://registrar.washington.edu/staffandfaculty/ferpa/"
-                    class="link-dark"
-                    target="_blank"
-                  >
-                    Learn More</a
-                  >
-                </div>
-              </span>
+        <div class="col-3 d-flex align-content-center flex-column">
+          <div class="my-auto">
+            <div class="text-secondary text-end small">
+              <i class="bi bi-calendar-week"></i>
+              Autumn 2022
             </div>
-            <div class="col-4">
-              <div class="fs-6 text-secondary text-end">
-                <i class="bi bi-calendar-week"></i>
-                Autumn 2022
-              </div>
-              <div class="fs-6 text-end">Week 4 of 10</div>
-            </div>
+            <div class="text-end fw-bold">Week 4 of 10</div>
           </div>
+        </div>
+      </div>
 
-          <div class="col">
-            <axdd-tabs-list :tabs-id="'example'">
-              <template #items>
-                <axdd-tabs-item
-                  :tabs-id="'example'"
-                  :panel-id="'overview'"
-                  :active-tab="true"
-                >
-                  Overview
-                </axdd-tabs-item>
-                <axdd-tabs-item :tabs-id="'example'" :panel-id="'history'">
-                  History
-                </axdd-tabs-item>
-                <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
-                  Unofficial Transcript
-                </axdd-tabs-item>
-                <axdd-tabs-item :tabs-id="'example'" :panel-id="'affiliation'">
-                  Affiliations
-                </axdd-tabs-item>
-              </template>
-            </axdd-tabs-list>
+      <div class="row">
+        <div class="col">
+          <axdd-tabs-list :tabs-id="'example'">
+            <template #items>
+              <axdd-tabs-item
+                :tabs-id="'example'"
+                :panel-id="'overview'"
+                :active-tab="true"
+              >
+                Overview
+              </axdd-tabs-item>
+              <axdd-tabs-item :tabs-id="'example'" :panel-id="'history'">
+                History
+              </axdd-tabs-item>
+              <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
+                Unofficial Transcript
+              </axdd-tabs-item>
+              <axdd-tabs-item :tabs-id="'example'" :panel-id="'affiliation'">
+                Affiliations
+              </axdd-tabs-item>
+            </template>
+          </axdd-tabs-list>
 
-            <axdd-tabs-display :tabs-id="'example'">
-              <template #panels>
-                <axdd-tabs-panel :panel-id="'overview'" :active-panel="true">
-                  <div class="row mt-4">
-                    <div class="col-xl-12">
-                      <StudentAcademics :person="person"></StudentAcademics>
-                    </div>
-                    <div class="col-xl-9">
-                      <StudentSchedule :person="person"></StudentSchedule>
-                    </div>
-                    <div class="col-xl-3">
-                      <StudentAdviser
-                        :advisers="person.student.advisers"
-                      ></StudentAdviser>
-                      <StudentPrograms :person="person"></StudentPrograms>
-                    </div>
+          <axdd-tabs-display :tabs-id="'example'">
+            <template #panels>
+              <axdd-tabs-panel :panel-id="'overview'" :active-panel="true">
+                <div class="row mt-4">
+                  <div class="col-xl-12">
+                    <StudentAcademics :person="person"></StudentAcademics>
                   </div>
-                </axdd-tabs-panel>
-                <axdd-tabs-panel :panel-id="'history'">
-                  <div class="row mt-4">
-                    <div class="col-xl-9">
-                      <StudentContact :person="person"></StudentContact>
-                    </div>
-                    <div class="col-xl-3">
-                      <StudentVisits></StudentVisits>
-                    </div>
+                  <div class="col-xl-9">
+                    <StudentSchedule :person="person"></StudentSchedule>
                   </div>
-                </axdd-tabs-panel>
-                <axdd-tabs-panel :panel-id="'transcript'">
-                  <div class="row mt-4">
-                    <div class="col-xl-9">
-                      <StudentTranscript :person="person"></StudentTranscript>
-                    </div>
-                    <div class="col-xl-3">
-                      <StudentTranscriptCredits
-                        :person="person"
-                      ></StudentTranscriptCredits>
-                    </div>
+                  <div class="col-xl-3">
+                    <StudentAdviser
+                      :advisers="person.student.advisers"
+                    ></StudentAdviser>
+                    <StudentPrograms :person="person"></StudentPrograms>
                   </div>
-                </axdd-tabs-panel>
-                <axdd-tabs-panel :panel-id="'affiliation'">
-                  <div class="row mt-4">
-                    <div class="col-xl-9">
-                      <StudentAffiliations
-                        :person="person"
-                      ></StudentAffiliations>
-                    </div>
-                    <div class="col-xl-3">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      Assumenda ab sunt iste, eaque similique odio alias
-                      aspernatur, ut quia totam quod magnam aliquam natus autem
-                      id recusandae odit? Sequi, incidunt?
-                    </div>
+                </div>
+              </axdd-tabs-panel>
+              <axdd-tabs-panel :panel-id="'history'">
+                <div class="row mt-4">
+                  <div class="col-xl-9">
+                    <StudentContact :person="person"></StudentContact>
                   </div>
-                </axdd-tabs-panel>
-              </template>
-            </axdd-tabs-display>
-          </div>
+                  <div class="col-xl-3">
+                    <StudentVisits></StudentVisits>
+                  </div>
+                </div>
+              </axdd-tabs-panel>
+              <axdd-tabs-panel :panel-id="'transcript'">
+                <div class="row mt-4">
+                  <div class="col-xl-9">
+                    <StudentTranscript :person="person"></StudentTranscript>
+                  </div>
+                  <div class="col-xl-3">
+                    <StudentTranscriptCredits
+                      :person="person"
+                    ></StudentTranscriptCredits>
+                  </div>
+                </div>
+              </axdd-tabs-panel>
+              <axdd-tabs-panel :panel-id="'affiliation'">
+                <div class="row mt-4">
+                  <div class="col-xl-9">
+                    <StudentAffiliations :person="person"></StudentAffiliations>
+                  </div>
+                  <div class="col-xl-3">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Assumenda ab sunt iste, eaque similique odio alias
+                    aspernatur, ut quia totam quod magnam aliquam natus autem id
+                    recusandae odit? Sequi, incidunt?
+                  </div>
+                </div>
+              </axdd-tabs-panel>
+            </template>
+          </axdd-tabs-display>
         </div>
       </div>
     </template>
@@ -207,7 +203,7 @@ export default {
     StudentVisits,
     TranscriptCredits,
     StudentAffiliations,
-    SearchStudent
+    SearchStudent,
   },
   created: function () {
     this.loadStudent(this.$route.params.id);

@@ -8,7 +8,7 @@
     :class="[
       buttonType === 'button'
         ? 'btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2'
-        : 'small p-0 btn-sm btn-link',
+        : 'fs-9 btn-outline-gray text-dark rounded-3 px-2 py-1',
     ]"
   >
     <slot>Add Contact</slot>
@@ -22,11 +22,14 @@
     tabindex="-1"
     aria-labelledby="contactModalLabel"
     aria-hidden="true"
+    data-bs-backdrop="static"
   >
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="contactModalLabel">Record a contact</h5>
+          <h5 class="modal-title h6 m-0 fw-bold" id="contactModalLabel">
+            Record a contact
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -34,7 +37,7 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body" v-if="contact">
+        <div class="modal-body">
           <div class="row">
             <div class="col">
               <div
@@ -48,23 +51,28 @@
           </div>
           <div class="row mb-3">
             <div class="col">
-              <label for="checkin_date" class="form-label">Checkin Date:</label>
+              <label for="checkin_date" class="form-label small fw-bold me-2"
+                >Checkin Date</label
+              >
+              <span class="text-danger" v-if="formErrors.checkin_date">
+                required
+              </span>
               <input
                 type="datetime-local"
                 id="checkin_date"
                 v-model="contact.checkin_date"
                 :class="
                   formErrors.checkin_date
-                    ? 'is-invalid form-control'
-                    : 'form-control'
+                    ? 'is-invalid form-control form-control-sm'
+                    : 'form-control '
                 "
               />
-              <span class="text-danger" v-if="formErrors.checkin_date">
-                required
-              </span>
             </div>
             <div class="col">
-              <label class="form-label">Contact type:</label>
+              <label class="form-label small fw-bold me-2">Contact type</label>
+              <span class="text-danger" v-if="formErrors.contact_type">
+                required
+              </span>
               <select
                 aria-label="Contact type"
                 v-model="contact.contact_type"
@@ -83,41 +91,68 @@
                   {{ contactType.name }}
                 </option>
               </select>
+            </div>
+            <div class="col">
+              <label class="form-label small fw-bold me-2"
+                >Contact method:</label
+              >
               <span class="text-danger" v-if="formErrors.contact_type">
                 required
               </span>
+              <select
+                aria-label="Contact method"
+                v-model="contact.contact_method"
+                :class="
+                  formErrors.time ? 'is-invalid form-select' : 'form-select'
+                "
+              >
+                <option selected disabled :value="undefined">
+                  Choose one...
+                </option>
+                <option
+                  v-for="contactMethod in contactMethods"
+                  :key="contactMethod.id"
+                  :value="contactMethod.id"
+                >
+                  {{ contactMethod.name }}
+                </option>
+              </select>
             </div>
           </div>
           <div class="mb-3">
-            <label class="form-label">Topics Covered:</label>
+            <label class="form-label small fw-bold me-2">Topics Covered</label>
+            <span class="small text-muted">(choose all that apply)</span>
             <span class="text-danger" v-if="formErrors.contact_topics">
               required
             </span>
-            <div style="column-count: 3">
-              <div
-                class="form-check"
+            <ul class="list-inline">
+              <li
+                class="list-inline-item mb-1 me-1"
                 v-for="topic in contactTopics"
                 :key="topic.id"
               >
                 <input
                   type="checkbox"
                   v-model="contact.contact_topics"
-                  :class="
-                    formErrors.contact_topics
-                      ? 'is-invalid form-check-input'
-                      : 'form-check-input'
-                  "
+                  class="btn-check"
+                  :class="formErrors.contact_topics ? 'is-invalid' : ''"
                   :value="topic.id"
-                  :id="topic.id"
+                  :id="'#contactModal' + contactId + 'Topic' + topic.id"
+                  autocomplete="off"
                 />
-                <label class="form-check-label" :for="topic.id">{{
-                  topic.name
-                }}</label>
-              </div>
-            </div>
+                <label
+                  class="btn btn-sm btn-outline-dark-beige fs-9 rounded-pill"
+                  :for="'#contactModal' + contactId + 'Topic' + topic.id"
+                  >{{ topic.name }}</label
+                >
+              </li>
+            </ul>
           </div>
           <div class="mb-3">
-            <label for="notesTextarea" class="form-label">Notes</label>
+            <label for="notesTextarea" class="form-label small fw-bold me-2"
+              >Notes</label
+            >
+            <span class="text-danger" v-if="formErrors.notes"> required </span>
             <textarea
               :class="
                 formErrors.notes ? 'is-invalid form-control' : 'form-control'
@@ -126,11 +161,11 @@
               rows="3"
               v-model="contact.notes"
             ></textarea>
-            <span class="text-danger" v-if="formErrors.notes"> required </span>
           </div>
-
           <div class="mb-3">
-            <label for="actionsAndRecomendationsTextarea" class="form-label"
+            <label
+              for="actionsAndRecomendationsTextarea"
+              class="form-label small fw-bold me-2"
               >Actions and Recommmendations</label
             >
             <textarea
@@ -145,14 +180,14 @@
           <div class="text-end">
             <button
               type="button"
-              class="btn btn-secondary me-2"
+              class="btn btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2 me-2"
               data-bs-dismiss="modal"
             >
               Close
             </button>
             <button
               type="button"
-              class="btn btn-primary"
+              class="btn btn-sm btn-purple rounded-3 px-3 py-2"
               @click="saveContact()"
             >
               Save contact
@@ -189,6 +224,7 @@ export default {
   data() {
     return {
       contactTopics: [],
+      contactMethods: [],
       contactTypes: [],
       contact: this.getDefaultContact(),
       formErrors: {},
@@ -199,6 +235,7 @@ export default {
   created() {
     this.getContactTopics();
     this.getContactTypes();
+    this.getContactMethods();
   },
   mounted() {
     this.$refs.contactModal.addEventListener(
@@ -210,6 +247,7 @@ export default {
   methods: {
     getFormData() {
       if (this.contactId != null) {
+        console.log("getContact for given id: " + this.contactId);
         this.getContact(this.contactId);
       }
     },
@@ -271,11 +309,15 @@ export default {
           newContact.checkin_date =
             newContact.checkin_date.split(/\-(?=[^\-]+$)/)[0];
           newContact.contact_type = newContact.contact_type.id;
+          newContact.contact_method = newContact.contact_method.id;
           newContact.contact_topics = newContact.contact_topics.map(
             (ct) => ct.id
           );
           // update the current contact
           this.contact = newContact;
+
+          console.log("contact returned!");
+          console.log(this.contact);
         }
       });
     },
@@ -290,6 +332,13 @@ export default {
       this.getStudentContactTypes().then((response) => {
         if (response.data) {
           this.contactTypes = response.data;
+        }
+      });
+    },
+    getContactMethods() {
+      this.getStudentContactMethods().then((response) => {
+        if (response.data) {
+          this.contactMethods = response.data;
         }
       });
     },

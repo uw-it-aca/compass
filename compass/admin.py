@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from compass.models import AppUser, Student, AccessGroup, Program, Contact, \
-    ContactType, ContactTopic
+    ContactType, ContactMethod, ContactTopic
 from compass.dao.group import is_admin_user
 from django.contrib import admin
 from django.http import HttpResponseRedirect
@@ -52,6 +52,7 @@ admin_site.register(Student, SAMLAdminModel)
 admin_site.register(AccessGroup, SAMLAdminModel)
 admin_site.register(Program, SAMLAdminModel)
 admin_site.register(ContactType, SAMLAdminModel)
+admin_site.register(ContactMethod, SAMLAdminModel)
 admin_site.register(ContactTopic, SAMLAdminModel)
 admin_site.register(Contact, SAMLAdminModel)
 admin_site.register(TokenProxy, SAMLAdminModel)
