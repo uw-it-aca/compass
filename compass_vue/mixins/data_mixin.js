@@ -92,6 +92,12 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
+    getStudentAffiliations: async function (systemkey) {
+      return true;
+    },
+    saveStudentAffiliations: async function (systemkey) {
+      return true;
+    },
     getStudentContacts: async function (systemkey) {
       return axios.get(
         "/api/internal/student/" + systemkey + "/contacts/",
@@ -116,6 +122,13 @@ const dataMixin = {
     getStudentContactTypes: async function () {
       return axios.get(
         "/api/internal/contact/types/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    getStudentContactMethods: async function () {
+      return axios.get(
+        "/api/internal/contact/methods/",
         {},
         this._getAxiosConfig()
       );

@@ -6,7 +6,23 @@
       >
     </template>
     <template #body>
-      <div class="d-flex ps-2">
+      <div>
+        <p class="small">
+          This student is currently not eligible to use Instructional Center
+          resources. <span class="fw-bold">Would you like to grant access?</span>
+        </p>
+        <div class="text-end">
+          <button
+            type="button"
+            class="btn btn-sm btn-purple rounded-3 px-3 py-2"
+            @click="updateEligibility()"
+          >
+            <i class="bi bi-hand-thumbs-up me-1"></i>Approve
+          </button>
+        </div>
+      </div>
+
+      <div class="d-flex ps-2 mt-4">
         <div class="vr text-muted" aria-hidden="true"></div>
         <ul class="list-unstyled mb-0" style="margin-left: -11px; z-index: 1">
           <li class="d-flex mb-3">
@@ -78,6 +94,11 @@ export default {
   components: {
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
+  },
+  methods: {
+    updateEligibility() {
+      alert("please update my eligibility!");
+    },
   },
 };
 </script>

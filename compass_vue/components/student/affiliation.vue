@@ -4,8 +4,8 @@
       <axdd-card-heading :level="2">Affiliations</axdd-card-heading>
       <!-- need to change the button -->
       <axdd-card-action>
-        <AddEditContact :button-type="'button'" :person="person"
-          >Record new contact</AddEditContact
+        <EditAffiliation :button-type="'button'" :person="person"
+          >Edit Affiliations</EditAffiliation
         >
       </axdd-card-action>
     </template>

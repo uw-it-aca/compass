@@ -7,7 +7,7 @@
           :button-type="'button'"
           :person="person"
           @contactUpdated="loadStudentContacts()"
-          ><i class="bi bi-plus-square text-dark me-2"></i>Record new
+          ><i class="bi bi-calendar-plus text-dark me-2"></i>Record new
           contact</AddEditContact
         >
       </axdd-card-action>
@@ -20,30 +20,25 @@
               <tr>
                 <th class="ps-3">Checkin Date</th>
                 <th>Type</th>
+                <th>Method</th>
+                <th class="ps-3">Date</th>
                 <th>Details</th>
+                <th>&nbsp;</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="contact in contacts" :key="contact.id">
                 <td scope="row" class="ps-3" style="width: 25%">
-                  <p>
-                    {{ contact.checkin_date }}
-                    <br />
-                    {{ contact.app_user.uwnetid }} -
-                    <AddEditContact
-                      v-if="contact.app_user.uwnetid == userName"
-                      :button-type="'link'"
-                      :person="person"
-                      :contact-id="contact.id"
-                      @contactUpdated="loadStudentContacts()"
-                      >edit contact</AddEditContact
-                    >
-                  </p>
+                  <div>{{ contact.checkin_date }}</div>
+                  <div class="text-muted small">
+                    <i class="bi bi-person-circle me-1"></i
+                    >{{ contact.app_user.uwnetid }}
+                  </div>
                 </td>
                 <td class="align-bottom">
                   <span
                     class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-1"
-                    >{{ contact.contact_type.name }}</span
+                    >{{ contact.contact_method.name }}</span
                   >
                 </td>
                 <td class="align-bottom">
@@ -52,16 +47,12 @@
                     <p class="text-dark">
                       {{ contact.notes }}
                     </p>
+                    {{ contact.contact_type.name }}
                   </div>
-
-                  <div v-if="contact.actions">
-                    <span class="small text-muted">Actions</span>
-                    <p class="text-dark">
-                      {{ contact.actions }}
-                    </p>
-                  </div>
-
-                  <ul v-if="contact.contact_topics" class="list-unstyled m-0">
+                  <ul
+                    v-if="contact.contact_topics"
+                    class="list-unstyled mt-2 mb-0"
+                  >
                     <li
                       v-for="topic in contact.contact_topics"
                       :key="topic.id"
@@ -70,6 +61,35 @@
                       {{ topic.name }}
                     </li>
                   </ul>
+
+                  <div v-if="contact.notes" class="mt-3">
+                    <span class="small text-muted visually-hidden">Notes</span>
+                    <p class="text-dark small">
+                      {{ contact.notes }}
+                    </p>
+                  </div>
+                  <div
+                    v-if="contact.actions"
+                    class="border-top border-light pt-3"
+                  >
+                    <span class="small text-muted visually-hidden"
+                      >Actions</span
+                    >
+                    <p class="text-muted small">
+                      {{ contact.actions }}
+                    </p>
+                  </div>
+                </td>
+                <td class="p-3">
+                  <AddEditContact
+                    v-if="contact.app_user.uwnetid == userName"
+                    :button-type="'link'"
+                    :person="person"
+                    :contact-id="contact.id"
+                    @contactUpdated="loadStudentContacts()"
+                    ><i class="bi bi-pencil text-dark me-2"></i>Edit
+                    contact</AddEditContact
+                  >
                 </td>
               </tr>
             </tbody>
@@ -126,7 +146,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 tbody {
   td {
     padding-top: 1rem !important;

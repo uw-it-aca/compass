@@ -4,9 +4,10 @@
 from compass.views.api import BaseAPIView, JSONClientContentNegotiation, \
     TokenAPIView
 from compass.models import AccessGroup, AppUser, Contact, ContactTopic, \
-    ContactType, Student
+    ContactType, ContactMethod, Student
 from compass.serializers import ContactReadSerializer, \
-    ContactWriteSerializer, ContactTopicSerializer, ContactTypeSerializer
+    ContactWriteSerializer, ContactTopicSerializer, ContactTypeSerializer, \
+    ContactMethodSerializer
 from dateutil import parser
 from django.core.exceptions import PermissionDenied
 from django.conf import settings
@@ -108,6 +109,22 @@ class ContactTypesView(BaseAPIView):
         contact_types = ContactType.objects.filter(
             access_group__in=access_groups)
         serializer = ContactTypeSerializer(contact_types.all(), many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class ContactMethodsView(BaseAPIView):
+    '''
+    API endpoint returning a list of contacts for the user's access group
+
+    /api/internal/contact/methods/
+    '''
+
+    def get(self, request):
+        # only load contact methods for the users access groups
+        access_groups = self.get_access_groups(request)
+        contact_methods = ContactMethod.objects.filter(
+            access_group__in=access_groups)
+        serializer = ContactMethodSerializer(contact_methods.all(), many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
