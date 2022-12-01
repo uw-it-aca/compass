@@ -20,9 +20,9 @@
 
         <div class="row">
           <div class="row p-3">
-            <div class="col-8">
+            <div class="col-xl-8">
               Student Authorizes Release of Directory Information:
-              <span v-if="person.student.directory_release_ind" class="fw-bold"
+              <span v-if="!person.student.directory_release_ind" class="fw-bold"
                 >Yes
                 <div class="fw-normal text-secondary fs-7">
                   <a
@@ -50,8 +50,9 @@
                   >
                 </div>
               </span>
+              <div v-if="!mq.xlPlus" class="mb-4"></div>
             </div>
-            <div class="col-4">
+            <div class="col-xl-4">
               <div class="fs-6 text-secondary text-end">
                 <i class="bi bi-calendar-week"></i>
                 Autumn 2022
@@ -186,6 +187,7 @@ import TranscriptCredits from "../components/student/transcript-credits.vue";
 import SearchStudent from "../components/search-student.vue";
 
 export default {
+  inject: ["mq"],
   mixins: [dataMixin],
   components: {
     layout: Layout,

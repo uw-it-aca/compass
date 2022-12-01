@@ -4,8 +4,8 @@
       <axdd-card-heading :level="2">Affiliations</axdd-card-heading>
       <!-- need to change the button -->
       <axdd-card-action>
-        <EditAffiliation :button-type="'button'" :person="person"
-          >Record new contact</EditAffiliation
+        <AddEditContact :button-type="'button'" :person="person"
+          >Record new contact</AddEditContact
         >
       </axdd-card-action>
     </template>
@@ -62,12 +62,12 @@
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
 import { Card, CardHeading, CardAction } from "axdd-components";
-import EditAffiliation from "../edit-affiliation.vue";
+import AddEditContact from "../add-contact.vue";
 
 export default {
   mixins: [dataMixin],
   components: {
-    EditAffiliation,
+    AddEditContact,
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
     "axdd-card-action": CardAction,
