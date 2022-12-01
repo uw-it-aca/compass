@@ -5,7 +5,7 @@
       <!-- need to change the button -->
       <axdd-card-action>
         <EditAffiliation :button-type="'button'" :person="person"
-          >Record new contact</EditAffiliation
+          >Edit Affiliations</EditAffiliation
         >
       </axdd-card-action>
     </template>

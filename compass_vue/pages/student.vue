@@ -130,7 +130,10 @@
                       ></StudentAffiliations>
                     </div>
                     <div class="col-xl-3">
-                      <StudentVisits></StudentVisits>
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      Assumenda ab sunt iste, eaque similique odio alias
+                      aspernatur, ut quia totam quod magnam aliquam natus autem
+                      id recusandae odit? Sequi, incidunt?
                     </div>
                   </div>
                 </axdd-tabs-panel>
@@ -204,6 +207,7 @@ export default {
     StudentVisits,
     TranscriptCredits,
     StudentAffiliations,
+    SearchStudent
   },
   created: function () {
     this.loadStudent(this.$route.params.id);
