@@ -92,6 +92,8 @@
               <KeyValue>
                 <template #key>Ethnicity</template>
                 <template #value>
+                  {{ ethinicity.assigned_ethnic_code }},
+                  {{ ethinicity.assigned_ethnic_desc }},
                   {{ ethinicity.assigned_ethnic_group_desc }}
                 </template>
               </KeyValue>
