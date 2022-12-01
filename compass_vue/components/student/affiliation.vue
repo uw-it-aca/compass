@@ -4,10 +4,7 @@
       <axdd-card-heading :level="2">Affiliations</axdd-card-heading>
       <!-- need to change the button -->
       <axdd-card-action>
-        <EditAffiliation
-          :button-type="'button'"
-          :person="person"
-          @contactUpdated="loadStudentContacts()"
+        <EditAffiliation :button-type="'button'" :person="person"
           >Record new contact</EditAffiliation
         >
       </axdd-card-action>

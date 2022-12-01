@@ -27,7 +27,7 @@
                 <div class="fw-normal text-secondary fs-7">
                   <a
                     href="https://registrar.washington.edu/staffandfaculty/ferpa/"
-                    class="link-dark"
+                    class="link-dark fw-normal text-secondary fs-7"
                     target="_blank"
                   >
                     Learn More</a
