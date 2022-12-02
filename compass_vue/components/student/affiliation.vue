@@ -62,12 +62,12 @@
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
 import { Card, CardHeading, CardAction } from "axdd-components";
-import AddEditContact from "../add-contact.vue";
+import EditAffiliation from "../edit-affiliation.vue";
 
 export default {
   mixins: [dataMixin],
   components: {
-    AddEditContact,
+    EditAffiliation,
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
     "axdd-card-action": CardAction,

@@ -57,6 +57,8 @@
             </div>
             <div class="fs-6 text-end">Week 4 of 10</div>
           </div>
+        </div>
+      </div>
 
       <div class="row">
         <div class="col">
