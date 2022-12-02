@@ -18,9 +18,6 @@
           <table class="table m-0">
             <thead class="table-light text-muted small">
               <tr>
-                <th class="ps-3">Checkin Date</th>
-                <th>Type</th>
-                <th>Method</th>
                 <th class="ps-3">Date</th>
                 <th>Details</th>
                 <th>&nbsp;</th>
@@ -36,19 +33,18 @@
                   </div>
                 </td>
                 <td class="align-bottom">
-                  <span
-                    class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-1"
-                    >{{ contact.contact_method.name }}</span
+                  <div
+                    class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-2"
                   >
-                </td>
-                <td class="align-bottom">
-                  <div v-if="contact.notes">
-                    <span class="small text-muted">Notes</span>
-                    <p class="text-dark">
-                      {{ contact.notes }}
-                    </p>
                     {{ contact.contact_type.name }}
                   </div>
+
+                  <div
+                    class="badge rounded-pill alert alert-secondary border-0 px-2 py-1 m-0 me-1"
+                  >
+                    {{ contact.contact_method.name }}
+                  </div>
+
                   <ul
                     v-if="contact.contact_topics"
                     class="list-unstyled mt-2 mb-0"
