@@ -37,10 +37,15 @@
           ></button>
         </div>
         <div class="modal-body" v-if="affiliations">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio maiores
-          amet corrupti blanditiis rerum doloremque dolores laboriosam molestias
-          error, modi unde cumque tenetur ipsa illo illum eos perspiciatis
-          corporis iure.
+          <div>
+            <div class="form-label small fw-bold me-2">Cohort</div>
+          </div>
+          <div>
+            <div class="form-label small fw-bold me-2">Program</div>
+          </div>
+          <div>
+            <div class="form-label small fw-bold me-2">Affiliations</div>
+          </div>
         </div>
         <div class="modal-footer">
           <div class="text-end">
