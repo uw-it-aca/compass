@@ -22,9 +22,9 @@
             </li>
             <li>
               <KeyValue>
-                <template #key>Registration Hold</template>
+                <template #key>Enrollment Status Code</template>
                 <template #value>
-                  {{ person.student.registration_hold_ind }}
+                  {{ person.student.enroll_status_code }}
                 </template>
               </KeyValue>
             </li>
