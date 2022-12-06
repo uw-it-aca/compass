@@ -27,6 +27,7 @@ class CompassPersonClient(UWPersonClient):
              self.DB.Student.student_number,
              self.DB.Student.class_desc,
              self.DB.Student.registered_in_quarter,
+             self.DB.Student.registration_hold_ind,
              self.DB.Student.campus_desc,
              self.DB.Student.enroll_status_code).join(
             self.DB.Student).join(self.DB.StudentToAdviser).join(
@@ -45,8 +46,9 @@ class CompassPersonClient(UWPersonClient):
             student.student_numer = item[5]
             student.class_desc = item[6]
             student.registered_in_quarter = item[7]
-            student.campus_desc = item[8]
-            student.enroll_status_code = item[9]
+            student.registration_hold_ind = item[8]
+            student.campus_desc = item[9]
+            student.enroll_status_code = item[10]
             person.student = student
             persons.append(person)
         return persons
