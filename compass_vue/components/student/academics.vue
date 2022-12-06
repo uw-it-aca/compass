@@ -30,14 +30,6 @@
             </li>
             <li>
               <KeyValue>
-                <template #key>Enrollment Status Code</template>
-                <template #value>
-                  {{ person.student.enroll_status_code }}
-                </template>
-              </KeyValue>
-            </li>
-            <li>
-              <KeyValue>
                 <template #key>Class standing</template>
                 <template #value>{{ person.student.class_desc }}</template>
               </KeyValue>

@@ -23,10 +23,10 @@
                 {{ person.student.registered_in_quarter }}
               </li>
               <li>
-                Registration Hold: {{ person.student.registration_hold_ind }}
+                Enrollment Status Code: {{ person.student.enroll_status_code }}
               </li>
               <li>
-                Enrollment Status Code: {{ person.student.enroll_status_code }}
+                Registration Hold: {{ person.student.registration_hold_ind }}
               </li>
             </ul>
           </td>
