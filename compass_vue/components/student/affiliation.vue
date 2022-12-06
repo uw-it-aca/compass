@@ -19,7 +19,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr class="border border-white">
               <td scope="row" class="ps-3" style="width: 25%">Cohort</td>
               <td colspan="2">
                 <span
@@ -28,7 +28,7 @@
                 >
               </td>
             </tr>
-            <tr>
+            <tr class="border border-white">
               <td scope="row" class="ps-3" style="width: 25%">Program</td>
               <td colspan="2">
                 <span
