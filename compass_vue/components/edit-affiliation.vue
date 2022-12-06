@@ -47,6 +47,7 @@
             <div class="form-label small fw-bold me-2">Affiliations</div>
           </div>
         </div>
+
         <div class="modal-footer">
           <div class="text-end">
             <button
