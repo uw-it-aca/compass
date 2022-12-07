@@ -61,7 +61,17 @@
             <p class="fw-bold">Registration Holds</p>
             <ul>
               <li>
-                Registration Hold: {{ person.student.registration_hold_ind }}
+                Registration Hold:
+
+                <span
+                  class="badge"
+                  :class="
+                    person.student.registration_hold_ind
+                      ? 'text-bg-danger'
+                      : 'text-bg-light-gray'
+                  "
+                  >{{ person.student.registration_hold_ind }}</span
+                >
               </li>
               <li>
                 Office Hold Name: {{ person.student.hold_office_name_combined }}

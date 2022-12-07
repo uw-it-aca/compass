@@ -20,13 +20,31 @@
             <ul>
               <li>
                 Registered in quarter:
-                {{ person.student.registered_in_quarter }}
+                <span
+                  class="badge"
+                  :class="
+                    !person.student.registered_in_quarter
+                      ? 'text-bg-danger'
+                      : 'text-bg-light-gray'
+                  "
+                >
+                  {{ person.student.registered_in_quarter }}
+                </span>
               </li>
               <li>
                 Enrollment Status Code: {{ person.student.enroll_status_code }}
               </li>
               <li>
-                Registration Hold: {{ person.student.registration_hold_ind }}
+                Registration Hold:
+                <span
+                  class="badge"
+                  :class="
+                    person.student.registration_hold_ind
+                      ? 'text-bg-danger'
+                      : 'text-bg-light-gray'
+                  "
+                  >{{ person.student.registration_hold_ind }}
+                </span>
               </li>
             </ul>
           </td>
