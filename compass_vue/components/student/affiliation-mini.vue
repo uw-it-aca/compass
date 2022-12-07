@@ -5,9 +5,20 @@
     </template>
     <template #body>
       <div>
-        <div class="fs-7 text fw-bold text-secondary">Cohort</div>
-        <div class="fs-7 text fw-bold text-secondary">Programs</div>
-        <div class="fs-7 text fw-bold text-secondary">Affiliations</div>
+        <div class="fs-7 text fw-bold text-secondary">
+          Cohort
+          <div></div>
+        </div>
+        <div class="fs-7 text fw-bold text-secondary">
+          Programs
+          <div></div>
+        </div>
+        <div class="fs-7 text fw-bold text-secondary">
+          Affiliations
+          <div class="ms-3">
+            <li></li>
+          </div>
+        </div>
       </div>
     </template>
   </axdd-card>
