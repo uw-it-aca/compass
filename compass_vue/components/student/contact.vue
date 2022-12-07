@@ -45,7 +45,7 @@
                   </div>
 
                   <div
-                    class="badge rounded-pill alert alert-secondary border-0 px-2 py-1 m-0 me-1"
+                    class="badge rounded-pill alert alert-light-gray border-0 px-2 py-1 m-0 me-1"
                   >
                     {{ contact.contact_method.name }}
                   </div>
@@ -80,14 +80,13 @@
                       {{ contact.actions }}
                     </p>
                   </div>
-                  <div
-                    v-if="contact.contact_type.name == 'Parent'"
-                    class="border-top border-light pt-3"
-                  >
+                  <div v-if="contact.contact_type.name == 'Parent'">
                     <span class="small text-muted visually-hidden">Parent</span>
-                    <p class="text-danger small">
-                      Note: Parental contacts should be treated as private. Do not discuss with student.
-                    </p>
+                    <div class="text-danger fs-8">
+                      <i class="bi bi-exclamation-octagon-fill me-1"></i>Parent
+                      contacts should be treated as private. Do not discuss this
+                      contact with their student.
+                    </div>
                   </div>
                 </td>
                 <td class="p-3">
