@@ -28,5 +28,15 @@
    "slug": "workshop",
    "active": true
   }
+ },
+ {
+  "model": "compass.contacttype",
+  "pk": 4,
+  "fields": {
+   "access_group": 1,
+   "name": "Parent",
+   "slug": "parent",
+   "active": true
+  }
  }
 ]

@@ -34,7 +34,12 @@
                 </td>
                 <td class="align-bottom">
                   <div
-                    class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-2"
+                    class="badge rounded-pill alert border-0 px-2 py-1 m-0 me-2"
+                    :class="
+                      contact.contact_type.name == 'Parent'
+                        ? 'alert-danger'
+                        : 'alert-dark-purple'
+                    "
                   >
                     {{ contact.contact_type.name }}
                   </div>
@@ -73,6 +78,15 @@
                     >
                     <p class="text-muted small">
                       {{ contact.actions }}
+                    </p>
+                  </div>
+                  <div
+                    v-if="contact.contact_type.name == 'Parent'"
+                    class="border-top border-light pt-3"
+                  >
+                    <span class="small text-muted visually-hidden">Parent</span>
+                    <p class="text-danger small">
+                      Note: Parental contacts should be treated as private. Do not discuss with student.
                     </p>
                   </div>
                 </td>

@@ -28,5 +28,15 @@
     "slug": "video-conference",
     "active": true
    }
-  }
+  },
+  {
+    "model": "compass.contactmethod",
+    "pk": 4,
+    "fields": {
+     "access_group": 1,
+     "name": "E-mail",
+     "slug": "e-mail",
+     "active": true
+    }
+   }
  ]
