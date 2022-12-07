@@ -108,7 +108,7 @@
                     <StudentAdviser
                       :advisers="person.student.advisers"
                     ></StudentAdviser>
-                    <StudentPrograms :person="person"></StudentPrograms>
+                    <StudentAffiliations></StudentAffiliations>
                   </div>
                 </div>
               </axdd-tabs-panel>
@@ -179,6 +179,7 @@ import StudentContact from "../components/student/contact.vue";
 import StudentSchedule from "../components/student/schedule.vue";
 import StudentAdviser from "../components/student/adviser.vue";
 import StudentPrograms from "../components/student/programs.vue";
+import StudentAffiliations from "../components/student/affiliation-mini.vue";
 import StudentVisits from "../components/student/visits.vue";
 import TranscriptCredits from "../components/student/transcript-credits.vue";
 import SearchStudent from "../components/search-student.vue";
@@ -201,6 +202,7 @@ export default {
     StudentPrograms,
     StudentVisits,
     TranscriptCredits,
+    StudentAffiliations,
     SearchStudent,
   },
   created: function () {
