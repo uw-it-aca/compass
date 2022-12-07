@@ -24,8 +24,8 @@
   "pk": 3,
   "fields": {
    "access_group": 1,
-   "name": "Workshop",
-   "slug": "workshop",
+   "name": "Event/Workshop",
+   "slug": "event-workshop",
    "active": true
   }
  },
