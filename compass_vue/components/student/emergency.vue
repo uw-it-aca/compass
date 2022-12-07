@@ -38,8 +38,6 @@
 </template>
 
 <script>
-import { Card, CardHeading } from "axdd-components";
-
 export default {
   props: {
     person: {
@@ -47,9 +45,6 @@ export default {
       required: true,
     },
   },
-  components: {
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
-  },
+  components: {},
 };
 </script>

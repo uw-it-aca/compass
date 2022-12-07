@@ -109,27 +109,10 @@
 
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
-import {
-  Card,
-  CardHeading,
-  CardTabs,
-  TabsList,
-  TabsDisplay,
-  TabsItem,
-  TabsPanel,
-} from "axdd-components";
 
 export default {
   mixins: [dataMixin],
-  components: {
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
-    "axdd-card-tabs": CardTabs,
-    "axdd-tabs-list": TabsList,
-    "axdd-tabs-display": TabsDisplay,
-    "axdd-tabs-item": TabsItem,
-    "axdd-tabs-panel": TabsPanel,
-  },
+  components: {},
   props: {
     person: {
       type: Object,

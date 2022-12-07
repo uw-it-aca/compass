@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import { Sidebar, Profile } from "axdd-components";
 import NavMenu from "./components/nav-menu.vue";
 import NavMessage from "./components/nav-message.vue";
 import dataMixin from "./mixins/data_mixin.js";
@@ -50,8 +49,6 @@ export default {
   name: "CompassApp",
   mixins: [dataMixin],
   components: {
-    "axdd-sidebar": Sidebar,
-    "axdd-profile": Profile,
     NavMenu,
     NavMessage,
   },
