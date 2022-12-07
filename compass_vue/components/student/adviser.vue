@@ -13,7 +13,7 @@
         >
           <li>
             <div class="d-flex">
-              <i class="bi bi-person-circle text-gray me-3"></i>
+              <i class="bi bi-person-square text-gray me-3"></i>
               <div class="flex-fill">
                 <strong>{{ adviser.display_name }}</strong> ({{
                   adviser.uwnetid
