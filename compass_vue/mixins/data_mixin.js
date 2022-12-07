@@ -120,6 +120,13 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
+    getStudentContactMethods: async function () {
+      return axios.get(
+        "/api/internal/contact/methods/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
     getAdviserCaseload: async function (adviserNetId) {
       return axios.get(
         "/api/internal/adviser/" + adviserNetId + "/caseload/",

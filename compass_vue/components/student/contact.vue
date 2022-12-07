@@ -34,10 +34,17 @@
                 </td>
                 <td class="align-bottom">
                   <div
-                    class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0"
+                    class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-2"
                   >
                     {{ contact.contact_type.name }}
                   </div>
+
+                  <div
+                    class="badge rounded-pill alert alert-secondary border-0 px-2 py-1 m-0 me-1"
+                  >
+                    {{ contact.contact_method.name }}
+                  </div>
+
                   <ul
                     v-if="contact.contact_topics"
                     class="list-unstyled mt-2 mb-0"

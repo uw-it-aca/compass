@@ -1,9 +1,9 @@
 # Copyright 2022 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.models import ContactTopic, ContactType, Program
+from compass.models import ContactTopic, ContactType, ContactMethod, Program
 from compass.serializers import ProgramSerializer, ContactTopicSerializer, \
-    ContactTypeSerializer
+    ContactTypeSerializer, ContactMethodSerializer
 from compass.views.api import BaseAPIView
 from django.core.exceptions import PermissionDenied
 from rest_framework.response import Response
@@ -43,6 +43,12 @@ class SettingsView(BaseAPIView):
                     ContactType.objects.filter(access_group=access_group.id),
                     many=True)
                 group_settings = contact_type_serializer.data
+            elif setting_type == "contact_method":
+                # contact methods
+                contact_type_serializer = ContactMethodSerializer(
+                    ContactMethod.objects.filter(access_group=access_group.id),
+                    many=True)
+                group_settings = contact_type_serializer.data
             else:
                 return Response(f"Unknown setting type '{setting_type}'",
                                 status=status.HTTP_400_BAD_REQUEST)
@@ -76,6 +82,9 @@ class SettingsView(BaseAPIView):
             elif setting_type == "contact_type":
                 SETTING_MODEL_CLS = ContactType
                 SETTING_SERIALIZER_CLS = ContactTypeSerializer
+            elif setting_type == "contact_Method":
+                SETTING_MODEL_CLS = ContactMethod
+                SETTING_SERIALIZER_CLS = ContactMethodSerializer
 
             # save each setting
             setting_saves = []

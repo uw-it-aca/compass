@@ -17,7 +17,7 @@
         </div>
       </div>
 
-      <div class="row my-4">
+      <div class="row my-5">
         <div class="col-9">
           <div>
             Student Authorizes Release of Directory Information:
@@ -54,6 +54,22 @@
               Autumn 2022
             </div>
             <div class="text-end fw-bold">Week 4 of 10</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="mt-3">
+            <p class="fw-bold">Registration Holds</p>
+            <ul>
+              <li>
+                Registration Hold: {{ person.student.registration_hold_ind }}
+              </li>
+              <li>
+                Office Hold Name: {{ person.student.hold_office_name_combined }}
+              </li>
+              <li>
+                Hold reason desc: {{ person.student.hold_reason_desc_combined }}
+              </li>
+            </ul>
           </div>
         </div>
       </div>
