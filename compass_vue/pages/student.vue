@@ -21,7 +21,7 @@
         <div class="row p-3">
           <div class="col-xl-8">
             Student Authorizes Release of Directory Information:
-            <span v-if="!person.student.directory_release_ind" class="fw-bold"
+            <span v-if="person.student.directory_release_ind" class="fw-bold"
               >Yes
               <div class="fw-normal text-secondary fs-7">
                 <a
