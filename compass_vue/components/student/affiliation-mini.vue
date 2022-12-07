@@ -14,7 +14,7 @@
           <div></div>
         </div>
         <div class="fs-7 text fw-bold text-secondary">
-          Affiliations
+          External
           <div class="ms-3">
             <li></li>
           </div>
