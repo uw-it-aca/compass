@@ -70,7 +70,6 @@
 
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
-import { Card, CardHeading } from "axdd-components";
 
 export default {
   mixins: [dataMixin],
@@ -80,10 +79,7 @@ export default {
       required: true,
     },
   },
-  components: {
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
-  },
+  components: {},
   data() {
     return {
       groupedPrograms: {},

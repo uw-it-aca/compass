@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import { Card, CardHeading } from "axdd-components";
 import SearchStudent from "../components/search-student.vue";
 import CaseloadTableDisplay from "../components/caseload-table-display.vue";
 import CaseloadTableLoading from "../components/caseload-table-loading.vue";
@@ -55,8 +54,6 @@ export default {
     "search-student": SearchStudent,
     "table-display": CaseloadTableDisplay,
     "table-loading": CaseloadTableLoading,
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
   },
   data() {
     return {

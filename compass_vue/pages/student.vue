@@ -166,11 +166,8 @@
 </template>
 
 <script>
-import { TabsList, TabsDisplay, TabsItem, TabsPanel } from "axdd-components";
-
 import Layout from "../layout.vue";
 import dataMixin from "../mixins/data_mixin.js";
-
 import StudentProfile from "../components/student/profile.vue";
 import StudentAcademics from "../components/student/academics.vue";
 import StudentTranscript from "../components/student/transcript.vue";
@@ -187,10 +184,6 @@ export default {
   mixins: [dataMixin],
   components: {
     layout: Layout,
-    "axdd-tabs-list": TabsList,
-    "axdd-tabs-display": TabsDisplay,
-    "axdd-tabs-item": TabsItem,
-    "axdd-tabs-panel": TabsPanel,
     StudentProfile,
     StudentAcademics,
     StudentTranscript,

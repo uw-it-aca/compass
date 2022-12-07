@@ -19,8 +19,6 @@
 </template>
 
 <script>
-import { Card, CardHeading } from "axdd-components";
-
 export default {
   props: {
     student: {
@@ -28,10 +26,7 @@ export default {
       required: true,
     },
   },
-  components: {
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
-  },
+  components: {},
   data() {
     return {};
   },

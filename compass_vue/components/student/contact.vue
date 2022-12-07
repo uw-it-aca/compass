@@ -101,16 +101,12 @@
 
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
-import { Card, CardHeading, CardAction } from "axdd-components";
 import AddEditContact from "../add-contact.vue";
 
 export default {
   mixins: [dataMixin],
   components: {
     AddEditContact,
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
-    "axdd-card-action": CardAction,
   },
   props: {
     person: {
