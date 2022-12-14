@@ -69,7 +69,9 @@ export default {
     };
   },
   created: function () {
-    this.loadAdviserCaseload(this.adviserNetId);
+    setTimeout(() => {
+      this.loadAdviserCaseload(this.adviserNetId);
+    }, 2000);
   },
   methods: {
     loadAdviserCaseload: function (netid) {
