@@ -16,7 +16,7 @@
       Search
     </button>
   </div>
-  <div v-if="!studentExists">No student found</div>
+  <div v-if="!studentExists || error" class="text-danger mt-2">No student found</div>
 </template>
 
 <script>
@@ -24,6 +24,13 @@ import dataMixin from "../mixins/data_mixin.js";
 
 export default {
   mixins: [dataMixin],
+  props: {
+    error: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+  },
   data() {
     return {
       studentExists: true,
@@ -34,7 +41,10 @@ export default {
     searchByStudent: function () {
       this.getStudentDetail(this.searchValue)
         .then(() => {
-          this.$router.push("/student/" + this.searchValue);
+          console.log(this.searchValue);
+          this.studentExists = true;
+          //this.$router.push("/student/" + this.searchValue);
+          window.location.href = "/student/" + this.searchValue;
         })
         .catch(() => {
           this.studentExists = false;

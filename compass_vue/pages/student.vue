@@ -15,7 +15,7 @@
               <div class="col-xl-4 ms-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
-                  <SearchStudent></SearchStudent>
+                  <SearchStudent :error="isError"></SearchStudent>
                 </div>
               </div>
               <div class="col-4"></div>
@@ -167,7 +167,6 @@
           </div>
         </div>
       </div>
-      <div v-else-if="isError">Error occurred...</div>
     </template>
   </layout>
 </template>
@@ -243,12 +242,13 @@ export default {
           if (response.data) {
             this.person = response.data;
             this.isLoading = false;
+            this.isError = false;
           }
         })
         .catch((error) => {
           this.isLoading = false;
           this.isError = true;
-          console.log("error occured");
+          console.log("error occured: " + error);
         });
     },
   },
