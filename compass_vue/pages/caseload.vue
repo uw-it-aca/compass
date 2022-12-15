@@ -4,7 +4,7 @@
     <template #content>
       <div class="row my-4 small">
         <div class="col">
-          <div class="bg-gray p-3 rounded-3">
+          <div class="bg-light p-3 rounded-3">
             <div class="row">
               <div class="col-xl-4 ms-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>

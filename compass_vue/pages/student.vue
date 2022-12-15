@@ -1,16 +1,19 @@
 // about.vue
 
 <template>
-  <layout :page-title="'Student'">
+  <layout :page-title="'Student Search'">
     <template #title>
       <h1 class="visually-hidden">
-        {{ person.display_name }}
+        <template v-if="$route.params.id && person.display_name !== undefined">
+          {{ person.display_name }}
+        </template>
+        <template v-else>Student Search</template>
       </h1>
     </template>
     <template #content>
       <div v-show="!$route.params.id || isError" class="row my-4 small">
         <div class="col">
-          <div class="bg-gray p-3 rounded-3">
+          <div class="bg-light p-3 rounded-3">
             <div class="row">
               <div class="col-xl-4 ms-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
@@ -25,7 +28,15 @@
         </div>
       </div>
 
-      <div v-if="isLoading">Loading....</div>
+      <div v-if="isLoading">
+        <div class="row my-4">
+          <div class="col">
+            <div class="bg-light rounded-3 border-0 p-4 m-0">
+              <StudentProfileLoading></StudentProfileLoading>
+            </div>
+          </div>
+        </div>
+      </div>
       <div v-else-if="$route.params.id && person.display_name !== undefined">
         <div class="row my-4">
           <div class="col">
@@ -175,6 +186,7 @@
 import Layout from "../layout.vue";
 import dataMixin from "../mixins/data_mixin.js";
 import StudentProfile from "../components/student/profile.vue";
+import StudentProfileLoading from "../components/student/profile-loading.vue";
 import StudentAcademics from "../components/student/academics.vue";
 import StudentTranscript from "../components/student/transcript.vue";
 import StudentTranscriptCredits from "../components/student/transcript-credits.vue";
@@ -192,6 +204,7 @@ export default {
   components: {
     layout: Layout,
     StudentProfile,
+    StudentProfileLoading,
     StudentAcademics,
     StudentTranscript,
     StudentTranscriptCredits,
