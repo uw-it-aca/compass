@@ -16,7 +16,9 @@
       Search
     </button>
   </div>
-  <div v-if="!studentExists || error" class="text-danger mt-2">No student found</div>
+  <div v-if="!studentExists || error" class="text-danger mt-2">
+    No student found
+  </div>
 </template>
 
 <script>

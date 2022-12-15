@@ -1,7 +1,7 @@
 // about.vue
 
 <template>
-  <layout :page-title="person.display_name">
+  <layout :page-title="'Student'">
     <template #title>
       <h1 class="visually-hidden">
         {{ person.display_name }}
@@ -243,6 +243,9 @@ export default {
             this.person = response.data;
             this.isLoading = false;
             this.isError = false;
+
+            // programatically update page title with student name
+            document.title = this.person.display_name + " - Compass";
           }
         })
         .catch((error) => {
