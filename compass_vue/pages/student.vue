@@ -31,13 +31,16 @@
       <div v-if="isLoading">
         <div class="row my-4">
           <div class="col">
-            <div class="bg-light rounded-3 border-0 p-4 m-0">
-              <StudentProfileLoading></StudentProfileLoading>
-            </div>
+            <StudentProfileLoading></StudentProfileLoading>
           </div>
         </div>
       </div>
       <div v-else-if="$route.params.id && person.display_name !== undefined">
+        <div class="row my-4">
+          <div class="col">
+            <StudentProfileLoading></StudentProfileLoading>
+          </div>
+        </div>
         <div class="row my-4">
           <div class="col">
             <StudentProfile :person="person"></StudentProfile>
