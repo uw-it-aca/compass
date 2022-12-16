@@ -222,7 +222,7 @@ export default {
       this.isLoading = true;
       setTimeout(() => {
         this.loadStudent(this.$route.params.id);
-      }, 2000);
+      }, 3000);
     }
   },
   data() {
