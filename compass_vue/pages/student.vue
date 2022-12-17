@@ -38,11 +38,6 @@
       <div v-else-if="$route.params.id && person.display_name !== undefined">
         <div class="row my-4">
           <div class="col">
-            <StudentProfileLoading></StudentProfileLoading>
-          </div>
-        </div>
-        <div class="row my-4">
-          <div class="col">
             <StudentProfile :person="person"></StudentProfile>
           </div>
         </div>
