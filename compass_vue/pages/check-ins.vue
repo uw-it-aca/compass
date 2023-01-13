@@ -59,7 +59,9 @@ export default {
     },
   },
   mounted() {
-    this.loadAdviserContactsList(this.userNetId);
+    setTimeout(() => {
+      this.loadAdviserContactsList(this.userNetId);
+    }, 2000);
   },
 };
 </script>
