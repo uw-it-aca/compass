@@ -37,7 +37,7 @@
               <td colspan="5" class="">
                 <ul class="list-unstyled">
                   <li>QTR ATTEMPTED: {{ transcript.qtr_graded_attmp }}</li>
-                  <li>QTR EARNED: {{ transcript.qtr_grade_points }}</li>
+                  <li>QTR Grade Points EARNED: {{ transcript.qtr_grade_points }}</li>
                   <li>Number of Courses: {{ transcript.num_courses }}</li>
                 </ul>
                 <ul class="list-unstyled">

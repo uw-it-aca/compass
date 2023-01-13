@@ -107,6 +107,21 @@
                   {{ person.student.hold_reason_desc_combined }}
                 </li>
               </ul>
+
+              <p class="fw-bold">Misc/Graduation Application Status</p>
+              <ul>
+                <li>
+                  Applied to grad qtr:
+                  {{ person.student.applied_to_graduate_yr_qtr_id }}
+                </li>
+                <li>
+                  Applied to grad qtr desc:
+                  {{ person.student.applied_to_graduate_yr_qtr_desc }}
+                </li>
+                <li>
+                  Last enrolled: {{ person.student.last_enrolled_yr_qtr_desc }}
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -218,9 +233,9 @@ export default {
   created: function () {
     if (this.$route.params.id) {
       this.isLoading = true;
-      setTimeout(() => {
-        this.loadStudent(this.$route.params.id);
-      }, 3000);
+      //setTimeout(() => {
+      this.loadStudent(this.$route.params.id);
+      //}, 3000);
     }
   },
   data() {
