@@ -56,9 +56,6 @@ environmentVariables:
   - name: ENV
     value: test
 
-  - name: SESSION_BACKEND
-    value: MEMCACHED
-
   - name: SWS_ENV
     value: PROD
   - name: SWS_TIMEOUT

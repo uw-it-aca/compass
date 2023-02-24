@@ -78,6 +78,18 @@ else:
     COMPASS_SUPPORT_GROUP = os.getenv('SUPPORT_GROUP', '')
     OMAD_ACCESS_GROUP_ID = os.getenv('OMAD_ACCESS_GROUP_ID', '')
 
+    # Django cache backend for the idcard tokens
+    CACHES = {
+        'default': {
+            'BACKEND': 'memcached_clients.django_backend.PymemcacheCache',
+            'LOCATION': MEMCACHED_SERVERS,
+            'OPTIONS': {
+                'use_pooling': MEMCACHED_USE_POOLING,
+                'max_pool_size': MEMCACHED_MAX_POOL_SIZE,
+            }
+        }
+    }
+
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
 
 # Where the back link should go, and how it's labeled.
