@@ -49,18 +49,6 @@ TEMPLATES = [
 # If you have file data, define the path here
 DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 
-# Django cache backend for the idcard tokens
-CACHES = {
-    'default': {
-        'BACKEND': 'memcached_clients.django_backend.PymemcacheCache',
-        'LOCATION': MEMCACHED_SERVERS,
-        'OPTIONS': {
-            'use_pooling': MEMCACHED_USE_POOLING,
-            'max_pool_size': MEMCACHED_MAX_POOL_SIZE,
-        }
-    }
-}
-
 if os.getenv("ENV") == "localdev":
     DEBUG = True
     RESTCLIENTS_DAO_CACHE_CLASS = None
@@ -89,6 +77,18 @@ else:
     COMPASS_ADMIN_GROUP = os.getenv('ADMIN_GROUP', '')
     COMPASS_SUPPORT_GROUP = os.getenv('SUPPORT_GROUP', '')
     OMAD_ACCESS_GROUP_ID = os.getenv('OMAD_ACCESS_GROUP_ID', '')
+
+    # Django cache backend for the idcard tokens
+    CACHES = {
+        'default': {
+            'BACKEND': 'memcached_clients.django_backend.PymemcacheCache',
+            'LOCATION': MEMCACHED_SERVERS,
+            'OPTIONS': {
+                'use_pooling': MEMCACHED_USE_POOLING,
+                'max_pool_size': MEMCACHED_MAX_POOL_SIZE,
+            }
+        }
+    }
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
 
