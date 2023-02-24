@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.urls import re_path, include
+from django.urls import re_path
 from compass.admin import admin_site
 from django.conf import settings
 from django.views.generic import TemplateView
@@ -110,7 +110,6 @@ urlpatterns += [
     ),
     # vue-router paths
     re_path(r"^(student|caseload|reports|settings).*$", LandingView.as_view()),
-    re_path(r'^saml/', include('uw_saml.urls')),
     # default landing
     re_path(r"^$", LandingView.as_view(), name="index"),
 ]
