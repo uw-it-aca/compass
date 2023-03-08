@@ -35,11 +35,14 @@
                 <td class="align-bottom">
                   <div
                     class="badge rounded-pill alert border-0 px-2 py-1 m-0 me-2"
-                    :class="
+                    :class="[
                       contact.contact_type.name == 'Parent'
                         ? 'alert-danger'
-                        : 'alert-dark-purple'
-                    "
+                        : 'foo',
+                      contact.contact_type.name == 'Admin'
+                        ? 'alert-success'
+                        : 'bar',
+                    ]"
                   >
                     {{ contact.contact_type.name }}
                   </div>

@@ -38,5 +38,15 @@
    "slug": "parent",
    "active": true
   }
+ },
+ {
+  "model": "compass.contacttype",
+  "pk": 5,
+  "fields": {
+   "access_group": 1,
+   "name": "Admin",
+   "slug": "admin",
+   "active": true
+  }
  }
 ]
