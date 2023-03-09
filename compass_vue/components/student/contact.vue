@@ -33,20 +33,28 @@
                   </div>
                 </td>
                 <td class="align-bottom">
-                  <div
-                    class="badge rounded-pill alert border-0 px-2 py-1 m-0 me-2"
-                    :class="[
-                      contact.contact_type.name == 'Parent'
-                        ? 'alert-danger'
-                        : 'foo',
-                      contact.contact_type.name == 'Admin'
-                        ? 'alert-success'
-                        : 'bar',
-                    ]"
-                  >
-                    {{ contact.contact_type.name }}
-                  </div>
 
+                  <template v-if="contact.contact_type.name == 'Parent'">
+                    <div
+                      class="badge rounded-pill alert alert-danger border-0 px-2 py-1 m-0 me-2"
+                    >
+                      {{ contact.contact_type.name }}
+                    </div>
+                  </template>
+                  <template v-else-if="contact.contact_type.name == 'Admin'">
+                    <div
+                      class="badge rounded-pill alert alert-primary border-0 px-2 py-1 m-0 me-2"
+                    >
+                      {{ contact.contact_type.name }}
+                    </div>
+                  </template>
+                  <template v-else>
+                    <div
+                      class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-2"
+                    >
+                      {{ contact.contact_type.name }}
+                    </div>
+                  </template>
                   <div
                     class="badge rounded-pill alert alert-light-gray border-0 px-2 py-1 m-0 me-1"
                   >
@@ -89,6 +97,12 @@
                       <i class="bi bi-exclamation-octagon-fill me-1"></i>Parent
                       contacts should be treated as private. Do not discuss this
                       contact with their student.
+                    </div>
+                  </div>
+                  <div v-if="contact.contact_type.name == 'Admin'">
+                    <span class="small text-muted visually-hidden">Admin</span>
+                    <div class="text-primary fs-8">
+                      <i class="bi bi-exclamation-octagon-fill me-1"></i>This is an admin note
                     </div>
                   </div>
                 </td>
