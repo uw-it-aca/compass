@@ -13,9 +13,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from uw_person_client import UWPersonClient
 from uw_person_client.exceptions import PersonNotFoundException
-from uw_sws.term import get_current_term, get_next_term, get_term_after, \
-    get_term_by_year_and_quarter
+from uw_sws.term import (
+    get_current_term, get_next_term, get_term_after,
+    get_term_by_year_and_quarter)
 from uw_sws.registration import get_schedule_by_regid_and_term
+from uw_sws.enrollment import enrollment_search_by_regid
 
 
 class StudentView(BaseAPIView):
@@ -121,23 +123,16 @@ class StudentTranscriptsView(BaseAPIView):
         client = UWPersonClient()
         person = client.get_person_by_uwregid(uwregid)
 
-        quarter_definitions = {
-            1: "Winter",
-            2: "Spring",
-            3: "Summer",
-            4: "Autumn",
-        }
+        try:
+            enrollments = enrollment_search_by_regid(uwregid)
+        except DataFailureException as err:
+            raise
+
+        qtr_sort = {"winter": 1, "spring": 2, "summer": 3, "autumn": 4}
 
         transcripts = []
-        for transcript in person.student.transcripts:
-            term = get_term_by_year_and_quarter(
-                transcript.tran_term.year,
-                quarter_definitions[transcript.tran_term.quarter])
-            try:
-                class_schedule = get_schedule_by_regid_and_term(
-                    uwregid, term)
-                transcript.class_schedule = class_schedule.json_data()
-            except DataFailureException:
-                transcript.class_schedule = None
-            transcripts.append(transcript.to_dict())
+        for enrollment in sorted(enrollments.values(), key=lambda e: (
+                e.term.year, qtr_sort[e.term.quarter.lower()]), reverse=True):
+            transcripts.append(enrollment.json_data())
+
         return JsonResponse(transcripts, safe=False)
