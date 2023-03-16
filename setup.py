@@ -31,7 +31,7 @@ setup(
         'Django-SupportTools~=3.6',
         'UW-RestClients-Django-Utils~=2.3',
         'djangorestframework~=3.12',
-        'UW-RestClients-SWS~=2.3',
+        'UW-RestClients-SWS~=2.4',
         'UW-RestClients-GWS~=2.3',
         'UW-RestClients-PWS~=2.1',
         'UW-Django-SAML2~=1.7',
