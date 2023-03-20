@@ -110,3 +110,96 @@ UW_PERSON_DB_PORT = os.getenv('UW_PERSON_DB_PORT', '')
 
 # IDCard photo config
 IDCARD_TOKEN_EXPIRES = 60 * 60
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'info_only': {
+            '()': 'compass.log.InfoFilter'
+        },
+        'add_user': {
+            '()': 'compass.log.UserFilter'
+        },
+        'stdout_stream': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': lambda record: record.levelno < logging.WARNING
+        },
+        'stderr_stream': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': lambda record: record.levelno > logging.ERROR
+        }
+    },
+    'formatters': {
+        'compass': {
+            'format': '%(levelname)-4s %(asctime)s %(user)s %(actas)s %(message)s [%(name)s]',
+            'datefmt': '[%Y-%m-%d %H:%M:%S]',
+        },
+        'restclients_timing': {
+            'format': '%(levelname)-4s restclients_timing %(module)s %(asctime)s %(message)s [%(name)s]',
+            'datefmt': '[%Y-%m-%d %H:%M:%S]',
+        },
+    },
+    'handlers': {
+        'stdout': {
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+            'filters': ['add_user', 'stdout_stream'],
+            'formatter': 'compass',
+        },
+        'stderr': {
+            'class': 'logging.StreamHandler',
+            'stream': sys.stderr,
+            'filters': ['add_user', 'stderr_stream'],
+            'formatter': 'compass',
+        },
+        'compass': {
+            'filters': ['info_only', 'add_user', 'stdout_stream'],
+            'formatter': 'compass',
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+        },
+        'compass_errors': {
+            'level': 'ERROR',
+            'filters': ['add_user', 'stderr_stream'],
+            'formatter': 'compass',
+            'class': 'logging.StreamHandler',
+            'stream': sys.stderr,
+        },
+        'restclients_timing': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+            'filters': ['stdout_stream'],
+            'formatter': 'restclients_timing',
+        },
+        'null': {
+            'class': 'logging.NullHandler',
+        },
+    },
+    'loggers': {
+        'django.security.DisallowedHost': {
+            'handlers': ['null'],
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['stderr'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'compass': {
+            'handlers': ['compass', 'compass_errors'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'restclients_core': {
+            'handlers': ['restclients_timing'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        '': {
+            'handlers': ['stdout', 'stderr'],
+            'level': 'INFO' if os.getenv('ENV', 'localdev') == 'prod' else 'DEBUG'
+        }
+    }
+}
