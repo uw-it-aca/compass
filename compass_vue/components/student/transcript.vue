@@ -1,14 +1,14 @@
 <template>
   <axdd-card v-for="(transcript, transIndex) in transcripts" :key="transIndex">
     <template #heading-action>
-      <axdd-card-heading v-if="transcript.class_schedule" :level="2"
-        >{{ transcript.class_schedule.term.quarter }}
-        {{ transcript.class_schedule.term.year }}</axdd-card-heading
+      <axdd-card-heading v-if="transcript.term" :level="2"
+        >{{ transcript.term.quarter }}
+        {{ transcript.term.year }}</axdd-card-heading
       >
       <div v-else>no term data</div>
     </template>
     <template #body>
-      <div v-if="transcript.class_schedule" class="table-responsive m-n3">
+      <div v-if="transcript.registrations" class="table-responsive m-n3">
         <table class="table m-0">
           <thead class="table-light text-muted small">
             <tr>
@@ -21,14 +21,12 @@
           </thead>
           <tbody>
             <tr
-              v-for="(section, index3) in transcript.class_schedule.sections"
-              :key="index3"
-            >
+              v-for="(registration, index3) in transcript.registrations" :key="index3">
               <td class="ps-3">
-                {{ section.curriculum_abbr }}
-                {{ section.course_number }}
+                {{ registration.section.curriculum_abbr }}
+                {{ registration.section.course_number }}
               </td>
-              <td>{{ section.course_title }}</td>
+              <td>{{ registration.section.course_title }}</td>
               <td>{{ section.credits }}</td>
               <td>{{ section.grade }}</td>
               <td>{{ section.for_credit }}</td>
