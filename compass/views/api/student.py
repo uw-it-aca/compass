@@ -17,7 +17,7 @@ from uw_sws.term import (
     get_current_term, get_next_term, get_term_after,
     get_term_by_year_and_quarter)
 from uw_sws.registration import get_schedule_by_regid_and_term
-from uw_sws.enrollment import enrollment_search_by_regid
+from uw_sws.enrollment import get_enrollment_history_by_regid
 
 
 class StudentView(BaseAPIView):
@@ -124,14 +124,14 @@ class StudentTranscriptsView(BaseAPIView):
         person = client.get_person_by_uwregid(uwregid)
 
         try:
-            enrollments = enrollment_search_by_regid(uwregid)
+            enrollments = get_enrollment_history_by_regid(uwregid)
         except DataFailureException as err:
             raise
 
         qtr_sort = {"winter": 1, "spring": 2, "summer": 3, "autumn": 4}
 
         transcripts = []
-        for enrollment in sorted(enrollments.values(), key=lambda e: (
+        for enrollment in sorted(enrollments, key=lambda e: (
                 e.term.year, qtr_sort[e.term.quarter.lower()]), reverse=True):
             transcripts.append(enrollment.json_data())
 
