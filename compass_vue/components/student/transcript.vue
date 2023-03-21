@@ -27,23 +27,23 @@
                 {{ registration.section.course_number }}
               </td>
               <td>{{ registration.section.course_title }}</td>
-              <td>{{ section.credits }}</td>
-              <td>{{ section.grade }}</td>
-              <td>{{ section.for_credit }}</td>
+              <td>{{ registration.credits }}</td>
+              <td>{{ registration.grade }}</td>
+              <td>{{ registration.is_credit }}</td>
             </tr>
             <tr>
               <td colspan="5" class="">
                 <ul class="list-unstyled">
                   <li>QTR ATTEMPTED: {{ transcript.qtr_graded_attmp }}</li>
                   <li>QTR Grade Points EARNED: {{ transcript.qtr_grade_points }}</li>
-                  <li>Number of Courses: {{ transcript.num_courses }}</li>
+                  <li>Number of Courses: {{ transcript.registrations.length }}</li>
                 </ul>
                 <ul class="list-unstyled">
-                  <li>Class Code: {{ transcript.special_program }}</li>
-                  <li>Enrollment Status: {{ transcript.enroll_status }}</li>
+                  <li>Class Code: {{ transcript.class_code }}</li>
+                  <li>Enrollment Status: {{ transcript.enrollment_status }}</li>
                   <li>Exemption Code: {{ transcript.exemption_code }}</li>
                   <li>Grad status: {{ transcript.grad_status }}</li>
-                  <li>Honors Program: {{ transcript.honors_program }}</li>
+                  <li>Honors Program: {{ transcript.is_honors }}</li>
                   <li>Scholarships: {{ transcript.scholarship_type }}</li>
                   <li>
                     Special Program Code: {{ transcript.special_program }}
