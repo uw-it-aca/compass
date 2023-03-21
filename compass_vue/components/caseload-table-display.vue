@@ -19,6 +19,23 @@
           <td>
             <ul>
               <li>
+                Special Program:
+                <!-- show N/A when student isn't in any special program -->
+
+                <span
+                  v-if="
+                    person.student.special_program_code === '1' ||
+                    person.student.special_program_code === '2' ||
+                    person.student.special_program_code === '13'
+                  "
+                  class="badge text-bg-success"
+                >
+                  {{ person.student.special_program_code }},
+                  {{ person.student.special_program_desc }}
+                </span>
+                <span v-else class="badge text-bg-light-gray"> N/A</span>
+              </li>
+              <li>
                 Registered in quarter:
                 <span
                   class="badge"
