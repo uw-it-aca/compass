@@ -115,11 +115,8 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'filters': {
-        'info_only': {
-            '()': 'compass.log.InfoFilter'
-        },
         'add_user': {
-            '()': 'compass.log.UserFilter'
+            '()': 'compass.logging.UserFilter'
         },
         'stdout_stream': {
             '()': 'django.utils.log.CallbackFilter',
@@ -153,19 +150,6 @@ LOGGING = {
             'filters': ['add_user', 'stderr_stream'],
             'formatter': 'compass',
         },
-        'compass': {
-            'filters': ['info_only', 'add_user', 'stdout_stream'],
-            'formatter': 'compass',
-            'class': 'logging.StreamHandler',
-            'stream': sys.stdout,
-        },
-        'compass_errors': {
-            'level': 'ERROR',
-            'filters': ['add_user', 'stderr_stream'],
-            'formatter': 'compass',
-            'class': 'logging.StreamHandler',
-            'stream': sys.stderr,
-        },
         'restclients_timing': {
             'level': 'INFO',
             'class': 'logging.StreamHandler',
@@ -188,9 +172,9 @@ LOGGING = {
             'propagate': True,
         },
         'compass': {
-            'handlers': ['compass', 'compass_errors'],
+            'handlers': ['stdout', 'stderr'],
             'level': 'INFO',
-            'propagate': True,
+            'propagate': False,
         },
         'restclients_core': {
             'handlers': ['restclients_timing'],
