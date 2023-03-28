@@ -124,7 +124,7 @@ LOGGING = {
         },
         'stderr_stream': {
             '()': 'django.utils.log.CallbackFilter',
-            'callback': lambda record: record.levelno > logging.ERROR
+            'callback': lambda record: record.levelno > logging.INFO
         }
     },
     'formatters': {
