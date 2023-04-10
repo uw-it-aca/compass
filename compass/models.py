@@ -74,7 +74,6 @@ class Student(models.Model):
     """
 
     system_key = models.CharField(unique=True, max_length=50)
-    programs = models.ManyToManyField("Program")
 
     class Meta:
         indexes = [
@@ -257,16 +256,42 @@ class BaseAccessGroupContent(models.Model):
         return self.name
 
 
-class Program(BaseAccessGroupContent):
+class StudentAffiliation(BaseAccessGroupContent):
+    """
+    Affiliation assigned to a student
+    """
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    affiliation = models.ForeignKey(Affiliation, on_delete=models.CASCADE)
+    cohort = models.ForeignKey(Cohort, on_delete=models.CASCADE)
+    active = models.BooleanField(default=True)
+
+
+class Affiliation(BaseAccessGroupContent):
     """
     Departmental/Group Program (e.g. CAMP, TRIO, SSS, Champions, IC Eligible)
     """
 
-    access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-    slug = models.SlugField(unique=True, max_length=50)
+    access_group = models.ForeignKey(
+        AccessGroup, on_delete=models.CASCADE)
+    affiliation_group = models.ForeignKey(
+        AffiliationGroup, on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     active = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
+
+
+class AffiliationGroup(models.Model):
+    """
+    Collects Affiliations that limit assignment per group
+    """
+    exclusivity_count = models.SmallIntegerField()
+    exclusivity_group = models.ManyToManyField("Affiliation")
+
+
+class Cohort(models.Model):
+    start_date = models.DateTimeField()
+    end_date = models.DateTimeField()
 
 
 class ContactType(BaseAccessGroupContent):
