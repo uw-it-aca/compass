@@ -74,7 +74,6 @@ class Student(models.Model):
     """
 
     system_key = models.CharField(unique=True, max_length=50)
-    programs = models.ManyToManyField("Program")
 
     class Meta:
         indexes = [
@@ -124,7 +123,7 @@ class AccessGroupManager(models.Manager):
 
 class AccessGroup(models.Model):
     """
-    AccessGroups manage their Program, ContactTopic, ContactType, and
+    AccessGroups manage their Affiliation, ContactTopic, ContactType, and
     ContactMethod lists. AccessGroup membership is defined externally in
     UW groups (Astra) and determined for a AppUser via a request to the
     GWS at login. Contact records created by a member of one access group
@@ -257,16 +256,51 @@ class BaseAccessGroupContent(models.Model):
         return self.name
 
 
-class Program(BaseAccessGroupContent):
+class StudentAffiliation(models.Model):
     """
-    Departmental/Group Program (e.g. CAMP, TRIO, SSS, Champions, IC Eligible)
+    Affiliation assigned to a student
+    """
+    student = models.ForeignKey("Student", on_delete=models.CASCADE)
+    affiliation = models.ForeignKey("Affiliation", on_delete=models.CASCADE)
+    cohorts = models.ManyToManyField("Cohort")
+    date = models.DateField(null=True)
+    actively_advised = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.student} {self.affiliation}"
+
+
+class Affiliation(BaseAccessGroupContent):
+    """
+    Departmental/Group Affiliation
+    (e.g. CAMP, TRIO, SSS, Champions, IC Eligible)
     """
 
-    access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-    slug = models.SlugField(unique=True, max_length=50)
+    access_group = models.ForeignKey(
+        "AccessGroup", on_delete=models.CASCADE)
+    affiliation_group = models.ForeignKey(
+        "AffiliationGroup", on_delete=models.CASCADE, blank=True, null=True)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     active = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
+
+
+class AffiliationGroup(models.Model):
+    """
+    Collects Affiliations that limit assignment per group
+    """
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
+    exclusivity_count = models.SmallIntegerField()
+    exclusivity_group = models.ManyToManyField("Affiliation")
+
+    def __str__(self):
+        return f"{self.exclusivity_count} of {self.exclusivity_group}"
+
+
+class Cohort(models.Model):
+    start_year = models.SmallIntegerField()
+    end_year = models.SmallIntegerField()
 
 
 class ContactType(BaseAccessGroupContent):
@@ -276,7 +310,7 @@ class ContactType(BaseAccessGroupContent):
     and Workshop.
     """
 
-    access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
     name = models.CharField(unique=True, max_length=50)
     slug = models.SlugField(unique=True, max_length=50)
     active = models.BooleanField(default=True)
@@ -290,7 +324,7 @@ class ContactMethod(BaseAccessGroupContent):
     and Video Conference.
     """
 
-    access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
     name = models.CharField(unique=True, max_length=50)
     slug = models.SlugField(unique=True, max_length=50)
     active = models.BooleanField(default=True)
@@ -306,7 +340,7 @@ class ContactTopic(BaseAccessGroupContent):
     Testing/Assessment.
     """
 
-    access_group = models.ForeignKey(AccessGroup, on_delete=models.CASCADE)
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
     name = models.CharField(unique=True, max_length=50)
     slug = models.SlugField(unique=True, max_length=50)
     active = models.BooleanField(default=True)
