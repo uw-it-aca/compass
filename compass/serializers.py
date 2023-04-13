@@ -3,7 +3,7 @@
 
 
 from compass.models import AppUser, AccessGroup, Contact, ContactTopic, \
-    ContactType, ContactMethod, Program, Student
+    ContactType, ContactMethod, Affiliation, Student
 from rest_framework import serializers
 
 
@@ -28,12 +28,12 @@ class AccessGroupSerializer(serializers.ModelSerializer):
         }
 
 
-class ProgramSerializer(serializers.ModelSerializer):
+class AffiliationSerializer(serializers.ModelSerializer):
 
     access_group = AccessGroupSerializer(many=False, read_only=False)
 
     class Meta:
-        model = Program
+        model = Affiliation
         fields = ['id', 'access_group', 'name', 'slug', 'active', 'editable']
         extra_kwargs = {
             'access_group_id': {'validators': []},
@@ -43,7 +43,7 @@ class ProgramSerializer(serializers.ModelSerializer):
         access_group = AccessGroup.objects.get(
             access_group_id=validated_data['access_group']['access_group_id'])
         validated_data["access_group"] = access_group
-        return Program.objects.create(**validated_data)
+        return Affiliation.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.name = validated_data.get('name', instance.name)

@@ -24,7 +24,7 @@ from compass.views.api.contact import (
 )
 from compass.views.api.settings import SettingsView
 from compass.views.api.photo import PhotoView
-from compass.views.api.program import ProgramsView
+from compass.views.api.program import AffiliationsView
 from compass.views.api.support import SupportView
 
 # start with an empty url array
@@ -77,8 +77,9 @@ urlpatterns += [
         r"(?P<setting_type>[\w]+)/$",
         SettingsView.as_view(),
     ),
-    re_path(r"^api/internal/accessgroup/(?P<access_group_pk>[\w]+)/programs/$",
-            ProgramsView.as_view()),
+    re_path((r"^api/internal/accessgroup/"
+             r"(?P<access_group_pk>[\w]+)/affiliations/$"),
+            AffiliationsView.as_view()),
     re_path(r"^api/internal/accessgroup/$", AccessGroupView.as_view()),
     re_path(r"^api/internal/contact/topics/$", ContactTopicsView.as_view()),
     re_path(r"^api/internal/contact/types/$", ContactTypesView.as_view()),

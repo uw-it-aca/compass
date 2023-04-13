@@ -3,6 +3,7 @@
 
 
 from django.core.management.base import BaseCommand
+from django.utils.text import slugify
 from uw_person_client import UWPersonClient
 from compass.models import (
     Contact, AppUser, AccessGroup, Student,
@@ -20,41 +21,34 @@ class Command(BaseCommand):
     help = "load compass legacy data from csv dump of Appointment table"
 
     def add_arguments(self, parser):
+        parser.add_argument('csvfile')
         parser.add_argument('count', type=int, nargs='?', default=None)
-        parser.add_argument('infile', nargs='?', type=argparse.FileType('r'),
-                            default=sys.stdin)
 
     def handle(self, *args, **options):
-        self.uw_person = UWPersonClient()
+#        self.uw_person = UWPersonClient()
         self.access_group = AccessGroup.objects.get(name='OMAD')
 
         n = 0
         count = options['count']
-        first_line = True
-        for row in csv.reader(options['infile'], delimiter=","):
-            if first_line:
-                first_line = False
-                continue
-
-            try:
+        with open(options['csvfile']) as csvfile:
+            next(csvfile, None)
+            for row in csv.reader(csvfile, delimiter=","):
                 self._create_contact(Appointment(row))
                 if count:
                     n += 1
                     if n >= count:
                         return
-            except Exception as ex:
-                print("FAILED ROW {}: {}".format(row.ID, ex))
 
     def _create_contact(self, apt):
         try:
             app_user = self._get_app_user(apt.staff_id)
-            student = self._get_student(apt.student_number)
+            student = self._get_student(apt.student_no)
             checkin_date = self._get_checkin_date(apt)
             Contact.objects.get(
                 app_user=app_user, student=student, checkin_date=checkin_date)
             return
         except ValueError as ex:
-            print("SKIP ID {}: {}".format(apt.ID, ex), file=sys.stderr)
+            self._error("SKIP ID {}: {}".format(apt.ID, ex))
             return
         except Contact.DoesNotExist:
             # fall through to create new Contact
@@ -81,10 +75,7 @@ class Command(BaseCommand):
         person = self.uw_person.get_person_by_student_number(
             student_number, include_student=True)
         student, created = Student.objects.get_or_create(
-            person.student.system_key)
-
-        # if created:
-        #     raise Exception('wire up programs')
+            system_key=person.student.system_key)
 
         return student
 
@@ -99,124 +90,114 @@ class Command(BaseCommand):
     def _get_contact_type(self, contact):
         mapping = [
             (re.compile('Appointment', re.I),
-             'Appointment',
-             'appointment'),
+             'Appointment'),
             (re.compile('Admin Notes', re.I),
-             'Admin',
-             'admin'),
+             'Admin'),
             (re.compile('(Workshop'
                         '|ECC Meeting or Event'
                         '|ECC Event)', re.I),
-             'Event Workshop',
-             'event-workshop')]
+             'Event Workshop')]
 
         if contact:
-            for pat, name, slug in mapping:
+            for pat, name in mapping:
                 if pat.search(contact):
-                    return self._get_contact_type_model(name, slug)
+                    return self._get_contact_type_model(name)
 
-        return self._get_contact_type_model('Quick Question', 'quick-question')
+        return self._get_contact_type_model('Quick Question')
 
-    def _get_contact_type_model(self, name, slug):
+    def _get_contact_type_model(self, name):
         contact_type, created = ContactType.objects.get_or_create(
-            access_group=self.access_group, name=name, slug=slug)
+            access_group=self.access_group, name=name, slug=slugify(name))
         return contact_type
 
     def _get_contact_method(self, apt):
         mapping = [
             (re.compile('Telephone', re.I),
-             'Telephone',
-             'telephone'),
+             'Telephone'),
             (re.compile('(Email Message'
                         '|Mass Email'
                         '|Email'
                         '|Email Contact)', re.I),
-             'E-mail',
-             'e-mail')]
+             'E-mail')]
 
         if apt.Contact_Type:
-            for pat, name, slug in mapping:
+            for pat, name in mapping:
                 if pat.search(apt.Contact_Type):
-                    return self._get_contact_method_model(name, slug)
+                    return self._get_contact_method_model(name)
 
         # sniff notes for "Zoom" "A&O" and "A&R" indicating video contact
         if re.match(r'(Zoom|A&O|A&R)', apt.Notes, re.MULTILINE):
-            return self._get_contact_method_model(
-                'Video Conference', 'video-conference')
+            return self._get_contact_method_model('Video Conference')
 
-        return self._get_contact_method_model('In Person', 'in-person')
+        return self._get_contact_method_model('In-Person')
 
-    def _get_contact_method_model(self, name, slug):
-        contact_method, created = ContactMethod.objects.get_or_create(
-            access_group=self.access_group, name=name, slug=slug)
+    def _get_contact_method_model(self, name):
+        try:
+            contact_method, created = ContactMethod.objects.get_or_create(
+                access_group=self.access_group, name=name, slug=slugify(name))
+        except Exception as ex:
+            import pdb; pdb.set_trace()
+            raise
+
         return contact_method
 
     def _add_contact_topics(self, apt, contact):
         mapping = [
             (re.compile('(Add\/Drop Class|Academic Planning)', re.I),
-             'Academic Planning & Changes',
-             'academic-planning-changes'),
+             'Academic Planning & Changes'),
             (re.compile('Join\/Affiliate', re.I),
-             'Join/Affiliate',
-             'joinaffiliate'),
+             'Join/Affiliate'),
             (re.compile('Academic Difficulties', re.I),
-             'Academic Difficulties',
-             'academic-difficulties'),
+             'Academic Difficulties'),
             (re.compile('Hardship Withdrawal', re.I),
-             'FQD/CQD & S/NS',
-             'fqdcqd-sns'),
+             'FQD/CQD & S/NS'),
             (re.compile('(Internships|Research Opportunities'
                         '|Career Counselling/Advising)', re.I),
-             'Internships, Research, and Career Exploration',
-             'internships-research-career-exploration'),
+             'Internships, Research, and Career Exploration'),
             (re.compile('Graduate/Professional School', re.I),
-             'Graduate & Professional School',
-             'graduateprofessional-school'),
+             'Graduate & Professional School'),
             (re.compile('Study Abroad', re.I),
-             'Study Abroad',
-             'study-abroad'),
+             'Study Abroad'),
             (re.compile('PreMajor Extension', re.I),
-             'Pre-major Extension',
-             'pre-major-extension'),
+             'Pre-major Extension'),
             (re.compile('Reinstatement', re.I),
-             'Reinstatement',
-             'reinstatement'),
+             'Reinstatement'),
             (re.compile('Personal Issues', re.I),
-             'Personal Issues',
-             'personal-issues'),
+             'Personal Issues'),
             (re.compile('Financial Aid'),
-             'Financial Aid',
-             'financial-aid'),
+             'Financial Aid'),
             (re.compile('(Test Assessment'
                         '|Referral-Campus/Community'
                         '|General ED Requirements'
                         '|Computer Lab'
                         '|Exit Interview'
                         '|Other)', re.I),
-             'Other',
-             'other')]
+             'Other')]
 
         event_type = apt.Event_Type
 
         if event_type and not re.match('^[A-Za-z &]+ [0-9]+$', event_type):
-            for pat, name, slug in mapping:
+            for pat, name in mapping:
                 if pat.search(event_type):
-                    topic = self._get_topic(name, slug)
-                    contact.event_type.add(topic)
+                    topic = self._get_topic(name)
+                    contact.contact_topics.add(topic)
 
         # sniff at Appointment for other cues
         if apt.PersonalFamilyIssues in ['1', 1]:
-            topic = self._get_topic('Personal Issues', 'personal-issues')
-            contact.event_type.add(topic)
+            topic = self._get_topic('Personal Issues')
+            contact.contact_topics.add(topic)
 
-    def _get_topic(self, name, slug):
+    def _get_topic(self, name):
         topic, created = ContactTopic.objects.get_or_create(
-            access_group=self.access_group, name=name, slug=slug)
+            access_group=self.access_group, name=name, slug=slugify(name))
 
         return topic
 
     def _add_access_group(self, contact):
         contact.access_group.add(self.access_group)
+
+    def _error(self, msg):
+        print(msg, file=sys.stderr)
 
 
 class Appointment(object):
@@ -282,4 +263,4 @@ class Appointment(object):
 
     def __init__(self, row):
         for i, k in enumerate(self.APPOINTMENT_COLUMNS):
-            setattr(self, k, row[i])
+            setattr(self, k, row[i].strip())

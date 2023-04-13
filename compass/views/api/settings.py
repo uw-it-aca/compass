@@ -2,9 +2,11 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from compass.models import ContactTopic, ContactType, ContactMethod, Program
-from compass.serializers import ProgramSerializer, ContactTopicSerializer, \
-    ContactTypeSerializer, ContactMethodSerializer
+from compass.models import (
+    ContactTopic, ContactType, ContactMethod, Affiliation)
+from compass.serializers import (
+    AffiliationSerializer, ContactTopicSerializer, 
+    ContactTypeSerializer, ContactMethodSerializer)
 from compass.views.api import BaseAPIView
 from django.core.exceptions import PermissionDenied
 from rest_framework.response import Response
@@ -13,11 +15,11 @@ from rest_framework import status
 
 class SettingsView(BaseAPIView):
     '''
-    API endpoint returning a list of programs for the user's access group
+    API endpoint returning a list of affiliation for the user's access group
 
     /api/internal/accessgroup/[access_group_pk]/settings/[setting_type]/
 
-    The setting_type param can be: program, contact_topic, or contact_type
+    The setting_type param can be: affiliation, contact_topic, or contact_type
     '''
 
     def get(self, request, access_group_pk, setting_type):
@@ -26,12 +28,12 @@ class SettingsView(BaseAPIView):
                 request, access_group_pk)
 
             group_settings = []
-            if setting_type == "program":
-                # programs
-                program_serializer = ProgramSerializer(
-                    Program.objects.filter(access_group=access_group.id),
+            if setting_type == "affiliation":
+                # Affiliations
+                affiliation_serializer = AffiliationSerializer(
+                    Affiliation.objects.filter(access_group=access_group.id),
                     many=True)
-                group_settings = program_serializer.data
+                group_settings = affiliation_serializer.data
             elif setting_type == "contact_topic":
                 # contact topics
                 contact_topic_serializer = ContactTopicSerializer(
@@ -74,9 +76,9 @@ class SettingsView(BaseAPIView):
             # associate the correct model and serializer with the setting type
             SETTING_MODEL_CLS = None
             SETTING_SERIALIZER_CLS = None
-            if setting_type == "program":
-                SETTING_MODEL_CLS = Program
-                SETTING_SERIALIZER_CLS = ProgramSerializer
+            if setting_type == "affiliation":
+                SETTING_MODEL_CLS = Affiliation
+                SETTING_SERIALIZER_CLS = AffiliationSerializer
             elif setting_type == "contact_topic":
                 SETTING_MODEL_CLS = ContactTopic
                 SETTING_SERIALIZER_CLS = ContactTopicSerializer

@@ -37,6 +37,7 @@ class ContactAPITest(ApiTest):
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
 
+        import pdb; pdb.set_trace()
         response = self.post_response('contact_omad',
                                       test_request)
         self.assertEqual(response.status_code, 201)
