@@ -103,7 +103,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Build Test Image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           target: app-test-container
           tags: app-test-container

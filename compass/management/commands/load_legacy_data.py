@@ -139,9 +139,9 @@ class Command(BaseCommand):
 
     def _add_contact_topics(self, apt, contact):
         mapping = [
-            (re.compile('(Add\/Drop Class|Academic Planning)', re.I),
+            (re.compile('(Add/Drop Class|Academic Planning)', re.I),
              'Academic Planning & Changes'),
-            (re.compile('Join\/Affiliate', re.I),
+            (re.compile('Join/Affiliate', re.I),
              'Join/Affiliate'),
             (re.compile('Academic Difficulties', re.I),
              'Academic Difficulties'),
