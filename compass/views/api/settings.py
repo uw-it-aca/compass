@@ -5,7 +5,7 @@
 from compass.models import (
     ContactTopic, ContactType, ContactMethod, Affiliation)
 from compass.serializers import (
-    AffiliationSerializer, ContactTopicSerializer, 
+    AffiliationSerializer, ContactTopicSerializer,
     ContactTypeSerializer, ContactMethodSerializer)
 from compass.views.api import BaseAPIView
 from django.core.exceptions import PermissionDenied

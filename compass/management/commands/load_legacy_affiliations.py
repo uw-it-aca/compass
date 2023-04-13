@@ -232,8 +232,8 @@ class LegacyAffiliation(object):
 
 class Association(object):
     ASSOCIATION_COLUMNS = [
-        "ID","student_number","affiliation","cohort",
-        "date","date_modified","active"]
+        "ID", "student_number", "affiliation", "cohort",
+        "date", "date_modified", "active"]
 
     def __init__(self, row):
         for i, k in enumerate(self.ASSOCIATION_COLUMNS):

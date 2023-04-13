@@ -25,7 +25,7 @@ class Command(BaseCommand):
         parser.add_argument('count', type=int, nargs='?', default=None)
 
     def handle(self, *args, **options):
-#        self.uw_person = UWPersonClient()
+        self.uw_person = UWPersonClient()
         self.access_group = AccessGroup.objects.get(name='OMAD')
 
         n = 0
@@ -60,7 +60,7 @@ class Command(BaseCommand):
             contact_method=self._get_contact_method(apt),
             noshow=True if apt.NoShow.upper() == 'Y' else False,
             notes=apt.Notes, actions=apt.Actions, source=apt.Source)
-            
+
         contact.save()
 
         self._add_contact_topics(apt, contact)
@@ -132,12 +132,8 @@ class Command(BaseCommand):
         return self._get_contact_method_model('In-Person')
 
     def _get_contact_method_model(self, name):
-        try:
-            contact_method, created = ContactMethod.objects.get_or_create(
-                access_group=self.access_group, name=name, slug=slugify(name))
-        except Exception as ex:
-            import pdb; pdb.set_trace()
-            raise
+        contact_method, created = ContactMethod.objects.get_or_create(
+            access_group=self.access_group, name=name, slug=slugify(name))
 
         return contact_method
 
