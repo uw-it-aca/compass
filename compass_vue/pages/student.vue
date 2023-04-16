@@ -73,13 +73,7 @@
             </div>
           </div>
           <div class="col-3 d-flex align-content-center flex-column">
-            <div class="my-auto">
-              <div class="text-secondary text-end small">
-                <i class="bi bi-calendar-week"></i>
-                Autumn 2022
-              </div>
-              <div class="text-end fw-bold">Week 4 of 10</div>
-            </div>
+            <QuarterWeek :term-data="termData"></QuarterWeek>
           </div>
           <div class="col">
             <div class="mt-3">
@@ -211,6 +205,7 @@ import StudentAffiliations from "../components/student/affiliation-mini.vue";
 import StudentVisits from "../components/student/visits.vue";
 import TranscriptCredits from "../components/student/transcript-credits.vue";
 import SearchStudent from "../components/search-student.vue";
+import QuarterWeek from "../components/_common/quarter-week.vue";
 
 export default {
   mixins: [dataMixin],
@@ -229,6 +224,7 @@ export default {
     TranscriptCredits,
     StudentAffiliations,
     SearchStudent,
+    QuarterWeek,
   },
   created: function () {
     if (this.$route.params.id) {
@@ -243,6 +239,19 @@ export default {
       person: {},
       isLoading: false,
       isError: false,
+      termData: {
+        // MARK: sample data from MyUW
+        //today: "Sunday, April 16, 2023",
+        year: "2023",
+        quarter: "spring",
+        breakYear: "2023",
+        breakQuarter: "spring",
+        isFinals: false,
+        isBreak: false,
+        //todayDate: new Date(2023, 4 - 1, 16),
+        firstDay: new Date(2023, 3 - 1, 27),
+        lastDay: new Date(2023, 6 - 1, 2),
+      },
     };
   },
   //  computed: {
