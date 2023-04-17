@@ -123,16 +123,20 @@ class StudentTranscriptsView(BaseAPIView):
         client = UWPersonClient()
         person = client.get_person_by_uwregid(uwregid)
 
-        try:
-            enrollments = get_enrollment_history_by_regid(uwregid)
-        except DataFailureException as err:
-            raise
-
-        qtr_sort = {"winter": 1, "spring": 2, "summer": 3, "autumn": 4}
+        quarter_definitions = {
+            1: "Winter", 2: "Spring", 3: "Summer", 4: "Autumn",
+        }
 
         transcripts = []
-        for enrollment in sorted(enrollments, key=lambda e: (
-                e.term.year, qtr_sort[e.term.quarter.lower()]), reverse=True):
-            transcripts.append(enrollment.json_data())
-
+        for transcript in person.student.transcripts:
+            term = get_term_by_year_and_quarter(
+                transcript.tran_term.year,
+                quarter_definitions[transcript.tran_term.quarter])
+            try:
+                class_schedule = get_schedule_by_regid_and_term(
+                    uwregid, term)
+                transcript.class_schedule = class_schedule.json_data()
+            except DataFailureException:
+                transcript.class_schedule = None
+            transcripts.append(transcript.to_dict())
         return JsonResponse(transcripts, safe=False)
