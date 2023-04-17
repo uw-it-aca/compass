@@ -26,15 +26,21 @@
       </span>
     </div>
     <div class="text-end small text-muted">
-      {{ formatDates(todayDate, "LLLL") }}
+      Yesterday: {{ formatDate(yesterdayDate, "LL") }}
+    </div>
+    <div class="text-end small text-muted">
+      Today: {{ formatDate(todayDate, "LLLL") }}
     </div>
   </div>
 </template>
 
 <script>
-import dayjs from "dayjs";
-import localizedFormat from "dayjs/plugin/localizedFormat";
-dayjs.extend(localizedFormat);
+import {
+  formatDate,
+  getToday,
+  getYesterday,
+  getWeeksApart,
+} from "../../utils/dates";
 
 export default {
   props: {
@@ -42,29 +48,19 @@ export default {
       type: Object,
     },
   },
-  data() {
+  setup() {
+    // setup is used for composition api
     return {
-      todayDate: dayjs(),
+      formatDate,
+      getWeeksApart,
     };
   },
-  methods: {
-    getWeeksApart(quarterStartDate, compareDate) {
-      const days = dayjs(compareDate).diff(
-        dayjs(quarterStartDate).startOf("week"),
-        "days"
-      );
-      if (days < 0) {
-        return 0;
-      } else {
-        return parseInt(days / 7) + 1;
-      }
-    },
-    formatDates(date, format) {
-      if (!date) {
-        return null;
-      }
-      return dayjs(date).format(format);
-    },
+  data() {
+    return {
+      todayDate: getToday(),
+      yesterdayDate: getYesterday(),
+    };
   },
+  methods: {},
 };
 </script>
