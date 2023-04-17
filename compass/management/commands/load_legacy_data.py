@@ -5,6 +5,7 @@
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 from uw_person_client import UWPersonClient
+from uw_person_client.exceptions import PersonNotFoundException
 from compass.models import (
     Contact, AppUser, AccessGroup, Student,
     ContactType, ContactMethod, ContactTopic)
@@ -21,8 +22,9 @@ class Command(BaseCommand):
     help = "load compass legacy data from csv dump of Appointment table"
 
     def add_arguments(self, parser):
+        parser.add_argument('--start-id', type=int, default=None)
+        parser.add_argument('--count', type=int, default=None)
         parser.add_argument('csvfile')
-        parser.add_argument('count', type=int, nargs='?', default=None)
 
     def handle(self, *args, **options):
         self.uw_person = UWPersonClient()
@@ -30,22 +32,40 @@ class Command(BaseCommand):
 
         n = 0
         count = options['count']
+        start_id = options['start_id']
+        self.unknown_student_ids = set()
         with open(options['csvfile']) as csvfile:
             next(csvfile, None)
             for row in csv.reader(csvfile, delimiter=","):
-                self._create_contact(Appointment(row))
+                appointment = Appointment(row)
+                if start_id:
+                    if start_id == int(appointment.ID):
+                        start_id = None
+                    else:
+                        continue
+
+                self._create_contact(appointment)
                 if count:
                     n += 1
                     if n >= count:
                         return
 
     def _create_contact(self, apt):
+        if int(apt.student_no) in self.unknown_student_ids:
+            return
+
+        student_number = apt.student_no.zfill(7)
         try:
             app_user = self._get_app_user(apt.staff_id)
-            student = self._get_student(apt.student_no)
+            student = self._get_student(student_number)
             checkin_date = self._get_checkin_date(apt)
             Contact.objects.get(
                 app_user=app_user, student=student, checkin_date=checkin_date)
+            return
+        except PersonNotFoundException:
+            self.unknown_student_ids.add(int(apt.student_no))
+            self._error("Appointment {}: student number {} not found".format(
+                apt.ID, student_number))
             return
         except ValueError as ex:
             self._error("SKIP ID {}: {}".format(apt.ID, ex))
@@ -89,13 +109,13 @@ class Command(BaseCommand):
 
     def _get_contact_type(self, contact):
         mapping = [
-            (re.compile('Appointment', re.I),
+            (re.compile('^Appointment$', re.I),
              'Appointment'),
-            (re.compile('Admin Notes', re.I),
+            (re.compile('^Admin Notes$', re.I),
              'Admin'),
-            (re.compile('(Workshop'
+            (re.compile('^(Event[/ ]Workshop'
                         '|ECC Meeting or Event'
-                        '|ECC Event)', re.I),
+                        '|ECC Event)$', re.I),
              'Event Workshop')]
 
         if contact:
@@ -108,16 +128,17 @@ class Command(BaseCommand):
     def _get_contact_type_model(self, name):
         contact_type, created = ContactType.objects.get_or_create(
             access_group=self.access_group, name=name, slug=slugify(name))
+
         return contact_type
 
     def _get_contact_method(self, apt):
         mapping = [
-            (re.compile('Telephone', re.I),
+            (re.compile('^Telephone$', re.I),
              'Telephone'),
-            (re.compile('(Email Message'
+            (re.compile('^(Email Message'
                         '|Mass Email'
                         '|Email'
-                        '|Email Contact)', re.I),
+                        '|Email Contact)$', re.I),
              'E-mail')]
 
         if apt.Contact_Type:
@@ -148,9 +169,9 @@ class Command(BaseCommand):
             (re.compile('Hardship Withdrawal', re.I),
              'FQD/CQD & S/NS'),
             (re.compile('(Internships|Research Opportunities'
-                        '|Career Counselling/Advising)', re.I),
+                        '|Career Counselling[/]Advising)', re.I),
              'Internships, Research, and Career Exploration'),
-            (re.compile('Graduate/Professional School', re.I),
+            (re.compile('Graduate[/]Professional School', re.I),
              'Graduate & Professional School'),
             (re.compile('Study Abroad', re.I),
              'Study Abroad'),

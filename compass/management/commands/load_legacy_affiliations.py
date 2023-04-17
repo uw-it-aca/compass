@@ -4,6 +4,7 @@
 
 from django.core.management.base import BaseCommand
 from uw_person_client import UWPersonClient
+from uw_person_client.exceptions import PersonNotFoundException
 from compass.models import (
     AccessGroup, Student, StudentAffiliation, Affiliation,
     AffiliationGroup, Cohort)
@@ -156,13 +157,14 @@ class Command(BaseCommand):
         with open(filename, 'r') as csvfile:
             next(csvfile, None)
             for row in csv.reader(csvfile, delimiter=","):
+                a = Association(row)
+                student_number = a.student_number.zfill(7)
                 try:
-                    a = Association(row)
-                    student = self._get_student(a.student_number)
+                    student = self._get_student(student_number)
                     name, active = self._get_affiliation_name(a.affiliation)
                     affiliation = self._get_affiliation(name)
                     sa = self._get_student_affiliation(student, affiliation)
-                    sa.actively_advised = (a.active.strip().lower() == 'yes')
+                    sa.actively_advised = (a.active.lower() == 'yes')
 
                     sa.date = None
                     date = a.date_modified if a.date_modified else a.date
@@ -179,6 +181,10 @@ class Command(BaseCommand):
 
                     sa.save()
                     self._set_cohorts(sa, a.cohort)
+                except PersonNotFoundException:
+                    self._error(
+                        "Person Not Found affiliation {}: {}".format(
+                            a.ID, student_number))
                 except UnknownLegacyAssociation as ex:
                     self._error(
                         'Unknown legacy affiliation: {}'.format(ex))
@@ -227,7 +233,7 @@ class LegacyAffiliation(object):
 
     def __init__(self, row):
         for i, k in enumerate(self.AFFILIATION_COLUMNS):
-            setattr(self, k, row[i])
+            setattr(self, k, row[i].strip())
 
 
 class Association(object):
@@ -237,4 +243,4 @@ class Association(object):
 
     def __init__(self, row):
         for i, k in enumerate(self.ASSOCIATION_COLUMNS):
-            setattr(self, k, row[i])
+            setattr(self, k, row[i].strip())
