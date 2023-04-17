@@ -26,6 +26,7 @@
       </axdd-profile>
     </template>
     <template #navigation>
+      <QuarterWeek :term-data="termData" />
       <NavMenu :user-roles="userRoles" />
     </template>
     <template #aside>
@@ -41,6 +42,7 @@
 </template>
 
 <script>
+import QuarterWeek from "./components/_common/quarter-week.vue";
 import NavMenu from "./components/nav-menu.vue";
 import NavMessage from "./components/nav-message.vue";
 import dataMixin from "./mixins/data_mixin.js";
@@ -51,6 +53,7 @@ export default {
   components: {
     NavMenu,
     NavMessage,
+    QuarterWeek,
   },
   props: {
     pageTitle: {
@@ -69,6 +72,20 @@ export default {
       userRoles: document.body.getAttribute("data-user-role").split(","),
       // automatically set year
       currentYear: new Date().getFullYear(),
+      // mocked term-data
+      termData: {
+        // MARK: sample data from MyUW
+        //today: "Sunday, April 16, 2023",
+        year: "2023",
+        quarter: "spring",
+        breakYear: "2023",
+        breakQuarter: "spring",
+        isFinals: false,
+        isBreak: false,
+        //todayDate: new Date(2023, 4 - 1, 16),
+        firstDay: new Date(2023, 3 - 1, 27),
+        lastDay: new Date(2023, 6 - 1, 2),
+      },
     };
   },
   created: function () {
