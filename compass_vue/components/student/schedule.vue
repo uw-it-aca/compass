@@ -88,7 +88,8 @@
                           :key="index"
                         >
                           <span v-if="!meeting.no_meeting">
-                            {{ meeting.start_time }} - {{ meeting.end_time }}
+                            {{ translateMilitaryTime(meeting.start_time) }} -
+                            {{ translateMilitaryTime(meeting.end_time) }}
                           </span>
                         </div>
                       </td>
@@ -117,6 +118,7 @@
 
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
+import { translateMilitaryTime } from "../../utils/translations";
 
 export default {
   mixins: [dataMixin],
@@ -126,6 +128,11 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return {
+      translateMilitaryTime,
+    };
   },
   data() {
     return {
