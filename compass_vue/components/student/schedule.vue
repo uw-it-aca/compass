@@ -49,7 +49,7 @@
                       <th>Credits</th>
                     </tr>
                   </thead>
-                  <tbody class="mb-3" v-if="schedule.sections">
+                  <tbody class="mb-3" v-if="schedule.sections.length > 0">
                     <tr
                       v-for="(section, index) in schedule.sections"
                       :key="index"
@@ -57,6 +57,7 @@
                       <td class="ps-3">
                         {{ section.curriculum_abbr }}
                         {{ section.course_number }}
+                        {{ section.section_id }}
                         <div class="fs-8 text-secondary">
                           {{ section.course_title }}
                         </div>
@@ -87,7 +88,8 @@
                           :key="index"
                         >
                           <span v-if="!meeting.no_meeting">
-                            {{ meeting.start_time }} - {{ meeting.end_time }}
+                            {{ translateMilitaryTime(meeting.start_time) }} -
+                            {{ translateMilitaryTime(meeting.end_time) }}
                           </span>
                         </div>
                       </td>
@@ -97,7 +99,7 @@
                   <tbody v-else class="mb-3">
                     <tr>
                       <td colspan="5" class="ps-3 text-secondary">
-                        No upcoming registrations found
+                        No registrations found
                       </td>
                     </tr>
                   </tbody>
@@ -116,6 +118,7 @@
 
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
+import { translateMilitaryTime } from "../../utils/translations";
 
 export default {
   mixins: [dataMixin],
@@ -125,6 +128,11 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return {
+      translateMilitaryTime,
+    };
   },
   data() {
     return {
