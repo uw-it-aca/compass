@@ -1,6 +1,6 @@
 <template>
-  <div class="my-auto text-light">
-    <div class="text-end small">
+  <div class="mb-4 text-light bg-dark-purple rounded-3 px-3 py-2">
+    <div class="small">
       <i class="bi bi-calendar-week me-2"></i>
       <span v-if="termData.isBreak">
         <span v-if="termData.breakYear !== termData.year">
@@ -14,7 +14,7 @@
       </span>
     </div>
 
-    <div class="text-end fw-bold">
+    <div class="fw-bold">
       <span v-if="termData.isFinals">Finals Week</span>
       <span v-else-if="termData.isBreak" class="text-capitalize">
         {{ termData.breakQuarter }}
@@ -25,10 +25,12 @@
         {{ getWeeksApart(termData.firstDay, termData.lastDay) }}
       </span>
     </div>
+    <!--
     <div class="text-end small">
       Yesterday: {{ formatDate(yesterdayDate, "LL") }}
     </div>
     <div class="text-end small">Today: {{ formatDate(todayDate, "LLLL") }}</div>
+     -->
   </div>
 </template>
 
