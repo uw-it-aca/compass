@@ -94,7 +94,7 @@
                       <td>{{ section.credits }}</td>
                     </tr>
                   </tbody>
-                  <tbody class="mb-3">
+                  <tbody v-else class="mb-3">
                     <tr>
                       <td colspan="5" class="ps-3 text-secondary">
                         No upcoming registrations found
