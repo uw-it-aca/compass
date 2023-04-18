@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-4 border border-dark-purple rounded-3 text-light px-3 py-2">
+  <div class="bg-dark-purple rounded-3 text-light mb-1 p-3">
     <div class="small">
       <i class="bi bi-calendar-week me-2"></i>
       <span v-if="termData.isBreak">
@@ -25,12 +25,7 @@
         {{ getWeeksApart(termData.firstDay, termData.lastDay) }}
       </span>
     </div>
-    <!--
-    <div class="text-end small">
-      Yesterday: {{ formatDate(yesterdayDate, "LL") }}
-    </div>
-    <div class="text-end small">Today: {{ formatDate(todayDate, "LLLL") }}</div>
-     -->
+    <div class="small mt-3">{{ formatDate(todayDate, "LLLL") }}</div>
   </div>
 </template>
 

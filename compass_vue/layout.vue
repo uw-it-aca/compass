@@ -26,10 +26,10 @@
       </axdd-profile>
     </template>
     <template #navigation>
-      <QuarterWeek :term-data="termData" />
       <NavMenu :user-roles="userRoles" />
     </template>
     <template #aside>
+      <QuarterWeek :term-data="termData" />
       <NavMessage />
     </template>
     <template #main>
@@ -72,20 +72,9 @@ export default {
       userRoles: document.body.getAttribute("data-user-role").split(","),
       // automatically set year
       currentYear: new Date().getFullYear(),
-      // mocked term-data
-      termData: {
-        // MARK: sample data from MyUW
-        // today: "Sunday, April 16, 2023",
-        year: "2023",
-        quarter: "spring",
-        breakYear: "2023",
-        breakQuarter: "spring",
-        isFinals: false,
-        isBreak: false,
-        // todayDate: new Date(2023, 4 - 1, 16),
-        firstDay: new Date(2023, 3 - 1, 27),
-        lastDay: new Date(2023, 6 - 1, 2),
-      },
+
+      // get term_data from window context
+      termData: window.term_data,
     };
   },
   created: function () {
