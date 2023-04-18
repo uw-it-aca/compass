@@ -17,7 +17,7 @@
           <td>{{ person.student.class_desc }}</td>
           <td>{{ person.student.campus_desc }}</td>
           <td>
-            <ul class="list-inline d-flex">
+            <ul class="list-inline d-flex m-0">
               <li class="list-inline-item d-none">
                 Special Program:
                 <!-- show N/A when student isn't in any special program -->
