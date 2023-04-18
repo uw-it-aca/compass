@@ -1,5 +1,5 @@
 <template>
-  <div class="mb-4 text-light bg-dark-purple rounded-3 px-3 py-2">
+  <div class="mb-4 border border-dark-purple rounded-3 text-light px-3 py-2">
     <div class="small">
       <i class="bi bi-calendar-week me-2"></i>
       <span v-if="termData.isBreak">
