@@ -19,6 +19,8 @@ from uw_sws.term import (
 from uw_sws.registration import get_schedule_by_regid_and_term
 from uw_sws.enrollment import get_enrollment_history_by_regid
 
+TERMS = {1: "Winter", 2: "Spring", 3: "Summer", 4: "Autumn"}
+
 
 class StudentView(BaseAPIView):
     '''
@@ -122,15 +124,12 @@ class StudentTranscriptsView(BaseAPIView):
         client = UWPersonClient()
         person = client.get_person_by_uwregid(uwregid)
 
-        quarter_definitions = {
-            1: "Winter", 2: "Spring", 3: "Summer", 4: "Autumn",
-        }
-
         transcripts = []
-        for transcript in person.student.transcripts:
+        for transcript in sorted(person.student.transcripts, key=lambda t: (
+                t.tran_term.year, t.tran_term.quarter), reverse=True):
             term = get_term_by_year_and_quarter(
                 transcript.tran_term.year,
-                quarter_definitions[transcript.tran_term.quarter])
+                TERMS[transcript.tran_term.quarter])
             try:
                 class_schedule = get_schedule_by_regid_and_term(
                     uwregid, term)
@@ -138,4 +137,5 @@ class StudentTranscriptsView(BaseAPIView):
             except DataFailureException:
                 transcript.class_schedule = None
             transcripts.append(transcript.to_dict())
+
         return JsonResponse(transcripts, safe=False)
