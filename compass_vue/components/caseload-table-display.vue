@@ -6,7 +6,7 @@
           <th scope="col" style="width: 33%" class="ps-3">Student</th>
           <th scope="col">Class</th>
           <th scope="col">Campus</th>
-          <th scope="col" class="text-nowrap">Enrollment Status</th>
+          <th scope="col" style="width: 33%" class="text-nowrap">Status</th>
         </tr>
       </thead>
       <tbody>
@@ -17,8 +17,8 @@
           <td>{{ person.student.class_desc }}</td>
           <td>{{ person.student.campus_desc }}</td>
           <td>
-            <ul>
-              <li>
+            <ul class="list-inline d-flex">
+              <li class="list-inline-item d-none">
                 Special Program:
                 <!-- show N/A when student isn't in any special program -->
 
@@ -33,32 +33,34 @@
                   {{ person.student.special_program_desc }}
                 </span>
               </li>
-              <li>
-                Registered in quarter:
+              <li class="list-inline-item flex-fill">
+                <div>Registered</div>
                 <span
-                  class="badge"
+                  class="small"
                   :class="
                     !person.student.registered_in_quarter
-                      ? 'text-bg-danger'
-                      : 'text-bg-light-gray'
+                      ? 'text-danger'
+                      : 'text-secondary'
                   "
                 >
-                  {{ person.student.registered_in_quarter }}
+                  {{ translateTrueFalse(person.student.registered_in_quarter) }}
                 </span>
               </li>
-              <li>
+              <li class="list-inline-item d-none">
                 Enrollment Status Code: {{ person.student.enroll_status_code }}
               </li>
-              <li>
-                Registration Hold:
+              <li class="list-inline-item flex-fill">
+                <div>Registration Holds</div>
                 <span
-                  class="badge"
+                  class="small"
                   :class="
                     person.student.registration_hold_ind
-                      ? 'text-bg-danger'
-                      : 'text-bg-light-gray'
+                      ? 'text-danger'
+                      : 'text-secondary'
                   "
-                  >{{ person.student.registration_hold_ind }}
+                  >{{
+                    translateTrueFalse(person.student.registration_hold_ind)
+                  }}
                 </span>
               </li>
             </ul>
@@ -72,6 +74,7 @@
 
 <script>
 import ProfileMini from "../components/student/profile-mini.vue";
+import { translateTrueFalse } from "../utils/translations";
 
 export default {
   components: {
@@ -86,6 +89,11 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return {
+      translateTrueFalse,
+    };
   },
   data() {
     return {};
