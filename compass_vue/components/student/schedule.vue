@@ -49,7 +49,7 @@
                       <th>Credits</th>
                     </tr>
                   </thead>
-                  <tbody class="mb-3">
+                  <tbody class="mb-3" v-if="schedule.sections">
                     <tr
                       v-for="(section, index) in schedule.sections"
                       :key="index"
@@ -94,12 +94,19 @@
                       <td>{{ section.credits }}</td>
                     </tr>
                   </tbody>
+                  <tbody v-else class="mb-3">
+                    <tr>
+                      <td colspan="5" class="ps-3 text-secondary">
+                        No upcoming registrations found
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
               </div>
             </axdd-tabs-panel>
           </template>
           <template v-else>
-            <p>No schedules found</p>
+            <div class="text-secondary">No schedules found</div>
           </template>
         </template>
       </axdd-tabs-display>

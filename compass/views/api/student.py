@@ -19,6 +19,8 @@ from uw_sws.term import (
 from uw_sws.registration import get_schedule_by_regid_and_term
 from uw_sws.enrollment import get_enrollment_history_by_regid
 
+TERMS = {1: "Winter", 2: "Spring", 3: "Summer", 4: "Autumn"}
+
 
 class StudentView(BaseAPIView):
     '''
@@ -37,8 +39,7 @@ class StudentView(BaseAPIView):
             try:
                 local_student = Student.objects.get(
                     system_key=person.student.system_key)
-                person.student.compass_programs = [
-                    program.id for program in local_student.programs.all()]
+                person.student.compass_programs = []
             except Student.DoesNotExist:
                 person.student.compass_programs = []
             person.photo_url = PhotoDAO().get_photo_url(person.uwregid)
@@ -123,16 +124,18 @@ class StudentTranscriptsView(BaseAPIView):
         client = UWPersonClient()
         person = client.get_person_by_uwregid(uwregid)
 
-        try:
-            enrollments = get_enrollment_history_by_regid(uwregid)
-        except DataFailureException as err:
-            raise
-
-        qtr_sort = {"winter": 1, "spring": 2, "summer": 3, "autumn": 4}
-
         transcripts = []
-        for enrollment in sorted(enrollments, key=lambda e: (
-                e.term.year, qtr_sort[e.term.quarter.lower()]), reverse=True):
-            transcripts.append(enrollment.json_data())
+        for transcript in sorted(person.student.transcripts, key=lambda t: (
+                t.tran_term.year, t.tran_term.quarter), reverse=True):
+            term = get_term_by_year_and_quarter(
+                transcript.tran_term.year,
+                TERMS[transcript.tran_term.quarter])
+            try:
+                class_schedule = get_schedule_by_regid_and_term(
+                    uwregid, term)
+                transcript.class_schedule = class_schedule.json_data()
+            except DataFailureException:
+                transcript.class_schedule = None
+            transcripts.append(transcript.to_dict())
 
         return JsonResponse(transcripts, safe=False)

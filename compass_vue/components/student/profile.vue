@@ -99,7 +99,7 @@
               <KeyValue>
                 <template #key>Disability</template>
                 <template #value>
-                  {{ person.student.disability_ind }}
+                  {{ translateTrueFalse(person.student.disability_ind) }}
                 </template>
               </KeyValue>
             </li>
@@ -325,6 +325,7 @@
 
 <script>
 import KeyValue from "../../components/_common/key-value.vue";
+import { translateTrueFalse } from "../../utils/translations";
 
 export default {
   inject: ["mq"],
@@ -335,6 +336,11 @@ export default {
     },
   },
   components: { KeyValue },
+  setup() {
+    return {
+      translateTrueFalse,
+    };
+  },
   data() {
     return {};
   },
