@@ -49,7 +49,7 @@
                       <th>Credits</th>
                     </tr>
                   </thead>
-                  <tbody class="mb-3" v-if="schedule.sections">
+                  <tbody class="mb-3" v-if="schedule.sections.length > 0">
                     <tr
                       v-for="(section, index) in schedule.sections"
                       :key="index"
@@ -57,6 +57,7 @@
                       <td class="ps-3">
                         {{ section.curriculum_abbr }}
                         {{ section.course_number }}
+                        {{ section.section_id }}
                         <div class="fs-8 text-secondary">
                           {{ section.course_title }}
                         </div>
@@ -97,7 +98,7 @@
                   <tbody v-else class="mb-3">
                     <tr>
                       <td colspan="5" class="ps-3 text-secondary">
-                        No upcoming registrations found
+                        No registrations found
                       </td>
                     </tr>
                   </tbody>
