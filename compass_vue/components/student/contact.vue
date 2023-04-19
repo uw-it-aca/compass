@@ -26,7 +26,9 @@
             <tbody>
               <tr v-for="contact in contacts" :key="contact.id">
                 <td scope="row" class="ps-3" style="width: 25%">
-                  <div>{{ formatDate(contact.checkin_date, "LLL") }}</div>
+                  <div class="small">
+                    {{ formatDate(contact.checkin_date, "LLL") }}
+                  </div>
                   <div class="text-muted small">
                     <i class="bi bi-person-circle me-1"></i
                     >{{ contact.app_user.uwnetid }}
