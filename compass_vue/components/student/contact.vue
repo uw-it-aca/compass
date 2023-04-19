@@ -101,12 +101,6 @@
                       contact with their student.
                     </div>
                   </div>
-                  <div v-if="contact.contact_type.name == 'Admin'">
-                    <span class="small text-muted visually-hidden">Admin</span>
-                    <div class="text-primary fs-8">
-                      <i class="bi bi-exclamation-octagon-fill me-1"></i>This is an admin note
-                    </div>
-                  </div>
                 </td>
                 <td class="p-3">
                   <AddEditContact
