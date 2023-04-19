@@ -43,10 +43,12 @@
         </div>
 
         <div class="row my-5">
-          <div class="col-9">
+          <div class="col-12">
             <div>
               Student Authorizes Release of Directory Information:
-              <span class="fw-bold">
+              <span
+                class="small badge rounded-pill alert alert-secondary border-0 px-2 py-1 mb-0 me-1"
+              >
                 <template v-if="person.student.directory_release_ind"
                   >Yes</template
                 >
@@ -70,15 +72,6 @@
               >
                 Learn More</a
               >
-            </div>
-          </div>
-          <div class="col-3 d-flex align-content-center flex-column">
-            <div class="my-auto">
-              <div class="text-secondary text-end small">
-                <i class="bi bi-calendar-week"></i>
-                Autumn 2022
-              </div>
-              <div class="text-end fw-bold">Week 4 of 10</div>
             </div>
           </div>
           <div class="col">

@@ -3,11 +3,11 @@
     <table class="table mb-0">
       <thead class="table-light text-muted small">
         <tr>
-          <th scope="col" class="ps-3 w-50">Student</th>
-          <th scope="col">Check-in Date</th>
-          <th scope="col">Contact Type</th>
-          <th scope="col">Meeting With</th>
-          <th scope="col">Adviser</th>
+          <th class="ps-3" style="width: 33%" scope="col">Student</th>
+          <th scope="col" style="width: 15%">Check-in Date</th>
+          <th scope="col" style="width: 15%">Contact Type</th>
+          <th scope="col" style="width: 15%">Meeting With</th>
+          <th scope="col">Assigned Adviser</th>
         </tr>
       </thead>
       <tbody>
