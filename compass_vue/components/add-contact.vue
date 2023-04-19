@@ -28,7 +28,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title h6 m-0 fw-bold" id="contactModalLabel">
-            Record a contact
+            Record a contact {{ userRoles }}
           </h5>
           <button
             type="button"
@@ -83,13 +83,14 @@
                 <option selected disabled :value="undefined">
                   Choose one...
                 </option>
-                <option
+                <template
                   v-for="contactType in contactTypes"
                   :key="contactType.id"
-                  :value="contactType.id"
                 >
-                  {{ contactType.name }}
-                </option>
+                  <option :value="contactType.id">
+                    {{ contactType.name }}
+                  </option>
+                </template>
               </select>
             </div>
             <div class="col">
@@ -203,6 +204,7 @@
 <script>
 import dataMixin from "../mixins/data_mixin.js";
 import { Modal } from "bootstrap";
+import { Role } from "../helpers/roles";
 
 export default {
   mixins: [dataMixin],
@@ -230,6 +232,8 @@ export default {
       formErrors: {},
       updatePermissionDenied: false,
       errorResponse: "",
+      userRoles: document.body.getAttribute("data-user-role").split(","),
+      Role: Role,
     };
   },
   created() {
