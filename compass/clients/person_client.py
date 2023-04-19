@@ -32,7 +32,9 @@ class CompassPersonClient(UWPersonClient):
              self.DB.Student.campus_desc,
              self.DB.Student.special_program_code,
              self.DB.Student.special_program_desc,
-             self.DB.Student.enroll_status_code).join(
+             self.DB.Student.enroll_status_code,
+             self.DB.Student.enroll_status_request_code,
+             self.DB.Student.enroll_status_desc).join(
             self.DB.Student).join(self.DB.StudentToAdviser).join(
             self.DB.Adviser).filter(
                 self.DB.Adviser.id == sqla_adviser.id).order_by(
@@ -54,6 +56,8 @@ class CompassPersonClient(UWPersonClient):
             student.special_program_code = item[10]
             student.special_program_desc = item[11]
             student.enroll_status_code = item[12]
+            student.enroll_status_request_code = item[13]
+            student.enroll_status_desc = item[14]
             person.student = student
             persons.append(person)
         return persons
