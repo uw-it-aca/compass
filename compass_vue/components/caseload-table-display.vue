@@ -4,7 +4,7 @@
       <thead class="table-light text-muted small">
         <tr>
           <th scope="col" style="width: 33%" class="ps-3">Student</th>
-          <th scope="col">Class</th>
+          <th scope="col" style="width: 15%">Class</th>
           <th scope="col">Campus</th>
           <th scope="col" style="width: 33%" class="text-nowrap">Status</th>
         </tr>
