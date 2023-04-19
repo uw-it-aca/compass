@@ -42,45 +42,44 @@
           </div>
         </div>
 
-        <div class="row my-5">
-          <div class="col-9">
-            <div>
-              Student Authorizes Release of Directory Information:
-              <span class="fw-bold">
-                <template v-if="person.student.directory_release_ind"
-                  >Yes</template
-                >
-                <template v-else>No</template>
-              </span>
-            </div>
-            <div
-              v-if="!person.student.directory_release_ind"
-              class="fw-normal text-secondary small"
-            >
-              This student has opted out and blocked the release of their
-              directory information. No information may be released about this
-              student. A recommended response when asked about this student is,
-              "I have no information about that individual."
-            </div>
-            <div>
-              <a
-                href="https://registrar.washington.edu/staffandfaculty/ferpa/"
-                class="small"
-                target="_blank"
-              >
-                Learn More</a
-              >
-            </div>
-          </div>
-          <div class="col-3 d-flex align-content-center flex-column">
-            <div class="my-auto">
-              <div class="text-secondary text-end small">
-                <i class="bi bi-calendar-week"></i>
-                Autumn 2022
+        <div class="row">
+          <div>
+            <div class="row p-3">
+              <div class="col-xl-8">
+                Student Authorizes Release of Directory Information:
+                <span
+                  v-if="!person.student.directory_release_ind"
+                  class="fw-bold"
+                  >Yes
+                </span>
+                <span v-else class="fw-bold">
+                  No
+                  <div class="fw-normal text-secondary fs-7">
+                    Student has opted out of directory information release, no
+                    information may be released about this student. The
+                    recommended response is, “I have no information about that
+                    individual."
+                    <a
+                      href="https://registrar.washington.edu/staffandfaculty/ferpa/"
+                      class="link-dark"
+                      target="_blank"
+                    >
+                      Learn More</a
+                    >
+                  </div>
+                </span>
+                <div v-if="!mq.xlPlus" class="mb-4"></div>
               </div>
-              <div class="text-end fw-bold">Week 4 of 10</div>
+              <div class="col-xl-4">
+                <div class="text-secondary text-end">
+                  <i class="bi bi-calendar-week"></i>
+                  Autumn 2022
+                </div>
+                <div class="text-end">Week 4 of 10</div>
+              </div>
             </div>
           </div>
+
           <div class="col">
             <div class="mt-3">
               <p class="fw-bold">Registration Holds</p>
@@ -214,6 +213,7 @@ import SearchStudent from "../components/search-student.vue";
 
 export default {
   mixins: [dataMixin],
+  inject: ["mq"],
   components: {
     layout: Layout,
     StudentProfile,

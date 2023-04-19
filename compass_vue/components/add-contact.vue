@@ -206,6 +206,7 @@ import { Modal } from "bootstrap";
 
 export default {
   mixins: [dataMixin],
+  inject: ["mq"],
   emits: ["contactUpdated"],
   props: {
     buttonType: {
