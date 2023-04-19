@@ -41,8 +41,6 @@
 </template>
 
 <script>
-import { Card, CardHeading } from "axdd-components";
-
 export default {
   props: {
     advisers: {
@@ -56,9 +54,6 @@ export default {
       userRole: document.body.getAttribute("data-user-role"),
     };
   },
-  components: {
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
-  },
+  components: {},
 };
 </script>

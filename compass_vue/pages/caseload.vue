@@ -4,7 +4,7 @@
     <template #content>
       <div class="row my-4 small">
         <div class="col">
-          <div class="bg-gray p-3 rounded-3">
+          <div class="bg-light p-3 rounded-3">
             <div class="row">
               <div class="col-xl-4 ms-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import { Card, CardHeading } from "axdd-components";
 import SearchStudent from "../components/search-student.vue";
 import CaseloadTableDisplay from "../components/caseload-table-display.vue";
 import CaseloadTableLoading from "../components/caseload-table-loading.vue";
@@ -55,8 +54,6 @@ export default {
     "search-student": SearchStudent,
     "table-display": CaseloadTableDisplay,
     "table-loading": CaseloadTableLoading,
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
   },
   data() {
     return {
@@ -72,7 +69,9 @@ export default {
     };
   },
   created: function () {
-    this.loadAdviserCaseload(this.adviserNetId);
+    setTimeout(() => {
+      this.loadAdviserCaseload(this.adviserNetId);
+    }, 2000);
   },
   methods: {
     loadAdviserCaseload: function (netid) {

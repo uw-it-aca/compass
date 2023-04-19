@@ -1,5 +1,6 @@
-# Copyright 2022 UW-IT, University of Washington
+# Copyright 2023 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
+
 
 from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
@@ -12,9 +13,13 @@ from rest_framework.response import Response
 from rest_framework import status
 from uw_person_client import UWPersonClient
 from uw_person_client.exceptions import PersonNotFoundException
-from uw_sws.term import get_current_term, get_next_term, get_term_after, \
-    get_term_by_year_and_quarter
+from uw_sws.term import (
+    get_current_term, get_next_term, get_term_after,
+    get_term_by_year_and_quarter)
 from uw_sws.registration import get_schedule_by_regid_and_term
+from uw_sws.enrollment import get_enrollment_history_by_regid
+
+TERMS = {1: "Winter", 2: "Spring", 3: "Summer", 4: "Autumn"}
 
 
 class StudentView(BaseAPIView):
@@ -34,8 +39,7 @@ class StudentView(BaseAPIView):
             try:
                 local_student = Student.objects.get(
                     system_key=person.student.system_key)
-                person.student.compass_programs = [
-                    program.id for program in local_student.programs.all()]
+                person.student.compass_programs = []
             except Student.DoesNotExist:
                 person.student.compass_programs = []
             person.photo_url = PhotoDAO().get_photo_url(person.uwregid)
@@ -120,18 +124,12 @@ class StudentTranscriptsView(BaseAPIView):
         client = UWPersonClient()
         person = client.get_person_by_uwregid(uwregid)
 
-        quarter_definitions = {
-            1: "Winter",
-            2: "Spring",
-            3: "Summer",
-            4: "Autumn",
-        }
-
         transcripts = []
-        for transcript in person.student.transcripts:
+        for transcript in sorted(person.student.transcripts, key=lambda t: (
+                t.tran_term.year, t.tran_term.quarter), reverse=True):
             term = get_term_by_year_and_quarter(
                 transcript.tran_term.year,
-                quarter_definitions[transcript.tran_term.quarter])
+                TERMS[transcript.tran_term.quarter])
             try:
                 class_schedule = get_schedule_by_regid_and_term(
                     uwregid, term)
@@ -139,4 +137,5 @@ class StudentTranscriptsView(BaseAPIView):
             except DataFailureException:
                 transcript.class_schedule = None
             transcripts.append(transcript.to_dict())
+
         return JsonResponse(transcripts, safe=False)

@@ -47,7 +47,9 @@
                   <li>Grad status: {{ transcript.grad_status }}</li>
                   <li>Honors Program: {{ transcript.honors_program }}</li>
                   <li>Scholarships: {{ transcript.scholarship_type }}</li>
-                  <li>Special Program Code: {{ transcript.special_program }}</li>
+                  <li>
+                    Special Program Code: {{ transcript.special_program }}
+                  </li>
                   <li>Veteran: {{ transcript.veteran }}</li>
                   <li>Veteran Benefit: {{ transcript.veteran_benefit }}</li>
                 </ul>
@@ -62,8 +64,6 @@
 </template>
 
 <script>
-import { Card, CardHeading } from "axdd-components";
-
 import dataMixin from "../../mixins/data_mixin.js";
 
 export default {
@@ -74,10 +74,7 @@ export default {
       required: true,
     },
   },
-  components: {
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
-  },
+  components: {},
   data() {
     return {
       transcripts: {},

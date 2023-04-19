@@ -2,7 +2,7 @@
   <div class="bg-light rounded-3 border-0 px-0 py-4 m-0">
     <div class="row">
       <div class="col-xl-3 my-auto">
-        <div class="text-center mb-4">
+        <div class="px-3 text-center">
           <div class="d-inline-block rounded-circle border border-4 mb-2">
             <img
               :src="person.photo_url"
@@ -85,16 +85,13 @@
                 <template #value> {{ person.student.birthdate }} </template>
               </KeyValue>
             </li>
-            <li
-              v-for="(ethinicity, index) in person.student.ethnicities"
-              :key="index"
-            >
+            <li>
               <KeyValue>
                 <template #key>Ethnicity</template>
                 <template #value>
-                  {{ ethinicity.assigned_ethnic_code }},
-                  {{ ethinicity.assigned_ethnic_desc }},
-                  {{ ethinicity.assigned_ethnic_group_desc }}
+                  {{ person.student.assigned_ethnic_code }},
+                  {{ person.student.assigned_ethnic_desc }},
+                  {{ person.student.assigned_ethnic_group_desc }}
                 </template>
               </KeyValue>
             </li>
@@ -102,7 +99,7 @@
               <KeyValue>
                 <template #key>Disability</template>
                 <template #value>
-                  {{ person.student.disability_ind }}
+                  {{ translateTrueFalse(person.student.disability_ind) }}
                 </template>
               </KeyValue>
             </li>
@@ -125,9 +122,7 @@
               </KeyValue>
             </li>
           </ul>
-        </div>
 
-        <div class="px-3">
           <div
             v-if="mq.xlPlus"
             class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
@@ -188,13 +183,11 @@
               </KeyValue>
             </li>
           </ul>
-        </div>
 
-        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
-          <hr class="text-muted" />
-        </div>
+          <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
+            <hr class="text-muted" />
+          </div>
 
-        <div class="px-3">
           <div
             v-if="mq.xlPlus"
             class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
@@ -211,13 +204,11 @@
               </KeyValue>
             </li>
           </ul>
-        </div>
 
-        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
-          <hr class="text-muted" />
-        </div>
+          <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
+            <hr class="text-muted" />
+          </div>
 
-        <div class="px-3">
           <div
             v-if="mq.xlPlus"
             class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
@@ -334,6 +325,7 @@
 
 <script>
 import KeyValue from "../../components/_common/key-value.vue";
+import { translateTrueFalse } from "../../utils/translations";
 
 export default {
   inject: ["mq"],
@@ -344,6 +336,11 @@ export default {
     },
   },
   components: { KeyValue },
+  setup() {
+    return {
+      translateTrueFalse,
+    };
+  },
   data() {
     return {};
   },

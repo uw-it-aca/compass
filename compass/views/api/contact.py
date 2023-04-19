@@ -1,5 +1,6 @@
-# Copyright 2022 UW-IT, University of Washington
+# Copyright 2023 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
+
 
 from compass.views.api import BaseAPIView, JSONClientContentNegotiation, \
     TokenAPIView
@@ -9,7 +10,7 @@ from compass.serializers import ContactReadSerializer, \
     ContactWriteSerializer, ContactTopicSerializer, ContactTypeSerializer, \
     ContactMethodSerializer
 from dateutil import parser
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -196,7 +197,7 @@ class ContactOMADView(TokenAPIView):
                     f"The specified app-user '{contact_dict['adviser_netid']}'"
                     f" is not a member of the OMAD access group.",
                     status=status.HTTP_400_BAD_REQUEST)
-        except KeyError as e:
+        except (KeyError, ObjectDoesNotExist) as e:
             return Response(repr(e), status=status.HTTP_400_BAD_REQUEST)
         # parse the contact dictionary
         try:

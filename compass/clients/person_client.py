@@ -1,5 +1,6 @@
-# Copyright 2022 UW-IT, University of Washington
+# Copyright 2023 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
+
 
 from uw_person_client.clients.core_client import UWPersonClient
 from uw_person_client.components import Person, Student
@@ -29,7 +30,11 @@ class CompassPersonClient(UWPersonClient):
              self.DB.Student.registered_in_quarter,
              self.DB.Student.registration_hold_ind,
              self.DB.Student.campus_desc,
-             self.DB.Student.enroll_status_code).join(
+             self.DB.Student.special_program_code,
+             self.DB.Student.special_program_desc,
+             self.DB.Student.enroll_status_code,
+             self.DB.Student.enroll_status_request_code,
+             self.DB.Student.enroll_status_desc).join(
             self.DB.Student).join(self.DB.StudentToAdviser).join(
             self.DB.Adviser).filter(
                 self.DB.Adviser.id == sqla_adviser.id).order_by(
@@ -48,7 +53,11 @@ class CompassPersonClient(UWPersonClient):
             student.registered_in_quarter = item[7]
             student.registration_hold_ind = item[8]
             student.campus_desc = item[9]
-            student.enroll_status_code = item[10]
+            student.special_program_code = item[10]
+            student.special_program_desc = item[11]
+            student.enroll_status_code = item[12]
+            student.enroll_status_request_code = item[13]
+            student.enroll_status_desc = item[14]
             person.student = student
             persons.append(person)
         return persons

@@ -49,7 +49,7 @@
                       <th>Credits</th>
                     </tr>
                   </thead>
-                  <tbody class="mb-3">
+                  <tbody class="mb-3" v-if="schedule.sections.length > 0">
                     <tr
                       v-for="(section, index) in schedule.sections"
                       :key="index"
@@ -57,6 +57,7 @@
                       <td class="ps-3">
                         {{ section.curriculum_abbr }}
                         {{ section.course_number }}
+                        {{ section.section_id }}
                         <div class="fs-8 text-secondary">
                           {{ section.course_title }}
                         </div>
@@ -87,11 +88,19 @@
                           :key="index"
                         >
                           <span v-if="!meeting.no_meeting">
-                            {{ meeting.start_time }} - {{ meeting.end_time }}
+                            {{ translateMilitaryTime(meeting.start_time) }} -
+                            {{ translateMilitaryTime(meeting.end_time) }}
                           </span>
                         </div>
                       </td>
                       <td>{{ section.credits }}</td>
+                    </tr>
+                  </tbody>
+                  <tbody v-else class="mb-3">
+                    <tr>
+                      <td colspan="5" class="ps-3 text-secondary">
+                        No registrations found
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -99,7 +108,7 @@
             </axdd-tabs-panel>
           </template>
           <template v-else>
-            <p>No schedules found</p>
+            <div class="text-secondary">No schedules found</div>
           </template>
         </template>
       </axdd-tabs-display>
@@ -109,32 +118,21 @@
 
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
-import {
-  Card,
-  CardHeading,
-  CardTabs,
-  TabsList,
-  TabsDisplay,
-  TabsItem,
-  TabsPanel,
-} from "axdd-components";
+import { translateMilitaryTime } from "../../utils/translations";
 
 export default {
   mixins: [dataMixin],
-  components: {
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
-    "axdd-card-tabs": CardTabs,
-    "axdd-tabs-list": TabsList,
-    "axdd-tabs-display": TabsDisplay,
-    "axdd-tabs-item": TabsItem,
-    "axdd-tabs-panel": TabsPanel,
-  },
+  components: {},
   props: {
     person: {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return {
+      translateMilitaryTime,
+    };
   },
   data() {
     return {

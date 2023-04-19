@@ -80,7 +80,6 @@
 </template>
 
 <script>
-import { Card, CardHeading } from "axdd-components";
 import dataMixin from "../../mixins/data_mixin.js";
 
 export default {
@@ -99,10 +98,7 @@ export default {
       required: true,
     },
   },
-  components: {
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
-  },
+  components: {},
   data() {
     return {
       settings: [],

@@ -78,6 +78,18 @@ else:
     COMPASS_SUPPORT_GROUP = os.getenv('SUPPORT_GROUP', '')
     OMAD_ACCESS_GROUP_ID = os.getenv('OMAD_ACCESS_GROUP_ID', '')
 
+    # Django cache backend for the idcard tokens
+    CACHES = {
+        'default': {
+            'BACKEND': 'memcached_clients.django_backend.PymemcacheCache',
+            'LOCATION': MEMCACHED_SERVERS,
+            'OPTIONS': {
+                'use_pooling': MEMCACHED_USE_POOLING,
+                'max_pool_size': MEMCACHED_MAX_POOL_SIZE,
+            }
+        }
+    }
+
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
 
 # Where the back link should go, and how it's labeled.
@@ -98,3 +110,80 @@ UW_PERSON_DB_PORT = os.getenv('UW_PERSON_DB_PORT', '')
 
 # IDCard photo config
 IDCARD_TOKEN_EXPIRES = 60 * 60
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'add_user': {
+            '()': 'compass.logging.UserFilter'
+        },
+        'stdout_stream': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': lambda record: record.levelno < logging.WARNING
+        },
+        'stderr_stream': {
+            '()': 'django.utils.log.CallbackFilter',
+            'callback': lambda record: record.levelno > logging.INFO
+        }
+    },
+    'formatters': {
+        'compass': {
+            'format': '%(levelname)-4s %(asctime)s %(user)s %(actas)s %(message)s [%(name)s]',
+            'datefmt': '[%Y-%m-%d %H:%M:%S]',
+        },
+        'restclients_timing': {
+            'format': '%(levelname)-4s restclients_timing %(module)s %(asctime)s %(message)s [%(name)s]',
+            'datefmt': '[%Y-%m-%d %H:%M:%S]',
+        },
+    },
+    'handlers': {
+        'stdout': {
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+            'filters': ['add_user', 'stdout_stream'],
+            'formatter': 'compass',
+        },
+        'stderr': {
+            'class': 'logging.StreamHandler',
+            'stream': sys.stderr,
+            'filters': ['add_user', 'stderr_stream'],
+            'formatter': 'compass',
+        },
+        'restclients_timing': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'stream': sys.stdout,
+            'filters': ['stdout_stream'],
+            'formatter': 'restclients_timing',
+        },
+        'null': {
+            'class': 'logging.NullHandler',
+        },
+    },
+    'loggers': {
+        'django.security.DisallowedHost': {
+            'handlers': ['null'],
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['stderr'],
+            'level': 'ERROR',
+            'propagate': True,
+        },
+        'compass': {
+            'handlers': ['stdout', 'stderr'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        'restclients_core': {
+            'handlers': ['restclients_timing'],
+            'level': 'INFO',
+            'propagate': False,
+        },
+        '': {
+            'handlers': ['stdout', 'stderr'],
+            'level': 'INFO' if os.getenv('ENV', 'localdev') == 'prod' else 'DEBUG'
+        }
+    }
+}
