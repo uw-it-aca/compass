@@ -20,6 +20,9 @@
             </tr>
           </thead>
           <tbody>
+            {{
+              transcript
+            }}
             <tr
               v-for="(section, index3) in transcript.class_schedule.sections"
               :key="index3"

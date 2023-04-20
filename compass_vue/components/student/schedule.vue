@@ -13,10 +13,16 @@
               :panel-id="'panel' + index"
               :active-tab="index == 0"
               :variant="'pills'"
-              >{{ schedule.term.quarter }}
-              {{ schedule.term.year }}</axdd-tabs-item
             >
+              <div class="row">
+                <div class="col-9">
+                  {{ schedule.term.quarter }} {{ schedule.term.year }}
+                </div>
+                <span class="badge text-bg-secondary col">10</span>
+              </div>
+            </axdd-tabs-item>
           </template>
+          {{ schedule }}
         </axdd-tabs-list>
       </axdd-card-tabs>
     </template>
@@ -38,8 +44,8 @@
                   <col style="width: 40%" />
                   <col style="width: 15%" />
                   <col style="width: 13%" />
-                  <col style="width: 20%" />
-                  <col style="width: 12%" />
+                  <col style="width: 22%" />
+                  <col style="width: 10%" />
                   <thead class="table-light text-muted small">
                     <tr>
                       <th class="ps-3">Course</th>
