@@ -34,13 +34,15 @@ TEMPLATES = [
         'OPTIONS': {
             'debug':  True,
             'context_processors': [
-                "compass.context_processors.google_analytics",
-                "compass.context_processors.django_debug",
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'supporttools.context_processors.supportools_globals',
                 'supporttools.context_processors.has_less_compiled',
+                'compass.context_processors.google_analytics',
+                'compass.context_processors.django_debug',
+                'compass.context_processors.term_context',
+                'compass.context_processors.auth_user',
             ],
         }
     }
