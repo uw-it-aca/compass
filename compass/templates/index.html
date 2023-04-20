@@ -16,20 +16,20 @@
 
     <script>
       window.term_data = {
-        todayDate: "{% current_date %}",
-        currYear: "{% current_term_year %}",
-        currQuarter: "{% current_term_quarter %}",
-        nextYear: "{% next_term_year %}",
-        nextQuarter: "{% next_term_quarter %}",
-        breakYear: "{% break_term_year %}",
-        breakQuarter: "{% break_term_quarter %}",
+        todayDate: "{{ current_date }}",
+        currYear: "{{ current_term_year }}",
+        currQuarter: "{{ current_term_quarter }}",
+        nextYear: "{{ next_term_year }}",
+        nextQuarter: "{{ next_term_quarter }}",
+        breakYear: "{{ break_term_year }}",
+        breakQuarter: "{{ break_term_quarter }}",
         isFinals:  {% if is_finals %}true{% else %}false{% endif %},
         isBreak:  {% if is_break %}true{% else %}false{% endif %},
-        firstDay: "{% term_first_day %}",
-        lastDay: "{% term_last_day %}",
-        aTermLastDay: {% if aterm_last_day %}"{% aterm_last_day %}"{% else %}null{% endif %},
-        bTermFirstDay: {% if bterm_first_day %}"{% bterm_first_day %}"{% else %}null{% endif %},
-        lastFinalExamDay: "{% last_final_exam_date %}",
+        firstDay: "{{ term_first_day }}",
+        lastDay: "{{ term_last_day }}",
+        aTermLastDay: {% if aterm_last_day %}"{{ aterm_last_day }}"{% else %}null{% endif %},
+        bTermFirstDay: {% if bterm_first_day %}"{{ bterm_first_day }}"{% else %}null{% endif %},
+        lastFinalExamDay: "{{ last_final_exam_date }}",
         weekOfTerm: {% term_week %}
       };
     </script>
