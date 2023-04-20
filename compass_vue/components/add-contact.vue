@@ -87,7 +87,10 @@
                   v-for="contactType in contactTypes"
                   :key="contactType.id"
                 >
-                  <option :value="contactType.id">
+                  <option
+                    v-if="contactType.slug !== 'admin'"
+                    :value="contactType.id"
+                  >
                     {{ contactType.name }}
                   </option>
                 </template>
@@ -110,13 +113,18 @@
                 <option selected disabled :value="undefined">
                   Choose one...
                 </option>
-                <option
+
+                <template
                   v-for="contactMethod in contactMethods"
                   :key="contactMethod.id"
-                  :value="contactMethod.id"
                 >
-                  {{ contactMethod.name }}
-                </option>
+                  <option
+                    v-if="contactMethod.slug !== 'internal'"
+                    :value="contactMethod.id"
+                  >
+                    {{ contactMethod.name }}
+                  </option>
+                </template>
               </select>
             </div>
           </div>
@@ -127,26 +135,27 @@
               required
             </span>
             <ul class="list-inline">
-              <li
-                class="list-inline-item mb-1 me-1"
-                v-for="topic in contactTopics"
-                :key="topic.id"
-              >
-                <input
-                  type="checkbox"
-                  v-model="contact.contact_topics"
-                  class="btn-check"
-                  :class="formErrors.contact_topics ? 'is-invalid' : ''"
-                  :value="topic.id"
-                  :id="'#contactModal' + contactId + 'Topic' + topic.id"
-                  autocomplete="off"
-                />
-                <label
-                  class="btn btn-sm btn-outline-dark-beige fs-9 rounded-pill"
-                  :for="'#contactModal' + contactId + 'Topic' + topic.id"
-                  >{{ topic.name }}</label
+              <template v-for="topic in contactTopics" :key="topic.id">
+                <li
+                  v-if="topic.slug !== 'none'"
+                  class="list-inline-item mb-1 me-1"
                 >
-              </li>
+                  <input
+                    type="checkbox"
+                    v-model="contact.contact_topics"
+                    class="btn-check"
+                    :class="formErrors.contact_topics ? 'is-invalid' : ''"
+                    :value="topic.id"
+                    :id="'#contactModal' + contactId + 'Topic' + topic.id"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-sm btn-outline-dark-beige fs-9 rounded-pill"
+                    :for="'#contactModal' + contactId + 'Topic' + topic.id"
+                    >{{ topic.name }}</label
+                  >
+                </li>
+              </template>
             </ul>
           </div>
           <div class="mb-3">

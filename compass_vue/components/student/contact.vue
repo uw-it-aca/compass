@@ -35,15 +35,14 @@
                   </div>
                 </td>
                 <td class="align-bottom">
-
-                  <template v-if="contact.contact_type.name == 'Parent'">
+                  <template v-if="contact.contact_type.slug == 'parent'">
                     <div
                       class="badge rounded-pill alert alert-danger border-0 px-2 py-1 m-0 me-2"
                     >
                       {{ contact.contact_type.name }}
                     </div>
                   </template>
-                  <template v-else-if="contact.contact_type.name == 'Admin'">
+                  <template v-else-if="contact.contact_type.slug == 'admin'">
                     <div
                       class="badge rounded-pill alert alert-primary border-0 px-2 py-1 m-0 me-2"
                     >
@@ -67,13 +66,15 @@
                     v-if="contact.contact_topics"
                     class="list-unstyled mt-2 mb-0"
                   >
-                    <li
-                      v-for="topic in contact.contact_topics"
-                      :key="topic.id"
-                      class="badge rounded-pill alert alert-dark-beige border-0 px-2 py-1 mb-0 me-1"
-                    >
-                      {{ topic.name }}
-                    </li>
+                    <template v-for="topic in contact.contact_topics">
+                      <li
+                        v-if="topic.slug !== 'none'"
+                        :key="topic.id"
+                        class="badge rounded-pill alert alert-dark-beige border-0 px-2 py-1 mb-0 me-1"
+                      >
+                        {{ topic.name }}
+                      </li>
+                    </template>
                   </ul>
 
                   <div v-if="contact.notes" class="mt-3">
