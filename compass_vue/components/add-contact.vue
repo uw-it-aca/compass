@@ -213,7 +213,7 @@
 <script>
 import dataMixin from "../mixins/data_mixin.js";
 import { Modal } from "bootstrap";
-import { Role } from "../helpers/roles";
+import { Role } from "../utils/roles";
 
 export default {
   mixins: [dataMixin],
