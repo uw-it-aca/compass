@@ -13,9 +13,15 @@
               :panel-id="'panel' + index"
               :active-tab="index == 0"
               :variant="'pills'"
-              >{{ schedule.term.quarter }}
-              {{ schedule.term.year }}</axdd-tabs-item
             >
+              {{ schedule.term.quarter }} {{ schedule.term.year }}
+              <span
+                v-if="schedule.sections.length > 0"
+                class="badge text-bg-purple ms-2 rounded-pill"
+                @click.stop
+                >{{ getCreditTotal(schedule.sections) }}</span
+              >
+            </axdd-tabs-item>
           </template>
         </axdd-tabs-list>
       </axdd-card-tabs>
@@ -38,8 +44,8 @@
                   <col style="width: 40%" />
                   <col style="width: 15%" />
                   <col style="width: 13%" />
-                  <col style="width: 20%" />
-                  <col style="width: 12%" />
+                  <col style="width: 22%" />
+                  <col style="width: 10%" />
                   <thead class="table-light text-muted small">
                     <tr>
                       <th class="ps-3">Course</th>
@@ -149,6 +155,17 @@ export default {
           this.schedules = response.data;
         }
       });
+    },
+    getCreditTotal: function (sections) {
+      // get all section credits and sum the total
+      let creditTotal = 0;
+      for (let i = 0; i < sections.length; i++) {
+        // parseInt to exclude non-interger credits (i.e. None, NC, etc.)
+        if (parseInt(sections[i].credits)) {
+          creditTotal += parseInt(sections[i].credits);
+        }
+      }
+      return creditTotal;
     },
   },
 };
