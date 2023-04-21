@@ -16,6 +16,7 @@
             >
               {{ schedule.term.quarter }} {{ schedule.term.year }}
               <span
+                v-if="schedule.sections.length > 0"
                 class="badge text-bg-purple ms-2 rounded-pill"
                 @click.stop
                 >{{ getCreditTotal(schedule.sections) }}</span
@@ -156,17 +157,14 @@ export default {
       });
     },
     getCreditTotal: function (sections) {
-      console.log(sections);
+      // get all section credits and sum the total
       let creditTotal = 0;
       for (let i = 0; i < sections.length; i++) {
-        // parseInt to remove non-credit sections
+        // parseInt to exclude non-interger credits (i.e. None, NC, etc.)
         if (parseInt(sections[i].credits)) {
-          console.log(parseInt(sections[i].credits));
           creditTotal += parseInt(sections[i].credits);
         }
       }
-      // TODO: get all section credits and sum total
-      console.log(creditTotal);
       return creditTotal;
     },
   },
