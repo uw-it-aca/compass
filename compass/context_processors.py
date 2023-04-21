@@ -17,7 +17,7 @@ def django_debug(request):
     return {'django_debug': getattr(settings, 'DEBUG', False)}
 
 
-def term_context(request):
+def term(request):
     return term_context()
 
 
