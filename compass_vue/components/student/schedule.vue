@@ -14,12 +14,8 @@
               :active-tab="index == 0"
               :variant="'pills'"
             >
-              <div class="row">
-                <div class="col-9">
-                  {{ schedule.term.quarter }} {{ schedule.term.year }}
-                </div>
-                <span class="badge text-bg-secondary col">10</span>
-              </div>
+              {{ schedule.term.quarter }} {{ schedule.term.year }}
+              <span class="badge text-bg-purple ms-2 rounded-pill">10</span>
             </axdd-tabs-item>
           </template>
           {{ schedule }}
