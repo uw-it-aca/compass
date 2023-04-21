@@ -4,7 +4,7 @@
       <thead class="table-light text-muted small">
         <tr>
           <th scope="col" style="width: 33%" class="ps-3">Student</th>
-          <th scope="col">Class</th>
+          <th scope="col" style="width: 15%">Class</th>
           <th scope="col">Campus</th>
           <th scope="col" style="width: 33%" class="text-nowrap">Status</th>
         </tr>
@@ -36,11 +36,11 @@
               <li class="list-inline-item flex-fill">
                 <div>Registered</div>
                 <span
-                  class="small"
+                  class="small badge rounded-pill alert border-0 px-2 py-1 mb-0 me-1"
                   :class="
                     !person.student.registered_in_quarter
-                      ? 'text-danger'
-                      : 'text-secondary'
+                      ? 'alert-danger'
+                      : 'alert-secondary'
                   "
                 >
                   {{ translateTrueFalse(person.student.registered_in_quarter) }}
@@ -52,11 +52,11 @@
               <li class="list-inline-item flex-fill">
                 <div>Registration Holds</div>
                 <span
-                  class="small"
+                  class="small badge rounded-pill alert border-0 px-2 py-1 mb-0 me-1"
                   :class="
                     person.student.registration_hold_ind
-                      ? 'text-danger'
-                      : 'text-secondary'
+                      ? 'alert-danger'
+                      : 'alert-secondary'
                   "
                   >{{
                     translateTrueFalse(person.student.registration_hold_ind)

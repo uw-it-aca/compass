@@ -26,21 +26,38 @@
             <tbody>
               <tr v-for="contact in contacts" :key="contact.id">
                 <td scope="row" class="ps-3" style="width: 25%">
-                  <div>{{ formatDate(contact.checkin_date, "LLL") }}</div>
+                  <div class="small">
+                    {{ formatDate(contact.checkin_date, "LLL") }}
+                  </div>
                   <div class="text-muted small">
                     <i class="bi bi-person-circle me-1"></i
                     >{{ contact.app_user.uwnetid }}
                   </div>
                 </td>
                 <td class="align-bottom">
+                  <template v-if="contact.contact_type.slug == 'parent'">
+                    <div
+                      class="badge rounded-pill alert alert-danger border-0 px-2 py-1 m-0 me-2"
+                    >
+                      {{ contact.contact_type.name }}
+                    </div>
+                  </template>
+                  <template v-else-if="contact.contact_type.slug == 'admin'">
+                    <div
+                      class="badge rounded-pill alert alert-primary border-0 px-2 py-1 m-0 me-2"
+                    >
+                      {{ contact.contact_type.name }}
+                    </div>
+                  </template>
+                  <template v-else>
+                    <div
+                      class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-2"
+                    >
+                      {{ contact.contact_type.name }}
+                    </div>
+                  </template>
                   <div
-                    class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-2"
-                  >
-                    {{ contact.contact_type.name }}
-                  </div>
-
-                  <div
-                    class="badge rounded-pill alert alert-secondary border-0 px-2 py-1 m-0 me-1"
+                    class="badge rounded-pill alert alert-light-gray border-0 px-2 py-1 m-0 me-1"
                   >
                     {{ contact.contact_method.name }}
                   </div>
@@ -49,13 +66,15 @@
                     v-if="contact.contact_topics"
                     class="list-unstyled mt-2 mb-0"
                   >
-                    <li
-                      v-for="topic in contact.contact_topics"
-                      :key="topic.id"
-                      class="badge rounded-pill alert alert-dark-beige border-0 px-2 py-1 mb-0 me-1"
-                    >
-                      {{ topic.name }}
-                    </li>
+                    <template v-for="topic in contact.contact_topics">
+                      <li
+                        v-if="topic.slug !== 'none'"
+                        :key="topic.id"
+                        class="badge rounded-pill alert alert-dark-beige border-0 px-2 py-1 mb-0 me-1"
+                      >
+                        {{ topic.name }}
+                      </li>
+                    </template>
                   </ul>
 
                   <div v-if="contact.notes" class="mt-3">
@@ -74,6 +93,14 @@
                     <p class="text-muted small">
                       {{ contact.actions }}
                     </p>
+                  </div>
+                  <div v-if="contact.contact_type.name == 'Parent'">
+                    <span class="small text-muted visually-hidden">Parent</span>
+                    <div class="text-danger fs-8">
+                      <i class="bi bi-exclamation-octagon-fill me-1"></i>Parent
+                      contacts should be treated as private. Do not discuss this
+                      contact with their student.
+                    </div>
                   </div>
                 </td>
                 <td class="p-3">

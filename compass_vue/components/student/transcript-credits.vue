@@ -5,41 +5,63 @@
     </template>
     <template #body>
       <ul class="list-unstyled">
-        <li>UW Credits Attempted: xxx</li>
-        <li>UW Credits Earned: xxx</li>
-        <li>UW Graded Attempted: xxx</li>
-        <li>UW Graded Earned: xxx</li>
-        <li>UW Graded Points: xxx</li>
-        <li>UW Grade Point Average: xxx</li>
-        <li>Extension Credits: xxx</li>
-        <li>Transfer Credits: {{ person.student.total_transfer_credits }}</li>
-        <li>Total UW Credits Earned: {{ person.student.total_uw_credits }}</li>
+        <li>
+          <div class="d-flex justify-content-between">
+            <span>UW Credits Attempted:</span>
+            <span>xxx</span>
+          </div>
+        </li>
+        <li>
+          <div class="d-flex justify-content-between">
+            <span> UW Graded Attempted:</span>
+            <span>{{ person.student.total_grade_attempted }}</span>
+          </div>
+        </li>
+        <li>
+          <div class="d-flex justify-content-between">
+            <span>UW Graded Earned:</span>
+            <span>xxx</span>
+          </div>
+        </li>
+        <li>
+          <div class="d-flex justify-content-between">
+            <span>UW Graded Points:</span>
+            <span>{{ person.student.total_grade_points }}</span>
+          </div>
+        </li>
+        <li>
+          <div class="d-flex justify-content-between">
+            <span>UW GPA:</span>
+            <span class="fw-bold">{{
+              (person.student.total_grade_points /
+              person.student.total_grade_attempted).toFixed(2)
+            }}</span>
+          </div>
+        </li>
       </ul>
-      <ul class="list-unstyled">
+      <ul class="list-unstyled m-0">
         <li>
-          Total Deductible Credits:
-          {{ person.student.total_deductible_credits }}
+          <div class="d-flex justify-content-between">
+            <span>UW Credits Earned:</span>
+            <span>{{ person.student.total_uw_credits }}</span>
+          </div>
         </li>
         <li>
-          Total Extension Credits:
-          {{ person.student.total_extension_credits }}
+          <div class="d-flex justify-content-between">
+            <span>Extension Credits:</span>
+            <span>{{ person.student.total_extension_credits }}</span>
+          </div>
         </li>
         <li>
-          Total Non-Graded Credits:
-          {{ person.student.total_non_graded_credits }}
-        </li>
-        <li>
-          Total Registered Credits:
-          {{ person.student.total_registered_credits }}
-        </li>
-        <li>
-          Total Transfer Credits:
-          {{ person.student.total_transfer_credits }}
+          <div class="d-flex justify-content-between">
+            <span>Transfer Credits:</span>
+            <span>{{ person.student.total_transfer_credits }}</span>
+          </div>
         </li>
         <li><hr /></li>
         <li>
           <div class="d-flex justify-content-between">
-            <span>Total Credits</span>
+            <span>Total Credits Earned</span>
             <span>{{ person.student.total_credits }}</span>
           </div>
         </li>

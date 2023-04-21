@@ -13,20 +13,12 @@
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Status</p>
           <ul class="list-unstyled">
             <li>
-              <KeyValue>
-                <template #key>Registered in Quarter</template>
-                <template #value>
-                  {{ translateTrueFalse(person.student.registered_in_quarter) }}
-                </template>
-              </KeyValue>
-            </li>
-            <li>
-              <KeyValue>
-                <template #key>Enrollment Status Code</template>
-                <template #value>
-                  {{ person.student.enroll_status_code }}
-                </template>
-              </KeyValue>
+              <span
+                v-if="person.student.registration_hold_ind"
+                class="fw-bold text-danger"
+              >
+                Registration Hold
+              </span>
             </li>
             <li>
               <KeyValue>

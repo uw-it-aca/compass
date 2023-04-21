@@ -46,7 +46,9 @@
           <div class="col-12">
             <div>
               Student Authorizes Release of Directory Information:
-              <span class="fw-bold">
+              <span
+                class="small badge rounded-pill alert alert-secondary border-0 px-2 py-1 mb-0 me-1"
+              >
                 <template v-if="person.student.directory_release_ind"
                   >Yes</template
                 >
@@ -74,31 +76,6 @@
           </div>
           <div class="col">
             <div class="mt-3">
-              <p class="fw-bold">Registration Holds</p>
-              <ul>
-                <li>
-                  Registration Hold:
-
-                  <span
-                    class="badge"
-                    :class="
-                      person.student.registration_hold_ind
-                        ? 'text-bg-danger'
-                        : 'text-bg-light-gray'
-                    "
-                    >{{ person.student.registration_hold_ind }}</span
-                  >
-                </li>
-                <li>
-                  Office Hold Name:
-                  {{ person.student.hold_office_name_combined }}
-                </li>
-                <li>
-                  Hold reason desc:
-                  {{ person.student.hold_reason_desc_combined }}
-                </li>
-              </ul>
-
               <p class="fw-bold">Misc/Graduation Application Status</p>
               <ul>
                 <li>
@@ -148,6 +125,9 @@
                       <StudentSchedule :person="person"></StudentSchedule>
                     </div>
                     <div class="col-xl-3">
+                      <span v-if="!person.student.registration_hold_ind">
+                        <StudentHolds :person="person"></StudentHolds>
+                      </span>
                       <StudentAdviser
                         :advisers="person.student.advisers"
                       ></StudentAdviser>
@@ -196,6 +176,7 @@ import StudentTranscript from "../components/student/transcript.vue";
 import StudentTranscriptCredits from "../components/student/transcript-credits.vue";
 import StudentContact from "../components/student/contact.vue";
 import StudentSchedule from "../components/student/schedule.vue";
+import StudentHolds from "../components/student/holds.vue";
 import StudentAdviser from "../components/student/adviser.vue";
 import StudentPrograms from "../components/student/programs.vue";
 import StudentAffiliations from "../components/student/affiliation-mini.vue";
@@ -214,6 +195,7 @@ export default {
     StudentTranscriptCredits,
     StudentContact,
     StudentSchedule,
+    StudentHolds,
     StudentAdviser,
     StudentPrograms,
     StudentVisits,
