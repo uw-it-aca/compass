@@ -6,9 +6,6 @@
           {{ transcript.class_schedule.term.quarter }}
           {{ transcript.class_schedule.term.year }}
         </axdd-card-heading>
-        <axdd-card-action class="text-danger fw-bold">
-          Current Major: Premajor
-        </axdd-card-action>
       </template>
       <div v-else>no term data</div>
     </template>
@@ -61,7 +58,7 @@
                     <li>TTL EARNED: xx</li>
                     <li>CUM GRADED AT: xx</li>
                     <li>CUM GRADE PTS: xx</li>
-                    <li>CUM GPA: xx cum_gradepoints / cum_attempted</li>
+                    <li>CUM GPA: xx</li>
                   </ul>
 
                   <ul class="d-none list-unstyled">
