@@ -159,7 +159,8 @@ export default {
       console.log(sections);
       let creditTotal = 0;
       for (let i = 0; i < sections.length; i++) {
-        if (sections[i].credits !== "None") {
+        // parseInt to remove non-credit sections
+        if (parseInt(sections[i].credits)) {
           console.log(parseInt(sections[i].credits));
           creditTotal += parseInt(sections[i].credits);
         }
