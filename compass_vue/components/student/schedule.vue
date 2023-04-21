@@ -15,10 +15,13 @@
               :variant="'pills'"
             >
               {{ schedule.term.quarter }} {{ schedule.term.year }}
-              <span class="badge text-bg-purple ms-2 rounded-pill">10</span>
+              <span
+                class="badge text-bg-purple ms-2 rounded-pill"
+                @click.stop
+                >{{ getCreditTotal(schedule.sections) }}</span
+              >
             </axdd-tabs-item>
           </template>
-          {{ schedule }}
         </axdd-tabs-list>
       </axdd-card-tabs>
     </template>
@@ -151,6 +154,19 @@ export default {
           this.schedules = response.data;
         }
       });
+    },
+    getCreditTotal: function (sections) {
+      console.log(sections);
+      let creditTotal = 0;
+      for (let i = 0; i < sections.length; i++) {
+        if (sections[i].credits !== "None") {
+          console.log(parseInt(sections[i].credits));
+          creditTotal += parseInt(sections[i].credits);
+        }
+      }
+      // TODO: get all section credits and sum total
+      console.log(creditTotal);
+      return creditTotal;
     },
   },
 };
