@@ -1,10 +1,15 @@
 <template>
   <axdd-card v-for="(transcript, transIndex) in transcripts" :key="transIndex">
     <template #heading-action>
-      <axdd-card-heading v-if="transcript.class_schedule" :level="2"
-        >{{ transcript.class_schedule.term.quarter }}
-        {{ transcript.class_schedule.term.year }}</axdd-card-heading
-      >
+      <template v-if="transcript.class_schedule">
+        <axdd-card-heading :level="2">
+          {{ transcript.class_schedule.term.quarter }}
+          {{ transcript.class_schedule.term.year }}
+        </axdd-card-heading>
+        <axdd-card-action class="text-danger fw-bold">
+          Current Major: Premajor
+        </axdd-card-action>
+      </template>
       <div v-else>no term data</div>
     </template>
     <template #body>
@@ -16,13 +21,9 @@
               <th>Title</th>
               <th>Credits</th>
               <th>Grade</th>
-              <th class="text-nowrap">For Credit</th>
             </tr>
           </thead>
           <tbody>
-            {{
-              transcript
-            }}
             <tr
               v-for="(section, index3) in transcript.class_schedule.sections"
               :key="index3"
@@ -34,28 +35,60 @@
               <td>{{ section.course_title }}</td>
               <td>{{ section.credits }}</td>
               <td>{{ section.grade }}</td>
-              <td>{{ section.for_credit }}</td>
             </tr>
             <tr>
-              <td colspan="5" class="">
-                <ul class="list-unstyled">
-                  <li>QTR ATTEMPTED: {{ transcript.qtr_graded_attmp }}</li>
-                  <li>QTR EARNED: {{ transcript.qtr_grade_points }}</li>
-                  <li>Number of Courses: {{ transcript.num_courses }}</li>
-                </ul>
-                <ul class="list-unstyled">
-                  <li>Class Code: {{ transcript.special_program }}</li>
-                  <li>Enrollment Status: {{ transcript.enroll_status }}</li>
-                  <li>Exemption Code: {{ transcript.exemption_code }}</li>
-                  <li>Grad status: {{ transcript.grad_status }}</li>
-                  <li>Honors Program: {{ transcript.honors_program }}</li>
-                  <li>Scholarships: {{ transcript.scholarship_type }}</li>
-                  <li>
-                    Special Program Code: {{ transcript.special_program }}
-                  </li>
-                  <li>Veteran: {{ transcript.veteran }}</li>
-                  <li>Veteran Benefit: {{ transcript.veteran_benefit }}</li>
-                </ul>
+              <td colspan="4">
+                <div class="d-flex justify-content-between">
+                  <ul class="list-unstyled w-50">
+                    <li>QTR ATTEMPTED: {{ transcript.qtr_graded_attmp }}</li>
+                    <li>QTR EARNED: xx</li>
+                    <li>QTR GRADE POINTS: {{ transcript.qtr_grade_points }}</li>
+                    <li>
+                      QTR GPA (calculated):
+                      <strong>{{
+                        (
+                          transcript.qtr_grade_points /
+                          transcript.qtr_graded_attmp
+                        ).toFixed(2)
+                      }}</strong>
+                    </li>
+                    <li>QTR GRADED AT: xx</li>
+                  </ul>
+
+                  <ul class="list-unstyled w-50">
+                    <li>CUM ATTEMPTED: xx</li>
+                    <li>UW EARNED: xx</li>
+                    <li>TTL EARNED: xx</li>
+                    <li>CUM GRADED AT: xx</li>
+                    <li>CUM GRADE PTS: xx</li>
+                    <li>CUM GPA: xx cum_gradepoints / cum_attempted</li>
+                  </ul>
+
+                  <ul class="d-none list-unstyled">
+                    <li>Class Code: {{ transcript.special_program }}</li>
+                    <li>Enrollment Status: {{ transcript.enroll_status }}</li>
+                    <li>Exemption Code: {{ transcript.exemption_code }}</li>
+                    <li>Grad status: {{ transcript.grad_status }}</li>
+                    <li>Honors Program: {{ transcript.honors_program }}</li>
+                    <li>Scholarship Code: {{ transcript.scholarship_type }}</li>
+                    <li>
+                      Special Program Code: {{ transcript.special_program }}
+                    </li>
+                    <li>Veteran: {{ transcript.veteran }}</li>
+                    <li>Veteran Benefit: {{ transcript.veteran_benefit }}</li>
+                  </ul>
+                </div>
+                <div v-if="transcript.scholarship_type == 3">
+                  SCHOLARSHIP STATUS: PROBATION
+                </div>
+                <div v-else-if="transcript.scholarship_type == 4">
+                  SCHOLARSHIP STATUS: WARNING
+                </div>
+                <div v-else-if="transcript.scholarship_type == 1">
+                  SCHOLARSHIP STATUS: DEAN'S LIST
+                </div>
+
+                <div> {{ transcript.qtr_comment }}</div>
               </td>
             </tr>
           </tbody>
