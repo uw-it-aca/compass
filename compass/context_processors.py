@@ -5,7 +5,7 @@
 from django.conf import settings
 from django.urls import reverse
 from userservice.user import UserService
-from compass.dao_term import term_context
+from compass.dao.term import term_context
 from compass.models import AccessGroup
 
 
