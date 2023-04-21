@@ -125,9 +125,7 @@
                       <StudentSchedule :person="person"></StudentSchedule>
                     </div>
                     <div class="col-xl-3">
-                      <span v-if="!person.student.registration_hold_ind">
-                        <StudentHolds :person="person"></StudentHolds>
-                      </span>
+                      <StudentHolds :person="person"></StudentHolds>
                       <StudentAdviser
                         :advisers="person.student.advisers"
                       ></StudentAdviser>

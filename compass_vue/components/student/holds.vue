@@ -1,13 +1,12 @@
 <template>
-  <axdd-card>
+  <axdd-card v-if="!person.student.registration_hold_ind">
     <template #heading>
       <axdd-card-heading :level="2" class="text-danger"
         >Registration Holds</axdd-card-heading
       >
     </template>
     <template #body>
-      <ul>
-        <li>{{ person.student.registration_hold_ind }}</li>
+      <ul class="list-unstyled">
         <li>
           Office Hold Name: {{ person.student.hold_office_name_combined }}
         </li>
