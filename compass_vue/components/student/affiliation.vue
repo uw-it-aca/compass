@@ -26,9 +26,9 @@
               <td></td>
               <td></td>
               <td>
-                <button class="btn py-0">
-                  <i class="bi bi-pencil-square"></i>
-                </button>
+                <EditAffiliation :button-type="'button'" :person="person">
+                  <i class="bi bi-pencil-square"></i
+                ></EditAffiliation>
                 <button class="btn py-0">
                   <i class="bi bi-trash3"></i>
                 </button>
@@ -67,12 +67,14 @@
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
 import { Card, CardHeading, CardAction } from "axdd-components";
-import AddAffiliation from "../edit-affiliation.vue";
+import AddAffiliation from "../add-affiliation.vue.js";
+import EditAffiliation from "../edit-affiliation.vue.js";
 
 export default {
   mixins: [dataMixin],
   components: {
     AddAffiliation,
+    EditAffiliation,
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
     "axdd-card-action": CardAction,

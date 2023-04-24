@@ -11,9 +11,10 @@
         : 'small p-0 btn-sm btn-link',
     ]"
   >
-    <slot>Edit Affiliation</slot>
+    <slot>Add Affiliation</slot>
   </a>
 
+  <!-- contact modal -->
   <div
     ref="affiliationsModal"
     class="modal fade text-start"
@@ -25,7 +26,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title h6 m-0 fw-bold">Edit Affiliation</h5>
+          <h5 class="modal-title h6 m-0 fw-bold">Add Affiliation</h5>
           <button
             type="button"
             class="btn-close"
@@ -59,7 +60,7 @@
               class="btn btn-primary bg-purple"
               @click="saveAffiliations()"
             >
-              Save Changes
+              Save Affiliations
             </button>
           </div>
         </div>
