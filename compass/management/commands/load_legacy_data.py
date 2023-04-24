@@ -30,6 +30,25 @@ class Command(BaseCommand):
         self.uw_person = UWPersonClient()
         self.access_group = AccessGroup.objects.get(name='OMAD')
 
+        # ignore IC (Instructional Center) contact types:
+        #    IC Drop-In Tutoring
+        #    IC Exam Prep
+        #    IC-Exam Prep (Workshop)
+        #    IC-Writing
+        #    IC-Exam Prep (Drop-In)
+        #    IC-Read/Study Skill
+        #    IC Writing Assistance
+        #    IC-Tutoring (Workshop)
+        #    IC-Tutoring (Drop-In)
+        #    IC Computer Usage
+        #    IC-Computer Lab
+        #    IC Workshop
+        #    Classroom Presentation
+        #    Career Computer Lab
+        excluded_re = re.compile('^(IC[- ].*'
+                                 '|Classroom Presentation'
+                                 '|Career Computer Lab)', re.I)
+
         n = 0
         count = options['count']
         start_id = options['start_id']
@@ -44,7 +63,9 @@ class Command(BaseCommand):
                     else:
                         continue
 
-                self._create_contact(appointment)
+                if not excluded_re.match(apt.Contact_Type):
+                    self._create_contact(appointment)
+
                 if count:
                     n += 1
                     if n >= count:
