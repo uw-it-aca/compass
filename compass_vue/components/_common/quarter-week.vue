@@ -25,7 +25,9 @@
         {{ getWeeksApart(termData.firstDay, termData.lastDay) }}
       </span>
     </div>
-    <div class="small mt-3">{{ formatDate(termData.todayDate, "LLLL") }}</div>
+    <div class="small mt-3">
+      {{ formatDate(termData.todayDate, "dddd, LL") }}
+    </div>
   </div>
 </template>
 
