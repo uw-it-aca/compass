@@ -34,6 +34,7 @@ class CompassPersonClient(UWPersonClient):
              self.DB.Student.special_program_desc,
              self.DB.Student.enroll_status_code,
              self.DB.Student.enroll_status_request_code,
+             self.DB.Student.pronouns,
              self.DB.Student.enroll_status_desc).join(
             self.DB.Student).join(self.DB.StudentToAdviser).join(
             self.DB.Adviser).filter(
@@ -57,7 +58,8 @@ class CompassPersonClient(UWPersonClient):
             student.special_program_desc = item[11]
             student.enroll_status_code = item[12]
             student.enroll_status_request_code = item[13]
-            student.enroll_status_desc = item[14]
+            student.pronouns = item[14]
+            student.enroll_status_desc = item[15]
             person.student = student
             persons.append(person)
         return persons
