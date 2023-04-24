@@ -3,14 +3,14 @@
     <div class="small">
       <i class="bi bi-calendar-week me-2"></i>
       <span v-if="termData.isBreak">
-        <span v-if="termData.breakYear !== termData.year">
-          {{ termData.year }} / {{ termData.breakYear }}
+        <span v-if="termData.breakYear !== termData.currYear">
+          {{ termData.currYear }} / {{ termData.breakYear }}
         </span>
-        <span v-else>{{ termData.year }}</span>
+        <span v-else>{{ termData.currYear }}</span>
       </span>
       <span v-else class="text-capitalize">
-        {{ termData.quarter }}
-        {{ termData.year }}
+        {{ termData.currQuarter }}
+        {{ termData.currYear }}
       </span>
     </div>
 
@@ -20,22 +20,17 @@
         {{ termData.breakQuarter }}
         Break
       </span>
-      <span v-else class="d-block fw-bold">
-        Week {{ getWeeksApart(termData.firstDay, todayDate) }} of
+      <span v-else class="d-inline-block fw-bold">
+        Week {{ termData.weekOfTerm }} of
         {{ getWeeksApart(termData.firstDay, termData.lastDay) }}
       </span>
     </div>
-    <div class="small mt-3">{{ formatDate(todayDate, "LLLL") }}</div>
+    <div class="small mt-3">{{ formatDate(termData.todayDate, "LLLL") }}</div>
   </div>
 </template>
 
 <script>
-import {
-  formatDate,
-  getToday,
-  getYesterday,
-  getWeeksApart,
-} from "../../utils/dates";
+import { formatDate, getWeeksApart } from "../../utils/dates";
 
 export default {
   props: {
@@ -51,10 +46,7 @@ export default {
     };
   },
   data() {
-    return {
-      todayDate: getToday(),
-      yesterdayDate: getYesterday(),
-    };
+    return {};
   },
   methods: {},
 };
