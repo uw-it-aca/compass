@@ -54,6 +54,7 @@ DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 if os.getenv("ENV") == "localdev":
     DEBUG = True
     RESTCLIENTS_DAO_CACHE_CLASS = None
+    CURRENT_DATETIME_OVERRIDE = "2020-10-15 00:00:00"
 
     DATABASES = {
         'default': {
