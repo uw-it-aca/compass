@@ -129,7 +129,7 @@
                       <StudentAdviser
                         :advisers="person.student.advisers"
                       ></StudentAdviser>
-                      <StudentAffiliations></StudentAffiliations>
+                      <StudentAffiliations :person="person"></StudentAffiliations>
                     </div>
                   </div>
                 </axdd-tabs-panel>

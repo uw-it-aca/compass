@@ -291,6 +291,8 @@ class AffiliationGroup(models.Model):
     Collects Affiliations that limit assignment per group
     """
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     exclusivity_count = models.SmallIntegerField()
     exclusivity_group = models.ManyToManyField("Affiliation")
 
