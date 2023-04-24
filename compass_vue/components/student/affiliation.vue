@@ -4,8 +4,8 @@
       <axdd-card-heading :level="2">Affiliations</axdd-card-heading>
       <!-- need to change the button -->
       <axdd-card-action>
-        <EditAffiliation :button-type="'button'" :person="person"
-          >Edit Affiliations</EditAffiliation
+        <AddAffiliation :button-type="'button'" :person="person"
+          >Add Affiliation</AddAffiliation
         >
       </axdd-card-action>
     </template>
@@ -14,43 +14,48 @@
         <table class="table m-0">
           <thead class="table-light text-muted small">
             <tr>
-              <th class="ps-3">Type</th>
-              <th colspan="2">Detials</th>
+              <th class="ps-3">Programs</th>
+              <th>Cohort</th>
+              <th>Active</th>
+              <th>Edit</th>
             </tr>
           </thead>
           <tbody>
             <tr class="border border-white">
-              <td scope="row" class="ps-3" style="width: 25%">Cohort</td>
-              <td colspan="2">
-                <span
-                  class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-1"
-                  >2022-2023</span
-                >
+              <td scope="row" class="ps-3">Trio</td>
+              <td></td>
+              <td></td>
+              <td>
+                <button class="btn py-0">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn py-0">
+                  <i class="bi bi-trash3"></i>
+                </button>
               </td>
             </tr>
+          </tbody>
+          <thead class="table-light text-muted small">
+            <tr>
+              <th class="ps-3">Others</th>
+              <th>Cohort</th>
+              <th>Active</th>
+              <th>Edit</th>
+            </tr>
+          </thead>
+          <tbody>
             <tr class="border border-white">
-              <td scope="row" class="ps-3" style="width: 25%">Program</td>
-              <td colspan="2">
-                <span
-                  class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-1"
-                  >CHAMPION</span
-                >
+              <td scope="row" class="ps-3">Brotherhood Initiative Scholar</td>
+              <td>2022-2023</td>
+              <td>Yes</td>
+              <td>
+                <button class="btn py-0">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn py-0">
+                  <i class="bi bi-trash3"></i>
+                </button>
               </td>
-            </tr>
-            <tr>
-              <td scope="row" class="ps-3" style="width: 25%">Affiliations</td>
-              <td colspan="2">
-                <li
-                  class="badge rounded-pill alert alert-dark-beige border-0 px-2 py-1 mb-0 me-1"
-                >
-                  EIO
-                </li>
-              </td>
-            </tr>
-            <tr>
-              <td scope="row" class="ps-3" style="width: 25%">Notes</td>
-              <td style="width: 20%">Date</td>
-              <td>Notes</td>
             </tr>
           </tbody>
         </table>
@@ -62,12 +67,12 @@
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
 import { Card, CardHeading, CardAction } from "axdd-components";
-import EditAffiliation from "../edit-affiliation.vue";
+import AddAffiliation from "../edit-affiliation.vue";
 
 export default {
   mixins: [dataMixin],
   components: {
-    EditAffiliation,
+    AddAffiliation,
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
     "axdd-card-action": CardAction,

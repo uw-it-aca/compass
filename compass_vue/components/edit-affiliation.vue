@@ -27,7 +27,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="affiliationsModalLabel">
-            Update Affiliations
+            Add Affiliation
           </h5>
           <button
             type="button"
@@ -55,11 +55,11 @@
               class="btn btn-secondary me-2"
               data-bs-dismiss="modal"
             >
-              Close
+              Cancel
             </button>
             <button
               type="button"
-              class="btn btn-primary"
+              class="btn btn-primary bg-purple"
               @click="saveAffiliations()"
             >
               Save affiliations
