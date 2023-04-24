@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 // vue-gtag-next track routing
 import { trackRouter } from "vue-gtag-next";
 
-import { Role } from "../helpers/roles.js";
+import { Role } from "../utils/roles.js";
 
 // page components
 import CheckIn from "../pages/check-ins.vue";

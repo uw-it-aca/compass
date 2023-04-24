@@ -29,6 +29,7 @@
       <NavMenu :user-roles="userRoles" />
     </template>
     <template #aside>
+      <QuarterWeek :term-data="termData" />
       <NavMessage />
     </template>
     <template #main>
@@ -41,6 +42,7 @@
 </template>
 
 <script>
+import QuarterWeek from "./components/_common/quarter-week.vue";
 import NavMenu from "./components/nav-menu.vue";
 import NavMessage from "./components/nav-message.vue";
 import dataMixin from "./mixins/data_mixin.js";
@@ -51,6 +53,7 @@ export default {
   components: {
     NavMenu,
     NavMessage,
+    QuarterWeek,
   },
   props: {
     pageTitle: {
@@ -69,6 +72,9 @@ export default {
       userRoles: document.body.getAttribute("data-user-role").split(","),
       // automatically set year
       currentYear: new Date().getFullYear(),
+
+      // get term_data from window context
+      termData: window.term_data,
     };
   },
   created: function () {
