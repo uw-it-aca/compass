@@ -4,6 +4,7 @@
   "pk": 1,
   "fields": {
    "access_group": 1,
+   "affiliation_group": 1,
    "name": "CAMP",
    "slug": "camp",
    "active": true
@@ -14,6 +15,7 @@
   "pk": 2,
   "fields": {
    "access_group": 1,
+   "affiliation_group": 1,
    "name": "TRIO-SSS",
    "slug": "trio-sss",
    "active": true

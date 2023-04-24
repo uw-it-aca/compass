@@ -1,0 +1,42 @@
+[
+ {
+  "model": "compass.cohort",
+  "pk": 1,
+  "fields": {
+   "start_year": 2018,
+   "end_year": 2019
+  }
+ },
+ {
+  "model": "compass.cohort",
+  "pk": 2,
+  "fields": {
+   "start_year": 2019,
+   "end_year": 2020
+  }
+ },
+ {
+  "model": "compass.cohort",
+  "pk": 3,
+  "fields": {
+   "start_year": 2020,
+   "end_year": 2021
+  }
+ },
+ {
+  "model": "compass.cohort",
+  "pk": 4,
+  "fields": {
+   "start_year": 2021,
+   "end_year": 2022
+  }
+ },
+ {
+  "model": "compass.cohort",
+  "pk": 5,
+  "fields": {
+   "start_year": 2022,
+   "end_year": 2023
+  }
+ }
+]
