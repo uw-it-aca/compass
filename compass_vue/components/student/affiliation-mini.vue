@@ -1,31 +1,56 @@
 <template>
-  <axdd-card>
+  <axdd-card
+    v-if="
+      Object.keys(affiliations.group).length || affiliations.external.length
+    "
+  >
     <template #heading>
       <axdd-card-heading :level="2">Affiliations</axdd-card-heading>
     </template>
     <template #body>
-      <div>
-        <div v-if="affiliations.group">
-          <div v-for="(alist, groupName) in affiliations.group" class="fs-7 text fw-bold text-secondary">
-             {{groupName}}
+      <div v-if="Object.keys(affiliations.group).length">
+        <template
+          v-for="(alist, groupName, index) in affiliations.group"
+          :key="index"
+        >
+          <div class="mb-2 fs-8 fw-bold text-uppercase">{{ groupName }}</div>
+          <ul class="list-unstyled">
+            <li
+              v-for="(a, index) in alist"
+              :key="index"
+              class="d-flex justify-content-between"
+            >
+              <span>{{ a.affiliation.name }}</span>
+              <span
+                v-for="(c, index) in a.cohorts"
+                :key="index"
+                class="text-muted"
+              >
+                {{ c.start_year }}-{{ c.end_year }}
+              </span>
+            </li>
+          </ul>
+        </template>
+      </div>
 
-             <div v-for="a in alist">
-               {{a.affiliation.name}}
-               <ul>
-                <li v-for="c in a.cohorts">{{c.start_year}}-{{c.end_year}}</li>
-               </ul>
-             </div>
-          </div>
-        </div>
-        <div v-if="affiliations.external" class="fs-7 text fw-bold text-secondary">
-          External
-          <div v-for="a in affiliations.external">
-            {{a.affiliation.name}}
-            <ul>
-              <li v-for="c in a.cohorts">{{c.start_year}}-{{c.end_year}}</li>
-            </ul>
-          </div>
-        </div>
+      <div v-if="affiliations.external.length">
+        <div class="mb-2 fs-8 fw-bold text-uppercase">Other</div>
+        <ul class="list-unstyled">
+          <li
+            v-for="(a, index) in affiliations.external"
+            :key="index"
+            class="d-flex justify-content-between"
+          >
+            <span>{{ a.affiliation.name }}</span>
+            <span
+              v-for="(c, index) in a.cohorts"
+              :key="index"
+              class="text-muted"
+            >
+              {{ c.start_year }}-{{ c.end_year }}
+            </span>
+          </li>
+        </ul>
       </div>
     </template>
   </axdd-card>
@@ -45,7 +70,7 @@ export default {
   },
   data() {
     return {
-        affiliations: {}
+      affiliations: { group: {}, external: [] },
     };
   },
   created() {
@@ -61,6 +86,6 @@ export default {
         }
       );
     },
-  }
+  },
 };
 </script>
