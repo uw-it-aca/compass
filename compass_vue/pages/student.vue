@@ -1,165 +1,164 @@
 // about.vue
 
 <template>
-  <layout
-    v-if="$route.params.id && person.display_name !== undefined"
-    :page-title="person.display_name"
-  >
+  <layout :page-title="'Student Search'">
     <template #title>
       <h1 class="visually-hidden">
-        {{ person.display_name }}
+        <template v-if="$route.params.id && person.display_name !== undefined">
+          {{ person.display_name }}
+        </template>
+        <template v-else>Student Search</template>
       </h1>
     </template>
     <template #content>
-      <div class="row my-4">
+      <div v-show="!$route.params.id || isError" class="row my-4 small">
         <div class="col">
-          <StudentProfile :person="person"></StudentProfile>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="row p-3">
-          <div class="col-xl-8">
-            Student Authorizes Release of Directory Information:
-            <span v-if="person.student.directory_release_ind" class="fw-bold"
-              >Yes
-              <div class="fw-normal text-secondary fs-7">
-                <a
-                  href="https://registrar.washington.edu/staffandfaculty/ferpa/"
-                  class="link-dark fw-normal text-secondary fs-7"
-                  target="_blank"
-                >
-                  Learn More</a
-                >
-              </div>
-            </span>
-            <span v-else class="fw-bold">
-              No
-              <div class="fw-normal text-secondary fs-7">
-                Student has opted out of directory information release, no
-                information may be released about this student. The recommended
-                response is, “I have no information about that individual."
-                <a
-                  href="https://registrar.washington.edu/staffandfaculty/ferpa/"
-                  class="link-dark"
-                  target="_blank"
-                >
-                  Learn More</a
-                >
-              </div>
-            </span>
-            <div v-if="!mq.xlPlus" class="mb-4"></div>
-          </div>
-          <div class="col-xl-4">
-            <div class="fs-6 text-secondary text-end">
-              <i class="bi bi-calendar-week"></i>
-              Autumn 2022
-            </div>
-            <div class="fs-6 text-end">Week 4 of 10</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col">
-          <axdd-tabs-list :tabs-id="'example'">
-            <template #items>
-              <axdd-tabs-item
-                :tabs-id="'example'"
-                :panel-id="'overview'"
-                :active-tab="true"
-              >
-                Overview
-              </axdd-tabs-item>
-              <axdd-tabs-item :tabs-id="'example'" :panel-id="'history'">
-                History
-              </axdd-tabs-item>
-              <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
-                Unofficial Transcript
-              </axdd-tabs-item>
-              <axdd-tabs-item :tabs-id="'example'" :panel-id="'affiliation'">
-                Affiliations
-              </axdd-tabs-item>
-            </template>
-          </axdd-tabs-list>
-
-          <axdd-tabs-display :tabs-id="'example'">
-            <template #panels>
-              <axdd-tabs-panel :panel-id="'overview'" :active-panel="true">
-                <div class="row mt-4">
-                  <div class="col-xl-12">
-                    <StudentAcademics :person="person"></StudentAcademics>
-                  </div>
-                  <div class="col-xl-9">
-                    <StudentSchedule :person="person"></StudentSchedule>
-                  </div>
-                  <div class="col-xl-3">
-                    <StudentAdviser
-                      :advisers="person.student.advisers"
-                    ></StudentAdviser>
-                    <StudentPrograms :person="person"></StudentPrograms>
-                  </div>
-                </div>
-              </axdd-tabs-panel>
-              <axdd-tabs-panel :panel-id="'history'">
-                <div class="row mt-4">
-                  <div class="col-xl-9">
-                    <StudentContact :person="person"></StudentContact>
-                  </div>
-                  <div class="col-xl-3">
-                    <StudentVisits></StudentVisits>
-                  </div>
-                </div>
-              </axdd-tabs-panel>
-              <axdd-tabs-panel :panel-id="'transcript'">
-                <div class="row mt-4">
-                  <div class="col-xl-9">
-                    <StudentTranscript :person="person"></StudentTranscript>
-                  </div>
-                  <div class="col-xl-3">
-                    <StudentTranscriptCredits
-                      :person="person"
-                    ></StudentTranscriptCredits>
-                  </div>
-                </div>
-              </axdd-tabs-panel>
-              <axdd-tabs-panel :panel-id="'affiliation'">
-                <div class="row mt-4">
-                  <div class="col-xl-9">
-                    <StudentAffiliations :person="person"></StudentAffiliations>
-                  </div>
-                  <div class="col-xl-3">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    Assumenda ab sunt iste, eaque similique odio alias
-                    aspernatur, ut quia totam quod magnam aliquam natus autem id
-                    recusandae odit? Sequi, incidunt?
-                  </div>
-                </div>
-              </axdd-tabs-panel>
-            </template>
-          </axdd-tabs-display>
-        </div>
-      </div>
-    </template>
-  </layout>
-  <layout v-else :page-title="'Search Student'">
-    <template #title>
-      <h1 class="visually-hidden">Search Student</h1>
-    </template>
-    <template #content>
-      <div class="row my-4 small">
-        <div class="col">
-          <div class="bg-gray p-3 rounded-3">
+          <div class="bg-light p-3 rounded-3">
             <div class="row">
               <div class="col-xl-4 ms-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
-                  <SearchStudent></SearchStudent>
+                  <SearchStudent :error="isError"></SearchStudent>
                 </div>
               </div>
               <div class="col-4"></div>
               <div class="col-4"></div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="isLoading">
+        <div class="row my-4">
+          <div class="col">
+            <StudentProfileLoading></StudentProfileLoading>
+          </div>
+        </div>
+      </div>
+      <div v-else-if="$route.params.id && person.display_name !== undefined">
+        <div class="row my-4">
+          <div class="col">
+            <StudentProfile :person="person"></StudentProfile>
+          </div>
+        </div>
+
+        <div class="row my-5">
+          <div class="col-12">
+            <div>
+              Student Authorizes Release of Directory Information:
+              <span
+                class="small badge rounded-pill alert alert-secondary border-0 px-2 py-1 mb-0 me-1"
+              >
+                <template v-if="person.student.directory_release_ind"
+                  >Yes</template
+                >
+                <template v-else>No</template>
+              </span>
+            </div>
+            <div
+              v-if="!person.student.directory_release_ind"
+              class="fw-normal text-secondary small"
+            >
+              This student has opted out and blocked the release of their
+              directory information. No information may be released about this
+              student. A recommended response when asked about this student is,
+              "I have no information about that individual."
+            </div>
+            <div>
+              <a
+                href="https://registrar.washington.edu/staffandfaculty/ferpa/"
+                class="small"
+                target="_blank"
+              >
+                Learn More</a
+              >
+            </div>
+          </div>
+          <div class="col">
+            <div class="mt-3">
+              <p class="fw-bold">Misc/Graduation Application Status</p>
+              <ul>
+                <li>
+                  Applied to grad qtr:
+                  {{ person.student.applied_to_graduate_yr_qtr_id }}
+                </li>
+                <li>
+                  Applied to grad qtr desc:
+                  {{ person.student.applied_to_graduate_yr_qtr_desc }}
+                </li>
+                <li>
+                  Last enrolled: {{ person.student.last_enrolled_yr_qtr_desc }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <axdd-tabs-list :tabs-id="'example'">
+              <template #items>
+                <axdd-tabs-item
+                  :tabs-id="'example'"
+                  :panel-id="'overview'"
+                  :active-tab="true"
+                >
+                  Overview
+                </axdd-tabs-item>
+                <axdd-tabs-item :tabs-id="'example'" :panel-id="'history'">
+                  History
+                </axdd-tabs-item>
+                <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
+                  Unofficial Transcript
+                </axdd-tabs-item>
+              </template>
+            </axdd-tabs-list>
+
+            <axdd-tabs-display :tabs-id="'example'">
+              <template #panels>
+                <axdd-tabs-panel :panel-id="'overview'" :active-panel="true">
+                  <div class="row mt-4">
+                    <div class="col-xl-12">
+                      <StudentAcademics :person="person"></StudentAcademics>
+                    </div>
+                    <div class="col-xl-9">
+                      <StudentSchedule :person="person"></StudentSchedule>
+                    </div>
+                    <div class="col-xl-3">
+                      <span v-if="person.student.registration_hold_ind">
+                        <StudentHolds :person="person"></StudentHolds>
+                      </span>
+                      <StudentAdviser
+                        :advisers="person.student.advisers"
+                      ></StudentAdviser>
+                      <StudentAffiliations></StudentAffiliations>
+                    </div>
+                  </div>
+                </axdd-tabs-panel>
+                <axdd-tabs-panel :panel-id="'history'">
+                  <div class="row mt-4">
+                    <div class="col-xl-9">
+                      <StudentContact :person="person"></StudentContact>
+                    </div>
+                    <div class="col-xl-3">
+                      <StudentVisits></StudentVisits>
+                    </div>
+                  </div>
+                </axdd-tabs-panel>
+                <axdd-tabs-panel :panel-id="'transcript'">
+                  <div class="row mt-4">
+                    <div class="col-xl-9">
+                      <StudentTranscript :person="person"></StudentTranscript>
+                    </div>
+                    <div class="col-xl-3">
+                      <StudentTranscriptCredits
+                        :person="person"
+                      ></StudentTranscriptCredits>
+                    </div>
+                  </div>
+                </axdd-tabs-panel>
+              </template>
+            </axdd-tabs-display>
           </div>
         </div>
       </div>
@@ -168,39 +167,35 @@
 </template>
 
 <script>
-import { TabsList, TabsDisplay, TabsItem, TabsPanel } from "axdd-components";
-
 import Layout from "../layout.vue";
 import dataMixin from "../mixins/data_mixin.js";
-
 import StudentProfile from "../components/student/profile.vue";
+import StudentProfileLoading from "../components/student/profile-loading.vue";
 import StudentAcademics from "../components/student/academics.vue";
 import StudentTranscript from "../components/student/transcript.vue";
 import StudentTranscriptCredits from "../components/student/transcript-credits.vue";
 import StudentContact from "../components/student/contact.vue";
-import StudentAffiliations from "../components/student/affiliation.vue";
 import StudentSchedule from "../components/student/schedule.vue";
+import StudentHolds from "../components/student/holds.vue";
 import StudentAdviser from "../components/student/adviser.vue";
 import StudentPrograms from "../components/student/programs.vue";
+import StudentAffiliations from "../components/student/affiliation-mini.vue";
 import StudentVisits from "../components/student/visits.vue";
 import TranscriptCredits from "../components/student/transcript-credits.vue";
 import SearchStudent from "../components/search-student.vue";
 
 export default {
-  inject: ["mq"],
   mixins: [dataMixin],
   components: {
     layout: Layout,
-    "axdd-tabs-list": TabsList,
-    "axdd-tabs-display": TabsDisplay,
-    "axdd-tabs-item": TabsItem,
-    "axdd-tabs-panel": TabsPanel,
     StudentProfile,
+    StudentProfileLoading,
     StudentAcademics,
     StudentTranscript,
     StudentTranscriptCredits,
     StudentContact,
     StudentSchedule,
+    StudentHolds,
     StudentAdviser,
     StudentPrograms,
     StudentVisits,
@@ -209,11 +204,18 @@ export default {
     SearchStudent,
   },
   created: function () {
-    this.loadStudent(this.$route.params.id);
+    if (this.$route.params.id) {
+      this.isLoading = true;
+      //setTimeout(() => {
+      this.loadStudent(this.$route.params.id);
+      //}, 3000);
+    }
   },
   data() {
     return {
       person: {},
+      isLoading: false,
+      isError: false,
     };
   },
   //  computed: {
@@ -234,11 +236,22 @@ export default {
   //  },
   methods: {
     loadStudent: function (studentNetID) {
-      this.getStudentDetail(studentNetID).then((response) => {
-        if (response.data) {
-          this.person = response.data;
-        }
-      });
+      this.getStudentDetail(studentNetID)
+        .then((response) => {
+          if (response.data) {
+            this.person = response.data;
+            this.isLoading = false;
+            this.isError = false;
+
+            // programatically update page title with student name
+            document.title = this.person.display_name + " - Compass";
+          }
+        })
+        .catch((error) => {
+          this.isLoading = false;
+          this.isError = true;
+          console.log("error occured: " + error);
+        });
     },
   },
 };
