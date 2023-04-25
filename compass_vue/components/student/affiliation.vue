@@ -26,7 +26,7 @@
               <td></td>
               <td></td>
               <td>
-                <EditAffiliation :button-type="'button'" :person="person">
+                <EditAffiliation :button-type="'button'">
                   <i class="bi bi-pencil-square"></i
                 ></EditAffiliation>
                 <button class="btn py-0">

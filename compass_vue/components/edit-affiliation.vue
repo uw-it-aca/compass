@@ -33,17 +33,7 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body" v-if="affiliations">
-          <div>
-            <div class="form-label small fw-bold me-2">Program</div>
-          </div>
-          <div>
-            <div class="form-label small fw-bold me-2">Other</div>
-          </div>
-          <div>
-            <div class="form-label small fw-bold me-2">Cohort</div>
-          </div>
-        </div>
+        <div class="modal-body" v-if="affiliations"></div>
 
         <div class="modal-footer">
           <div class="text-end">
