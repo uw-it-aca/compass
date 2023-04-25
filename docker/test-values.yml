@@ -105,7 +105,7 @@ environmentVariables:
     value: uw-person-prod
 
   - name: OMAD_ACCESS_GROUP_ID
-    value: 'u_astra_compass_omad'
+    value: 'u_acadev_compass-test'
 
 externalSecrets:
   enabled: true
