@@ -17,7 +17,9 @@
               <div class="flex-fill">
                 <strong>{{ adviser.display_name }}</strong> ({{
                   adviser.uwnetid
-                }})<br />{{ adviser.pronouns }}
+                }})<br /><span class="small text-muted text-capitalize">{{
+                  adviser.pronouns
+                }}</span>
               </div>
             </div>
           </li>

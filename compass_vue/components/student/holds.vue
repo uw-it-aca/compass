@@ -6,11 +6,18 @@
       >
     </template>
     <template #body>
-      <ul class="list-unstyled">
-        <li>
-          Office Hold Name: {{ person.student.hold_office_name_combined }}
+      <ul class="list-unstyled mb-0">
+        <li class="mb-1">
+          <div class="d-flex">
+            <i class="bi bi-exclamation-triangle-fill text-gray me-3"></i>
+            <div class="flex-fill">
+              <strong>{{ person.student.hold_office_name_combined }}</strong
+              ><span class="ms-2 small text-muted">{{
+                person.student.hold_reason_desc_combined
+              }}</span>
+            </div>
+          </div>
         </li>
-        <li>Hold Reason: {{ person.student.hold_reason_desc_combined }}</li>
       </ul>
     </template>
   </axdd-card>

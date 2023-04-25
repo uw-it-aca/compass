@@ -18,6 +18,7 @@
               <span
                 v-if="schedule.sections.length > 0"
                 class="badge text-bg-purple ms-2 rounded-pill"
+                style="min-width: 25px"
                 @click.stop
                 >{{ getCreditTotal(schedule.sections) }}</span
               >
