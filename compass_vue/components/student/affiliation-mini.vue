@@ -1,11 +1,11 @@
 <template>
-  <axdd-card>
+  <axdd-card v-if="Object.keys(affiliations.group).length || affiliations.external.length">
     <template #heading>
       <axdd-card-heading :level="2">Affiliations</axdd-card-heading>
     </template>
     <template #body>
       <div>
-        <div v-if="affiliations.group">
+        <div v-if="Object.keys(affiliations.group).length">
           <div v-for="(alist, groupName) in affiliations.group" class="fs-7 text fw-bold text-secondary">
              {{groupName}}
 
@@ -17,7 +17,7 @@
              </div>
           </div>
         </div>
-        <div v-if="affiliations.external" class="fs-7 text fw-bold text-secondary">
+        <div v-if="affiliations.external.length" class="fs-7 text fw-bold text-secondary">
           External
           <div v-for="a in affiliations.external">
             {{a.affiliation.name}}
@@ -45,7 +45,7 @@ export default {
   },
   data() {
     return {
-        affiliations: {}
+        affiliations: {'group': {}, 'external': []}
     };
   },
   created() {
