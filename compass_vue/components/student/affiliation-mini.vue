@@ -15,19 +15,19 @@
         >
           <div class="mb-2 fs-8 fw-bold text-uppercase">{{ groupName }}</div>
           <ul class="list-unstyled">
-            <li
-              v-for="(a, index) in alist"
-              :key="index"
-              class="d-flex justify-content-between"
-            >
-              <span>{{ a.affiliation.name }}</span>
-              <span
-                v-for="(c, index) in a.cohorts"
-                :key="index"
-                class="text-muted"
-              >
-                {{ c.start_year }}-{{ c.end_year }}
-              </span>
+            <li v-for="(a, index) in alist" :key="index" class="mb-1">
+              <div class="d-flex">
+                <i class="bi bi-collection text-gray me-3"></i>
+                <div class="flex-fill">
+                  <strong>{{ a.affiliation.name }}</strong
+                  ><span
+                    v-for="(c, index) in a.cohorts"
+                    :key="index"
+                    class="ms-2 small text-nowrap text-muted"
+                    >{{ c.start_year }}-{{ c.end_year }}</span
+                  >
+                </div>
+              </div>
             </li>
           </ul>
         </template>
@@ -35,20 +35,24 @@
 
       <div v-if="affiliations.external.length">
         <div class="mb-2 fs-8 fw-bold text-uppercase">Other</div>
-        <ul class="list-unstyled">
+        <ul class="list-unstyled mb-0">
           <li
             v-for="(a, index) in affiliations.external"
             :key="index"
-            class="d-flex justify-content-between"
+            class="mb-1"
           >
-            <span>{{ a.affiliation.name }}</span>
-            <span
-              v-for="(c, index) in a.cohorts"
-              :key="index"
-              class="text-muted"
-            >
-              {{ c.start_year }}-{{ c.end_year }}
-            </span>
+            <div class="d-flex">
+              <i class="bi bi-collection text-gray me-3"></i>
+              <div class="flex-fill">
+                <strong>{{ a.affiliation.name }}</strong
+                ><span
+                  v-for="(c, index) in a.cohorts"
+                  :key="index"
+                  class="ms-2 small text-nowrap text-muted"
+                  >{{ c.start_year }}-{{ c.end_year }}</span
+                >
+              </div>
+            </div>
           </li>
         </ul>
       </div>
