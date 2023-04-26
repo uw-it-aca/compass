@@ -4,8 +4,10 @@
 
 from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
-from compass.models import Student, Contact
-from compass.serializers import ContactReadSerializer, StudentWriteSerializer
+from compass.models import Student, Contact, StudentAffiliation
+from compass.serializers import (
+    ContactReadSerializer, StudentAffiliationReadSerializer,
+    StudentWriteSerializer)
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse, HttpResponseNotFound
 from restclients_core.exceptions import DataFailureException
@@ -29,6 +31,7 @@ class StudentView(BaseAPIView):
     /api/internal/student/[student_number|uwnetid]/
     '''
     def get(self, request, student_identifier):
+        access_groups = self.get_access_groups(request)
         try:
             client = UWPersonClient()
             try:
@@ -36,12 +39,6 @@ class StudentView(BaseAPIView):
             except PersonNotFoundException:
                 person = client.get_person_by_student_number(
                     student_identifier)
-            try:
-                local_student = Student.objects.get(
-                    system_key=person.student.system_key)
-                person.student.compass_programs = []
-            except Student.DoesNotExist:
-                person.student.compass_programs = []
             person.photo_url = PhotoDAO().get_photo_url(person.uwregid)
             return JsonResponse(person.to_dict(), safe=False)
         except PersonNotFoundException:
@@ -112,6 +109,42 @@ class StudentContactsView(BaseAPIView):
             student__system_key=systemkey).order_by('-checkin_date')
         serializer = ContactReadSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class StudentAffiliationsView(BaseAPIView):
+    '''
+    API endpoint returning a list of affiliations for a student
+
+    /api/internal/student/[systemkey]/affiliations/
+    '''
+
+    def get(self, request, systemkey):
+        access_groups = self.get_access_groups(request)
+        affiliations = {
+            'group': {},
+            'external': []
+        }
+        try:
+            student_affiliations = StudentAffiliation.objects.filter(
+                student__system_key=systemkey,
+                affiliation__access_group__in=access_groups)
+
+            for sa in student_affiliations:
+                serialized = StudentAffiliationReadSerializer(sa, )
+                group_name = sa.affiliation.affiliation_group.name if (
+                    sa.affiliation.affiliation_group) else None
+                if group_name:
+                    if group_name in affiliations["group"]:
+                        affiliations["group"][group_name].append(
+                            serialized.data)
+                    else:
+                        affiliations["group"][group_name] = [serialized.data]
+                else:
+                    affiliations['external'].append(serialized.data)
+        except StudentAffiliation.DoesNotExist:
+            pass
+
+        return Response(affiliations, status=status.HTTP_200_OK)
 
 
 class StudentTranscriptsView(BaseAPIView):

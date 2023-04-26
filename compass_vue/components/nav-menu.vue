@@ -5,30 +5,14 @@
         <router-link
           :to="'/'"
           active-class="bg-dark-purple rounded-3"
-          class="
-            nav-link
-            text-gray
-            d-block
-            px-3
-            py-2
-            bg-dark-purple-hover
-            rounded-3
-          "
+          class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
           ><i class="bi bi-calendar-check me-2"></i>Check-Ins</router-link
         >
       </li>
       <li class="nav-item mb-1">
         <router-link
           :to="'/caseload'"
-          class="
-            nav-link
-            text-gray
-            d-block
-            px-3
-            py-2
-            bg-dark-purple-hover
-            rounded-3
-          "
+          class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
           :class="
             $route.path.includes('/caseload') ? 'bg-dark-purple rounded-3' : ''
           "
@@ -40,15 +24,7 @@
         <router-link
           :to="'/settings'"
           active-class="bg-dark-purple rounded-3"
-          class="
-            nav-link
-            text-gray
-            d-block
-            px-3
-            py-2
-            bg-dark-purple-hover
-            rounded-3
-          "
+          class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
           ><i class="bi bi-tools me-2"></i>Settings</router-link
         >
       </li>
@@ -65,30 +41,14 @@
       <li class="nav-item mb-1">
         <a
           href="https://sdb.admin.uw.edu/sisAdvising/securid/overview.aspx"
-          class="
-            nav-link
-            text-gray
-            d-block
-            px-3
-            py-2
-            bg-dark-purple-hover
-            rounded-3
-          "
+          class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
           ><i class="bi bi-ear me-2"></i>Academic Records (EARS)</a
         >
       </li>
       <li class="nav-item mb-2">
         <a
           href="https://retention.uw.edu"
-          class="
-            nav-link
-            text-gray
-            d-block
-            px-3
-            py-2
-            bg-dark-purple-hover
-            rounded-3
-          "
+          class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
           ><i class="bi bi-bar-chart-fill me-2"></i>Retention Analytics (RAD)</a
         >
       </li>
@@ -97,7 +57,7 @@
 </template>
 
 <script>
-import { Role } from "../helpers/roles.js";
+import { Role } from "../utils/roles.js";
 
 export default {
   props: {

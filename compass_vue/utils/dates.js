@@ -9,4 +9,27 @@ function formatDate(date, format) {
   return dayjs(date).format(format);
 }
 
-export { formatDate };
+function getToday() {
+  let today = dayjs();
+  return today;
+}
+
+function getYesterday() {
+  let today = dayjs();
+  let yesterday = today.subtract("1", "day");
+  return yesterday;
+}
+
+function getWeeksApart(quarterStartDate, compareDate) {
+  const days = dayjs(compareDate).diff(
+    dayjs(quarterStartDate).startOf("week"),
+    "days"
+  );
+  if (days < 0) {
+    return 0;
+  } else {
+    return parseInt(days / 7) + 1;
+  }
+}
+
+export { formatDate, getToday, getYesterday, getWeeksApart };

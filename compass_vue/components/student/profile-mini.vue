@@ -13,12 +13,11 @@
       <div class="text-nowrap">
         <span class="me-2">
           <span>{{ person.display_name }}</span>
-          <span class="ms-2 text-muted"
+          <span class="small ms-2 text-muted text-capitalize"
             ><template v-if="person.pronouns">
               {{ person.pronouns }}
             </template>
-            <template v-else>not/specified</template></span
-          >
+          </span>
         </span>
       </div>
       <div class="text-secondary small">

@@ -82,8 +82,8 @@ export default {
   components: {},
   data() {
     return {
-      groupedPrograms: {},
-      studentPrograms: this.person.student.compass_programs,
+      groupedPrograms: this.person.student.compass_group_affiliations,
+      studentPrograms: this.person.student.compass_affiliations,
       updateSuccessful: false,
       updatePermissionDenied: false,
       userName: document.body.getAttribute("data-user-netid"),
@@ -107,7 +107,7 @@ export default {
       var _this = this;
       this.getAccessGroups().then((accessGroups) => {
         accessGroups.data.forEach(function (accessGroup) {
-          _this.getPrograms(accessGroup.id).then((response) => {
+          _this.getAffiliations(accessGroup.id).then((response) => {
             if (response.data) {
               _this.groupedPrograms = Object.assign(
                 {},

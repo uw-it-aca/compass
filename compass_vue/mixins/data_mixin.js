@@ -35,7 +35,7 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
-    getPrograms: async function (accessGroupPk) {
+    getAffiliations: async function (accessGroupPk) {
       return axios.get(
         "/api/internal/accessgroup/" + accessGroupPk + "/affiliations/",
         {},
@@ -129,6 +129,13 @@ const dataMixin = {
     getStudentContactMethods: async function () {
       return axios.get(
         "/api/internal/contact/methods/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    getStudentAffiliations: async function (systemkey) {
+      return axios.get(
+        "/api/internal/student/" + systemkey + "/affiliations/",
         {},
         this._getAxiosConfig()
       );

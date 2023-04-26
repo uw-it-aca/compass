@@ -18,11 +18,10 @@
             <template v-else>{{ person.full_name }}</template>
           </div>
           <!-- moved pronouns to under the preferred name -->
-          <div class="text-secondary mb-2">
+          <div class="text-secondary text-capitalize mb-2">
             <template v-if="person.pronouns">
               {{ person.pronouns }}
             </template>
-            <template v-else>not/specified</template>
           </div>
           <div class="mt-3 small">
             {{ person.student.student_number }}, {{ person.uwnetid }}<br />

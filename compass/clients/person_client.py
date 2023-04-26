@@ -23,6 +23,7 @@ class CompassPersonClient(UWPersonClient):
              self.DB.Person.display_name,
              self.DB.Person.uwnetid,
              self.DB.Person.uwregid,
+             self.DB.Person.pronouns,
              self.DB.Student.student_number,
              self.DB.Student.gender,
              self.DB.Student.student_number,
@@ -45,19 +46,20 @@ class CompassPersonClient(UWPersonClient):
             person.display_name = item[0]
             person.uwnetid = item[1]
             person.uwregid = item[2]
+            person.pronouns = item[3]
             student = Student()
-            student.student_number = item[3]
-            student.gender = item[4]
-            student.student_numer = item[5]
-            student.class_desc = item[6]
-            student.registered_in_quarter = item[7]
-            student.registration_hold_ind = item[8]
-            student.campus_desc = item[9]
-            student.special_program_code = item[10]
-            student.special_program_desc = item[11]
-            student.enroll_status_code = item[12]
-            student.enroll_status_request_code = item[13]
-            student.enroll_status_desc = item[14]
+            student.student_number = item[4]
+            student.gender = item[5]
+            student.student_numer = item[6]
+            student.class_desc = item[7]
+            student.registered_in_quarter = item[8]
+            student.registration_hold_ind = item[9]
+            student.campus_desc = item[10]
+            student.special_program_code = item[11]
+            student.special_program_desc = item[12]
+            student.enroll_status_code = item[13]
+            student.enroll_status_request_code = item[14]
+            student.enroll_status_desc = item[15]
             person.student = student
             persons.append(person)
         return persons
