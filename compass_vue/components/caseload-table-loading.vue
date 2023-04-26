@@ -3,11 +3,10 @@
     <table class="table mb-0">
       <thead class="table-light text-muted small">
         <tr>
-          <th scope="col" class="ps-3">Student</th>
-          <th scope="col">Class</th>
+          <th scope="col" style="width: 33%" class="ps-3">Student</th>
+          <th scope="col" style="width: 15%">Class</th>
           <th scope="col">Campus</th>
-          <th scope="col" class="text-nowrap">Enrollment Status</th>
-          <th scope="col">Adviser</th>
+          <th scope="col" style="width: 33%" class="text-nowrap">Status</th>
         </tr>
       </thead>
       <tbody>
@@ -32,10 +31,10 @@
             <div><span class="placeholder bg-light-gray col-10"></span></div>
           </td>
           <td class="placeholder-glow">
-            <div><span class="placeholder bg-light-gray col-7"></span></div>
-          </td>
-          <td class="placeholder-glow">
-            <div><span class="placeholder bg-light-gray col-7"></span></div>
+            <div>
+              <span class="placeholder bg-light-gray col-10"></span><br />
+              <span class="placeholder bg-light-gray col-4"></span>
+            </div>
           </td>
         </tr>
       </tbody>

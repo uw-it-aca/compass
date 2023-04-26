@@ -16,15 +16,7 @@
               <KeyValue>
                 <template #key>Registered in Quarter</template>
                 <template #value>
-                  {{ person.student.registered_in_quarter }}
-                </template>
-              </KeyValue>
-            </li>
-            <li>
-              <KeyValue>
-                <template #key>Registration Hold</template>
-                <template #value>
-                  {{ person.student.registration_hold_ind }}
+                  {{ translateTrueFalse(person.student.registered_in_quarter) }}
                 </template>
               </KeyValue>
             </li>
@@ -205,6 +197,7 @@
 <script>
 import KeyValue from "../../components/_common/key-value.vue";
 import dataMixin from "../../mixins/data_mixin.js";
+import { translateTrueFalse } from "../../utils/translations";
 
 export default {
   inject: ["mq"],
@@ -217,6 +210,11 @@ export default {
   },
   components: {
     KeyValue,
+  },
+  setup() {
+    return {
+      translateTrueFalse,
+    };
   },
   data() {
     return {};

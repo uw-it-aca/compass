@@ -37,7 +37,7 @@ const dataMixin = {
     },
     getPrograms: async function (accessGroupPk) {
       return axios.get(
-        "/api/internal/accessgroup/" + accessGroupPk + "/programs/",
+        "/api/internal/accessgroup/" + accessGroupPk + "/affiliations/",
         {},
         this._getAxiosConfig()
       );

@@ -1,4 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
+// vue-gtag-next track routing
+import { trackRouter } from "vue-gtag-next";
+
 import { Role } from "../helpers/roles.js";
 
 // page components
@@ -73,5 +76,8 @@ router.beforeEach((to, from, next) => {
   }
   next();
 });
+
+// add router tracking to vue-gtag-next
+trackRouter(router);
 
 export default router;

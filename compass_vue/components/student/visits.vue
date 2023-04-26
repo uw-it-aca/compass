@@ -9,7 +9,8 @@
       <div>
         <p class="small">
           This student is currently not eligible to use Instructional Center
-          resources. <span class="fw-bold">Would you like to grant access?</span>
+          resources.
+          <span class="fw-bold">Would you like to grant access?</span>
         </p>
         <div class="text-end">
           <button
@@ -88,13 +89,8 @@
 </template>
 
 <script>
-import { Card, CardHeading } from "axdd-components";
-
 export default {
-  components: {
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
-  },
+  components: {},
   methods: {
     updateEligibility() {
       alert("please update my eligibility!");

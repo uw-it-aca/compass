@@ -21,7 +21,7 @@
           >
         </span>
       </div>
-      <div class="text-secondary">
+      <div class="text-secondary small">
         <router-link :to="{ path: '/student/' + person.student.student_number }"
           >{{ person.student.student_number }} </router-link
         >,

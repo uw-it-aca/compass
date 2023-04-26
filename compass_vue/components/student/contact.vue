@@ -26,7 +26,9 @@
             <tbody>
               <tr v-for="contact in contacts" :key="contact.id">
                 <td scope="row" class="ps-3" style="width: 25%">
-                  <div>{{ contact.checkin_date }}</div>
+                  <div class="small">
+                    {{ formatDate(contact.checkin_date, "LLL") }}
+                  </div>
                   <div class="text-muted small">
                     <i class="bi bi-person-circle me-1"></i
                     >{{ contact.app_user.uwnetid }}
@@ -101,22 +103,24 @@
 
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
-import { Card, CardHeading, CardAction } from "axdd-components";
 import AddEditContact from "../add-contact.vue";
+import { formatDate } from "../../utils/dates";
 
 export default {
   mixins: [dataMixin],
   components: {
     AddEditContact,
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
-    "axdd-card-action": CardAction,
   },
   props: {
     person: {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return {
+      formatDate,
+    };
   },
   data() {
     return {

@@ -1,6 +1,6 @@
 [
  {
-  "model": "compass.program",
+  "model": "compass.affiliation",
   "pk": 1,
   "fields": {
    "access_group": 1,
@@ -10,7 +10,7 @@
   }
  },
  {
-  "model": "compass.program",
+  "model": "compass.affiliation",
   "pk": 2,
   "fields": {
    "access_group": 1,
@@ -20,7 +20,7 @@
   }
  },
  {
-  "model": "compass.program",
+  "model": "compass.affiliation",
   "pk": 3,
   "fields": {
    "access_group": 1,
@@ -30,7 +30,7 @@
   }
  },
  {
-  "model": "compass.program",
+  "model": "compass.affiliation",
   "pk": 4,
   "fields": {
    "access_group": 1,

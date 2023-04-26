@@ -1,7 +1,8 @@
-# Copyright 2022 UW-IT, University of Washington
+# Copyright 2023 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from django.urls import re_path, include
+
+from django.urls import re_path
 from compass.admin import admin_site
 from django.conf import settings
 from django.views.generic import TemplateView
@@ -23,7 +24,7 @@ from compass.views.api.contact import (
 )
 from compass.views.api.settings import SettingsView
 from compass.views.api.photo import PhotoView
-from compass.views.api.program import ProgramsView
+from compass.views.api.program import AffiliationsView
 from compass.views.api.support import SupportView
 
 # start with an empty url array
@@ -76,8 +77,9 @@ urlpatterns += [
         r"(?P<setting_type>[\w]+)/$",
         SettingsView.as_view(),
     ),
-    re_path(r"^api/internal/accessgroup/(?P<access_group_pk>[\w]+)/programs/$",
-            ProgramsView.as_view()),
+    re_path((r"^api/internal/accessgroup/"
+             r"(?P<access_group_pk>[\w]+)/affiliations/$"),
+            AffiliationsView.as_view()),
     re_path(r"^api/internal/accessgroup/$", AccessGroupView.as_view()),
     re_path(r"^api/internal/contact/topics/$", ContactTopicsView.as_view()),
     re_path(r"^api/internal/contact/types/$", ContactTypesView.as_view()),
@@ -109,7 +111,6 @@ urlpatterns += [
     ),
     # vue-router paths
     re_path(r"^(student|caseload|reports|settings).*$", LandingView.as_view()),
-    re_path(r'^saml/', include('uw_saml.urls')),
     # default landing
     re_path(r"^$", LandingView.as_view(), name="index"),
 ]
