@@ -100,7 +100,6 @@
                   {{ person.student.hold_reason_desc_combined }}
                 </li>
               </ul>
-              {{ person.student }}
 
               <p class="fw-bold">Misc/Graduation Application Status</p>
               <ul>
@@ -151,9 +150,6 @@
                       <StudentSchedule :person="person"></StudentSchedule>
                     </div>
                     <div class="col-xl-3">
-                      <span v-if="person.student.registration_hold_ind">
-                        <StudentHolds :person="person"></StudentHolds>
-                      </span>
                       <StudentAdviser
                         :advisers="person.student.advisers"
                       ></StudentAdviser>
@@ -202,7 +198,6 @@ import StudentTranscript from "../components/student/transcript.vue";
 import StudentTranscriptCredits from "../components/student/transcript-credits.vue";
 import StudentContact from "../components/student/contact.vue";
 import StudentSchedule from "../components/student/schedule.vue";
-import StudentHolds from "../components/student/holds.vue";
 import StudentAdviser from "../components/student/adviser.vue";
 import StudentPrograms from "../components/student/programs.vue";
 import StudentAffiliations from "../components/student/affiliation-mini.vue";
@@ -221,7 +216,6 @@ export default {
     StudentTranscriptCredits,
     StudentContact,
     StudentSchedule,
-    StudentHolds,
     StudentAdviser,
     StudentPrograms,
     StudentVisits,
