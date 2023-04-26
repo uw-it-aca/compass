@@ -136,6 +136,9 @@
                 <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
                   Unofficial Transcript
                 </axdd-tabs-item>
+                <axdd-tabs-item :tabs-id="'example'" :panel-id="'affiliations'">
+                  Affiliation
+                </axdd-tabs-item>
               </template>
             </axdd-tabs-list>
 
@@ -179,6 +182,14 @@
                     </div>
                   </div>
                 </axdd-tabs-panel>
+                <axdd-tabs-panel :panel-id="'affiliations'">
+                  <div class="row mt-4">
+                    <div class="col-xl-9">
+                      <Affiliations :person="person"></Affiliations>
+                    </div>
+                    <div class="col-xl-3"></div>
+                  </div>
+                </axdd-tabs-panel>
               </template>
             </axdd-tabs-display>
           </div>
@@ -204,6 +215,7 @@ import StudentAffiliations from "../components/student/affiliation-mini.vue";
 import StudentVisits from "../components/student/visits.vue";
 import TranscriptCredits from "../components/student/transcript-credits.vue";
 import SearchStudent from "../components/search-student.vue";
+import Affiliations from "../components/student/affiliation.vue";
 
 export default {
   mixins: [dataMixin],
@@ -222,6 +234,7 @@ export default {
     TranscriptCredits,
     StudentAffiliations,
     SearchStudent,
+    Affiliations,
   },
   created: function () {
     if (this.$route.params.id) {

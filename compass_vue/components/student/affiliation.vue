@@ -25,6 +25,7 @@
               <td scope="row" class="ps-3">Trio</td>
               <td></td>
               <td></td>
+
               <td>
                 <EditAffiliation :button-type="'button'">
                   <i class="bi bi-pencil-square"></i
@@ -71,10 +72,10 @@ import AddAffiliation from "../add-affiliation.vue.js";
 import EditAffiliation from "../edit-affiliation.vue.js";
 
 export default {
+  AddAffiliation,
+  EditAffiliation,
   mixins: [dataMixin],
   components: {
-    AddAffiliation,
-    EditAffiliation,
     "axdd-card": Card,
     "axdd-card-heading": CardHeading,
     "axdd-card-action": CardAction,
