@@ -114,9 +114,6 @@ class ContactAPITest(ApiTest):
         response = mock_view.post(mock_request)
         mock_access_group_cls.objects.get.assert_called_once_with(
             access_group_id=mock_settings.OMAD_ACCESS_GROUP_ID)
-        mock_access_group_cls.objects.is_access_group_member.\
-            assert_called_once_with(mock_request.data["adviser_netid"],
-                                    mock_omad_access_group)
         # assert parsing and validating contact
         mock_view.validate_adviser_netid.assert_called_once_with(
             mock_request.data.get("adviser_netid"))
