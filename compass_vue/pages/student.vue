@@ -111,8 +111,8 @@
                 <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
                   Unofficial Transcript
                 </axdd-tabs-item>
-                <axdd-tabs-item :tabs-id="'example'" :panel-id="'affiliations'">
-                  Affiliation
+                <axdd-tabs-item :tabs-id="'example'" :panel-id="'Admin'">
+                  Administrative
                 </axdd-tabs-item>
               </template>
             </axdd-tabs-list>
@@ -132,7 +132,9 @@
                       <StudentAdviser
                         :advisers="person.student.advisers"
                       ></StudentAdviser>
-                      <StudentAffiliations :person="person"></StudentAffiliations>
+                      <StudentAffiliations
+                        :person="person"
+                      ></StudentAffiliations>
                     </div>
                   </div>
                 </axdd-tabs-panel>
@@ -158,12 +160,35 @@
                     </div>
                   </div>
                 </axdd-tabs-panel>
-                <axdd-tabs-panel :panel-id="'affiliations'">
+                <axdd-tabs-panel :panel-id="'Admin'">
                   <div class="row mt-4">
                     <div class="col-xl-9">
-                      <Affiliations :person="person"></Affiliations>
+                      <Admin :person="person"></Admin>
                     </div>
-                    <div class="col-xl-3"></div>
+                    <div class="col-xl-3">
+                      <div
+                        v-for="group in accessGroups"
+                        :key="group.access_group_id"
+                      >
+                        <div>
+                          <SettingsForm
+                            settingLabel="program"
+                            settingType="program"
+                            :accessGroup="group"
+                          ></SettingsForm>
+                          <SettingsForm
+                            settingLabel="contact topic"
+                            settingType="contact_topic"
+                            :accessGroup="group"
+                          ></SettingsForm>
+                          <SettingsForm
+                            settingLabel="contact type"
+                            settingType="contact_type"
+                            :accessGroup="group"
+                          ></SettingsForm>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </axdd-tabs-panel>
               </template>
@@ -192,7 +217,9 @@ import StudentAffiliations from "../components/student/affiliation-mini.vue";
 import StudentVisits from "../components/student/visits.vue";
 import TranscriptCredits from "../components/student/transcript-credits.vue";
 import SearchStudent from "../components/search-student.vue";
-import Affiliations from "../components/student/affiliation.vue";
+import Admin from "../components/student/affiliation.vue";
+
+import SettingsForm from "../components/settings/settings-form.vue";
 
 export default {
   mixins: [dataMixin],
@@ -212,7 +239,8 @@ export default {
     TranscriptCredits,
     StudentAffiliations,
     SearchStudent,
-    Affiliations,
+    Admin,
+    SettingsForm,
   },
   created: function () {
     if (this.$route.params.id) {
@@ -221,12 +249,15 @@ export default {
       this.loadStudent(this.$route.params.id);
       //}, 3000);
     }
+    this.loadAccessGroups();
   },
   data() {
     return {
       person: {},
       isLoading: false,
       isError: false,
+      pageTitle: "Settings",
+      accessGroups: [],
     };
   },
   //  computed: {
@@ -263,6 +294,13 @@ export default {
           this.isError = true;
           console.log("error occured: " + error);
         });
+    },
+    loadAccessGroups: function () {
+      this.getAccessGroups().then((response) => {
+        if (response.data) {
+          this.accessGroups = response.data;
+        }
+      });
     },
   },
 };

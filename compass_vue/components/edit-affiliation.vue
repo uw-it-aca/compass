@@ -2,12 +2,12 @@
   <a
     role="button"
     data-bs-toggle="modal"
-    :data-bs-target="'#affiliationsModal'"
+    :data-bs-target="'#editAffiliationsModal'"
     class="btn text-nowrap"
     @click="getAffiliations()"
     :class="[
       buttonType === 'button'
-        ? 'btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2'
+        ? 'rounded-3 px-3 py-2'
         : 'small p-0 btn-sm btn-link',
     ]"
   >
@@ -17,9 +17,9 @@
   <div
     ref="affiliationsModal"
     class="modal fade text-start"
-    :id="'affiliationsModal'"
+    :id="'editAffiliationsModal'"
     tabindex="-1"
-    aria-labelledby="affiliationsModalLabel"
+    aria-labelledby="editAffiliationsModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -33,7 +33,28 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body" v-if="affiliations"></div>
+        <div class="modal-body">
+          <div class="col">
+            <lable class="form-label small fw-bold me-2">Program</lable>
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <lable class="form-label small fw-bold me-2">Cohort</lable>
+            </div>
+            <div class="col">
+              <lable class="form-label small fw-bold me-2">Active</lable>
+            </div>
+          </div>
+          <div class="mb-3">
+            <lable class="form-label small fw-bold me-2">Admin Note</lable>
+            <textarea
+              :class="
+                formErrors.notes ? 'is-invalid form-control' : 'form-control'
+              "
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
 
         <div class="modal-footer">
           <div class="text-end">
@@ -56,7 +77,6 @@
       </div>
     </div>
   </div>
-  <!-- end visit modal -->
 </template>
 
 <script>
@@ -86,11 +106,11 @@ export default {
   },
   created() {},
   mounted() {
-    this.$refs.affiliationsModal.addEventListener(
+    this.$refs.editAffiliationsModal.addEventListener(
       "shown.bs.modal",
       this.clearFormErrors
     );
-    this.$refs.affiliationsModal.addEventListener(
+    this.$refs.editAffiliationsModal.addEventListener(
       "hidden.bs.modal",
       this.resetForm
     );
@@ -109,8 +129,8 @@ export default {
       );*/
     },
     saveAffiliations() {
-      var affiliationsModal = Modal.getInstance(
-        document.getElementById("affiliationsModal")
+      var editAffiliationsModal = Modal.getInstance(
+        document.getElementById("editAffiliationsModal")
       );
       /*
       this.saveStudentAffiliations(this.person.student.system_key)

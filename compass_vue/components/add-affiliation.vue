@@ -34,18 +34,30 @@
             aria-label="Close"
           ></button>
         </div>
-        <div class="modal-body" v-if="affiliations">
-          <div>
-            <div class="form-label small fw-bold me-2">Program</div>
+        <!-- body -->
+        <div class="modal-body">
+          <div class="row mb-3">
+            <div class="col">
+              <lable class="form-label small fw-bold me-2"> Program </lable>
+            </div>
+            <div class="col">
+              <lable class="form-label small fw-bold me-2">External</lable>
+            </div>
           </div>
-          <div>
-            <div class="form-label small fw-bold me-2">Other</div>
+
+          <div class="mb-3">
+            <lable class="form-label small fw-bold me-2">Cohort</lable>
           </div>
-          <div>
-            <div class="form-label small fw-bold me-2">Cohort</div>
+          <div class="mb-3">
+            <lable class="form-label small fw-bold me-2">Admin Note</lable>
+            <textarea
+              :class="
+                formErrors.notes ? 'is-invalid form-control' : 'form-control'
+              "
+              rows="3"
+            ></textarea>
           </div>
         </div>
-
         <div class="modal-footer">
           <div class="text-end">
             <button
@@ -60,14 +72,13 @@
               class="btn btn-primary bg-purple"
               @click="saveAffiliations()"
             >
-              Save Affiliations
+              Add Affiliation
             </button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- end visit modal -->
 </template>
 
 <script>
@@ -108,7 +119,6 @@ export default {
   },
   methods: {
     getAffiliations() {
-      /*
       this.getStudentAffiliations(this.person.student.system_key).then(
         (response) => {
           if (response.data) {
@@ -117,7 +127,7 @@ export default {
             this.affiliations = newAffiliations;
           }
         }
-      );*/
+      );
     },
     saveAffiliations() {
       var affiliationsModal = Modal.getInstance(

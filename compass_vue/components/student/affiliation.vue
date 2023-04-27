@@ -3,11 +3,9 @@
     <template #heading-action>
       <axdd-card-heading :level="2">Affiliations</axdd-card-heading>
       <!-- need to change the button -->
-      <axdd-card-action>
-        <AddAffiliation :button-type="'button'" :person="person"
-          >Add Affiliation</AddAffiliation
-        >
-      </axdd-card-action>
+      <AddAffiliation :button-type="'button'" :person="person"
+        >Add Affiliation</AddAffiliation
+      >
     </template>
     <template #body>
       <div class="table-responsive m-n3">
@@ -27,7 +25,7 @@
               <td></td>
 
               <td>
-                <EditAffiliation :button-type="'button'">
+                <EditAffiliation :button-type="'button'" :person="person">
                   <i class="bi bi-pencil-square"></i
                 ></EditAffiliation>
                 <button class="btn py-0">
@@ -67,18 +65,14 @@
 
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
-import { Card, CardHeading, CardAction } from "axdd-components";
-import AddAffiliation from "../add-affiliation.vue.js";
-import EditAffiliation from "../edit-affiliation.vue.js";
+import AddAffiliation from "../add-affiliation.vue";
+import EditAffiliation from "../edit-affiliation.vue";
 
 export default {
-  AddAffiliation,
-  EditAffiliation,
   mixins: [dataMixin],
   components: {
-    "axdd-card": Card,
-    "axdd-card-heading": CardHeading,
-    "axdd-card-action": CardAction,
+    AddAffiliation,
+    EditAffiliation,
   },
   props: {
     person: {
