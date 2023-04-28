@@ -26,11 +26,11 @@
 
               <td>
                 <EditAffiliation :button-type="'button'" :person="person">
-                  <i class="bi bi-pencil-square"></i
+                  <i class="py-0 bi bi-pencil-square"></i
                 ></EditAffiliation>
-                <button class="btn py-0">
+                <DeleteAffiliation :button-type="'button'" :person="person">
                   <i class="bi bi-trash3"></i>
-                </button>
+                </DeleteAffiliation>
               </td>
             </tr>
           </tbody>
@@ -48,12 +48,12 @@
               <td>2022-2023</td>
               <td>Yes</td>
               <td>
-                <button class="btn py-0">
-                  <i class="bi bi-pencil-square"></i>
-                </button>
-                <button class="btn py-0">
+                <EditAffiliation :button-type="'button'" :person="person">
+                  <i class="py-0 bi bi-pencil-square"></i
+                ></EditAffiliation>
+                <DeleteAffiliation :button-type="'button'" :person="person">
                   <i class="bi bi-trash3"></i>
-                </button>
+                </DeleteAffiliation>
               </td>
             </tr>
           </tbody>
@@ -66,6 +66,7 @@
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
 import AddAffiliation from "../add-affiliation.vue";
+import DeleteAffiliation from "../delete-affiliation.vue";
 import EditAffiliation from "../edit-affiliation.vue";
 
 export default {
@@ -73,6 +74,7 @@ export default {
   components: {
     AddAffiliation,
     EditAffiliation,
+    DeleteAffiliation,
   },
   props: {
     person: {

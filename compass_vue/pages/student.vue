@@ -243,20 +243,19 @@ export default {
     SettingsForm,
   },
   created: function () {
+    this.loadAccessGroups();
     if (this.$route.params.id) {
       this.isLoading = true;
       //setTimeout(() => {
       this.loadStudent(this.$route.params.id);
       //}, 3000);
     }
-    this.loadAccessGroups();
   },
   data() {
     return {
       person: {},
       isLoading: false,
       isError: false,
-      pageTitle: "Settings",
       accessGroups: [],
     };
   },

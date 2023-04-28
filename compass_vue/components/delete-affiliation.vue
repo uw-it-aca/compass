@@ -2,7 +2,7 @@
   <a
     role="button"
     data-bs-toggle="modal"
-    :data-bs-target="'#editAffiliationsModal'"
+    :data-bs-target="'#deleteAffiliationsModal'"
     class="btn text-nowrap"
     @click="getAffiliations()"
     :class="[
@@ -17,15 +17,15 @@
   <div
     ref="affiliationsModal"
     class="modal fade text-start"
-    :id="'editAffiliationsModal'"
+    :id="'deleteAffiliationsModal'"
     tabindex="-1"
-    aria-labelledby="editAffiliationsModalLabel"
+    aria-labelledby="deleteAffiliationsModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title h6 m-0 fw-bold">Edit Affiliation</h5>
+          <h5 class="modal-title h6 m-0 fw-bold">Delete Affiliation</h5>
           <button
             type="button"
             class="btn-close"
@@ -34,21 +34,12 @@
           ></button>
         </div>
         <div class="modal-body">
-          <div class="col mb-3">
-            <lable class="form-label small fw-bold me-2">Program</lable>
-          </div>
-          <div class="row mb-3">
-            <div class="col">
-              <lable class="form-label small fw-bold me-2">Cohort</lable>
-            </div>
-            <div class="col">
-              <lable class="form-label small fw-bold me-2">Active</lable>
-              <i class="bi bi-toggle-on"></i>
-              <i class="bi bi-toggle-off"></i>
-            </div>
-          </div>
           <div class="mb-3">
-            <lable class="form-label small fw-bold me-2">Admin Note</lable>
+            <div class="mb-3 text-secondary">
+              Warning: Consider carefully before deleting an affiliation as
+              there is no way to undo this action.
+            </div>
+            <lable class="form-label small fw-bold">Admin Note</lable>
             <textarea
               :class="
                 formErrors.notes ? 'is-invalid form-control' : 'form-control'
@@ -69,10 +60,10 @@
             </button>
             <button
               type="button"
-              class="btn btn-primary bg-purple"
+              class="btn btn-primary bg-danger"
               @click="saveAffiliations()"
             >
-              Save Changes
+              Delete
             </button>
           </div>
         </div>
