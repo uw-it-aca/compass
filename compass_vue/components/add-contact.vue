@@ -217,6 +217,7 @@ import { Role } from "../utils/roles";
 
 export default {
   mixins: [dataMixin],
+  inject: ["mq"],
   emits: ["contactUpdated"],
   props: {
     buttonType: {
