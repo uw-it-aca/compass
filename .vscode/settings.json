@@ -4,5 +4,4 @@
   "python.formatting.autopep8Args": ["--max-line-length=79"],
   "python.formatting.blackArgs": ["--line-length=79"],
   "stylelint.validate": ["vue", "scss"],
-  "vue3snippets.enable-compile-vue-file-on-did-save-code": true
 }
