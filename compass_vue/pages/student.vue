@@ -109,6 +109,9 @@
                 <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
                   Unofficial Transcript
                 </axdd-tabs-item>
+                <axdd-tabs-item :tabs-id="'example'" :panel-id="'Admin'">
+                  Administrative
+                </axdd-tabs-item>
               </template>
             </axdd-tabs-list>
 
@@ -155,6 +158,37 @@
                     </div>
                   </div>
                 </axdd-tabs-panel>
+                <axdd-tabs-panel :panel-id="'Admin'">
+                  <div class="row mt-4">
+                    <div class="col-xl-9">
+                      <Admin :person="person"></Admin>
+                    </div>
+                    <div class="col-xl-3">
+                      <div
+                        v-for="group in accessGroups"
+                        :key="group.access_group_id"
+                      >
+                        <div>
+                          <SettingsForm
+                            settingLabel="program"
+                            settingType="program"
+                            :accessGroup="group"
+                          ></SettingsForm>
+                          <SettingsForm
+                            settingLabel="contact topic"
+                            settingType="contact_topic"
+                            :accessGroup="group"
+                          ></SettingsForm>
+                          <SettingsForm
+                            settingLabel="contact type"
+                            settingType="contact_type"
+                            :accessGroup="group"
+                          ></SettingsForm>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </axdd-tabs-panel>
               </template>
             </axdd-tabs-display>
           </div>
@@ -181,6 +215,9 @@ import StudentAffiliations from "../components/student/affiliation-mini.vue";
 import StudentVisits from "../components/student/visits.vue";
 import TranscriptCredits from "../components/student/transcript-credits.vue";
 import SearchStudent from "../components/search-student.vue";
+import Admin from "../components/student/affiliation.vue";
+
+import SettingsForm from "../components/settings/settings-form.vue";
 
 export default {
   mixins: [dataMixin],
@@ -201,8 +238,11 @@ export default {
     TranscriptCredits,
     StudentAffiliations,
     SearchStudent,
+    Admin,
+    SettingsForm,
   },
   created: function () {
+    this.loadAccessGroups();
     if (this.$route.params.id) {
       this.isLoading = true;
       //setTimeout(() => {
@@ -215,6 +255,7 @@ export default {
       person: {},
       isLoading: false,
       isError: false,
+      accessGroups: [],
     };
   },
   //  computed: {
@@ -251,6 +292,13 @@ export default {
           this.isError = true;
           console.log("error occured: " + error);
         });
+    },
+    loadAccessGroups: function () {
+      this.getAccessGroups().then((response) => {
+        if (response.data) {
+          this.accessGroups = response.data;
+        }
+      });
     },
   },
 };

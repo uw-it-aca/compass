@@ -103,7 +103,7 @@
                     </div>
                   </div>
                 </td>
-                <td class="p-3">
+                <td style="width: 20%" class="p-3">
                   <AddEditContact
                     v-if="contact.app_user.uwnetid == userName"
                     :button-type="'link'"
