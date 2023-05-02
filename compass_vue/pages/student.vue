@@ -1,5 +1,3 @@
-// about.vue
-
 <template>
   <layout :page-title="'Student Search'">
     <template #title>
@@ -223,6 +221,7 @@ import SettingsForm from "../components/settings/settings-form.vue";
 
 export default {
   mixins: [dataMixin],
+  inject: ["mq"],
   components: {
     layout: Layout,
     StudentProfile,

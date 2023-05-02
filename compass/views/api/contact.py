@@ -187,18 +187,8 @@ class ContactOMADView(TokenAPIView):
 
     def post(self, request):
         contact_dict = request.data
-        try:
-            # confirm that the adviser is a member of the OMAD access group
-            omad_access_group = AccessGroup.objects.get(
-                access_group_id=settings.OMAD_ACCESS_GROUP_ID)
-            if not AccessGroup.objects.is_access_group_member(
-                    contact_dict["adviser_netid"], omad_access_group):
-                return Response(
-                    f"The specified app-user '{contact_dict['adviser_netid']}'"
-                    f" is not a member of the OMAD access group.",
-                    status=status.HTTP_400_BAD_REQUEST)
-        except (KeyError, ObjectDoesNotExist) as e:
-            return Response(repr(e), status=status.HTTP_400_BAD_REQUEST)
+        omad_access_group = AccessGroup.objects.get(
+            access_group_id=settings.OMAD_ACCESS_GROUP_ID)
         # parse the contact dictionary
         try:
             # check that adviser netid is defined
