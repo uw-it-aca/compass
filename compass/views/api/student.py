@@ -4,8 +4,10 @@
 
 from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
-from compass.models import Student, Contact
-from compass.serializers import ContactReadSerializer, StudentWriteSerializer
+from compass.models import Student, Contact, StudentAffiliation
+from compass.serializers import (
+    ContactReadSerializer, StudentAffiliationReadSerializer,
+    StudentWriteSerializer)
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse, HttpResponseNotFound
 from restclients_core.exceptions import DataFailureException
@@ -19,6 +21,8 @@ from uw_sws.term import (
 from uw_sws.registration import get_schedule_by_regid_and_term
 from uw_sws.enrollment import get_enrollment_history_by_regid
 
+TERMS = {1: "Winter", 2: "Spring", 3: "Summer", 4: "Autumn"}
+
 
 class StudentView(BaseAPIView):
     '''
@@ -27,6 +31,7 @@ class StudentView(BaseAPIView):
     /api/internal/student/[student_number|uwnetid]/
     '''
     def get(self, request, student_identifier):
+        access_groups = self.get_access_groups(request)
         try:
             client = UWPersonClient()
             try:
@@ -34,13 +39,6 @@ class StudentView(BaseAPIView):
             except PersonNotFoundException:
                 person = client.get_person_by_student_number(
                     student_identifier)
-            try:
-                local_student = Student.objects.get(
-                    system_key=person.student.system_key)
-                person.student.compass_programs = [
-                    program.id for program in local_student.programs.all()]
-            except Student.DoesNotExist:
-                person.student.compass_programs = []
             person.photo_url = PhotoDAO().get_photo_url(person.uwregid)
             return JsonResponse(person.to_dict(), safe=False)
         except PersonNotFoundException:
@@ -113,6 +111,42 @@ class StudentContactsView(BaseAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class StudentAffiliationsView(BaseAPIView):
+    '''
+    API endpoint returning a list of affiliations for a student
+
+    /api/internal/student/[systemkey]/affiliations/
+    '''
+
+    def get(self, request, systemkey):
+        access_groups = self.get_access_groups(request)
+        affiliations = {
+            'group': {},
+            'external': []
+        }
+        try:
+            student_affiliations = StudentAffiliation.objects.filter(
+                student__system_key=systemkey,
+                affiliation__access_group__in=access_groups)
+
+            for sa in student_affiliations:
+                serialized = StudentAffiliationReadSerializer(sa, )
+                group_name = sa.affiliation.affiliation_group.name if (
+                    sa.affiliation.affiliation_group) else None
+                if group_name:
+                    if group_name in affiliations["group"]:
+                        affiliations["group"][group_name].append(
+                            serialized.data)
+                    else:
+                        affiliations["group"][group_name] = [serialized.data]
+                else:
+                    affiliations['external'].append(serialized.data)
+        except StudentAffiliation.DoesNotExist:
+            pass
+
+        return Response(affiliations, status=status.HTTP_200_OK)
+
+
 class StudentTranscriptsView(BaseAPIView):
     '''
     API endpoint returning a list of transcripts for a student
@@ -123,16 +157,18 @@ class StudentTranscriptsView(BaseAPIView):
         client = UWPersonClient()
         person = client.get_person_by_uwregid(uwregid)
 
-        try:
-            enrollments = get_enrollment_history_by_regid(uwregid)
-        except DataFailureException as err:
-            raise
-
-        qtr_sort = {"winter": 1, "spring": 2, "summer": 3, "autumn": 4}
-
         transcripts = []
-        for enrollment in sorted(enrollments, key=lambda e: (
-                e.term.year, qtr_sort[e.term.quarter.lower()]), reverse=True):
-            transcripts.append(enrollment.json_data())
+        for transcript in sorted(person.student.transcripts, key=lambda t: (
+                t.tran_term.year, t.tran_term.quarter), reverse=True):
+            term = get_term_by_year_and_quarter(
+                transcript.tran_term.year,
+                TERMS[transcript.tran_term.quarter])
+            try:
+                class_schedule = get_schedule_by_regid_and_term(
+                    uwregid, term)
+                transcript.class_schedule = class_schedule.json_data()
+            except DataFailureException:
+                transcript.class_schedule = None
+            transcripts.append(transcript.to_dict())
 
         return JsonResponse(transcripts, safe=False)

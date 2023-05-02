@@ -4,9 +4,9 @@
       <thead class="table-light text-muted small">
         <tr>
           <th class="ps-3" style="width: 33%" scope="col">Student</th>
-          <th scope="col">Check-in Date</th>
-          <th scope="col">Contact Type</th>
-          <th scope="col">Meeting With</th>
+          <th scope="col" style="width: 15%">Check-in Date</th>
+          <th scope="col" style="width: 15%">Contact Type</th>
+          <th scope="col" style="width: 15%">Meeting With</th>
           <th scope="col">Assigned Adviser</th>
         </tr>
       </thead>
@@ -15,7 +15,7 @@
           <td class="ps-3">
             <profile-mini :person="contact.student"></profile-mini>
           </td>
-          <td>{{ contact.checkin_date }}</td>
+          <td>{{ formatDate(contact.checkin_date, "LLL") }}</td>
           <td>{{ contact.contact_type.name }}</td>
           <td>{{ contact.app_user.uwnetid }}</td>
           <td>
@@ -37,6 +37,7 @@
 
 <script>
 import ProfileMini from "../components/student/profile-mini.vue";
+import { formatDate } from "../utils/dates";
 
 export default {
   components: {
@@ -47,6 +48,11 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return {
+      formatDate,
+    };
   },
   data() {
     return {};

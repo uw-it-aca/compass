@@ -108,5 +108,15 @@
       "slug": "premajor-extension",
       "active": true
     }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 12,
+    "fields": {
+      "access_group": 1,
+      "name": "None",
+      "slug": "none",
+      "active": true
+    }
   }
 ]

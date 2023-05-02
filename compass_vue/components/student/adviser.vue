@@ -13,11 +13,13 @@
         >
           <li>
             <div class="d-flex">
-              <i class="bi bi-person-circle text-gray me-3"></i>
+              <i class="bi bi-person-square text-gray me-3"></i>
               <div class="flex-fill">
                 <strong>{{ adviser.display_name }}</strong> ({{
                   adviser.uwnetid
-                }})<br />{{ adviser.pronouns }}
+                }})<br /><span class="small text-muted text-capitalize">{{
+                  adviser.pronouns
+                }}</span>
               </div>
             </div>
           </li>

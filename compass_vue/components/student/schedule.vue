@@ -13,9 +13,16 @@
               :panel-id="'panel' + index"
               :active-tab="index == 0"
               :variant="'pills'"
-              >{{ schedule.term.quarter }}
-              {{ schedule.term.year }}</axdd-tabs-item
             >
+              {{ schedule.term.quarter }} {{ schedule.term.year }}
+              <span
+                v-if="schedule.sections.length > 0"
+                class="badge text-bg-purple ms-2 rounded-pill"
+                style="min-width: 25px"
+                @click.stop
+                >{{ getCreditTotal(schedule.sections) }}</span
+              >
+            </axdd-tabs-item>
           </template>
         </axdd-tabs-list>
       </axdd-card-tabs>
@@ -38,8 +45,8 @@
                   <col style="width: 40%" />
                   <col style="width: 15%" />
                   <col style="width: 13%" />
-                  <col style="width: 20%" />
-                  <col style="width: 12%" />
+                  <col style="width: 22%" />
+                  <col style="width: 10%" />
                   <thead class="table-light text-muted small">
                     <tr>
                       <th class="ps-3">Course</th>
@@ -49,7 +56,7 @@
                       <th>Credits</th>
                     </tr>
                   </thead>
-                  <tbody class="mb-3">
+                  <tbody class="mb-3" v-if="schedule.sections.length > 0">
                     <tr
                       v-for="(section, index) in schedule.sections"
                       :key="index"
@@ -57,6 +64,7 @@
                       <td class="ps-3">
                         {{ section.curriculum_abbr }}
                         {{ section.course_number }}
+                        {{ section.section_id }}
                         <div class="fs-8 text-secondary">
                           {{ section.course_title }}
                         </div>
@@ -87,11 +95,19 @@
                           :key="index"
                         >
                           <span v-if="!meeting.no_meeting">
-                            {{ meeting.start_time }} - {{ meeting.end_time }}
+                            {{ translateMilitaryTime(meeting.start_time) }} -
+                            {{ translateMilitaryTime(meeting.end_time) }}
                           </span>
                         </div>
                       </td>
                       <td>{{ section.credits }}</td>
+                    </tr>
+                  </tbody>
+                  <tbody v-else class="mb-3">
+                    <tr>
+                      <td colspan="5" class="ps-3 text-secondary">
+                        No registrations found
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -99,7 +115,7 @@
             </axdd-tabs-panel>
           </template>
           <template v-else>
-            <p>No schedules found</p>
+            <div class="text-secondary">No schedules found</div>
           </template>
         </template>
       </axdd-tabs-display>
@@ -109,6 +125,7 @@
 
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
+import { translateMilitaryTime } from "../../utils/translations";
 
 export default {
   mixins: [dataMixin],
@@ -118,6 +135,11 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return {
+      translateMilitaryTime,
+    };
   },
   data() {
     return {
@@ -134,6 +156,17 @@ export default {
           this.schedules = response.data;
         }
       });
+    },
+    getCreditTotal: function (sections) {
+      // get all section credits and sum the total
+      let creditTotal = 0;
+      for (let i = 0; i < sections.length; i++) {
+        // parseInt to exclude non-interger credits (i.e. None, NC, etc.)
+        if (parseInt(sections[i].credits)) {
+          creditTotal += parseInt(sections[i].credits);
+        }
+      }
+      return creditTotal;
     },
   },
 };

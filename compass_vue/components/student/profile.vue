@@ -18,11 +18,10 @@
             <template v-else>{{ person.full_name }}</template>
           </div>
           <!-- moved pronouns to under the preferred name -->
-          <div class="text-secondary mb-2">
+          <div class="text-secondary text-capitalize mb-2">
             <template v-if="person.pronouns">
               {{ person.pronouns }}
             </template>
-            <template v-else>not/specified</template>
           </div>
           <div class="mt-3 small">
             {{ person.student.student_number }}, {{ person.uwnetid }}<br />
@@ -99,7 +98,7 @@
               <KeyValue>
                 <template #key>Disability</template>
                 <template #value>
-                  {{ person.student.disability_ind }}
+                  {{ translateTrueFalse(person.student.disability_ind) }}
                 </template>
               </KeyValue>
             </li>
@@ -325,6 +324,7 @@
 
 <script>
 import KeyValue from "../../components/_common/key-value.vue";
+import { translateTrueFalse } from "../../utils/translations";
 
 export default {
   inject: ["mq"],
@@ -335,6 +335,11 @@ export default {
     },
   },
   components: { KeyValue },
+  setup() {
+    return {
+      translateTrueFalse,
+    };
+  },
   data() {
     return {};
   },
