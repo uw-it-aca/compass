@@ -2,31 +2,30 @@
   <a
     role="button"
     data-bs-toggle="modal"
-    :data-bs-target="'#affiliationsModal'"
+    :data-bs-target="'#editAffiliationsModal'"
     class="btn text-nowrap"
     @click="getAffiliations()"
     :class="[
       buttonType === 'button'
-        ? 'btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2'
+        ? 'rounded-3 px-3 py-0'
         : 'small p-0 btn-sm btn-link',
     ]"
   >
-    <slot>Add Affiliation</slot>
+    <slot>Edit Affiliation</slot>
   </a>
 
-  <!-- contact modal -->
   <div
     ref="affiliationsModal"
     class="modal fade text-start"
-    :id="'affiliationsModal'"
+    :id="'editAffiliationsModal'"
     tabindex="-1"
-    aria-labelledby="affiliationsModalLabel"
+    aria-labelledby="editAffiliationsModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title h6 m-0 fw-bold">Add Affiliation</h5>
+          <h5 class="modal-title h6 m-0 fw-bold">Edit Affiliation</h5>
           <button
             type="button"
             class="btn-close"
@@ -34,19 +33,19 @@
             aria-label="Close"
           ></button>
         </div>
-        <!-- body -->
         <div class="modal-body">
+          <div class="col mb-3">
+            <lable class="form-label small fw-bold me-2">Program</lable>
+          </div>
           <div class="row mb-3">
             <div class="col">
-              <lable class="form-label small fw-bold me-2"> Program </lable>
+              <lable class="form-label small fw-bold me-2">Cohort</lable>
             </div>
             <div class="col">
-              <lable class="form-label small fw-bold me-2">External</lable>
+              <lable class="form-label small fw-bold me-2">Active</lable>
+              <i class="bi bi-toggle-on"></i>
+              <i class="bi bi-toggle-off"></i>
             </div>
-          </div>
-
-          <div class="mb-3">
-            <lable class="form-label small fw-bold me-2">Cohort</lable>
           </div>
           <div class="mb-3">
             <lable class="form-label small fw-bold me-2">Admin Note</lable>
@@ -58,6 +57,7 @@
             ></textarea>
           </div>
         </div>
+
         <div class="modal-footer">
           <div class="text-end">
             <button
@@ -72,7 +72,7 @@
               class="btn btn-primary bg-purple"
               @click="saveAffiliations()"
             >
-              Add Affiliation
+              Save Changes
             </button>
           </div>
         </div>
@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import dataMixin from "../mixins/data_mixin.js";
+import dataMixin from "../../../mixins/data_mixin.js";
 import { Modal } from "bootstrap";
 
 export default {
@@ -108,17 +108,18 @@ export default {
   },
   created() {},
   mounted() {
-    this.$refs.affiliationsModal.addEventListener(
+    this.$refs.editAffiliationsModal.addEventListener(
       "shown.bs.modal",
       this.clearFormErrors
     );
-    this.$refs.affiliationsModal.addEventListener(
+    this.$refs.editAffiliationsModal.addEventListener(
       "hidden.bs.modal",
       this.resetForm
     );
   },
   methods: {
     getAffiliations() {
+      /*
       this.getStudentAffiliations(this.person.student.system_key).then(
         (response) => {
           if (response.data) {
@@ -127,11 +128,11 @@ export default {
             this.affiliations = newAffiliations;
           }
         }
-      );
+      );*/
     },
     saveAffiliations() {
-      var affiliationsModal = Modal.getInstance(
-        document.getElementById("affiliationsModal")
+      var editAffiliationsModal = Modal.getInstance(
+        document.getElementById("editAffiliationsModal")
       );
       /*
       this.saveStudentAffiliations(this.person.student.system_key)

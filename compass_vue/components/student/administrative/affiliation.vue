@@ -3,8 +3,8 @@
     <template #heading-action>
       <axdd-card-heading :level="2">Affiliations</axdd-card-heading>
       <!-- need to change the button -->
-      <AddAffiliation :button-type="'button'" :person="person"
-        >Add Affiliation</AddAffiliation
+      <AffiliationAdd :button-type="'button'" :person="person"
+        >Add Affiliation</AffiliationAdd
       >
     </template>
     <template #body>
@@ -25,12 +25,12 @@
               <td></td>
 
               <td>
-                <EditAffiliation :button-type="'button'" :person="person">
+                <AffiliationEdit :button-type="'button'" :person="person">
                   <i class="py-0 bi bi-pencil-square"></i
-                ></EditAffiliation>
-                <DeleteAffiliation :button-type="'button'" :person="person">
+                ></AffiliationEdit>
+                <AffiliationDelete :button-type="'button'" :person="person">
                   <i class="bi bi-trash3"></i>
-                </DeleteAffiliation>
+                </AffiliationDelete>
               </td>
             </tr>
           </tbody>
@@ -48,12 +48,12 @@
               <td>2022-2023</td>
               <td>Yes</td>
               <td>
-                <EditAffiliation :button-type="'button'" :person="person">
+                <AffiliationEdit :button-type="'button'" :person="person">
                   <i class="py-0 bi bi-pencil-square"></i
-                ></EditAffiliation>
-                <DeleteAffiliation :button-type="'button'" :person="person">
+                ></AffiliationEdit>
+                <AffiliationDelete :button-type="'button'" :person="person">
                   <i class="bi bi-trash3"></i>
-                </DeleteAffiliation>
+                </AffiliationDelete>
               </td>
             </tr>
           </tbody>
@@ -64,17 +64,18 @@
 </template>
 
 <script>
-import dataMixin from "../../mixins/data_mixin.js";
-import AddAffiliation from "../add-affiliation.vue";
-import DeleteAffiliation from "../delete-affiliation.vue";
-import EditAffiliation from "../edit-affiliation.vue";
+import dataMixin from "../../../mixins/data_mixin.js";
+
+import AffiliationAdd from "./affiliation-add.vue";
+import AffiliationDelete from "./affiliation-delete.vue";
+import AffiliationEdit from "./affiliation-edit.vue";
 
 export default {
   mixins: [dataMixin],
   components: {
-    AddAffiliation,
-    EditAffiliation,
-    DeleteAffiliation,
+    AffiliationAdd,
+    AffiliationEdit,
+    AffiliationDelete,
   },
   props: {
     person: {
