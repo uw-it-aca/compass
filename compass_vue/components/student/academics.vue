@@ -13,7 +13,10 @@
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Status</p>
           <ul class="list-unstyled">
             <li>
-              <KeyValue v-if="person.student.registration_hold_ind" class="text-danger">
+              <KeyValue
+                v-if="person.student.registration_hold_ind"
+                class="text-danger"
+              >
                 <template #key>Holds</template>
                 <template #value>Registration</template>
               </KeyValue>
@@ -29,6 +32,28 @@
                 <template #key>Campus</template>
                 <template #value>{{ person.student.campus_desc }}</template>
               </KeyValue>
+            </li>
+            <li>
+              <span
+                v-if="person.student.applied_to_graduate_yr_qtr_id !== 'NaN'"
+              >
+                <KeyValue class="text-success">
+                  <template #key>Applied to Graduate</template>
+                  <template #value>{{
+                    person.student.applied_to_graduate_yr_qtr_desc
+                  }}</template>
+                </KeyValue>
+              </span>
+            </li>
+            <li>
+              <span v-if="!person.student.registered_in_quarter">
+                <KeyValue class="text-success">
+                  <template #key>Last Enrolled</template>
+                  <template #value>{{
+                    person.student.last_enrolled_yr_qtr_desc
+                  }}</template>
+                </KeyValue>
+              </span>
             </li>
           </ul>
         </div>
