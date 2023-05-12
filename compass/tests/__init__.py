@@ -2,11 +2,9 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.test import RequestFactory, TestCase, Client
+from django.test import TestCase, Client
 from django.contrib.auth.models import User
-from django.contrib.sessions.middleware import SessionMiddleware
 from django.urls import reverse
-import json
 
 
 class ApiTest(TestCase):
@@ -14,9 +12,13 @@ class ApiTest(TestCase):
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0')
 
     def _set_user(self, netid):
-        get_user(netid)
-        self.client.login(username=netid,
-                          password=get_user_pass(netid))
+        self.client.force_login(User.objects.get_or_create(
+            username=netid)[0])
+
+    def get_response(self, url_name, netid, get_args=None, **kwargs):
+        self._set_user(netid)
+        url = reverse(url_name, **kwargs)
+        return self.client.get(url, get_args, **kwargs)
 
     def _set_group(self, group):
         session = self.client.session
