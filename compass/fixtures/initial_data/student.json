@@ -1,0 +1,9 @@
+[
+   {
+  "model": "compass.student",
+  "pk": 1,
+  "fields": {
+   "system_key": 123
+  }
+ }
+]

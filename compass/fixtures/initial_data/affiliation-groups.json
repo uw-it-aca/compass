@@ -6,8 +6,8 @@
    "access_group": 1,
    "name": "Programs",
    "slug": "programs",
-   "exclusivity_count": 1,
-   "exclusivity_group": [1, 2]
+   "exclusivity_count": 1
+
   }
  }
 ]
