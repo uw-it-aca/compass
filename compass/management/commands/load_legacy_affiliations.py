@@ -6,8 +6,7 @@ from django.core.management.base import BaseCommand
 from uw_person_client import UWPersonClient
 from uw_person_client.exceptions import PersonNotFoundException
 from compass.models import (
-    AccessGroup, Student, StudentAffiliation, Affiliation,
-    AffiliationGroup, Cohort)
+    AccessGroup, Student, StudentAffiliation, Affiliation, Cohort)
 from datetime import datetime
 from pytz import timezone
 import string
@@ -35,17 +34,20 @@ class Command(BaseCommand):
         self.access_group = AccessGroup.objects.get(name='OMAD')
 
         self.load_affiliation_table(options['affiliations'])
-        self.set_affiliation_groups()
         self.load_affiliations(options['affiliation_associations'])
 
     def _get_affiliation_name(self, affiliation):
         mapping = [
             (['camp'],
              'CAMP', True),
-            (['triosss', 'sss', 'triosssstem'],
-             'TRIO-SSS', True),
-            (['eip', 'eiplab'],
+            (['triosss', 'sss'],
+             'TRIO SSS', True),
+            (['triosssstem'],
+             'TRIO SSS-STEM', True),
+            (['eip'],
              'EIP', True),
+            (['eiplab'],
+             'EIP Lab', True),
             (['champions'],
              'Champions', True),
             (['lsamp'],
@@ -53,7 +55,7 @@ class Command(BaseCommand):
             (['mesa'],
              'MESA', True),
             (['eopscholar'],
-             'EOP', True),
+             'EOP Scholar', True),
             (['brotherhoodinitiativescholar'],
              'Brotherhood Initiative Scholar', True),
             (['diversityscholar'],
@@ -116,38 +118,6 @@ class Command(BaseCommand):
                     self._error(
                         'Unknown legacy affiliation: {}'.format(ex))
 
-    def set_affiliation_groups(self):
-        groups = [
-            {
-                'count': 1,
-                'affiliations': ['CAMP', 'TRIO-SSS', 'Champions', 'EOP']
-            }]
-
-        for group in groups:
-            affilations = Affiliation.objects.filter(
-                access_group=self.access_group, name__in=group['affiliations'])
-
-            if affilations.count() != len(group['affiliations']):
-                self._error('Affiliation group member mismatch : '.format(
-                    group['affiliations']))
-                sys.exit(1)
-
-            affilation_group = AffiliationGroup.objects.filter(
-                access_group=self.access_group,
-                exclusivity_count=group['count'],
-                exclusivity_group__in=affilations)
-
-            if not affilation_group:
-                ag = AffiliationGroup(
-                    access_group=self.access_group,
-                    exclusivity_count=group['count'])
-                ag.save()
-                for a in affilations:
-                    a.affiliation_group = ag
-                    a.save()
-                    ag.exclusivity_group.add(a)
-                    ag.save()
-
     def _get_affiliation(self, affiliation):
         affiliation, created = Affiliation.objects.get_or_create(
             access_group=self.access_group, name=affiliation)
@@ -164,7 +134,7 @@ class Command(BaseCommand):
                     name, active = self._get_affiliation_name(a.affiliation)
                     affiliation = self._get_affiliation(name)
                     sa = self._get_student_affiliation(student, affiliation)
-                    sa.actively_advised = (a.active.lower() == 'yes')
+                    sa.actively_advised = (a.active.lower() in ['yes', ''])
 
                     sa.date = None
                     date = a.date_modified if a.date_modified else a.date

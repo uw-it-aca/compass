@@ -120,27 +120,16 @@ class StudentAffiliationsView(BaseAPIView):
 
     def get(self, request, systemkey):
         access_groups = self.get_access_groups(request)
-        affiliations = {
-            'group': {},
-            'external': []
-        }
+        affiliations = []
+
         try:
             student_affiliations = StudentAffiliation.objects.filter(
                 student__system_key=systemkey,
                 affiliation__access_group__in=access_groups)
 
             for sa in student_affiliations:
-                serialized = StudentAffiliationReadSerializer(sa, )
-                group_name = sa.affiliation.affiliation_group.name if (
-                    sa.affiliation.affiliation_group) else None
-                if group_name:
-                    if group_name in affiliations["group"]:
-                        affiliations["group"][group_name].append(
-                            serialized.data)
-                    else:
-                        affiliations["group"][group_name] = [serialized.data]
-                else:
-                    affiliations['external'].append(serialized.data)
+                affiliations.append(
+                    StudentAffiliationReadSerializer(sa).data)
         except StudentAffiliation.DoesNotExist:
             pass
 

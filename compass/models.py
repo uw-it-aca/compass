@@ -275,29 +275,11 @@ class Affiliation(BaseAccessGroupContent):
     Departmental/Group Affiliation
     (e.g. CAMP, TRIO, SSS, Champions, IC Eligible)
     """
-
-    access_group = models.ForeignKey(
-        "AccessGroup", on_delete=models.CASCADE)
-    affiliation_group = models.ForeignKey(
-        "AffiliationGroup", on_delete=models.CASCADE, blank=True, null=True)
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50)
     active = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
-
-
-class AffiliationGroup(models.Model):
-    """
-    Collects Affiliations that limit assignment per group
-    """
-    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
-    slug = models.SlugField(max_length=50)
-    exclusivity_count = models.SmallIntegerField()
-    exclusivity_group = models.ManyToManyField("Affiliation")
-
-    def __str__(self):
-        return f"{self.exclusivity_count} of {self.exclusivity_group}"
 
 
 class Cohort(models.Model):
