@@ -103,13 +103,19 @@
                 >
                   Overview
                 </axdd-tabs-item>
-                <axdd-tabs-item :tabs-id="'example'" :panel-id="'history'">
-                  History
+                <axdd-tabs-item
+                  :tabs-id="'example'"
+                  :panel-id="'contact-visit'"
+                >
+                  Contacts &amp; Visits
                 </axdd-tabs-item>
-                <axdd-tabs-item :tabs-id="'example'" :panel-id="'transcript'">
-                  Unofficial Transcript
+                <axdd-tabs-item
+                  :tabs-id="'example'"
+                  :panel-id="'academic-history'"
+                >
+                  Academic History
                 </axdd-tabs-item>
-                <axdd-tabs-item :tabs-id="'example'" :panel-id="'Admin'">
+                <axdd-tabs-item :tabs-id="'example'" :panel-id="'admin'">
                   Administrative
                 </axdd-tabs-item>
               </template>
@@ -136,7 +142,7 @@
                     </div>
                   </div>
                 </axdd-tabs-panel>
-                <axdd-tabs-panel :panel-id="'history'">
+                <axdd-tabs-panel :panel-id="'contact-visit'">
                   <div class="row mt-4">
                     <div class="col-xl-9">
                       <StudentContact :person="person"></StudentContact>
@@ -146,7 +152,7 @@
                     </div>
                   </div>
                 </axdd-tabs-panel>
-                <axdd-tabs-panel :panel-id="'transcript'">
+                <axdd-tabs-panel :panel-id="'academic-history'">
                   <div class="row mt-4">
                     <div class="col-xl-9">
                       <StudentTranscript :person="person"></StudentTranscript>
@@ -158,35 +164,12 @@
                     </div>
                   </div>
                 </axdd-tabs-panel>
-                <axdd-tabs-panel :panel-id="'Admin'">
+                <axdd-tabs-panel :panel-id="'admin'">
                   <div class="row mt-4">
                     <div class="col-xl-9">
-                      <Admin :person="person"></Admin>
+                      <AffiliationAddEdit :person="person"></AffiliationAddEdit>
                     </div>
-                    <div class="col-xl-3">
-                      <div
-                        v-for="group in accessGroups"
-                        :key="group.access_group_id"
-                      >
-                        <div>
-                          <SettingsForm
-                            settingLabel="program"
-                            settingType="program"
-                            :accessGroup="group"
-                          ></SettingsForm>
-                          <SettingsForm
-                            settingLabel="contact topic"
-                            settingType="contact_topic"
-                            :accessGroup="group"
-                          ></SettingsForm>
-                          <SettingsForm
-                            settingLabel="contact type"
-                            settingType="contact_type"
-                            :accessGroup="group"
-                          ></SettingsForm>
-                        </div>
-                      </div>
-                    </div>
+                    <div class="col-xl-3">&nbsp;</div>
                   </div>
                 </axdd-tabs-panel>
               </template>
@@ -210,14 +193,10 @@ import StudentContact from "../components/student/contact.vue";
 import StudentSchedule from "../components/student/schedule.vue";
 import StudentHolds from "../components/student/holds.vue";
 import StudentAdviser from "../components/student/adviser.vue";
-import StudentPrograms from "../components/student/programs.vue";
 import StudentAffiliations from "../components/student/affiliation-mini.vue";
 import StudentVisits from "../components/student/visits.vue";
-import TranscriptCredits from "../components/student/transcript-credits.vue";
 import SearchStudent from "../components/search-student.vue";
-import Admin from "../components/student/affiliation.vue";
-
-import SettingsForm from "../components/settings/settings-form.vue";
+import AffiliationAddEdit from "../components/student/administrative/affiliation.vue";
 
 export default {
   mixins: [dataMixin],
@@ -233,13 +212,10 @@ export default {
     StudentSchedule,
     StudentHolds,
     StudentAdviser,
-    StudentPrograms,
     StudentVisits,
-    TranscriptCredits,
     StudentAffiliations,
     SearchStudent,
-    Admin,
-    SettingsForm,
+    AffiliationAddEdit,
   },
   created: function () {
     this.loadAccessGroups();
