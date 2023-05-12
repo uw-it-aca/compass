@@ -54,7 +54,7 @@
                 <span
                   class="small badge rounded-pill alert border-0 px-2 py-1 mb-0 me-1"
                   :class="
-                    person.student.holds.length > 0
+                    person.student.holds && person.student.holds.length > 0
                       ? 'alert-danger'
                       : 'alert-secondary'
                   "
