@@ -36,7 +36,7 @@ setup(
         'UW-RestClients-PWS~=2.1',
         'UW-Django-SAML2~=1.7',
         'urllib3~=1.25',
-        'axdd-person-client>=1.1.5',
+        'axdd-person-client>=1.1.7',
         'python-dateutil~=2.8'
     ],
     license="Apache License, Version 2.0",
