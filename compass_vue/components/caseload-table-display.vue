@@ -59,7 +59,11 @@
                       : 'alert-secondary'
                   "
                 >
-                  {{ translateTrueFalse(person.student.holds.length > 0) }}
+                  {{
+                    translateTrueFalse(
+                      person.student.holds && person.student.holds.length > 0
+                    )
+                  }}
                 </span>
               </li>
             </ul>
