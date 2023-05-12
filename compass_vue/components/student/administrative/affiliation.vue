@@ -65,7 +65,6 @@
 
 <script>
 import dataMixin from "../../../mixins/data_mixin.js";
-
 import AffiliationAdd from "./affiliation-add.vue";
 import AffiliationDelete from "./affiliation-delete.vue";
 import AffiliationEdit from "./affiliation-edit.vue";
