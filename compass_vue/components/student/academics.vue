@@ -13,9 +13,12 @@
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Status</p>
           <ul class="list-unstyled">
             <li>
-              <KeyValue v-if="person.student.registration_hold_ind" class="text-danger">
+              <KeyValue
+                v-if="person.student.holds.length > 0"
+                class="text-danger"
+              >
                 <template #key>Holds</template>
-                <template #value>Registration</template>
+                <template #value>Yes</template>
               </KeyValue>
             </li>
             <li>
