@@ -1,5 +1,5 @@
 <template>
-  <axdd-card v-if="person.student.holds.length > 0">
+  <axdd-card v-if="person.student.registration_hold_ind">
     <template #heading>
       <axdd-card-heading :level="2" class="text-danger"
         >Holds</axdd-card-heading

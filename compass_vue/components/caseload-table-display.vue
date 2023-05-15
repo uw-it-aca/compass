@@ -54,16 +54,12 @@
                 <span
                   class="small badge rounded-pill alert border-0 px-2 py-1 mb-0 me-1"
                   :class="
-                    person.student.holds && person.student.holds.length > 0
+                    person.student.registration_hold_ind
                       ? 'alert-danger'
                       : 'alert-secondary'
                   "
                 >
-                  {{
-                    translateTrueFalse(
-                      person.student.holds && person.student.holds.length > 0
-                    )
-                  }}
+                  {{ translateTrueFalse(person.student.registration_hold_ind) }}
                 </span>
               </li>
             </ul>
