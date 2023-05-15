@@ -29,7 +29,7 @@ class CompassPersonClient(UWPersonClient):
              self.DB.Student.student_number,
              self.DB.Student.class_desc,
              self.DB.Student.registered_in_quarter,
-             self.DB.Student.holds,
+             self.DB.Student.registration_hold_ind,
              self.DB.Student.campus_desc,
              self.DB.Student.special_program_code,
              self.DB.Student.special_program_desc,
@@ -53,7 +53,7 @@ class CompassPersonClient(UWPersonClient):
             student.student_numer = item[6]
             student.class_desc = item[7]
             student.registered_in_quarter = item[8]
-            student.holds = item[9]
+            student.registration_hold_ind = item[9]
             student.campus_desc = item[10]
             student.special_program_code = item[11]
             student.special_program_desc = item[12]
