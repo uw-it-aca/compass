@@ -96,6 +96,18 @@
                 </template>
               </KeyValue>
             </li>
+            <li>
+              <KeyValue>
+                <template #key>Hispanic</template>
+                <template #value>
+                  {{ person.student.hispanic_code }},
+                  {{ person.student.hispanic_desc }},
+                  {{ person.student.hispanic_long_desc }},
+                  {{ person.student.hispanic_group_code }},
+                  {{ person.student.hispanic_group_desc }}
+                </template>
+              </KeyValue>
+            </li>
             <li class="mt-3">
               <KeyValue>
                 <template #key>Disability</template>
