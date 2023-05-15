@@ -90,7 +90,7 @@
                 <template #value>
                   {{ person.student.ethnic_code }},
                   {{ person.student.ethnic_desc }},
-                  {{ person.student.ethnic_log_desc }},
+                  {{ person.student.ethnic_long_desc }},
                   {{ person.student.ethnic_group_code }},
                   {{ person.student.ethnic_group_desc }}
                 </template>
