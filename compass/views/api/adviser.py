@@ -38,7 +38,7 @@ class AdviserContactsView(BaseAPIView):
                 person.photo_url = photo_dao.get_photo_url(person.uwregid)
                 contact_dict["student"] = person.to_dict()
                 contacts.append(contact_dict)
-            except PersonNotFoundException(ex):
+            except PersonNotFoundException:
                 pass
         return JsonResponse([contact for contact in contacts], safe=False)
 
