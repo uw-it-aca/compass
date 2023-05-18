@@ -72,24 +72,6 @@
               >
             </div>
           </div>
-          <div class="col">
-            <div class="mt-3">
-              <p class="fw-bold">Misc/Graduation Application Status</p>
-              <ul>
-                <li>
-                  Applied to grad qtr:
-                  {{ person.student.applied_to_graduate_yr_qtr_id }}
-                </li>
-                <li>
-                  Applied to grad qtr desc:
-                  {{ person.student.applied_to_graduate_yr_qtr_desc }}
-                </li>
-                <li>
-                  Last enrolled: {{ person.student.last_enrolled_yr_qtr_desc }}
-                </li>
-              </ul>
-            </div>
-          </div>
         </div>
 
         <div class="row">
