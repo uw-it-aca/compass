@@ -141,7 +141,6 @@ class ContactOMADView(TokenAPIView):
         "student_systemkey": "<System Key>",
         "contact_type": "<ContactType Slug",
         "checkin_date": "<CURRENT_TIMESTAMP>",
-        "source": "Compass"
     }
     '''
 
@@ -182,7 +181,13 @@ class ContactOMADView(TokenAPIView):
         if student_systemkey is None:
             raise ValueError("Student systemkey is not specified")
         else:
-            if not student_systemkey.isdigit():
+            is_valid = True
+            try:
+                if not student_systemkey.isdigit():
+                    is_valid = False
+            except AttributeError:
+                is_valid = False
+            if is_valid is not True:
                 raise ValueError("Student systemkey is not a positive integer")
 
     def post(self, request):
@@ -217,6 +222,7 @@ class ContactOMADView(TokenAPIView):
         contact.student = student
         contact.contact_type = contact_dict["contact_type"]
         contact.checkin_date = contact_dict["checkin_date"]
+        contact.source = "Checkin"
         contact.save()
         contact.access_group.add(omad_access_group)
         return Response(status=status.HTTP_201_CREATED)

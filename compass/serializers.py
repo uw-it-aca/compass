@@ -5,7 +5,7 @@
 from compass.models import (
     AppUser, AccessGroup, Contact, ContactTopic,
     ContactType, ContactMethod, Affiliation, Cohort,
-    StudentAffiliation, AffiliationGroup, Student)
+    StudentAffiliation, Student)
 from rest_framework import serializers
 
 
@@ -36,8 +36,7 @@ class AffiliationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Affiliation
-        fields = ['id', 'access_group', 'affiliation_group',
-                  'name', 'slug', 'active', 'editable']
+        fields = ['id', 'access_group', 'name', 'slug', 'active', 'editable']
         extra_kwargs = {
             'access_group_id': {'validators': []},
         }
@@ -53,23 +52,6 @@ class AffiliationSerializer(serializers.ModelSerializer):
         instance.active = validated_data.get('active', instance.active)
         instance.save()
         return instance
-
-
-class AffiliationGroupSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = AffiliationGroup
-        fields = ['id', 'access_group', 'name', 'slug',
-                  'exclusivity_count', 'exclusivity_group']
-        extra_kwargs = {
-            'access_group_id': {'validators': []},
-        }
-
-    def create(self, validated_data):
-        access_group = AccessGroup.objects.get(
-            access_group_id=validated_data['access_group']['access_group_id'])
-        validated_data["access_group"] = access_group
-        return AffiliationGroup.objects.create(**validated_data)
 
 
 class CohortReadSerializer(serializers.ModelSerializer):

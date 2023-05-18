@@ -88,9 +88,23 @@
               <KeyValue>
                 <template #key>Ethnicity</template>
                 <template #value>
-                  {{ person.student.assigned_ethnic_code }},
-                  {{ person.student.assigned_ethnic_desc }},
-                  {{ person.student.assigned_ethnic_group_desc }}
+                  {{ person.student.ethnic_code }},
+                  {{ person.student.ethnic_desc }},
+                  {{ person.student.ethnic_long_desc }},
+                  {{ person.student.ethnic_group_code }},
+                  {{ person.student.ethnic_group_desc }}
+                </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key>Hispanic</template>
+                <template #value>
+                  {{ person.student.hispanic_code }},
+                  {{ person.student.hispanic_desc }},
+                  {{ person.student.hispanic_long_desc }},
+                  {{ person.student.hispanic_group_code }},
+                  {{ person.student.hispanic_group_desc }}
                 </template>
               </KeyValue>
             </li>

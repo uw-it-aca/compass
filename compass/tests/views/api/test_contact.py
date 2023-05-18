@@ -72,7 +72,9 @@ class ContactAPITest(ApiTest):
             ContactOMADView().validate_student_systemkey(None)
         with self.assertRaises(ValueError):
             ContactOMADView().validate_student_systemkey("badsyskey")
-        ContactOMADView().validate_adviser_netid("1234")
+        with self.assertRaises(ValueError):
+            ContactOMADView().validate_student_systemkey(1234)
+        ContactOMADView().validate_student_systemkey("1234")
 
     @patch('compass.views.api.contact.Student')
     @patch('compass.views.api.contact.AppUser')

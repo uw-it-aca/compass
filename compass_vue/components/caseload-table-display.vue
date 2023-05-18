@@ -58,9 +58,8 @@
                       ? 'alert-danger'
                       : 'alert-secondary'
                   "
-                  >{{
-                    translateTrueFalse(person.student.registration_hold_ind)
-                  }}
+                >
+                  {{ translateTrueFalse(person.student.registration_hold_ind) }}
                 </span>
               </li>
             </ul>

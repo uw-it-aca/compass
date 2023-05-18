@@ -95,6 +95,7 @@ urlpatterns += [
     re_path(
         r"^api/internal/adviser/(?P<adviser_netid>[\w]+)/contacts/$",
         AdviserContactsView.as_view(),
+        name="adviser_contacts"
     ),
     re_path(
         r"^api/internal/adviser/(?P<adviser_netid>[\w]+)/caseload/$",

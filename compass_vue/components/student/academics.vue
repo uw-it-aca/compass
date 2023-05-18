@@ -18,7 +18,7 @@
                 class="text-danger"
               >
                 <template #key>Holds</template>
-                <template #value>Registration</template>
+                <template #value>Yes</template>
               </KeyValue>
             </li>
             <li>

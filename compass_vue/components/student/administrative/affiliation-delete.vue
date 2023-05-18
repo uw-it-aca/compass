@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import dataMixin from "../mixins/data_mixin.js";
+import dataMixin from "../../../mixins/data_mixin.js";
 import { Modal } from "bootstrap";
 
 export default {
@@ -99,6 +99,7 @@ export default {
   },
   created() {},
   mounted() {
+    /*
     this.$refs.editAffiliationsModal.addEventListener(
       "shown.bs.modal",
       this.clearFormErrors
@@ -107,6 +108,7 @@ export default {
       "hidden.bs.modal",
       this.resetForm
     );
+    */
   },
   methods: {
     getAffiliations() {
