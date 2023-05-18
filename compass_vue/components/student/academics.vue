@@ -50,6 +50,31 @@
       :class="[mq.lgMinus ? 'mb-4' : '']"
     >
       <div
+        class="bg-light-beige rounded-3 p-3 border-0 d-flex flex-column flex-fill m-0 mb-2 small"
+      >
+        <div class="flex-fill">
+          <p class="text-uppercase text-dark-beige fs-8 fw-bold">Degrees</p>
+          <div>
+            <KeyValue variant="address">
+              <template #key>Degree(s) Received</template>
+              <template #value>
+                <ul class="list-unstyled">
+                  <li
+                    v-for="(degree, index) in person.student.degrees"
+                    :key="index"
+                  >
+                    <p class="small">{{ degree }}</p>
+                    {{ degree.degree_level_type_desc }},
+                    {{ degree.degree_abbr_code }},
+                    {{ degree.degree_term }}
+                  </li>
+                </ul>
+              </template>
+            </KeyValue>
+          </div>
+        </div>
+      </div>
+      <div
         class="bg-light-beige rounded-3 p-3 border-0 d-flex flex-column flex-fill m-0 small"
       >
         <div class="flex-fill">
