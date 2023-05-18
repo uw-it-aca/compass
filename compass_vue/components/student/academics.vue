@@ -62,11 +62,14 @@
                   <li
                     v-for="(degree, index) in person.student.degrees"
                     :key="index"
+                    class="small"
                   >
-                    <p class="small">{{ degree }}</p>
-                    {{ degree.degree_level_type_desc }},
-                    {{ degree.degree_abbr_code }},
-                    {{ degree.degree_term }}
+                    <p>{{ degree }}</p>
+                    <p>
+                      {{ degree.degree_level_type_desc }} ({{
+                        degree.degree_desc
+                      }})
+                    </p>
                   </li>
                 </ul>
               </template>
