@@ -10,6 +10,22 @@
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
                   <search-student></search-student>
+                  <div>
+                    <label for="enrollmentFilter">Enrollment:</label>
+                    <select id="enrollmentFilter" v-model="selectedEnrollment" class="">
+                      <option selected :value="undefined">All</option>
+                      <option v-for="option in enrollmentOptions" v-bind:value="option.id">
+                        {{ option.value }}
+                      </option>
+                    </select>
+                    <label for="classFilter">Class:</label>
+                    <select id="classFilter" v-model="selectedClass" class="">
+                      <option selected :value="undefined">All</option>
+                      <option v-for="option in classOptions" v-bind:value="option.id">
+                        {{ option.value }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
               </div>
               <div class="col-4"></div>
@@ -30,7 +46,7 @@
               <table-display
                 v-else
                 :adviser-net-id="adviserNetId"
-                :persons="persons"
+                :persons="filteredPersons"
               ></table-display>
             </template>
           </axdd-card>
@@ -66,14 +82,59 @@ export default {
         : document.body.getAttribute("data-user-override")
         ? document.body.getAttribute("data-user-override")
         : document.body.getAttribute("data-user-netid"),
+      selectedEnrollment: undefined,
+      selectedClass: undefined,
     };
   },
   created: function () {
-    setTimeout(() => {
-      this.loadAdviserCaseload(this.adviserNetId);
-    }, 2000);
+    this.loadAdviserCaseload(this.adviserNetId);
+  },
+  computed: {
+    enrollmentOptions: function(){
+      let unique_values = [],
+        value_objs = [];
+      this.persons.forEach((person) =>{
+        if(!unique_values.includes(person.student.enroll_status_desc)){
+          unique_values.push(person.student.enroll_status_desc);
+          value_objs.push({"id": person.student.enroll_status_desc,
+            "value": this.capitalizeFirstLetter(person.student.enroll_status_desc)})
+        }
+      });
+      return value_objs;
+    },
+    classOptions: function(){
+      let unique_values = [],
+        value_objs = [];
+      this.persons.forEach((person) =>{
+        if(!unique_values.includes(person.student.class_code)){
+          unique_values.push(person.student.class_code);
+          value_objs.push({"id": person.student.class_code,
+            "value": person.student.class_desc})
+        }
+      });
+      return value_objs;
+    },
+    filteredPersons: function () {
+      let filteredPersons = this.persons;
+      if (this.selectedEnrollment) {
+        filteredPersons = filteredPersons.filter(
+          (person) => person.student.enroll_status_desc == this.selectedEnrollment
+        );
+      }
+      if (this.selectedClass) {
+        filteredPersons = filteredPersons.filter(
+          (person) => person.student.class_code == this.selectedClass
+        );
+      }
+      return filteredPersons;
+    },
+
   },
   methods: {
+    capitalizeFirstLetter: function (string) {
+      string = string.toLowerCase();
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    },
     loadAdviserCaseload: function (netid) {
       this.getAdviserCaseload(netid).then((response) => {
         this.persons = response.data;
