@@ -22,6 +22,17 @@
               </KeyValue>
             </li>
             <li>
+              <KeyValue
+                v-if="person.student.applied_to_graduate_yr_qtr_id !== 'NaN'"
+                class="text-success"
+              >
+                <template #key>Applied to Graduate</template>
+                <template #value>{{
+                  person.student.applied_to_graduate_yr_qtr_desc
+                }}</template>
+              </KeyValue>
+            </li>
+            <li>
               <KeyValue>
                 <template #key>Class standing</template>
                 <template #value>{{ person.student.class_desc }}</template>
@@ -32,6 +43,16 @@
                 <template #key>Campus</template>
                 <template #value>{{ person.student.campus_desc }}</template>
               </KeyValue>
+            </li>
+            <li>
+              <span v-if="!person.student.registered_in_quarter">
+                <KeyValue class="text-success">
+                  <template #key>Last Enrolled</template>
+                  <template #value>{{
+                    person.student.last_enrolled_yr_qtr_desc
+                  }}</template>
+                </KeyValue>
+              </span>
             </li>
           </ul>
         </div>
