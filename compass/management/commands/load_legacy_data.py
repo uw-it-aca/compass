@@ -114,7 +114,11 @@ class Command(BaseCommand):
 
     def _get_student(self, student_number):
         person = self.uw_person.get_person_by_student_number(
-            student_number, include_student=True)
+            student_number, include_employee=False, include_student=True,
+            include_student_transcripts=False, include_student_transfers=False,
+            include_student_sports=False, include_student_advisers=False,
+            include_student_majors=False, include_student_pending_majors=False,
+            include_student_holds=False, include_student_degrees=False)
         student, created = Student.objects.get_or_create(
             system_key=person.student.system_key)
 
