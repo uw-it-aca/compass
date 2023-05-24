@@ -50,6 +50,7 @@
       :class="[mq.lgMinus ? 'mb-4' : '']"
     >
       <div
+        v-if="person.student.degrees && person.student.degrees.length > 0"
         class="bg-light-beige rounded-3 p-3 border-0 d-flex flex-column flex-fill m-0 mb-2 small"
       >
         <div class="flex-fill">
@@ -64,11 +65,10 @@
                     :key="index"
                     class="small"
                   >
-                    <p>{{ degree }}</p>
                     <p>
                       {{ degree.degree_level_type_desc }} ({{
                         degree.degree_desc
-                      }})
+                      }}) <br />{{ degree.degree_term }}
                     </p>
                   </li>
                 </ul>
