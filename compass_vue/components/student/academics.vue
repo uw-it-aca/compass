@@ -92,12 +92,16 @@
               v-for="(degree, index) in person.student.degrees"
               :key="index"
             >
-              <template #key>{{ degree.degree_desc }}</template>
+              <template #key
+                ><span class="text-wrap">{{
+                  degree.degree_desc
+                }}</span></template
+              >
               <template #value>
                 <ul class="list-unstyled">
                   <li class="small">
                     <p>
-                      {{ degree.degree_term.quarter }} -
+                      {{ translateQuarter(degree.degree_term.quarter) }}
                       {{ degree.degree_term.year }}
                     </p>
                   </li>
@@ -249,7 +253,7 @@
 <script>
 import KeyValue from "../../components/_common/key-value.vue";
 import dataMixin from "../../mixins/data_mixin.js";
-import { translateTrueFalse } from "../../utils/translations";
+import { translateTrueFalse, translateQuarter } from "../../utils/translations";
 
 export default {
   inject: ["mq"],
@@ -266,6 +270,7 @@ export default {
   setup() {
     return {
       translateTrueFalse,
+      translateQuarter,
     };
   },
   data() {

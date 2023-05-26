@@ -11,4 +11,17 @@ function translateMilitaryTime(time) {
   return hours + ":" + minutes + " " + suffix;
 }
 
-export { translateTrueFalse, translateMilitaryTime };
+function translateQuarter(num) {
+  switch (num) {
+    case 1:
+      return "Winter";
+    case 2:
+      return "Spring";
+    case 3:
+      return "Summer";
+    default:
+      return "Autumn";
+  }
+}
+
+export { translateTrueFalse, translateMilitaryTime, translateQuarter };
