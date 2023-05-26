@@ -29,6 +29,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.uw_person = UWPersonClient()
         self.access_group = AccessGroup.objects.get(name='OMAD')
+        self._student_syskey = {}
 
         # ignore IC (Instructional Center) contact types:
         #    IC Drop-In Tutoring
@@ -63,7 +64,7 @@ class Command(BaseCommand):
                     else:
                         continue
 
-                if not excluded_re.match(apt.Contact_Type):
+                if not excluded_re.match(appointment.Contact_Type):
                     self._create_contact(appointment)
 
                 if count:
@@ -113,11 +114,20 @@ class Command(BaseCommand):
         return app_user
 
     def _get_student(self, student_number):
-        person = self.uw_person.get_person_by_student_number(
-            student_number, include_student=True)
-        student, created = Student.objects.get_or_create(
-            system_key=person.student.system_key)
+        try:
+            syskey = self._student_syskey[student_number]
+        except KeyError:
+            person = self.uw_person.get_person_by_student_number(
+                student_number, include_employee=False, include_student=True,
+                include_student_transcripts=False,
+                include_student_transfers=False, include_student_sports=False,
+                include_student_advisers=False, include_student_majors=False,
+                include_student_pending_majors=False,
+                include_student_holds=False, include_student_degrees=False)
+            syskey = person.student.system_key
+            self._student_syskey[student_number] = syskey
 
+        student, created = Student.objects.get_or_create(system_key=syskey)
         return student
 
     def _get_checkin_date(self, apt):

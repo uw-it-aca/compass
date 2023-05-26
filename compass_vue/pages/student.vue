@@ -130,7 +130,9 @@
                       <StudentContact :person="person"></StudentContact>
                     </div>
                     <div class="col-xl-3">
-                      <StudentVisits></StudentVisits>
+                      <StudentVisits
+                        :person="person"
+                      ></StudentVisits>
                     </div>
                   </div>
                 </axdd-tabs-panel>
