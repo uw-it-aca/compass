@@ -5,7 +5,7 @@
 from compass.models import (
     AppUser, AccessGroup, Contact, ContactTopic,
     ContactType, ContactMethod, Affiliation, Cohort,
-    StudentAffiliation, Student)
+    Visit, VisitType, StudentAffiliation, Student)
 from rest_framework import serializers
 
 
@@ -215,3 +215,36 @@ class StudentWriteSerializer(serializers.ModelSerializer):
             validated_data.get('programs', instance.programs))
         instance.save()
         return instance
+
+
+class VisitTypeSerializer(serializers.ModelSerializer):
+
+    access_group = AccessGroupSerializer(many=False, read_only=False)
+
+    class Meta:
+        model = VisitType
+        fields = ['id', 'access_group', 'name', 'slug', 'editable']
+        extra_kwargs = {
+            'access_group_id': {'validators': []},
+        }
+
+    def create(self, validated_data):
+        access_group = AccessGroup.objects.get(
+            access_group_id=validated_data['access_group']['access_group_id'])
+        validated_data["access_group"] = access_group
+        return VisitType.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.save()
+        return instance
+
+
+class VisitReadSerializer(serializers.ModelSerializer):
+
+    visit_type = VisitTypeSerializer(many=False, read_only=False)
+
+    class Meta:
+        model = Visit
+        fields = ['id', 'student', 'ic_eligible', 'visit_type',
+                  'course_code', 'checkin_date', 'checkout_date']

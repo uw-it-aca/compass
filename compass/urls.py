@@ -12,6 +12,7 @@ from compass.views.api.student import (
     StudentSchedulesView,
     StudentTranscriptsView,
     StudentAffiliationsView,
+    StudentVisitsView,
     StudentView,
 )
 from compass.views.api.access_group import AccessGroupView
@@ -76,6 +77,10 @@ urlpatterns += [
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/affiliations/$",
         StudentAffiliationsView.as_view(),
+    ),
+    re_path(
+        r"^api/internal/student/(?P<systemkey>[\w]+)/visits/$",
+        StudentVisitsView.as_view(),
     ),
     re_path(
         r"^api/internal/accessgroup/(?P<access_group_pk>[\w]+)/settings/"

@@ -4,10 +4,10 @@
 
 from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
-from compass.models import Student, Contact, StudentAffiliation
+from compass.models import Student, Contact, StudentAffiliation, Visit
 from compass.serializers import (
     ContactReadSerializer, StudentAffiliationReadSerializer,
-    StudentWriteSerializer)
+    VisitReadSerializer, StudentWriteSerializer)
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse, HttpResponseNotFound
 from restclients_core.exceptions import DataFailureException
@@ -134,6 +134,19 @@ class StudentAffiliationsView(BaseAPIView):
             pass
 
         return Response(affiliations, status=status.HTTP_200_OK)
+
+
+class StudentVisitsView(BaseAPIView):
+    '''
+    API endpoint returning a list of visits for a student
+
+    /api/internal/student/[systemkey]/visits/
+    '''
+    def get(self, request, systemkey):
+        queryset = Visit.objects.filter(
+            student__system_key=systemkey).order_by('-checkin_date')
+        serializer = VisitReadSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class StudentTranscriptsView(BaseAPIView):

@@ -18,6 +18,18 @@ const dataMixin = {
       };
       return axiosConfig;
     },
+    dateMMDDYYYY: function (date) {
+        return ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
+    },
+    dateHHMMampm: function (date) {
+      var hours = date.getHours(),
+          minutes = date.getMinutes(),
+          ampm = hours >= 12 ? 'pm' : 'am';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      return hours + ':' + minutes + ampm;
+    },
     getStudentDetail: async function (uwnetid) {
       return axios.get(
         "/api/internal/student/" + uwnetid + "/",
@@ -92,9 +104,6 @@ const dataMixin = {
         this._getAxiosConfig()
       );
     },
-    getStudentAffiliations: async function (systemkey) {
-      return true;
-    },
     saveStudentAffiliations: async function (systemkey) {
       return true;
     },
@@ -136,6 +145,13 @@ const dataMixin = {
     getStudentAffiliations: async function (systemkey) {
       return axios.get(
         "/api/internal/student/" + systemkey + "/affiliations/",
+        {},
+        this._getAxiosConfig()
+      );
+    },
+    getStudentVisits: async function (systemkey) {
+      return axios.get(
+        "/api/internal/student/" + systemkey + "/visits/",
         {},
         this._getAxiosConfig()
       );
