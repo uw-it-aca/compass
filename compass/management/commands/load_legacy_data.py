@@ -119,9 +119,10 @@ class Command(BaseCommand):
         except KeyError:
             person = self.uw_person.get_person_by_student_number(
                 student_number, include_employee=False, include_student=True,
-                include_student_transcripts=False, include_student_transfers=False,
-                include_student_sports=False, include_student_advisers=False,
-                include_student_majors=False, include_student_pending_majors=False,
+                include_student_transcripts=False,
+                include_student_transfers=False, include_student_sports=False,
+                include_student_advisers=False, include_student_majors=False,
+                include_student_pending_majors=False,
                 include_student_holds=False, include_student_degrees=False)
             syskey = person.student.system_key
             self._student_syskey[student_number] = syskey
