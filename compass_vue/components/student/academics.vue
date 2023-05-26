@@ -23,8 +23,18 @@
             </li>
             <li>
               <KeyValue
-                v-if="person.student.applied_to_graduate_yr_qtr_id !== 'NaN'"
+                v-if="
+                  person.student.degrees && person.student.degrees.length > 0
+                "
                 class="text-success"
+              >
+                <template #key>Graduated</template>
+                <template #value>Yes</template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue
+                v-if="person.student.applied_to_graduate_yr_qtr_id !== 'NaN'"
               >
                 <template #key>Applied to Graduate</template>
                 <template #value>{{
@@ -72,24 +82,23 @@
     >
       <div
         v-if="person.student.degrees && person.student.degrees.length > 0"
-        class="bg-light-beige rounded-3 p-3 border-0 d-flex flex-column flex-fill m-0 mb-2 small"
+        class="bg-light-beige rounded-3 p-3 border-0 d-flex flex-column flex-fill m-0 small"
       >
         <div class="flex-fill">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Degrees</p>
           <div>
-            <KeyValue variant="address">
-              <template #key>Degree(s) Received</template>
+            <KeyValue
+              variant="address"
+              v-for="(degree, index) in person.student.degrees"
+              :key="index"
+            >
+              <template #key>{{ degree.degree_desc }}</template>
               <template #value>
                 <ul class="list-unstyled">
-                  <li
-                    v-for="(degree, index) in person.student.degrees"
-                    :key="index"
-                    class="small"
-                  >
+                  <li class="small">
                     <p>
-                      {{ degree.degree_level_type_desc }} ({{
-                        degree.degree_desc
-                      }}) <br />{{ degree.degree_term }}
+                      {{ degree.degree_term.quarter }} -
+                      {{ degree.degree_term.year }}
                     </p>
                   </li>
                 </ul>
@@ -99,6 +108,7 @@
         </div>
       </div>
       <div
+        v-if="person.student.degrees && person.student.degrees.length == 0"
         class="bg-light-beige rounded-3 p-3 border-0 d-flex flex-column flex-fill m-0 small"
       >
         <div class="flex-fill">
