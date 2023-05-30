@@ -101,7 +101,7 @@
                 <ul class="list-unstyled">
                   <li class="small">
                     <p>
-                      {{ translateQuarter(degree.degree_term.quarter) }}
+                      {{ degree.degree_term.quarter_name }}
                       {{ degree.degree_term.year }}
                     </p>
                   </li>
@@ -253,7 +253,7 @@
 <script>
 import KeyValue from "../../components/_common/key-value.vue";
 import dataMixin from "../../mixins/data_mixin.js";
-import { translateTrueFalse, translateQuarter } from "../../utils/translations";
+import { translateTrueFalse } from "../../utils/translations";
 
 export default {
   inject: ["mq"],
