@@ -101,7 +101,7 @@
                 <ul class="list-unstyled">
                   <li class="small">
                     <p>
-                      {{ translateQuarter(degree.degree_term.quarter) }}
+                      {{ degree.degree_term.quarter_name }}
                       {{ degree.degree_term.year }}
                     </p>
                   </li>
