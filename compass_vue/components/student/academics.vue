@@ -253,7 +253,7 @@
 <script>
 import KeyValue from "../../components/_common/key-value.vue";
 import dataMixin from "../../mixins/data_mixin.js";
-import { translateTrueFalse, translateQuarter } from "../../utils/translations";
+import { translateTrueFalse } from "../../utils/translations";
 
 export default {
   inject: ["mq"],
