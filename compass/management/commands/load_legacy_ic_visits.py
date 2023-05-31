@@ -6,9 +6,10 @@ from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 from uw_person_client import UWPersonClient
 from uw_person_client.exceptions import PersonNotFoundException
-from compass.models import Student, Visit, VisitType
+from compass.models import Student, Visit, VisitType, AccessGroup
 from datetime import datetime
 from pytz import timezone
+import sys
 import csv
 import re
 
@@ -43,6 +44,7 @@ class Command(BaseCommand):
         n = 0
         count = options['count']
         start_id = options['start_id']
+        self.student_syskey = {}
         self.unknown_student_ids = set()
         with open(options['csvfile']) as csvfile:
             next(csvfile, None)
@@ -88,7 +90,7 @@ class Command(BaseCommand):
             pass
 
         visit = Visit(
-            access_group=self.access_group, student=student, is_eligible=True,
+            access_group=self.access_group, student=student, ic_eligible=True,
             checkin_date=checkin_date, checkout_date=checkout_date,
             course_code=self._get_course_code(apt),
             visit_type=self._get_visit_type(apt))
@@ -96,15 +98,20 @@ class Command(BaseCommand):
         visit.save()
 
     def _get_student(self, student_number):
-        person = self.uw_person.get_person_by_student_number(
-            student_number, include_employee=False, include_student=True,
-            include_student_transcripts=False, include_student_transfers=False,
-            include_student_sports=False, include_student_advisers=False,
-            include_student_majors=False, include_student_pending_majors=False,
-            include_student_holds=False, include_student_degrees=False)
-        student, created = Student.objects.get_or_create(
-            system_key=person.student.system_key)
+        try:
+            syskey = self.student_syskey[student_number]
+        except KeyError:
+            person = self.uw_person.get_person_by_student_number(
+                student_number, include_employee=False, include_student=True,
+                include_student_transcripts=False,
+                include_student_transfers=False, include_student_sports=False,
+                include_student_advisers=False, include_student_majors=False,
+                include_student_pending_majors=False,
+                include_student_holds=False, include_student_degrees=False)
+            syskey = person.student.system_key
+            self.student_syskey[student_number] = syskey
 
+        student, created = Student.objects.get_or_create(system_key=syskey)
         return student
 
     def _get_checkin_date(self, apt):
@@ -134,6 +141,10 @@ class Command(BaseCommand):
             access_group=self.access_group, name=name, slug=slugify(name))
 
         return visit_type
+
+    def _error(self, msg):
+        print(msg, file=sys.stderr)
+
 
 
 class Appointment(object):
