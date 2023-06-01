@@ -270,7 +270,6 @@ export default {
   setup() {
     return {
       translateTrueFalse,
-      translateQuarter,
     };
   },
   data() {
