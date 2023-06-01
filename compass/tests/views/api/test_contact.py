@@ -80,13 +80,11 @@ class ContactAPITest(ApiTest):
     @patch('compass.views.api.contact.AppUser')
     @patch('compass.views.api.contact.Contact')
     @patch('compass.views.api.contact.AccessGroup')
-    @patch('compass.views.api.contact.settings')
-    def test_post(
-            self, mock_settings, mock_access_group_cls,
-            mock_contact_cls, mock_appuser_cls, mock_student_cls):
+    def test_post(self, mock_access_group_cls, mock_contact_cls,
+                  mock_appuser_cls, mock_student_cls):
         mock_omad_access_group = MagicMock()
-        mock_access_group_cls.objects.get = \
-            MagicMock(return_value=mock_omad_access_group)
+        mock_access_group_cls.objects.get = MagicMock(
+            return_value=mock_omad_access_group)
         mock_access_group_cls.objects.is_access_group_member.return_value = \
             True
         mock_view = ContactOMADView()
@@ -114,8 +112,7 @@ class ContactAPITest(ApiTest):
         # assertions
         mock_request = MagicMock()
         response = mock_view.post(mock_request)
-        mock_access_group_cls.objects.get.assert_called_once_with(
-            access_group_id=mock_settings.OMAD_ACCESS_GROUP_ID)
+        mock_access_group_cls.objects.by_name.assert_called_once_with("OMAD")
         # assert parsing and validating contact
         mock_view.validate_adviser_netid.assert_called_once_with(
             mock_request.data.get("adviser_netid"))

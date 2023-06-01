@@ -192,8 +192,7 @@ class ContactOMADView(TokenAPIView):
 
     def post(self, request):
         contact_dict = request.data
-        omad_access_group = AccessGroup.objects.get(
-            access_group_id=settings.OMAD_ACCESS_GROUP_ID)
+        omad_access_group = AccessGroup.objects.by_name("OMAD")
         # parse the contact dictionary
         try:
             # check that adviser netid is defined
