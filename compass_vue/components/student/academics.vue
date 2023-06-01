@@ -159,52 +159,7 @@
       class="col-xl-3 d-flex flex-column"
       :class="[mq.lgMinus ? 'mb-4' : '']"
     >
-      <div
-        class="bg-light-beige rounded-3 p-3 border-0 d-flex flex-column flex-fill m-0 small"
-      >
-        <div class="flex-fill">
-          <p class="text-uppercase text-dark-beige fs-8 fw-bold">Programs</p>
-
-          <div>
-            <KeyValue>
-              <template #key> Special Programs </template>
-              <template #value>
-                <ul class="list-unstyled">
-                  <!-- show N/A when student isn't in any special program -->
-                  <span v-if="person.student.special_program_code === '0'">
-                    N/A</span
-                  >
-                  <span v-else>
-                    <li>
-                      {{ person.student.special_program_code }},
-                      {{ person.student.special_program_desc }}
-                    </li>
-                  </span>
-                </ul>
-              </template>
-            </KeyValue>
-          </div>
-          <!-- show N/A when student isn't in any honors program -->
-          <div>
-            <KeyValue>
-              <template #key> Honors </template>
-              <template #value>
-                <ul class="list-unstyled">
-                  <span v-if="person.student.honors_program_code === '0'"
-                    >N/A</span
-                  >
-                  <span v-else>
-                    <li>
-                      {{ person.student.honors_program_code }},
-                      {{ person.student.honors_program_ind }}
-                    </li></span
-                  >
-                </ul>
-              </template>
-            </KeyValue>
-          </div>
-        </div>
-      </div>
+      <AffiliationSummary :person="person"></AffiliationSummary>
     </div>
     <div class="col-xl-3 d-flex flex-column">
       <div
@@ -253,6 +208,8 @@
 <script>
 import KeyValue from "../../components/_common/key-value.vue";
 import dataMixin from "../../mixins/data_mixin.js";
+import AffiliationSummary from "../../components/student/affiliation-mini.vue";
+
 import { translateTrueFalse } from "../../utils/translations";
 
 export default {
@@ -266,11 +223,11 @@ export default {
   },
   components: {
     KeyValue,
+    AffiliationSummary
   },
   setup() {
     return {
       translateTrueFalse,
-      translateQuarter,
     };
   },
   data() {
