@@ -18,8 +18,7 @@ class ContactAPITest(ApiTest):
 
     def setUp(self):
         super(ContactAPITest, self).setUp()
-        AccessGroup(name="Test OMAD Group",
-                    access_group_id="u_astra_group1").save()
+        AccessGroup(name="OMAD", access_group_id="u_astra_group1").save()
         user = User.objects.create_user(username='testuser', password='12345')
         token = Token.objects.create(user=user)
         self.API_TOKEN = token.key
@@ -83,7 +82,7 @@ class ContactAPITest(ApiTest):
     def test_post(self, mock_access_group_cls, mock_contact_cls,
                   mock_appuser_cls, mock_student_cls):
         mock_omad_access_group = MagicMock()
-        mock_access_group_cls.objects.get = MagicMock(
+        mock_access_group_cls.objects.by_name = MagicMock(
             return_value=mock_omad_access_group)
         mock_access_group_cls.objects.is_access_group_member.return_value = \
             True
