@@ -118,9 +118,6 @@
                       <StudentAdviser
                         :advisers="person.student.advisers"
                       ></StudentAdviser>
-                      <StudentAffiliations
-                        :person="person"
-                      ></StudentAffiliations>
                     </div>
                   </div>
                 </axdd-tabs-panel>
@@ -130,9 +127,7 @@
                       <StudentContact :person="person"></StudentContact>
                     </div>
                     <div class="col-xl-3">
-                      <StudentVisits
-                        :person="person"
-                      ></StudentVisits>
+                      <StudentVisits :person="person"></StudentVisits>
                     </div>
                   </div>
                 </axdd-tabs-panel>
@@ -177,7 +172,6 @@ import StudentContact from "../components/student/contact.vue";
 import StudentSchedule from "../components/student/schedule.vue";
 import StudentHolds from "../components/student/holds.vue";
 import StudentAdviser from "../components/student/adviser.vue";
-import StudentAffiliations from "../components/student/affiliation-mini.vue";
 import StudentVisits from "../components/student/visits.vue";
 import SearchStudent from "../components/search-student.vue";
 import AffiliationAddEdit from "../components/student/administrative/affiliation.vue";
@@ -197,7 +191,6 @@ export default {
     StudentHolds,
     StudentAdviser,
     StudentVisits,
-    StudentAffiliations,
     SearchStudent,
     AffiliationAddEdit,
   },

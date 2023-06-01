@@ -1,45 +1,46 @@
 <template>
-  <axdd-card
-    v-if="
-      affiliations.length
-    "
+  <div
+    class="bg-light-beige rounded-3 p-3 border-0 d-flex flex-column flex-fill m-0 small"
   >
-    <template #heading>
-      <axdd-card-heading :level="2">Affiliations</axdd-card-heading>
-    </template>
-    <template #body>
+    <div class="flex-fill">
+      <p class="text-uppercase text-dark-beige fs-8 fw-bold">Affiliations</p>
+
+      <KeyValue>
+        <template #key> Special Programs </template>
+        <template #value>
+          <ul class="list-unstyled">
+            <li>
+              {{ person.student.special_program_code }} -
+              {{ person.student.special_program_desc }}
+            </li>
+          </ul>
+        </template>
+      </KeyValue>
+
       <div v-if="affiliations.length">
         <ul class="list-unstyled mb-0">
-          <li
-            v-for="(a, index) in affiliations"
-            :key="index"
-            class="mb-1"
-          >
-            <div class="d-flex">
-              <i class="bi bi-collection text-gray me-3"></i>
-              <div class="flex-fill">
-                <strong>{{ a.affiliation.name }}</strong
-                ><span
-                  v-for="(c, index) in a.cohorts"
-                  :key="index"
-                  class="ms-2 small text-nowrap text-muted"
-                  >{{ c.start_year }}-{{ c.end_year }}</span
-                >
-              </div>
-            </div>
+          <li v-for="(a, index) in affiliations" :key="index" class="mb-1">
+            <strong>{{ a.affiliation.name }}</strong
+            ><span
+              v-for="(c, index) in a.cohorts"
+              :key="index"
+              class="ms-2 text-nowrap"
+              >{{ c.start_year }}-{{ c.end_year }}</span
+            >
           </li>
         </ul>
       </div>
-    </template>
-  </axdd-card>
+    </div>
+  </div>
 </template>
 
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
+import KeyValue from "../../components/_common/key-value.vue";
 
 export default {
   mixins: [dataMixin],
-  components: {},
+  components: { KeyValue },
   props: {
     person: {
       type: Object,
