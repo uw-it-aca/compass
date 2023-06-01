@@ -3,9 +3,10 @@
 
 
 from compass.models import (
-    AppUser, AccessGroup, Contact, ContactTopic,
+    Student, AppUser, AccessGroup, Contact, ContactTopic,
     ContactType, ContactMethod, Affiliation, Cohort,
-    Visit, VisitType, StudentAffiliation, Student)
+    Visit, VisitType, StudentAffiliation,
+    StudentEligibility, EligibilityType)
 from rest_framework import serializers
 
 
@@ -246,5 +247,27 @@ class VisitReadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Visit
-        fields = ['id', 'student', 'ic_eligible', 'visit_type',
-                  'course_code', 'checkin_date', 'checkout_date']
+        fields = ['id', 'student', 'visit_type', 'course_code',
+                  'checkin_date', 'checkout_date']
+
+
+class EligibilityReadSerializer(serializers.ModelSerializer):
+
+    access_group = AccessGroupSerializer(many=False, read_only=False)
+
+    class Meta:
+        model = EligibilityType
+        fields = ['id', 'access_group', 'name', 'slug', 'editable']
+        extra_kwargs = {
+            'access_group_id': {'validators': []},
+        }
+
+
+class StudentEligibilityReadSerializer(serializers.ModelSerializer):
+
+    affiliation = AffiliationSerializer()
+    eligibility = EligibilityReadSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = StudentEligibility
+        fields = ['id', 'student', 'eligibility']
