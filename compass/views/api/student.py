@@ -4,10 +4,12 @@
 
 from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
-from compass.models import Student, Contact, StudentAffiliation, Visit
+from compass.models import (
+    Student, Contact, StudentAffiliation, Visit, StudentEligibility)
 from compass.serializers import (
     ContactReadSerializer, StudentAffiliationReadSerializer,
-    VisitReadSerializer, StudentWriteSerializer)
+    VisitReadSerializer, StudentWriteSerializer,
+    StudentEligibilityReadSerializer)
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse, HttpResponseNotFound
 from restclients_core.exceptions import DataFailureException
@@ -143,8 +145,11 @@ class StudentVisitsView(BaseAPIView):
     /api/internal/student/[systemkey]/visits/
     '''
     def get(self, request, systemkey):
+        access_groups = self.get_access_groups(request)
         queryset = Visit.objects.filter(
-            student__system_key=systemkey).order_by('-checkin_date')
+            student__system_key=systemkey,
+            visit_type__access_group__in=access_groups).order_by(
+                '-checkin_date')
         serializer = VisitReadSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -174,3 +179,18 @@ class StudentTranscriptsView(BaseAPIView):
             transcripts.append(transcript.to_dict())
 
         return JsonResponse(transcripts, safe=False)
+
+
+class StudentEligibilityView(BaseAPIView):
+    '''
+    API endpoint returning a list of eligible resources for a student
+
+    /api/internal/student/[systemkey]/eligibility[/eligibility_id]
+    '''
+    def get(self, request, systemkey, eligibility_id):
+        access_groups = self.get_access_groups(request)
+        queryset = StudentEligibility.objects.filter(
+            student__system_key=systemkey,
+            eligibility_type__access_group__in=access_groups)
+        serializer = StudentEligibilityReadSerializer(queryset, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

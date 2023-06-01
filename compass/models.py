@@ -331,21 +331,38 @@ class ContactTopic(BaseAccessGroupContent):
     editable = models.BooleanField(default=True)
 
 
+class StudentEligibility(models.Model):
+    """
+    Services and resources for which a Student is provided access
+    """
+    student = models.ForeignKey(
+        "Student", on_delete=models.CASCADE)
+    eligibility = models.ManyToManyField("EligibilityType")
+
+
+class EligibilityType(BaseAccessGroupContent):
+    """
+    A service or resource that is available to students
+    """
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
+    name = models.CharField(unique=True, max_length=50)
+    slug = models.SlugField(unique=True, max_length=50)
+    editable = models.BooleanField(default=True)
+
+
 class Visit(models.Model):
     """
-    A non-advisor student interaction. For OMAD, these are Instructional
-    Center visists.
+    Student interaction with service
     """
     student = models.ForeignKey("Student", on_delete=models.CASCADE)
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    ic_eligible = models.BooleanField(default=False)
     visit_type = models.ForeignKey("VisitType", on_delete=models.CASCADE)
-    course_code = models.CharField(max_length=32)
+    course_code = models.CharField(max_length=64)
     checkin_date = models.DateTimeField()
     checkout_date = models.DateTimeField()
 
 
-class VisitType(models.Model):
+class VisitType(BaseAccessGroupContent):
     """
     Type of student visit. These are created for a given access group
     by the access group managers. Examples include IC Drop-In Tutoring and
