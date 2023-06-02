@@ -104,6 +104,13 @@ RESTCLIENTS_ADMIN_AUTH_MODULE = 'compass.dao.group.can_proxy_restclient'
 # IDCard photo config
 IDCARD_TOKEN_EXPIRES = 60 * 60
 
+# PDS config
+UW_PERSON_DB_USERNAME = os.getenv('UW_PERSON_DB_USERNAME', '')
+UW_PERSON_DB_PASSWORD = os.getenv('UW_PERSON_DB_PASSWORD', '')
+UW_PERSON_DB_HOSTNAME = os.getenv('UW_PERSON_DB_HOSTNAME', '')
+UW_PERSON_DB_DATABASE = os.getenv('UW_PERSON_DB_DATABASE', '')
+UW_PERSON_DB_PORT = os.getenv('UW_PERSON_DB_PORT', '')
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

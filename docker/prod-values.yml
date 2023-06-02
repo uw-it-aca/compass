@@ -98,7 +98,7 @@ environmentVariables:
   - name: CLUSTER_CNAME
     value: compass.uw.edu
 
-  - name: PERSON_CLIENT_ENV
+  - name: UW_PERSON_CLIENT_ENV
     value: PROD
 
 externalSecrets:

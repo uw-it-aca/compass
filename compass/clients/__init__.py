@@ -4,8 +4,8 @@
 
 import os
 
-if os.environ.get("PERSON_CLIENT_ENV") == "PROD":
+if os.environ.get("UW_PERSON_CLIENT_ENV") == "PROD":
     from compass.clients.person_client import CompassPersonClient
 else:
-    from compass.clients.mock_person_client import \
-        MockedCompassPersonClient as CompassPersonClient  # noqa
+    from compass.clients.mock_person_client import (
+        MockedCompassPersonClient as CompassPersonClient)
