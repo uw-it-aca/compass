@@ -85,6 +85,9 @@ class Student(models.Model):
 
 
 class AccessGroupManager(models.Manager):
+    def by_name(self, name):
+        return AccessGroup.objects.get(name=name)
+
     def get_roles_for_user(self, request):
         """
         Return the unique roles for a user, without group context.
