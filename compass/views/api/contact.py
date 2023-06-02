@@ -132,7 +132,7 @@ class ContactMethodsView(BaseAPIView):
 @method_decorator(csrf_exempt, name='dispatch')
 class ContactOMADView(TokenAPIView):
     '''
-    API endpoint for ingesting OMAD contacts from the check-ins system
+    API endpoint for ingesting contacts from the OMAD check-in system.
 
     /api/v1/contact/omad/
 
@@ -147,17 +147,14 @@ class ContactOMADView(TokenAPIView):
     # Force JSON so clients aren't required to send ContentType header
     content_negotiation_class = JSONClientContentNegotiation
 
-    def parse_contact_type_str(self, contact_type_str, omad_access_group):
+    def parse_contact_type_str(self, contact_type_str, access_group):
         try:
-            contact_type = ContactType.objects.get(
-                access_group=omad_access_group,
-                slug=contact_type_str)
-            return contact_type
+            return ContactType.objects.get(access_group=access_group,
+                                           slug=contact_type_str)
         except ContactType.DoesNotExist:
             raise ValueError(
-                f"The specified contact type "
-                f"'{contact_type_str}' does not exist for the OMAD "
-                f"access group.")
+                f"Contact type '{contact_type_str}' does not exist "
+                f"for the {access_group.name} access group.")
 
     def parse_checkin_date_str(self, checkin_date_str):
         # parse checkin date
@@ -167,34 +164,29 @@ class ContactOMADView(TokenAPIView):
             try:
                 dt = parser.parse(checkin_date_str)
                 if dt.tzinfo is None:
-                    raise ValueError("Invalid check-in date, "
-                                     "timezone required")
+                    raise ValueError("Invalid check-in date, missing timezone")
                 return dt
-            except parser.ParserError:
-                raise ValueError("Invalid check-in date")
+            except parser.ParserError as e:
+                raise ValueError(f"Invalid check-in date: {e}")
 
     def validate_adviser_netid(self, adviser_netid):
         if adviser_netid is None:
-            raise ValueError("Adviser netid is not specified")
+            raise ValueError("Missing adviser netid")
 
     def validate_student_systemkey(self, student_systemkey):
         if student_systemkey is None:
-            raise ValueError("Student systemkey is not specified")
-        else:
-            is_valid = True
-            try:
-                if not student_systemkey.isdigit():
-                    is_valid = False
-            except AttributeError:
-                is_valid = False
-            if is_valid is not True:
+            raise ValueError("Missing student systemkey")
+
+        try:
+            if not student_systemkey.isdigit():
                 raise ValueError("Student systemkey is not a positive integer")
+        except AttributeError as e:
+            raise ValueError(f"Invalid student systemkey: {e}")
 
     def post(self, request):
         contact_dict = request.data
-        omad_access_group = AccessGroup.objects.by_name("OMAD")
-        # parse the contact dictionary
         try:
+            access_group = AccessGroup.objects.by_name("OMAD")
             # check that adviser netid is defined
             self.validate_adviser_netid(contact_dict.get("adviser_netid"))
             # check that system key is defined
@@ -205,7 +197,9 @@ class ContactOMADView(TokenAPIView):
                 contact_dict.get("checkin_date"))
             # verify that the specified contact type exists in OMAD
             contact_dict["contact_type"] = self.parse_contact_type_str(
-                contact_dict.get("contact_type"), omad_access_group)
+                contact_dict.get("contact_type"), access_group)
+        except AccessGroup.DoesNotExist as e:
+            return Response(repr(e), status=status.HTTP_501_NOT_IMPLEMENTED)
         except ValueError as e:
             return Response(repr(e), status=status.HTTP_400_BAD_REQUEST)
         # if the adviser is a member of the omad group and the contact record
@@ -223,5 +217,5 @@ class ContactOMADView(TokenAPIView):
         contact.checkin_date = contact_dict["checkin_date"]
         contact.source = "Checkin"
         contact.save()
-        contact.access_group.add(omad_access_group)
+        contact.access_group.add(access_group)
         return Response(status=status.HTTP_201_CREATED)
