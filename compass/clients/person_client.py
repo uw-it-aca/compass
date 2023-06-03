@@ -3,7 +3,7 @@
 
 
 from uw_person_client.clients.core_client import UWPersonClient
-from uw_person_client.components import Person, Student
+from uw_person_client.components import Person, Student, Transcript
 from uw_person_client.databases.uwpds import UWPDS
 from uw_person_client.exceptions import AdviserNotFoundException
 
@@ -35,11 +35,12 @@ class CompassPersonClient(UWPersonClient):
              self.DB.Student.special_program_desc,
              self.DB.Student.enroll_status_code,
              self.DB.Student.enroll_status_request_code,
-             self.DB.Student.enroll_status_desc).join(
-            self.DB.Student).join(self.DB.StudentToAdviser).join(
-            self.DB.Adviser).filter(
-                self.DB.Adviser.id == sqla_adviser.id).order_by(
-            self.DB.Person.display_name)
+             self.DB.Student.enroll_status_desc)\
+            .join(self.DB.Student)\
+            .join(self.DB.StudentToAdviser)\
+            .join(self.DB.Adviser)\
+            .filter(self.DB.Adviser.id == sqla_adviser.id)\
+            .order_by(self.DB.Person.display_name)
         persons = []
         for item in sqla_persons.all():
             person = Person()
