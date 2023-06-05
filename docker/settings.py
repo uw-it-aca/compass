@@ -66,7 +66,6 @@ if os.getenv("ENV") == "localdev":
     TEST_ACCESS_GROUP = 'u_test_group'
     COMPASS_ADMIN_GROUP = TEST_ACCESS_GROUP
     COMPASS_SUPPORT_GROUP = TEST_ACCESS_GROUP
-    OMAD_ACCESS_GROUP_ID = 'u_astra_group1'
     MOCK_SAML_ATTRIBUTES = {
         'uwnetid': ['jadviser'],
         'affiliations': ['student', 'member', 'alum', 'staff', 'employee'],
@@ -79,7 +78,6 @@ else:
     RESTCLIENTS_DAO_CACHE_CLASS = 'compass.cache.CompassRestclientCache'
     COMPASS_ADMIN_GROUP = os.getenv('ADMIN_GROUP', '')
     COMPASS_SUPPORT_GROUP = os.getenv('SUPPORT_GROUP', '')
-    OMAD_ACCESS_GROUP_ID = os.getenv('OMAD_ACCESS_GROUP_ID', '')
 
     # Django cache backend for the idcard tokens
     CACHES = {
@@ -103,16 +101,15 @@ USERSERVICE_VALIDATION_MODULE = 'compass.dao.person.is_netid'
 USERSERVICE_OVERRIDE_AUTH_MODULE = 'compass.dao.group.can_override_user'
 RESTCLIENTS_ADMIN_AUTH_MODULE = 'compass.dao.group.can_proxy_restclient'
 
+# IDCard photo config
+IDCARD_TOKEN_EXPIRES = 60 * 60
+
 # PDS config
-AXDD_PERSON_CLIENT_ENV = os.getenv('AXDD_PERSON_CLIENT_ENV', '')
 UW_PERSON_DB_USERNAME = os.getenv('UW_PERSON_DB_USERNAME', '')
 UW_PERSON_DB_PASSWORD = os.getenv('UW_PERSON_DB_PASSWORD', '')
 UW_PERSON_DB_HOSTNAME = os.getenv('UW_PERSON_DB_HOSTNAME', '')
 UW_PERSON_DB_DATABASE = os.getenv('UW_PERSON_DB_DATABASE', '')
 UW_PERSON_DB_PORT = os.getenv('UW_PERSON_DB_PORT', '')
-
-# IDCard photo config
-IDCARD_TOKEN_EXPIRES = 60 * 60
 
 LOGGING = {
     'version': 1,
