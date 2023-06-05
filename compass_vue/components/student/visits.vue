@@ -37,8 +37,8 @@
               ></i>
             </div>
             <div>
-              <div><strong>{{ visit.course_code }}</strong> <small>({{ visit.duration }}min)</small></div>
-              <div class="text-muted small">{{ visit.date }} {{ visit.checkin }} - {{ visit.checkout }}</div>
+              <div><strong>{{ visit.course_code }}</strong> <small>({{ visitDuration(visit) }}min)</small></div>
+              <div class="text-muted small">{{ visitDate(visit) }} {{ visitCheckin(visit) }} - {{ visitCheckout(visit) }}</div>
             </div>
           </li>
         </ul>
@@ -74,19 +74,25 @@ export default {
         (response) => {
           if (response.data) {
             this.visits = response.data;
-            this.calculateDates();
           }
         }
       );
     },
-    calculateDates: function () {
-      this.visits.forEach((item) => {
-         var checkin = new Date(item.checkin_date), checkout = new Date(item.checkout_date);
-         item.duration = Math.abs(Math.round((checkout.getTime() - checkin.getTime()) / 1000 / 60));
-         item.date = this.dateMMDDYYYY(checkin);
-         item.checkin = this.dateHHMMampm(checkin);
-         item.checkout = this.dateHHMMampm(checkout);
-      });
+    visitDuration: function (visit) {
+      var checkin = new Date(visit.checkin_date), checkout = new Date(visit.checkout_date);
+      return Math.abs(Math.round((checkout.getTime() - checkin.getTime()) / 1000 / 60));
+    },
+    visitDate: function (visit) {
+      var checkin = new Date(visit.checkin_date);
+      return this.dateMMDDYYYY(checkin);
+    },
+    visitCheckin: function (visit) {
+      var checkin = new Date(visit.checkin_date);
+      return this.dateHHMMampm(checkin);
+    },
+    visitCheckout: function (visit) {
+      var checkout = new Date(visit.checkout_date);
+      return this.dateHHMMampm(checkout);
     },
     updateEligibility() {
       alert("please update my eligibility!");
