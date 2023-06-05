@@ -1,0 +1,52 @@
+[
+ {
+  "model": "compass.contacttype",
+  "pk": 1,
+  "fields": {
+   "access_group": 1,
+   "name": "Quick Question",
+   "slug": "quick-question",
+   "active": true
+  }
+ },
+ {
+  "model": "compass.contacttype",
+  "pk": 2,
+  "fields": {
+   "access_group": 1,
+   "name": "Appointment",
+   "slug": "appointment",
+   "active": true
+  }
+ },
+ {
+  "model": "compass.contacttype",
+  "pk": 3,
+  "fields": {
+   "access_group": 1,
+   "name": "Event/Workshop",
+   "slug": "event-workshop",
+   "active": true
+  }
+ },
+ {
+  "model": "compass.contacttype",
+  "pk": 4,
+  "fields": {
+   "access_group": 1,
+   "name": "Parent",
+   "slug": "parent",
+   "active": true
+  }
+ },
+ {
+  "model": "compass.contacttype",
+  "pk": 5,
+  "fields": {
+   "access_group": 1,
+   "name": "Admin",
+   "slug": "admin",
+   "active": true
+  }
+ }
+]

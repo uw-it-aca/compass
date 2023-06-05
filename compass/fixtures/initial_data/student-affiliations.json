@@ -1,0 +1,35 @@
+[
+  {
+    "model": "compass.studentaffiliation",
+    "pk": 1,
+    "fields": {
+      "student": 2,
+      "affiliation": 5,
+      "cohorts": [3],
+      "date": "2020-08-01",
+      "actively_advised": true
+    }
+  },
+  {
+    "model": "compass.studentaffiliation",
+    "pk": 2,
+    "fields": {
+      "student": 2,
+      "affiliation": 4,
+      "cohorts": [3],
+      "date": "2020-08-01",
+      "actively_advised": true
+    }
+  },
+  {
+    "model": "compass.studentaffiliation",
+    "pk": 3,
+    "fields": {
+      "student": 1,
+      "affiliation": 5,
+      "cohorts": [2],
+      "date": "2022-03-11",
+      "actively_advised": true
+    }
+  }
+]

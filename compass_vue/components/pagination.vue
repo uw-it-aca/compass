@@ -1,7 +1,13 @@
 <template>
-  <div class="VuePagination d-flex justify-content-between" :class="props.theme.wrapper">
-
-    <div v-show="props.hasRecords" class="lh-lg text-muted" :class="props.theme.count">
+  <div
+    class="VuePagination d-flex justify-content-between"
+    :class="props.theme.wrapper"
+  >
+    <div
+      v-show="props.hasRecords"
+      class="lh-lg text-muted"
+      :class="props.theme.count"
+    >
       {{ props.count }}
     </div>
 
@@ -23,7 +29,9 @@
           :class="props.pageClasses(page)"
           v-on="props.pageEvents(page)"
         >
-          <button type="button" v-bind="props.aProps" :class="props.theme.link">{{ page }}</button>
+          <button type="button" v-bind="props.aProps" :class="props.theme.link">
+            {{ page }}
+          </button>
         </li>
 
         <li :class="props.theme.next" @click="props.setNextPage">
@@ -38,7 +46,7 @@
 
 <script>
 export default {
-  name: 'MyPagination',
-  props: ['props'],
+  name: "MyPagination",
+  props: ["props"],
 };
 </script>

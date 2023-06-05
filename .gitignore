@@ -101,6 +101,9 @@ venv.bak/
 # Rope project settings
 .ropeproject
 
+# IDE settings
+.editorconfig
+
 # mkdocs documentation
 /site
 
@@ -114,11 +117,13 @@ constring.txt
 node_modules/
 package-lock.json
 
-# webpack
-bundles/
-webpack_bundles/
-webpack-stats.json
+# vite bundle
+assets/
+manifest.json
 
 # cypress image snapshots diffs
 screenshots/
 __diff_output__/
+
+# coverage
+coverage

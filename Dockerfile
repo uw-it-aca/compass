@@ -1,10 +1,11 @@
-ARG DJANGO_CONTAINER_VERSION=1.4.0
+ARG DJANGO_CONTAINER_VERSION=1.4.1
 
-FROM gcr.io/uwit-mci-axdd/django-container:${DJANGO_CONTAINER_VERSION} as app-prewebpack-container
+FROM gcr.io/uwit-mci-axdd/django-container:${DJANGO_CONTAINER_VERSION} as app-prebundler-container
 
 USER root
 
 RUN apt-get update && apt-get install libpq-dev -y
+COPY docker/locations.conf /etc/nginx/includes/locations.conf
 
 USER acait
 
@@ -17,7 +18,7 @@ RUN chmod u+x /scripts/app_start.sh
 RUN /app/bin/pip install -r requirements.txt
 RUN /app/bin/pip install psycopg2
 
-FROM node:14.18.1-stretch AS wpack
+FROM node:lts-bullseye AS node-bundler
 
 ADD ./package.json /app/
 WORKDIR /app/
@@ -27,15 +28,13 @@ ADD . /app/
 
 ARG VUE_DEVTOOLS
 ENV VUE_DEVTOOLS=$VUE_DEVTOOLS
-RUN npx webpack --mode=production
+RUN npm run build
 
-FROM app-prewebpack-container as app-container
+FROM app-prebundler-container as app-container
 
-ADD --chown=acait:acait . /app/
-ADD --chown=acait:acait docker/ project/
-COPY --chown=acait:acait --from=wpack /app/compass/static /static
+COPY --chown=acait:acait --from=node-bundler /app/compass/static /app/compass/static
 
-RUN . /app/bin/activate && python manage.py collectstatic --noinput
+RUN /app/bin/python manage.py collectstatic --noinput
 
 FROM gcr.io/uwit-mci-axdd/django-test-container:${DJANGO_CONTAINER_VERSION} as app-test-container
 

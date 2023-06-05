@@ -11,10 +11,7 @@ services:
       ENV: localdev
       AUTH: SAML_MOCK
       GOOGLE_ANALYTICS_KEY: ${GOOGLE_ANALYTICS_KEY}
-      LOGOUT_URL: ${LOGOUT_URL}
-      EDW_USERNAME: ${EDW_USERNAME}
-      EDW_PASSWORD: ${EDW_PASSWORD}
-      EDW_HOSTNAME: ${EDW_HOSTNAME}
+      GWS_ENV: Mock
     volumes:
       - ./compass:/app/compass
       - statics-volume:/static
@@ -22,12 +19,12 @@ services:
       - "${RUNSERVER_PORT:-8000}:8000"
     stdin_open: true
     tty: true
-  devtools:
+  node-bundler:
     build:
       context: .
-      target: wpack
+      target: node-bundler
     restart: always
-    container_name: compass_devtools
+    container_name: compass_node
     ports:
       - "${BUNDLE_ANALYZER_PORT:-8888}:8888" # Required when environment.BUNDLE_ANALYZER is true
     environment:
@@ -37,7 +34,7 @@ services:
       - ./compass:/app/compass # expose main django app so webpack-loader can output bundles here
       - ./compass_vue:/app/compass_vue
       - statics-volume:/static
-    command: npx webpack --watch --mode=development
+    command: npm run watch
     stdin_open: true
     tty: true
 volumes:

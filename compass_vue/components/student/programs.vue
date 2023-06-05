@@ -1,76 +1,151 @@
 <template>
-  <axdd-card>
+  <axdd-card v-if="groupedPrograms">
     <template #heading>
       <axdd-card-heading :level="2">Programs</axdd-card-heading>
     </template>
     <template #body>
-      <p>UW Programs (from EDW?)</p>
-      <ul>
-        <li>Honor's</li>
-        <li>Dean's List</li>
-        <li>Athletics</li>
-        <li>EOP</li>
-      </ul>
+      <div
+        class="alert alert-success py-2 small"
+        role="alert"
+        v-show="updateSuccessful"
+      >
+        Update Successful!
+      </div>
+      <div
+        class="alert alert-danger py-2 small"
+        role="alert"
+        v-show="updatePermissionDenied"
+      >
+        You don't have permission to update programs.
+      </div>
+      <div class="mb-3">
+        <template
+          v-for="(groupPrograms, accessGroupName) in groupedPrograms"
+          :key="accessGroupName"
+        >
+          <div class="fw-bold text-muted mb-2">
+            {{ accessGroupName }} Programs
+          </div>
 
-      <hr />
-
-      <p>OMAD Programs (if EOP yes)</p>
-      <ul>
-        <li>Pre-professional: yes/no</li>
-        <li>IC Eligible: yes/no</li>
-        <li>
-          <template v-if="student.special_program_code"> <b>yes</b>/no </template>
-          <template v-else>CAMP, TRIO SSS, Champions</template>
-        </li>
-      </ul>
-      <p>
-        <a href="#" class="small">Edit Programs (ADMIN)</a>
-      </p>
-      <div class="border border-danger">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value id="defaultCheck1" />
-          <label class="form-check-label" for="defaultCheck1">CAMP</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value id="defaultCheck2" />
-          <label class="form-check-label" for="defaultCheck2">TRIO</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value id="defaultCheck3" />
-          <label class="form-check-label" for="defaultCheck3">SSS</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value id="defaultCheck4" />
-          <label class="form-check-label" for="defaultCheck4">Champions</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value id="defaultCheck5" />
-          <label class="form-check-label" for="defaultCheck5">IC Eligible</label>
-        </div>
-        <div class="text-end">
-          <button type="button" class="btn btn-outline-dark-beige btn-sm">Update programs</button>
-        </div>
+          <ul class="list-group list-group-flush mb-4">
+            <li
+              v-for="program in groupPrograms"
+              :key="program.name"
+              class="list-group-item border-0 px-0 py-1 d-flex"
+            >
+              <label
+                class="form-check-label flex-fill"
+                :for="'defaultCheck' + program.name"
+              >
+                {{ program.name }}
+              </label>
+              <div class="form-check form-switch m-0">
+                <input
+                  class="form-check-input flex-fill"
+                  type="checkbox"
+                  role="switch"
+                  v-model="studentPrograms"
+                  :value="program.id"
+                  :id="'defaultCheck' + program.name"
+                  :disabled="userName != userOverride"
+                />
+              </div>
+            </li>
+          </ul>
+        </template>
+      </div>
+      <div class="text-end">
+        <button
+          v-if="userName == userOverride"
+          @click="saveStudentData()"
+          type="button"
+          class="btn btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2"
+        >
+          Update programs
+        </button>
       </div>
     </template>
   </axdd-card>
 </template>
 
 <script>
-import { Card, CardHeading } from 'axdd-components';
+import dataMixin from "../../mixins/data_mixin.js";
 
 export default {
+  mixins: [dataMixin],
   props: {
-    student: {
+    person: {
       type: Object,
       required: true,
     },
   },
-  components: {
-    'axdd-card': Card,
-    'axdd-card-heading': CardHeading,
-  },
+  components: {},
   data() {
-    return {};
+    return {
+      groupedPrograms: this.person.student.compass_group_affiliations,
+      studentPrograms: this.person.student.compass_affiliations,
+      updateSuccessful: false,
+      updatePermissionDenied: false,
+      userName: document.body.getAttribute("data-user-netid"),
+      userOverride: document.body.getAttribute("data-user-override"),
+
+    };
+  },
+  created: function () {
+    this.loadPrograms();
+  },
+  methods: {
+    _groupProgramsByAccessGroup: function (programs) {
+      return programs.reduce((groups, item) => {
+        const group = groups[item.access_group.name] || [];
+        group.push(item);
+        groups[item.access_group.name] = group;
+        return groups;
+      }, {});
+    },
+    loadPrograms: function () {
+      var _this = this;
+      this.getAccessGroups().then((accessGroups) => {
+        accessGroups.data.forEach(function (accessGroup) {
+          _this.getAffiliations(accessGroup.id).then((response) => {
+            if (response.data) {
+              _this.groupedPrograms = Object.assign(
+                {},
+                _this.groupedPrograms,
+                _this._groupProgramsByAccessGroup(response.data)
+              );
+            }
+          });
+        });
+      });
+    },
+    saveStudentData: function () {
+      this.saveStudent(
+        this.person.student.system_key,
+        this.person.uwnetid,
+        this.studentPrograms
+      )
+        .then((response) => {
+          if (response.data) {
+            // show and update successful message for 3 seconds
+            this.updateSuccessful = true;
+            setTimeout(() => (this.updateSuccessful = false), 3000);
+          }
+        })
+        .catch((error) => {
+          if (error.response.status == 401) {
+            this.updatePermissionDenied = true;
+            setTimeout(() => (this.updatePermissionDenied = false), 3000);
+          }
+        });
+    },
   },
 };
 </script>
+
+<style lang="scss">
+.form-switch .form-check-input:checked {
+  background-color: #4d307f;
+  border-color: #4d307f;
+}
+</style>

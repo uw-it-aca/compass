@@ -8,7 +8,6 @@ See the README on `GitHub
 
 # The VERSION file is created by travis-ci, based on the tag name
 version_path = "compass/VERSION"
-print(os.path.join(os.path.dirname(__file__), version_path))
 VERSION = open(os.path.join(os.path.dirname(__file__), version_path)).read()
 VERSION = VERSION.replace("\n", "")
 
@@ -25,11 +24,21 @@ setup(
     include_package_data=True,
     install_requires = [
         'django~=3.2',
-        "django-webpack-loader",
+        'uw-memcached-clients~=1.0',
+        'django-user-agents',
+        'django-simple-history==3.1.1',
+        'Django-UserService~=3.2',
+        'Django-SupportTools~=3.6',
+        'UW-RestClients-Django-Utils~=2.3',
         'djangorestframework~=3.12',
-        'UW-RestClients-SWS~=2.3',
-        'UW-Django-SAML2~=1.5',
-        'urllib3~=1.25'
+        'UW-RestClients-SWS~=2.4',
+        'UW-RestClients-GWS~=2.3',
+        'UW-RestClients-PWS~=2.1',
+        'UW-Django-SAML2~=1.7',
+        'urllib3~=1.25',
+        'axdd-person-client>=1.1.11',
+        'python-dateutil~=2.8',
+        'freezegun~=1.2'
     ],
     license="Apache License, Version 2.0",
     description="A application for managing student advising information.",

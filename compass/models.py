@@ -1,208 +1,377 @@
-# Copyright 2022 UW-IT, University of Washington
+# Copyright 2023 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass import utilities
-from datetime import datetime, date
+
 from django.db import models
-from django.utils import timezone
-from django.conf import settings
-from uw_sws.term import get_current_term, get_term_by_year_and_quarter
-from uw_sws import SWS_TIMEZONE
+from django.utils.text import slugify
+from simple_history.models import HistoricalRecords
+from uw_person_client import UWPersonClient
+from compass.dao.group import is_group_member
+from uw_gws import GWS
+from restclients_core.exceptions import DataFailureException
 
 
-class TermManager(models.Manager):
-
-    def get_current_term(self):
-        curr_date = timezone.now()
-        return self.get_term_for_date(curr_date)
-
-    def get_term_for_date(self, date):
+class AppUserManager(models.Manager):
+    def upsert_appuser(self, uwnetid):
         """
-        Return term intersecting with supplied date
-
-        :param date: date to return term for
-        :type date: datetime.datetime
+        New app users are created when they first create content in
+        the app, such as a new contact. This record is only used to associate
+        data to a user of the system, login credentials are determined by UW
+        group memberships. Since uwnetids may change over time, this method
+        uses the PDS to resolve prior netids and then update them in Compass as
+        needed.
         """
-        term = (Term.objects
-                .filter(first_day_quarter__lte=date)
-                .filter(grade_submission_deadline__gte=date)).first()
-        return term
-
-    def get_or_create_term_from_sis_term_id(self, sis_term_id=None):
-        """
-        Creates and/or queries for Term matching sis_term_id. If sis_term_id
-        is not defined, creates and/or queries for Term object for current
-        sws term.
-
-        :param sis_term_id: sis term id to return Term object for
-        :type sis_term_id: str
-        """
-        if sis_term_id is None:
-            # try to lookup the current term based on the date
-            term = self.get_current_term()
-            if term:
-                # return current term
-                return term, False
-
-        if sis_term_id:
-            # lookup sws term object for supplied sis term id
-            year, quarter = sis_term_id.split("-")
-            sws_term = get_term_by_year_and_quarter(int(year), quarter)
+        # request the current person object for the user
+        client = UWPersonClient()
+        person = client.get_person_by_uwnetid(uwnetid)
+        # check the AppUser table to see if they have an existing entry
+        persons_netids = person.prior_uwnetids + [person.uwnetid]
+        for netid in persons_netids:
+            try:
+                # update the AppUsers uwnetid
+                user = AppUser.objects.get(uwnetid=netid)
+                user.uwnetid = person.uwnetid
+                user.save()
+                return user
+            except AppUser.DoesNotExist:
+                continue
         else:
-            # lookup sws term object for current term
-            sws_term = get_current_term()
-        return self.get_or_create_from_sws_term(sws_term)
-
-    def get_or_create_from_sws_term(self, sws_term):
-        """
-        Creates and/or queries for Term for sws_term object. If Term for
-        sws_term is not defined in the database, a Term object is created.
-
-        :param sws_term: sws_term object to create and or load
-        :type sws_term: uw_sws.term
-        """
-
-        def sws_to_utc(dt):
-            if isinstance(dt, date):
-                # convert date to datetime
-                dt = datetime.combine(dt, datetime.min.time())
-                SWS_TIMEZONE.localize(dt)
-                return dt.astimezone(timezone.utc)
-
-        # get/create model for the term
-        term, created = \
-            Term.objects.get_or_create(sis_term_id=sws_term.canvas_sis_id())
-        if created:
-            # add current term info for course
-            term.sis_term_id = sws_term.canvas_sis_id()
-            term.year = sws_term.year
-            term.quarter = sws_term.quarter
-            term.label = sws_term.term_label()
-            term.last_day_add = sws_to_utc(sws_term.last_day_add)
-            term.last_day_drop = sws_to_utc(sws_term.last_day_drop)
-            term.first_day_quarter = sws_to_utc(sws_term.first_day_quarter)
-            term.census_day = sws_to_utc(sws_term.census_day)
-            term.last_day_instruction = \
-                sws_to_utc(sws_term.last_day_instruction)
-            term.grading_period_open = sws_to_utc(sws_term.grading_period_open)
-            term.aterm_grading_period_open = \
-                sws_to_utc(sws_term.aterm_grading_period_open)
-            term.grade_submission_deadline = \
-                sws_to_utc(sws_term.grade_submission_deadline)
-            term.last_final_exam_date = \
-                sws_to_utc(sws_term.last_final_exam_date)
-            term.save()
-        return term, created
+            # if no user is found, then create one
+            user = AppUser(uwnetid=uwnetid)
+            user.save()
+            return user
 
 
-class Term(models.Model):
+class AppUser(models.Model):
+    """
+    User of the app that content, such as contacts, is associated with.
+    """
 
-    objects = TermManager()
-    sis_term_id = models.TextField(null=True)
-    year = models.IntegerField(null=True)
-    quarter = models.TextField(null=True)
-    label = models.TextField(null=True)
-    last_day_add = models.DateField(null=True)
-    last_day_drop = models.DateField(null=True)
-    first_day_quarter = models.DateField(null=True)
-    census_day = models.DateField(null=True)
-    last_day_instruction = models.DateField(null=True)
-    grading_period_open = models.DateTimeField(null=True)
-    aterm_grading_period_open = models.DateTimeField(null=True)
-    grade_submission_deadline = models.DateTimeField(null=True)
-    last_final_exam_date = models.DateTimeField(null=True)
+    objects = AppUserManager()
 
-    @property
-    def term_number(self):
-        return utilities.get_term_number(self.quarter)
+    uwnetid = models.CharField(unique=True, max_length=50)
 
+    # A user's Access Group affiliation is derived at login via GWS Groups.
+    # A GWS group key is generated using the <access_id>. It is important to
+    # notethat UW Group memberships are managed externally from the app
 
-class Adviser(models.Model):
+    class Meta:
+        indexes = [
+            models.Index(fields=["uwnetid"]),
+        ]
 
-    is_active = models.BooleanField(null=True)
-    is_dept_adviser = models.BooleanField(null=True)
-    full_name = models.TextField(null=True)
-    pronouns = models.TextField(null=True)
-    email_address = models.TextField(null=True)
-    phone_number = models.TextField(null=True)
-    uwnetid = models.TextField(null=True)
-    regid = models.TextField(null=True)
-    program = models.TextField(null=True)
-    booking_url = models.TextField(null=True)
-    metadata = models.TextField(null=True)
-    timestamp = models.DateTimeField(null=True)
-
-
-class Major(models.Model):
-
-    major_abbr_code = models.TextField(null=True)
-    major_full_code = models.TextField(null=True)
-    major_name = models.TextField(null=True)
-    major_full_name = models.TextField(null=True)
-    major_short_name = models.TextField(null=True)
-
-
-class SpecialProgram(models.Model):
-
-    special_program_code = models.TextField(null=True)
-    special_program_desc = models.TextField(null=True)
-
-
-class Retention(models.Model):
-
-    priority = models.TextField(null=True)
-    sign_in = models.TextField(null=True)
-    activity = models.TextField(null=True)
-    assignment = models.TextField(null=True)
-    grade = models.TextField(null=True)
+    def __str__(self):
+        return f"{self.uwnetid}"
 
 
 class Student(models.Model):
+    """
+    The student model is used to associate app data to a student. In this app
+    only system_key is stored as it provides a unique key that is used to
+    request student information from the PDS. Besides system-key, no student
+    information is ever stored in the app, all student data is fetched directly
+    from the PDS since it is kept up to date via automated jobs.
+    """
 
-    student_number = models.BigIntegerField(unique=True)
-    uw_net_id = models.TextField(null=True)
-    student_name = models.TextField(null=True)
-    student_preferred_first_name = models.TextField(null=True)
-    student_preferred_middle_name = models.TextField(null=True)
-    student_preferred_last_name = models.TextField(null=True)
-    birthdate = models.DateField(null=True)
-    student_email = models.TextField(null=True)
-    external_email = models.TextField(null=True)
-    local_phone_number = models.TextField(null=True)
-    gender = models.TextField(null=True)
-    gpa = models.TextField(null=True)
-    total_credits = models.TextField(null=True)
-    total_uw_credits = models.TextField(null=True)
-    campus_code = models.TextField(null=True)
-    campus_desc = models.TextField(null=True)
-    class_code = models.TextField(null=True)
-    class_desc = models.TextField(null=True)
-    enrollment_status_code = models.TextField(null=True)
-    exemption_code = models.TextField(null=True)
-    exemption_desc = models.TextField(null=True)
-    honors_program_code = models.TextField(null=True)
-    honors_program_ind = models.TextField(null=True)
-    resident_code = models.TextField(null=True)
-    resident_desc = models.TextField(null=True)
-    perm_addr_line1 = models.TextField(null=True)
-    perm_addr_line2 = models.TextField(null=True)
-    perm_addr_city = models.TextField(null=True)
-    perm_addr_state = models.TextField(null=True)
-    perm_addr_5digit_zip = models.TextField(null=True)
-    perm_addr_4digit_zip = models.TextField(null=True)
-    perm_addr_country = models.TextField(null=True)
-    perm_addr_postal_code = models.TextField(null=True)
-    registered_in_quarter = models.BooleanField(null=True)
-    special_program = models.ManyToManyField(SpecialProgram)
-    retention = models.ForeignKey(Retention, on_delete=models.CASCADE,
-                                  default=1)
-    adviser = models.ManyToManyField(Adviser)
-    intended_major = models.ManyToManyField(
-        Major, related_name="intended_major")  # edited by compass
-    major = models.ManyToManyField(Major, related_name="major")
+    system_key = models.CharField(unique=True, max_length=50)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["system_key"]),
+        ]
+
+    def __str__(self):
+        return self.system_key
+
+
+class AccessGroupManager(models.Manager):
+    def by_name(self, name):
+        return AccessGroup.objects.get(name=name)
+
+    def get_roles_for_user(self, request):
+        """
+        Return the unique roles for a user, without group context.
+        """
+        roles = []
+        for group in super().get_queryset().all():
+            for role in AccessGroup.ROLES:
+                if role not in roles and is_group_member(
+                    request, group.authz_group_id(role)
+                ):
+                    roles.append(role)
+        return roles
+
+    def get_access_groups_for_netid(self, uwnetid):
+        """
+        Returns the list of access groups that a uwnetid is a member of
+        """
+        access_groups = []
+        try:
+            for access_group in AccessGroup.objects.all():
+                groups = GWS().search_groups(
+                    member=uwnetid, name=f"{access_group.access_group_id}*"
+                )
+                if groups:
+                    access_groups.append(access_group)
+        except DataFailureException:
+            pass
+        return access_groups
+
+    def is_access_group_member(self, uwnetid, access_group):
+        user_access_groups = self.get_access_groups_for_netid(uwnetid)
+        if access_group in user_access_groups:
+            return True
+        return False
+
+
+class AccessGroup(models.Model):
+    """
+    AccessGroups manage their Affiliation, ContactTopic, ContactType, and
+    ContactMethod lists. AccessGroup membership is defined externally in
+    UW groups (Astra) and determined for a AppUser via a request to the
+    GWS at login. Contact records created by a member of one access group
+    are only visible to other members of that same access group.
+
+    Access groups for the app are created in the Django Admin. The
+    access_group_id is the prefix of the uw-groups (user and manger) that it
+    is affiliated with. For example, there are two uw-groups for OMAD named
+    u_astra_compass_omad-manager and u_astra_compass_omad-user. Within the
+    Django Admin there is then an associated AccessGroup with an
+    access_group_id of 'u_astra_compass_omad'. The access_group_id associates
+    the membership of a uw-group to the apps AccessGroup, thereby controlling
+    access to content within the app.
+    """
+
+    ROLE_MANAGER = "manager"
+    ROLE_USER = "user"
+    ROLES = [ROLE_MANAGER, ROLE_USER]
+
+    objects = AccessGroupManager()
+
+    name = models.CharField(unique=True, max_length=50)
+    access_group_id = models.CharField(unique=True, max_length=50)
+
+    def save(self, *args, **kwargs):
+        created = not self.pk
+        super(AccessGroup, self).save(*args, **kwargs)
+        if created:
+            # set uneditable contact type presets
+            uneditable_contact_types = [
+                "Quick Question",
+                "Appointment",
+                "Workshop",
+            ]
+            for contact_type_name in uneditable_contact_types:
+                ContactType(
+                    access_group=self, name=contact_type_name, editable=False
+                ).save()
+            # set uneditable contact methods presets
+            uneditable_contact_methods = [
+                "In-person",
+                "Telephone",
+                "Video Conference",
+            ]
+            for contact_method_name in uneditable_contact_methods:
+                ContactMethod(
+                    access_group=self, name=contact_method_name, editable=False
+                ).save()
+            # set default contact topics
+            default_contact_topics = [
+                "Add/Drop a Class",
+            ]
+            for contact_topic_name in default_contact_topics:
+                ContactTopic(access_group=self, name=contact_topic_name).save()
+
+    def authz_group_id(self, role):
+        return "{}-{}".format(self.access_group_id, role)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return f"<AccessGroup(name='{self.name}')>"
+
+    def __hash__(self):
+        return self.id
+
+    def __eq__(self, other):
+        if isinstance(other, AccessGroup):
+            return self.access_group_id == other.access_group_id
+        return False
+
+    def has_role(self, request, role):
+        return is_group_member(request, self.authz_group_id(role))
+
+
+class Contact(models.Model):
+    """
+    A contact/appointment with a student. For OMAD contacts are generated
+    via the automated check-in system and updated by advisers, or created
+    manually by advisers.
+    """
+
+    # required fields
+    app_user = models.ForeignKey("AppUser", on_delete=models.CASCADE)
+    access_group = models.ManyToManyField("AccessGroup")
+    student = models.ForeignKey("Student", on_delete=models.CASCADE)
+    contact_type = models.ForeignKey("ContactType", on_delete=models.CASCADE)
+    contact_method = models.ForeignKey("ContactMethod",
+                                       on_delete=models.CASCADE, null=True)
+    checkin_date = models.DateTimeField()
+    # optional fields
+    noshow = models.BooleanField(default=False)
+    notes = models.TextField(default=None, blank=True, null=True)
+    actions = models.TextField(default=None, blank=True, null=True)
+    contact_topics = models.ManyToManyField("ContactTopic")
+    # generated by check-in queue system
+    source = models.CharField(default="Compass", max_length=50)
+    # contact history fields
+    created_date = models.DateTimeField(auto_now=True)
+    history = HistoricalRecords(history_user_id_field="app_user")
+
+    # The history user feature is a Django App used to track changes to
+    # contacts. Although we don't currently display this in the UW, it is
+    # accessible via the Django Admin.
 
     @property
-    def enrollment_desc(self):
-        enrollment_map = settings.ENROLLMENT_STATUS_MAPPING
-        return enrollment_map.get(int(self.enrollment_status_code),
-                                  "Unknown").title()
+    def _history_user(self):
+        return self.app_user
+
+    @_history_user.setter
+    def _history_user(self, value):
+        self.app_user = value
+
+    def __str__(self):
+        return f"{self.app_user} w/ {self.student} @ {self.checkin_date}"
+
+
+class BaseAccessGroupContent(models.Model):
+    class Meta:
+        abstract = True
+
+    def save(self, *args, **kwargs):
+        created = not self.pk
+        if created:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+
+class StudentAffiliation(models.Model):
+    """
+    Affiliation assigned to a student
+    """
+    student = models.ForeignKey("Student", on_delete=models.CASCADE)
+    affiliation = models.ForeignKey("Affiliation", on_delete=models.CASCADE)
+    cohorts = models.ManyToManyField("Cohort")
+    date = models.DateField(null=True)
+    actively_advised = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.student} {self.affiliation}"
+
+
+class Affiliation(BaseAccessGroupContent):
+    """
+    Departmental/Group Affiliation
+    (e.g. CAMP, TRIO, SSS, Champions, IC Eligible)
+    """
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
+    active = models.BooleanField(default=True)
+    editable = models.BooleanField(default=True)
+
+
+class Cohort(models.Model):
+    start_year = models.SmallIntegerField()
+    end_year = models.SmallIntegerField()
+
+
+class ContactType(BaseAccessGroupContent):
+    """
+    Type of contact with a student. These are created for a given access group
+    by the access group managers. Examples include Quick Question, Appointment,
+    and Workshop.
+    """
+
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
+    name = models.CharField(unique=True, max_length=50)
+    slug = models.SlugField(unique=True, max_length=50)
+    active = models.BooleanField(default=True)
+    editable = models.BooleanField(default=True)
+
+
+class ContactMethod(BaseAccessGroupContent):
+    """
+    The method used in the contact. These are created for a given access group
+    by the access group managers. Examples include Telephone, In-Person,
+    and Video Conference.
+    """
+
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
+    name = models.CharField(unique=True, max_length=50)
+    slug = models.SlugField(unique=True, max_length=50)
+    active = models.BooleanField(default=True)
+    editable = models.BooleanField(default=True)
+
+
+class ContactTopic(BaseAccessGroupContent):
+    """
+    Topics discussed with a student. These are created for a given access group
+    by the access group managers. Examples include Add/Drop Class,
+    Join/Affiliate, Academic Difficulties, Hardship Withdrawl, Internships,
+    Research Opportunities, Graduate Professional School, and
+    Testing/Assessment.
+    """
+
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
+    name = models.CharField(unique=True, max_length=50)
+    slug = models.SlugField(unique=True, max_length=50)
+    active = models.BooleanField(default=True)
+    editable = models.BooleanField(default=True)
+
+
+class StudentEligibility(models.Model):
+    """
+    Services and resources for which a Student is provided access
+    """
+    student = models.ForeignKey(
+        "Student", on_delete=models.CASCADE)
+    eligibility = models.ManyToManyField("EligibilityType")
+
+
+class EligibilityType(BaseAccessGroupContent):
+    """
+    A service or resource that is available to students
+    """
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
+    name = models.CharField(unique=True, max_length=50)
+    slug = models.SlugField(unique=True, max_length=50)
+    editable = models.BooleanField(default=True)
+
+
+class Visit(models.Model):
+    """
+    Student interaction with service
+    """
+    student = models.ForeignKey("Student", on_delete=models.CASCADE)
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
+    visit_type = models.ForeignKey("VisitType", on_delete=models.CASCADE)
+    course_code = models.CharField(max_length=64)
+    checkin_date = models.DateTimeField()
+    checkout_date = models.DateTimeField()
+
+
+class VisitType(BaseAccessGroupContent):
+    """
+    Type of student visit. These are created for a given access group
+    by the access group managers. Examples include IC Drop-In Tutoring and
+    and IC Workshop
+    """
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
+    name = models.CharField(unique=True, max_length=50)
+    slug = models.SlugField(unique=True, max_length=50)
+    editable = models.BooleanField(default=False)

@@ -1,32 +1,48 @@
-import { createWebHistory, createRouter } from 'vue-router';
+import { createWebHistory, createRouter } from "vue-router";
+// vue-gtag-next track routing
 import { trackRouter } from "vue-gtag-next";
 
-// page components
-import Home from '../pages/home.vue';
-import Caseload from '../pages/caseload.vue';
-import Student from '../pages/student.vue';
+import { Role } from "../utils/roles.js";
 
+// page components
+import CheckIn from "../pages/check-ins.vue";
+import Caseload from "../pages/caseload.vue";
+import Student from "../pages/student.vue";
+import Reports from "../pages/reports.vue";
+import Settings from "../pages/settings.vue";
 
 const routes = [
   {
-    path: '/',
-    component: Home,
+    path: "/",
+    component: CheckIn,
     pathToRegexpOptions: { strict: true },
-    props: true
+    props: true,
   },
   {
-    path: '/caseload',
-    name: 'Caseload',
+    path: "/caseload/:id?",
     component: Caseload,
     pathToRegexpOptions: { strict: true },
-    props: true
+    props: true,
   },
   {
-    path: '/student/:id?',
-    name: 'Student',
+    path: "/student/:id?",
     component: Student,
     pathToRegexpOptions: { strict: true },
-    props: true
+    props: true,
+  },
+  {
+    path: "/reports",
+    component: Reports,
+    meta: { authorize: [Role.Manager] },
+    pathToRegexpOptions: { strict: true },
+    props: true,
+  },
+  {
+    path: "/settings",
+    component: Settings,
+    meta: { authorize: [Role.Manager] },
+    pathToRegexpOptions: { strict: true },
+    props: true,
   },
 ];
 
@@ -35,11 +51,30 @@ const router = createRouter({
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
-      return savedPosition
+      return savedPosition;
     } else {
-      return { top: 0 }
+      return { top: 0 };
     }
   },
+});
+
+// MARK: implement route guards
+router.beforeEach((to, from, next) => {
+  // get the authorization settings from the meta field for the route
+  const { authorize } = to.meta;
+
+  // get the authenticated user role from django context
+  let userRoles = document.body.getAttribute("data-user-role").split(",");
+
+  // check if authorization is required for this route
+  if (authorize) {
+    // check to see if current user's role is authorized to view page
+    if (authorize.length && !authorize.some((r) => userRoles.includes(r))) {
+      // redirect to 'unauthorized' page in django/nginx
+      window.location.replace("/unauthorized-user");
+    }
+  }
+  next();
 });
 
 // add router tracking to vue-gtag-next

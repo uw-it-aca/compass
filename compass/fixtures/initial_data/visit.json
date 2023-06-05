@@ -1,0 +1,26 @@
+[
+{
+    "model": "compass.visit",
+    "pk": 1,
+    "fields": {
+        "student": 2,
+        "access_group": 1,
+        "visit_type": 4,
+        "course_code": "ESS 203",
+        "checkin_date": "2023-05-26T18:45:00Z",
+        "checkout_date": "2023-05-26T19:17:00Z"
+    }
+},
+{
+    "model": "compass.visit",
+    "pk": 2,
+    "fields": {
+        "student": 2,
+        "access_group": 1,
+        "visit_type": 2,
+        "course_code": "MATH 123",
+        "checkin_date": "2022-11-06T14:22:00Z",
+        "checkout_date": "2022-11-06T15:34:00Z"
+    }
+}
+]

@@ -1,5 +1,5 @@
 {% load static %}
-{% load render_bundle from webpack_loader %}
+{% load vite %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,16 +14,39 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@400;500;700&family=Open+Sans:ital,wght@0,400;0,700;1,400&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
-    {% render_bundle 'main' 'css' %}
+    <script>
+      window.term_data = {
+        todayDate: "{{ current_date }}",
+        currYear: "{{ current_term_year }}",
+        currQuarter: "{{ current_term_quarter }}",
+        nextYear: "{{ next_term_year }}",
+        nextQuarter: "{{ next_term_quarter }}",
+        breakYear: "{{ break_term_year }}",
+        breakQuarter: "{{ break_term_quarter }}",
+        isFinals:  {% if is_finals %}true{% else %}false{% endif %},
+        isBreak:  {% if is_break %}true{% else %}false{% endif %},
+        firstDay: "{{ term_first_day }}",
+        lastDay: "{{ term_last_day }}",
+        aTermLastDay: {% if aterm_last_day %}"{{ aterm_last_day }}"{% else %}null{% endif %},
+        bTermFirstDay: {% if bterm_first_day %}"{{ bterm_first_day }}"{% else %}null{% endif %},
+        lastFinalExamDay: "{{ last_final_exam_date }}",
+        weekOfTerm: "{{ term_week }}"
+      };
+    </script>
+
+    <!-- vite css bundle -->
+    {% vite_styles 'compass_vue/main.js' %}
 
 </head>
 
-<body {% if google_analytics %}data-google-analytics="{{ google_analytics }}"{% endif %} {% if logout_url %}data-logout-url="{{ logout_url }}"{% endif %} data-django-debug="{{ django_debug|lower}}" class="bg-light">
+<body{% if google_analytics %} data-google-analytics="{{ google_analytics }}"{% endif %} data-signout-url="{{ signout_url }}" data-user-netid="{{ user_netid }}" data-user-override="{{ user_override }}" data-user-role="{{ user_role }}" data-django-debug="{{ django_debug|lower}}" class="bg-white">
     {% csrf_token %}
 
     <!-- vue app will be injected here -->
     <div id="app"></div>
-    {% render_bundle 'main' 'js' attrs='defer' %}
+
+    <!-- vite js bundle -->
+    {% vite_scripts 'compass_vue/main.js' %}
 
 </body>
 
