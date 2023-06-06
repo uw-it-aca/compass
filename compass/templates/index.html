@@ -32,7 +32,7 @@
         lastFinalExamDay: "{{ last_final_exam_date }}",
         weekOfTerm: "{{ term_week }}"
       };
-      window.messages = {{ messages }};
+      window.messages = ["{{ messages|join:", " }}"];
       window.message_level = "{{ message_level }}";
     </script>
 
