@@ -32,7 +32,6 @@ def auth_user(request):
         'signout_url': reverse('saml_logout'),
         'user_role': ','.join(sorted(roles)),
         'messages': [],
-        'messsage_level': '',
     }
 
     for message in Message.objects.active_messages():
