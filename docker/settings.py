@@ -7,6 +7,7 @@ INSTALLED_APPS += [
     'supporttools',
     'rc_django',
     'userservice',
+    'persistent_message',
     'rest_framework',
     'rest_framework.authtoken'
 ]
@@ -100,6 +101,7 @@ SUPPORTTOOLS_PARENT_APP_URL = "/"
 USERSERVICE_VALIDATION_MODULE = 'compass.dao.person.is_netid'
 USERSERVICE_OVERRIDE_AUTH_MODULE = 'compass.dao.group.can_override_user'
 RESTCLIENTS_ADMIN_AUTH_MODULE = 'compass.dao.group.can_proxy_restclient'
+PERSISTENT_MESSAGE_AUTH_MODULE = 'compass.dao.group.can_manage_persistent_messages'
 
 # IDCard photo config
 IDCARD_TOKEN_EXPIRES = 60 * 60

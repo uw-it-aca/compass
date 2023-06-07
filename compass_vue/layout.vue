@@ -33,6 +33,16 @@
       <NavMessage />
     </template>
     <template #main>
+      <div
+        v-if="persMsg && persMsg.length > 0"
+        class="sticky-top alert alert-purple mt-3 border-0 small"
+        role="alert"
+      >
+        <ul class="list-unstyled m-0">
+          <li v-for="(msg, index) in persMsg" :key="index" v-html="msg"></li>
+        </ul>
+      </div>
+
       <slot name="title">
         <h1 class="visually-hidden">{{ pageTitle }}</h1>
       </slot>
@@ -75,6 +85,9 @@ export default {
 
       // get term_data from window context
       termData: window.term_data,
+
+      // get persistent messages
+      persMsg: window.persistent_msgs,
     };
   },
   created: function () {

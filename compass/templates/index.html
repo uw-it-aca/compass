@@ -32,6 +32,9 @@
         lastFinalExamDay: "{{ last_final_exam_date }}",
         weekOfTerm: "{{ term_week }}"
       };
+
+      window.persistent_msgs = {{ messages|safe }};
+      window.msg_level = "{{ message_level }}";
     </script>
 
     <!-- vite css bundle -->
