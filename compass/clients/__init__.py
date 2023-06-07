@@ -9,3 +9,6 @@ if os.environ.get("UW_PERSON_CLIENT_ENV") == "PROD":
 else:
     from compass.clients.mock_person_client import (
         MockedCompassPersonClient as CompassPersonClient)
+
+from uw_person_client.exceptions import (
+    PersonNotFoundException, AdviserNotFoundException)
