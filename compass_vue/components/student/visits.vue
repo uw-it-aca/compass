@@ -26,23 +26,29 @@
 
       <div v-if="visits.length" class="d-flex ps-2">
         <div class="vr text-muted" aria-hidden="true"></div>
-        <ul class="list-unstyled mb-0" style="margin-left: -11px; z-index: 1">
-          <li
-            v-for="visit in visits"
-            class="d-flex mb-3"
-          >
+        <ul
+          class="list-unstyled mb-0 overflow-auto w-100 flex-fill"
+          style="margin-left: -11px; z-index: 1; max-height: 400px"
+        >
+          <li v-for="(visit, index) in visits" :key="index" class="d-flex mb-3">
             <div>
               <i
                 class="bi bi-calendar-check-fill text-gray fs-7 ms-1 me-3 bg-white"
               ></i>
             </div>
             <div>
-              <div><strong>{{ visit.course_code }}</strong> <small>({{ visit.duration }}min)</small></div>
-              <div class="text-muted small">{{ visit.date }} {{ visit.checkin }} - {{ visit.checkout }}</div>
+              <div>
+                <strong>{{ visit.course_code }}</strong>
+                <small class="ms-1">({{ visit.duration }}min)</small>
+              </div>
+              <div class="text-muted small">
+                {{ visit.date }} {{ visit.checkin }} - {{ visit.checkout }}
+              </div>
             </div>
           </li>
         </ul>
       </div>
+      <div v-else class="text-muted">No visits found</div>
     </template>
     <template #footer>Total Visits: {{ visits.length }}</template>
   </axdd-card>
@@ -70,22 +76,23 @@ export default {
   },
   methods: {
     loadStudentVisits: function () {
-      this.getStudentVisits(this.person.student.system_key).then(
-        (response) => {
-          if (response.data) {
-            this.visits = response.data;
-            this.calculateDates();
-          }
+      this.getStudentVisits(this.person.student.system_key).then((response) => {
+        if (response.data) {
+          this.visits = response.data;
+          this.calculateDates();
         }
-      );
+      });
     },
     calculateDates: function () {
       this.visits.forEach((item) => {
-         var checkin = new Date(item.checkin_date), checkout = new Date(item.checkout_date);
-         item.duration = Math.abs(Math.round((checkout.getTime() - checkin.getTime()) / 1000 / 60));
-         item.date = this.dateMMDDYYYY(checkin);
-         item.checkin = this.dateHHMMampm(checkin);
-         item.checkout = this.dateHHMMampm(checkout);
+        var checkin = new Date(item.checkin_date),
+          checkout = new Date(item.checkout_date);
+        item.duration = Math.abs(
+          Math.round((checkout.getTime() - checkin.getTime()) / 1000 / 60)
+        );
+        item.date = this.dateMMDDYYYY(checkin);
+        item.checkin = this.dateHHMMampm(checkin);
+        item.checkout = this.dateHHMMampm(checkout);
       });
     },
     updateEligibility() {
