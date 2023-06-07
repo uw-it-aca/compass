@@ -11,17 +11,61 @@
                 <div>
                   <search-student></search-student>
                   <div>
-                    <label for="enrollmentFilter">Enrollment:</label>
-                    <select id="enrollmentFilter" v-model="selectedEnrollment" class="">
-                      <option selected :value="undefined">All</option>
-                      <option v-for="option in enrollmentOptions" v-bind:value="option.id">
-                        {{ option.value }}
-                      </option>
-                    </select>
                     <label for="classFilter">Class:</label>
                     <select id="classFilter" v-model="selectedClass" class="">
                       <option selected :value="undefined">All</option>
-                      <option v-for="option in classOptions" v-bind:value="option.id">
+                      <option
+                        v-for="option in classOptions"
+                        v-bind:value="option.id"
+                      >
+                        {{ option.value }}
+                      </option>
+                    </select>
+                    <label for="scholarshipFilter">Scholarship:</label>
+                    <select
+                      id="scholarshipFilter"
+                      v-model="selectedScholarship"
+                      class=""
+                    >
+                      <option selected :value="undefined">All</option>
+                      <option
+                        v-for="option in scholarshipOptions"
+                        v-bind:value="option.id"
+                      >
+                        {{ option.value }}
+                      </option>
+                    </select>
+                    <label for="campusFilter">Campus:</label>
+                    <select id="campusFilter" v-model="selectedCampus" class="">
+                      <option selected :value="undefined">All</option>
+                      <option
+                        v-for="option in campusOptions"
+                        v-bind:value="option.id"
+                      >
+                        {{ option.value }}
+                      </option>
+                    </select>
+                    <label for="registrationFilter">Registration Status:</label>
+                    <select
+                      id="registrationFilter"
+                      v-model="selectedRegistration"
+                      class=""
+                    >
+                      <option selected :value="undefined">All</option>
+                      <option
+                        v-for="option in registrationOptions"
+                        v-bind:value="option.id"
+                      >
+                        {{ option.value }}
+                      </option>
+                    </select>
+                    <label for="holdsFilter">Holds Status:</label>
+                    <select id="holdsFilter" v-model="selectedHolds" class="">
+                      <option selected :value="undefined">All</option>
+                      <option
+                        v-for="option in holdsOptions"
+                        v-bind:value="option.id"
+                      >
                         {{ option.value }}
                       </option>
                     </select>
@@ -82,53 +126,79 @@ export default {
         : document.body.getAttribute("data-user-override")
         ? document.body.getAttribute("data-user-override")
         : document.body.getAttribute("data-user-netid"),
-      selectedEnrollment: undefined,
       selectedClass: undefined,
+      selectedScholarship: undefined,
+      selectedCampus: undefined,
+      selectedRegistration: undefined,
+      selectedHolds: undefined,
+      scholarshipOptions: [
+        { id: 1, value: "Dean's List" },
+        { id: 4, value: "Academic Warning" },
+        { id: 3, value: "Academic Probation" },
+      ],
+      classOptions: [
+        { id: "Freshman", value: "Freshman" },
+        { id: "Sophomore", value: "Sophomore" },
+        { id: "Junior", value: "Junior" },
+        { id: "Senior", value: "Senior" },
+      ],
+      campusOptions: [
+        { id: "Seattle", value: "Seattle" },
+        { id: "Tacoma", value: "Tacoma" },
+        { id: "Bothell", value: "Bothell" },
+      ],
+      registrationOptions: [
+        { id: true, value: "Registered" },
+        { id: false, value: "Not Registered" },
+      ],
+      holdsOptions: [
+        { id: true, value: "Has Holds" },
+        { id: false, value: "No Holds" },
+      ],
     };
   },
   created: function () {
     this.loadAdviserCaseload(this.adviserNetId);
   },
   computed: {
-    enrollmentOptions: function(){
-      let unique_values = [],
-        value_objs = [];
-      this.persons.forEach((person) =>{
-        if(!unique_values.includes(person.student.enroll_status_desc)){
-          unique_values.push(person.student.enroll_status_desc);
-          value_objs.push({"id": person.student.enroll_status_desc,
-            "value": this.capitalizeFirstLetter(person.student.enroll_status_desc)})
-        }
-      });
-      return value_objs;
-    },
-    classOptions: function(){
-      let unique_values = [],
-        value_objs = [];
-      this.persons.forEach((person) =>{
-        if(!unique_values.includes(person.student.class_code)){
-          unique_values.push(person.student.class_code);
-          value_objs.push({"id": person.student.class_code,
-            "value": person.student.class_desc})
-        }
-      });
-      return value_objs;
-    },
     filteredPersons: function () {
       let filteredPersons = this.persons;
-      if (this.selectedEnrollment) {
+      if (this.selectedClass) {
+        filteredPersons = filteredPersons.filter((person) => {
+          return person.student.class_desc === this.selectedClass;
+        });
+      }
+      if (this.selectedScholarship) {
+        filteredPersons = filteredPersons.filter((person) => {
+          try {
+            return (
+              person.student.transcripts[0].scholarship_type ===
+              this.selectedScholarship
+            );
+          } catch (error) {
+            return false;
+          }
+        });
+      }
+      if (this.selectedCampus) {
         filteredPersons = filteredPersons.filter(
-          (person) => person.student.enroll_status_desc == this.selectedEnrollment
+          (person) => person.student.campus_desc === this.selectedCampus
         );
       }
-      if (this.selectedClass) {
+      if (this.selectedRegistration !== undefined) {
         filteredPersons = filteredPersons.filter(
-          (person) => person.student.class_code == this.selectedClass
+          (person) =>
+            person.student.registered_in_quarter === this.selectedRegistration
+        );
+      }
+      if (this.selectedHolds !== undefined) {
+        filteredPersons = filteredPersons.filter(
+          (person) =>
+            person.student.registration_hold_ind === this.selectedHolds
         );
       }
       return filteredPersons;
     },
-
   },
   methods: {
     capitalizeFirstLetter: function (string) {
