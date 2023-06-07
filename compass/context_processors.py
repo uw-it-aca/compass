@@ -5,6 +5,7 @@
 from django.conf import settings
 from django.urls import reverse
 from userservice.user import UserService
+from persistent_message.models import Message
 from compass.dao.term import term_context
 from compass.models import AccessGroup
 
@@ -24,9 +25,18 @@ def term(request):
 def auth_user(request):
     us = UserService()
     roles = AccessGroup.objects.get_roles_for_user(request)
-    return {
+
+    ret = {
         'user_netid': us.get_original_user(),
         'user_override': us.get_user(),
-        'user_role': ','.join(sorted(roles)),
         'signout_url': reverse('saml_logout'),
+        'user_role': ','.join(sorted(roles)),
+        'messages': [],
     }
+
+    for message in Message.objects.active_messages():
+        if 'message_level' not in ret:
+            ret['message_level'] = message.get_level_display().lower()
+        ret['messages'].append(message.render())
+
+    return ret
