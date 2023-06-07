@@ -32,6 +32,9 @@
         lastFinalExamDay: "{{ last_final_exam_date }}",
         weekOfTerm: "{{ term_week }}"
       };
+
+      window.persistent_msgs = {{ messages|safe }},
+      window.msg_level = "{{ message_level }}"
     </script>
 
     <!-- vite css bundle -->
@@ -41,14 +44,6 @@
 
 <body{% if google_analytics %} data-google-analytics="{{ google_analytics }}"{% endif %} data-signout-url="{{ signout_url }}" data-user-netid="{{ user_netid }}" data-user-override="{{ user_override }}" data-user-role="{{ user_role }}" data-django-debug="{{ django_debug|lower}}" class="bg-white">
     {% csrf_token %}
-
-    <div id="persistent-messages" class="alert alert-{{ message_level }} hidden-print" role="alert">
-      {% for message in messages %}
-      <div {% if not forloop.last %} style="margin-bottom:10px;"{% endif %}>
-        <i class="fas fa-exclamation-circle fa-lg"></i> <span>{{ message }}</span>
-      </div>
-      {% endfor %}
-    </div>
 
     <!-- vue app will be injected here -->
     <div id="app"></div>
