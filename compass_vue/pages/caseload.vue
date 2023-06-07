@@ -6,65 +6,108 @@
         <div class="col">
           <div class="bg-light p-3 rounded-3">
             <div class="row">
-              <div class="col-xl-4 ms-auto">
+              <div class="col-xl-4 me-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
                   <search-student></search-student>
-                  <div>
-                    <label for="classFilter">Class:</label>
-                    <select id="classFilter" v-model="selectedClass" class="">
+                </div>
+              </div>
+              <div class="col-xl-8">
+                <div
+                  class="row gy-2 gx-3 align-items-center justify-content-end"
+                >
+                  <div class="col-auto">
+                    <label for="classFilter" class="fw-bold lh-lg"
+                      >Class:</label
+                    >
+                    <select
+                      id="classFilter"
+                      v-model="selectedClass"
+                      class="form-select form-select-sm"
+                    >
                       <option selected :value="undefined">All</option>
                       <option
-                        v-for="option in classOptions"
+                        v-for="(option, index) in classOptions"
                         v-bind:value="option.id"
+                        :key="index"
                       >
                         {{ option.value }}
                       </option>
                     </select>
-                    <label for="scholarshipFilter">Scholarship:</label>
+                  </div>
+
+                  <div class="col-auto">
+                    <label for="campusFilter" class="fw-bold lh-lg"
+                      >Campus:</label
+                    >
+                    <select
+                      id="campusFilter"
+                      v-model="selectedCampus"
+                      class="form-select form-select-sm"
+                    >
+                      <option selected :value="undefined">All</option>
+                      <option
+                        v-for="(option, index) in campusOptions"
+                        v-bind:value="option.id"
+                        :key="index"
+                      >
+                        {{ option.value }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-auto">
+                    <label for="scholarshipFilter" class="fw-bold lh-lg"
+                      >Scholarship:</label
+                    >
                     <select
                       id="scholarshipFilter"
                       v-model="selectedScholarship"
-                      class=""
+                      class="form-select form-select-sm"
                     >
                       <option selected :value="undefined">All</option>
                       <option
-                        v-for="option in scholarshipOptions"
+                        v-for="(option, index) in scholarshipOptions"
                         v-bind:value="option.id"
+                        :key="index"
                       >
                         {{ option.value }}
                       </option>
                     </select>
-                    <label for="campusFilter">Campus:</label>
-                    <select id="campusFilter" v-model="selectedCampus" class="">
-                      <option selected :value="undefined">All</option>
-                      <option
-                        v-for="option in campusOptions"
-                        v-bind:value="option.id"
-                      >
-                        {{ option.value }}
-                      </option>
-                    </select>
-                    <label for="registrationFilter">Registration Status:</label>
+                  </div>
+
+                  <div class="col-auto">
+                    <label for="registrationFilter" class="fw-bold lh-lg"
+                      >Registered:</label
+                    >
                     <select
                       id="registrationFilter"
                       v-model="selectedRegistration"
-                      class=""
+                      class="form-select form-select-sm"
                     >
                       <option selected :value="undefined">All</option>
                       <option
-                        v-for="option in registrationOptions"
+                        v-for="(option, index) in registrationOptions"
                         v-bind:value="option.id"
+                        :key="index"
                       >
                         {{ option.value }}
                       </option>
                     </select>
-                    <label for="holdsFilter">Holds Status:</label>
-                    <select id="holdsFilter" v-model="selectedHolds" class="">
+                  </div>
+                  <div class="col-auto">
+                    <label for="holdsFilter" class="fw-bold lh-lg"
+                      >Registration Holds:</label
+                    >
+                    <select
+                      id="holdsFilter"
+                      v-model="selectedHolds"
+                      class="form-select form-select-sm"
+                    >
                       <option selected :value="undefined">All</option>
                       <option
-                        v-for="option in holdsOptions"
+                        v-for="(option, index) in holdsOptions"
                         v-bind:value="option.id"
+                        :key="index"
                       >
                         {{ option.value }}
                       </option>
@@ -72,8 +115,6 @@
                   </div>
                 </div>
               </div>
-              <div class="col-4"></div>
-              <div class="col-4"></div>
             </div>
           </div>
         </div>
@@ -148,12 +189,12 @@ export default {
         { id: "Bothell", value: "Bothell" },
       ],
       registrationOptions: [
-        { id: true, value: "Registered" },
-        { id: false, value: "Not Registered" },
+        { id: true, value: "Yes" },
+        { id: false, value: "No" },
       ],
       holdsOptions: [
-        { id: true, value: "Has Holds" },
-        { id: false, value: "No Holds" },
+        { id: true, value: "Yes" },
+        { id: false, value: "No" },
       ],
     };
   },
