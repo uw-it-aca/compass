@@ -36,8 +36,14 @@
               <li class="list-inline-item flex-fill">
                 <div>Scholarship</div>
                 <span
-                  class="small badge rounded-pill alert alert-secondary border-0 px-2 py-1 mb-0 me-1"
-                  >{{ person.student.transcripts.scholarship_desc }}</span
+                  class="small badge rounded-pill alert border-0 px-2 py-1 mb-0 me-1"
+                  :class="
+                    person.student.transcripts[0].scholarship_type == 3 ||
+                    person.student.transcripts[0].scholarship_type == 4
+                      ? 'alert-danger'
+                      : 'alert-secondary'
+                  "
+                  >{{ person.student.transcripts[0].scholarship_desc }}</span
                 >
               </li>
               <li class="list-inline-item flex-fill">
