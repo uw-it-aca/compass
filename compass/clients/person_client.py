@@ -5,7 +5,8 @@
 from uw_person_client.clients.core_client import UWPersonClient
 from uw_person_client.components import Person, Student, Transcript
 from uw_person_client.databases.uwpds import UWPDS
-from uw_person_client.exceptions import AdviserNotFoundException
+from uw_person_client.exceptions import (
+    PersonNotFoundException, AdviserNotFoundException)
 
 
 class CompassPersonClient(UWPersonClient):

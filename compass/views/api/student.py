@@ -4,19 +4,21 @@
 
 from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
+from compass.dao.person import (
+    valid_uwnetid, valid_uwregid, valid_student_number, valid_system_key)
 from compass.models import (
     Student, Contact, StudentAffiliation, Visit, StudentEligibility)
 from compass.serializers import (
     ContactReadSerializer, StudentAffiliationReadSerializer,
     VisitReadSerializer, StudentWriteSerializer,
     StudentEligibilityReadSerializer)
+from compass.clients import (
+    CompassPersonClient, PersonNotFoundException)
 from django.core.exceptions import PermissionDenied
 from django.http import JsonResponse, HttpResponseNotFound
 from restclients_core.exceptions import DataFailureException
 from rest_framework.response import Response
 from rest_framework import status
-from uw_person_client import UWPersonClient
-from uw_person_client.exceptions import PersonNotFoundException
 from uw_sws.term import (
     get_current_term, get_next_term, get_term_after,
     get_term_by_year_and_quarter)
@@ -32,21 +34,22 @@ class StudentView(BaseAPIView):
 
     /api/internal/student/[student_number|uwnetid]/
     '''
-    def get(self, request, student_identifier):
-        access_groups = self.get_access_groups(request)
+    def get(self, request, identifier):
         try:
-            client = UWPersonClient()
-            try:
-                person = client.get_person_by_uwnetid(student_identifier)
-            except PersonNotFoundException:
-                person = client.get_person_by_student_number(
-                    student_identifier)
+            client = CompassPersonClient()
+            if valid_uwnetid(identifier):
+                person = client.get_person_by_uwnetid(identifier)
+            elif valid_student_number(identifier):
+                person = client.get_person_by_student_number(identifier)
+            else:
+                return Response('Invalid student identifier',
+                                status=status.HTTP_400_BAD_REQUEST)
             person.photo_url = PhotoDAO().get_photo_url(person.uwregid)
             return JsonResponse(person.to_dict(), safe=False)
         except PersonNotFoundException:
             return HttpResponseNotFound()
 
-    def post(self, request, student_identifier=None):
+    def post(self, request, identifier=None):
         access_groups = self.get_access_groups(request)
         try:
             # check user permissions for every group that the user belongs to
@@ -85,6 +88,10 @@ class StudentSchedulesView(BaseAPIView):
     /api/internal/student/[uwregid]/schedules/
     '''
     def get(self, request, uwregid):
+        if not valid_uwregid(uwregid):
+            return Response('Invalid uwregid',
+                            status=status.HTTP_400_BAD_REQUEST)
+
         cur_term = get_current_term()
         next_term = get_next_term()
         term_after = get_term_after(next_term)
@@ -105,8 +112,11 @@ class StudentContactsView(BaseAPIView):
 
     /api/internal/student/[systemkey]/contacts/
     '''
-
     def get(self, request, systemkey):
+        if not valid_system_key(systemkey):
+            return Response('Invalid systemkey',
+                            status=status.HTTP_400_BAD_REQUEST)
+
         queryset = Contact.objects.filter(
             student__system_key=systemkey).order_by('-checkin_date')
         serializer = ContactReadSerializer(queryset, many=True)
@@ -121,6 +131,10 @@ class StudentAffiliationsView(BaseAPIView):
     '''
 
     def get(self, request, systemkey):
+        if not valid_system_key(systemkey):
+            return Response('Invalid systemkey',
+                            status=status.HTTP_400_BAD_REQUEST)
+
         access_groups = self.get_access_groups(request)
         affiliations = []
 
@@ -145,6 +159,10 @@ class StudentVisitsView(BaseAPIView):
     /api/internal/student/[systemkey]/visits/
     '''
     def get(self, request, systemkey):
+        if not valid_system_key(systemkey):
+            return Response('Invalid systemkey',
+                            status=status.HTTP_400_BAD_REQUEST)
+
         access_groups = self.get_access_groups(request)
         queryset = Visit.objects.filter(
             student__system_key=systemkey,
@@ -161,7 +179,7 @@ class StudentTranscriptsView(BaseAPIView):
     /api/internal/student/[uwregid]/transcripts/
     '''
     def get(self, request, uwregid):
-        client = UWPersonClient()
+        client = CompassPersonClient()
         person = client.get_person_by_uwregid(uwregid)
 
         transcripts = []
@@ -188,6 +206,10 @@ class StudentEligibilityView(BaseAPIView):
     /api/internal/student/[systemkey]/eligibility[/eligibility_id]
     '''
     def get(self, request, systemkey, eligibility_id):
+        if not valid_system_key(systemkey):
+            return Response('Invalid systemkey',
+                            status=status.HTTP_400_BAD_REQUEST)
+
         access_groups = self.get_access_groups(request)
         queryset = StudentEligibility.objects.filter(
             student__system_key=systemkey,

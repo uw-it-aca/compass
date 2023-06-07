@@ -5,7 +5,7 @@
 from django.db import models
 from django.utils.text import slugify
 from simple_history.models import HistoricalRecords
-from uw_person_client import UWPersonClient
+from compass.clients import CompassPersonClient
 from compass.dao.group import is_group_member
 from uw_gws import GWS
 from restclients_core.exceptions import DataFailureException
@@ -22,11 +22,9 @@ class AppUserManager(models.Manager):
         needed.
         """
         # request the current person object for the user
-        client = UWPersonClient()
-        person = client.get_person_by_uwnetid(uwnetid)
+        person = CompassPersonClient().get_person_by_uwnetid(uwnetid)
         # check the AppUser table to see if they have an existing entry
-        persons_netids = person.prior_uwnetids + [person.uwnetid]
-        for netid in persons_netids:
+        for netid in (person.prior_uwnetids + [person.uwnetid]):
             try:
                 # update the AppUsers uwnetid
                 user = AppUser.objects.get(uwnetid=netid)

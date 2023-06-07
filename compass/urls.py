@@ -61,7 +61,7 @@ if settings.DEBUG:
 urlpatterns += [
     re_path(r"^admin", admin_site.urls),
     re_path(
-        r"^api/internal/student/(?P<student_identifier>[-@:\w]+)/$",
+        r"^api/internal/student/(?P<identifier>[-@:\w]+)/$",
         StudentView.as_view(),
     ),
     re_path(
