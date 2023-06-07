@@ -3,10 +3,10 @@
     <table class="table m-0">
       <thead class="table-light text-muted small">
         <tr>
-          <th scope="col" style="width: 33%" class="ps-3">Student</th>
+          <th scope="col" style="width: 25%" class="ps-3">Student</th>
           <th scope="col" style="width: 15%">Class</th>
           <th scope="col">Campus</th>
-          <th scope="col" style="width: 33%" class="text-nowrap">Status</th>
+          <th scope="col" style="width: 40%" class="text-nowrap">Status</th>
         </tr>
       </thead>
       <tbody>
@@ -32,6 +32,13 @@
                   {{ person.student.special_program_code }},
                   {{ person.student.special_program_desc }}
                 </span>
+              </li>
+              <li class="list-inline-item flex-fill">
+                <div>Scholarship</div>
+                <span
+                  class="small badge rounded-pill alert alert-secondary border-0 px-2 py-1 mb-0 me-1"
+                  >{{ person.student.transcripts.scholarship_desc }}</span
+                >
               </li>
               <li class="list-inline-item flex-fill">
                 <div>Registered</div>
