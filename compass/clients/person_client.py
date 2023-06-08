@@ -3,9 +3,10 @@
 
 
 from uw_person_client.clients.core_client import UWPersonClient
-from uw_person_client.components import Person, Student
+from uw_person_client.components import Person, Student, Transcript
 from uw_person_client.databases.uwpds import UWPDS
-from uw_person_client.exceptions import AdviserNotFoundException
+from uw_person_client.exceptions import (
+    PersonNotFoundException, AdviserNotFoundException)
 
 
 class CompassPersonClient(UWPersonClient):
@@ -35,11 +36,20 @@ class CompassPersonClient(UWPersonClient):
              self.DB.Student.special_program_desc,
              self.DB.Student.enroll_status_code,
              self.DB.Student.enroll_status_request_code,
-             self.DB.Student.enroll_status_desc).join(
-            self.DB.Student).join(self.DB.StudentToAdviser).join(
-            self.DB.Adviser).filter(
-                self.DB.Adviser.id == sqla_adviser.id).order_by(
-            self.DB.Person.display_name)
+             self.DB.Student.enroll_status_desc,
+             self.DB.Transcript.scholarship_type,
+             self.DB.Transcript.scholarship_desc,)\
+            .join(self.DB.Person)\
+            .join(self.DB.StudentToAdviser)\
+            .join(self.DB.Adviser) \
+            .join(self.DB.Transcript,
+                  self.DB.Student.id == self.DB.Transcript.student_id) \
+            .join(self.DB.Term,
+                  self.DB.Transcript.tran_term_id == self.DB.Term.id) \
+            .order_by(self.DB.Student.id, self.DB.Term.year.desc(),
+                      self.DB.Term.quarter.desc()) \
+            .distinct(self.DB.Student.id) \
+            .filter(self.DB.Adviser.id == sqla_adviser.id)
         persons = []
         for item in sqla_persons.all():
             person = Person()
@@ -60,6 +70,13 @@ class CompassPersonClient(UWPersonClient):
             student.enroll_status_code = item[13]
             student.enroll_status_request_code = item[14]
             student.enroll_status_desc = item[15]
+            latest_transcript = Transcript()
+            latest_transcript.scholarship_type = item[16]
+            latest_transcript.scholarship_desc = item[17]
+            student.transcripts = [latest_transcript]
             person.student = student
             persons.append(person)
+        # sorting by display name, can't get it to work in SQL-Alchemy
+        persons.sort(key=lambda x: x.display_name)
+
         return persons

@@ -3,14 +3,15 @@
 
 
 from compass.views.api import BaseAPIView
+from compass.dao.person import valid_uwnetid
 from compass.dao.photo import PhotoDAO
-from compass.clients import CompassPersonClient
+from compass.clients import (
+    CompassPersonClient, PersonNotFoundException, AdviserNotFoundException)
 from compass.models import Contact
 from compass.serializers import ContactReadSerializer
 from django.http import JsonResponse
-from uw_person_client import UWPersonClient
-from uw_person_client.exceptions import AdviserNotFoundException, \
-    PersonNotFoundException
+from rest_framework.response import Response
+from rest_framework import status
 import datetime
 
 
@@ -21,7 +22,11 @@ class AdviserContactsView(BaseAPIView):
     """
 
     def get(self, request, adviser_netid):
-        client = UWPersonClient()
+        if not valid_uwnetid(adviser_netid):
+            return Response('Invalid uwnetid',
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        client = CompassPersonClient()
         earliest_contact_date = datetime.datetime.now(datetime.timezone.utc)\
             - datetime.timedelta(hours=72)
         contact_queryset = Contact.objects.filter(
@@ -50,6 +55,10 @@ class AdviserCaseloadView(BaseAPIView):
     """
 
     def get(self, request, adviser_netid):
+        if not valid_uwnetid(adviser_netid):
+            return Response('Invalid uwnetid',
+                            status=status.HTTP_400_BAD_REQUEST)
+
         client = CompassPersonClient()
         try:
             persons = client.get_adviser_caseload(adviser_netid)

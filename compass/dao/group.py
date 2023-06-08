@@ -41,3 +41,7 @@ def can_override_user(request):
 
 def can_proxy_restclient(request, service, url):
     return is_admin_user(request) or is_support_user(request)
+
+
+def can_manage_persistent_messages(request):
+    return is_admin_user(request)

@@ -251,7 +251,7 @@ class VisitReadSerializer(serializers.ModelSerializer):
                   'checkin_date', 'checkout_date']
 
 
-class EligibilityReadSerializer(serializers.ModelSerializer):
+class EligibilityTypeSerializer(serializers.ModelSerializer):
 
     access_group = AccessGroupSerializer(many=False, read_only=False)
 
@@ -262,11 +262,21 @@ class EligibilityReadSerializer(serializers.ModelSerializer):
             'access_group_id': {'validators': []},
         }
 
+    def create(self, validated_data):
+        access_group = AccessGroup.objects.get(
+            access_group_id=validated_data['access_group']['access_group_id'])
+        validated_data["access_group"] = access_group
+        return EligibilityType.objects.create(**validated_data)
 
-class StudentEligibilityReadSerializer(serializers.ModelSerializer):
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get('name', instance.name)
+        instance.save()
+        return instance
 
-    affiliation = AffiliationSerializer()
-    eligibility = EligibilityReadSerializer(read_only=True, many=True)
+
+class StudentEligibilitySerializer(serializers.ModelSerializer):
+
+    eligibility = EligibilityTypeSerializer(read_only=True, many=True)
 
     class Meta:
         model = StudentEligibility

@@ -16,8 +16,9 @@ class AffiliationsView(BaseAPIView):
     /api/internal/accessgroup/[access_group_pk]/affiliations/
     '''
 
-    def get(self, request, access_group_pk):
+    def get(self, request):
+        access_groups = self.get_access_groups(request)
         affiliations = Affiliation.objects.filter(
-            access_group=access_group_pk).filter(active=True).all()
+            access_group__in=access_groups).filter(active=True).all()
         serializer = AffiliationSerializer(affiliations, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

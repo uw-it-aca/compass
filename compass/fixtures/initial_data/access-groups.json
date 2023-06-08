@@ -6,5 +6,13 @@
    "name": "OMAD",
    "access_group_id": "u_astra_group1"
   }
+ },
+ {
+  "model": "compass.accessgroup",
+  "pk": 2,
+  "fields": {
+   "name": "General Advising",
+   "access_group_id": "u_astra_group33"
+  }
  }
 ]
