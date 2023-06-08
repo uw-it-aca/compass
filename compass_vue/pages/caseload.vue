@@ -174,8 +174,8 @@ export default {
       selectedHolds: undefined,
       scholarshipOptions: [
         { id: 1, value: "Dean's List" },
-        { id: 4, value: "Academic Warning" },
-        { id: 3, value: "Academic Probation" },
+        { id: 4, value: "Warning" },
+        { id: 3, value: "Probation" },
       ],
       classOptions: [
         { id: "Freshman", value: "Freshman" },

@@ -36,8 +36,14 @@
               <li class="list-inline-item flex-fill">
                 <div>Scholarship</div>
                 <span
-                  class="small badge rounded-pill alert alert-secondary border-0 px-2 py-1 mb-0 me-1"
-                  >{{ person.student.transcripts.scholarship_desc }}</span
+                  class="small badge rounded-pill alert border-0 px-2 py-1 mb-0 me-1"
+                  :class="
+                    getScholarshipData(person).scholarship_type == 3 ||
+                    getScholarshipData(person).scholarship_type == 4
+                      ? 'alert-danger'
+                      : 'alert-secondary'
+                  "
+                  >{{ getScholarshipData(person).scholarship_desc }}</span
                 >
               </li>
               <li class="list-inline-item flex-fill">
@@ -103,6 +109,21 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    getScholarshipData: function (person){
+      try {
+        return {
+          'scholarship_type': person.student.transcripts[0].scholarship_type,
+          'scholarship_desc': person.student.transcripts[0].scholarship_desc
+        }
+      } catch (err) {
+        return {
+          'scholarship_type': undefined,
+          'scholarship_desc': undefined
+        }
+      }
+    }
   },
 };
 </script>
