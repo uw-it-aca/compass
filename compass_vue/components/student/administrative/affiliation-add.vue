@@ -38,18 +38,21 @@
         <div class="modal-body">
           <div class="row mb-3">
             <div class="col">
-              <lable class="form-label small fw-bold me-2"> Program </lable>
+              <label class="form-label small fw-bold me-2"> Program </label>
+              <select>
+              <option v-for="a in affiliations" value="{{a.id}}">{{ a.name }}</option>
+              </select>
             </div>
             <div class="col">
-              <lable class="form-label small fw-bold me-2">External</lable>
+              <label class="form-label small fw-bold me-2">External</label>
             </div>
           </div>
 
           <div class="mb-3">
-            <lable class="form-label small fw-bold me-2">Cohort</lable>
+            <label class="form-label small fw-bold me-2">Cohort</label>
           </div>
           <div class="mb-3">
-            <lable class="form-label small fw-bold me-2">Admin Note</lable>
+            <label class="form-label small fw-bold me-2">Admin Note</label>
             <textarea
               :class="
                 formErrors.notes ? 'is-invalid form-control' : 'form-control'
