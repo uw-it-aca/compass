@@ -259,4 +259,3 @@ class StudentEligibilityView(BaseAPIView):
         except PermissionDenied:
             return Response("User not authorized to update student data.",
                             status=status.HTTP_401_UNAUTHORIZED)
-
