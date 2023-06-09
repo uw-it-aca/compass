@@ -4,7 +4,7 @@
     data-bs-toggle="modal"
     :data-bs-target="'#deleteAffiliationsModal'"
     class="btn text-nowrap"
-    @click="getAffiliations()"
+    @click="loadAffiliations()"
     :class="[
       buttonType === 'button'
         ? 'rounded-3 px-3 py-0'
@@ -91,13 +91,15 @@ export default {
   },
   data() {
     return {
-      affiliations: this.getStudentAffiliations(),
+      affiliations: [],
       formErrors: {},
       updatePermissionDenied: false,
       errorResponse: "",
     };
   },
-  created() {},
+  created() {
+    this.loadAffiliations();
+  },
   mounted() {
     /*
     this.$refs.editAffiliationsModal.addEventListener(
@@ -111,17 +113,14 @@ export default {
     */
   },
   methods: {
-    getAffiliations() {
-      /*
-      this.getStudentAffiliations(this.person.student.system_key).then(
+    loadAffiliations() {
+      this.getAffiliations().then(
         (response) => {
           if (response.data) {
-            let newAffiliations;
-            // update the current affiliations
-            this.affiliations = newAffiliations;
+            this.affiliations = response.data;
           }
         }
-      );*/
+      );
     },
     saveAffiliations() {
       var editAffiliationsModal = Modal.getInstance(
@@ -149,7 +148,7 @@ export default {
     },
     resetForm() {
       this.clearFormErrors();
-      //this.affiliations = this.getStudentAffiliations();
+      this.loadAffiliations();
     },
   },
 };

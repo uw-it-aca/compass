@@ -4,7 +4,7 @@
     data-bs-toggle="modal"
     :data-bs-target="'#affiliationsModal'"
     class="btn text-nowrap"
-    @click="getAffiliations()"
+    @click="loadAffiliations()"
     :class="[
       buttonType === 'button'
         ? 'btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2'
@@ -38,18 +38,21 @@
         <div class="modal-body">
           <div class="row mb-3">
             <div class="col">
-              <lable class="form-label small fw-bold me-2"> Program </lable>
+              <label class="form-label small fw-bold me-2"> Program </label>
+              <select>
+              <option v-for="a in affiliations" value="{{a.id}}">{{ a.name }}</option>
+              </select>
             </div>
             <div class="col">
-              <lable class="form-label small fw-bold me-2">External</lable>
+              <label class="form-label small fw-bold me-2">External</label>
             </div>
           </div>
 
           <div class="mb-3">
-            <lable class="form-label small fw-bold me-2">Cohort</lable>
+            <label class="form-label small fw-bold me-2">Cohort</label>
           </div>
           <div class="mb-3">
-            <lable class="form-label small fw-bold me-2">Admin Note</lable>
+            <label class="form-label small fw-bold me-2">Admin Note</label>
             <textarea
               :class="
                 formErrors.notes ? 'is-invalid form-control' : 'form-control'
@@ -100,13 +103,15 @@ export default {
   },
   data() {
     return {
-      affiliations: this.getStudentAffiliations(),
+      affiliations: [],
       formErrors: {},
       updatePermissionDenied: false,
       errorResponse: "",
     };
   },
-  created() {},
+  created() {
+    this.loadAffiliations();
+  },
   mounted() {
     this.$refs.affiliationsModal.addEventListener(
       "shown.bs.modal",
@@ -118,13 +123,11 @@ export default {
     );
   },
   methods: {
-    getAffiliations() {
-      this.getStudentAffiliations(this.person.student.system_key).then(
+    loadAffiliations() {
+      this.getAffiliations().then(
         (response) => {
           if (response.data) {
-            let newAffiliations;
-            // update the current affiliations
-            this.affiliations = newAffiliations;
+            this.affiliations = response.data;
           }
         }
       );
@@ -155,7 +158,7 @@ export default {
     },
     resetForm() {
       this.clearFormErrors();
-      //this.affiliations = this.getStudentAffiliations();
+      this.loadAffiliations();
     },
   },
 };

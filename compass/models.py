@@ -209,12 +209,14 @@ class Contact(models.Model):
     """
 
     # required fields
-    app_user = models.ForeignKey("AppUser", on_delete=models.CASCADE)
+    app_user = models.ForeignKey("AppUser",
+                                 on_delete=models.SET_NULL, null=True)
     access_group = models.ManyToManyField("AccessGroup")
-    student = models.ForeignKey("Student", on_delete=models.CASCADE)
-    contact_type = models.ForeignKey("ContactType", on_delete=models.CASCADE)
+    student = models.ForeignKey("Student", on_delete=models.PROTECT)
+    contact_type = models.ForeignKey("ContactType",
+                                     on_delete=models.SET_NULL, null=True)
     contact_method = models.ForeignKey("ContactMethod",
-                                       on_delete=models.CASCADE, null=True)
+                                       on_delete=models.SET_NULL, null=True)
     checkin_date = models.DateTimeField()
     # optional fields
     noshow = models.BooleanField(default=False)
@@ -336,8 +338,7 @@ class StudentEligibility(models.Model):
     """
     Services and resources for which a Student is provided access
     """
-    student = models.ForeignKey(
-        "Student", on_delete=models.CASCADE)
+    student = models.ForeignKey("Student", on_delete=models.CASCADE)
     eligibility = models.ManyToManyField("EligibilityType")
 
 
@@ -355,9 +356,12 @@ class Visit(models.Model):
     """
     Student interaction with service
     """
-    student = models.ForeignKey("Student", on_delete=models.CASCADE)
-    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    visit_type = models.ForeignKey("VisitType", on_delete=models.CASCADE)
+    student = models.ForeignKey("Student",
+                                on_delete=models.CASCADE)
+    access_group = models.ForeignKey("AccessGroup",
+                                     on_delete=models.CASCADE)
+    visit_type = models.ForeignKey("VisitType",
+                                   null=True, on_delete=models.SET_NULL)
     course_code = models.CharField(max_length=64)
     checkin_date = models.DateTimeField()
     checkout_date = models.DateTimeField()

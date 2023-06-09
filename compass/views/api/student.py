@@ -7,11 +7,12 @@ from compass.dao.photo import PhotoDAO
 from compass.dao.person import (
     valid_uwnetid, valid_uwregid, valid_student_number, valid_system_key)
 from compass.models import (
-    Student, Contact, StudentAffiliation, Visit, StudentEligibility)
+    Student, Contact, StudentAffiliation, Visit,
+    EligibilityType, StudentEligibility)
 from compass.serializers import (
     ContactReadSerializer, StudentAffiliationReadSerializer,
     VisitReadSerializer, StudentWriteSerializer,
-    StudentEligibilityReadSerializer)
+    StudentEligibilitySerializer, EligibilityTypeSerializer)
 from compass.clients import (
     CompassPersonClient, PersonNotFoundException)
 from django.core.exceptions import PermissionDenied
@@ -203,16 +204,58 @@ class StudentEligibilityView(BaseAPIView):
     '''
     API endpoint returning a list of eligible resources for a student
 
-    /api/internal/student/[systemkey]/eligibility[/eligibility_id]
+    /api/internal/student/[systemkey]/eligibility/
     '''
-    def get(self, request, systemkey, eligibility_id):
+    def get(self, request, systemkey):
         if not valid_system_key(systemkey):
             return Response('Invalid systemkey',
                             status=status.HTTP_400_BAD_REQUEST)
 
         access_groups = self.get_access_groups(request)
-        queryset = StudentEligibility.objects.filter(
-            student__system_key=systemkey,
-            eligibility_type__access_group__in=access_groups)
-        serializer = StudentEligibilityReadSerializer(queryset, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        eligibilities = []
+        try:
+            student = StudentEligibility.objects.get(
+                student__system_key=systemkey)
+            for e in student.eligibility.all():
+                if e.access_group in access_groups:
+                    eligibilities.append(EligibilityTypeSerializer(e).data)
+        except StudentEligibility.DoesNotExist:
+            pass
+
+        return Response(eligibilities, status=status.HTTP_200_OK)
+
+    def post(self, request, systemkey):
+        access_groups = self.get_access_groups(request)
+        try:
+            # check user permissions for every group that the user belongs to
+            for group in access_groups:
+                self.validate_user_access(request, group.id)
+
+            system_key = int(systemkey)
+            eligibility_type_id = int(request.data.get("eligibility_type_id"))
+            if system_key < 0 or eligibility_type_id < 0:
+                return Response("Invalid Key or TypeID",
+                                status=status.HTTP_400_BAD_REQUEST)
+
+            try:
+                # update existing student record if one exists
+                student = Student.objects.get(system_key=system_key)
+                eligibility_type = EligibilityType.objects.get(
+                    id=eligibility_type_id, access_group__in=access_groups)
+                s_e, _ = StudentEligibility.objects.get_or_create(
+                    student=student)
+
+                s_e.eligibility.add(eligibility_type)
+                s_e.save()
+
+                serializer = StudentEligibilitySerializer(s_e)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            except Student.DoesNotExist:
+                return Response("Unknown Student.",
+                                status=status.HTTP_404_NOT_FOUND)
+            except EligibilityType.DoesNotExist:
+                return Response("Unknown or Unpermitted Eligiblity.",
+                                status=status.HTTP_404_NOT_FOUND)
+        except PermissionDenied:
+            return Response("User not authorized to update student data.",
+                            status=status.HTTP_401_UNAUTHORIZED)

@@ -4,7 +4,7 @@
 
 from compass.views.api import BaseAPIView
 from compass.models import EligibilityType
-from compass.serializers import EligibilityReadSerializer
+from compass.serializers import EligibilityTypeSerializer
 from rest_framework.response import Response
 from rest_framework import status
 
@@ -16,10 +16,10 @@ class EligibilityView(BaseAPIView):
     /api/internal/eligibility
     '''
     def get(self, request):
+        eligibilities = []
         access_groups = self.get_access_groups(request)
-        eligibilities = EligibilityType.objects.filter(
-            access_group__in=access_groups)
-        serializer = EligibilityReadSerializer(
-            eligibilities, many=False)
+        for e in EligibilityType.objects.filter(
+                access_group__in=access_groups):
+            eligibilities.append(EligibilityTypeSerializer(e, many=False).data)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(eligibilities, status=status.HTTP_200_OK)
