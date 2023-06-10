@@ -87,6 +87,7 @@
 <script>
 import dataMixin from "../../../mixins/data_mixin.js";
 import { Modal } from "bootstrap";
+import { useAffiliationStore } from "../../../stores/affiliations";
 
 export default {
   mixins: [dataMixin],
@@ -109,6 +110,10 @@ export default {
       errorResponse: "",
     };
   },
+  setup() {
+    const storeAffiliations = useAffiliationStore();
+    return { storeAffiliations };
+  },
   created() {
     this.loadAffiliations();
   },
@@ -124,7 +129,7 @@ export default {
   },
   methods: {
     loadAffiliations() {
-      this.getAffiliations().then(
+      this.storeAffiliations.affiliationsPromise.then(
         (response) => {
           if (response.data) {
             this.affiliations = response.data;
