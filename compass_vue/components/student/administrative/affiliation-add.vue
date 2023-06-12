@@ -129,7 +129,7 @@ export default {
   },
   methods: {
     loadAffiliations() {
-      this.storeAffiliations.affiliationsPromise.then(
+      this.storeAffiliations.getAffiliations.then(
         (response) => {
           if (response.data) {
             this.affiliations = response.data;

@@ -10,7 +10,7 @@ export const useAffiliationStore = defineStore({
     };
   },
   getters: {
-    affiliationsPromise(state) {
+    getAffiliations(state) {
       if(state.affiliationsLoaded) {
         return new Promise((resolve) => {
           resolve({"data": state.affiliations});

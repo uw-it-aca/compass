@@ -109,7 +109,7 @@ export default {
     },
     loadPrograms: function () {
       var _this = this;
-      this.storeAffiliations.affiliationsPromise.then((response) => {
+      this.storeAffiliations.getAffiliations.then((response) => {
         if (response.data) {
           _this.groupedPrograms = Object.assign(
             {},

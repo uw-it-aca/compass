@@ -128,7 +128,7 @@ export default {
   },
   methods: {
     loadAffiliations() {
-      this.storeAffiliations.affiliationsPromise.then((response) => {
+      this.storeAffiliations.getAffiliations.then((response) => {
           if (response.data) {
             this.affiliations = response.data;
           }
