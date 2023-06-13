@@ -5,25 +5,20 @@ export const useAffiliationStore = defineStore({
   id: "affiliation",
   state: () => {
     return {
-      affiliations: [],
+      affiliations: {},
       affiliationsLoaded: false,
     };
   },
   getters: {
     getAffiliations(state) {
-      if(state.affiliationsLoaded) {
-        return new Promise((resolve) => {
-          resolve({"data": state.affiliations});
-        });
-      } else {
-        dataMixin.methods.getAffiliations().then((response) => {
-          state.affiliations = response.data;
-          state.affiliationsLoaded = true;
-        });
-        return new Promise((resolve) => {
-          resolve({"data": state.affiliations});
-        });
+      if (!state.affiliationsLoaded) {
+        state.affiliations = {
+          request: dataMixin.methods.getAffiliations().then((response) => {
+            state.affiliations.data = response.data;
+          }),
+        };
       }
+      return state.affiliations.request;
     },
   },
   actions: {},

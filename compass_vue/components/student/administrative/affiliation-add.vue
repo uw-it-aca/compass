@@ -129,13 +129,9 @@ export default {
   },
   methods: {
     loadAffiliations() {
-      this.storeAffiliations.getAffiliations.then(
-        (response) => {
-          if (response.data) {
-            this.affiliations = response.data;
-          }
-        }
-      );
+      this.storeAffiliations.getAffiliations.then(() => {
+        this.affiliations = this.storeAffiliations.affiliations.data;
+      });
     },
     saveAffiliations() {
       var affiliationsModal = Modal.getInstance(

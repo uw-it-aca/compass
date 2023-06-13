@@ -108,15 +108,14 @@ export default {
       }, {});
     },
     loadPrograms: function () {
+      console.log('lp')
       var _this = this;
-      this.storeAffiliations.getAffiliations.then((response) => {
-        if (response.data) {
-          _this.groupedPrograms = Object.assign(
-            {},
-            _this.groupedPrograms,
-            _this._groupProgramsByAccessGroup(response.data)
-          );
-        }
+      this.storeAffiliations.getAffiliations.then(() => {
+        _this.groupedPrograms = Object.assign(
+          {},
+          _this.groupedPrograms,
+          _this._groupProgramsByAccessGroup(this.storeAffiliations.affiliations.data)
+        );
       });
     },
     saveStudentData: function () {
