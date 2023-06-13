@@ -12,11 +12,14 @@ from rest_framework.parsers import JSONParser
 from rest_framework.renderers import JSONRenderer
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from uw_saml.utils import get_attribute
+from uw_saml.utils import get_user, get_attribute
 
 
 @method_decorator(login_required, name='dispatch')
 class BaseAPIView(GenericAPIView):
+
+    def get_login_name(self, request):
+        return get_user(request)
 
     def get_access_groups(self, request):
         groups = get_attribute(request, 'isMemberOf') or []
