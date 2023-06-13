@@ -11,17 +11,16 @@ export const useStudentStore = defineStore({
   getters: {},
   actions: {
     fetchStudentTranscripts(uwregid) {
-      if (Object.prototype.hasOwnProperty.call(this.studentData, uwregid)) {
-        return this.studentData[uwregid].request;
-      } else {
+      if (!Object.prototype.hasOwnProperty.call(this.studentData, uwregid)) {
         this.studentData[uwregid] = {
           request: dataMixin.methods
-            .getStudentTranscripts(uwregid).then((response) => {
+            .getStudentTranscripts(uwregid)
+            .then((response) => {
               this.studentData[uwregid].data = response.data;
             }),
         };
-        return this.studentData[uwregid].request;
       }
+      return this.studentData[uwregid].request;
     },
     getStudentSchedules(uwregid) {
       let schedules = [];
