@@ -48,5 +48,15 @@
    "slug": "dadgar-kallascholar",
    "active": true
   }
+ },
+ {
+  "model": "compass.affiliation",
+  "pk": 6,
+  "fields": {
+   "access_group": 2,
+   "name": "Some Other Affiliation",
+   "slug": "some-other-affiliation",
+   "active": true
+  }
  }
 ]

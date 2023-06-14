@@ -16,7 +16,7 @@
     "fields": {
       "student": 2,
       "affiliation": 4,
-      "cohorts": [3],
+      "cohorts": [3, 4],
       "date": "2020-08-01",
       "actively_advised": true
     }

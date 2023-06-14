@@ -81,6 +81,11 @@ urlpatterns += [
         StudentAffiliationsView.as_view(),
     ),
     re_path(
+        r"^api/internal/student/(?P<systemkey>[\w]+)"
+        r"/affiliations/(?P<affiliation_id>[\w]+)/$",
+        StudentAffiliationsView.as_view(),
+    ),
+    re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/visits/$",
         StudentVisitsView.as_view(),
     ),
