@@ -40,6 +40,7 @@ class ContactView(BaseAPIView):
                             status=status.HTTP_401_UNAUTHORIZED)
 
     def post(self, request, contactid=None):
+        login_name = self.get_login_name(request)
         access_groups = self.get_access_groups(request)
         try:
             # if the user does not belong to any access groups, raise a
@@ -51,11 +52,12 @@ class ContactView(BaseAPIView):
                 self.validate_user_access(request, group.id)
             if not request.data:
                 return Response([], status=status.HTTP_400_BAD_REQUEST)
+
             contact_record = request.data.get('contact')
             system_key = request.data.get('system_key')
             if contact_record is not None and system_key is not None:
-                contact_record['app_user'] = \
-                    AppUser.objects.upsert_appuser(uwnetid=request.user).id
+                contact_record['app_user'] = AppUser.objects.upsert_appuser(
+                    uwnetid=login_name).id
                 student, _ = Student.objects.get_or_create(
                     system_key=system_key)
                 contact_record['student'] = student.id
