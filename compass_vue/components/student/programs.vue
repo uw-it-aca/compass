@@ -108,7 +108,6 @@ export default {
       }, {});
     },
     loadPrograms: function () {
-      console.log('lp')
       var _this = this;
       this.storeAffiliations.getAffiliations.then(() => {
         _this.groupedPrograms = Object.assign(

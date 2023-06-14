@@ -12,11 +12,13 @@ from compass.serializers import ContactReadSerializer, \
 from dateutil import parser
 from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
 from django.conf import settings
+from django.utils.text import slugify
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
+from datetime import datetime
 
 
 class ContactView(BaseAPIView):
@@ -38,6 +40,7 @@ class ContactView(BaseAPIView):
                             status=status.HTTP_401_UNAUTHORIZED)
 
     def post(self, request, contactid=None):
+        login_name = self.get_login_name(request)
         access_groups = self.get_access_groups(request)
         try:
             # if the user does not belong to any access groups, raise a
@@ -49,28 +52,68 @@ class ContactView(BaseAPIView):
                 self.validate_user_access(request, group.id)
             if not request.data:
                 return Response([], status=status.HTTP_400_BAD_REQUEST)
+
             contact_record = request.data.get('contact')
             system_key = request.data.get('system_key')
             if contact_record is not None and system_key is not None:
-                contact_record['app_user'] = \
-                    AppUser.objects.upsert_appuser(uwnetid=request.user).id
+                contact_record['app_user'] = AppUser.objects.upsert_appuser(
+                    uwnetid=login_name).id
                 student, _ = Student.objects.get_or_create(
                     system_key=system_key)
                 contact_record['student'] = student.id
                 contact_record['access_group'] = [
                     access_group.pk for access_group in access_groups]
-                try:
-                    # update existing contact record if one exists
-                    contact = Contact.objects.get(id=contactid)
-                    serializer = ContactWriteSerializer(
-                        contact, data=contact_record)
-                except Contact.DoesNotExist:
+                created = False
+                if contactid:
+                    try:
+                        # update existing contact record if one exists
+                        contact = Contact.objects.get(id=contactid)
+                        serializer = ContactWriteSerializer(
+                            contact, data=contact_record)
+                    except Contact.DoesNotExist:
+                        return Response("Unrecognized Contact Id",
+                                        status=status.HTTP_400_BAD_REQUEST)
+                else:
                     # create new contact record
+                    try:
+                        created = True
+                        if isinstance(contact_record['contact_type'], str):
+                            slug = slugify(contact_record['contact_type'])
+                            contact_record['contact_type'] = \
+                                ContactType.objects.get(slug=slug).id
+                        if isinstance(contact_record['contact_method'], str):
+                            slug = slugify(contact_record['contact_method'])
+                            contact_record['contact_method'] = \
+                                ContactMethod.objects.get(slug=slug).id
+                        if isinstance(contact_record['contact_topics'], list):
+                            topics = []
+                            for t in contact_record['contact_topics']:
+                                if isinstance(t, str):
+                                    slug = slugify(t)
+                                    topics.append(
+                                        ContactTopic.objects.get(
+                                            slug=slug).id)
+                                else:
+                                    topics.append(t)
+
+                            contact_record['contact_topics'] = topics
+
+                        if 'checkin_date' not in contact_record:
+                            contact_record['checkin_date'] = datetime.now()
+
+                    except (KeyError, ContactType.DoesNotExist,
+                            ContactMethod.DoesNotExist,
+                            ContactTopic.DoesNotExist):
+                        return Response("Unrecognized Contact Values",
+                                        status=status.HTTP_400_BAD_REQUEST)
+
                     serializer = ContactWriteSerializer(data=contact_record)
+
                 if serializer.is_valid():
                     serializer.save()
                     return Response(serializer.data,
-                                    status=status.HTTP_201_CREATED)
+                                    status=status.HTTP_201_CREATED if (
+                                        created) else status.HTTP_200_OK)
             return Response(serializer.errors,
                             status=status.HTTP_400_BAD_REQUEST)
         except PermissionDenied:

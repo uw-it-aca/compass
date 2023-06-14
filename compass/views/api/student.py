@@ -7,8 +7,8 @@ from compass.dao.photo import PhotoDAO
 from compass.dao.person import (
     valid_uwnetid, valid_uwregid, valid_student_number, valid_system_key)
 from compass.models import (
-    Student, Contact, StudentAffiliation, Visit,
-    EligibilityType, StudentEligibility)
+    Student, Contact, StudentAffiliation, Affiliation, Cohort,
+    Visit, EligibilityType, StudentEligibility)
 from compass.serializers import (
     ContactReadSerializer, StudentAffiliationReadSerializer,
     VisitReadSerializer, StudentWriteSerializer,
@@ -25,6 +25,7 @@ from uw_sws.term import (
     get_term_by_year_and_quarter)
 from uw_sws.registration import get_schedule_by_regid_and_term
 from uw_sws.enrollment import get_enrollment_history_by_regid
+from datetime import datetime
 
 TERMS = {1: "Winter", 2: "Spring", 3: "Summer", 4: "Autumn"}
 
@@ -154,6 +155,82 @@ class StudentAffiliationsView(BaseAPIView):
             pass
 
         return Response(affiliations, status=status.HTTP_200_OK)
+
+    def post(self, request, systemkey, affiliation_id=None):
+        if not valid_system_key(systemkey):
+            return Response('Invalid systemkey',
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            system_key = int(systemkey)
+            access_groups = self.get_access_groups(request)
+            affiliation_data = request.data.get('affiliation')
+
+            student = Student.objects.get(system_key=system_key)
+
+            affiliation_model_id = int(affiliation_data['affiliationId'])
+            affiliation = Affiliation.objects.get(
+                id=affiliation_model_id, access_group__in=access_groups)
+
+            if affiliation_id:
+                sa = StudentAffiliation.objects.get(id=affiliation_id)
+                sa.affiliation = affiliation
+            else:
+                sa, _ = StudentAffiliation.objects.get_or_create(
+                    student=student, affiliation=affiliation)
+
+            sa.actively_advised = affiliation_data['actively_advised']
+            sa.date = datetime.now().date()
+            cohort_objects = []
+            for c in affiliation_data['cohorts']:
+                co, _ = Cohort.objects.get_or_create(
+                    start_year=c['start_year'], end_year=c['end_year'])
+                cohort_objects.append(co)
+
+            sa.cohorts.clear()
+            for cohort in cohort_objects:
+                sa.cohorts.add(cohort)
+
+            sa.save()
+
+            serializer = StudentAffiliationReadSerializer(sa)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Student.DoesNotExist:
+            return Response("Unknown Student.",
+                            status=status.HTTP_404_NOT_FOUND)
+        except StudentAffiliation.DoesNotExist:
+            return Response("Unknown Student Affiliation.",
+                            status=status.HTTP_404_NOT_FOUND)
+        except Affiliation.DoesNotExist:
+            return Response("Unknown or Unpermitted Affiliation.",
+                            status=status.HTTP_404_NOT_FOUND)
+        except PermissionDenied:
+            return Response("User not authorized to update student data.",
+                            status=status.HTTP_401_UNAUTHORIZED)
+
+    def delete(self, request, systemkey, affiliation_id):
+        if not valid_system_key(systemkey):
+            return Response('Invalid systemkey',
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            system_key = int(systemkey)
+            access_groups = self.get_access_groups(request)
+            student = Student.objects.get(system_key=system_key)
+            student_affiliation = StudentAffiliation.objects.get(
+                id=affiliation_id, student=student,
+                affiliation__access_group__in=access_groups)
+            student_affiliation.delete()
+            return Response({}, status=status.HTTP_200_OK)
+        except Student.DoesNotExist:
+            return Response("Unknown Student.",
+                            status=status.HTTP_404_NOT_FOUND)
+        except StudentAffiliation.DoesNotExist:
+            return Response("Unknown Student Affiliation.",
+                            status=status.HTTP_404_NOT_FOUND)
+        except PermissionDenied:
+            return Response("User not authorized to update student data.",
+                            status=status.HTTP_401_UNAUTHORIZED)
 
 
 class StudentVisitsView(BaseAPIView):
