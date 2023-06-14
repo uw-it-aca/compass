@@ -2,9 +2,8 @@
   <a
     role="button"
     data-bs-toggle="modal"
-    :data-bs-target="'#deleteAffiliationsModal'"
+    :data-bs-target="'#deleteAffiliationsModal' + this.studentAffiliation.id"
     class="btn text-nowrap"
-    @click="loadAffiliations()"
     :class="[
       buttonType === 'button'
         ? 'rounded-3 px-3 py-0'
@@ -17,13 +16,14 @@
   <div
     ref="affiliationsModal"
     class="modal fade text-start"
-    :id="'deleteAffiliationsModal'"
+    :id="'deleteAffiliationsModal' + this.studentAffiliation.id"
     tabindex="-1"
-    aria-labelledby="deleteAffiliationsModalLabel"
+    aria-labelledby="deleteAffiliationsModalLabel{{ this.studentAffiliation.id }}"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
+        <form ref="form" @submit="deleteAffiliation">
         <div class="modal-header">
           <h5 class="modal-title h6 m-0 fw-bold">Delete Affiliation</h5>
           <button
@@ -45,28 +45,29 @@
                 formErrors.notes ? 'is-invalid form-control' : 'form-control'
               "
               rows="3"
+              v-model.trim="notes"
+              required
             ></textarea>
           </div>
         </div>
 
         <div class="modal-footer">
           <div class="text-end">
-            <button
+            <input
               type="button"
               class="btn btn-secondary me-2"
               data-bs-dismiss="modal"
+              value="Cancel"
             >
-              Cancel
-            </button>
-            <button
-              type="button"
+            <input
+              type="submit"
               class="btn btn-primary bg-danger"
-              @click="saveAffiliations()"
+              value="Delete"
+              :disabled="invalidForm"
             >
-              Delete
-            </button>
           </div>
         </div>
+        </form>
       </div>
     </div>
   </div>
@@ -88,67 +89,73 @@ export default {
       type: Object,
       required: true,
     },
+    studentAffiliation: {
+      type: Object,
+      required: true
+    },
+    studentAffiliations: {
+      type: Object,
+      required: true
+    },
   },
   data() {
     return {
-      affiliations: [],
+      notes: "",
       formErrors: {},
       updatePermissionDenied: false,
       errorResponse: "",
     };
   },
-  created() {
-    this.loadAffiliations();
-  },
-  mounted() {
-    /*
-    this.$refs.editAffiliationsModal.addEventListener(
-      "shown.bs.modal",
-      this.clearFormErrors
-    );
-    this.$refs.editAffiliationsModal.addEventListener(
-      "hidden.bs.modal",
-      this.resetForm
-    );
-    */
+  created() {},
+  mounted() {},
+  computed: {
+    invalidForm() {
+      return !(this.notes.length > 0);
+    }
   },
   methods: {
-    loadAffiliations() {
-      this.getAffiliations().then(
-        (response) => {
-          if (response.data) {
-            this.affiliations = response.data;
-          }
-        }
-      );
-    },
-    saveAffiliations() {
-      var editAffiliationsModal = Modal.getInstance(
-        document.getElementById("editAffiliationsModal")
-      );
-      /*
-      this.saveStudentAffiliations(this.person.student.system_key)
+    deleteAffiliation() {
+
+      event.preventDefault();
+
+      this.deleteStudentAffiliation(this.person.student.system_key, this.studentAffiliation.id)
         .then(() => {
+          this.updateStudentAffiliation();
           this.$emit("affiliationsUpdated");
-          affiliationsModal.hide();
+          this.hideModal()
         })
         .catch((error) => {
+          console.log("ERROR: " + error);
           if (error.response.status == 401) {
             this.updatePermissionDenied = true;
             this.errorResponse = error.response.data;
             setTimeout(() => (this.updatePermissionDenied = false), 3000);
           } else {
-            this.formErrors = error.response.data;
+            this.formErrors.notes = error.response.data;
           }
         });
-        */
+    },
+    updateStudentAffiliation() {
+      let deleteIndex = null;
+
+      this.studentAffiliations.forEach((item, index) => {
+        if (this.studentAffiliation.id == item.id) deleteIndex = index;
+      });
+
+      this.studentAffiliations.splice(deleteIndex, 1);
+    },
+    hideModal() {
+      var deleteAffiliationsModal = Modal.getInstance(
+        document.getElementById("deleteAffiliationsModal" + this.studentAffiliation.id)
+      );
+
+      deleteAffiliationsModal.hide();
     },
     clearFormErrors() {
       this.formErrors = {};
     },
     resetForm() {
       this.clearFormErrors();
-      this.loadAffiliations();
     },
   },
 };
