@@ -13,7 +13,7 @@ class AffiliationsView(BaseAPIView):
     '''
     API endpoint returning a list of affiliations for the user's access group
 
-    /api/internal/accessgroup/[access_group_pk]/affiliations/
+    /api/internal/accessgroup/affiliations/
     '''
 
     def get(self, request):

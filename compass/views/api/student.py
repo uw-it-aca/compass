@@ -39,10 +39,13 @@ class StudentView(BaseAPIView):
     def get(self, request, identifier):
         try:
             client = CompassPersonClient()
+            client_args = {'include_student_transcripts': False}
             if valid_uwnetid(identifier):
-                person = client.get_person_by_uwnetid(identifier)
+                person = client. \
+                    get_person_by_uwnetid(identifier, **client_args)
             elif valid_student_number(identifier):
-                person = client.get_person_by_student_number(identifier)
+                person = client.\
+                    get_person_by_student_number(identifier, **client_args)
             else:
                 return Response('Invalid student identifier',
                                 status=status.HTTP_400_BAD_REQUEST)

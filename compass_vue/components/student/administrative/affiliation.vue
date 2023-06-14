@@ -52,6 +52,7 @@ import dataMixin from "../../../mixins/data_mixin.js";
 import AffiliationAdd from "./affiliation-add.vue";
 import AffiliationDelete from "./affiliation-delete.vue";
 import AffiliationEdit from "./affiliation-edit.vue";
+import { useAffiliationStore } from "../../../stores/affiliations";
 
 export default {
   mixins: [dataMixin],
@@ -77,6 +78,10 @@ export default {
   created() {
     this.loadAffiliationData();
   },
+  setup() {
+    const storeAffiliations = useAffiliationStore();
+    return { storeAffiliations };
+  },
   methods: {
     loadAffiliationData() {
       this.getStudentAffiliations(this.person.student.system_key).then(
@@ -87,13 +92,9 @@ export default {
         }
       );
 
-      this.getAffiliations().then(
-        (response) => {
-          if (response.data) {
-            this.affiliations = response.data;
-          }
-        }
-      );
+      this.storeAffiliations.getAffiliations.then(() => {
+        this.affiliations = this.storeAffiliations.affiliations.data;
+      });
     },
   },
 };

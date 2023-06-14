@@ -97,10 +97,9 @@
 </template>
 
 <script>
-import dataMixin from "../../mixins/data_mixin.js";
+import { useStudentStore } from "../../stores/student";
 
 export default {
-  mixins: [dataMixin],
   props: {
     person: {
       type: Object,
@@ -113,16 +112,21 @@ export default {
       transcripts: {},
     };
   },
+  setup() {
+    const storeStudent = useStudentStore();
+    return { storeStudent};
+  },
   created() {
     this.loadStudentTranscripts();
   },
   methods: {
     loadStudentTranscripts: function () {
-      this.getStudentTranscripts(this.person.uwregid).then((response) => {
-        if (response.data) {
-          this.transcripts = response.data;
-        }
-      });
+      this.storeStudent
+        .fetchStudentTranscripts(this.person.uwregid)
+        .then(() => {
+          this.transcripts =
+            this.storeStudent.studentData[this.person.uwregid].data;
+        });
     },
   },
 };
