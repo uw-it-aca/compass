@@ -74,12 +74,12 @@ class Command(BaseCommand):
 
         if student.system_key not in self.eligible:
             self.eligible.add(student.system_key)
-            se, c = StudentEligibility.objects.get_or_create(student)
+            se, c = StudentEligibility.objects.get_or_create(student=student)
             if c:
                 se.eligibility.add(self.eligibility_type)
-                se.eligibility.save()
+                se.save()
 
-    def _create_visit(self, student, apt):
+    def _create_visit(self, apt):
         if int(apt.student_no) in self.unknown_student_ids:
             return
 
@@ -112,6 +112,7 @@ class Command(BaseCommand):
             visit_type=self._get_visit_type(apt))
 
         visit.save()
+        self._add_eligibility(student)
 
     def _get_student(self, student_number):
         try:

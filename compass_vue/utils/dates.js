@@ -32,4 +32,8 @@ function getWeeksApart(quarterStartDate, compareDate) {
   }
 }
 
-export { formatDate, getToday, getYesterday, getWeeksApart };
+function getMinutesApart(startDate, endDate) {
+    return dayjs(endDate).diff(startDate, 'minutes')
+}
+
+export { formatDate, getToday, getYesterday, getWeeksApart, getMinutesApart };

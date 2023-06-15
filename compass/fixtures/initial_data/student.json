@@ -3,14 +3,14 @@
     "model": "compass.student",
     "pk": 1,
     "fields": {
-        "system_key": "123"
+        "system_key": "123123123"
     }
 },
 {
     "model": "compass.student",
     "pk": 2,
     "fields": {
-        "system_key": "5323"
+        "system_key": "532353230"
     }
 }
 ]

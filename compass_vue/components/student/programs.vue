@@ -70,6 +70,7 @@
 
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
+import { useAffiliationStore } from "../../../stores/affiliations";
 
 export default {
   mixins: [dataMixin],
@@ -88,8 +89,11 @@ export default {
       updatePermissionDenied: false,
       userName: document.body.getAttribute("data-user-netid"),
       userOverride: document.body.getAttribute("data-user-override"),
-
     };
+  },
+  setup() {
+    const storeAffiliations = useAffiliationStore();
+    return { storeAffiliations };
   },
   created: function () {
     this.loadPrograms();
@@ -105,18 +109,12 @@ export default {
     },
     loadPrograms: function () {
       var _this = this;
-      this.getAccessGroups().then((accessGroups) => {
-        accessGroups.data.forEach(function (accessGroup) {
-          _this.getAffiliations(accessGroup.id).then((response) => {
-            if (response.data) {
-              _this.groupedPrograms = Object.assign(
-                {},
-                _this.groupedPrograms,
-                _this._groupProgramsByAccessGroup(response.data)
-              );
-            }
-          });
-        });
+      this.storeAffiliations.getAffiliations.then(() => {
+        _this.groupedPrograms = Object.assign(
+          {},
+          _this.groupedPrograms,
+          _this._groupProgramsByAccessGroup(this.storeAffiliations.affiliations.data)
+        );
       });
     },
     saveStudentData: function () {

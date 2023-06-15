@@ -29,6 +29,7 @@ setup(
         'django-simple-history==3.1.1',
         'Django-UserService~=3.2',
         'Django-SupportTools~=3.6',
+        'Django-Persistent-Message~=1.1',
         'UW-RestClients-Django-Utils~=2.3',
         'djangorestframework~=3.12',
         'UW-RestClients-SWS~=2.4',
@@ -36,7 +37,7 @@ setup(
         'UW-RestClients-PWS~=2.1',
         'UW-Django-SAML2~=1.7',
         'urllib3~=1.25',
-        'axdd-person-client>=1.1.11',
+        'axdd-person-client>=1.1.17',
         'python-dateutil~=2.8',
         'freezegun~=1.2'
     ],

@@ -3,7 +3,11 @@
     <template #heading-action>
       <axdd-card-heading :level="2">Affiliations</axdd-card-heading>
       <!-- need to change the button -->
-      <AffiliationAdd :button-type="'button'" :person="person"
+      <AffiliationAdd
+        :button-type="'button'"
+        :person="person"
+        :affiliations="affiliations"
+        :studentAffiliations="studentAffiliations"
         >Add Affiliation</AffiliationAdd
       >
     </template>
@@ -12,46 +16,26 @@
         <table class="table m-0">
           <thead class="table-light text-muted small">
             <tr>
-              <th class="ps-3">Programs</th>
+              <th class="ps-3">Affiliation</th>
               <th>Cohort</th>
               <th>Active</th>
               <th>Edit</th>
             </tr>
           </thead>
           <tbody>
-            <tr class="border border-white">
-              <td scope="row" class="ps-3">Trio</td>
-              <td></td>
-              <td></td>
-
+            <tr v-for="aff in studentAffiliations" class="border border-white">
+              <td scope="row" class="ps-3">{{ aff.affiliation.name }}</td>
+              <td scope="row" class="ps-3">
+              <div v-for="cohort in aff.cohorts">
+              {{ cohort.start_year }} - {{ cohort.end_year }}
+              </div></td>
+              <td v-if="aff.actively_advised"><i class="py-0 bi bi-check-lg"></i></td>
+              <td v-else><i class="py-0 bi bi-x-circle"></i></td>
               <td>
-                <AffiliationEdit :button-type="'button'" :person="person">
+                <AffiliationEdit :button-type="'button'" :person="person" :affiliations="affiliations" :studentAffiliation="aff" :studentAffiliations="studentAffiliations">
                   <i class="py-0 bi bi-pencil-square"></i
                 ></AffiliationEdit>
-                <AffiliationDelete :button-type="'button'" :person="person">
-                  <i class="bi bi-trash3"></i>
-                </AffiliationDelete>
-              </td>
-            </tr>
-          </tbody>
-          <thead class="table-light text-muted small">
-            <tr>
-              <th class="ps-3">Others</th>
-              <th>Cohort</th>
-              <th>Active</th>
-              <th>Edit</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border border-white">
-              <td scope="row" class="ps-3">Brotherhood Initiative Scholar</td>
-              <td>2022-2023</td>
-              <td>Yes</td>
-              <td>
-                <AffiliationEdit :button-type="'button'" :person="person">
-                  <i class="py-0 bi bi-pencil-square"></i
-                ></AffiliationEdit>
-                <AffiliationDelete :button-type="'button'" :person="person">
+                <AffiliationDelete :button-type="'button'" :person="person" :studentAffiliation="aff" :studentAffiliations="studentAffiliations">
                   <i class="bi bi-trash3"></i>
                 </AffiliationDelete>
               </td>
@@ -68,6 +52,7 @@ import dataMixin from "../../../mixins/data_mixin.js";
 import AffiliationAdd from "./affiliation-add.vue";
 import AffiliationDelete from "./affiliation-delete.vue";
 import AffiliationEdit from "./affiliation-edit.vue";
+import { useAffiliationStore } from "../../../stores/affiliations";
 
 export default {
   mixins: [dataMixin],
@@ -84,23 +69,32 @@ export default {
   },
   data() {
     return {
-      contacts: {},
+      studentAffiliations: [],
+      affiliations: [],
       userName: document.body.getAttribute("data-user-netid"),
       userOverride: document.body.getAttribute("data-user-override"),
     };
   },
   created() {
-    this.loadStudentContacts();
+    this.loadAffiliationData();
+  },
+  setup() {
+    const storeAffiliations = useAffiliationStore();
+    return { storeAffiliations };
   },
   methods: {
-    loadStudentContacts: function () {
-      this.getStudentContacts(this.person.student.system_key).then(
+    loadAffiliationData() {
+      this.getStudentAffiliations(this.person.student.system_key).then(
         (response) => {
           if (response.data) {
-            this.contacts = response.data;
+            this.studentAffiliations = response.data;
           }
         }
       );
+
+      this.storeAffiliations.getAffiliations.then(() => {
+        this.affiliations = this.storeAffiliations.affiliations.data;
+      });
     },
   },
 };
@@ -112,5 +106,6 @@ tbody {
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
   }
+i.bi-check-lg { color: green; }
 }
 </style>

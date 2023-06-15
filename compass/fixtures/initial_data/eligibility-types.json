@@ -8,5 +8,15 @@
    "slug": "instructional-center",
    "editable": true
   }
+ },
+ {
+  "model": "compass.eligibilitytype",
+  "pk": 2,
+  "fields": {
+   "access_group": 2,
+   "name": "Remedial Math Center",
+   "slug": "remedial-math-center",
+   "editable": true
+  }
  }
 ]

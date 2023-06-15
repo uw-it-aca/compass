@@ -6,43 +6,26 @@
       >
     </template>
     <template #body>
-      <!-- TODO: wire this up later when we get the API working -->
-      <div v-show="false">
-        <p class="small">
-          This student is currently not eligible to use Instructional Center
-          resources.
-          <span class="fw-bold">Would you like to grant access?</span>
-        </p>
-        <div class="text-end">
-          <button
-            type="button"
-            class="btn btn-sm btn-purple rounded-3 px-3 py-2"
-            @click="updateEligibility()"
-          >
-            <i class="bi bi-hand-thumbs-up me-1"></i>Approve
-          </button>
-        </div>
-      </div>
-
       <div v-if="visits.length" class="d-flex ps-2">
         <div class="vr text-muted" aria-hidden="true"></div>
-        <ul class="list-unstyled mb-0" style="margin-left: -11px; z-index: 1">
-          <li
-            v-for="visit in visits"
-            class="d-flex mb-3"
-          >
+        <ul
+          class="list-unstyled mb-0 overflow-auto w-100 flex-fill"
+          style="margin-left: -11px; z-index: 1; max-height: 400px"
+        >
+          <li v-for="(visit, index) in visits" :key="index" class="d-flex mb-3">
             <div>
               <i
                 class="bi bi-calendar-check-fill text-gray fs-7 ms-1 me-3 bg-white"
               ></i>
             </div>
             <div>
-              <div><strong>{{ visit.course_code }}</strong> <small>({{ visit.duration }}min)</small></div>
-              <div class="text-muted small">{{ visit.date }} {{ visit.checkin }} - {{ visit.checkout }}</div>
+              <div><strong>{{ visit.course_code }}</strong> <small>({{ visitDuration(visit) }}min)</small></div>
+              <div class="text-muted small">{{ visitDate(visit) }} {{ visitCheckin(visit) }} - {{ visitCheckout(visit) }}</div>
             </div>
           </li>
         </ul>
       </div>
+      <div v-else class="text-muted">No visits found</div>
     </template>
     <template #footer>Total Visits: {{ visits.length }}</template>
   </axdd-card>
@@ -50,6 +33,7 @@
 
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
+import { formatDate, getMinutesApart } from "../../utils/dates.js"
 
 export default {
   mixins: [dataMixin],
@@ -74,22 +58,20 @@ export default {
         (response) => {
           if (response.data) {
             this.visits = response.data;
-            this.calculateDates();
           }
-        }
-      );
+        });
     },
-    calculateDates: function () {
-      this.visits.forEach((item) => {
-         var checkin = new Date(item.checkin_date), checkout = new Date(item.checkout_date);
-         item.duration = Math.abs(Math.round((checkout.getTime() - checkin.getTime()) / 1000 / 60));
-         item.date = this.dateMMDDYYYY(checkin);
-         item.checkin = this.dateHHMMampm(checkin);
-         item.checkout = this.dateHHMMampm(checkout);
-      });
+    visitDuration: function (visit) {
+      return getMinutesApart(visit.checkin_date, visit.checkout_date);
     },
-    updateEligibility() {
-      alert("please update my eligibility!");
+    visitDate: function (visit) {
+      return formatDate(visit.checkin_date, 'MM/DD/YYYY');
+    },
+    visitCheckin: function (visit) {
+      return formatDate(visit.checkin_date, 'hh:mma');
+    },
+    visitCheckout: function (visit) {
+      return formatDate(visit.checkout_date, 'hh:mma');
     },
   },
 };

@@ -61,7 +61,7 @@ if settings.DEBUG:
 urlpatterns += [
     re_path(r"^admin", admin_site.urls),
     re_path(
-        r"^api/internal/student/(?P<student_identifier>[-@:\w]+)/$",
+        r"^api/internal/student/(?P<identifier>[-@:\w]+)/$",
         StudentView.as_view(),
     ),
     re_path(
@@ -81,16 +81,16 @@ urlpatterns += [
         StudentAffiliationsView.as_view(),
     ),
     re_path(
+        r"^api/internal/student/(?P<systemkey>[\w]+)"
+        r"/affiliations/(?P<affiliation_id>[\w]+)/$",
+        StudentAffiliationsView.as_view(),
+    ),
+    re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/visits/$",
         StudentVisitsView.as_view(),
     ),
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/eligibility/$",
-        StudentEligibilityView.as_view(),
-    ),
-    re_path(
-        r"^api/internal/student/(?P<systemkey>[\w]+)"
-        r"/eligibility/(?P<eligibility_id>[\w]+)$",
         StudentEligibilityView.as_view(),
     ),
     re_path(
@@ -102,8 +102,7 @@ urlpatterns += [
         r"(?P<setting_type>[\w]+)/$",
         SettingsView.as_view(),
     ),
-    re_path((r"^api/internal/accessgroup/"
-             r"(?P<access_group_pk>[\w]+)/affiliations/$"),
+    re_path((r"^api/internal/accessgroup/affiliations/$"),
             AffiliationsView.as_view()),
     re_path(r"^api/internal/accessgroup/$", AccessGroupView.as_view()),
     re_path(r"^api/internal/contact/topics/$", ContactTopicsView.as_view()),
