@@ -109,6 +109,7 @@ class StudentSchedulesView(BaseAPIView):
 
         return self.response_ok(schedules)
 
+
 class StudentContactsView(BaseAPIView):
     '''
     API endpoint returning a list of contacts for a student
