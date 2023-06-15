@@ -102,6 +102,7 @@ USERSERVICE_VALIDATION_MODULE = 'compass.dao.person.is_netid'
 USERSERVICE_OVERRIDE_AUTH_MODULE = 'compass.dao.group.can_override_user'
 RESTCLIENTS_ADMIN_AUTH_MODULE = 'compass.dao.group.can_proxy_restclient'
 PERSISTENT_MESSAGE_AUTH_MODULE = 'compass.dao.group.can_manage_persistent_messages'
+ALLOW_USER_OVERRIDE_FOR_WRITE = (os.getenv('ENV', 'localdev') != 'prod')
 
 # IDCard photo config
 IDCARD_TOKEN_EXPIRES = 60 * 60

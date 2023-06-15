@@ -4,18 +4,15 @@
 
 import logging
 from compass.views.api import BaseAPIView
-from userservice.user import clear_override, get_override_user, \
-    get_original_user
-from rest_framework.response import Response
-from rest_framework import status
+from userservice.user import UserService
 
 
 class SupportView(BaseAPIView):
 
     def post(self, request):
         if "clear_override" in request.data:
+            us = UserService()
             logging.info("{} is ending impersonation of {}".format(
-                         get_original_user(request),
-                         get_override_user(request)))
-            clear_override(request)
-        return Response("", status=status.HTTP_200_OK)
+                         us.get_original_user(), us.get_override_user()))
+            us.clear_override()
+        return self.response_ok("")

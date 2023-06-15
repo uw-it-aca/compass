@@ -7,8 +7,6 @@ from django.utils.text import slugify
 from simple_history.models import HistoricalRecords
 from compass.clients import CompassPersonClient
 from compass.dao.group import is_group_member
-from uw_gws import GWS
-from restclients_core.exceptions import DataFailureException
 
 
 class AppUserManager(models.Manager):
@@ -49,9 +47,10 @@ class AppUser(models.Model):
 
     uwnetid = models.CharField(unique=True, max_length=50)
 
-    # A user's Access Group affiliation is derived at login via GWS Groups.
-    # A GWS group key is generated using the <access_id>. It is important to
-    # notethat UW Group memberships are managed externally from the app
+    # A user's Access Group affiliation is derived at login via UW Group
+    # membership.  A group key is generated using the <access_id>. It is
+    # important to note that UW Group memberships are managed externally
+    # from the app.
 
     class Meta:
         indexes = [
@@ -86,49 +85,35 @@ class AccessGroupManager(models.Manager):
     def by_name(self, name):
         return AccessGroup.objects.get(name=name)
 
-    def get_roles_for_user(self, request):
+    def access_group_for_user(self, request, require_manager=False):
         """
-        Return the unique roles for a user, without group context.
+        Returns the defauilt access group that a user is in, or
+        raises exception AccessGroup.DoesNotExist.
         """
-        roles = []
-        for group in super().get_queryset().all():
-            for role in AccessGroup.ROLES:
-                if role not in roles and is_group_member(
-                    request, group.authz_group_id(role)
-                ):
-                    roles.append(role)
-        return roles
+        access_groups = super().get_queryset().all().order_by('id')
+        for access_group in access_groups:
+            # Return the first instance of a manager role
+            if access_group.has_manager_role(request):
+                return access_group
 
-    def get_access_groups_for_netid(self, uwnetid):
-        """
-        Returns the list of access groups that a uwnetid is a member of
-        """
-        access_groups = []
-        try:
-            for access_group in AccessGroup.objects.all():
-                groups = GWS().search_groups(
-                    member=uwnetid, name=f"{access_group.access_group_id}*"
-                )
-                if groups:
-                    access_groups.append(access_group)
-        except DataFailureException:
-            pass
-        return access_groups
+        if require_manager:
+            raise AccessGroup.DoesNotExist()
 
-    def is_access_group_member(self, uwnetid, access_group):
-        user_access_groups = self.get_access_groups_for_netid(uwnetid)
-        if access_group in user_access_groups:
-            return True
-        return False
+        for access_group in access_groups:
+            # Return the first instance of a user role
+            if access_group.has_user_role(request):
+                return access_group
+
+        raise AccessGroup.DoesNotExist()
 
 
 class AccessGroup(models.Model):
     """
     AccessGroups manage their Affiliation, ContactTopic, ContactType, and
     ContactMethod lists. AccessGroup membership is defined externally in
-    UW groups (Astra) and determined for a AppUser via a request to the
-    GWS at login. Contact records created by a member of one access group
-    are only visible to other members of that same access group.
+    UW groups (Astra) and determined for a AppUser at login. Contact records
+    created by a member of one access group are only visible to other members
+    of that same access group.
 
     Access groups for the app are created in the Django Admin. The
     access_group_id is the prefix of the uw-groups (user and manger) that it
@@ -199,6 +184,12 @@ class AccessGroup(models.Model):
 
     def has_role(self, request, role):
         return is_group_member(request, self.authz_group_id(role))
+
+    def has_manager_role(self, request):
+        return self.has_role(request, self.ROLE_MANAGER)
+
+    def has_user_role(self, request):
+        return self.has_role(request, self.ROLE_USER)
 
 
 class Contact(models.Model):

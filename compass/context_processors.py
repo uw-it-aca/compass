@@ -24,15 +24,19 @@ def term(request):
 
 def auth_user(request):
     us = UserService()
-    roles = AccessGroup.objects.get_roles_for_user(request)
-
     ret = {
         'user_netid': us.get_original_user(),
         'user_override': us.get_user(),
         'signout_url': reverse('saml_logout'),
-        'user_role': ','.join(sorted(roles)),
         'messages': [],
     }
+
+    try:
+        access_group = AccessGroup.objects.access_group_for_user(request)
+        ret['user_role'] = AccessGroup.ROLE_MANAGER if (
+            access_group.has_manager_role(request)) else AccessGroup.ROLE_USER
+    except AccessGroup.DoesNotExist:
+        ret['user_role'] = None
 
     for message in Message.objects.active_messages():
         if 'message_level' not in ret:
