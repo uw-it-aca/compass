@@ -98,7 +98,7 @@ urlpatterns += [
         EligibilityView.as_view(),
     ),
     re_path(
-        r"^api/internal/accessgroup/(?P<access_group_pk>[\w]+)/settings/"
+        r"^api/internal/accessgroup/(?P<access_group_id>[\w]+)/settings/"
         r"(?P<setting_type>[\w]+)/$",
         SettingsView.as_view(),
     ),

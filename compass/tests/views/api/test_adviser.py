@@ -46,5 +46,4 @@ class ContactAPITest(ApiTest):
                                  "javerage",
                                  args=["javerage"])
         response = json.loads(resp.content)
-
         self.assertEqual(len(response), 2)
