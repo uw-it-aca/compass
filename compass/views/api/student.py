@@ -266,6 +266,13 @@ class StudentTranscriptsView(BaseAPIView):
         client = CompassPersonClient()
         person = client.get_person_by_uwregid(uwregid)
 
+        cur_term = get_current_term()
+        next_term = get_next_term()
+        term_after = get_term_after(next_term)
+        schedule_display_terms = [cur_term.int_key(),
+                                  next_term.int_key(),
+                                  term_after.int_key()]
+
         transcripts = []
         for transcript in sorted(person.student.transcripts, key=lambda t: (
                 t.tran_term.year, t.tran_term.quarter), reverse=True):
@@ -276,6 +283,8 @@ class StudentTranscriptsView(BaseAPIView):
                 class_schedule = get_schedule_by_regid_and_term(
                     uwregid, term)
                 transcript.class_schedule = class_schedule.json_data()
+                transcript.class_schedule['display_schedule'] = \
+                    term.int_key() in schedule_display_terms
             except DataFailureException:
                 transcript.class_schedule = None
             transcripts.append(transcript.to_dict())
