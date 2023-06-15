@@ -158,6 +158,7 @@ class AccessGroup(models.Model):
                 "Quick Question",
                 "Appointment",
                 "Workshop",
+                "Admin",
             ]
             for contact_type_name in uneditable_contact_types:
                 ContactType(
@@ -168,6 +169,7 @@ class AccessGroup(models.Model):
                 "In-person",
                 "Telephone",
                 "Video Conference",
+                "Internal",
             ]
             for contact_method_name in uneditable_contact_methods:
                 ContactMethod(
@@ -176,6 +178,7 @@ class AccessGroup(models.Model):
             # set default contact topics
             default_contact_topics = [
                 "Add/Drop a Class",
+                "None",
             ]
             for contact_topic_name in default_contact_topics:
                 ContactTopic(access_group=self, name=contact_topic_name).save()
