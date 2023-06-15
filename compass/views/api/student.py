@@ -58,6 +58,10 @@ class StudentView(BaseAPIView):
 
             data = request.data
             system_key = data.get("system_key")
+            if not valid_system_key(system_key):
+                return Response('Invalid systemkey',
+                                status=status.HTTP_400_BAD_REQUEST)
+
             student_record = {}
             student_record['system_key'] = system_key
             student_record['programs'] = data.get('programs')
@@ -162,7 +166,7 @@ class StudentAffiliationsView(BaseAPIView):
             system_key = int(systemkey)
             affiliation_data = request.data.get('affiliation')
 
-            student = Student.objects.get(system_key=system_key)
+            student = Student.objects.get(system_key=systemkey)
 
             affiliation_model_id = int(affiliation_data['affiliationId'])
             affiliation = Affiliation.objects.get(
@@ -213,6 +217,7 @@ class StudentAffiliationsView(BaseAPIView):
 
             system_key = int(systemkey)
             student = Student.objects.get(system_key=system_key)
+
             student_affiliation = StudentAffiliation.objects.get(
                 id=affiliation_id, student=student,
                 affiliation__access_group=access_group)
@@ -305,15 +310,17 @@ class StudentEligibilityView(BaseAPIView):
         return self.response_ok(eligibilities)
 
     def post(self, request, systemkey):
+        if not valid_system_key(systemkey):
+            return self.response_badrequest("Invalid systemkey")
+
         try:
             access_group = self.get_access_group(request)
 
             self.valid_user_override()
 
-            system_key = int(systemkey)
             eligibility_type_id = int(request.data.get("eligibility_type_id"))
-            if system_key < 0 or eligibility_type_id < 0:
-                return self.response_badrequest("Invalid Key or TypeID")
+            if eligibility_type_id < 0:
+                return self.response_badrequest("Invalid TypeID")
 
             # update existing student record if one exists
             student = Student.objects.get(system_key=system_key)
@@ -321,7 +328,6 @@ class StudentEligibilityView(BaseAPIView):
                 id=eligibility_type_id, access_group=access_group)
             s_e, _ = StudentEligibility.objects.get_or_create(
                 student=student)
-
             s_e.eligibility.add(eligibility_type)
             s_e.save()
 
