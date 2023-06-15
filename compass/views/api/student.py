@@ -62,6 +62,10 @@ class StudentView(BaseAPIView):
                 self.validate_user_access(request, group.id)
             data = request.data
             system_key = data.get("system_key")
+            if not valid_system_key(system_key):
+                return Response('Invalid systemkey',
+                                status=status.HTTP_400_BAD_REQUEST)
+
             student_record = {}
             student_record['system_key'] = system_key
             student_record['programs'] = data.get('programs')
@@ -162,11 +166,10 @@ class StudentAffiliationsView(BaseAPIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            system_key = int(systemkey)
             access_groups = self.get_access_groups(request)
             affiliation_data = request.data.get('affiliation')
 
-            student = Student.objects.get(system_key=system_key)
+            student = Student.objects.get(system_key=systemkey)
 
             affiliation_model_id = int(affiliation_data['affiliationId'])
             affiliation = Affiliation.objects.get(
@@ -214,9 +217,8 @@ class StudentAffiliationsView(BaseAPIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
         try:
-            system_key = int(systemkey)
             access_groups = self.get_access_groups(request)
-            student = Student.objects.get(system_key=system_key)
+            student = Student.objects.get(system_key=systemkey)
             student_affiliation = StudentAffiliation.objects.get(
                 id=affiliation_id, student=student,
                 affiliation__access_group__in=access_groups)
@@ -305,21 +307,24 @@ class StudentEligibilityView(BaseAPIView):
         return Response(eligibilities, status=status.HTTP_200_OK)
 
     def post(self, request, systemkey):
+        if not valid_system_key(systemkey):
+            return Response('Invalid systemkey',
+                            status=status.HTTP_400_BAD_REQUEST)
+
         access_groups = self.get_access_groups(request)
         try:
             # check user permissions for every group that the user belongs to
             for group in access_groups:
                 self.validate_user_access(request, group.id)
 
-            system_key = int(systemkey)
             eligibility_type_id = int(request.data.get("eligibility_type_id"))
-            if system_key < 0 or eligibility_type_id < 0:
+            if eligibility_type_id < 0:
                 return Response("Invalid Key or TypeID",
                                 status=status.HTTP_400_BAD_REQUEST)
 
             try:
                 # update existing student record if one exists
-                student = Student.objects.get(system_key=system_key)
+                student = Student.objects.get(system_key=systemkey)
                 eligibility_type = EligibilityType.objects.get(
                     id=eligibility_type_id, access_group__in=access_groups)
                 s_e, _ = StudentEligibility.objects.get_or_create(
