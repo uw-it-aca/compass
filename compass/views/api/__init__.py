@@ -4,6 +4,7 @@
 
 from compass.models import AccessGroup, AppUser
 from compass.exceptions import OverrideNotPermitted
+from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from rest_framework.generics import GenericAPIView

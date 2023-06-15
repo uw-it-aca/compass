@@ -6,8 +6,6 @@
 Custom exceptions used by Compass.
 """
 
-from django.conf import settings
-
 
 class OverrideNotPermitted(Exception):
     def __str__(self):
