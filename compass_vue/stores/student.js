@@ -22,19 +22,5 @@ export const useStudentStore = defineStore({
       }
       return this.studentData[uwregid].request;
     },
-    getStudentSchedules(uwregid) {
-      // Returns a student schedule for the current and next two terms
-      let schedules = [];
-      this.studentData[uwregid].data.forEach((transcript) => {
-        try {
-          if (transcript.class_schedule.display_schedule === true){
-            schedules.push(transcript.class_schedule);
-          }
-        } catch (e) {
-          //  no transcript
-        }
-      });
-      return schedules;
-    },
   },
 });

@@ -124,10 +124,11 @@
 </template>
 
 <script>
-import { useStudentStore } from "../../stores/student";
+import dataMixin from "../../mixins/data_mixin.js";
 import { translateMilitaryTime } from "../../utils/translations";
 
 export default {
+  mixins: [dataMixin],
   components: {},
   props: {
     person: {
@@ -136,8 +137,7 @@ export default {
     },
   },
   setup() {
-    const storeStudent = useStudentStore();
-    return { storeStudent, translateMilitaryTime};
+    return { translateMilitaryTime };
   },
   data() {
     return {
@@ -149,13 +149,11 @@ export default {
   },
   methods: {
     loadStudentSchedules: function () {
-      this.storeStudent
-        .fetchStudentTranscripts(this.person.uwregid)
-        .then(() => {
-          this.schedules = this.storeStudent.getStudentSchedules(
-            this.person.uwregid
-          );
-        });
+      this.getStudentSchedules(this.person.uwregid).then((response) => {
+        if (response.data) {
+          this.schedules = response.data;
+        }
+      });
     },
     getCreditTotal: function (sections) {
       // get all section credits and sum the total
