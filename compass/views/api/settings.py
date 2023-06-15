@@ -16,16 +16,18 @@ class SettingsView(BaseAPIView):
     '''
     API endpoint returning a list of affiliation for the user's access group
 
-    /api/internal/accessgroup/[access_group_pk]/settings/[setting_type]/
+    /api/internal/accessgroup/[access_group_id]/settings/[setting_type]/
 
     The setting_type param can be: affiliation, contact_topic, or contact_type
     '''
 
-    def get(self, request, access_group_pk, setting_type):
+    def get(self, request, access_group_id, setting_type):
         try:
-            access_group = self.get_access_group(request, require_manager=True)
+            access_group = AccessGroup.objects.get(id=access_group_id)
+            if not access_group.has_manager_role(request):
+                return self.response_unauthorized()
         except AccessGroup.DoesNotExist:
-            return self.response_unauthorized()
+            return self.response_notfound()
 
         group_settings = []
         if setting_type == "affiliation":
