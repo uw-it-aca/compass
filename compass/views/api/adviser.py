@@ -9,9 +9,6 @@ from compass.clients import (
     CompassPersonClient, PersonNotFoundException, AdviserNotFoundException)
 from compass.models import Contact
 from compass.serializers import ContactReadSerializer
-from django.http import JsonResponse
-from rest_framework.response import Response
-from rest_framework import status
 import datetime
 
 
@@ -23,12 +20,11 @@ class AdviserContactsView(BaseAPIView):
 
     def get(self, request, adviser_netid):
         if not valid_uwnetid(adviser_netid):
-            return Response('Invalid uwnetid',
-                            status=status.HTTP_400_BAD_REQUEST)
+            return self.response_badrequest('Invalid uwnetid')
 
         client = CompassPersonClient()
-        earliest_contact_date = datetime.datetime.now(datetime.timezone.utc)\
-            - datetime.timedelta(hours=72)
+        earliest_contact_date = datetime.datetime.now(
+            datetime.timezone.utc) - datetime.timedelta(hours=72)
         contact_queryset = Contact.objects.filter(
             app_user__uwnetid=adviser_netid,
             checkin_date__gte=earliest_contact_date).all()
@@ -45,7 +41,7 @@ class AdviserContactsView(BaseAPIView):
                 contacts.append(contact_dict)
             except PersonNotFoundException:
                 pass
-        return JsonResponse([contact for contact in contacts], safe=False)
+        return self.response_ok([contact for contact in contacts])
 
 
 class AdviserCaseloadView(BaseAPIView):
@@ -56,8 +52,7 @@ class AdviserCaseloadView(BaseAPIView):
 
     def get(self, request, adviser_netid):
         if not valid_uwnetid(adviser_netid):
-            return Response('Invalid uwnetid',
-                            status=status.HTTP_400_BAD_REQUEST)
+            return self.response_badrequest('Invalid uwnetid')
 
         client = CompassPersonClient()
         try:
@@ -67,6 +62,5 @@ class AdviserCaseloadView(BaseAPIView):
         photo_dao = PhotoDAO()
         for person in persons:
             person.photo_url = photo_dao.get_photo_url(person.uwregid)
-        return JsonResponse(
-            [person.to_dict() for person in persons], safe=False
-        )
+
+        return self.response_ok([person.to_dict() for person in persons])

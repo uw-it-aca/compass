@@ -84,8 +84,6 @@ class ContactAPITest(ApiTest):
         mock_omad_access_group = MagicMock()
         mock_access_group_cls.objects.by_name = MagicMock(
             return_value=mock_omad_access_group)
-        mock_access_group_cls.objects.is_access_group_member.return_value = \
-            True
         mock_view = ContactOMADView()
         # mock parsing/validation methods
         mock_view.validate_adviser_netid = MagicMock()
