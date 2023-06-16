@@ -1,30 +1,29 @@
 <template>
-  <div class="text-light">
-    <p
-      v-show="$route.path == '/'"
-      class="text-light-gray bg-dark-purple rounded-3 p-3 small"
-    >
-      Welcome to <strong>check-ins</strong>. View upcoming student appointments.
-    </p>
-
-    <p
-      v-show="$route.path.includes('/caseload')"
-      class="text-light-gray bg-dark-purple rounded-3 p-3 small"
-    >
-      Welcome to <strong>caseloads</strong>. View all students in your current
-      caseload.
-    </p>
-    <p
-      v-show="$route.path == '/settings'"
-      class="text-light-gray bg-dark-purple rounded-3 p-3 small"
-    >
-      Welcome to <strong>settings</strong>. Manage your teams form options.
-    </p>
+  <div class="text-light my-3">
+    <div class="text-light-gray bg-dark-purple rounded-3 p-3 small">
+      <div class="mb-2">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i>System Messages
+      </div>
+      <ul class="list-unstyled m-0">
+        <li
+          v-for="(msg, index) in messages"
+          :key="index"
+          v-html="msg"
+          class="mt-2"
+        ></li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    messages: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {};
   },

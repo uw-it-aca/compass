@@ -30,19 +30,9 @@
     </template>
     <template #aside>
       <QuarterWeek :term-data="termData" />
-      <NavMessage />
+      <NavMessage v-if="persMsg && persMsg.length > 0" :messages="persMsg" />
     </template>
     <template #main>
-      <div
-        v-if="persMsg && persMsg.length > 0"
-        class="sticky-top alert alert-purple mt-3 border-0 small"
-        role="alert"
-      >
-        <ul class="list-unstyled m-0">
-          <li v-for="(msg, index) in persMsg" :key="index" v-html="msg"></li>
-        </ul>
-      </div>
-
       <slot name="title">
         <h1 class="visually-hidden">{{ pageTitle }}</h1>
       </slot>
