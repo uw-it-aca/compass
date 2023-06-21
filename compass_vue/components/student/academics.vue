@@ -29,7 +29,9 @@
                 class="text-success"
               >
                 <template #key>Graduated</template>
-                <template #value>Yes</template>
+                <template #value>{{
+                  person.student.applied_to_graduate_yr_qtr_desc
+                }}</template>
               </KeyValue>
             </li>
             <li>
@@ -89,23 +91,24 @@
           <div>
             <KeyValue
               variant="address"
-              v-for="(degree, index) in person.student.degrees"
-              :key="index"
+              v-for="(degree, index2) in person.student.degrees"
+              :key="index2"
             >
               <template #key
-                ><span class="text-wrap">{{
-                  degree.degree_desc
-                }}</span></template
+                ><span class="text-wrap">
+                  {{ degree.degree_desc }}
+                </span></template
               >
               <template #value>
-                <ul class="list-unstyled">
-                  <li class="small">
-                    <p>
-                      {{ degree.degree_term.quarter_name }}
-                      {{ degree.degree_term.year }}
-                    </p>
-                  </li>
-                </ul>
+                <p
+                  class="small"
+                  v-if="degree.degree_term && degree.degree_term.length > 0"
+                >
+                  {{ degree.degree_term.quarter_name }}
+                  {{ degree.degree_term.year }}
+                  ({{ degree.degree_status_desc }})
+                </p>
+                <p v-else class="small">{{ degree.degree_status_desc }}</p>
               </template>
             </KeyValue>
           </div>
@@ -206,8 +209,8 @@
 </template>
 
 <script>
-import KeyValue from "../../components/_common/key-value.vue";
-import dataMixin from "../../mixins/data_mixin.js";
+import KeyValue from "../_common/key-value.vue";
+import dataMixin from "../../mixins/data_mixin";
 import AffiliationSummary from "../../components/student/affiliation-mini.vue";
 
 import { translateTrueFalse } from "../../utils/translations";
@@ -223,7 +226,7 @@ export default {
   },
   components: {
     KeyValue,
-    AffiliationSummary
+    AffiliationSummary,
   },
   setup() {
     return {
