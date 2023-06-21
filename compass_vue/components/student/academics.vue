@@ -36,7 +36,7 @@
             </li>
             <li>
               <KeyValue
-                v-if="person.student.applied_to_graduate_yr_qtr_id !== 'NaN'"
+                v-if="person.student.applied_to_graduate_yr_qtr_desc !== null"
               >
                 <template #key>Applied to Graduate</template>
                 <template #value>{{
@@ -100,10 +100,7 @@
                 </span></template
               >
               <template #value>
-                <p
-                  class="small"
-                  v-if="degree.degree_term && degree.degree_term.length > 0"
-                >
+                <p class="small" v-if="degree.degree_term">
                   {{ degree.degree_term.quarter_name }}
                   {{ degree.degree_term.year }}
                   ({{ degree.degree_status_desc }})
@@ -234,7 +231,9 @@ export default {
     };
   },
   data() {
-    return {};
+    return {
+      testObj: {},
+    };
   },
   created() {},
   methods: {},
