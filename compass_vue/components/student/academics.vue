@@ -91,8 +91,8 @@
           <div>
             <KeyValue
               variant="address"
-              v-for="(degree, index2) in person.student.degrees"
-              :key="index2"
+              v-for="(degree, index) in person.student.degrees"
+              :key="index"
             >
               <template #key
                 ><span class="text-wrap">
