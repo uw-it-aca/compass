@@ -9,7 +9,6 @@ import CheckIn from "../pages/check-ins.vue";
 import Caseload from "../pages/caseload.vue";
 import Student from "../pages/student.vue";
 import Reports from "../pages/reports.vue";
-import Settings from "../pages/settings.vue";
 
 const routes = [
   {
@@ -33,13 +32,6 @@ const routes = [
   {
     path: "/reports",
     component: Reports,
-    meta: { authorize: [Role.Manager] },
-    pathToRegexpOptions: { strict: true },
-    props: true,
-  },
-  {
-    path: "/settings",
-    component: Settings,
     meta: { authorize: [Role.Manager] },
     pathToRegexpOptions: { strict: true },
     props: true,
