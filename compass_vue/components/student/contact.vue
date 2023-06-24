@@ -57,7 +57,7 @@
                     </div>
                   </template>
                   <div
-                    v-if="contact.contact_method.name"
+                    v-if="contact.contact_method"
                     class="badge rounded-pill alert alert-light-gray border-0 px-2 py-1 m-0 me-1"
                   >
                     {{ contact.contact_method.name }}
