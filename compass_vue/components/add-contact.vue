@@ -28,7 +28,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title h6 m-0 fw-bold" id="contactModalLabel">
-            Record a contact {{ userRoles }}
+            Record a contact
           </h5>
           <button
             type="button"
@@ -242,7 +242,6 @@ export default {
       formErrors: {},
       updatePermissionDenied: false,
       errorResponse: "",
-      userRoles: document.body.getAttribute("data-user-role").split(","),
       Role: Role,
     };
   },

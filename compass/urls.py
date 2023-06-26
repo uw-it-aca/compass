@@ -98,7 +98,7 @@ urlpatterns += [
         EligibilityView.as_view(),
     ),
     re_path(
-        r"^api/internal/accessgroup/(?P<access_group_pk>[\w]+)/settings/"
+        r"^api/internal/accessgroup/(?P<access_group_id>[\w]+)/settings/"
         r"(?P<setting_type>[\w]+)/$",
         SettingsView.as_view(),
     ),
@@ -135,7 +135,7 @@ urlpatterns += [
         name="contact_omad"
     ),
     # vue-router paths
-    re_path(r"^(student|caseload|reports|settings).*$", LandingView.as_view()),
+    re_path(r"^(student|caseload|reports).*$", LandingView.as_view()),
     # default landing
     re_path(r"^$", LandingView.as_view(), name="index"),
 ]

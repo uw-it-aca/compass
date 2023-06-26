@@ -22,12 +22,5 @@ export const useStudentStore = defineStore({
       }
       return this.studentData[uwregid].request;
     },
-    getStudentSchedules(uwregid) {
-      let schedules = [];
-      this.studentData[uwregid].data.forEach((transcript) => {
-        schedules.push(transcript.class_schedule);
-      });
-      return schedules;
-    },
   },
 });

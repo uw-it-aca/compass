@@ -2,10 +2,9 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+from compass.models import AccessGroup
 from compass.serializers import AccessGroupSerializer
 from compass.views.api import BaseAPIView
-from rest_framework.response import Response
-from rest_framework import status
 
 
 class AccessGroupView(BaseAPIView):
@@ -16,6 +15,10 @@ class AccessGroupView(BaseAPIView):
     '''
 
     def get(self, request):
-        access_groups = self.get_access_groups(request)
-        serializer = AccessGroupSerializer(access_groups, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        try:
+            access_group = self.get_access_group(request)
+        except AccessGroup.DoesNotExist:
+            return self.response_unauthorized()
+
+        serializer = AccessGroupSerializer([access_group], many=True)
+        return self.response_ok(serializer.data)
