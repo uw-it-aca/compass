@@ -35,12 +35,10 @@ class DecoratorTest(TestCase):
     def test_person_required_noauth(self, mock_auth_user):
         mock_auth_user.return_value = {}
         self.request.user = AnonymousUser()
-
         view_instance = PersonRequiredView.as_view()
         response = view_instance(self.request)
         self.assertEquals(response.status_code, 302)
-        self.assertIn('%s?next=/' % settings.LOGIN_URL, response.url,
-                      'Login required')
+        self.assertIn(f'{settings.LOGIN_URL}?next=/', response.url)
 
     @mock.patch('compass.context_processors.auth_user')
     @mock.patch('compass.views.decorators.get_user')
@@ -49,7 +47,8 @@ class DecoratorTest(TestCase):
         mock_auth_user.return_value = {}
         view_instance = PersonRequiredView.as_view()
         response = view_instance(self.request)
-        self.assertEquals(response.status_code, 401)
+        self.assertEquals(response.status_code, 302)
+        self.assertIn('unauthorized-user', response.url)
 
     @mock.patch('compass.views.decorators.get_user')
     def test_person_required_success(self, mock_get_user):
