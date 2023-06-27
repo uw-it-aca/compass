@@ -8,7 +8,7 @@ from userservice.user import UserService
 from compass.dao.person import person_from_uwnetid, PersonNotFoundException
 
 
-def uw_person_required():
+def uw_person_required(*args, **kwargs):
     """
     A decorator for views that checks whether the login is a UW personal
     UWNetID.  Calls login_required if the user is not authenticated.
