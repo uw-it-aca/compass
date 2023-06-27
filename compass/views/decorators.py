@@ -4,7 +4,7 @@
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-from userservice.user import UserService
+from uw_saml.utils import get_user
 from compass.dao.person import person_from_uwnetid, PersonNotFoundException
 
 
@@ -15,7 +15,7 @@ def uw_person_required(view_func):
     """
     def wrapper(request, *args, **kwargs):
         try:
-            person = person_from_uwnetid(UserService().get_user())
+            person = person_from_uwnetid(get_user(request))
             return view_func(request, *args, **kwargs)
         except PersonNotFoundException:
             return render(request, 'unauthorized-user.html', status=401)
