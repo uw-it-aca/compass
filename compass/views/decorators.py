@@ -3,7 +3,8 @@
 
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import redirect
+from django.urls import reverse
 from uw_saml.utils import get_user
 from compass.dao.person import person_from_uwnetid, PersonNotFoundException
 
@@ -18,6 +19,6 @@ def uw_person_required(view_func):
             person = person_from_uwnetid(get_user(request))
             return view_func(request, *args, **kwargs)
         except PersonNotFoundException:
-            return render(request, 'unauthorized-user.html', status=401)
+            return redirect(reverse('unauthorized_user'))
 
     return login_required(function=wrapper)

@@ -46,7 +46,7 @@
     {% csrf_token %}
 
     <!-- vue app will be injected here -->
-    <div id="app">{% block content %}{% endblock %}</div>
+    <div id="app"></div>
 
     <!-- vite js bundle -->
     {% vite_scripts 'compass_vue/main.js' %}
