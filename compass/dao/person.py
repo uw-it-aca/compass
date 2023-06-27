@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from uw_pws import PWS, InvalidNetID
-from uw_saml.utils
 from compass.clients import CompassPersonClient, PersonNotFoundException
 import re
 
