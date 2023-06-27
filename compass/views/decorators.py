@@ -21,4 +21,3 @@ def uw_person_required(view_func):
             return render(request, 'unauthorized-user.html', status=401)
 
     return login_required(function=wrapper)
-
