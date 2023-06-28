@@ -2,10 +2,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+from django.utils.timezone import utc
 from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
 from compass.dao.person import (
     valid_uwnetid, valid_uwregid, valid_student_number, valid_system_key)
+from compass.dao import current_datetime
 from compass.models import (
     AccessGroup, Student, Contact, StudentAffiliation, Affiliation, Cohort,
     Visit, EligibilityType, StudentEligibility)
@@ -21,7 +23,6 @@ from uw_sws.term import (
     get_current_term, get_next_term, get_term_after,
     get_term_by_year_and_quarter)
 from uw_sws.registration import get_schedule_by_regid_and_term
-from datetime import datetime
 from logging import getLogger
 
 logger = getLogger(__name__)
@@ -185,7 +186,8 @@ class StudentAffiliationsView(BaseAPIView):
                     student=student, affiliation=affiliation)
 
             sa.actively_advised = affiliation_data['actively_advised']
-            sa.date = datetime.now().date()
+            sa.date = current_datetime().replace(tzinfo=utc).date()
+
             cohort_objects = []
             for c in affiliation_data['cohorts']:
                 co, _ = Cohort.objects.get_or_create(

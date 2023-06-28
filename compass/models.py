@@ -4,9 +4,12 @@
 
 from django.db import models
 from django.utils.text import slugify
+from django.utils.timezone import utc
 from simple_history.models import HistoricalRecords
 from compass.clients import CompassPersonClient
 from compass.dao.group import is_group_member
+from compass.dao import current_datetime
+from datetime import datetime, timedelta
 
 
 class AppUserManager(models.Manager):
@@ -192,6 +195,17 @@ class AccessGroup(models.Model):
         return self.has_role(request, self.ROLE_USER)
 
 
+class ContactManager(models.Manager):
+    def by_adviser(self, adviser_uwnetid, min_age_hours=72):
+        kwargs = {'app_user__uwnetid': adviser_uwnetid}
+
+        if min_age_hours is not None and min_age_hours > 0:
+            cutoff_dt = current_datetime() - timedelta(hours=min_age_hours)
+            kwargs['checkin_date__gte'] = cutoff_dt.replace(tzinfo=utc)
+
+        return super().get_queryset().filter(**kwargs).order_by('checkin_date')
+
+
 class Contact(models.Model):
     """
     A contact/appointment with a student. For OMAD contacts are generated
@@ -219,6 +233,8 @@ class Contact(models.Model):
     # contact history fields
     created_date = models.DateTimeField(auto_now=True)
     history = HistoricalRecords(history_user_id_field="app_user")
+
+    objects = ContactManager()
 
     # The history user feature is a Django App used to track changes to
     # contacts. Although we don't currently display this in the UW, it is
