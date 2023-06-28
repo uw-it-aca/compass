@@ -196,11 +196,11 @@ class AccessGroup(models.Model):
 
 
 class ContactManager(models.Manager):
-    def by_adviser(self, adviser_uwnetid, min_age_hours=72):
+    def by_adviser(self, adviser_uwnetid, offset_hours=72):
         kwargs = {'app_user__uwnetid': adviser_uwnetid}
 
-        if min_age_hours is not None and min_age_hours > 0:
-            cutoff_dt = current_datetime() - timedelta(hours=min_age_hours)
+        if offset_hours is not None and offset_hours > 0:
+            cutoff_dt = current_datetime() - timedelta(hours=offset_hours)
             kwargs['checkin_date__gte'] = cutoff_dt.replace(tzinfo=utc)
 
         return super().get_queryset().filter(**kwargs).order_by('checkin_date')
