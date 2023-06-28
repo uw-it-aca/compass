@@ -2,8 +2,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from compass.views.api import BaseAPIView, JSONClientContentNegotiation, \
-    TokenAPIView
+from django.utils.timezone import utc
+from compass.dao import current_datetime
+from compass.views.api import (
+    BaseAPIView, JSONClientContentNegotiation, TokenAPIView)
 from compass.models import (
     AccessGroup, AppUser, Contact, ContactTopic, ContactType, ContactMethod,
     Student)
@@ -19,7 +21,6 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from userservice.user import UserService
-from datetime import datetime
 from logging import getLogger
 
 logger = getLogger(__name__)
@@ -105,7 +106,8 @@ class ContactView(BaseAPIView):
                     contact_record['contact_topics'] = topics
 
                 if 'checkin_date' not in contact_record:
-                    contact_record['checkin_date'] = datetime.now()
+                    current_dt = current_datetime().replace(tzinfo=utc)
+                    contact_record['checkin_date'] = current_dt
 
             except (KeyError, ContactType.DoesNotExist,
                     ContactMethod.DoesNotExist,
