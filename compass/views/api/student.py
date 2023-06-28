@@ -22,6 +22,9 @@ from uw_sws.term import (
     get_term_by_year_and_quarter)
 from uw_sws.registration import get_schedule_by_regid_and_term
 from datetime import datetime
+from logging import getLogger
+
+logger = getLogger(__name__)
 
 TERMS = {1: "Winter", 2: "Spring", 3: "Summer", 4: "Autumn"}
 
@@ -76,6 +79,7 @@ class StudentView(BaseAPIView):
                 serializer = StudentWriteSerializer(data=student_record)
             if serializer.is_valid():
                 serializer.save()
+                logger.info(f"Student {system_key} saved: {serializer.data}")
                 return self.response_created(serializer.data)
             else:
                 return self.response_badrequest(serializer.errors)
@@ -195,6 +199,8 @@ class StudentAffiliationsView(BaseAPIView):
             sa.save()
 
             serializer = StudentAffiliationReadSerializer(sa)
+            logger.info(f"StudentAffiliation for {system_key} saved: "
+                        f"{serializer.data}")
             return self.response_ok(serializer.data)
         except Student.DoesNotExist:
             return self.response_notfound("Unknown student")
@@ -223,6 +229,8 @@ class StudentAffiliationsView(BaseAPIView):
                 id=affiliation_id, student=student,
                 affiliation__access_group=access_group)
             student_affiliation.delete()
+            logger.info(f"StudentAffiliation {affiliation_id} for "
+                        f"{system_key} deleted")
             return self.response_ok("")
         except Student.DoesNotExist:
             return self.response_notfound("Unknown student")
@@ -333,6 +341,8 @@ class StudentEligibilityView(BaseAPIView):
             s_e.save()
 
             serializer = StudentEligibilitySerializer(s_e)
+            logger.info(f"StudentEligibility for {system_key} saved: "
+                        f"{serializer.data}")
             return self.response_ok(serializer.data)
         except Student.DoesNotExist:
             return self.response_notfound("Unknown student")
