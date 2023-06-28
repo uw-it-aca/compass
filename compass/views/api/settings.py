@@ -10,6 +10,9 @@ from compass.serializers import (
 from compass.views.api import BaseAPIView
 from compass.exceptions import OverrideNotPermitted
 from userservice.user import UserService
+from logging import getLogger
+
+logger = getLogger(__name__)
 
 
 class SettingsView(BaseAPIView):
@@ -114,6 +117,7 @@ class SettingsView(BaseAPIView):
             if serializer.is_valid():
                 serializer.save()
                 setting_saves.append(serializer.data)
+                logger.info(f"Setting saved: {serializer.data}")
             else:
                 return self.response_badrequest(serializer.errors)
             # return settings

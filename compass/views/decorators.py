@@ -7,6 +7,9 @@ from django.shortcuts import redirect
 from django.urls import reverse
 from uw_saml.utils import get_user
 from compass.dao.person import person_from_uwnetid, PersonNotFoundException
+from logging import getLogger
+
+logger = getLogger(__name__)
 
 
 def uw_person_required(view_func):
@@ -16,9 +19,11 @@ def uw_person_required(view_func):
     """
     def wrapper(request, *args, **kwargs):
         try:
-            person = person_from_uwnetid(get_user(request))
+            username = get_user(request)
+            kwargs['person'] = person_from_uwnetid(username)
             return view_func(request, *args, **kwargs)
         except PersonNotFoundException:
+            logger.info(f"Nonpersonal or unknown login blocked: {username}")
             return redirect(reverse('unauthorized_user'))
 
     return login_required(function=wrapper)
