@@ -9,12 +9,11 @@ from compass.clients import (
     CompassPersonClient, PersonNotFoundException, AdviserNotFoundException)
 from compass.models import Contact
 from compass.serializers import ContactReadSerializer
-import datetime
 
 
 class AdviserContactsView(BaseAPIView):
     """
-    API endpoint returning a list of contacts of an adviser for previous 3 days
+    API endpoint returning a list of contacts of an adviser
     /api/internal/adviser/<adviser_netid>/contact/
     """
 
@@ -23,14 +22,9 @@ class AdviserContactsView(BaseAPIView):
             return self.response_badrequest('Invalid uwnetid')
 
         client = CompassPersonClient()
-        earliest_contact_date = datetime.datetime.now(
-            datetime.timezone.utc) - datetime.timedelta(hours=72)
-        contact_queryset = Contact.objects.filter(
-            app_user__uwnetid=adviser_netid,
-            checkin_date__gte=earliest_contact_date).all()
         contacts = []
         photo_dao = PhotoDAO()
-        for contact in contact_queryset:
+        for contact in Contact.objects.by_adviser(adviser_netid):
             contact_dict = ContactReadSerializer(contact, many=False).data
             try:
                 person = client.get_person_by_system_key(

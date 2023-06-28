@@ -3,10 +3,10 @@
 
 
 from django.utils.decorators import method_decorator
-from django.contrib.auth.decorators import login_required
 from django.views.generic import TemplateView
+from compass.views.decorators import uw_person_required
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(uw_person_required, name='dispatch')
 class LandingView(TemplateView):
     template_name = 'index.html'

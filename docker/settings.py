@@ -98,7 +98,7 @@ GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
 SUPPORTTOOLS_PARENT_APP = "Compass"
 SUPPORTTOOLS_PARENT_APP_URL = "/"
 
-USERSERVICE_VALIDATION_MODULE = 'compass.dao.person.is_netid'
+USERSERVICE_VALIDATION_MODULE = 'compass.dao.person.is_overridable_uwnetid'
 USERSERVICE_OVERRIDE_AUTH_MODULE = 'compass.dao.group.can_override_user'
 RESTCLIENTS_ADMIN_AUTH_MODULE = 'compass.dao.group.can_proxy_restclient'
 PERSISTENT_MESSAGE_AUTH_MODULE = 'compass.dao.group.can_manage_persistent_messages'

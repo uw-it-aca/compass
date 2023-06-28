@@ -39,7 +39,6 @@ setup(
         'urllib3~=1.25',
         'axdd-person-client>=1.1.17',
         'python-dateutil~=2.8',
-        'freezegun~=1.2'
     ],
     license="Apache License, Version 2.0",
     description="A application for managing student advising information.",

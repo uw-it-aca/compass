@@ -1,11 +1,11 @@
 # Copyright 2023 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-import json
-from datetime import datetime, timezone
+from django.test import override_settings
 from compass.tests import ApiTest
 from compass.models import AccessGroup, Contact, AppUser, Student, ContactType
-from freezegun import freeze_time
+from datetime import datetime, timezone
+import json
 
 
 class ContactAPITest(ApiTest):
@@ -28,7 +28,7 @@ class ContactAPITest(ApiTest):
                                         slug="contact")
         self.contact_type.save()
 
-    @freeze_time("2023-05-10  12:00:01", tz_offset=0)
+    @override_settings(CURRENT_DATETIME_OVERRIDE='2023-05-10 12:00:01')
     def test_get_contacts(self):
         d1 = datetime(2023, 5, 10, 2, 30, 30, 300, tzinfo=timezone.utc)
         d2 = datetime(2023, 5, 7, 12, 1, 30, 300, tzinfo=timezone.utc)
