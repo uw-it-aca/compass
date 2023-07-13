@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import ProfileMini from "../components/student/profile-mini.vue";
+import ProfileMini from "../components/student/profile/profile-mini.vue";
 import { formatDate } from "../utils/dates";
 
 export default {

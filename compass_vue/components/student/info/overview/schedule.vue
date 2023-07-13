@@ -124,8 +124,8 @@
 </template>
 
 <script>
-import dataMixin from "../../mixins/data_mixin.js";
-import { translateMilitaryTime } from "../../utils/translations";
+import dataMixin from "../../../../mixins/data_mixin.js";
+import { translateMilitaryTime } from "../../../../utils/translations";
 
 export default {
   mixins: [dataMixin],

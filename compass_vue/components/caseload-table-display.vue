@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import ProfileMini from "../components/student/profile-mini.vue";
+import ProfileMini from "../components/student/profile/profile-mini.vue";
 import { translateTrueFalse } from "../utils/translations";
 
 export default {

@@ -89,9 +89,8 @@
             <KeyValue variant="address">
               <template #key>Current Majors</template>
               <template #value>
-                <ul class="list-unstyled">
-                  <p
-                    v-for="(major, index) in person.student.majors"
+                <ul class="list-unstyled">Summary
+                  <p v-for="(major, index) in person.student.majors"
                     :key="index"
                   >
                     {{ major.major_abbr_code }}, {{ major.major_name }}
@@ -126,7 +125,7 @@
       class="col-xl-3 d-flex flex-column"
       :class="[mq.lgMinus ? 'mb-4' : '']"
     >
-      <AffiliationSummary :person="person"></AffiliationSummary>
+      <Affiliations :person="person"></Affiliations>
     </div>
     <div class="col-xl-3 d-flex flex-column">
       <div
@@ -173,11 +172,11 @@
 </template>
 
 <script>
-import KeyValue from "../_common/key-value.vue";
-import dataMixin from "../../mixins/data_mixin";
-import AffiliationSummary from "../../components/student/affiliation-mini.vue";
+import KeyValue from "../../_common/key-value.vue";
+import dataMixin from "../../../mixins/data_mixin";
+import Affiliations from "./overview/summary/affiliation-mini.vue";
 
-import { translateTrueFalse } from "../../utils/translations";
+import { translateTrueFalse } from "../../../utils/translations";
 
 export default {
   inject: ["mq"],
@@ -190,7 +189,7 @@ export default {
   },
   components: {
     KeyValue,
-    AffiliationSummary,
+    Affiliations,
   },
   setup() {
     return {
