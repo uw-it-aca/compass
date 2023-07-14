@@ -1,9 +1,7 @@
 <template>
   <axdd-card>
     <template #heading>
-      <axdd-card-heading :level="2"
-        >Resource Eligibility</axdd-card-heading
-      >
+      <axdd-card-heading :level="2">Resource Eligibility</axdd-card-heading>
     </template>
     <template #body>
       <div v-if="eligibilities.length">
@@ -16,7 +14,8 @@
           </div>
           <div v-else>
             <p class="small">
-              This student is currently not eligible to use {{ eligibility.name }}
+              This student is currently not eligible to use
+              {{ eligibility.name }}
               resources.
               <span class="fw-bold">Would you like to grant access?</span>
             </p>
@@ -37,8 +36,7 @@
 </template>
 
 <script>
-import dataMixin from "../../../mixins/data_mixin.js";
-import { formatDate, getMinutesApart } from "../../../utils/dates.js"
+import dataMixin from "../../../../mixins/data_mixin.js";
 
 export default {
   mixins: [dataMixin],
@@ -52,7 +50,7 @@ export default {
   data() {
     return {
       student_eligibilities: [],
-      eligibilities: []
+      eligibilities: [],
     };
   },
   created() {
@@ -70,13 +68,11 @@ export default {
       );
     },
     loadEligibilities() {
-      this.getEligibilities().then(
-        (response) => {
-          if (response.data) {
-            this.eligibilities = response.data;
-          }
+      this.getEligibilities().then((response) => {
+        if (response.data) {
+          this.eligibilities = response.data;
         }
-      );
+      });
     },
     isAssignedEligibility(eligibility) {
       let is_assigned = false;
@@ -86,11 +82,12 @@ export default {
       return is_assigned;
     },
     updateStudentEligibility(eligibility_id) {
-      this.setStudentEligibility(this.person.student.system_key, eligibility_id).then(
-         () => {
-           this.loadStudentEligibilities();
-         }
-      );
+      this.setStudentEligibility(
+        this.person.student.system_key,
+        eligibility_id
+      ).then(() => {
+        this.loadStudentEligibilities();
+      });
     },
   },
 };

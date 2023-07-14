@@ -19,8 +19,14 @@
               ></i>
             </div>
             <div>
-              <div><strong>{{ visit.course_code }}</strong> <small>({{ visitDuration(visit) }}min)</small></div>
-              <div class="text-muted small">{{ visitDate(visit) }} {{ visitCheckin(visit) }} - {{ visitCheckout(visit) }}</div>
+              <div>
+                <strong>{{ visit.course_code }}</strong>
+                <small>({{ visitDuration(visit) }}min)</small>
+              </div>
+              <div class="text-muted small">
+                {{ visitDate(visit) }} {{ visitCheckin(visit) }} -
+                {{ visitCheckout(visit) }}
+              </div>
             </div>
           </li>
         </ul>
@@ -32,8 +38,8 @@
 </template>
 
 <script>
-import dataMixin from "../../mixins/data_mixin.js";
-import { formatDate, getMinutesApart } from "../../utils/dates.js"
+import dataMixin from "../../../../mixins/data_mixin.js";
+import { formatDate, getMinutesApart } from "../../../../utils/dates.js";
 
 export default {
   mixins: [dataMixin],
@@ -54,24 +60,23 @@ export default {
   },
   methods: {
     loadStudentVisits: function () {
-      this.getStudentVisits(this.person.student.system_key).then(
-        (response) => {
-          if (response.data) {
-            this.visits = response.data;
-          }
-        });
+      this.getStudentVisits(this.person.student.system_key).then((response) => {
+        if (response.data) {
+          this.visits = response.data;
+        }
+      });
     },
     visitDuration: function (visit) {
       return getMinutesApart(visit.checkin_date, visit.checkout_date);
     },
     visitDate: function (visit) {
-      return formatDate(visit.checkin_date, 'MM/DD/YYYY');
+      return formatDate(visit.checkin_date, "MM/DD/YYYY");
     },
     visitCheckin: function (visit) {
-      return formatDate(visit.checkin_date, 'hh:mma');
+      return formatDate(visit.checkin_date, "hh:mma");
     },
     visitCheckout: function (visit) {
-      return formatDate(visit.checkout_date, 'hh:mma');
+      return formatDate(visit.checkout_date, "hh:mma");
     },
   },
 };

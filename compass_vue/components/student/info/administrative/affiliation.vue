@@ -26,16 +26,30 @@
             <tr v-for="aff in studentAffiliations" class="border border-white">
               <td scope="row" class="ps-3">{{ aff.affiliation.name }}</td>
               <td scope="row" class="ps-3">
-              <div v-for="cohort in aff.cohorts">
-              {{ cohort.start_year }} - {{ cohort.end_year }}
-              </div></td>
-              <td v-if="aff.actively_advised"><i class="py-0 bi bi-check-lg"></i></td>
+                <div v-for="cohort in aff.cohorts">
+                  {{ cohort.start_year }} - {{ cohort.end_year }}
+                </div>
+              </td>
+              <td v-if="aff.actively_advised">
+                <i class="py-0 bi bi-check-lg"></i>
+              </td>
               <td v-else><i class="py-0 bi bi-x-circle"></i></td>
               <td>
-                <AffiliationEdit :button-type="'button'" :person="person" :affiliations="affiliations" :studentAffiliation="aff" :studentAffiliations="studentAffiliations">
+                <AffiliationEdit
+                  :button-type="'button'"
+                  :person="person"
+                  :affiliations="affiliations"
+                  :studentAffiliation="aff"
+                  :studentAffiliations="studentAffiliations"
+                >
                   <i class="py-0 bi bi-pencil-square"></i
                 ></AffiliationEdit>
-                <AffiliationDelete :button-type="'button'" :person="person" :studentAffiliation="aff" :studentAffiliations="studentAffiliations">
+                <AffiliationDelete
+                  :button-type="'button'"
+                  :person="person"
+                  :studentAffiliation="aff"
+                  :studentAffiliations="studentAffiliations"
+                >
                   <i class="bi bi-trash3"></i>
                 </AffiliationDelete>
               </td>
@@ -48,11 +62,11 @@
 </template>
 
 <script>
-import dataMixin from "../../../mixins/data_mixin.js";
+import dataMixin from "../../../../mixins/data_mixin.js";
 import AffiliationAdd from "./affiliation-add.vue";
 import AffiliationDelete from "./affiliation-delete.vue";
 import AffiliationEdit from "./affiliation-edit.vue";
-import { useAffiliationStore } from "../../../stores/affiliations";
+import { useAffiliationStore } from "../../../../stores/affiliations";
 
 export default {
   mixins: [dataMixin],
@@ -106,6 +120,9 @@ tbody {
     padding-top: 1rem !important;
     padding-bottom: 1rem !important;
   }
-i.bi-check-lg { color: green; }
+
+  i.bi-check-lg {
+    color: green;
+  }
 }
 </style>

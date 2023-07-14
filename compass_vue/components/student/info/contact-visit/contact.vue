@@ -128,9 +128,9 @@
 </template>
 
 <script>
-import dataMixin from "../../../mixins/data_mixin.js";
-import AddEditContact from "../../add-contact.vue";
-import { formatDate } from "../../../utils/dates";
+import dataMixin from "../../../../mixins/data_mixin.js";
+import AddEditContact from "./add-contact.vue";
+import { formatDate } from "../../../../utils/dates";
 
 export default {
   mixins: [dataMixin],
