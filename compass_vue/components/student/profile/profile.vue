@@ -55,7 +55,10 @@
 
           <ProfileInfoCard :person="person" />
 
-          <ProfileAthleticsCard :person="person" />
+          <ProfileAthleticsCard
+            v-if="person.student.sports.length > 0"
+            :person="person"
+          />
         </div>
 
         <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
