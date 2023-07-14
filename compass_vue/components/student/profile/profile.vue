@@ -99,13 +99,13 @@
 </template>
 
 <script>
-import ProfileNameCard from "./card/profile-name-card.vue";
-import ProfileInfoCard from "./card/profile-info-card.vue";
-import ProfileAthleticsCard from "./card/profile-athletics-card.vue";
-import ProfileImmigrationCard from "./card/profile-immigration-card.vue";
-import ProfileResidencyCard from "./card/profile-residency-card.vue";
-import ProfileContactCard from "./card/profile-contact-card.vue";
-import ProfileAddressCard from "./card/profile-address-card.vue";
+import ProfileNameCard from "./cards/profile-name-card.vue";
+import ProfileInfoCard from "./cards/profile-info-card.vue";
+import ProfileAthleticsCard from "./cards/profile-athletics-card.vue";
+import ProfileImmigrationCard from "./cards/profile-immigration-card.vue";
+import ProfileResidencyCard from "./cards/profile-residency-card.vue";
+import ProfileContactCard from "./cards/profile-contact-card.vue";
+import ProfileAddressCard from "./cards/profile-address-card.vue";
 import { translateTrueFalse } from "../../../utils/translations";
 import { formatDate } from "../../../utils/dates";
 
