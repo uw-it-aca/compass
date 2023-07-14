@@ -112,42 +112,15 @@
             <axdd-tabs-display :tabs-id="'example'">
               <template #panels>
                 <axdd-tabs-panel :panel-id="'overview'" :active-panel="true">
-                  <div class="row mt-4">
-                    <div class="col-xl-12">
-                      <StudentAcademics :person="person"></StudentAcademics>
-                    </div>
-                    <div class="col-xl-9">
-                      <StudentSchedule :person="person"></StudentSchedule>
-                    </div>
-                    <div class="col-xl-3">
-                      <StudentHolds :person="person"></StudentHolds>
-                      <StudentAdviser
-                        :advisers="person.student.advisers"
-                      ></StudentAdviser>
-                    </div>
-                  </div>
+                  <StudentOverview :person="person"></StudentOverview>
                 </axdd-tabs-panel>
                 <axdd-tabs-panel :panel-id="'contact-visit'">
-                  <div class="row mt-4">
-                    <div class="col-xl-9">
-                      <StudentContact :person="person"></StudentContact>
-                    </div>
-                    <div class="col-xl-3">
-                      <StudentVisits :person="person"></StudentVisits>
-                    </div>
-                  </div>
+                  <StudentContactVisit :person="person"></StudentContactVisit>
                 </axdd-tabs-panel>
                 <axdd-tabs-panel :panel-id="'academic-history'">
-                  <div class="row mt-4">
-                    <div class="col-xl-9">
-                      <StudentTranscript :person="person"></StudentTranscript>
-                    </div>
-                    <div class="col-xl-3">
-                      <StudentTranscriptCredits
-                        :person="person"
-                      ></StudentTranscriptCredits>
-                    </div>
-                  </div>
+                  <StudentAcademicHistory
+                    :person="person"
+                  ></StudentAcademicHistory>
                 </axdd-tabs-panel>
 
                 <!-- MARK: only show administrative panel to managers -->
@@ -155,14 +128,7 @@
                   v-show="userRoles.includes(Role.Manager)"
                   :panel-id="'admin'"
                 >
-                  <div class="row mt-4">
-                    <div class="col-xl-9">
-                      <AffiliationAddEdit :person="person"></AffiliationAddEdit>
-                    </div>
-                    <div class="col-xl-3">
-                      <StudentEligibility :person="person"></StudentEligibility>
-                    </div>
-                  </div>
+                  <AdministrativePanel :person="person"></AdministrativePanel>
                 </axdd-tabs-panel>
               </template>
             </axdd-tabs-display>
@@ -177,19 +143,13 @@
 import { Role } from "../utils/roles.js";
 import Layout from "../layout.vue";
 import dataMixin from "../mixins/data_mixin.js";
+import StudentOverview from "../components/student/info/overview/overview.vue";
+import StudentContactVisit from "../components/student/info/contact-visit/contact-visit.vue";
+import StudentAcademicHistory from "../components/student/info/academic-history/academic-history.vue";
+import AdministrativePanel from "../components/student/info/administrative/administrative-panel.vue";
 import StudentProfile from "../components/student/profile/profile.vue";
 import StudentProfileLoading from "../components/student/profile/profile-loading.vue";
-import StudentAcademics from "../components/student/info/academics.vue";
-import StudentTranscript from "../components/student/info/transcript.vue";
-import StudentTranscriptCredits from "../components/student/info/transcript-credits.vue";
-import StudentContact from "../components/student/info/contact.vue";
-import StudentSchedule from "../components/student/info/overview/schedule.vue";
-import StudentHolds from "../components/student/holds.vue";
-import StudentAdviser from "../components/student/info/overview/adviser.vue";
-import StudentVisits from "../components/student/visits.vue";
 import SearchStudent from "../components/search-student.vue";
-import AffiliationAddEdit from "../components/student/administrative/affiliation.vue";
-import StudentEligibility from "../components/student/administrative/eligibility.vue";
 
 export default {
   mixins: [dataMixin],
@@ -198,17 +158,11 @@ export default {
     layout: Layout,
     StudentProfile,
     StudentProfileLoading,
-    StudentAcademics,
-    StudentTranscript,
-    StudentTranscriptCredits,
-    StudentContact,
-    StudentSchedule,
-    StudentHolds,
-    StudentAdviser,
-    StudentVisits,
+    StudentOverview,
+    StudentContactVisit,
+    StudentAcademicHistory,
+    AdministrativePanel,
     SearchStudent,
-    AffiliationAddEdit,
-    StudentEligibility,
   },
   created: function () {
     this.loadAccessGroups();
