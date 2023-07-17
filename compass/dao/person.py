@@ -31,7 +31,7 @@ def person_from_uwnetid(uwnetid):
 
 
 def is_overridable_uwnetid(username):
-    error_msg = "No override user supplied, please enter a UWNetID"
+    error_msg = None
     if username is not None and len(username) > 0:
         try:
             person = person_from_uwnetid(username.lower())
@@ -41,4 +41,6 @@ def is_overridable_uwnetid(username):
             error_msg = "Not a valid UWNetID: "
         except PersonNotFoundException:
             error_msg = "UWNetID not found: "
+    else:
+        error_msg = "No override user supplied, please enter a UWNetID"
     return error_msg
