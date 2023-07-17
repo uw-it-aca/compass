@@ -37,6 +37,8 @@ def is_overridable_uwnetid(username):
             person = person_from_uwnetid(username.lower())
             if username.lower() != person.uwnetid:
                 error_msg = f"Current netid: {person.uwnetid}, Prior netid: "
+            else:
+                error_msg = None
         except InvalidNetID:
             error_msg = "Not a valid UWNetID: "
         except PersonNotFoundException:
