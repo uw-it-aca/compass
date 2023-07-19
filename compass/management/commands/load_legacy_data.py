@@ -147,7 +147,7 @@ class Command(BaseCommand):
             (re.compile('^(Event[/ ]Workshop'
                         '|ECC Meeting or Event'
                         '|ECC Event)$', re.I),
-             'Event Workshop')]
+             'Event/Workshop')]
 
         if contact:
             for pat, name in mapping:

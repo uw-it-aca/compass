@@ -69,7 +69,7 @@ class ContactView(BaseAPIView):
             uwnetid=us.get_user()).id
         student, _ = Student.objects.get_or_create(system_key=system_key)
         contact_record['student'] = student.id
-        contact_record['access_group'] = access_group.id
+        contact_record['access_group'] = [access_group.id]
         created = False
         if contactid:
             try:
