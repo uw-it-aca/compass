@@ -97,7 +97,13 @@
                 >
                   Academic History
                 </axdd-tabs-item>
-                <axdd-tabs-item :tabs-id="'example'" :panel-id="'admin'">
+
+                <!-- MARK: only show administrative tab to managers -->
+                <axdd-tabs-item
+                  v-show="userRoles.includes(Role.Manager)"
+                  :tabs-id="'example'"
+                  :panel-id="'admin'"
+                >
                   Administrative
                 </axdd-tabs-item>
               </template>
@@ -143,7 +149,12 @@
                     </div>
                   </div>
                 </axdd-tabs-panel>
-                <axdd-tabs-panel :panel-id="'admin'">
+
+                <!-- MARK: only show administrative panel to managers -->
+                <axdd-tabs-panel
+                  v-show="userRoles.includes(Role.Manager)"
+                  :panel-id="'admin'"
+                >
                   <div class="row mt-4">
                     <div class="col-xl-9">
                       <AffiliationAddEdit :person="person"></AffiliationAddEdit>
@@ -163,6 +174,7 @@
 </template>
 
 <script>
+import { Role } from "../utils/roles.js";
 import Layout from "../layout.vue";
 import dataMixin from "../mixins/data_mixin.js";
 import StudentProfile from "../components/student/profile.vue";
@@ -213,6 +225,8 @@ export default {
       isLoading: false,
       isError: false,
       accessGroups: [],
+      userRoles: document.body.getAttribute("data-user-role").split(","),
+      Role: Role,
     };
   },
   //  computed: {

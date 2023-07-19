@@ -2,8 +2,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from compass.views.api import BaseAPIView, JSONClientContentNegotiation, \
-    TokenAPIView
+from django.utils.timezone import utc
+from compass.dao import current_datetime
+from compass.views.api import (
+    BaseAPIView, JSONClientContentNegotiation, TokenAPIView)
 from compass.models import (
     AccessGroup, AppUser, Contact, ContactTopic, ContactType, ContactMethod,
     Student)
@@ -19,7 +21,9 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from userservice.user import UserService
-from datetime import datetime
+from logging import getLogger
+
+logger = getLogger(__name__)
 
 
 class ContactView(BaseAPIView):
@@ -102,7 +106,8 @@ class ContactView(BaseAPIView):
                     contact_record['contact_topics'] = topics
 
                 if 'checkin_date' not in contact_record:
-                    contact_record['checkin_date'] = datetime.now()
+                    current_dt = current_datetime().replace(tzinfo=utc)
+                    contact_record['checkin_date'] = current_dt
 
             except (KeyError, ContactType.DoesNotExist,
                     ContactMethod.DoesNotExist,
@@ -113,6 +118,8 @@ class ContactView(BaseAPIView):
 
         if serializer.is_valid():
             serializer.save()
+            logger.info(f"Contact saved for student {system_key}: "
+                        f"{serializer.data}")
             if created:
                 return self.response_created(serializer.data)
             return self.response_ok(serializer.data)
@@ -265,4 +272,6 @@ class ContactOMADView(TokenAPIView):
         contact.source = "Checkin"
         contact.save()
         contact.access_group.add(access_group)
+        logger.info(f"Checkin contact {contact.contact_type} added for "
+                    f"student {student.system_key}")
         return Response(status=status.HTTP_201_CREATED)

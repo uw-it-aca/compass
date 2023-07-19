@@ -52,14 +52,15 @@ if settings.DEBUG:
             TemplateView.as_view(template_name="403.html"),
             name="403_response",
         ),
-        re_path(
-            r"^unauthorized-user$",
-            TemplateView.as_view(template_name="unauthorized-user.html")
-        ),
     ]
 
 urlpatterns += [
     re_path(r"^admin", admin_site.urls),
+    re_path(
+        r"^unauthorized-user$",
+        TemplateView.as_view(template_name="unauthorized-user.html"),
+        name="unauthorized_user",
+    ),
     re_path(
         r"^api/internal/student/(?P<identifier>[-@:\w]+)/$",
         StudentView.as_view(),
@@ -135,7 +136,7 @@ urlpatterns += [
         name="contact_omad"
     ),
     # vue-router paths
-    re_path(r"^(student|caseload|reports|settings).*$", LandingView.as_view()),
+    re_path(r"^(student|caseload|reports).*$", LandingView.as_view()),
     # default landing
     re_path(r"^$", LandingView.as_view(), name="index"),
 ]

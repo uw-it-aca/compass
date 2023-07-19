@@ -22,27 +22,6 @@
               </KeyValue>
             </li>
             <li>
-              <KeyValue
-                v-if="
-                  person.student.degrees && person.student.degrees.length > 0
-                "
-                class="text-success"
-              >
-                <template #key>Graduated</template>
-                <template #value>Yes</template>
-              </KeyValue>
-            </li>
-            <li>
-              <KeyValue
-                v-if="person.student.applied_to_graduate_yr_qtr_id !== 'NaN'"
-              >
-                <template #key>Applied to Graduate</template>
-                <template #value>{{
-                  person.student.applied_to_graduate_yr_qtr_desc
-                }}</template>
-              </KeyValue>
-            </li>
-            <li>
               <KeyValue>
                 <template #key>Class standing</template>
                 <template #value>{{ person.student.class_desc }}</template>
@@ -53,16 +32,6 @@
                 <template #key>Campus</template>
                 <template #value>{{ person.student.campus_desc }}</template>
               </KeyValue>
-            </li>
-            <li>
-              <span v-if="!person.student.registered_in_quarter">
-                <KeyValue class="text-success">
-                  <template #key>Last Enrolled</template>
-                  <template #value>{{
-                    person.student.last_enrolled_yr_qtr_desc
-                  }}</template>
-                </KeyValue>
-              </span>
             </li>
           </ul>
         </div>
@@ -93,19 +62,17 @@
               :key="index"
             >
               <template #key
-                ><span class="text-wrap">{{
-                  degree.degree_desc
-                }}</span></template
+                ><span class="text-wrap">
+                  {{ degree.degree_desc }}
+                </span></template
               >
               <template #value>
-                <ul class="list-unstyled">
-                  <li class="small">
-                    <p>
-                      {{ degree.degree_term.quarter_name }}
-                      {{ degree.degree_term.year }}
-                    </p>
-                  </li>
-                </ul>
+                <p class="small" v-if="degree.degree_term">
+                  {{ degree.degree_term.quarter_name }}
+                  {{ degree.degree_term.year }}
+                  ({{ degree.degree_status_desc }})
+                </p>
+                <p v-else class="small">{{ degree.degree_status_desc }}</p>
               </template>
             </KeyValue>
           </div>
@@ -206,8 +173,8 @@
 </template>
 
 <script>
-import KeyValue from "../../components/_common/key-value.vue";
-import dataMixin from "../../mixins/data_mixin.js";
+import KeyValue from "../_common/key-value.vue";
+import dataMixin from "../../mixins/data_mixin";
 import AffiliationSummary from "../../components/student/affiliation-mini.vue";
 
 import { translateTrueFalse } from "../../utils/translations";
@@ -223,7 +190,7 @@ export default {
   },
   components: {
     KeyValue,
-    AffiliationSummary
+    AffiliationSummary,
   },
   setup() {
     return {
@@ -231,7 +198,9 @@ export default {
     };
   },
   data() {
-    return {};
+    return {
+      testObj: {},
+    };
   },
   created() {},
   methods: {},

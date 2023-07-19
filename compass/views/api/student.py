@@ -2,10 +2,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+from django.utils.timezone import utc
 from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
 from compass.dao.person import (
     valid_uwnetid, valid_uwregid, valid_student_number, valid_system_key)
+from compass.dao import current_datetime
 from compass.models import (
     AccessGroup, Student, Contact, StudentAffiliation, Affiliation, Cohort,
     Visit, EligibilityType, StudentEligibility)
@@ -21,7 +23,9 @@ from uw_sws.term import (
     get_current_term, get_next_term, get_term_after,
     get_term_by_year_and_quarter)
 from uw_sws.registration import get_schedule_by_regid_and_term
-from datetime import datetime
+from logging import getLogger
+
+logger = getLogger(__name__)
 
 TERMS = {1: "Winter", 2: "Spring", 3: "Summer", 4: "Autumn"}
 
@@ -76,6 +80,7 @@ class StudentView(BaseAPIView):
                 serializer = StudentWriteSerializer(data=student_record)
             if serializer.is_valid():
                 serializer.save()
+                logger.info(f"Student {system_key} saved: {serializer.data}")
                 return self.response_created(serializer.data)
             else:
                 return self.response_badrequest(serializer.errors)
@@ -181,7 +186,8 @@ class StudentAffiliationsView(BaseAPIView):
                     student=student, affiliation=affiliation)
 
             sa.actively_advised = affiliation_data['actively_advised']
-            sa.date = datetime.now().date()
+            sa.date = current_datetime().replace(tzinfo=utc).date()
+
             cohort_objects = []
             for c in affiliation_data['cohorts']:
                 co, _ = Cohort.objects.get_or_create(
@@ -195,6 +201,8 @@ class StudentAffiliationsView(BaseAPIView):
             sa.save()
 
             serializer = StudentAffiliationReadSerializer(sa)
+            logger.info(f"StudentAffiliation for {system_key} saved: "
+                        f"{serializer.data}")
             return self.response_ok(serializer.data)
         except Student.DoesNotExist:
             return self.response_notfound("Unknown student")
@@ -223,6 +231,8 @@ class StudentAffiliationsView(BaseAPIView):
                 id=affiliation_id, student=student,
                 affiliation__access_group=access_group)
             student_affiliation.delete()
+            logger.info(f"StudentAffiliation {affiliation_id} for "
+                        f"{system_key} deleted")
             return self.response_ok("")
         except Student.DoesNotExist:
             return self.response_notfound("Unknown student")
@@ -266,13 +276,6 @@ class StudentTranscriptsView(BaseAPIView):
         client = CompassPersonClient()
         person = client.get_person_by_uwregid(uwregid)
 
-        cur_term = get_current_term()
-        next_term = get_next_term()
-        term_after = get_term_after(next_term)
-        schedule_display_terms = [cur_term.int_key(),
-                                  next_term.int_key(),
-                                  term_after.int_key()]
-
         transcripts = []
         for transcript in sorted(person.student.transcripts, key=lambda t: (
                 t.tran_term.year, t.tran_term.quarter), reverse=True):
@@ -283,8 +286,6 @@ class StudentTranscriptsView(BaseAPIView):
                 class_schedule = get_schedule_by_regid_and_term(
                     uwregid, term)
                 transcript.class_schedule = class_schedule.json_data()
-                transcript.class_schedule['display_schedule'] = \
-                    term.int_key() in schedule_display_terms
             except DataFailureException:
                 transcript.class_schedule = None
             transcripts.append(transcript.to_dict())
@@ -342,6 +343,8 @@ class StudentEligibilityView(BaseAPIView):
             s_e.save()
 
             serializer = StudentEligibilitySerializer(s_e)
+            logger.info(f"StudentEligibility for {system_key} saved: "
+                        f"{serializer.data}")
             return self.response_ok(serializer.data)
         except Student.DoesNotExist:
             return self.response_notfound("Unknown student")

@@ -19,16 +19,6 @@
           ><i class="bi bi-people-fill me-2"></i>Caseload</router-link
         >
       </li>
-      <!-- if manager -->
-      <li v-show="userRoles.includes(Role.Manager)" class="nav-item mb-1">
-        <router-link
-          :to="'/settings'"
-          active-class="bg-dark-purple rounded-3"
-          class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
-          ><i class="bi bi-tools me-2"></i>Settings</router-link
-        >
-      </li>
-
       <li aria-hidden="true" class="nav-item mt-1 mb-2">
         <a
           href="#"
