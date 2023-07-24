@@ -22,8 +22,8 @@
                 {{ person.student.emergency_email }}
               </div>
             </div>
-           </li>
-           <li>
+          </li>
+          <li>
             <div class="d-flex">
               <i class="bi bi-telephone text-gray me-3"></i>
               <div class="flex-fill">

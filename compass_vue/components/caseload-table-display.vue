@@ -111,19 +111,19 @@ export default {
     return {};
   },
   methods: {
-    getScholarshipData: function (person){
+    getScholarshipData: function (person) {
       try {
         return {
-          'scholarship_type': person.student.transcripts[0].scholarship_type,
-          'scholarship_desc': person.student.transcripts[0].scholarship_desc
-        }
+          scholarship_type: person.student.transcripts[0].scholarship_type,
+          scholarship_desc: person.student.transcripts[0].scholarship_desc,
+        };
       } catch (err) {
         return {
-          'scholarship_type': undefined,
-          'scholarship_desc': undefined
-        }
+          scholarship_type: undefined,
+          scholarship_desc: undefined,
+        };
       }
-    }
+    },
   },
 };
 </script>

@@ -113,7 +113,9 @@ export default {
         _this.groupedPrograms = Object.assign(
           {},
           _this.groupedPrograms,
-          _this._groupProgramsByAccessGroup(this.storeAffiliations.affiliations.data)
+          _this._groupProgramsByAccessGroup(
+            this.storeAffiliations.affiliations.data
+          )
         );
       });
     },
