@@ -109,8 +109,8 @@ import ProfileImmigrationCard from "./cards/profile-immigration-card.vue";
 import ProfileResidencyCard from "./cards/profile-residency-card.vue";
 import ProfileContactCard from "./cards/profile-contact-card.vue";
 import ProfileAddressCard from "./cards/profile-address-card.vue";
-import { translateTrueFalse } from "../../../utils/translations";
-import { formatDate } from "../../../utils/dates";
+import { translateTrueFalse } from "@/utils/translations";
+import { formatDate } from "@/utils/dates";
 
 export default {
   inject: ["mq"],

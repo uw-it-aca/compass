@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import dataMixin from "../../../../mixins/data_mixin.js";
+import dataMixin from "@/mixins/data_mixin.js";
 
 export default {
   mixins: [dataMixin],

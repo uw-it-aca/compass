@@ -69,8 +69,8 @@
 </template>
 
 <script>
-import dataMixin from "../../mixins/data_mixin.js";
-import { useAffiliationStore } from "../../../stores/affiliations";
+import dataMixin from "@/mixins/data_mixin.js";
+import { useAffiliationStore } from "@/stores/affiliations";
 
 export default {
   mixins: [dataMixin],

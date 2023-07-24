@@ -108,9 +108,9 @@
 </template>
 
 <script>
-import dataMixin from "../../../../mixins/data_mixin.js";
+import dataMixin from "@/mixins/data_mixin.js";
 import { Modal } from "bootstrap";
-import { getCohorts } from "../../../../utils/cohorts.js";
+import { getCohorts } from "@/utils/cohorts.js";
 
 export default {
   mixins: [dataMixin],

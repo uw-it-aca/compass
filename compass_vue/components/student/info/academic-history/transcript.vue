@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import { useStudentStore } from "../../../../stores/student";
+import { useStudentStore } from "@/stores/student";
 
 export default {
   props: {

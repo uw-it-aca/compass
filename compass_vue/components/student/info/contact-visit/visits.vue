@@ -38,8 +38,8 @@
 </template>
 
 <script>
-import dataMixin from "../../../../mixins/data_mixin.js";
-import { formatDate, getMinutesApart } from "../../../../utils/dates.js";
+import dataMixin from "@/mixins/data_mixin.js";
+import { formatDate, getMinutesApart } from "@/utils/dates.js";
 
 export default {
   mixins: [dataMixin],

@@ -140,16 +140,16 @@
 </template>
 
 <script>
-import { Role } from "../utils/roles.js";
-import Layout from "../layout.vue";
-import dataMixin from "../mixins/data_mixin.js";
-import StudentOverview from "../components/student/info/overview/overview.vue";
-import StudentContactVisit from "../components/student/info/contact-visit/contact-visit.vue";
-import StudentAcademicHistory from "../components/student/info/academic-history/academic-history.vue";
-import AdministrativePanel from "../components/student/info/administrative/administrative-panel.vue";
-import StudentProfile from "../components/student/profile/profile.vue";
-import StudentProfileLoading from "../components/student/profile/profile-loading.vue";
-import SearchStudent from "../components/search-student.vue";
+import { Role } from "@/utils/roles.js";
+import Layout from "@/layout.vue";
+import dataMixin from "@/mixins/data_mixin.js";
+import StudentOverview from "@/components/student/info/overview/overview.vue";
+import StudentContactVisit from "@/components/student/info/contact-visit/contact-visit.vue";
+import StudentAcademicHistory from "@/components/student/info/academic-history/academic-history.vue";
+import AdministrativePanel from "@/components/student/info/administrative/administrative-panel.vue";
+import StudentProfile from "@/components/student/profile/profile.vue";
+import StudentProfileLoading from "@/components/student/profile/profile-loading.vue";
+import SearchStudent from "@/components/search-student.vue";
 
 export default {
   mixins: [dataMixin],

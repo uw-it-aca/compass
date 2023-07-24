@@ -62,11 +62,11 @@
 </template>
 
 <script>
-import dataMixin from "../../../../mixins/data_mixin.js";
+import dataMixin from "@/mixins/data_mixin.js";
 import AffiliationAdd from "./affiliation-add.vue";
 import AffiliationDelete from "./affiliation-delete.vue";
 import AffiliationEdit from "./affiliation-edit.vue";
-import { useAffiliationStore } from "../../../../stores/affiliations";
+import { useAffiliationStore } from "@/stores/affiliations";
 
 export default {
   mixins: [dataMixin],

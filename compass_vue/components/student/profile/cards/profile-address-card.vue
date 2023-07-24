@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import KeyValue from "../../../_common/key-value.vue";
+import KeyValue from "@/components/_common/key-value.vue";
 
 export default {
   inject: ["mq"],
