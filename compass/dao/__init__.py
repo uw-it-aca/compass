@@ -4,7 +4,7 @@
 
 from django.conf import settings
 from datetime import datetime
-from uw_sws import sws_now
+from uw_sws.dao import sws_now, SWS_TIMEZONE
 import pytz
 
 
@@ -17,4 +17,4 @@ def current_datetime():
 
 
 def current_datetime_utc():
-    return current_datetime().astimezone(pytz.utc)
+    return SWS_TIMEZONE.localize(current_datetime()).astimezone(pytz.utc)
