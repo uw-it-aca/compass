@@ -18,9 +18,9 @@ class DateTimeFunctionsTest(TestCase):
 
     def test_current_datetime_utc(self):
         with self.settings(CURRENT_DATETIME_OVERRIDE='2013-05-31 08:00:00'):
-            self.assertEqual(current_datetime_utc().strftime('%Y-%m-%d %H:%M:%S'),
-                             '2013-05-31 15:00:00')
+            self.assertEqual(current_datetime_utc().strftime(
+                '%Y-%m-%d %H:%M:%S'), '2013-05-31 15:00:00')
 
         with self.settings(CURRENT_DATETIME_OVERRIDE='2013-01-31 08:00:00'):
-            self.assertEqual(current_datetime_utc().strftime('%Y-%m-%d %H:%M:%S'),
-                             '2013-01-31 16:00:00')
+            self.assertEqual(current_datetime_utc().strftime(
+                '%Y-%m-%d %H:%M:%S'), '2013-01-31 16:00:00')
