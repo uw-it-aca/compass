@@ -21,7 +21,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from userservice.user import UserService
 from logging import getLogger
-import pytz
+
 
 logger = getLogger(__name__)
 
