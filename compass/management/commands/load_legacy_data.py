@@ -10,7 +10,6 @@ from compass.models import (
     Contact, AppUser, AccessGroup, Student,
     ContactType, ContactMethod, ContactTopic)
 from datetime import datetime
-from pytz import timezone
 import argparse
 import pytz
 import sys
@@ -131,12 +130,14 @@ class Command(BaseCommand):
         return student
 
     def _get_checkin_date(self, apt):
-        pacific = timezone('US/Pacific')
+        pacific = pytz.timezone('US/Pacific')
         naive_date = datetime.strptime(apt.Date, '%Y-%m-%d %H:%M:%S.%f')
         date = pacific.localize(naive_date)
         time = datetime.strptime(apt.Time_In, '%H:%M:%S')
         return date.replace(
-            hour=time.hour, minute=time.minute, second=time.second)
+            hour=time.hour,
+            minute=time.minute,
+            second=time.second).astimezone(pytz.utc)
 
     def _get_contact_type(self, contact):
         mapping = [
@@ -144,10 +145,12 @@ class Command(BaseCommand):
              'Appointment'),
             (re.compile('^Admin Notes$', re.I),
              'Admin'),
+            (re.compile('^Notes$', re.I),
+             'Advisor'),
             (re.compile('^(Event[/ ]Workshop'
                         '|ECC Meeting or Event'
                         '|ECC Event)$', re.I),
-             'Event Workshop')]
+             'Event/Workshop')]
 
         if contact:
             for pat, name in mapping:

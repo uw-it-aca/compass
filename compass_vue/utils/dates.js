@@ -1,12 +1,38 @@
 import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 dayjs.extend(localizedFormat);
+dayjs.extend(utc);
+dayjs.extend(timezone);
+
+const LOCAL_TIMEZONE = 'America/Los_Angeles'
 
 function formatDate(date, format) {
-  if (!date) {
-    return null;
-  }
-  return dayjs(date).format(format);
+    return (date) ? dayjs(date).format(format) : null;
+}
+
+function formatUTCToLocalDate(date, format) {
+    return formatDate(utcToLocalDate(date), format);
+}
+
+function formatUTCToLocalDateAndTimeZone(date, format) {
+    let local_date = utcToLocalDate(date);
+
+    return formatDate(local_date, format)  + nonLocalTimeZone(local_date);
+}
+
+function utcToLocalDate(date) {
+    return (date) ? dayjs(date).tz(LOCAL_TIMEZONE) : null;
+}
+
+function nonLocalTimeZone(local_date) {
+    return ((dayjs.tz.guess() == LOCAL_TIMEZONE)
+            ? "" : ((Math.abs(local_date.utcOffset()) == 420) ? " PDT" : " PST"));
+}
+
+function utcDate(date) {
+    return dayjs(date).tz(dayjs.tz.utc);
 }
 
 function getToday() {
@@ -36,4 +62,5 @@ function getMinutesApart(startDate, endDate) {
     return dayjs(endDate).diff(startDate, 'minutes')
 }
 
-export { formatDate, getToday, getYesterday, getWeeksApart, getMinutesApart };
+export { formatDate, formatUTCToLocalDate, formatUTCToLocalDateAndTimeZone, getToday,
+         getYesterday, getWeeksApart, getMinutesApart };

@@ -181,14 +181,12 @@ export default {
       event.preventDefault();
       this.saveStudentAffiliation(this.person.student.system_key, affiliationData)
         .then((response) => {
-           console.log("RESPONSE 1111" + response.data);
           this.saveStudentContact(this.person.student.system_key, {
              contact_type: 'Admin',
              contact_method: 'Internal',
              contact_topics: ['None'],
              notes: this.notes
           }).then(() => {
-            console.log("RESPONSE 2222" + response.data);
             this.updateStudentAffiliations(response.data);
             this.$emit("affiliationsUpdated");
             this.hideModal();

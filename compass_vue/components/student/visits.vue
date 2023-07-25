@@ -33,7 +33,7 @@
 
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
-import { formatDate, getMinutesApart } from "../../utils/dates.js"
+import { formatUTCToLocalDate, formatUTCToLocalDateAndTimeZone, getMinutesApart } from "../../utils/dates.js"
 
 export default {
   mixins: [dataMixin],
@@ -65,13 +65,13 @@ export default {
       return getMinutesApart(visit.checkin_date, visit.checkout_date);
     },
     visitDate: function (visit) {
-      return formatDate(visit.checkin_date, 'MM/DD/YYYY');
+      return formatUTCToLocalDate(visit.checkin_date, 'MM/DD/YYYY');
     },
     visitCheckin: function (visit) {
-      return formatDate(visit.checkin_date, 'hh:mma');
+      return formatUTCToLocalDate(visit.checkin_date, 'hh:mma');
     },
     visitCheckout: function (visit) {
-      return formatDate(visit.checkout_date, 'hh:mma');
+      return formatUTCToLocalDateAndTimeZone(visit.checkout_date, 'hh:mma');
     },
   },
 };
