@@ -9,7 +9,7 @@ from compass.models import (
     Student, AccessGroup, Visit, VisitType,
     StudentEligibility, EligibilityType)
 from datetime import datetime
-from pytz import timezone
+import pytz
 import sys
 import csv
 import re
@@ -132,12 +132,14 @@ class Command(BaseCommand):
         return student
 
     def _get_checkin_date(self, apt):
-        pacific = timezone('US/Pacific')
+        pacific = pytz.timezone('US/Pacific')
         naive_date = datetime.strptime(apt.Date, '%Y-%m-%d %H:%M:%S.%f')
         date = pacific.localize(naive_date)
         time = datetime.strptime(apt.Time_In, '%H:%M:%S')
         return date.replace(
-            hour=time.hour, minute=time.minute, second=time.second)
+            hour=time.hour,
+            minute=time.minute,
+            second=time.second).astimezone(pytz.utc)
 
     def _get_checkout_date(self, apt):
         pacific = timezone('US/Pacific')
@@ -145,7 +147,9 @@ class Command(BaseCommand):
         date = pacific.localize(naive_date)
         time = datetime.strptime(apt.Time_Out, '%H:%M:%S')
         return date.replace(
-            hour=time.hour, minute=time.minute, second=time.second)
+            hour=time.hour,
+            minute=time.minute,
+            second=time.second).astimezone(pytz.utc)
 
     def _get_course_code(self, apt):
         return apt.Event_Type or "None"

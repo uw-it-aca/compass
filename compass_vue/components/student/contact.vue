@@ -27,7 +27,7 @@
               <tr v-for="contact in contacts" :key="contact.id">
                 <td scope="row" class="ps-3" style="width: 25%">
                   <div class="small">
-                    {{ formatDate(contact.checkin_date, "LLL") }}
+                    {{ contactDate(contact.checkin_date) }}
                   </div>
                   <div class="text-muted small">
                     <i class="bi bi-person-circle me-1"></i
@@ -130,7 +130,7 @@
 <script>
 import dataMixin from "../../mixins/data_mixin.js";
 import AddEditContact from "../add-contact.vue";
-import { formatDate } from "../../utils/dates";
+import { formatUTCToLocalDateAndTimeZone } from "../../utils/dates";
 
 export default {
   mixins: [dataMixin],
@@ -143,11 +143,7 @@ export default {
       required: true,
     },
   },
-  setup() {
-    return {
-      formatDate,
-    };
-  },
+  setup() {},
   data() {
     return {
       contacts: {},
@@ -167,6 +163,9 @@ export default {
           }
         }
       );
+    },
+    contactDate: function (date) {
+      return formatUTCToLocalDateAndTimeZone(date, "LLL");
     },
   },
 };
