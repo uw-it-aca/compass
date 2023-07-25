@@ -8,6 +8,7 @@ from compass.models import (
     Visit, VisitType, StudentAffiliation,
     StudentEligibility, EligibilityType)
 from rest_framework import serializers
+import pytz
 
 
 class AppUserSerializer(serializers.ModelSerializer):
@@ -152,6 +153,8 @@ class ContactReadSerializer(serializers.ModelSerializer):
     contact_type = ContactTypeSerializer(many=False, read_only=False)
     contact_method = ContactMethodSerializer(many=False, read_only=False)
     contact_topics = ContactTopicSerializer(many=True, read_only=False)
+    created_date = serializers.DateTimeField(default_timezone=pytz.utc)
+    checkin_date = serializers.DateTimeField(default_timezone=pytz.utc)
 
     class Meta:
         model = Contact
@@ -244,6 +247,8 @@ class VisitTypeSerializer(serializers.ModelSerializer):
 class VisitReadSerializer(serializers.ModelSerializer):
 
     visit_type = VisitTypeSerializer(many=False, read_only=False)
+    checkin_date = serializers.DateTimeField(default_timezone=pytz.utc)
+    checkout_date = serializers.DateTimeField(default_timezone=pytz.utc)
 
     class Meta:
         model = Visit
