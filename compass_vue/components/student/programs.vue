@@ -69,8 +69,8 @@
 </template>
 
 <script>
-import dataMixin from "../../mixins/data_mixin.js";
-import { useAffiliationStore } from "../../../stores/affiliations";
+import dataMixin from "@/mixins/data_mixin.js";
+import { useAffiliationStore } from "@/stores/affiliations";
 
 export default {
   mixins: [dataMixin],
@@ -113,7 +113,9 @@ export default {
         _this.groupedPrograms = Object.assign(
           {},
           _this.groupedPrograms,
-          _this._groupProgramsByAccessGroup(this.storeAffiliations.affiliations.data)
+          _this._groupProgramsByAccessGroup(
+            this.storeAffiliations.affiliations.data
+          )
         );
       });
     },
