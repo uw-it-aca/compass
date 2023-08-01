@@ -2,13 +2,13 @@ import { createWebHistory, createRouter } from "vue-router";
 // vue-gtag-next track routing
 import { trackRouter } from "vue-gtag-next";
 
-import { Role } from "../utils/roles.js";
+import { Role } from "@/utils/roles.js";
 
 // page components
-import CheckIn from "../pages/check-ins.vue";
-import Caseload from "../pages/caseload.vue";
-import Student from "../pages/student.vue";
-import Reports from "../pages/reports.vue";
+import CheckIn from "@/pages/check-ins.vue";
+import Caseload from "@/pages/caseload.vue";
+import Student from "@/pages/student.vue";
+import Reports from "@/pages/reports.vue";
 
 const routes = [
   {

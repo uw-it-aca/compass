@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import Layout from "../layout.vue";
-import dataMixin from "../mixins/data_mixin.js";
+import Layout from "@/layout.vue";
+import dataMixin from "@/mixins/data_mixin.js";
 
 export default {
   mixins: [dataMixin],

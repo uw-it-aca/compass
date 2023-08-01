@@ -6,33 +6,36 @@ dayjs.extend(localizedFormat);
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-const LOCAL_TIMEZONE = 'America/Los_Angeles'
+const LOCAL_TIMEZONE = "America/Los_Angeles";
 
 function formatDate(date, format) {
-    return (date) ? dayjs(date).format(format) : null;
+  return date ? dayjs(date).format(format) : null;
 }
 
 function formatUTCToLocalDate(date, format) {
-    return formatDate(utcToLocalDate(date), format);
+  return formatDate(utcToLocalDate(date), format);
 }
 
 function formatUTCToLocalDateAndTimeZone(date, format) {
-    let local_date = utcToLocalDate(date);
+  let local_date = utcToLocalDate(date);
 
-    return formatDate(local_date, format)  + nonLocalTimeZone(local_date);
+  return formatDate(local_date, format) + nonLocalTimeZone(local_date);
 }
 
 function utcToLocalDate(date) {
-    return (date) ? dayjs(date).tz(LOCAL_TIMEZONE) : null;
+  return date ? dayjs(date).tz(LOCAL_TIMEZONE) : null;
 }
 
 function nonLocalTimeZone(local_date) {
-    return ((dayjs.tz.guess() == LOCAL_TIMEZONE)
-            ? "" : ((Math.abs(local_date.utcOffset()) == 420) ? " PDT" : " PST"));
+  return dayjs.tz.guess() == LOCAL_TIMEZONE
+    ? ""
+    : Math.abs(local_date.utcOffset()) == 420
+    ? " PDT"
+    : " PST";
 }
 
 function utcDate(date) {
-    return dayjs(date).tz(dayjs.tz.utc);
+  return dayjs(date).tz(dayjs.tz.utc);
 }
 
 function getToday() {
@@ -59,8 +62,15 @@ function getWeeksApart(quarterStartDate, compareDate) {
 }
 
 function getMinutesApart(startDate, endDate) {
-    return dayjs(endDate).diff(startDate, 'minutes')
+  return dayjs(endDate).diff(startDate, "minutes");
 }
 
-export { formatDate, formatUTCToLocalDate, formatUTCToLocalDateAndTimeZone, getToday,
-         getYesterday, getWeeksApart, getMinutesApart };
+export {
+  formatDate,
+  formatUTCToLocalDate,
+  formatUTCToLocalDateAndTimeZone,
+  getToday,
+  getYesterday,
+  getWeeksApart,
+  getMinutesApart,
+};

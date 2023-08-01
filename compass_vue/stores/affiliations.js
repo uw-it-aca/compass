@@ -1,5 +1,5 @@
-import {defineStore} from "pinia";
-import dataMixin from "../mixins/data_mixin.js";
+import { defineStore } from "pinia";
+import dataMixin from "@/mixins/data_mixin.js";
 
 export const useAffiliationStore = defineStore({
   id: "affiliation",
