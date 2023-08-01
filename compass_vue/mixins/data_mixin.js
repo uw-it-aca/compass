@@ -54,7 +54,7 @@ const dataMixin = {
         "/api/internal/student/" + systemkey + "/eligibility/",
         {
           system_key: systemkey,
-          eligibility_type_id: eligibility_type_id
+          eligibility_type_id: eligibility_type_id,
         },
         this._getAxiosConfig()
       );
@@ -117,7 +117,7 @@ const dataMixin = {
       );
     },
     saveStudentAffiliation: async function (systemkey, affiliation) {
-      let postUrl = "/api/internal/student/" + systemkey + '/affiliations/';
+      let postUrl = "/api/internal/student/" + systemkey + "/affiliations/";
       if (affiliation.studentAffiliationId != undefined) {
         postUrl += affiliation.studentAffiliationId + "/";
       }
@@ -128,12 +128,13 @@ const dataMixin = {
       );
     },
     deleteStudentAffiliation: async function (systemkey, affiliation_id) {
-      let deleteUrl = "/api/internal/student/" + systemkey
-          + '/affiliations/' + affiliation_id + "/";
-      return axios.delete(
-        deleteUrl,
-        this._getAxiosConfig()
-      );
+      let deleteUrl =
+        "/api/internal/student/" +
+        systemkey +
+        "/affiliations/" +
+        affiliation_id +
+        "/";
+      return axios.delete(deleteUrl, this._getAxiosConfig());
     },
     getStudentContacts: async function (systemkey) {
       return axios.get(
@@ -172,8 +173,10 @@ const dataMixin = {
     },
     getStudentAffiliations: async function (systemkey, affiliation_id) {
       return axios.get(
-          "/api/internal/student/" + systemkey + "/affiliations/"
-              + ((affiliation_id !== undefined) ? affiliation_id : ""),
+        "/api/internal/student/" +
+          systemkey +
+          "/affiliations/" +
+          (affiliation_id !== undefined ? affiliation_id : ""),
         {},
         this._getAxiosConfig()
       );
