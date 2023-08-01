@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { Role } from "../utils/roles.js";
+import { Role } from "@/utils/roles.js";
 
 export default {
   props: {

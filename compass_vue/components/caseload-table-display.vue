@@ -85,8 +85,8 @@
 </template>
 
 <script>
-import ProfileMini from "../components/student/profile-mini.vue";
-import { translateTrueFalse } from "../utils/translations";
+import ProfileMini from "@/components/student/profile-mini.vue";
+import { translateTrueFalse } from "@/utils/translations";
 
 export default {
   components: {
@@ -111,7 +111,7 @@ export default {
     return {};
   },
   methods: {
-    getScholarshipData: function (person){
+    getScholarshipData: function (person) {
       try {
         return {
           'scholarship_type': person.student.transcripts[0].scholarship_type,

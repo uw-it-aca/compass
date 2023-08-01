@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { formatDate, getWeeksApart } from "../../utils/dates";
+import { formatDate, getWeeksApart } from "@/utils/dates";
 
 export default {
   props: {
