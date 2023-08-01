@@ -23,7 +23,7 @@ setup(
     author_email="aca-it@uw.edu",
     include_package_data=True,
     install_requires = [
-        'django~=3.2',
+        'django~=4.2',
         'uw-memcached-clients~=1.0',
         'django-user-agents',
         'django-simple-history==3.1.1',
@@ -37,7 +37,7 @@ setup(
         'UW-RestClients-PWS~=2.1',
         'UW-Django-SAML2~=1.7',
         'urllib3~=1.25',
-        'axdd-person-client>=1.1.17',
+        'axdd-person-client>=1.1.18',
         'python-dateutil~=2.8',
     ],
     license="Apache License, Version 2.0",
