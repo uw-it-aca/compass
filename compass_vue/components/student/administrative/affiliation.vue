@@ -67,9 +67,9 @@
 
 <script>
 import dataMixin from "@/mixins/data_mixin.js";
-import AffiliationAdd from "./affiliation-add.vue";
-import AffiliationDelete from "./affiliation-delete.vue";
-import AffiliationEdit from "./affiliation-edit.vue";
+import AffiliationAdd from "@/components/student/administrative/affiliation-add.vue";
+import AffiliationDelete from "@/components/student/administrative/affiliation-delete.vue";
+import AffiliationEdit from "@/components/student/administrative/affiliation-edit.vue";
 import { useAffiliationStore } from "@/stores/affiliations";
 
 export default {

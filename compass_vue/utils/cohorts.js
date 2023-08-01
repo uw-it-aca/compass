@@ -1,4 +1,4 @@
-import { getToday } from "./dates.js";
+import { getToday } from "@/utils/dates.js";
 
 function getCohorts(n) {
   let thisYear = getToday().year(),
