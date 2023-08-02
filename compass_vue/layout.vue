@@ -42,10 +42,10 @@
 </template>
 
 <script>
-import QuarterWeek from "./components/_common/quarter-week.vue";
-import NavMenu from "./components/nav-menu.vue";
-import NavMessage from "./components/nav-message.vue";
-import dataMixin from "./mixins/data_mixin.js";
+import QuarterWeek from "@/components/_common/quarter-week.vue";
+import NavMenu from "@/components/nav-menu.vue";
+import NavMessage from "@/components/nav-message.vue";
+import dataMixin from "@/mixins/data_mixin.js";
 
 export default {
   name: "CompassApp",

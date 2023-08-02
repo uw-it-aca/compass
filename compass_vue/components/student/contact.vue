@@ -128,9 +128,9 @@
 </template>
 
 <script>
-import dataMixin from "../../mixins/data_mixin.js";
-import AddEditContact from "../add-contact.vue";
-import { formatUTCToLocalDateAndTimeZone } from "../../utils/dates";
+import dataMixin from "@/mixins/data_mixin.js";
+import AddEditContact from "@/components/add-contact.vue";
+import { formatUTCToLocalDateAndTimeZone } from "@/utils/dates";
 
 export default {
   mixins: [dataMixin],

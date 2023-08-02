@@ -85,7 +85,7 @@
                   SCHOLARSHIP STATUS: DEAN'S LIST
                 </div>
 
-                <div> {{ transcript.qtr_comment }}</div>
+                <div>{{ transcript.qtr_comment }}</div>
               </td>
             </tr>
           </tbody>
@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import { useStudentStore } from "../../stores/student";
+import { useStudentStore } from "@/stores/student";
 
 export default {
   props: {
@@ -114,7 +114,7 @@ export default {
   },
   setup() {
     const storeStudent = useStudentStore();
-    return { storeStudent};
+    return { storeStudent };
   },
   created() {
     this.loadStudentTranscripts();
