@@ -173,11 +173,11 @@
 </template>
 
 <script>
-import KeyValue from "../_common/key-value.vue";
-import dataMixin from "../../mixins/data_mixin";
-import AffiliationSummary from "../../components/student/affiliation-mini.vue";
+import KeyValue from "@/components/_common/key-value.vue";
+import dataMixin from "@/mixins/data_mixin";
+import AffiliationSummary from "@/components/student/affiliation-mini.vue";
 
-import { translateTrueFalse } from "../../utils/translations";
+import { translateTrueFalse } from "@/utils/translations";
 
 export default {
   inject: ["mq"],

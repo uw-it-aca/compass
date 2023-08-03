@@ -25,44 +25,59 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <form ref="form" @submit="saveAffiliation">
-        <div class="modal-header">
-          <h5 class="modal-title h6 m-0 fw-bold">Add Affiliation</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <!-- body -->
-        <div class="modal-body">
-          <div class="row mb-3">
-            <div class="col">
-              <label class="form-label small fw-bold me-2"> Affiliation </label>
-              <select
-                class="form-select"
-                required
-                v-model="affiliationId"
-               >
-              <option
-               v-for="a in this.affiliations"
-               v-bind:value="a.id"
-               :disabled="isCurrentAffiliation(a)">{{ a.name }}</option>
-              </select>
-            </div>
+          <div class="modal-header">
+            <h5 class="modal-title h6 m-0 fw-bold">Add Affiliation</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
+          <!-- body -->
+          <div class="modal-body">
+            <div class="row mb-3">
+              <div class="col">
+                <label class="form-label small fw-bold me-2">
+                  Affiliation
+                </label>
+                <select class="form-select" required v-model="affiliationId">
+                  <option
+                    v-for="(a, index) in this.affiliations"
+                    v-bind:value="a.id"
+                    :key="index"
+                    :disabled="isCurrentAffiliation(a)"
+                  >
+                    {{ a.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
 
-          <div class="mb-3">
-            <label class="form-label small fw-bold me-2">Cohort</label>
+            <div class="mb-3">
+              <label class="form-label small fw-bold me-2">Cohort</label>
               <div class="cohort-list overflow-auto">
-              <ul class="list-group">
-              <li class="list-group-item" v-for="(cohort, index) in allCohorts" :value="index">
-              <label><input class="form-check-input me-1" type="checkbox" v-model="cohorts" :value="cohort"> {{ cohort.start_year }}-{{ cohort.end_year }}</label>
-              </li>
-              </ul>
+                <ul class="list-group">
+                  <li
+                    class="list-group-item"
+                    v-for="(cohort, index) in allCohorts"
+                    :value="index"
+                    :key="index"
+                  >
+                    <label
+                      ><input
+                        class="form-check-input me-1"
+                        type="checkbox"
+                        v-model="cohorts"
+                        :value="cohort"
+                      />
+                      {{ cohort.start_year }}-{{ cohort.end_year }}</label
+                    >
+                  </li>
+                </ul>
               </div>
 
-<!--              <select
+              <!--              <select
                 class="form-select"
                 multiple
                 required
@@ -72,35 +87,35 @@
                v-for="cohort in allCohorts" :value="cohort">{{ cohort.start_year }}-{{ cohort.end_year }}</option>
               </select>
 -->
+            </div>
+            <div class="mb-3">
+              <label class="form-label small fw-bold me-2">Admin Note</label>
+              <textarea
+                :class="
+                  formErrors.notes ? 'is-invalid form-control' : 'form-control'
+                "
+                rows="3"
+                v-model.trim="notes"
+                required
+              ></textarea>
+            </div>
           </div>
-          <div class="mb-3">
-            <label class="form-label small fw-bold me-2">Admin Note</label>
-            <textarea
-              :class="
-                formErrors.notes ? 'is-invalid form-control' : 'form-control'
-              "
-              rows="3"
-              v-model.trim="notes"
-              required
-            ></textarea>
+          <div class="modal-footer">
+            <div class="text-end">
+              <input
+                type="button"
+                class="btn btn-secondary me-2"
+                data-bs-dismiss="modal"
+                value="Cancel"
+              />
+              <input
+                type="submit"
+                class="btn btn-primary bg-purple"
+                value="Add Affiliation"
+                :disabled="invalidForm"
+              />
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <div class="text-end">
-            <input
-              type="button"
-              class="btn btn-secondary me-2"
-              data-bs-dismiss="modal"
-              value="Cancel"
-            >
-            <input
-              type="submit"
-              class="btn btn-primary bg-purple"
-              value="Add Affiliation"
-              :disabled="invalidForm"
-            >
-          </div>
-        </div>
         </form>
       </div>
     </div>
@@ -108,9 +123,9 @@
 </template>
 
 <script>
-import dataMixin from "../../../mixins/data_mixin.js";
+import dataMixin from "@/mixins/data_mixin.js";
 import { Modal } from "bootstrap";
-import { getCohorts } from "../../../utils/cohorts.js"
+import { getCohorts } from "@/utils/cohorts.js";
 
 export default {
   mixins: [dataMixin],
@@ -126,12 +141,12 @@ export default {
     },
     affiliations: {
       type: Object,
-      required: true
+      required: true,
     },
     studentAffiliations: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -159,7 +174,7 @@ export default {
   computed: {
     invalidForm() {
       return !(this.cohorts.length > 0 && this.notes.length > 0);
-    }
+    },
   },
   methods: {
     isCurrentAffiliation(affiliation) {
@@ -175,30 +190,35 @@ export default {
         studentAffiliationId: null,
         affiliationId: this.affiliationId,
         cohorts: this.cohorts,
-        actively_advised: true
+        actively_advised: true,
       };
 
       event.preventDefault();
-      this.saveStudentAffiliation(this.person.student.system_key, affiliationData)
+      this.saveStudentAffiliation(
+        this.person.student.system_key,
+        affiliationData
+      )
         .then((response) => {
           this.saveStudentContact(this.person.student.system_key, {
-             contact_type: 'Admin',
-             contact_method: 'Internal',
-             contact_topics: ['None'],
-             notes: this.notes
-          }).then(() => {
-            this.updateStudentAffiliations(response.data);
-            this.$emit("affiliationsUpdated");
-            this.hideModal();
-          }).catch((error) => {
-            if (error.response.status == 401) {
-              this.updatePermissionDenied = true;
-              this.errorResponse = error.response.data;
-              setTimeout(() => (this.updatePermissionDenied = false), 3000);
-            } else {
-              this.formErrors.notes = error.response.data;
-            }
+            contact_type: "Admin",
+            contact_method: "Internal",
+            contact_topics: ["None"],
+            notes: this.notes,
           })
+            .then(() => {
+              this.updateStudentAffiliations(response.data);
+              this.$emit("affiliationsUpdated");
+              this.hideModal();
+            })
+            .catch((error) => {
+              if (error.response.status == 401) {
+                this.updatePermissionDenied = true;
+                this.errorResponse = error.response.data;
+                setTimeout(() => (this.updatePermissionDenied = false), 3000);
+              } else {
+                this.formErrors.notes = error.response.data;
+              }
+            });
         })
         .catch((error) => {
           if (error.response.status == 401) {

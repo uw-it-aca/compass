@@ -142,11 +142,11 @@
 </template>
 
 <script>
-import SearchStudent from "../components/search-student.vue";
-import CaseloadTableDisplay from "../components/caseload-table-display.vue";
-import CaseloadTableLoading from "../components/caseload-table-loading.vue";
-import Layout from "../layout.vue";
-import dataMixin from "../mixins/data_mixin.js";
+import SearchStudent from "@/components/search-student.vue";
+import CaseloadTableDisplay from "@/components/caseload-table-display.vue";
+import CaseloadTableLoading from "@/components/caseload-table-loading.vue";
+import Layout from "@/layout.vue";
+import dataMixin from "@/mixins/data_mixin.js";
 
 export default {
   mixins: [dataMixin],

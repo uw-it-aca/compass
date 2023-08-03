@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import dataMixin from "../../mixins/data_mixin.js";
+import dataMixin from "@/mixins/data_mixin.js";
 
 export default {
   mixins: [dataMixin],
@@ -112,35 +112,33 @@ export default {
   },
   methods: {
     loadSettings() {
-      this.getSettings(this.accessGroup.id, this.settingType).then(
-        (response) => {
+      this.getSettings(this.accessGroup.id, this.settingType)
+        .then((response) => {
           if (response.data) {
             this.settings = response.data;
           }
-        }
-      ).catch((error) => {
-        if (error.response.status == 401) {
-          this.updatePermissionDenied = true;
-        }
-      });
+        })
+        .catch((error) => {
+          if (error.response.status == 401) {
+            this.updatePermissionDenied = true;
+          }
+        });
     },
     submitSettingsForm() {
-      this.saveSettings(
-        this.accessGroup.id,
-        this.settingType,
-        this.settings
-      ).then((response) => {
-        if (response.data) {
-          // show and update successful message for 3 seconds
-          this.updateSuccessful = true;
-          setTimeout(() => (this.updateSuccessful = false), 3000);
-        }
-      }).catch((error) => {
-        if (error.response.status == 401) {
-          this.updatePermissionDenied = true;
-          setTimeout(() => (this.updatePermissionDenied = false), 3000);
-        }
-      });
+      this.saveSettings(this.accessGroup.id, this.settingType, this.settings)
+        .then((response) => {
+          if (response.data) {
+            // show and update successful message for 3 seconds
+            this.updateSuccessful = true;
+            setTimeout(() => (this.updateSuccessful = false), 3000);
+          }
+        })
+        .catch((error) => {
+          if (error.response.status == 401) {
+            this.updatePermissionDenied = true;
+            setTimeout(() => (this.updatePermissionDenied = false), 3000);
+          }
+        });
     },
     addSetting() {
       if (this.newSettingName.length) {

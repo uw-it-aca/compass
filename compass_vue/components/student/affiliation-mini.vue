@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import dataMixin from "../../mixins/data_mixin.js";
-import KeyValue from "../../components/_common/key-value.vue";
+import dataMixin from "@/mixins/data_mixin.js";
+import KeyValue from "@/components/_common/key-value.vue";
 
 export default {
   mixins: [dataMixin],

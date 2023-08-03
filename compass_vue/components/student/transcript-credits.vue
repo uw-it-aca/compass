@@ -33,8 +33,10 @@
           <div class="d-flex justify-content-between">
             <span>UW GPA:</span>
             <span class="fw-bold">{{
-              (person.student.total_grade_points /
-              person.student.total_grade_attempted).toFixed(2)
+              (
+                person.student.total_grade_points /
+                person.student.total_grade_attempted
+              ).toFixed(2)
             }}</span>
           </div>
         </li>

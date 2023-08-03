@@ -24,49 +24,49 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <form ref="form" @submit="deleteAffiliation">
-        <div class="modal-header">
-          <h5 class="modal-title h6 m-0 fw-bold">Delete Affiliation</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div class="mb-3">
-            <div class="mb-3 text-secondary">
-              Warning: Consider carefully before deleting an affiliation as
-              there is no way to undo this action.
-            </div>
-            <lable class="form-label small fw-bold">Admin Note</lable>
-            <textarea
-              :class="
-                formErrors.notes ? 'is-invalid form-control' : 'form-control'
-              "
-              rows="3"
-              v-model.trim="notes"
-              required
-            ></textarea>
-          </div>
-        </div>
-
-        <div class="modal-footer">
-          <div class="text-end">
-            <input
+          <div class="modal-header">
+            <h5 class="modal-title h6 m-0 fw-bold">Delete Affiliation</h5>
+            <button
               type="button"
-              class="btn btn-secondary me-2"
+              class="btn-close"
               data-bs-dismiss="modal"
-              value="Cancel"
-            >
-            <input
-              type="submit"
-              class="btn btn-primary bg-danger"
-              value="Delete"
-              :disabled="invalidForm"
-            >
+              aria-label="Close"
+            ></button>
           </div>
-        </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <div class="mb-3 text-secondary">
+                Warning: Consider carefully before deleting an affiliation as
+                there is no way to undo this action.
+              </div>
+              <lable class="form-label small fw-bold">Admin Note</lable>
+              <textarea
+                :class="
+                  formErrors.notes ? 'is-invalid form-control' : 'form-control'
+                "
+                rows="3"
+                v-model.trim="notes"
+                required
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <div class="text-end">
+              <input
+                type="button"
+                class="btn btn-secondary me-2"
+                data-bs-dismiss="modal"
+                value="Cancel"
+              />
+              <input
+                type="submit"
+                class="btn btn-primary bg-danger"
+                value="Delete"
+                :disabled="invalidForm"
+              />
+            </div>
+          </div>
         </form>
       </div>
     </div>
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import dataMixin from "../../../mixins/data_mixin.js";
+import dataMixin from "@/mixins/data_mixin.js";
 import { Modal } from "bootstrap";
 
 export default {
@@ -91,11 +91,11 @@ export default {
     },
     studentAffiliation: {
       type: Object,
-      required: true
+      required: true,
     },
     studentAffiliations: {
       type: Object,
-      required: true
+      required: true,
     },
   },
   data() {
@@ -111,18 +111,20 @@ export default {
   computed: {
     invalidForm() {
       return !(this.notes.length > 0);
-    }
+    },
   },
   methods: {
     deleteAffiliation() {
-
       event.preventDefault();
 
-      this.deleteStudentAffiliation(this.person.student.system_key, this.studentAffiliation.id)
+      this.deleteStudentAffiliation(
+        this.person.student.system_key,
+        this.studentAffiliation.id
+      )
         .then(() => {
           this.updateStudentAffiliation();
           this.$emit("affiliationsUpdated");
-          this.hideModal()
+          this.hideModal();
         })
         .catch((error) => {
           console.log("ERROR: " + error);
@@ -146,7 +148,9 @@ export default {
     },
     hideModal() {
       var deleteAffiliationsModal = Modal.getInstance(
-        document.getElementById("deleteAffiliationsModal" + this.studentAffiliation.id)
+        document.getElementById(
+          "deleteAffiliationsModal" + this.studentAffiliation.id
+        )
       );
 
       deleteAffiliationsModal.hide();

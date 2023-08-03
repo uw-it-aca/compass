@@ -174,22 +174,22 @@
 </template>
 
 <script>
-import { Role } from "../utils/roles.js";
-import Layout from "../layout.vue";
-import dataMixin from "../mixins/data_mixin.js";
-import StudentProfile from "../components/student/profile.vue";
-import StudentProfileLoading from "../components/student/profile-loading.vue";
-import StudentAcademics from "../components/student/academics.vue";
-import StudentTranscript from "../components/student/transcript.vue";
-import StudentTranscriptCredits from "../components/student/transcript-credits.vue";
-import StudentContact from "../components/student/contact.vue";
-import StudentSchedule from "../components/student/schedule.vue";
-import StudentHolds from "../components/student/holds.vue";
-import StudentAdviser from "../components/student/adviser.vue";
-import StudentVisits from "../components/student/visits.vue";
-import SearchStudent from "../components/search-student.vue";
-import AffiliationAddEdit from "../components/student/administrative/affiliation.vue";
-import StudentEligibility from "../components/student/administrative/eligibility.vue";
+import { Role } from "@/utils/roles.js";
+import Layout from "@/layout.vue";
+import dataMixin from "@/mixins/data_mixin.js";
+import StudentProfile from "@/components/student/profile.vue";
+import StudentProfileLoading from "@/components/student/profile-loading.vue";
+import StudentAcademics from "@/components/student/academics.vue";
+import StudentTranscript from "@/components/student/transcript.vue";
+import StudentTranscriptCredits from "@/components/student/transcript-credits.vue";
+import StudentContact from "@/components/student/contact.vue";
+import StudentSchedule from "@/components/student/schedule.vue";
+import StudentHolds from "@/components/student/holds.vue";
+import StudentAdviser from "@/components/student/adviser.vue";
+import StudentVisits from "@/components/student/visits.vue";
+import SearchStudent from "@/components/search-student.vue";
+import AffiliationAddEdit from "@/components/student/administrative/affiliation.vue";
+import StudentEligibility from "@/components/student/administrative/eligibility.vue";
 
 export default {
   mixins: [dataMixin],
