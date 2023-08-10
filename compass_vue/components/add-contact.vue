@@ -87,10 +87,7 @@
                   v-for="contactType in contactTypes"
                   :key="contactType.id"
                 >
-                  <option
-                    v-if="contactType.slug !== 'admin'"
-                    :value="contactType.id"
-                  >
+                  <option :value="contactType.id">
                     {{ contactType.name }}
                   </option>
                 </template>
@@ -118,10 +115,7 @@
                   v-for="contactMethod in contactMethods"
                   :key="contactMethod.id"
                 >
-                  <option
-                    v-if="contactMethod.slug !== 'internal'"
-                    :value="contactMethod.id"
-                  >
+                  <option :value="contactMethod.id">
                     {{ contactMethod.name }}
                   </option>
                 </template>
@@ -136,10 +130,7 @@
             </span>
             <ul class="list-inline">
               <template v-for="topic in contactTopics" :key="topic.id">
-                <li
-                  v-if="topic.slug !== 'none'"
-                  class="list-inline-item mb-1 me-1"
-                >
+                <li class="list-inline-item mb-1 me-1">
                   <input
                     type="checkbox"
                     v-model="contact.contact_topics"
