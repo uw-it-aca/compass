@@ -35,10 +35,10 @@
 </template>
 
 <script>
-import Layout from "../layout.vue";
-import dataMixin from "../mixins/data_mixin.js";
+import Layout from "@/layout.vue";
+import dataMixin from "@/mixins/data_mixin.js";
 
-import SettingsForm from "../components/settings/settings-form.vue";
+import SettingsForm from "@/components/settings/settings-form.vue";
 
 export default {
   mixins: [dataMixin],

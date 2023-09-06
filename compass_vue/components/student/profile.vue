@@ -3,8 +3,13 @@
     <div class="row">
       <div class="col-xl-3 d-flex flex-column">
         <div v-if="person.student.deceased_date" class="px-3 mt-n1">
-          <span class="badge rounded-pill text-bg-danger fw-light text-uppercase">Deceased</span>
-          <span class="ms-2 small text-muted">{{ formatDate(person.student.deceased_date, "LL") }} </span>
+          <span
+            class="badge rounded-pill text-bg-danger fw-light text-uppercase"
+            >Deceased</span
+          >
+          <span class="ms-2 small text-muted"
+            >{{ formatDate(person.student.deceased_date, "LL") }}
+          </span>
         </div>
         <div class="flex-fill d-flex px-3 text-center">
           <div class="align-self-center flex-fill">
@@ -345,9 +350,9 @@
 </template>
 
 <script>
-import KeyValue from "../../components/_common/key-value.vue";
-import { translateTrueFalse } from "../../utils/translations";
-import { formatDate } from "../../utils/dates";
+import KeyValue from "@/components/_common/key-value.vue";
+import { translateTrueFalse } from "@/utils/translations";
+import { formatDate } from "@/utils/dates";
 
 export default {
   inject: ["mq"],
@@ -361,7 +366,7 @@ export default {
   setup() {
     return {
       translateTrueFalse,
-      formatDate
+      formatDate,
     };
   },
   data() {

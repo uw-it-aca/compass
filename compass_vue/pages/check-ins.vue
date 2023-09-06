@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import CheckInTableLoading from "../components/checkin-table-loading.vue";
-import CheckInTableDisplay from "../components/checkin-table-display.vue";
+import CheckInTableLoading from "@/components/checkin-table-loading.vue";
+import CheckInTableDisplay from "@/components/checkin-table-display.vue";
 
-import Layout from "../layout.vue";
-import dataMixin from "../mixins/data_mixin.js";
+import Layout from "@/layout.vue";
+import dataMixin from "@/mixins/data_mixin.js";
 
 export default {
   mixins: [dataMixin],
