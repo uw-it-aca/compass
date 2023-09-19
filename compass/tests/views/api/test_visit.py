@@ -75,19 +75,18 @@ class ViewAPITest(ApiTest):
     @patch('compass.views.api.visit.AccessGroup')
     def test_post(self, mock_access_group_cls, mock_student_cls,
                   mock_visit_type_cls, mock_visit_cls):
-                  
+
         mock_omad_access_group = MagicMock()
         mock_access_group_cls.objects.by_name = MagicMock(
             return_value=mock_omad_access_group)
 
         mock_view = VisitOMADView()
-        
+
         mock_student = MagicMock()
         mock_student_cls.get_or_create = MagicMock(
             return_value=(mock_student, None))
         mock_view._valid_student = MagicMock(
             return_value=mock_student)
-
 
         mock_visit_type = MagicMock()
         mock_visit_type_cls.objects.get = MagicMock(
@@ -131,4 +130,3 @@ class ViewAPITest(ApiTest):
         self.assertEqual(mock_visit.checkin_date, mock_date)
         mock_visit.save.assert_called_once()
         self.assertEqual(response.status_code, 201)
-
