@@ -290,6 +290,34 @@
             v-if="mq.xlPlus"
             class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
           >
+            Email
+          </div>
+          <ul class="list-unstyled mb-3 small">
+            <li>
+              <KeyValue>
+                <template #key>Student</template>
+                <template #value
+                  ><a :href="'mailto:' + person.student.student_email">{{
+                    person.student.student_email
+                  }}</a></template
+                >
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key>External</template>
+                <template #value>
+                  <a :href="'mailto:' + person.student.external_email">{{
+                    person.student.external_email
+                  }}</a>
+                </template>
+              </KeyValue>
+            </li>
+          </ul>
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
             Address
           </div>
           <ul class="list-unstyled m-0 small">
