@@ -26,6 +26,7 @@ from compass.views.api.contact import (
     ContactView,
     ContactOMADView
 )
+from compass.views.api.visit import VisitOMADView
 from compass.views.api.settings import SettingsView
 from compass.views.api.photo import PhotoView
 from compass.views.api.affiliation import AffiliationsView
@@ -134,6 +135,11 @@ urlpatterns += [
         r"^api/v1/contact/omad/$",
         ContactOMADView.as_view(),
         name="contact_omad"
+    ),
+    re_path(
+        r"^api/v1/visit/omad",
+        VisitOMADView.as_view(),
+        name="visit_omad"
     ),
     # vue-router paths
     re_path(r"^(student|caseload|reports).*$", LandingView.as_view()),

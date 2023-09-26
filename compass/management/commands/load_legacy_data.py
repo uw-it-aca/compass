@@ -169,6 +169,8 @@ class Command(BaseCommand):
         mapping = [
             (re.compile('^Telephone$', re.I),
              'Telephone'),
+            (re.compile('^Notes$', re.I),
+             'Internal'),
             (re.compile('^(Email Message'
                         '|Mass Email'
                         '|Email'
@@ -237,6 +239,9 @@ class Command(BaseCommand):
         if apt.PersonalFamilyIssues in ['1', 1]:
             topic = self._get_topic('Personal Issues')
             contact.contact_topics.add(topic)
+
+        if apt.Contact_Type and apt.Contact_Type == 'Notes':
+            contact.contact_topics.add(self._get_topic('Other'))
 
     def _get_topic(self, name):
         topic, created = ContactTopic.objects.get_or_create(
