@@ -75,10 +75,7 @@ class VisitOMADView(TokenAPIView):
             raise ValueError(f'Unrecognized visit type: {slug}')
 
     def _valid_course(self, course_code):
-        if course_code is None:
-            raise ValueError('Missing Course Code')
-
-        return course_code
+        return course_code or "None"
 
     def _valid_date(self, date_str):
         # parse checkin date
@@ -115,14 +112,12 @@ class VisitOMADView(TokenAPIView):
             return Response("Missing Visit Dates",
                             status=status.HTTP_400_BAD_REQUEST)
 
-        visit = Visit()
-        visit.student = student
-        visit.visit_type = visit_type
-        visit.course_code = course_code
-        visit.checkin_date = checkin_date
-        visit.checkout_date = checkout_date
-        visit.access_group = access_group
-        visit.save()
+        visit, created = Visit.objects.update_or_create(
+            student=student, access_group=access_group,
+            course_code=course_code, checkin_date=checkin_date,
+            defaults={
+                'checkout_date': checkout_date,
+                'visit_type': visit_type})
 
         logger.info(f"IC Visit {visit.visit_type} added for "
                     f"student {student.system_key}")

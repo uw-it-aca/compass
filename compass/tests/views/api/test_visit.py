@@ -71,10 +71,14 @@ class ViewAPITest(ApiTest):
 
     @patch('compass.views.api.visit.Visit')
     @patch('compass.views.api.visit.VisitType')
+    @patch('compass.views.api.visit.UWPersonClient')
     @patch('compass.views.api.visit.Student')
     @patch('compass.views.api.visit.AccessGroup')
-    def test_post(self, mock_access_group_cls, mock_student_cls,
-                  mock_visit_type_cls, mock_visit_cls):
+    def test_post(self, mock_access_group_cls,
+                  mock_student_cls,
+                  mock_person_client_cls,
+                  mock_visit_type_cls,
+                  mock_visit_cls):
 
         mock_omad_access_group = MagicMock()
         mock_access_group_cls.objects.by_name = MagicMock(
@@ -83,14 +87,13 @@ class ViewAPITest(ApiTest):
         mock_view = VisitOMADView()
 
         mock_student = MagicMock()
-        mock_student_cls.get_or_create = MagicMock(
-            return_value=(mock_student, None))
         mock_view._valid_student = MagicMock(
             return_value=mock_student)
 
         mock_visit_type = MagicMock()
-        mock_visit_type_cls.objects.get = MagicMock(
-            return_value=mock_visit_type)
+        mock_visit_type_cls.objects.get.return_value = \
+            mock_visit_type
+
         mock_view._valid_visit_type = MagicMock(
             return_value=mock_visit_type)
 
@@ -102,9 +105,8 @@ class ViewAPITest(ApiTest):
         mock_view._valid_date = MagicMock(
             return_value=mock_date)
 
-        # mock saving visit
-        mock_visit = mock_visit_cls()
-        mock_visit.save = MagicMock()
+        mock_visit_cls.return_value = (mock_visit_cls, None)
+        mock_visit_cls.objects.update_or_create = mock_visit_cls
 
         # assertions
         mock_request = MagicMock()
@@ -123,10 +125,13 @@ class ViewAPITest(ApiTest):
         mock_view._valid_visit_type.assert_called_once_with(
             mock_request.data.get("visit_type"), mock_omad_access_group)
 
-        # assert creating visit record
-        self.assertEqual(mock_visit.student, mock_student)
-        self.assertEqual(mock_visit.visit_type, mock_visit_type)
-        self.assertEqual(mock_visit.course_code, mock_course)
-        self.assertEqual(mock_visit.checkin_date, mock_date)
-        mock_visit.save.assert_called_once()
+        # assert visit record called correctly
+        mock_visit_cls.assert_called_once_with(
+            student=mock_student,
+            access_group=mock_omad_access_group,
+            course_code=mock_course,
+            checkin_date=mock_date,
+            defaults={
+                'checkout_date': mock_date, 'visit_type': mock_visit_type})
+
         self.assertEqual(response.status_code, 201)
