@@ -3,7 +3,7 @@
     <div class="me-2">
       <div class="rounded-circle border border-light border-3">
         <img
-          :src="person.photo_url"
+          :data-src="person.photo_url"
           @error="$event.target.src = '/static/compass/img/placeholder.png'"
           class="img-profile rounded-circle border bg-light border-white border-2"
         />
