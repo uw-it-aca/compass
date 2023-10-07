@@ -5,7 +5,7 @@ export default {
         el => el.nodeName === "IMG"
       );
       if (imageElement) {
-        imageElement.src = imageElement.dataset.src;
+        imageElement.src = imageElement.dataset.url;
       }
     }
 
