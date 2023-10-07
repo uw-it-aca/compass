@@ -9,7 +9,7 @@
           <th scope="col" style="width: 40%" class="text-nowrap">Status</th>
         </tr>
       </thead>
-      <tbody v-lazyload>
+      <tbody>
         <tr v-for="person in persons" :key="person.uwnetid">
           <td class="ps-3">
             <profile-mini :person="person"></profile-mini>
@@ -85,14 +85,10 @@
 </template>
 
 <script>
-import LazyLoad from "@/directives/lazyload";
 import ProfileMini from "@/components/student/profile-mini.vue";
 import { translateTrueFalse } from "@/utils/translations";
 
 export default {
-  directives: {
-    "lazyload": LazyLoad,
-  },
   components: {
     "profile-mini": ProfileMini,
   },

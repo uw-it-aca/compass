@@ -1,9 +1,9 @@
 <template>
   <div class="d-flex">
     <div class="me-2">
-      <div class="rounded-circle border border-light border-3">
+      <div v-lazyload class="rounded-circle border border-light border-3">
         <img
-          :data-src="person.photo_url"
+          :data-url="person.photo_url"
           @error="$event.target.src = '/static/compass/img/placeholder.png'"
           class="img-profile rounded-circle border bg-light border-white border-2"
         />
@@ -33,12 +33,17 @@
 </template>
 
 <script>
+import LazyLoad from "@/directives/lazyload";
+
 export default {
   props: {
     person: {
       type: Object,
       required: true,
     },
+  },
+  directives: {
+    "lazyload": LazyLoad,
   },
   components: {},
   data() {
