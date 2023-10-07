@@ -43,7 +43,7 @@ export default {
     },
   },
   directives: {
-    "lazyload": LazyLoad,
+    lazyload: LazyLoad,
   },
   components: {},
   data() {

@@ -1,5 +1,5 @@
 export default {
-  inserted: el => {
+  mounted: el => {
     function loadImage() {
       const imageElement = Array.from(el.children).find(
         el => el.nodeName === "IMG"
