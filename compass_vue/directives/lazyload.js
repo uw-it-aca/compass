@@ -1,3 +1,24 @@
+/*
+ * Defer image loading until the parent element enters the viewport.
+ *
+ * Component code:
+ *
+ *   <template>
+ *     <div v-lazyload>
+ *       <img :data-url="{image_url}" />
+ *     </div>
+ *   </template>
+ *
+ *   <script>
+ *     import LazyLoad from "@/directives/lazyload";
+ *
+ *     export default {
+ *       directives: {
+ *         lazyload: LazyLoad,
+ *       },
+ *     };
+ *   </script>
+ */
 export default {
   mounted: el => {
     function loadImage() {
@@ -26,6 +47,7 @@ export default {
       const observer = new IntersectionObserver(handleIntersect, options);
       observer.observe(el);
     }
+
     if (window["IntersectionObserver"]) {
       createObserver();
     } else {
