@@ -21,6 +21,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from userservice.user import UserService
 from logging import getLogger
+from uw_person_client.exceptions import PersonNotFoundException
 
 
 logger = getLogger(__name__)
@@ -258,8 +259,14 @@ class ContactOMADView(TokenAPIView):
         # if the adviser is a member of the omad group and the contact record
         # was successfully parsed, create an app-user and a student record for
         # them if one doesn't already exist
-        app_user = AppUser.objects.upsert_appuser(
-            contact_dict["adviser_netid"])
+        try:
+            app_user = AppUser.objects.upsert_appuser(
+                contact_dict["adviser_netid"])
+        except PersonNotFoundException as e:
+            logger.error("ContactOMADView: Person not found for "
+                         "adviser_netid: %s" % contact_dict["adviser_netid"])
+            return Response("Person record for adviser not found",
+                            status=status.HTTP_400_BAD_REQUEST)
         student, _ = Student.objects.get_or_create(
             system_key=contact_dict["student_systemkey"])
         # create the new contact record
