@@ -37,28 +37,28 @@
                 <td class="align-bottom">
                   <template v-if="contact.contact_type.slug == 'parent'">
                     <div
-                      class="badge rounded-pill alert alert-danger border-0 px-2 py-1 m-0 me-2"
+                      class="badge rounded-pill text-bg-danager border-0 px-2 py-1 m-0 me-2"
                     >
                       {{ contact.contact_type.name }}
                     </div>
                   </template>
                   <template v-else-if="contact.contact_type.slug == 'admin'">
                     <div
-                      class="badge rounded-pill alert alert-primary border-0 px-2 py-1 m-0 me-2"
+                      class="badge rounded-pill text-bg-primary border-0 px-2 py-1 m-0 me-2"
                     >
                       {{ contact.contact_type.name }}
                     </div>
                   </template>
                   <template v-else>
                     <div
-                      class="badge rounded-pill alert alert-dark-purple border-0 px-2 py-1 m-0 me-2"
+                      class="badge rounded-pill text-bg-dark-purple border-0 px-2 py-1 m-0 me-2"
                     >
                       {{ contact.contact_type.name }}
                     </div>
                   </template>
                   <div
                     v-if="contact.contact_method"
-                    class="badge rounded-pill alert alert-light-gray border-0 px-2 py-1 m-0 me-1"
+                    class="badge rounded-pill text-bg-light-gray border-0 px-2 py-1 m-0 me-1"
                   >
                     {{ contact.contact_method.name }}
                   </div>
@@ -71,7 +71,7 @@
                       <li
                         v-if="topic.slug !== 'none'"
                         :key="topic.id"
-                        class="badge rounded-pill alert alert-dark-beige border-0 px-2 py-1 mb-0 me-1"
+                        class="badge rounded-pill text-bg-dark-beige border-0 px-2 py-1 mb-0 me-1"
                       >
                         {{ topic.name }}
                       </li>
