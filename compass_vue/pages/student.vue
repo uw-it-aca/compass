@@ -45,7 +45,7 @@
             <div>
               Student Authorizes Release of Directory Information:
               <span
-                class="small badge rounded-pill alert alert-secondary border-0 px-2 py-1 mb-0 me-1"
+                class="small badge rounded-pill text-bg-secondary border-0 px-2 py-1 mb-0 me-1"
               >
                 <template v-if="person.student.directory_release_ind"
                   >Yes</template
