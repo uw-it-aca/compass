@@ -6,6 +6,7 @@ from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 from uw_person_client import UWPersonClient
 from uw_person_client.exceptions import PersonNotFoundException
+from uw_pws import PWS
 from compass.models import (
     Contact, AppUser, AccessGroup, Student,
     ContactType, ContactMethod, ContactTopic)
@@ -27,6 +28,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.uw_person = UWPersonClient()
+        self.uw_pws = PWS()
         self.access_group = AccessGroup.objects.get(name='OMAD')
         self._student_syskey = {}
 
@@ -70,6 +72,8 @@ class Command(BaseCommand):
                     n += 1
                     if n >= count:
                         return
+
+        self._sanitize_app_user()
 
     def _create_contact(self, apt):
         if int(apt.student_no) in self.unknown_student_ids:
@@ -248,6 +252,39 @@ class Command(BaseCommand):
             access_group=self.access_group, name=name, slug=slugify(name))
 
         return topic
+
+    def _sanitize_app_user(self):
+        prior_netids = []
+        for app_user in AppUser.objects.all():
+            if not self.uw_pws.valid_uwnetid(app_user.uwnetid):
+                self._error(
+                    "Person {}: invalid netid".format(app_user.uwnetid))
+                continue
+
+            try:
+                person = self.uw_person.get_person_by_uwnetid(app_user.uwnetid)
+            except PersonNotFoundException:
+                self._error("Person {}: not found".format(app_user.uwnetid))
+                continue
+
+            for prior_netid in person.prior_uwnetids:
+                try:
+                    if app_user.uwnetid == prior_netid:
+                        continue
+
+                    prior_app_user = AppUser.objects.get(uwnetid=prior_netid)
+                    contacts = Contact.objects.filter(app_user=prior_app_user)
+                    self._error("Update {} contacts from {} to {}".format(
+                        contacts.count(), prior_app_user, app_user))
+                    contacts.update(app_user=app_user)
+                    prior_netids.append(prior_app_user.uwnetid)
+                except AppUser.DoesNotExist:
+                    pass
+
+        for netid in prior_netids:
+            app_user = AppUser.objects.get(uwnetid=netid)
+            self._error("Deleting AppUser {}".format(app_user))
+            app_user.delete()
 
     def _add_access_group(self, contact):
         contact.access_group.add(self.access_group)
