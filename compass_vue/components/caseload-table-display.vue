@@ -40,7 +40,7 @@
                   :class="
                     getScholarshipData(person).scholarship_type == 3 ||
                     getScholarshipData(person).scholarship_type == 4
-                      ? 'text-bg-danager'
+                      ? 'text-bg-danger'
                       : 'text-bg-secondary'
                   "
                   >{{ getScholarshipData(person).scholarship_desc }}</span
@@ -52,7 +52,7 @@
                   class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1"
                   :class="
                     !person.student.registered_in_quarter
-                      ? 'text-bg-danager'
+                      ? 'text-bg-danger'
                       : 'text-bg-secondary'
                   "
                 >
@@ -68,7 +68,7 @@
                   class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1"
                   :class="
                     person.student.registration_hold_ind
-                      ? 'text-bg-danager'
+                      ? 'text-bg-danger'
                       : 'text-bg-secondary'
                   "
                 >
