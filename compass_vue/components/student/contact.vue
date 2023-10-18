@@ -37,7 +37,7 @@
                 <td class="align-bottom">
                   <template v-if="contact.contact_type.slug == 'parent'">
                     <div
-                      class="badge rounded-pill text-bg-danager border-0 px-2 py-1 m-0 me-2"
+                      class="badge rounded-pill text-bg-danger border-0 px-2 py-1 m-0 me-2"
                     >
                       {{ contact.contact_type.name }}
                     </div>
