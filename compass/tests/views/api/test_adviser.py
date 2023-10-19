@@ -21,7 +21,7 @@ class ContactAPITest(ApiTest):
         self.ag.save()
         self.app_user = AppUser(uwnetid="javerage")
         self.app_user.save()
-        self.student = Student(system_key="12345")
+        self.student = Student(system_key="532353230")
         self.student.save()
         self.contact_type = ContactType(access_group=self.ag,
                                         name="contact",
