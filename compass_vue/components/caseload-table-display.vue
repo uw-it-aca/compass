@@ -36,12 +36,12 @@
               <li class="list-inline-item flex-fill">
                 <div>Scholarship</div>
                 <span
-                  class="small badge rounded-pill alert border-0 px-2 py-1 mb-0 me-1"
+                  class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1"
                   :class="
                     getScholarshipData(person).scholarship_type == 3 ||
                     getScholarshipData(person).scholarship_type == 4
-                      ? 'alert-danger'
-                      : 'alert-secondary'
+                      ? 'text-bg-danger'
+                      : 'text-bg-secondary'
                   "
                   >{{ getScholarshipData(person).scholarship_desc }}</span
                 >
@@ -49,11 +49,11 @@
               <li class="list-inline-item flex-fill">
                 <div>Registered</div>
                 <span
-                  class="small badge rounded-pill alert border-0 px-2 py-1 mb-0 me-1"
+                  class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1"
                   :class="
                     !person.student.registered_in_quarter
-                      ? 'alert-danger'
-                      : 'alert-secondary'
+                      ? 'text-bg-danger'
+                      : 'text-bg-secondary'
                   "
                 >
                   {{ translateTrueFalse(person.student.registered_in_quarter) }}
@@ -65,11 +65,11 @@
               <li class="list-inline-item flex-fill">
                 <div>Registration Holds</div>
                 <span
-                  class="small badge rounded-pill alert border-0 px-2 py-1 mb-0 me-1"
+                  class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1"
                   :class="
                     person.student.registration_hold_ind
-                      ? 'alert-danger'
-                      : 'alert-secondary'
+                      ? 'text-bg-danger'
+                      : 'text-bg-secondary'
                   "
                 >
                   {{ translateTrueFalse(person.student.registration_hold_ind) }}

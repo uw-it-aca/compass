@@ -3,8 +3,8 @@ import { createPinia } from "pinia";
 import VueGtag from "vue-gtag-next";
 import { Vue3Mq, MqResponsive } from "vue3-mq";
 
-// import axdd-components
-import AxddComponents from "axdd-components";
+// import solstice-vue
+import SolsticeVue from "solstice-vue";
 
 import App from "@/app.vue";
 import router from "@/router";
@@ -13,9 +13,9 @@ import router from "@/router";
 import "bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-// bootstrap (axdd) and axdd-components
+// bootstrap (axdd) and solstice-vue
 import "@/css/custom.scss";
-import "axdd-components/dist/style.css";
+import "solstice-vue/dist/style.css";
 
 const app = createApp(App);
 app.config.productionTip = false;
@@ -45,8 +45,8 @@ app.component("mq-responsive", MqResponsive);
 const pinia = createPinia();
 app.use(pinia);
 
-// axdd-components
-app.use(AxddComponents);
+// solstice-vue
+app.use(SolsticeVue);
 
 // vue-router
 app.use(router);
