@@ -32,9 +32,8 @@ def auth_user(request):
     }
 
     try:
-        access_group = AccessGroup.objects.access_group_for_user(request)
-        ret['user_role'] = AccessGroup.ROLE_MANAGER if (
-            access_group.has_manager_role(request)) else AccessGroup.ROLE_USER
+        access_group, role = AccessGroup.objects.access_group_for_user(request)
+        ret['user_role'] = role
     except AccessGroup.DoesNotExist:
         ret['user_role'] = None
 
