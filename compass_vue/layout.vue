@@ -36,6 +36,8 @@
       <slot name="title">
         <h1 class="visually-hidden">{{ pageTitle }}</h1>
       </slot>
+
+      <SessionExpired></SessionExpired>
       <slot name="content"></slot>
     </template>
   </axdd-sidebar>
@@ -45,6 +47,7 @@
 import QuarterWeek from "@/components/_common/quarter-week.vue";
 import NavMenu from "@/components/nav-menu.vue";
 import NavMessage from "@/components/nav-message.vue";
+import SessionExpired from "@/components/session-expired.vue";
 import dataMixin from "@/mixins/data_mixin.js";
 
 export default {
@@ -54,6 +57,7 @@ export default {
     NavMenu,
     NavMessage,
     QuarterWeek,
+    SessionExpired,
   },
   props: {
     pageTitle: {

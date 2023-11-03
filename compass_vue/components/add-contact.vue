@@ -41,12 +41,11 @@
           <div class="row">
             <div class="col">
               <div
-                class="alert alert-danger py-2 small"
+                class="border-0 alert alert-danger py-2 small"
                 role="alert"
                 v-show="updatePermissionDenied"
-              >
-                {{ errorResponse }}
-              </div>
+                v-html="errorResponse"
+              ></div>
             </div>
           </div>
           <div class="row mb-3">
@@ -274,10 +273,23 @@ export default {
           contactModal.hide();
         })
         .catch((error) => {
+          // permission denied
           if (error.response.status == 401) {
             this.updatePermissionDenied = true;
             this.errorResponse = error.response.data;
             setTimeout(() => (this.updatePermissionDenied = false), 3000);
+          }
+          // invalid request (missing fields)
+          else if (error.response.status == 400) {
+            this.updatePermissionDenied = true;
+            this.errorResponse =
+              "<strong>Invalid request.</strong> Your are missing required fields in your submission.";
+          }
+          // session expired
+          else if (error.response.status == 300) {
+            this.updatePermissionDenied = true;
+            this.errorResponse =
+              "<strong>Your session has expired.</strong> Refreshing the page will result in loss of data. Please copy or make note of your changes before starting a new session.";
           } else {
             this.formErrors = error.response.data;
           }
