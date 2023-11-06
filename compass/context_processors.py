@@ -5,8 +5,10 @@
 from django.conf import settings
 from django.urls import reverse
 from userservice.user import UserService
+from restclients_core.exceptions import DataFailureException
 from persistent_message.models import Message
 from compass.dao.term import term_context
+from compass.dao import current_datetime
 from compass.models import AccessGroup
 
 
@@ -19,7 +21,10 @@ def django_debug(request):
 
 
 def term(request):
-    return term_context()
+    try:
+        return term_context()
+    except DataFailureException:
+        return {'current_date': current_datetime().date().isoformat()}
 
 
 def auth_user(request):
