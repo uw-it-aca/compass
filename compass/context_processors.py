@@ -25,6 +25,7 @@ def auth_user(request):
     ret = {
         'user_netid': us.get_original_user(),
         'user_override': us.get_user(),
+        'user_role': None,
         'signout_url': reverse('saml_logout'),
         'messages': [],
     }
@@ -32,12 +33,11 @@ def auth_user(request):
     try:
         access_group, role = AccessGroup.objects.access_group_for_user(request)
         ret['user_role'] = role
-    except AccessGroup.DoesNotExist:
-        ret['user_role'] = None
     except DataFailureException:
-        ret['user_role'] = None
         ret['messages'].append(
             'The UW Groups Service is currently unavailable.')
+    except AccessGroup.DoesNotExist:
+        pass
 
     try:
         ret.update(term_context())
