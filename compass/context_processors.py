@@ -20,13 +20,6 @@ def django_debug(request):
     return {'django_debug': getattr(settings, 'DEBUG', False)}
 
 
-def term(request):
-    try:
-        return term_context()
-    except DataFailureException:
-        return {'current_date': current_datetime().date().isoformat()}
-
-
 def auth_user(request):
     us = UserService()
     ret = {
@@ -41,6 +34,13 @@ def auth_user(request):
         ret['user_role'] = role
     except AccessGroup.DoesNotExist:
         ret['user_role'] = None
+
+    try:
+        ret.update(term_context())
+    except DataFailureException:
+        ret['current_date'] = current_datetime().date().isoformat()
+        ret['messages'].append(
+            'The Student Web Service is currently unavailable.')
 
     for message in Message.objects.active_messages():
         if 'message_level' not in ret:
