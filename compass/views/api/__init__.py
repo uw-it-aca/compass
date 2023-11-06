@@ -27,8 +27,9 @@ class BaseAPIView(GenericAPIView):
             raise OverrideNotPermitted()
 
     def get_access_group(self, request, require_manager=False):
-        return AccessGroup.objects.access_group_for_user(
+        access_group, role = AccessGroup.objects.access_group_for_user(
             request, require_manager=require_manager)
+        return access_group
 
     def response_ok(self, content):
         return Response(content, status=status.HTTP_200_OK)

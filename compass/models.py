@@ -90,22 +90,24 @@ class AccessGroupManager(models.Manager):
 
     def access_group_for_user(self, request, require_manager=False):
         """
-        Returns the defauilt access group that a user is in, or
+        Returns the defauilt access group and role that a user is in, or
         raises exception AccessGroup.DoesNotExist.
         """
         access_groups = super().get_queryset().all().order_by('id')
         for access_group in access_groups:
             # Return the first instance of a manager role
             if access_group.has_manager_role(request):
-                return access_group
+                return access_group, AccessGroup.ROLE_MANAGER
 
         if require_manager:
             raise AccessGroup.DoesNotExist()
 
         for access_group in access_groups:
-            # Return the first instance of a user role
+            # Return the first instance of a user or student role
             if access_group.has_user_role(request):
-                return access_group
+                return access_group, AccessGroup.ROLE_USER
+            elif access_group.has_student_role(request):
+                return access_group, AccessGroup.ROLE_STUDENT
 
         raise AccessGroup.DoesNotExist()
 
@@ -130,7 +132,8 @@ class AccessGroup(models.Model):
 
     ROLE_MANAGER = "manager"
     ROLE_USER = "user"
-    ROLES = [ROLE_MANAGER, ROLE_USER]
+    ROLE_STUDENT = "student"
+    ROLES = [ROLE_MANAGER, ROLE_USER, ROLE_STUDENT]
 
     objects = AccessGroupManager()
 
@@ -196,6 +199,9 @@ class AccessGroup(models.Model):
 
     def has_user_role(self, request):
         return self.has_role(request, self.ROLE_USER)
+
+    def has_student_role(self, request):
+        return self.has_role(request, self.ROLE_STUDENT)
 
 
 class ContactManager(models.Manager):

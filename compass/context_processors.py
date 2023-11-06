@@ -5,8 +5,10 @@
 from django.conf import settings
 from django.urls import reverse
 from userservice.user import UserService
+from restclients_core.exceptions import DataFailureException
 from persistent_message.models import Message
 from compass.dao.term import term_context
+from compass.dao import current_datetime
 from compass.models import AccessGroup
 
 
@@ -16,10 +18,6 @@ def google_analytics(request):
 
 def django_debug(request):
     return {'django_debug': getattr(settings, 'DEBUG', False)}
-
-
-def term(request):
-    return term_context()
 
 
 def auth_user(request):
@@ -32,11 +30,17 @@ def auth_user(request):
     }
 
     try:
-        access_group = AccessGroup.objects.access_group_for_user(request)
-        ret['user_role'] = AccessGroup.ROLE_MANAGER if (
-            access_group.has_manager_role(request)) else AccessGroup.ROLE_USER
+        access_group, role = AccessGroup.objects.access_group_for_user(request)
+        ret['user_role'] = role
     except AccessGroup.DoesNotExist:
         ret['user_role'] = None
+
+    try:
+        ret.update(term_context())
+    except DataFailureException:
+        ret['current_date'] = current_datetime().date().isoformat()
+        ret['messages'].append(
+            'The Student Web Service is currently unavailable.')
 
     for message in Message.objects.active_messages():
         if 'message_level' not in ret:
