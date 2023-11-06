@@ -34,6 +34,10 @@ def auth_user(request):
         ret['user_role'] = role
     except AccessGroup.DoesNotExist:
         ret['user_role'] = None
+    except DataFailureException:
+        ret['user_role'] = None
+        ret['messages'].append(
+            'The UW Groups Service is currently unavailable.')
 
     try:
         ret.update(term_context())
