@@ -43,7 +43,6 @@ TEMPLATES = [
                 'compass.context_processors.google_analytics',
                 'compass.context_processors.django_debug',
                 'compass.context_processors.auth_user',
-                'compass.context_processors.term',
             ],
         }
     }
