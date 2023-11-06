@@ -1,5 +1,5 @@
-<template v-if="termData.currYear && termData.currQuarter">
-  <div class="bg-dark-purple rounded-3 text-light mb-1 p-3">
+<template>
+  <div v-if="termData.currYear" class="bg-dark-purple rounded-3 text-light mb-1 p-3">
     <div class="small">
       <i class="bi bi-calendar-week me-2"></i>
       <span v-if="termData.isBreak">
