@@ -50,7 +50,7 @@ class SAMLAdminModel(AbstractSAMLAdminModel, admin.ModelAdmin):
     pass
 
 
-class SessionAdminModel(admin.ModelAdmin):
+class SessionAdminModel(SAMLAdminModel):
     def user(self, obj):
         session_user = obj.get_decoded().get('_auth_user_id')
         user = User.objects.get(pk=session_user)

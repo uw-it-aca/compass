@@ -2,144 +2,84 @@ import "regenerator-runtime/runtime";
 import axios from "axios";
 import { useTokenStore } from "@/stores/token";
 
+// Request interceptor
+axios.interceptors.request.use(function (config) {
+    const tokenStore = useTokenStore();
+
+    config.headers['Content-Type'] = 'application/json;charset=UTF-8';
+    config.headers['Access-Control-Allow-Origin'] = '*';
+    config.headers["X-CSRFToken"] = tokenStore.csrfToken;
+    return config;
+  }, function (error) {
+    return Promise.reject(error);
+  });
+
+// Response interceptor
+axios.interceptors.response.use(function (response) {
+    // 2xx status code
+    return response;
+  }, function (error) {
+    if (error.response.status === 302) {
+      // Expired Session
+      alert("Your session has expired. Refresh the page to start a new session.");
+    }
+    return Promise.reject(error);
+  });
+
 const dataMixin = {
   methods: {
-    _getAxiosConfig: function () {
-      //const csrfToken = this.$store.state.csrfToken;
-
-      const tokenStore = useTokenStore();
-
-      const axiosConfig = {
-        headers: {
-          "Content-Type": "application/json;charset=UTF-8",
-          "Access-Control-Allow-Origin": "*",
-          "X-CSRFToken": tokenStore.csrfToken,
-        },
-      };
-      return axiosConfig;
-    },
-    _handleError: function (error) {
-      if (error.response) {
-        if (error.response.status === 302) {
-          // Expired Session
-          alert("Your session has expired. Refresh the page to start a new session.");
-        } else {
-          console.log(error.response);
-        }
-      } else if (error.request) {
-        console.log(error.request);
-      } else {
-        console.log('Error', error.message);
-      }
-    },
     getStudentDetail: async function (uwnetid) {
-      return axios.get(
-        "/api/internal/student/" + uwnetid + "/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/student/" + uwnetid + "/");
     },
     saveStudent: async function (systemkey, uwnetid, programs) {
       return axios.post(
         "/api/internal/student/" + uwnetid + "/",
-        {
-          system_key: systemkey,
-          programs: programs,
-        },
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+        {system_key: systemkey, programs: programs}
+      );
     },
     getEligibilities: async function () {
-      return axios.get(
-        "/api/internal/eligibility/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/eligibility/");
     },
     getStudentEligibility: async function (systemkey) {
-      return axios.get(
-        "/api/internal/student/" + systemkey + "/eligibility/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/student/" + systemkey + "/eligibility/");
     },
     setStudentEligibility: async function (systemkey, eligibility_type_id) {
       return axios.post(
         "/api/internal/student/" + systemkey + "/eligibility/",
-        {
-          system_key: systemkey,
-          eligibility_type_id: eligibility_type_id,
-        },
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+        {system_key: systemkey, eligibility_type_id: eligibility_type_id}
+      );
     },
     getAffiliations: async function () {
-      return axios.get(
-        "/api/internal/accessgroup/affiliations/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/accessgroup/affiliations/");
     },
     getSettings: async function (accessGroupPk, settingType) {
-      return axios.get(
-        "/api/internal/accessgroup/" +
-          accessGroupPk +
-          "/settings/" +
-          settingType +
-          "/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/accessgroup/" + accessGroupPk +
+        "/settings/" + settingType + "/");
     },
     saveSettings: async function (accessGroupPk, settingType, settingValues) {
-      return axios.post(
-        "/api/internal/accessgroup/" +
-          accessGroupPk +
-          "/settings/" +
-          settingType +
-          "/",
-        {
-          setting_type: settingType,
-          setting_values: settingValues,
-        },
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.post("/api/internal/accessgroup/" + accessGroupPk +
+          "/settings/" + settingType + "/",
+        {setting_type: settingType, setting_values: settingValues});
     },
     getStudentSchedules: async function (uwregid) {
-      return axios.get(
-        "/api/internal/student/" + uwregid + "/schedules/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/student/" + uwregid + "/schedules/");
     },
     getStudentTranscripts: async function (uwregid) {
-      return axios.get(
-        "/api/internal/student/" + uwregid + "/transcripts/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/student/" + uwregid + "/transcripts/");
     },
     saveStudentContact: async function (systemkey, contact) {
       let postUrl = "/api/internal/contact/";
-      if (contact.id != undefined) {
+      if (contact.id !== undefined) {
         postUrl += contact.id + "/";
       }
-      return axios.post(
-        postUrl,
-        { contact: contact, system_key: systemkey },
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.post(postUrl, {contact: contact, system_key: systemkey});
     },
     saveStudentAffiliation: async function (systemkey, affiliation) {
       let postUrl = "/api/internal/student/" + systemkey + "/affiliations/";
-      if (affiliation.studentAffiliationId != undefined) {
+      if (affiliation.studentAffiliationId !== undefined) {
         postUrl += affiliation.studentAffiliationId + "/";
       }
-      return axios.post(
-        postUrl,
-        { affiliation: affiliation },
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.post(postUrl, {affiliation: affiliation});
     },
     deleteStudentAffiliation: async function (systemkey, affiliation_id) {
       let deleteUrl =
@@ -148,89 +88,41 @@ const dataMixin = {
         "/affiliations/" +
         affiliation_id +
         "/";
-      return axios.delete(
-        deleteUrl, this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.delete(deleteUrl);
     },
     getStudentContacts: async function (systemkey) {
-      return axios.get(
-        "/api/internal/student/" + systemkey + "/contacts/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/student/" + systemkey + "/contacts/");
     },
     getStudentContact: async function (contactId) {
-      return axios.get(
-        "/api/internal/contact/" + contactId + "/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/contact/" + contactId + "/");
     },
     getStudentContactTopics: async function () {
-      return axios.get(
-        "/api/internal/contact/topics/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/contact/topics/");
     },
     getStudentContactTypes: async function () {
-      return axios.get(
-        "/api/internal/contact/types/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/contact/types/");
     },
     getStudentContactMethods: async function () {
-      return axios.get(
-        "/api/internal/contact/methods/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/contact/methods/");
     },
     getStudentAffiliations: async function (systemkey, affiliation_id) {
-      return axios.get(
-        "/api/internal/student/" +
-          systemkey +
-          "/affiliations/" +
-          (affiliation_id !== undefined ? affiliation_id : ""),
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/student/" + systemkey + "/affiliations/" +
+          (affiliation_id !== undefined ? affiliation_id : ""));
     },
     getStudentVisits: async function (systemkey) {
-      return axios.get(
-        "/api/internal/student/" + systemkey + "/visits/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/student/" + systemkey + "/visits/");
     },
     getAdviserCaseload: async function (adviserNetId) {
-      return axios.get(
-        "/api/internal/adviser/" + adviserNetId + "/caseload/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/adviser/" + adviserNetId + "/caseload/");
     },
     getAdviserContacts: async function (adviserNetId) {
-      return axios.get(
-        "/api/internal/adviser/" + adviserNetId + "/contacts/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/adviser/" + adviserNetId + "/contacts/");
     },
     getAccessGroups: async function () {
-      return axios.get(
-        "/api/internal/accessgroup/",
-        {},
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.get("/api/internal/accessgroup/");
     },
     clearOverride: async function () {
-      return axios.post(
-        "/api/internal/support/",
-        { clear_override: true },
-        this._getAxiosConfig()
-      ).catch(this._handleError);
+      return axios.post("/api/internal/support/", { clear_override: true });
     },
   },
 };
