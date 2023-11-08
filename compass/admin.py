@@ -9,6 +9,8 @@ from compass.dao.group import is_admin_user
 from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib.auth.models import User
+from django.contrib.sessions.models import Session
 from rest_framework.authtoken.models import Token, TokenProxy
 
 
@@ -48,6 +50,20 @@ class SAMLAdminModel(AbstractSAMLAdminModel, admin.ModelAdmin):
     pass
 
 
+class SessionAdminModel(admin.ModelAdmin):
+    def user(self, obj):
+        session_user = obj.get_decoded().get('_auth_user_id')
+        user = User.objects.get(pk=session_user)
+        return user.username
+
+    def _session_data(self, obj):
+        return pprint.pformat(obj.get_decoded()).replace('\n', '<br>\n')
+
+    _session_data.allow_tags = True
+    list_display = ['user', 'session_key', '_session_data', 'expire_date']
+    readonly_fields = ['_session_data']
+
+
 admin_site = SAMLAdminSite(name='SAMLAdmin')
 admin_site.register(AppUser, SAMLAdminModel)
 admin_site.register(Student, SAMLAdminModel)
@@ -59,3 +75,4 @@ admin_site.register(ContactMethod, SAMLAdminModel)
 admin_site.register(ContactTopic, SAMLAdminModel)
 admin_site.register(Contact, SAMLAdminModel)
 admin_site.register(TokenProxy, SAMLAdminModel)
+admin.site.register(Session, SessionAdminModel)
