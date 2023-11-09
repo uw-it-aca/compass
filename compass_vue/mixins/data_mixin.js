@@ -25,7 +25,7 @@ const dataMixin = {
       }
     },
     getStudentDetail: async function (uwnetid) {
-      return axios.get(
+      return await axios.get(
         "/api/internal/student/" + uwnetid + "/"
       ).catch(this._handleError);
     },
