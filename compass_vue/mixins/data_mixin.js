@@ -14,26 +14,23 @@ axios.interceptors.request.use(function (config) {
     return Promise.reject(error);
   });
 
-// Response interceptor
-axios.interceptors.response.use(function (response) {
-    // 2xx status code
-    return response;
-  }, function (error) {
-    if (error.response.status === 302) {
-      // Expired Session
-      alert("Your session has expired. Refresh the page to start a new session.");
-    }
-    return Promise.reject(error);
-  });
-
 const dataMixin = {
   methods: {
+    _handleError: function (error) {
+      if (error.response) {
+        if (error.response.status === 302) {
+          // Expired Session
+          return alert("Your session has expired. Refresh the page to start a new session.");
+        }
+      }
+    },
     getStudentDetail: async function (uwnetid) {
-      return axios.get("/api/internal/student/" + uwnetid + "/");
+      return await axios.get(
+        "/api/internal/student/" + uwnetid + "/"
+      ).catch(this._handleError);
     },
     saveStudent: async function (systemkey, uwnetid, programs) {
-      return axios.post(
-        "/api/internal/student/" + uwnetid + "/",
+      return axios.post("/api/internal/student/" + uwnetid + "/",
         {system_key: systemkey, programs: programs}
       );
     },
@@ -44,8 +41,7 @@ const dataMixin = {
       return axios.get("/api/internal/student/" + systemkey + "/eligibility/");
     },
     setStudentEligibility: async function (systemkey, eligibility_type_id) {
-      return axios.post(
-        "/api/internal/student/" + systemkey + "/eligibility/",
+      return axios.post("/api/internal/student/" + systemkey + "/eligibility/",
         {system_key: systemkey, eligibility_type_id: eligibility_type_id}
       );
     },
@@ -58,7 +54,7 @@ const dataMixin = {
     },
     saveSettings: async function (accessGroupPk, settingType, settingValues) {
       return axios.post("/api/internal/accessgroup/" + accessGroupPk +
-          "/settings/" + settingType + "/",
+        "/settings/" + settingType + "/",
         {setting_type: settingType, setting_values: settingValues});
     },
     getStudentSchedules: async function (uwregid) {
@@ -82,13 +78,8 @@ const dataMixin = {
       return axios.post(postUrl, {affiliation: affiliation});
     },
     deleteStudentAffiliation: async function (systemkey, affiliation_id) {
-      let deleteUrl =
-        "/api/internal/student/" +
-        systemkey +
-        "/affiliations/" +
-        affiliation_id +
-        "/";
-      return axios.delete(deleteUrl);
+      return axios.delete("/api/internal/student/" + systemkey +
+        "/affiliations/" + affiliation_id + "/");
     },
     getStudentContacts: async function (systemkey) {
       return axios.get("/api/internal/student/" + systemkey + "/contacts/");
@@ -107,16 +98,20 @@ const dataMixin = {
     },
     getStudentAffiliations: async function (systemkey, affiliation_id) {
       return axios.get("/api/internal/student/" + systemkey + "/affiliations/" +
-          (affiliation_id !== undefined ? affiliation_id : ""));
+        (affiliation_id !== undefined ? affiliation_id : ""));
     },
     getStudentVisits: async function (systemkey) {
       return axios.get("/api/internal/student/" + systemkey + "/visits/");
     },
     getAdviserCaseload: async function (adviserNetId) {
-      return axios.get("/api/internal/adviser/" + adviserNetId + "/caseload/");
+      return await axios.get(
+        "/api/internal/adviser/" + adviserNetId + "/caseload/"
+      ).catch(this._handleError);
     },
     getAdviserContacts: async function (adviserNetId) {
-      return axios.get("/api/internal/adviser/" + adviserNetId + "/contacts/");
+      return await axios.get(
+        "/api/internal/adviser/" + adviserNetId + "/contacts/"
+      ).catch(this._handleError);
     },
     getAccessGroups: async function () {
       return axios.get("/api/internal/accessgroup/");
