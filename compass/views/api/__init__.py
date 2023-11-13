@@ -3,9 +3,9 @@
 
 
 from compass.models import AccessGroup, AppUser
+from compass.views.decorators import xhr_login_required
 from compass.exceptions import OverrideNotPermitted
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from rest_framework.generics import GenericAPIView
 from rest_framework.negotiation import BaseContentNegotiation
@@ -18,7 +18,7 @@ from rest_framework import status
 from userservice.user import UserService
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(xhr_login_required, name='dispatch')
 class BaseAPIView(GenericAPIView):
 
     def valid_user_override(self):

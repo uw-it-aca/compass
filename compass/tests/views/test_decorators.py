@@ -6,21 +6,78 @@ from django.conf import settings
 from django.contrib.auth.models import AnonymousUser, User
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.http import HttpResponse
-from django.test import TestCase, RequestFactory
+from django.test import TestCase, RequestFactory, override_settings
 from django.utils.decorators import method_decorator
 from django.views.generic.base import View
 from userservice.user import UserServiceMiddleware
-from compass.views.decorators import uw_person_required
+from compass.views.decorators import xhr_login_required, person_required
 import mock
 
 
-@method_decorator(uw_person_required, name='dispatch')
+@method_decorator(person_required, name='dispatch')
 class PersonRequiredView(View):
     def get(request, *args, **kwargs):
         return HttpResponse('OK')
 
 
-class DecoratorTest(TestCase):
+@method_decorator(xhr_login_required, name='dispatch')
+class XHRLoginRequiredView(View):
+    def get(request, *args, **kwargs):
+        return HttpResponse('OK')
+
+
+@override_settings(LOGIN_URL='/login')
+class XHRLoginRequiredDecoratorTest(TestCase):
+    def setUp(self):
+        self.request = RequestFactory().get('/api/test')
+        self.request.user = User()
+        self.request.session = {}
+        UserServiceMiddleware().process_request(self.request)
+        get_response = mock.MagicMock()
+        middleware = SessionMiddleware(get_response)
+        response = middleware(self.request)
+        self.request.session.save()
+
+        headers = {'HTTP_X_REQUESTED_WITH': 'XMLHttpRequest'}
+        self.xhr_request = RequestFactory().get('/api/test', **headers)
+        self.xhr_request.user = User()
+        self.xhr_request.session = {}
+        UserServiceMiddleware().process_request(self.xhr_request)
+        get_response = mock.MagicMock()
+        middleware = SessionMiddleware(get_response)
+        response = middleware(self.xhr_request)
+        self.xhr_request.session.save()
+
+    @mock.patch('compass.context_processors.auth_user')
+    def test_xhr_login_required_noheader_noauth(self, mock_auth_user):
+        mock_auth_user.return_value = {}
+        self.request.user = AnonymousUser()
+        view_instance = XHRLoginRequiredView.as_view()
+        response = view_instance(self.request)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual('/login?next=/api/test', response.url)
+
+    @mock.patch('compass.context_processors.auth_user')
+    def test_xhr_login_required_noauth(self, mock_auth_user):
+        mock_auth_user.return_value = {}
+        self.xhr_request.user = AnonymousUser()
+        view_instance = XHRLoginRequiredView.as_view()
+        response = view_instance(self.xhr_request)
+        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.content, b'Invalid session')
+
+    @mock.patch('compass.context_processors.auth_user')
+    def test_xhr_login_required_auth(self, mock_auth_user):
+        mock_auth_user.return_value = {}
+        self.xhr_request.user = User()
+        view_instance = XHRLoginRequiredView.as_view()
+        response = view_instance(self.xhr_request)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.content, b'OK')
+
+
+@override_settings(LOGIN_URL='/login')
+class PersonRequiredDecoratorTest(TestCase):
     def setUp(self):
         self.request = RequestFactory().get('/')
         self.request.user = User()
@@ -37,8 +94,8 @@ class DecoratorTest(TestCase):
         self.request.user = AnonymousUser()
         view_instance = PersonRequiredView.as_view()
         response = view_instance(self.request)
-        self.assertEquals(response.status_code, 302)
-        self.assertIn(f'{settings.LOGIN_URL}?next=/', response.url)
+        self.assertEqual(response.status_code, 302)
+        self.assertIn('/login?next=/', response.url)
 
     @mock.patch('compass.context_processors.auth_user')
     @mock.patch('compass.views.decorators.get_user')
@@ -47,7 +104,7 @@ class DecoratorTest(TestCase):
         mock_auth_user.return_value = {}
         view_instance = PersonRequiredView.as_view()
         response = view_instance(self.request)
-        self.assertEquals(response.status_code, 302)
+        self.assertEqual(response.status_code, 302)
         self.assertIn('unauthorized-user', response.url)
 
     @mock.patch('compass.views.decorators.get_user')
@@ -55,4 +112,4 @@ class DecoratorTest(TestCase):
         mock_get_user.return_value = 'javerage'
         view_instance = PersonRequiredView.as_view()
         response = view_instance(self.request)
-        self.assertEquals(response.status_code, 200)
+        self.assertEqual(response.status_code, 200)
