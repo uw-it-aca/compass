@@ -67,6 +67,14 @@ certs:
   keyPath: /certs/compass.uw.edu-ic.key
   secretName: compass.uw.edu-ic-certs
 
+cronjob:
+  enabled: true
+  jobs:
+    - name: clear-sessions
+      schedule: "20 9 * * 7"
+      command: ["/scripts/management_command.sh"]
+      args: ["clearsessions"]
+
 environmentVariables:
   - name: ENV
     value: prod
