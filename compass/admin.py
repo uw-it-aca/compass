@@ -12,6 +12,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
 from rest_framework.authtoken.models import Token, TokenProxy
+import pprint
 
 
 class SAMLAdminSite(admin.AdminSite):
