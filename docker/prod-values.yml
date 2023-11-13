@@ -71,7 +71,7 @@ cronjob:
   enabled: true
   jobs:
     - name: clear-sessions
-      schedule: "20 9 * * 7"
+      schedule: "20 9 * * 0"
       command: ["/scripts/management_command.sh"]
       args: ["clearsessions"]
 
