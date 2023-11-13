@@ -9,7 +9,8 @@ from django.urls import reverse
 
 class ApiTest(TestCase):
     def setUp(self):
-        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0')
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_X_REQUESTED_WITH='XMLHttpRequest')
 
     def _set_user(self, netid):
         self.client.force_login(User.objects.get_or_create(
