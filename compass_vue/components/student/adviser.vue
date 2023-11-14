@@ -11,30 +11,61 @@
           class="list-unstyled"
           :class="index == advisers.length - 1 ? 'mb-0' : 'mb-4'"
         >
-          <li>
-            <div class="d-flex">
-              <i class="bi bi-person-square text-gray me-3"></i>
-              <div class="flex-fill">
-                <strong>{{ adviser.display_name }}</strong> ({{
-                  adviser.uwnetid
-                }})<br /><span class="small text-muted text-capitalize">{{
-                  adviser.pronouns
-                }}</span>
+          <!-- MARK: display OMAD Advising first, then show UAA -->
+          <template
+            v-if="adviser.employee.adviser.advising_program == 'OMAD Advising'"
+          >
+            <li>
+              <div class="d-flex">
+                <i class="bi bi-person-square text-gray me-3"></i>
+                <div class="flex-fill">
+                  <strong>{{ adviser.display_name }}</strong> ({{
+                    adviser.uwnetid
+                  }})<br /><span class="small text-muted text-capitalize">{{
+                    adviser.pronouns
+                  }}</span>
+                </div>
               </div>
-            </div>
-          </li>
-          <li class="">
-            <i class="bi bi-envelope-fill text-gray me-3"></i>
-            <span>{{ adviser.employee.adviser.advising_email }}</span>
-          </li>
-          <li class="">
-            <i class="bi bi-telephone text-gray me-3"></i>
-            <span>{{ adviser.employee.adviser.advising_phone_number }}</span>
-          </li>
-          <li class="">
-            <i class="bi bi-building text-gray me-3"></i>
-            <span>{{ adviser.employee.adviser.advising_program }}</span>
-          </li>
+            </li>
+            <li class="">
+              <i class="bi bi-envelope-fill text-gray me-3"></i>
+              <span>{{ adviser.employee.adviser.advising_email }}</span>
+            </li>
+            <li class="">
+              <i class="bi bi-telephone text-gray me-3"></i>
+              <span>{{ adviser.employee.adviser.advising_phone_number }}</span>
+            </li>
+            <li class="">
+              <i class="bi bi-building text-gray me-3"></i>
+              <span>{{ adviser.employee.adviser.advising_program }}</span>
+            </li>
+          </template>
+          <template v-else>
+            <li>
+              <div class="d-flex">
+                <i class="bi bi-person-square text-gray me-3"></i>
+                <div class="flex-fill">
+                  <strong>{{ adviser.display_name }}</strong> ({{
+                    adviser.uwnetid
+                  }})<br /><span class="small text-muted text-capitalize">{{
+                    adviser.pronouns
+                  }}</span>
+                </div>
+              </div>
+            </li>
+            <li class="">
+              <i class="bi bi-envelope-fill text-gray me-3"></i>
+              <span>{{ adviser.employee.adviser.advising_email }}</span>
+            </li>
+            <li class="">
+              <i class="bi bi-telephone text-gray me-3"></i>
+              <span>{{ adviser.employee.adviser.advising_phone_number }}</span>
+            </li>
+            <li class="">
+              <i class="bi bi-building text-gray me-3"></i>
+              <span>{{ adviser.employee.adviser.advising_program }}</span>
+            </li>
+          </template>
         </ul>
       </div>
       <div v-else>No adviser assigned to this student.</div>
