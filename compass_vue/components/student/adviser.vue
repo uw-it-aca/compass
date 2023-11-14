@@ -11,7 +11,7 @@
           class="list-unstyled"
           :class="index == advisers.length - 1 ? 'mb-0' : 'mb-4'"
         >
-          <!-- MARK: display OMAD Advising first, then show UAA -->
+          <!-- MARK: display OMAD Advising first -->
           <template
             v-if="adviser.employee.adviser.advising_program == 'OMAD Advising'"
           >
@@ -40,7 +40,10 @@
               <span>{{ adviser.employee.adviser.advising_program }}</span>
             </li>
           </template>
-          <template v-else>
+          <!-- MARK: display non OMAD after -->
+          <template
+            v-if="adviser.employee.adviser.advising_program != 'OMAD Advising'"
+          >
             <li>
               <div class="d-flex">
                 <i class="bi bi-person-square text-gray me-3"></i>
