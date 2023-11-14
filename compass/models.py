@@ -25,20 +25,21 @@ class AppUserManager(models.Manager):
         # request the current person object for the user
         person = CompassPersonClient().get_person_by_uwnetid(uwnetid)
         # check the AppUser table to see if they have an existing entry
+        user = None
         for netid in (person.prior_uwnetids + [person.uwnetid]):
             try:
                 # update the AppUsers uwnetid
                 user = AppUser.objects.get(uwnetid=netid)
                 user.uwnetid = person.uwnetid
                 user.save()
-                return user
+                break
             except AppUser.DoesNotExist:
                 continue
         else:
             # if no user is found, then create one
             user = AppUser(uwnetid=uwnetid)
             user.save()
-            return user
+        return user
 
 
 class AppUser(models.Model):
