@@ -5,17 +5,18 @@
     </template>
     <template #body>
       <div v-if="advisers">
-        <ul
-          v-for="(adviser, index) in advisers"
-          :key="adviser.id"
-          class="list-unstyled"
-          :class="index == advisers.length - 1 ? 'mb-0' : 'mb-4'"
-        >
-          <!-- MARK: display OMAD Advising first -->
-          <template
-            v-if="adviser.employee.adviser.advising_program == 'OMAD Advising'"
+        <ul class="list-unstyled mb-0">
+          <!-- loop advisers and display OMAD adviser first -->
+          <li
+            v-for="(adviser, index) in advisers"
+            :key="adviser.id"
+            :class="index == advisers.length - 1 ? 'mb-0' : 'mb-4'"
           >
-            <li>
+            <template
+              v-if="
+                adviser.employee.adviser.advising_program == 'OMAD Advising'
+              "
+            >
               <div class="d-flex">
                 <i class="bi bi-person-square text-gray me-3"></i>
                 <div class="flex-fill">
@@ -26,25 +27,33 @@
                   }}</span>
                 </div>
               </div>
-            </li>
-            <li class="">
-              <i class="bi bi-envelope-fill text-gray me-3"></i>
-              <span>{{ adviser.employee.adviser.advising_email }}</span>
-            </li>
-            <li class="">
-              <i class="bi bi-telephone text-gray me-3"></i>
-              <span>{{ adviser.employee.adviser.advising_phone_number }}</span>
-            </li>
-            <li class="">
-              <i class="bi bi-building text-gray me-3"></i>
-              <span>{{ adviser.employee.adviser.advising_program }}</span>
-            </li>
-          </template>
-          <!-- MARK: display non OMAD after -->
-          <template
-            v-if="adviser.employee.adviser.advising_program != 'OMAD Advising'"
+              <div>
+                <i class="bi bi-envelope-fill text-gray me-3"></i>
+                <span>{{ adviser.employee.adviser.advising_email }}</span>
+              </div>
+              <div>
+                <i class="bi bi-telephone text-gray me-3"></i>
+                <span>{{
+                  adviser.employee.adviser.advising_phone_number
+                }}</span>
+              </div>
+              <div>
+                <i class="bi bi-building text-gray me-3"></i>
+                <span>{{ adviser.employee.adviser.advising_program }}</span>
+              </div>
+            </template>
+          </li>
+          <!-- loop advisers again and display non-OMAD adviser second -->
+          <li
+            v-for="(adviser, index) in advisers"
+            :key="adviser.id"
+            :class="index == advisers.length - 1 ? 'mb-0' : 'mb-4'"
           >
-            <li>
+            <template
+              v-if="
+                adviser.employee.adviser.advising_program != 'OMAD Advising'
+              "
+            >
               <div class="d-flex">
                 <i class="bi bi-person-square text-gray me-3"></i>
                 <div class="flex-fill">
@@ -55,20 +64,22 @@
                   }}</span>
                 </div>
               </div>
-            </li>
-            <li class="">
-              <i class="bi bi-envelope-fill text-gray me-3"></i>
-              <span>{{ adviser.employee.adviser.advising_email }}</span>
-            </li>
-            <li class="">
-              <i class="bi bi-telephone text-gray me-3"></i>
-              <span>{{ adviser.employee.adviser.advising_phone_number }}</span>
-            </li>
-            <li class="">
-              <i class="bi bi-building text-gray me-3"></i>
-              <span>{{ adviser.employee.adviser.advising_program }}</span>
-            </li>
-          </template>
+              <div>
+                <i class="bi bi-envelope-fill text-gray me-3"></i>
+                <span>{{ adviser.employee.adviser.advising_email }}</span>
+              </div>
+              <div>
+                <i class="bi bi-telephone text-gray me-3"></i>
+                <span>{{
+                  adviser.employee.adviser.advising_phone_number
+                }}</span>
+              </div>
+              <div>
+                <i class="bi bi-building text-gray me-3"></i>
+                <span>{{ adviser.employee.adviser.advising_program }}</span>
+              </div>
+            </template>
+          </li>
         </ul>
       </div>
       <div v-else>No adviser assigned to this student.</div>
