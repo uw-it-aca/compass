@@ -2,6 +2,22 @@
   <layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
+      <div class="row my-4 small">
+        <div class="col">
+          <div class="bg-light p-3 rounded-3">
+            <div class="row">
+              <div class="col-xl-4 me-auto">
+                <div class="fw-bold lh-lg">Search all Students:</div>
+                <div>
+                  <search-student></search-student>
+                </div>
+              </div>
+              <div class="col-xl-8">&nbsp;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="row my-4">
         <div class="col">
           <axdd-card>
@@ -22,6 +38,7 @@
 </template>
 
 <script>
+import SearchStudent from "@/components/search-student.vue";
 import CheckInTableLoading from "@/components/checkin-table-loading.vue";
 import CheckInTableDisplay from "@/components/checkin-table-display.vue";
 
@@ -32,6 +49,7 @@ export default {
   mixins: [dataMixin],
   components: {
     layout: Layout,
+    "search-student": SearchStudent,
     "table-loading": CheckInTableLoading,
     "table-display": CheckInTableDisplay,
   },
