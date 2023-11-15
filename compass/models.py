@@ -2,7 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.db import models
+from django.db import models, transaction
+from django.db.utils import IntegrityError
 from django.utils.text import slugify
 from django.utils.timezone import utc
 from simple_history.models import HistoricalRecords
@@ -29,12 +30,22 @@ class AppUserManager(models.Manager):
         for netid in (person.prior_uwnetids + [person.uwnetid]):
             try:
                 # update the AppUsers uwnetid
-                user = AppUser.objects.get(uwnetid=netid)
-                user.uwnetid = person.uwnetid
-                user.save()
-                break
+                with transaction.atomic():
+                    user = AppUser.objects.get(uwnetid=netid)
+                    user.uwnetid = person.uwnetid
+                    user.save()
+                    break
+
             except AppUser.DoesNotExist:
                 continue
+            except IntegrityError:
+                user = AppUser.objects.get(uwnetid=person.uwnetid)
+                prior_netid_user = AppUser.objects.get(uwnetid=netid)
+                # update references from the prior netid user to current
+                Contact.objects.filter(app_user=prior_netid_user)\
+                    .update(app_user=user)
+                prior_netid_user.delete()
+                break
         else:
             # if no user is found, then create one
             user = AppUser(uwnetid=uwnetid)
