@@ -76,7 +76,6 @@
                     </select>
                   </div>
 
-
                   <div class="col-auto">
                     <label for="scholarshipFilter" class="fw-bold lh-lg"
                       >Scholarship:</label
