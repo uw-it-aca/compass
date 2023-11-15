@@ -7,15 +7,12 @@
       <div v-if="advisers">
         <ul class="list-unstyled mb-0">
           <!-- loop advisers and display OMAD adviser first -->
-          <li
-            v-for="(adviser, index) in advisers"
-            :key="adviser.id"
-            :class="index == advisers.length - 1 ? 'mb-0' : 'mb-4'"
-          >
-            <template
+          <template v-for="(adviser, index) in advisers" :key="adviser.id">
+            <li
               v-if="
                 adviser.employee.adviser.advising_program == 'OMAD Advising'
               "
+              class="mb-3"
             >
               <div class="d-flex">
                 <i class="bi bi-person-square text-gray me-3"></i>
@@ -41,18 +38,14 @@
                 <i class="bi bi-building text-gray me-3"></i>
                 <span>{{ adviser.employee.adviser.advising_program }}</span>
               </div>
-            </template>
-          </li>
-          <!-- loop advisers again and display non-OMAD adviser second -->
-          <li
-            v-for="(adviser, index) in advisers"
-            :key="adviser.id"
-            :class="index == advisers.length - 1 ? 'mb-0' : 'mb-4'"
-          >
-            <template
+            </li>
+          </template>
+          <template v-for="(adviser, index) in advisers" :key="adviser.id">
+            <li
               v-if="
                 adviser.employee.adviser.advising_program != 'OMAD Advising'
               "
+              class="mb-3"
             >
               <div class="d-flex">
                 <i class="bi bi-person-square text-gray me-3"></i>
@@ -78,8 +71,8 @@
                 <i class="bi bi-building text-gray me-3"></i>
                 <span>{{ adviser.employee.adviser.advising_program }}</span>
               </div>
-            </template>
-          </li>
+            </li>
+          </template>
         </ul>
       </div>
       <div v-else>No adviser assigned to this student.</div>
