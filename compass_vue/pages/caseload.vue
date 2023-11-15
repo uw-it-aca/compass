@@ -240,10 +240,15 @@ export default {
         });
       }
       if (this.selectedDegree) {
-        filteredPersons = filteredPersons.filter(
-          (person) =>
-            person.student.degrees[0].degree_status_desc === this.selectedDegree
-        );
+        filteredPersons = filteredPersons.filter((person) => {
+          try {
+            return (
+              person.student.degrees[0].degree_status_desc === this.selectedDegree
+            );
+          } catch (error) {
+            return false;
+          }
+        });
       }
       if (this.selectedScholarship) {
         filteredPersons = filteredPersons.filter((person) => {
