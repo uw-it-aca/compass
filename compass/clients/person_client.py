@@ -37,6 +37,7 @@ class CompassPersonClient(UWPersonClient):
              self.DB.Student.enroll_status_code,
              self.DB.Student.enroll_status_request_code,
              self.DB.Student.enroll_status_desc,
+             self.DB.Student.degrees,
              self.DB.Transcript.scholarship_type,
              self.DB.Transcript.scholarship_desc,)\
             .join(self.DB.Person)\
@@ -70,9 +71,10 @@ class CompassPersonClient(UWPersonClient):
             student.enroll_status_code = item[13]
             student.enroll_status_request_code = item[14]
             student.enroll_status_desc = item[15]
+            student.degrees = item[16]
             latest_transcript = Transcript()
-            latest_transcript.scholarship_type = item[16]
-            latest_transcript.scholarship_desc = item[17]
+            latest_transcript.scholarship_type = item[17]
+            latest_transcript.scholarship_desc = item[18]
             student.transcripts = [latest_transcript]
             person.student = student
             persons.append(person)

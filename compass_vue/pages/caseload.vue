@@ -55,6 +55,28 @@
                       </option>
                     </select>
                   </div>
+
+                  <div class="col-auto">
+                    <label for="campusFilter" class="fw-bold lh-lg"
+                      >Degree:</label
+                    >
+                    <select
+                      id="campusFilter"
+                      v-model="selectedDegree"
+                      class="form-select form-select-sm"
+                    >
+                      <option selected :value="undefined">All</option>
+                      <option
+                        v-for="(option, index) in degreeOptions"
+                        v-bind:value="option.id"
+                        :key="index"
+                      >
+                        {{ option.value }}
+                      </option>
+                    </select>
+                  </div>
+
+
                   <div class="col-auto">
                     <label for="scholarshipFilter" class="fw-bold lh-lg"
                       >Scholarship:</label
@@ -96,7 +118,7 @@
                   </div>
                   <div class="col-auto">
                     <label for="holdsFilter" class="fw-bold lh-lg"
-                      >Registration Holds:</label
+                      >Holds:</label
                     >
                     <select
                       id="holdsFilter"
@@ -172,6 +194,14 @@ export default {
       selectedCampus: undefined,
       selectedRegistration: undefined,
       selectedHolds: undefined,
+      degreeOptions: [
+        { id: 1, value: "Administrative Hold" },
+        { id: 2, value: "Incomplete" },
+        { id: 3, value: "Applied" },
+        { id: 4, value: "Applied" },
+        { id: 5, value: "Applied" },
+        { id: 9, value: "Granted" },
+      ],
       scholarshipOptions: [
         { id: 1, value: "Dean's List" },
         { id: 4, value: "Warning" },
