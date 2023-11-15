@@ -190,6 +190,7 @@ export default {
         ? document.body.getAttribute("data-user-override")
         : document.body.getAttribute("data-user-netid"),
       selectedClass: undefined,
+      selectedDegree: undefined,
       selectedScholarship: undefined,
       selectedCampus: undefined,
       selectedRegistration: undefined,
@@ -239,6 +240,8 @@ export default {
           return person.student.class_desc === this.selectedClass;
         });
       }
+      //TODO: filter selectedDegree
+
       if (this.selectedScholarship) {
         filteredPersons = filteredPersons.filter((person) => {
           try {
