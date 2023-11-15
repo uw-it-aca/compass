@@ -7,6 +7,8 @@ from uw_person_client.components import Person, Student, Transcript
 from uw_person_client.databases.uwpds import UWPDS
 from uw_person_client.exceptions import (
     PersonNotFoundException, AdviserNotFoundException)
+from sqlalchemy import func
+from sqlalchemy.sql.elements import literal_column
 
 
 class CompassPersonClient(UWPersonClient):
@@ -37,19 +39,22 @@ class CompassPersonClient(UWPersonClient):
              self.DB.Student.enroll_status_code,
              self.DB.Student.enroll_status_request_code,
              self.DB.Student.enroll_status_desc,
-             self.DB.Student.degrees,
              self.DB.Transcript.scholarship_type,
-             self.DB.Transcript.scholarship_desc,)\
+             self.DB.Transcript.scholarship_desc,
+             func.string_agg(
+                 self.DB.Degree.degree_status_desc, literal_column("','")))\
             .join(self.DB.Person)\
             .join(self.DB.StudentToAdviser)\
-            .join(self.DB.Adviser) \
+            .join(self.DB.Adviser)\
             .join(self.DB.Transcript,
-                  self.DB.Student.id == self.DB.Transcript.student_id) \
+                  self.DB.Student.id == self.DB.Transcript.student_id)\
+            .join(self.DB.Degree,
+                  self.DB.Student.id == self.DB.Degree.student_id)\
             .join(self.DB.Term,
-                  self.DB.Transcript.tran_term_id == self.DB.Term.id) \
+                  self.DB.Transcript.tran_term_id == self.DB.Term.id)\
             .order_by(self.DB.Student.id, self.DB.Term.year.desc(),
-                      self.DB.Term.quarter.desc()) \
-            .distinct(self.DB.Student.id) \
+                      self.DB.Term.quarter.desc())\
+            .distinct(self.DB.Student.id)\
             .filter(self.DB.Adviser.id == sqla_adviser.id)
         persons = []
         for item in sqla_persons.all():
@@ -71,11 +76,11 @@ class CompassPersonClient(UWPersonClient):
             student.enroll_status_code = item[13]
             student.enroll_status_request_code = item[14]
             student.enroll_status_desc = item[15]
-            student.degrees = item[16]
             latest_transcript = Transcript()
-            latest_transcript.scholarship_type = item[17]
-            latest_transcript.scholarship_desc = item[18]
+            latest_transcript.scholarship_type = item[16]
+            latest_transcript.scholarship_desc = item[17]
             student.transcripts = [latest_transcript]
+            student.degrees = item[18].split(',')
             person.student = student
             persons.append(person)
         # sorting by display name, can't get it to work in SQL-Alchemy
