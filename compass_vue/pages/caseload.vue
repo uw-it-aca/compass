@@ -239,8 +239,12 @@ export default {
           return person.student.class_desc === this.selectedClass;
         });
       }
-      //TODO: filter selectedDegree
-
+      if (this.selectedDegree) {
+        filteredPersons = filteredPersons.filter(
+          (person) =>
+            person.student.degrees[0].degree_status_desc === this.selectedDegree
+        );
+      }
       if (this.selectedScholarship) {
         filteredPersons = filteredPersons.filter((person) => {
           try {
