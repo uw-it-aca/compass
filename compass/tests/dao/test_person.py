@@ -46,4 +46,3 @@ class TestPerson(TestCase):
     def test_person_from_uwnetid(self):
         self.assertRaises(InvalidNetID, person_from_uwnetid, "1javerage")
         self.assertIsNotNone(person_from_uwnetid("javerage"))
-
