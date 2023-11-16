@@ -195,12 +195,10 @@ export default {
       selectedRegistration: undefined,
       selectedHolds: undefined,
       degreeOptions: [
-        { id: 1, value: "Administrative Hold" },
-        { id: 2, value: "Incomplete" },
-        { id: 3, value: "Applied" },
-        { id: 4, value: "Applied" },
-        { id: 5, value: "Applied" },
-        { id: 9, value: "Granted" },
+        { id: "ADMINISTRATIVE HOLD", value: "Administrative Hold" },
+        { id: "INCOMPLETE", value: "Incomplete" },
+        { id: "APPLIED", value: "Applied" },
+        { id: "GRANTED", value: "Granted" },
       ],
       scholarshipOptions: [
         { id: 1, value: "Dean's List" },
