@@ -4,6 +4,7 @@
 
 from django.apps import AppConfig
 from restclients_core.dao import MockDAO
+from uw_person_client.clients.mock_client import MockedUWPersonClient
 import os
 
 
@@ -11,6 +12,9 @@ class CompassConfig(AppConfig):
     name = 'compass'
 
     def ready(self):
-        cohort_manager_mocks = os.path.join(os.path.dirname(__file__),
-                                            "resources")
-        MockDAO.register_mock_path(cohort_manager_mocks)
+        restclient_mocks = os.path.join(os.path.dirname(__file__),
+                                        "resources")
+        MockDAO.register_mock_path(restclient_mocks)
+        pds_mocks = os.path.join(os.path.dirname(__file__),
+                                 "fixtures/mock_pds_data")
+        MockedUWPersonClient.register_mock_path(pds_mocks)
