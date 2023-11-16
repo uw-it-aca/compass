@@ -98,6 +98,7 @@ urlpatterns += [
     re_path(
         r"^api/internal/eligibility/",
         EligibilityView.as_view(),
+        name="eligibility_view"
     ),
     re_path(
         r"^api/internal/accessgroup/(?P<access_group_id>[\w]+)/settings/"
