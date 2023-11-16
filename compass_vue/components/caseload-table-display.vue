@@ -3,10 +3,10 @@
     <table class="table m-0">
       <thead class="table-light text-muted small">
         <tr>
-          <th scope="col" style="width: 25%" class="ps-3">Student</th>
-          <th scope="col" style="width: 15%">Class</th>
+          <th scope="col" style="width: 30%" class="ps-3">Student</th>
+          <th scope="col">Class</th>
           <th scope="col">Campus</th>
-          <th scope="col" style="width: 40%" class="text-nowrap">Status</th>
+          <th scope="col" style="width: 45%" class="text-nowrap">Status</th>
         </tr>
       </thead>
       <tbody>
@@ -14,9 +14,9 @@
           <td class="ps-3">
             <profile-mini :person="person"></profile-mini>
           </td>
-          <td>{{ person.student.class_desc }}</td>
-          <td>{{ person.student.campus_desc }}</td>
-          <td>
+          <td class="small">{{ person.student.class_desc }}</td>
+          <td class="small">{{ person.student.campus_desc }}</td>
+          <td class="small">
             <ul class="list-inline d-flex m-0">
               <li class="list-inline-item d-none">
                 Special Program:
@@ -24,7 +24,7 @@
 
                 <span
                   v-if="person.student.special_program_code === '0'"
-                  class="badge text-bg-light-gray"
+                  class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1 text-bg-secondary"
                 >
                   N/A</span
                 >
@@ -32,6 +32,14 @@
                   {{ person.student.special_program_code }},
                   {{ person.student.special_program_desc }}
                 </span>
+              </li>
+              <li class="list-inline-item flex-fill">
+                <div>Degree</div>
+                <span
+                  class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1 text-bg-secondary"
+                >
+                  {{ getDegreeData(person).degree_desc }}</span
+                >
               </li>
               <li class="list-inline-item flex-fill">
                 <div>Scholarship</div>
@@ -63,7 +71,7 @@
                 Enrollment Status Code: {{ person.student.enroll_status_code }}
               </li>
               <li class="list-inline-item flex-fill">
-                <div>Registration Holds</div>
+                <div>Holds</div>
                 <span
                   class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1"
                   :class="
@@ -114,16 +122,27 @@ export default {
     getScholarshipData: function (person) {
       try {
         return {
-          'scholarship_type': person.student.transcripts[0].scholarship_type,
-          'scholarship_desc': person.student.transcripts[0].scholarship_desc
-        }
+          scholarship_type: person.student.transcripts[0].scholarship_type,
+          scholarship_desc: person.student.transcripts[0].scholarship_desc,
+        };
       } catch (err) {
         return {
-          'scholarship_type': undefined,
-          'scholarship_desc': undefined
-        }
+          scholarship_type: undefined,
+          scholarship_desc: undefined,
+        };
       }
-    }
+    },
+    getDegreeData: function (person) {
+      try {
+        return {
+          degree_desc: person.student.degrees[0].degree_status_desc,
+        };
+      } catch (err) {
+        return {
+          degree_desc: undefined,
+        };
+      }
+    },
   },
 };
 </script>

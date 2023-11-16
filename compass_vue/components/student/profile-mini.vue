@@ -10,15 +10,15 @@
       </div>
     </div>
     <div class="flex-fill">
-      <div class="text-nowrap">
-        <span class="me-2">
-          <span>{{ person.display_name }}</span>
-          <span class="small ms-2 text-muted text-capitalize"
-            ><template v-if="person.pronouns">
+      <div class="">
+        <div class="me-2">
+          <div>{{ person.display_name }}</div>
+          <div class="small text-muted text-capitalize">
+            <template v-if="person.pronouns">
               {{ person.pronouns }}
             </template>
-          </span>
-        </span>
+          </div>
+        </div>
       </div>
       <div class="text-secondary small">
         <router-link :to="{ path: '/student/' + person.student.student_number }"

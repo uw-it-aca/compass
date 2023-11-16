@@ -98,6 +98,7 @@ urlpatterns += [
     re_path(
         r"^api/internal/eligibility/",
         EligibilityView.as_view(),
+        name="eligibility_view"
     ),
     re_path(
         r"^api/internal/accessgroup/(?P<access_group_id>[\w]+)/settings/"
@@ -106,7 +107,9 @@ urlpatterns += [
     ),
     re_path((r"^api/internal/accessgroup/affiliations/$"),
             AffiliationsView.as_view()),
-    re_path(r"^api/internal/accessgroup/$", AccessGroupView.as_view()),
+    re_path(r"^api/internal/accessgroup/$",
+            AccessGroupView.as_view(),
+            name="access_group_view"),
     re_path(r"^api/internal/contact/topics/$", ContactTopicsView.as_view()),
     re_path(r"^api/internal/contact/types/$", ContactTypesView.as_view()),
     re_path(r"^api/internal/contact/methods/$", ContactMethodsView.as_view()),
