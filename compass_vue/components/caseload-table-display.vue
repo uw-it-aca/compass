@@ -33,7 +33,7 @@
                   {{ person.student.special_program_desc }}
                 </span>
               </li>
-              <li class="list-inline-item flex-fill">
+              <li class="list-inline-item flex-fill w-25">
                 <div>Degree</div>
                 <span
                   class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1 text-bg-secondary"
@@ -41,7 +41,7 @@
                   {{ getDegreeData(person).degree_desc }}</span
                 >
               </li>
-              <li class="list-inline-item flex-fill">
+              <li class="list-inline-item flex-fill w-25">
                 <div>Scholarship</div>
                 <span
                   class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1"
@@ -54,7 +54,7 @@
                   >{{ getScholarshipData(person).scholarship_desc }}</span
                 >
               </li>
-              <li class="list-inline-item flex-fill">
+              <li class="list-inline-item flex-fill w-25">
                 <div>Registered</div>
                 <span
                   class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1"
@@ -70,7 +70,7 @@
               <li class="list-inline-item d-none">
                 Enrollment Status Code: {{ person.student.enroll_status_code }}
               </li>
-              <li class="list-inline-item flex-fill">
+              <li class="list-inline-item flex-fill w-25">
                 <div>Holds</div>
                 <span
                   class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1"

@@ -76,7 +76,6 @@
                     </select>
                   </div>
 
-
                   <div class="col-auto">
                     <label for="scholarshipFilter" class="fw-bold lh-lg"
                       >Scholarship:</label
@@ -190,17 +189,16 @@ export default {
         ? document.body.getAttribute("data-user-override")
         : document.body.getAttribute("data-user-netid"),
       selectedClass: undefined,
+      selectedDegree: undefined,
       selectedScholarship: undefined,
       selectedCampus: undefined,
       selectedRegistration: undefined,
       selectedHolds: undefined,
       degreeOptions: [
-        { id: 1, value: "Administrative Hold" },
-        { id: 2, value: "Incomplete" },
-        { id: 3, value: "Applied" },
-        { id: 4, value: "Applied" },
-        { id: 5, value: "Applied" },
-        { id: 9, value: "Granted" },
+        { id: "ADMINISTRATIVE HOLD", value: "Administrative Hold" },
+        { id: "INCOMPLETE", value: "Incomplete" },
+        { id: "APPLIED", value: "Applied" },
+        { id: "GRANTED", value: "Granted" },
       ],
       scholarshipOptions: [
         { id: 1, value: "Dean's List" },
@@ -237,6 +235,17 @@ export default {
       if (this.selectedClass) {
         filteredPersons = filteredPersons.filter((person) => {
           return person.student.class_desc === this.selectedClass;
+        });
+      }
+      if (this.selectedDegree) {
+        filteredPersons = filteredPersons.filter((person) => {
+          try {
+            return (
+              person.student.degrees[0].degree_status_desc === this.selectedDegree
+            );
+          } catch (error) {
+            return false;
+          }
         });
       }
       if (this.selectedScholarship) {
