@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-import re
 from django.test import TestCase
 from compass.cache import CompassRestclientCache
 
