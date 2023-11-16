@@ -139,7 +139,7 @@ export default {
         };
       } catch (err) {
         return {
-          degree_desc: undefined,
+          degree_desc: "NONE",
         };
       }
     },
