@@ -199,8 +199,10 @@ export default {
         { id: "INCOMPLETE", value: "Incomplete" },
         { id: "APPLIED", value: "Applied" },
         { id: "GRANTED", value: "Granted" },
+        { id: "none", value: "None" }
       ],
       scholarshipOptions: [
+        { id: 0, value: "None" },
         { id: 1, value: "Dean's List" },
         { id: 4, value: "Warning" },
         { id: 3, value: "Probation" },
@@ -244,11 +246,18 @@ export default {
               person.student.degrees[0].degree_status_desc === this.selectedDegree
             );
           } catch (error) {
-            return false;
+            try {
+              return (
+                person.student.degrees.length === 0 &&
+                this.selectedDegree === "none"
+              );
+            } catch (error) {
+              return false;
+            }
           }
         });
       }
-      if (this.selectedScholarship) {
+      if (this.selectedScholarship !== undefined) {
         filteredPersons = filteredPersons.filter((person) => {
           try {
             return (
