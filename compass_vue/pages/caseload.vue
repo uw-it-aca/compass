@@ -16,7 +16,7 @@
                 <div
                   class="row gy-2 gx-3 align-items-center justify-content-end"
                 >
-                  <div class="col-auto">
+                  <div class="col">
                     <label for="classFilter" class="fw-bold lh-lg"
                       >Class:</label
                     >
@@ -36,7 +36,7 @@
                     </select>
                   </div>
 
-                  <div class="col-auto">
+                  <div class="col">
                     <label for="campusFilter" class="fw-bold lh-lg"
                       >Campus:</label
                     >
@@ -56,7 +56,7 @@
                     </select>
                   </div>
 
-                  <div class="col-auto">
+                  <div class="col">
                     <label for="campusFilter" class="fw-bold lh-lg"
                       >Degree:</label
                     >
@@ -76,7 +76,7 @@
                     </select>
                   </div>
 
-                  <div class="col-auto">
+                  <div class="col">
                     <label for="scholarshipFilter" class="fw-bold lh-lg"
                       >Scholarship:</label
                     >
@@ -96,7 +96,7 @@
                     </select>
                   </div>
 
-                  <div class="col-auto">
+                  <div class="col">
                     <label for="registrationFilter" class="fw-bold lh-lg"
                       >Registered:</label
                     >
@@ -115,7 +115,7 @@
                       </option>
                     </select>
                   </div>
-                  <div class="col-auto">
+                  <div class="col">
                     <label for="holdsFilter" class="fw-bold lh-lg"
                       >Holds:</label
                     >
@@ -195,17 +195,17 @@ export default {
       selectedRegistration: undefined,
       selectedHolds: undefined,
       degreeOptions: [
-        { id: "ADMINISTRATIVE HOLD", value: "Administrative Hold" },
+        { id: "ADMINISTRATIVE HOLD", value: "Hold" },
         { id: "INCOMPLETE", value: "Incomplete" },
         { id: "APPLIED", value: "Applied" },
         { id: "GRANTED", value: "Granted" },
-        { id: "none", value: "None" }
+        { id: "none", value: "None" },
       ],
       scholarshipOptions: [
-        { id: 0, value: "None" },
         { id: 1, value: "Dean's List" },
         { id: 4, value: "Warning" },
         { id: 3, value: "Probation" },
+        { id: 0, value: "None" },
       ],
       classOptions: [
         { id: "Freshman", value: "Freshman" },
@@ -243,7 +243,8 @@ export default {
         filteredPersons = filteredPersons.filter((person) => {
           try {
             return (
-              person.student.degrees[0].degree_status_desc === this.selectedDegree
+              person.student.degrees[0].degree_status_desc ===
+              this.selectedDegree
             );
           } catch (error) {
             try {

@@ -3,7 +3,7 @@
     <table class="table m-0">
       <thead class="table-light text-muted small">
         <tr>
-          <th scope="col" style="width: 30%" class="ps-3">Student</th>
+          <th scope="col" style="width: 34%" class="ps-3">Student</th>
           <th scope="col">Class</th>
           <th scope="col">Campus</th>
           <th scope="col" style="width: 45%" class="text-nowrap">Status</th>
