@@ -40,7 +40,7 @@ class VisitOMADView(TokenAPIView):
 
     {
         "student_netid": "<UW NETID>",
-        "visit_type": "<VisitType Slug>",
+        "visit_type": "<VisitType Name>",
         "course_code": "<Course_Curriculum Course_Number>",
         "checkin_date": "<TIMESTAMP>",
         "checkout_date": "<TIMESTAMP>",
@@ -65,14 +65,14 @@ class VisitOMADView(TokenAPIView):
         student, created = Student.objects.get_or_create(system_key=syskey)
         return student
 
-    def _valid_visit_type(self, slug, access_group):
-        if slug is None:
+    def _valid_visit_type(self, name, access_group):
+        if name is None:
             raise ValueError('Missing Visit Type')
 
         try:
-            return VisitType.objects.get(access_group=access_group, slug=slug)
+            return VisitType.objects.get(access_group=access_group, name=name)
         except VisitType.DoesNotExist:
-            raise ValueError(f'Unrecognized visit type: {slug}')
+            raise ValueError(f'Unrecognized visit type: {name}')
 
     def _valid_course(self, course_code):
         return course_code or "None"

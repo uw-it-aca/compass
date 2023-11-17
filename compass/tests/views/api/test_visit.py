@@ -27,7 +27,7 @@ class ViewAPITest(ApiTest):
     def test_api_auth(self):
         test_request = {
             "student_netid": "javerage",
-            "visit_type": "ic-drop-in-tutoring",
+            "visit_type": "IC Drop-In Tutoring",
             "course_code": "CHEM 198",
             "checkin_date": "2012-01-19 13:21:00 PDT",
             "checkout_date": "2012-01-19 14:52:00 PDT"
