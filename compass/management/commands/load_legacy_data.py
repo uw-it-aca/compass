@@ -81,7 +81,7 @@ class Command(BaseCommand):
 
         student_number = apt.student_no.zfill(7)
         try:
-            app_user = self._get_app_user(apt.staff_id)
+            app_user = self._get_app_user(apt.staff_id, apt.staff_name)
             student = self._get_student(student_number)
             checkin_date = self._get_checkin_date(apt)
             Contact.objects.get(
@@ -112,7 +112,17 @@ class Command(BaseCommand):
         self._add_access_group(contact)
         contact.save()
 
-    def _get_app_user(self, netid):
+    def _get_app_user(self, netid, name):
+        if (not netid) and name:
+            try:
+                last, first = name.split(',')
+                person = self.uw_pws.person_search(
+                    first_name=first.strip(), last_name=last.strip())
+                if len(person) == 1:
+                    netid = person[0].uwnetid
+            except ValueError:
+                pass
+
         app_user, created = AppUser.objects.get_or_create(uwnetid=netid)
         return app_user
 
