@@ -125,7 +125,8 @@ class StudentContactsView(BaseAPIView):
             return self.response_badrequest('Invalid systemkey')
 
         queryset = Contact.objects.filter(
-            student__system_key__contains=systemkey).order_by('-checkin_date')
+            student__system_key__contains=systemkey.lstrip("0"))\
+            .order_by('-checkin_date')
         serializer = ContactReadSerializer(queryset, many=True)
         return self.response_ok(serializer.data)
 
