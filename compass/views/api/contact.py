@@ -52,9 +52,9 @@ class ContactView(BaseAPIView):
             self.valid_user_override()
 
         except AccessGroup.DoesNotExist:
-            return response_unauthorized()
+            return self.response_unauthorized()
         except OverrideNotPermitted as err:
-            return response_unauthorized(err)
+            return self.response_unauthorized(str(err))
 
         if not request.data:
             return self.response_badrequest()
