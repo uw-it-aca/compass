@@ -260,7 +260,6 @@ export default {
   methods: {
     getFormData() {
       if (this.contactId != null) {
-        console.log("getContact for given id: " + this.contactId);
         this.getContact(this.contactId);
       }
     },
@@ -319,8 +318,17 @@ export default {
         if (response.data) {
           // we need to map the contact type and topic ids to the data object
           let newContact = response.data;
-          newContact.checkin_date =
-            newContact.checkin_date.split(/\-(?=[^\-]+$)/)[0];
+          // convert date to local and format for datetime-local input
+          newContact.checkin_date = new Date(newContact.checkin_date)
+            .toLocaleString("sv-SE", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+            })
+            .replace(" ", "T");
           newContact.contact_type = newContact.contact_type.id;
           newContact.contact_method = newContact.contact_method.id;
           newContact.contact_topics = newContact.contact_topics.map(
@@ -328,9 +336,6 @@ export default {
           );
           // update the current contact
           this.contact = newContact;
-
-          console.log("contact returned!");
-          console.log(this.contact);
         }
       });
     },
