@@ -69,7 +69,9 @@
               />
             </div>
             <div class="col">
-              <label class="form-label small fw-bold me-2">Contact type</label>
+              <label class="form-label small fw-bold me-2"
+                >Contact typessss</label
+              >
               <span class="text-danger" v-if="formErrors.contact_type">
                 required
               </span>
@@ -87,10 +89,7 @@
                   v-for="contactType in contactTypes"
                   :key="contactType.id"
                 >
-                  <option
-                    v-if="contactType.slug !== 'admin'"
-                    :value="contactType.id"
-                  >
+                  <option :value="contactType.id">
                     {{ contactType.name }}
                   </option>
                 </template>
