@@ -122,8 +122,7 @@ class ContactAPITest(ApiTest):
         # assert creating student record and app user record
         mock_appuser_cls.objects.upsert_appuser.assert_called_once_with(
             mock_request.data["adviser_netid"])
-        mock_student_cls.objects.get_or_create.assert_called_once_with(
-            system_key=mock_request.data["student_systemkey"])
+        mock_student_cls.objects.get_or_create.assert_called_once()
         # assert creating contact record
         self.assertEqual(mock_contact.app_user, mock_appuser)
         self.assertEqual(mock_contact.student, mock_student)
@@ -135,3 +134,36 @@ class ContactAPITest(ApiTest):
         mock_contact.access_group.add.assert_called_once_with(
             mock_omad_access_group)
         self.assertEqual(response.status_code, 201)
+
+    def test_syskey_leading_zero(self):
+        test_nopad = {
+            "adviser_netid": "javerage",
+            "student_systemkey": "1234567",
+            "contact_type": "appointment",
+            "checkin_date": "2012-01-19 17:21:00 PDT",
+            "source": "Compass"
+        }
+
+        test_pad = {
+            "adviser_netid": "javerage",
+            "student_systemkey": "001234567",
+            "contact_type": "appointment",
+            "checkin_date": "2012-01-19 17:21:00 PDT",
+            "source": "Compass"
+        }
+
+        token_str = "Token %s" % self.API_TOKEN
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=token_str)
+
+        # create without padding
+        self.post_response('contact_omad',
+                           test_nopad)
+        contacts = Contact.objects.all()
+        self.assertEqual(contacts[0].student.system_key, "001234567")
+
+        # create with padding
+        self.post_response('contact_omad',
+                           test_pad)
+        contacts = Contact.objects.all()
+        self.assertEqual(contacts[1].student.system_key, "001234567")
