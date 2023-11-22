@@ -145,7 +145,7 @@ urlpatterns += [
         name="visit_omad"
     ),
     # vue-router paths
-    re_path(r"^(student|caseload|reports).*$", LandingView.as_view()),
+    re_path(r"^(checkins|student|caseload|reports).*$", LandingView.as_view()),
     # default landing
     re_path(r"^$", LandingView.as_view(), name="index"),
 ]
