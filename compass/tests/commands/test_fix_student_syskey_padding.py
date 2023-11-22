@@ -1,3 +1,7 @@
+# Copyright 2023 UW-IT, University of Washington
+# SPDX-License-Identifier: Apache-2.0
+
+
 from django.core.management import call_command
 from django.test import TestCase
 from compass.models import Contact, Student, StudentAffiliation, \
