@@ -14,6 +14,8 @@ import pytz
 class TestFixSyskey(TestCase):
     student_pad = None
     student_nopad = None
+    student_onlypad = None
+    student_nodata = None
     contact_pad = None
     contact_nopad = None
     visit_pad = None
@@ -65,6 +67,9 @@ class TestFixSyskey(TestCase):
         self.student_nopad = Student.objects.create(system_key='1234567')
         self.student_nopad.save()
         self.student_onlypad = Student.objects.create(system_key='7654321')
+        self.student_nopad.save()
+        self.student_nodata = Student.objects.create(system_key='3513985')
+        self.student_nodata.save()
 
         self.contact_pad = Contact.objects \
             .create(app_user=self.appUser,
@@ -153,7 +158,7 @@ class TestFixSyskey(TestCase):
 
     def test_fix(self):
         # Verify dupe students exist
-        self.assertEqual(len(Student.objects.all()), 3)
+        self.assertEqual(len(Student.objects.all()), 4)
         self.assertEqual(len(
             Contact.objects.filter(student__system_key='001234567')),
             1)
@@ -198,7 +203,7 @@ class TestFixSyskey(TestCase):
         call_command('fix_student_syskey_padding')
 
         # Verify dupes are merged
-        self.assertEqual(len(Student.objects.all()), 2)
+        self.assertEqual(len(Student.objects.all()), 3)
         self.assertEqual(len(
             Contact.objects.filter(student__system_key='001234567')),
             2)
