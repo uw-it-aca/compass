@@ -237,6 +237,10 @@ class ContactOMADView(TokenAPIView):
         except AttributeError as e:
             raise ValueError(f"Invalid student systemkey: {e}")
 
+    @staticmethod
+    def pad_student_systemkey(student_systemkey):
+        return student_systemkey.zfill(9)
+
     def post(self, request):
         contact_dict = request.data
         try:
@@ -267,8 +271,12 @@ class ContactOMADView(TokenAPIView):
                          "adviser_netid: %s" % contact_dict["adviser_netid"])
             return Response("Person record for adviser not found",
                             status=status.HTTP_400_BAD_REQUEST)
+
+        student_systemkey = self.pad_student_systemkey(
+            contact_dict["student_systemkey"])
+        # student_systemkey = contact_dict["student_systemkey"]
         student, _ = Student.objects.get_or_create(
-            system_key=contact_dict["student_systemkey"])
+            system_key=student_systemkey)
         # create the new contact record
         contact = Contact()
         contact.app_user = app_user
