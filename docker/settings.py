@@ -186,11 +186,6 @@ LOGGING = {
             'level': 'INFO',
             'propagate': False,
         },
-        'sqlalchemy.pool': {
-            'handlers': ['stdout', 'stderr'],
-            'level': 'DEBUG',
-            'propagate': False,
-        },
         '': {
             'handlers': ['stdout', 'stderr'],
             'level': 'INFO' if os.getenv('ENV', 'localdev') == 'prod' else 'DEBUG'
