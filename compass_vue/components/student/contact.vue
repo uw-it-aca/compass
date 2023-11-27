@@ -105,10 +105,8 @@
                   </div>
                 </td>
                 <td style="width: 20%" class="p-3">
-<!--                  Allow overriding users to edit contacts, -->
-<!--                  API will enforce the ALLOW_USER_OVERRIDE_FOR_WRITE  setting-->
                   <AddEditContact
-                    v-if="contact.app_user.uwnetid == userName || contact.app_user.uwnetid == userOverride"
+                    v-if="contact.app_user.uwnetid == userName"
                     :button-type="'link'"
                     :person="person"
                     :contact-id="contact.id"
@@ -155,11 +153,6 @@ export default {
   },
   created() {
     this.loadStudentContacts();
-  },
-  computed: {
-    allowWrite: function () {
-      return this.$store.getters["workspaces/allowWrite"];
-    },
   },
   methods: {
     loadStudentContacts: function () {
