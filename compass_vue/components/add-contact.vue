@@ -69,9 +69,9 @@
               />
             </div>
             <div class="col">
-              <label class="form-label small fw-bold me-2"
-                >Contact typessss</label
-              >
+              <label class="form-label small fw-bold me-2">
+                Contact types
+              </label>
               <span class="text-danger" v-if="formErrors.contact_type">
                 required
               </span>
@@ -99,7 +99,7 @@
               <label class="form-label small fw-bold me-2"
                 >Contact method:</label
               >
-              <span class="text-danger" v-if="formErrors.contact_type">
+              <span class="text-danger" v-if="formErrors.contact_method">
                 required
               </span>
               <select
@@ -263,6 +263,9 @@ export default {
       }
     },
     saveContact() {
+      if (!this.validateContactForm()) {
+        return;
+      }
       var contactModal = Modal.getInstance(
         document.getElementById("contactModal" + this.contactId)
       );
@@ -280,6 +283,36 @@ export default {
             this.formErrors = error.response.data;
           }
         });
+    },
+    validateContactForm() {
+      let is_invalid = false;
+      // date widget returns empty string if invalid
+      if (this.contact.checkin_date === "") {
+        this.formErrors.checkin_date = true;
+        is_invalid = true;
+      } else {
+        this.formErrors.checkin_date = false;
+      }
+      if (this.contact.contact_type === undefined) {
+        this.formErrors.contact_type = true;
+        is_invalid = true;
+      } else {
+        this.formErrors.contact_type = false;
+      }
+      if (this.contact.contact_method === undefined) {
+        this.formErrors.contact_method = true;
+        is_invalid = true;
+      } else {
+        this.formErrors.contact_method = false;
+      }
+      if (this.contact.contact_topics.length > 0) {
+        this.formErrors.contact_topics = false;
+      } else {
+        this.formErrors.contact_topics = true;
+        is_invalid = true;
+      }
+
+      return !is_invalid;
     },
     getDefaultContact() {
       var today = new Date();
