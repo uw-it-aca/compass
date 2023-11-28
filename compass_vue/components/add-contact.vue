@@ -378,7 +378,12 @@ export default {
             })
             .replace(" ", "T");
           newContact.contact_type = newContact.contact_type.id;
-          newContact.contact_method = newContact.contact_method.id;
+          if(newContact.contact_method != null) {
+            newContact.contact_method = newContact.contact_method.id;
+          } else {
+            newContact.contact_method = undefined;
+          }
+
           newContact.contact_topics = newContact.contact_topics.map(
             (ct) => ct.id
           );
