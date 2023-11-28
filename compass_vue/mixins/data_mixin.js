@@ -28,6 +28,7 @@ const dataMixin = {
             "Your session has expired. Refresh the page to start a new session."
           );
         }
+        throw error;
       }
     },
     getStudentDetail: async function (uwnetid) {
