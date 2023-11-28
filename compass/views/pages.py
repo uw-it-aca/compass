@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
-from compass.views.decorators import person_required
 
 
-@method_decorator(person_required, name='dispatch')
+@method_decorator(login_required, name='dispatch')
 class LandingView(TemplateView):
     template_name = 'index.html'
