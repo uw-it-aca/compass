@@ -45,7 +45,7 @@
                 role="alert"
                 v-show="updatePermissionDenied"
               >
-                {{ errorResponse }}
+                {{ errorResponsePermission }}
               </div>
             </div>
           </div>
@@ -201,6 +201,7 @@
             >
               Save contact
             </button>
+            <p><span class="text-danger" v-if="errorResponse">{{ errorResponse }}</span></p>
           </div>
         </div>
       </div>
@@ -240,8 +241,10 @@ export default {
       contact: this.getDefaultContact(),
       formErrors: {},
       updatePermissionDenied: false,
+      errorResponsePermission: "",
       errorResponse: "",
       Role: Role,
+      submitAttempted: false,
     };
   },
   created() {
@@ -256,6 +259,18 @@ export default {
     );
     this.$refs.contactModal.addEventListener("hidden.bs.modal", this.resetForm);
   },
+  watch: {
+    contact: {
+      handler: function () {
+        // Don't show 'required' errors until the user has tried to submit
+        // then update on every form edit
+        if(this.submitAttempted) {
+          this.validateContactForm();
+        }
+      },
+      deep: true,
+    },
+  },
   methods: {
     getFormData() {
       if (this.contactId != null) {
@@ -263,6 +278,7 @@ export default {
       }
     },
     saveContact() {
+      this.submitAttempted = true;
       if (!this.validateContactForm()) {
         return;
       }
@@ -277,10 +293,10 @@ export default {
         .catch((error) => {
           if (error.response.status == 401) {
             this.updatePermissionDenied = true;
-            this.errorResponse = error.response.data;
+            this.errorResponsePermission = error.response.data;
             setTimeout(() => (this.updatePermissionDenied = false), 3000);
           } else {
-            this.formErrors = error.response.data;
+            this.errorResponse = error.response.data;
           }
         });
     },
