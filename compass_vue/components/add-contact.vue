@@ -117,10 +117,7 @@
                   v-for="contactMethod in contactMethods"
                   :key="contactMethod.id"
                 >
-                  <option
-                    v-if="contactMethod.slug !== 'internal'"
-                    :value="contactMethod.id"
-                  >
+                  <option :value="contactMethod.id">
                     {{ contactMethod.name }}
                   </option>
                 </template>
@@ -201,7 +198,11 @@
             >
               Save contact
             </button>
-            <p><span class="text-danger" v-if="errorResponse">{{ errorResponse }}</span></p>
+            <p>
+              <span class="text-danger" v-if="errorResponse">{{
+                errorResponse
+              }}</span>
+            </p>
           </div>
         </div>
       </div>
@@ -264,7 +265,7 @@ export default {
       handler: function () {
         // Don't show 'required' errors until the user has tried to submit
         // then update on every form edit
-        if(this.submitAttempted) {
+        if (this.submitAttempted) {
           this.validateContactForm();
         }
       },
@@ -378,7 +379,7 @@ export default {
             })
             .replace(" ", "T");
           newContact.contact_type = newContact.contact_type.id;
-          if(newContact.contact_method != null) {
+          if (newContact.contact_method != null) {
             newContact.contact_method = newContact.contact_method.id;
           } else {
             newContact.contact_method = undefined;
