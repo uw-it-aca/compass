@@ -47,6 +47,22 @@
                 </option>
               </select>
             </div>
+
+            <div class="mb-3">
+              <div class="form-label small fw-bold me-2">Status</div>
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="activeSwitch"
+                  v-model="isActive"
+                />
+                <label class="form-check-label" for="activeSwitch"
+                  >Set user as active</label
+                >
+              </div>
+            </div>
+
             <div class="row mb-3">
               <div class="col">
                 <label class="form-label small fw-bold me-2">Cohort</label>
@@ -82,20 +98,8 @@
               </select>
 -->
               </div>
-              <div class="col">
-                <div class="form-check form-switch">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    id="activeSwitch"
-                    v-model="isActive"
-                  />
-                  <label class="form-check-label" for="activeSwitch"
-                    >Active</label
-                  >
-                </div>
-              </div>
             </div>
+
             <div class="mb-3">
               <label class="form-label small fw-bold me-2">Admin Note</label>
               <textarea
@@ -287,6 +291,6 @@ export default {
 
 <style lang="scss" scoped>
 .cohort-list {
-  height: 145px;
+  height: 250px;
 }
 </style>
