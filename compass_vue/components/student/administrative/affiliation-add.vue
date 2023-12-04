@@ -237,7 +237,8 @@ export default {
         });
     },
     updateStudentAffiliations(newAffiliation) {
-      this.studentAffiliations.push(newAffiliation);
+      // this.studentAffiliations.push(newAffiliation);
+      this.$emit("push", newAffiliation);
     },
     hideModal() {
       var addAffiliationsModal = Modal.getInstance(
