@@ -208,7 +208,7 @@ export default {
           this.saveStudentContact(this.person.student.system_key, {
             contact_type: "Admin",
             contact_method: "Internal",
-            contact_topics: ["None"],
+            contact_topics: ["Other"],
             notes: this.notes,
           })
             .then(() => {
