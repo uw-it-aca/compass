@@ -99,7 +99,7 @@ const dataMixin = {
     },
     saveStudentAffiliation: async function (systemkey, affiliation) {
       let postUrl = "/api/internal/student/" + systemkey + "/affiliations/";
-      if (affiliation.studentAffiliationId !== undefined) {
+      if (affiliation.studentAffiliationId !== null) {
         postUrl += affiliation.studentAffiliationId + "/";
       }
       return axios
