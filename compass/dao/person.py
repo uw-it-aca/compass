@@ -31,10 +31,13 @@ def is_overridable_uwnetid(username):
             if username.lower() == person.uwnetid:
                 error_msg = None
             else:
-                error_msg = "Current netid: {}, Prior netid: ".format(
+                error_msg = "Current UWNetID: {}, Prior UWNetID: ".format(
                     person.uwnetid)
         except InvalidNetID:
             error_msg = "Not a valid UWNetID: "
         except DataFailureException as err:
-            error_msg = "Error ({}) {}: ".format(err.status, err.msg)
+            if err.status == 404:
+                error_msg = 'UWNetID not found: '
+            else:
+                error_msg = "Error ({}) {}: ".format(err.status, err.msg)
     return error_msg

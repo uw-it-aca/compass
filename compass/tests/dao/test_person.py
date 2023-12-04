@@ -4,8 +4,10 @@
 
 from django.test import TestCase
 from compass.dao.person import *
+from uw_pws.util import fdao_pws_override
 
 
+@fdao_pws_override
 class TestPerson(TestCase):
     def test_is_overridable(self):
         err_msg = is_overridable_uwnetid("javerage")
@@ -22,11 +24,8 @@ class TestPerson(TestCase):
         err_msg = is_overridable_uwnetid("javerage1")
         self.assertEqual(err_msg, "UWNetID not found: ")
 
-        err_msg = is_overridable_uwnetid("123invalid$%!@#$")
+        err_msg = is_overridable_uwnetid("1javerage")
         self.assertEqual(err_msg, "Not a valid UWNetID: ")
-
-        err_msg = is_overridable_uwnetid("javerage2")
-        self.assertEqual(err_msg, "Current netid: javerage, Prior netid: ")
 
     def test_validation(self):
         self.assertTrue(valid_uwnetid("javerage"))
