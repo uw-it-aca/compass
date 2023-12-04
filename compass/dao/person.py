@@ -1,7 +1,7 @@
 # Copyright 2023 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from uw_pws import PWS, InvalidNetID
+from uw_pws import PWS, InvalidNetID, DataFailureException
 import re
 
 system_key_re = re.compile(r'^\d{9}$')
