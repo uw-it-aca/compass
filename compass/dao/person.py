@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from uw_pws import PWS, InvalidNetID
-from compass.clients import CompassPersonClient, PersonNotFoundException
 import re
 
 system_key_re = re.compile(r'^\d{9}$')
@@ -24,23 +23,18 @@ def valid_system_key(s):
     return (s is not None and system_key_re.match(str(s)) is not None)
 
 
-def person_from_uwnetid(uwnetid):
-    if not valid_uwnetid(uwnetid):
-        raise InvalidNetID
-    return CompassPersonClient().get_person_by_uwnetid(uwnetid)
-
-
 def is_overridable_uwnetid(username):
     error_msg = "No override user supplied, please enter a UWNetID"
     if username is not None and len(username) > 0:
         try:
-            person = person_from_uwnetid(username.lower())
-            if username.lower() != person.uwnetid:
-                error_msg = f"Current netid: {person.uwnetid}, Prior netid: "
-            else:
+            person = PWS().get_person_by_netid(username)
+            if username.lower() == person.uwnetid:
                 error_msg = None
+            else:
+                error_msg = "Current netid: {}, Prior netid: ".format(
+                    person.uwnetid)
         except InvalidNetID:
             error_msg = "Not a valid UWNetID: "
-        except PersonNotFoundException:
-            error_msg = "UWNetID not found: "
+        except DataFailureException as err:
+            error_msg = "Error ({}) {}: ".format(err.status, err.msg)
     return error_msg
