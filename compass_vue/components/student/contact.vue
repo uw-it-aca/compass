@@ -97,14 +97,18 @@
                       {{ contact.actions }}
                     </p>
                   </div>
-                  <div v-if="contact.contact_type.name == 'Parent'">
-                    <span class="small text-muted visually-hidden">Parent</span>
-                    <div class="text-danger fs-8">
-                      <i class="bi bi-exclamation-octagon-fill me-1"></i>Parent
-                      contacts should be treated as private. Do not discuss this
-                      contact with their student.
+                  <template v-if="contact.contact_type">
+                    <div v-if="contact.contact_type.slug == 'parent'">
+                      <span class="small text-muted visually-hidden"
+                        >Parent</span
+                      >
+                      <div class="text-danger fs-8">
+                        <i class="bi bi-exclamation-octagon-fill me-1"></i
+                        >Parent contacts should be treated as private. Do not
+                        discuss this contact with their student.
+                      </div>
                     </div>
-                  </div>
+                  </template>
                 </td>
                 <td style="width: 20%" class="p-3">
                   <AddEditContact
