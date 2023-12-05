@@ -118,5 +118,15 @@
       "slug": "none",
       "active": true
     }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 13,
+    "fields": {
+      "access_group": 1,
+      "name": "Other",
+      "slug": "other",
+      "active": true
+    }
   }
 ]

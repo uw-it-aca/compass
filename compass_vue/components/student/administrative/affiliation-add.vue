@@ -55,6 +55,11 @@
             </div>
 
             <div class="mb-3">
+              <label class="form-label small fw-bold me-2">Status</label>
+              <p>User will be set to active status</p>
+            </div>
+
+            <div class="mb-3">
               <label class="form-label small fw-bold me-2">Cohort</label>
               <div class="cohort-list overflow-auto">
                 <ul class="list-group">
@@ -152,6 +157,7 @@ export default {
     return {
       affiliationId: null,
       is_active: true,
+      actively_advised: true,
       cohorts: [],
       notes: "",
       allCohorts: getCohorts(5),
@@ -202,7 +208,7 @@ export default {
           this.saveStudentContact(this.person.student.system_key, {
             contact_type: "Admin",
             contact_method: "Internal",
-            contact_topics: ["None"],
+            contact_topics: ["Other"],
             notes: this.notes,
           })
             .then(() => {
@@ -231,7 +237,8 @@ export default {
         });
     },
     updateStudentAffiliations(newAffiliation) {
-      this.studentAffiliations.push(newAffiliation);
+      // this.studentAffiliations.push(newAffiliation);
+      this.$emit("push", newAffiliation);
     },
     hideModal() {
       var addAffiliationsModal = Modal.getInstance(

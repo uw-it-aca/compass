@@ -225,6 +225,7 @@
               <KeyValue>
                 <template #key>Status</template>
                 <template #value>
+                  {{ person.student.resident_code }},
                   {{ person.student.resident_desc }}
                 </template>
               </KeyValue>
