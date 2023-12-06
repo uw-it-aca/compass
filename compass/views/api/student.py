@@ -169,7 +169,6 @@ class StudentAffiliationsView(BaseAPIView):
             if not valid_system_key(systemkey):
                 return self.response_badrequest('Invalid systemkey')
 
-            system_key = int(systemkey)
             affiliation_data = request.data.get('affiliation')
 
             student = Student.objects.get(system_key=systemkey)
@@ -201,7 +200,7 @@ class StudentAffiliationsView(BaseAPIView):
             sa.save()
 
             serializer = StudentAffiliationReadSerializer(sa)
-            logger.info(f"StudentAffiliation for {system_key} saved: "
+            logger.info(f"StudentAffiliation for {systemkey} saved: "
                         f"{serializer.data}")
             return self.response_ok(serializer.data)
         except Student.DoesNotExist:
@@ -224,15 +223,14 @@ class StudentAffiliationsView(BaseAPIView):
             if not valid_system_key(systemkey):
                 return self.response_badrequest('Invalid systemkey')
 
-            system_key = int(systemkey)
-            student = Student.objects.get(system_key=system_key)
+            student = Student.objects.get(system_key=systemkey)
 
             student_affiliation = StudentAffiliation.objects.get(
                 id=affiliation_id, student=student,
                 affiliation__access_group=access_group)
             student_affiliation.delete()
             logger.info(f"StudentAffiliation {affiliation_id} for "
-                        f"{system_key} deleted")
+                        f"{systemkey} deleted")
             return self.response_ok("")
         except Student.DoesNotExist:
             return self.response_notfound("Unknown student")
