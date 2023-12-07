@@ -1,5 +1,5 @@
 <template>
-  <template v-if="transcripts !== 0">
+  <template v-if="transcripts.length !== 0">
     <axdd-card
       v-for="(transcript, transIndex) in transcripts"
       :key="transIndex"
