@@ -218,7 +218,9 @@ class AccessGroup(models.Model):
 
 class ContactManager(models.Manager):
     def by_adviser(self, adviser_uwnetid, offset_hours=72):
-        kwargs = {'app_user__uwnetid': adviser_uwnetid}
+        # Only return contacts from the checkin system, not manual contacts
+        kwargs = {'app_user__uwnetid': adviser_uwnetid,
+                  'source': 'Checkin'}
 
         if offset_hours is not None and offset_hours > 0:
             cutoff_dt = current_datetime() - timedelta(hours=offset_hours)
