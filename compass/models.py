@@ -256,6 +256,7 @@ class Contact(models.Model):
     # contact history fields
     created_date = models.DateTimeField(auto_now=True)
     history = HistoricalRecords(history_user_id_field="app_user")
+    trans_id = models.IntegerField(null=True)
 
     objects = ContactManager()
 

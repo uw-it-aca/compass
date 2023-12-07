@@ -195,6 +195,7 @@ class ContactOMADView(TokenAPIView):
         "student_systemkey": "<System Key>",
         "contact_type": "<ContactType Slug",
         "checkin_date": "<CURRENT_TIMESTAMP>",
+        "trans_id": <TRANSACTION ID>,
     }
     '''
 
@@ -284,6 +285,10 @@ class ContactOMADView(TokenAPIView):
         contact.contact_type = contact_dict["contact_type"]
         contact.checkin_date = contact_dict["checkin_date"]
         contact.source = "Checkin"
+        try:
+            contact.trans_id = contact_dict["trans_id"]
+        except KeyError:
+            pass
         contact.save()
         contact.access_group.add(access_group)
         logger.info(f"Checkin contact {contact.contact_type} added for "
