@@ -155,12 +155,13 @@ class ContactReadSerializer(serializers.ModelSerializer):
     contact_topics = ContactTopicSerializer(many=True, read_only=False)
     created_date = serializers.DateTimeField(default_timezone=pytz.utc)
     checkin_date = serializers.DateTimeField(default_timezone=pytz.utc)
+    source = serializers.CharField(max_length=None, min_length=None, allow_blank=False, trim_whitespace=True)
 
     class Meta:
         model = Contact
         fields = ['id', 'app_user', 'student', 'created_date', 'checkin_date',
                   'notes', 'actions', 'contact_type', 'contact_method',
-                  'contact_topics']
+                  'contact_topics', 'source']
 
 
 class ContactWriteSerializer(serializers.ModelSerializer):
