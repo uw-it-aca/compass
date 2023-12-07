@@ -16,13 +16,13 @@
         <table class="table m-0">
           <thead class="table-light text-muted small">
             <tr>
-              <th class="ps-3">Affiliation</th>
+              <th class="ps-3">Affiliation </th>
               <th>Cohort</th>
               <th>Active</th>
               <th>Edit</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody v-if="studentAffiliations.length !== 0">
             <tr
               v-for="(aff, index) in studentAffiliations"
               :key="index"
@@ -58,6 +58,9 @@
                 </AffiliationDelete>
               </td>
             </tr>
+          </tbody>
+          <tbody v-else>
+            <td class="ps-3" colspan="4">no affiliations for this student</td>
           </tbody>
         </table>
       </div>

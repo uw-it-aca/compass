@@ -1,5 +1,5 @@
 <template>
-  <template v-if="transcripts">
+  <template v-if="transcripts !== 0">
     <axdd-card
       v-for="(transcript, transIndex) in transcripts"
       :key="transIndex"
@@ -104,7 +104,7 @@
     </axdd-card>
   </template>
   <template v-else>
-    <p>no transcripts yet</p>
+    <p>no academic history available for this student</p>
   </template>
 </template>
 
