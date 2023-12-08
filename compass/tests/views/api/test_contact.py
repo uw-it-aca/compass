@@ -167,3 +167,34 @@ class ContactAPITest(ApiTest):
                            test_pad)
         contacts = Contact.objects.all()
         self.assertEqual(contacts[1].student.system_key, "001234567")
+
+    def test_trans_id(self):
+        test_noid = {
+            "adviser_netid": "javerage",
+            "student_systemkey": "1234567",
+            "contact_type": "appointment",
+            "checkin_date": "2012-01-19 17:21:00 PDT",
+            "source": "Compass"
+        }
+
+        test_id = {
+            "adviser_netid": "javerage",
+            "student_systemkey": "001234567",
+            "contact_type": "appointment",
+            "checkin_date": "2012-01-19 17:21:00 PDT",
+            "source": "Compass",
+            "trans_id": 1234567890
+        }
+
+        token_str = "Token %s" % self.API_TOKEN
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=token_str)
+
+        self.post_response('contact_omad',
+                           test_noid)
+        self.post_response('contact_omad',
+                           test_id)
+        contacts = Contact.objects.all()
+        self.assertEqual(len(contacts), 2)
+        self.assertIsNone(contacts[0].trans_id)
+        self.assertEqual(contacts[1].trans_id, 1234567890)
