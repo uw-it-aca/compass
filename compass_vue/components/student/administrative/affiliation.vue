@@ -8,6 +8,7 @@
         :person="person"
         :affiliations="affiliations"
         :studentAffiliations="studentAffiliations"
+        @affiliationsUpdated="loadAffiliationData()"
         >Add Affiliation</AffiliationAdd
       >
     </template>
