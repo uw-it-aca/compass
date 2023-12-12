@@ -68,6 +68,7 @@
                 "
               />
             </div>
+
             <div class="col">
               <label class="form-label small fw-bold me-2">
                 Contact types
@@ -89,12 +90,28 @@
                   v-for="contactType in contactTypes"
                   :key="contactType.id"
                 >
-                  <option :value="contactType.id">
-                    {{ contactType.name }}
-                  </option>
+                  <!-- MARK: show all contact types for Managers/ES -->
+                  <template v-if="userRoles.includes(Role.Manager)">
+                    <option :value="contactType.id">
+                      {{ contactType.name }}
+                    </option>
+                  </template>
+                  <!-- MARK: hide qq/appointment for Advisers -->
+                  <template v-else>
+                    <option
+                      v-if="
+                        contactType.slug !== 'quick-question' &&
+                        contactType.slug !== 'appointment'
+                      "
+                      :value="contactType.id"
+                    >
+                      {{ contactType.name }}
+                    </option>
+                  </template>
                 </template>
               </select>
             </div>
+
             <div class="col">
               <label class="form-label small fw-bold me-2"
                 >Contact method:</label
@@ -244,6 +261,7 @@ export default {
       updatePermissionDenied: false,
       errorResponsePermission: "",
       errorResponse: "",
+      userRoles: document.body.getAttribute("data-user-role").split(","),
       Role: Role,
       submitAttempted: false,
     };

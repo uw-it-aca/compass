@@ -159,9 +159,7 @@
                     <div class="col-xl-9">
                       <AffiliationAddEdit :person="person"></AffiliationAddEdit>
                     </div>
-                    <div class="col-xl-3">
-                      <StudentEligibility :person="person"></StudentEligibility>
-                    </div>
+                    <div class="col-xl-3">&nbsp;</div>
                   </div>
                 </axdd-tabs-panel>
               </template>
@@ -189,7 +187,6 @@ import StudentAdviser from "@/components/student/adviser.vue";
 import StudentVisits from "@/components/student/visits.vue";
 import SearchStudent from "@/components/search-student.vue";
 import AffiliationAddEdit from "@/components/student/administrative/affiliation.vue";
-import StudentEligibility from "@/components/student/administrative/eligibility.vue";
 
 export default {
   mixins: [dataMixin],
@@ -208,7 +205,6 @@ export default {
     StudentVisits,
     SearchStudent,
     AffiliationAddEdit,
-    StudentEligibility,
   },
   created: function () {
     this.loadAccessGroups();

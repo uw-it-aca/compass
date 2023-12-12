@@ -38,9 +38,19 @@ class ContactAPITest(ApiTest):
             contact = Contact(app_user=self.app_user,
                               student=self.student,
                               checkin_date=date,
-                              contact_type=self.contact_type)
+                              contact_type=self.contact_type,
+                              source="Checkin")
             contact.save()
             contact.access_group.add(self.ag)
+
+        # Don't display manual contacts
+        contact = Contact(app_user=self.app_user,
+                          student=self.student,
+                          checkin_date=d2,
+                          contact_type=self.contact_type,
+                          source="Compass")
+        contact.save()
+        contact.access_group.add(self.ag)
 
         resp = self.get_response("adviser_contacts",
                                  "javerage",

@@ -5,6 +5,7 @@
         <tr>
           <th class="ps-3" style="width: 33%" scope="col">Student</th>
           <th scope="col" style="width: 15%">Check-in Date</th>
+          <th scope="col" style="width: 15%">Source</th>
           <th scope="col" style="width: 15%">Contact Type</th>
           <th scope="col" style="width: 15%">Meeting With</th>
           <th scope="col">Assigned Adviser</th>
@@ -27,6 +28,9 @@
           </td>
           <td class="placeholder-glow">
             <div><span class="placeholder bg-light-gray col-10"></span></div>
+          </td>
+          <td class="placeholder-glow">
+            <div><span class="placeholder bg-light-gray col-7"></span></div>
           </td>
           <td class="placeholder-glow">
             <div><span class="placeholder bg-light-gray col-7"></span></div>
