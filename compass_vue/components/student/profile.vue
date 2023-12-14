@@ -139,11 +139,21 @@
                 </template>
               </KeyValue>
             </li>
-            <li class="mb-3">
+            <li>
               <KeyValue>
                 <template #key>Veteran Benefit</template>
                 <template #value>
                   <span>{{ person.student.veteran_benefit_desc }}</span>
+                </template>
+              </KeyValue>
+            </li>
+            <li class="mb-3">
+              <KeyValue>
+                <template #key>First Generation (4yr)</template>
+                <template #value>
+                  {{
+                    translateTrueFalse(person.student.first_generation_4yr_ind)
+                  }}
                 </template>
               </KeyValue>
             </li>
