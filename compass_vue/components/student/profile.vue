@@ -265,7 +265,7 @@
               <KeyValue>
                 <template #key>Phone</template>
                 <template #value>
-                  {{ person.student.emergency_phone }}
+                  {{ formatPhoneNumber(person.student.emergency_phone) }}
                 </template>
               </KeyValue>
             </li>
