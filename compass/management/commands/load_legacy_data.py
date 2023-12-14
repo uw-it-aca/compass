@@ -65,7 +65,8 @@ class Command(BaseCommand):
                     else:
                         continue
 
-                if not excluded_re.match(appointment.Contact_Type):
+                if ((not excluded_re.match(appointment.Contact_Type))
+                        and appointment.checkin_transid):
                     self._create_contact(appointment)
 
                 if count:
@@ -90,10 +91,14 @@ class Command(BaseCommand):
 
             # add transaction id if not present
             if trans_id and not contact.trans_id:
-                self._error("Contact gets trans_id {}".format(transid))
+                self._error("Contact gets trans_id {}".format(trans_id))
                 contact.trans_id = trans_id
                 contact.save()
 
+            return
+        except Contact.MultipleObjectsReturned:
+            self._error("MultipleObjectsReturned: {}, {}, {}".format(
+                app_user, student, checkin_date))
             return
         except PersonNotFoundException:
             self.unknown_student_ids.add(int(apt.student_no))
