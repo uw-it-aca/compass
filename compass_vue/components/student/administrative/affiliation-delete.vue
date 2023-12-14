@@ -122,12 +122,29 @@ export default {
         this.studentAffiliation.id
       )
         .then(() => {
-          this.updateStudentAffiliation();
-          this.$emit("affiliationsUpdated");
-          this.hideModal();
+          // write Contact Note from advisor type Admin
+          this.saveStudentContact(this.person.student.system_key, {
+            contact_type: "Admin",
+            contact_method: "Internal",
+            contact_topics: ["Other"],
+            notes: this.notes,
+          })
+            .then(() => {
+              this.updateStudentAffiliation();
+              this.$emit("affiliationsUpdated");
+              this.hideModal();
+            })
+            .catch((error) => {
+              if (error.response.status == 401) {
+                this.updatePermissionDenied = true;
+                this.errorResponse = error.response.data;
+                setTimeout(() => (this.updatePermissionDenied = false), 3000);
+              } else {
+                this.formErrors.notes = error.response.data;
+              }
+            });
         })
         .catch((error) => {
-          console.log("ERROR: " + error);
           if (error.response.status == 401) {
             this.updatePermissionDenied = true;
             this.errorResponse = error.response.data;

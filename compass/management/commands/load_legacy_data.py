@@ -84,8 +84,16 @@ class Command(BaseCommand):
             app_user = self._get_app_user(apt.staff_id, apt.staff_name)
             student = self._get_student(student_number)
             checkin_date = self._get_checkin_date(apt)
-            Contact.objects.get(
+            trans_id = self._get_trans_id(apt)
+            contact = Contact.objects.get(
                 app_user=app_user, student=student, checkin_date=checkin_date)
+
+            # add transaction id if not present
+            if trans_id and not contact.trans_id:
+                self._error("Contact gets trans_id {}".format(transid))
+                contact.trans_id = trans_id
+                contact.save()
+
             return
         except PersonNotFoundException:
             self.unknown_student_ids.add(int(apt.student_no))
@@ -99,12 +107,16 @@ class Command(BaseCommand):
             # fall through to create new Contact
             pass
 
+        self._error("Create Contact: {}, {}, {}".format(
+            app_user, student, checkin_date))
+
         contact = Contact(
             app_user=app_user, student=student, checkin_date=checkin_date,
             contact_type=self._get_contact_type(apt.Contact_Type),
             contact_method=self._get_contact_method(apt),
             noshow=True if apt.NoShow.upper() == 'Y' else False,
-            notes=apt.Notes, actions=apt.Actions, source=apt.Source)
+            trans_id=trans_id, notes=apt.Notes,
+            actions=apt.Actions, source=apt.Source)
 
         contact.save()
 
@@ -152,6 +164,14 @@ class Command(BaseCommand):
             hour=time.hour,
             minute=time.minute,
             second=time.second).astimezone(pytz.utc)
+
+    def _get_trans_id(self, apt):
+        try:
+            return int(apt.checkin_transid)
+        except (ValueError, TypeError):
+            pass
+
+        return None
 
     def _get_contact_type(self, contact):
         mapping = [

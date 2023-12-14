@@ -45,7 +45,7 @@
                 role="alert"
                 v-show="updatePermissionDenied"
               >
-                {{ errorResponse }}
+                {{ errorResponsePermission }}
               </div>
             </div>
           </div>
@@ -68,10 +68,11 @@
                 "
               />
             </div>
+
             <div class="col">
-              <label class="form-label small fw-bold me-2"
-                >Contact typessss</label
-              >
+              <label class="form-label small fw-bold me-2">
+                Contact types
+              </label>
               <span class="text-danger" v-if="formErrors.contact_type">
                 required
               </span>
@@ -89,17 +90,33 @@
                   v-for="contactType in contactTypes"
                   :key="contactType.id"
                 >
-                  <option :value="contactType.id">
-                    {{ contactType.name }}
-                  </option>
+                  <!-- MARK: show all contact types for Managers/ES -->
+                  <template v-if="userRoles.includes(Role.Manager)">
+                    <option :value="contactType.id">
+                      {{ contactType.name }}
+                    </option>
+                  </template>
+                  <!-- MARK: hide qq/appointment for Advisers -->
+                  <template v-else>
+                    <option
+                      v-if="
+                        contactType.slug !== 'quick-question' &&
+                        contactType.slug !== 'appointment'
+                      "
+                      :value="contactType.id"
+                    >
+                      {{ contactType.name }}
+                    </option>
+                  </template>
                 </template>
               </select>
             </div>
+
             <div class="col">
               <label class="form-label small fw-bold me-2"
                 >Contact method:</label
               >
-              <span class="text-danger" v-if="formErrors.contact_type">
+              <span class="text-danger" v-if="formErrors.contact_method">
                 required
               </span>
               <select
@@ -117,10 +134,7 @@
                   v-for="contactMethod in contactMethods"
                   :key="contactMethod.id"
                 >
-                  <option
-                    v-if="contactMethod.slug !== 'internal'"
-                    :value="contactMethod.id"
-                  >
+                  <option :value="contactMethod.id">
                     {{ contactMethod.name }}
                   </option>
                 </template>
@@ -201,6 +215,11 @@
             >
               Save contact
             </button>
+            <p>
+              <span class="text-danger" v-if="errorResponse">{{
+                errorResponse
+              }}</span>
+            </p>
           </div>
         </div>
       </div>
@@ -240,8 +259,11 @@ export default {
       contact: this.getDefaultContact(),
       formErrors: {},
       updatePermissionDenied: false,
+      errorResponsePermission: "",
       errorResponse: "",
+      userRoles: document.body.getAttribute("data-user-role").split(","),
       Role: Role,
+      submitAttempted: false,
     };
   },
   created() {
@@ -256,14 +278,29 @@ export default {
     );
     this.$refs.contactModal.addEventListener("hidden.bs.modal", this.resetForm);
   },
+  watch: {
+    contact: {
+      handler: function () {
+        // Don't show 'required' errors until the user has tried to submit
+        // then update on every form edit
+        if (this.submitAttempted) {
+          this.validateContactForm();
+        }
+      },
+      deep: true,
+    },
+  },
   methods: {
     getFormData() {
       if (this.contactId != null) {
-        console.log("getContact for given id: " + this.contactId);
         this.getContact(this.contactId);
       }
     },
     saveContact() {
+      this.submitAttempted = true;
+      if (!this.validateContactForm()) {
+        return;
+      }
       var contactModal = Modal.getInstance(
         document.getElementById("contactModal" + this.contactId)
       );
@@ -275,12 +312,42 @@ export default {
         .catch((error) => {
           if (error.response.status == 401) {
             this.updatePermissionDenied = true;
-            this.errorResponse = error.response.data;
+            this.errorResponsePermission = error.response.data;
             setTimeout(() => (this.updatePermissionDenied = false), 3000);
           } else {
-            this.formErrors = error.response.data;
+            this.errorResponse = error.response.data;
           }
         });
+    },
+    validateContactForm() {
+      let is_invalid = false;
+      // date widget returns empty string if invalid
+      if (this.contact.checkin_date === "") {
+        this.formErrors.checkin_date = true;
+        is_invalid = true;
+      } else {
+        this.formErrors.checkin_date = false;
+      }
+      if (this.contact.contact_type === undefined) {
+        this.formErrors.contact_type = true;
+        is_invalid = true;
+      } else {
+        this.formErrors.contact_type = false;
+      }
+      if (this.contact.contact_method === undefined) {
+        this.formErrors.contact_method = true;
+        is_invalid = true;
+      } else {
+        this.formErrors.contact_method = false;
+      }
+      if (this.contact.contact_topics.length > 0) {
+        this.formErrors.contact_topics = false;
+      } else {
+        this.formErrors.contact_topics = true;
+        is_invalid = true;
+      }
+
+      return !is_invalid;
     },
     getDefaultContact() {
       var today = new Date();
@@ -318,18 +385,29 @@ export default {
         if (response.data) {
           // we need to map the contact type and topic ids to the data object
           let newContact = response.data;
-          newContact.checkin_date =
-            newContact.checkin_date.split(/\-(?=[^\-]+$)/)[0];
+          // convert date to local and format for datetime-local input
+          newContact.checkin_date = new Date(newContact.checkin_date)
+            .toLocaleString("sv-SE", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+              second: "2-digit",
+            })
+            .replace(" ", "T");
           newContact.contact_type = newContact.contact_type.id;
-          newContact.contact_method = newContact.contact_method.id;
+          if (newContact.contact_method != null) {
+            newContact.contact_method = newContact.contact_method.id;
+          } else {
+            newContact.contact_method = undefined;
+          }
+
           newContact.contact_topics = newContact.contact_topics.map(
             (ct) => ct.id
           );
           // update the current contact
           this.contact = newContact;
-
-          console.log("contact returned!");
-          console.log(this.contact);
         }
       });
     },

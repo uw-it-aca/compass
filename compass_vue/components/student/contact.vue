@@ -31,31 +31,33 @@
                   </div>
                   <div class="text-muted small">
                     <i class="bi bi-person-circle me-1"></i
-                    >{{ contact.app_user.uwnetid }}
+                    >{{ contact.app_user.uwnetid }} -- {{ contact.source }}
                   </div>
                 </td>
                 <td class="align-bottom">
-                  <template v-if="contact.contact_type.slug == 'parent'">
+                  <template v-if="contact.contact_type">
                     <div
+                      v-if="contact.contact_type.slug == 'parent'"
                       class="badge rounded-pill text-bg-danger border-0 px-2 py-1 m-0 me-2"
                     >
                       {{ contact.contact_type.name }}
                     </div>
-                  </template>
-                  <template v-else-if="contact.contact_type.slug == 'admin'">
+
                     <div
+                      v-else-if="contact.contact_type.slug == 'admin'"
                       class="badge rounded-pill text-bg-primary border-0 px-2 py-1 m-0 me-2"
                     >
                       {{ contact.contact_type.name }}
                     </div>
-                  </template>
-                  <template v-else>
+
                     <div
+                      v-else
                       class="badge rounded-pill text-bg-dark-purple border-0 px-2 py-1 m-0 me-2"
                     >
                       {{ contact.contact_type.name }}
                     </div>
                   </template>
+
                   <div
                     v-if="contact.contact_method"
                     class="badge rounded-pill text-bg-light-gray border-0 px-2 py-1 m-0 me-1"
@@ -95,14 +97,18 @@
                       {{ contact.actions }}
                     </p>
                   </div>
-                  <div v-if="contact.contact_type.name == 'Parent'">
-                    <span class="small text-muted visually-hidden">Parent</span>
-                    <div class="text-danger fs-8">
-                      <i class="bi bi-exclamation-octagon-fill me-1"></i>Parent
-                      contacts should be treated as private. Do not discuss this
-                      contact with their student.
+                  <template v-if="contact.contact_type">
+                    <div v-if="contact.contact_type.slug == 'parent'">
+                      <span class="small text-muted visually-hidden"
+                        >Parent</span
+                      >
+                      <div class="text-danger fs-8">
+                        <i class="bi bi-exclamation-octagon-fill me-1"></i
+                        >Parent contacts should be treated as private. Do not
+                        discuss this contact with their student.
+                      </div>
                     </div>
-                  </div>
+                  </template>
                 </td>
                 <td style="width: 20%" class="p-3">
                   <AddEditContact

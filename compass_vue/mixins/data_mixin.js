@@ -28,6 +28,7 @@ const dataMixin = {
             "Your session has expired. Refresh the page to start a new session."
           );
         }
+        throw error;
       }
     },
     getStudentDetail: async function (uwnetid) {
@@ -98,7 +99,7 @@ const dataMixin = {
     },
     saveStudentAffiliation: async function (systemkey, affiliation) {
       let postUrl = "/api/internal/student/" + systemkey + "/affiliations/";
-      if (affiliation.studentAffiliationId !== undefined) {
+      if (affiliation.studentAffiliationId !== null) {
         postUrl += affiliation.studentAffiliationId + "/";
       }
       return axios

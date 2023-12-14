@@ -52,9 +52,9 @@ class ContactView(BaseAPIView):
             self.valid_user_override()
 
         except AccessGroup.DoesNotExist:
-            return response_unauthorized()
+            return self.response_unauthorized()
         except OverrideNotPermitted as err:
-            return response_unauthorized(err)
+            return self.response_unauthorized(str(err))
 
         if not request.data:
             return self.response_badrequest()
@@ -195,6 +195,7 @@ class ContactOMADView(TokenAPIView):
         "student_systemkey": "<System Key>",
         "contact_type": "<ContactType Slug",
         "checkin_date": "<CURRENT_TIMESTAMP>",
+        "trans_id": <TRANSACTION ID>,
     }
     '''
 
@@ -237,6 +238,10 @@ class ContactOMADView(TokenAPIView):
         except AttributeError as e:
             raise ValueError(f"Invalid student systemkey: {e}")
 
+    @staticmethod
+    def pad_student_systemkey(student_systemkey):
+        return student_systemkey.zfill(9)
+
     def post(self, request):
         contact_dict = request.data
         try:
@@ -267,8 +272,12 @@ class ContactOMADView(TokenAPIView):
                          "adviser_netid: %s" % contact_dict["adviser_netid"])
             return Response("Person record for adviser not found",
                             status=status.HTTP_400_BAD_REQUEST)
+
+        student_systemkey = self.pad_student_systemkey(
+            contact_dict["student_systemkey"])
+        # student_systemkey = contact_dict["student_systemkey"]
         student, _ = Student.objects.get_or_create(
-            system_key=contact_dict["student_systemkey"])
+            system_key=student_systemkey)
         # create the new contact record
         contact = Contact()
         contact.app_user = app_user
@@ -276,6 +285,10 @@ class ContactOMADView(TokenAPIView):
         contact.contact_type = contact_dict["contact_type"]
         contact.checkin_date = contact_dict["checkin_date"]
         contact.source = "Checkin"
+        try:
+            contact.trans_id = contact_dict["trans_id"]
+        except KeyError:
+            pass
         contact.save()
         contact.access_group.add(access_group)
         logger.info(f"Checkin contact {contact.contact_type} added for "
