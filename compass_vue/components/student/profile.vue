@@ -38,7 +38,7 @@
             <div class="mt-3 small">
               {{ person.student.student_number }}, {{ person.uwnetid }}<br />
               <span v-if="person.student.local_phone_number">
-                +1 {{ person.student.local_phone_number }}
+                {{ formatPhoneNumber(person.student.local_phone_number) }}
               </span>
             </div>
           </div>
@@ -392,6 +392,7 @@
 import KeyValue from "@/components/_common/key-value.vue";
 import { translateTrueFalse } from "@/utils/translations";
 import { formatDate } from "@/utils/dates";
+import { formatPhoneNumber } from "@/utils/formats";
 
 export default {
   inject: ["mq"],
@@ -406,6 +407,7 @@ export default {
     return {
       translateTrueFalse,
       formatDate,
+      formatPhoneNumber,
     };
   },
   data() {
