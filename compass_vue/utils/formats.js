@@ -1,4 +1,5 @@
-function formatPhoneNumber(phoneNumberString) {
+function formatPhoneNumber(phoneNumber) {
+  var phoneNumberString = phoneNumber + "";
   var cleaned = ("" + phoneNumberString).replace(/\D/g, "");
   var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
   if (match) {
