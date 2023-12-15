@@ -148,9 +148,9 @@ const dataMixin = {
         .get("/api/internal/adviser/" + adviserNetId + "/caseload/")
         .catch(this._handleError);
     },
-    getAdviserContacts: async function (adviserNetId) {
+    getAdviserCheckIns: async function (adviserNetId) {
       return axios
-        .get("/api/internal/adviser/" + adviserNetId + "/contacts/")
+        .get("/api/internal/adviser/" + adviserNetId + "/checkins/")
         .catch(this._handleError);
     },
     getAccessGroups: async function () {

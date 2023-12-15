@@ -13,6 +13,10 @@ import Reports from "@/pages/reports.vue";
 const routes = [
   {
     path: "/",
+    redirect: "/checkins",
+  },
+  {
+    path: "/checkins/:id?",
     component: CheckIn,
     pathToRegexpOptions: { strict: true },
     props: true,
