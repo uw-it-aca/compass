@@ -11,10 +11,10 @@ from compass.models import Contact
 from compass.serializers import ContactReadSerializer
 
 
-class AdviserContactsView(BaseAPIView):
+class AdviserCheckInsView(BaseAPIView):
     """
-    API endpoint returning a list of contacts of an adviser
-    /api/internal/adviser/<adviser_netid>/contact/
+    API endpoint returning a list of checkins of an adviser
+    /api/internal/adviser/<adviser_netid>/checkins/
     """
 
     def get(self, request, adviser_netid):

@@ -55,20 +55,22 @@ export default {
   },
   data() {
     return {
-      pageTitle: "Contacts",
+      pageTitle: "Check-Ins",
       isLoading: true,
       contacts: [],
       today: "",
-      userNetId: document.body.getAttribute("data-user-override")
+      adviserNetId: this.$route.params.id
+        ? this.$route.params.id
+        : document.body.getAttribute("data-user-override")
         ? document.body.getAttribute("data-user-override")
         : document.body.getAttribute("data-user-netid"),
     };
   },
   computed: {},
   methods: {
-    loadAdviserContactsList: function (adviserNetId) {
+    loadAdviserCheckInsList: function (netid) {
       let _this = this;
-      this.getAdviserContacts(adviserNetId).then((response) => {
+      this.getAdviserCheckIns(netid).then((response) => {
         if (response.data) {
           _this.contacts = response.data;
           _this.isLoading = false;
@@ -78,7 +80,7 @@ export default {
   },
   mounted() {
     setTimeout(() => {
-      this.loadAdviserContactsList(this.userNetId);
+      this.loadAdviserCheckInsList(this.adviserNetId);
     }, 2000);
   },
 };

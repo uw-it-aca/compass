@@ -18,7 +18,7 @@ from compass.views.api.student import (
 )
 from compass.views.api.eligibility import EligibilityView
 from compass.views.api.access_group import AccessGroupView
-from compass.views.api.adviser import AdviserContactsView, AdviserCaseloadView
+from compass.views.api.adviser import AdviserCheckInsView, AdviserCaseloadView
 from compass.views.api.contact import (
     ContactTopicsView,
     ContactTypesView,
@@ -117,9 +117,9 @@ urlpatterns += [
             ContactView.as_view()),
     re_path(r"^api/internal/contact/$",  ContactView.as_view()),
     re_path(
-        r"^api/internal/adviser/(?P<adviser_netid>[\w]+)/contacts/$",
-        AdviserContactsView.as_view(),
-        name="adviser_contacts"
+        r"^api/internal/adviser/(?P<adviser_netid>[\w]+)/checkins/$",
+        AdviserCheckInsView.as_view(),
+        name="adviser_checkins"
     ),
     re_path(
         r"^api/internal/adviser/(?P<adviser_netid>[\w]+)/caseload/$",
