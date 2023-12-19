@@ -32,7 +32,7 @@
                   <div class="text-muted small">
                     <i class="bi bi-person-circle me-1"></i
                     >{{ contact.app_user.uwnetid }} -- {{ contact.source }}
-                      --
+                    --
                     {{ contact.trans_id }}
                   </div>
                 </td>
@@ -115,7 +115,6 @@
                 <td style="width: 20%" class="p-3">
                   <AddEditContact
                     v-if="contact.app_user.uwnetid == userName"
-                    :button-type="'link'"
                     :person="person"
                     :contact-id="contact.id"
                     @contactUpdated="loadStudentContacts()"
@@ -124,7 +123,6 @@
 
                   <DeleteContact
                     v-show="userRoles.includes(Role.Manager)"
-                    :button-type="'link'"
                     :person="person"
                     :contact-id="contact.id"
                     ><i class="bi bi-trash text-danger me-2"></i>Delete

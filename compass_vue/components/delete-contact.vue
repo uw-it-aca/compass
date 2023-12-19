@@ -1,13 +1,8 @@
 <template>
   <a
     role="button"
-    class="btn text-nowrap"
+    class="btn btn-sm fs-9 btn-outline-gray text-danger rounded-3 px-2 py-1"
     @click="deleteContact()"
-    :class="[
-      buttonType === 'button'
-        ? 'btn-sm btn-danger text-danger rounded-3 px-3 py-2'
-        : 'fs-9 btn-outline-gray text-danger rounded-3 px-2 py-1',
-    ]"
   >
     <slot>Delete</slot>
   </a>
@@ -52,7 +47,7 @@ export default {
   },
   methods: {
     deleteContact() {
-      alert("delete this!");
+      alert("delete this record = " + this.contactId);
     },
   },
 };
