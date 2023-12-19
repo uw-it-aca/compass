@@ -172,6 +172,12 @@ class ContactReadSerializer(serializers.ModelSerializer):
         allow_blank=False,
         trim_whitespace=True,
     )
+    trans_id = serializers.CharField(
+        max_length=None,
+        min_length=None,
+        allow_blank=False,
+        trim_whitespace=True,
+    )
 
     class Meta:
         model = Contact
@@ -187,6 +193,7 @@ class ContactReadSerializer(serializers.ModelSerializer):
             "contact_method",
             "contact_topics",
             "source",
+            "trans_id"
         ]
 
 

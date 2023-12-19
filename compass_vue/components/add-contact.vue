@@ -14,7 +14,7 @@
     <slot>Add Contact</slot>
   </a>
 
-  <!-- contact modal -->
+  <!-- add/edit contact modal -->
   <div
     ref="contactModal"
     class="modal fade text-start"

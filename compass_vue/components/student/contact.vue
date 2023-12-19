@@ -32,6 +32,8 @@
                   <div class="text-muted small">
                     <i class="bi bi-person-circle me-1"></i
                     >{{ contact.app_user.uwnetid }} -- {{ contact.source }}
+                      --
+                    {{ contact.trans_id }}
                   </div>
                 </td>
                 <td class="align-bottom">
@@ -118,8 +120,15 @@
                     :contact-id="contact.id"
                     @contactUpdated="loadStudentContacts()"
                     ><i class="bi bi-pencil text-dark me-2"></i>Edit
-                    contact</AddEditContact
-                  >
+                  </AddEditContact>
+
+                  <DeleteContact
+                    v-show="userRoles.includes(Role.Manager)"
+                    :button-type="'link'"
+                    :person="person"
+                    :contact-id="contact.id"
+                    ><i class="bi bi-trash text-danger me-2"></i>Delete
+                  </DeleteContact>
                 </td>
               </tr>
             </tbody>
@@ -134,14 +143,17 @@
 </template>
 
 <script>
+import { Role } from "@/utils/roles.js";
 import dataMixin from "@/mixins/data_mixin.js";
 import AddEditContact from "@/components/add-contact.vue";
+import DeleteContact from "@/components/delete-contact.vue";
 import { formatUTCToLocalDateAndTimeZone } from "@/utils/dates";
 
 export default {
   mixins: [dataMixin],
   components: {
     AddEditContact,
+    DeleteContact,
   },
   props: {
     person: {
@@ -155,6 +167,8 @@ export default {
       contacts: {},
       userName: document.body.getAttribute("data-user-netid"),
       userOverride: document.body.getAttribute("data-user-override"),
+      userRoles: document.body.getAttribute("data-user-role").split(","),
+      Role: Role,
     };
   },
   created() {
