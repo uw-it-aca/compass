@@ -9,7 +9,8 @@
         :affiliations="affiliations"
         :studentAffiliations="studentAffiliations"
         @affiliationsUpdated="loadAffiliationData()"
-        >Add Affiliation</AffiliationAdd
+        ><i class="bi bi-people-fill text-dark me-2"></i>Add new
+        affiliation</AffiliationAdd
       >
     </template>
     <template #body>
@@ -17,10 +18,10 @@
         <table class="table m-0">
           <thead class="table-light text-muted small">
             <tr>
-              <th class="ps-3">Affiliation </th>
+              <th class="ps-3">Affiliation</th>
               <th>Cohort</th>
               <th>Active</th>
-              <th>Edit</th>
+              <th>&nbsp;</th>
             </tr>
           </thead>
           <tbody v-if="studentAffiliations.length !== 0">
@@ -39,7 +40,7 @@
                 <i class="py-0 bi bi-check-lg"></i>
               </td>
               <td v-else><i class="py-0 bi bi-x-circle"></i></td>
-              <td>
+              <td class="text-end">
                 <AffiliationEdit
                   :button-type="'button'"
                   :person="person"
@@ -47,15 +48,15 @@
                   :studentAffiliation="aff"
                   :studentAffiliations="studentAffiliations"
                 >
-                  <i class="py-0 bi bi-pencil-square"></i
-                ></AffiliationEdit>
+                  <i class="py-0 bi bi-pencil me-2"></i>Edit</AffiliationEdit
+                >
                 <AffiliationDelete
                   :button-type="'button'"
                   :person="person"
                   :studentAffiliation="aff"
                   :studentAffiliations="studentAffiliations"
                 >
-                  <i class="bi bi-trash3"></i>
+                  <i class="bi bi-trash me-2"></i>Delete
                 </AffiliationDelete>
               </td>
             </tr>

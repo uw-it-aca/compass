@@ -3,12 +3,7 @@
     role="button"
     data-bs-toggle="modal"
     :data-bs-target="'#editAffiliationsModal' + this.studentAffiliation.id"
-    class="btn text-nowrap"
-    :class="[
-      buttonType === 'button'
-        ? 'rounded-3 px-3 py-0'
-        : 'small p-0 btn-sm btn-link',
-    ]"
+    class="btn btn-sm fs-9 btn-outline-gray text-dark rounded-3 px-2 py-1"
   >
     <slot>Edit Affiliation</slot>
   </a>
@@ -86,17 +81,6 @@
                     </li>
                   </ul>
                 </div>
-                <!--
-              <select
-                class="form-select"
-                multiple
-                required
-                v-model="cohorts"
-              >
-              <option
-               v-for="cohort in allCohorts" :value="cohort">{{ cohort.start_year }}-{{ cohort.end_year }}</option>
-              </select>
--->
               </div>
             </div>
 
@@ -144,10 +128,6 @@ export default {
   mixins: [dataMixin],
   emits: ["affiliationsUpdated"],
   props: {
-    buttonType: {
-      type: String,
-      required: true,
-    },
     person: {
       type: Object,
       required: true,
