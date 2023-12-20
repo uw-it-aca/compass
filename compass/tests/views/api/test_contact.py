@@ -198,3 +198,28 @@ class ContactAPITest(ApiTest):
         self.assertEqual(len(contacts), 2)
         self.assertIsNone(contacts[0].trans_id)
         self.assertEqual(contacts[1].trans_id, 1234567890)
+
+    @patch('compass.dao.group.is_member_of_group')
+    def test_delete(self, mock_is_member):
+        mock_is_member.return_value = True
+        test_id = {
+            "adviser_netid": "javerage",
+            "student_systemkey": "001234567",
+            "contact_type": "appointment",
+            "checkin_date": "2012-01-19 17:21:00 PDT",
+            "source": "Compass",
+            "trans_id": 1234567890
+        }
+
+        token_str = "Token %s" % self.API_TOKEN
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=token_str)
+        self.post_response('contact_omad',
+                           test_id)
+        contacts = Contact.objects.all()
+
+        c_id = contacts[0].id
+        self.delete_response('contact_view', 'javerage', contactid=c_id)
+
+        contacts = Contact.objects.all()
+        self.assertEqual(len(contacts), 0)

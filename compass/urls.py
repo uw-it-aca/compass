@@ -114,7 +114,8 @@ urlpatterns += [
     re_path(r"^api/internal/contact/types/$", ContactTypesView.as_view()),
     re_path(r"^api/internal/contact/methods/$", ContactMethodsView.as_view()),
     re_path(r"^api/internal/contact/(?P<contactid>[\w]+)/$",
-            ContactView.as_view()),
+            ContactView.as_view(),
+            name="contact_view"),
     re_path(r"^api/internal/contact/$",  ContactView.as_view()),
     re_path(
         r"^api/internal/adviser/(?P<adviser_netid>[\w]+)/checkins/$",
