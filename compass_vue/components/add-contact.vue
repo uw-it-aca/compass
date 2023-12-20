@@ -71,7 +71,7 @@
               <span class="text-danger" v-if="formErrors.contact_type">
                 required
               </span>
-              <!-- MARK: disable editing contact_type if either qq/appointment (1,2)-->
+              <!-- MARK: disable editing contact_type if either qq/appointment (1,2) for Advisers -->
               <select
                 aria-label="Contact type"
                 v-model="contact.contact_type"
@@ -92,7 +92,7 @@
                   v-for="contactType in contactTypes"
                   :key="contactType.id"
                 >
-                  <!-- MARK: show all contact types for Managers/ES -->
+                  <!-- MARK: disable contact_type if either qq/appointment for Advisers -->
                   <option
                     :disabled="
                       (userRoles.includes(Role.User, Role.Student) &&
