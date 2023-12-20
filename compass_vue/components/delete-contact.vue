@@ -1,7 +1,7 @@
 <template>
   <a
     role="button"
-    class="btn btn-sm fs-9 btn-outline-gray text-danger rounded-3 px-2 py-1"
+    class="btn btn-sm fs-9 btn-outline-gray text-danger rounded-3 px-2 py-1 ms-1"
     @click="deleteContact()"
   >
     <slot>Delete</slot>

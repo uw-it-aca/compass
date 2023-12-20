@@ -112,7 +112,7 @@
                     </div>
                   </template>
                 </td>
-                <td style="width: 20%" class="p-3">
+                <td style="width: 20%" class="p-3 text-end">
                   <!-- MARK: check if user matches override. not overriding. -->
                   <template v-if="userName == userOverride">
                     <AddEditContact
@@ -121,8 +121,8 @@
                       :person="person"
                       :contact-id="contact.id"
                       @contactUpdated="loadStudentContacts()"
-                      ><i class="bi bi-pencil text-dark me-2"></i>Edit
-                      contact</AddEditContact
+                      ><i class="bi bi-pencil text-dark me-2"></i
+                      >Edit</AddEditContact
                     >
                   </template>
                   <!-- MARK: if not, user is overriding. show edit button for override user. -->
@@ -133,8 +133,8 @@
                       :person="person"
                       :contact-id="contact.id"
                       @contactUpdated="loadStudentContacts()"
-                      ><i class="bi bi-pencil text-dark me-2"></i>Edit
-                      contact</AddEditContact
+                      ><i class="bi bi-pencil text-dark me-2"></i
+                      >Edit</AddEditContact
                     >
                   </template>
                   <DeleteContact
