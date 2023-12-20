@@ -42,7 +42,16 @@
 
 </head>
 
-<body{% if google_analytics %} data-google-analytics="{{ google_analytics }}"{% endif %} data-signout-url="{{ signout_url }}" data-user-netid="{{ user_netid }}" data-user-override="{{ user_override }}" data-user-role="{{ user_role }}" data-django-debug="{{ django_debug|lower}}" class="bg-white">
+<body
+  {% if google_analytics %} data-google-analytics="{{ google_analytics }}"{% endif %}
+  data-signout-url="{{ signout_url }}"
+  data-user-netid="{{ user_netid }}"
+  data-user-override="{{ user_override }}"
+  data-user-role="{{ user_role }}"
+  data-user-access-group="{{ user_access_group }}"
+  data-django-debug="{{ django_debug|lower}}"
+  class="bg-white"
+>
     {% csrf_token %}
 
     <!-- vue app will be injected here -->

@@ -33,6 +33,7 @@ def auth_user(request):
     try:
         access_group, role = AccessGroup.objects.access_group_for_user(request)
         ret['user_role'] = role
+        ret['user_access_group'] = access_group.access_group_id
     except DataFailureException:
         ret['messages'].append(
             'The UW Groups Service is currently unavailable.')

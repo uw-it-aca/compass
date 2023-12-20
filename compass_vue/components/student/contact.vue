@@ -122,9 +122,13 @@
                   </AddEditContact>
 
                   <DeleteContact
-                    v-show="userRoles.includes(Role.Manager)"
+                    v-show="
+                      userRoles.includes(Role.Manager) &&
+                      inUserAccessGroup(contact)
+                    "
                     :person="person"
                     :contact-id="contact.id"
+                    @contactDeleted="removeContact(contact.id)"
                     ><i class="bi bi-trash text-danger me-2"></i>Delete
                   </DeleteContact>
                 </td>
@@ -166,6 +170,7 @@ export default {
       userName: document.body.getAttribute("data-user-netid"),
       userOverride: document.body.getAttribute("data-user-override"),
       userRoles: document.body.getAttribute("data-user-role").split(","),
+      userAccessGroup: document.body.getAttribute("data-user-access-group"),
       Role: Role,
     };
   },
@@ -184,6 +189,16 @@ export default {
     },
     contactDate: function (date) {
       return formatUTCToLocalDateAndTimeZone(date, "LLL");
+    },
+    inUserAccessGroup: function (contact) {
+      return contact.access_group.some(
+        (group) => group.access_group_id === this.userAccessGroup
+      );
+    },
+    removeContact: function (contactId) {
+      this.contacts = this.contacts.filter(
+        (contact) => contact.id !== contactId
+      );
     },
   },
 };

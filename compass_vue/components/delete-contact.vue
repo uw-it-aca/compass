@@ -47,7 +47,14 @@ export default {
   },
   methods: {
     deleteContact() {
-      alert("delete this record = " + this.contactId);
+      let vue = this;
+      this.deleteStudentContact(this.contactId)
+        .then(() => {
+          vue.$emit("contactDeleted");
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
     },
   },
 };

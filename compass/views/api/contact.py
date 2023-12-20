@@ -42,6 +42,32 @@ class ContactView(BaseAPIView):
         serializer = ContactReadSerializer(contact, many=False)
         return self.response_ok(serializer.data)
 
+    def delete(self, request, contactid):
+        try:
+            contact = Contact.objects.get(id=contactid)
+        except Contact.DoesNotExist:
+            return self.response_notfound()
+
+        try:
+            # User must belong to a manager access group
+            access_group = self.get_access_group(request, require_manager=True)
+
+            # User's AG must match contact's AG
+            if access_group.id not in [ag.id for ag in
+                                       contact.access_group.all()]:
+                return self.response_unauthorized()
+
+            # User override not permitted here
+            self.valid_user_override()
+
+        except AccessGroup.DoesNotExist:
+            return self.response_unauthorized()
+        except OverrideNotPermitted as err:
+            return self.response_unauthorized(str(err))
+
+        contact.delete()
+        return self.response_ok({})
+
     def post(self, request, contactid=None):
         us = UserService()
         try:

@@ -132,6 +132,9 @@ const dataMixin = {
     getStudentContactMethods: async function () {
       return axios.get("/api/internal/contact/methods/");
     },
+    deleteStudentContact: async function (contactId) {
+      return axios.delete("/api/internal/contact/" + contactId + "/");
+    },
     getStudentAffiliations: async function (systemkey, affiliation_id) {
       return axios.get(
         "/api/internal/student/" +

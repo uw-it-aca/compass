@@ -103,7 +103,7 @@ class AccessGroupManager(models.Manager):
 
     def access_group_for_user(self, request, require_manager=False):
         """
-        Returns the defauilt access group and role that a user is in, or
+        Returns the default access group and role that a user is in, or
         raises exception AccessGroup.DoesNotExist.
         """
         access_groups = super().get_queryset().all().order_by("id")
