@@ -71,11 +71,18 @@
               <span class="text-danger" v-if="formErrors.contact_type">
                 required
               </span>
+              <!-- MARK: disable editing contact_type if either qq/appointment (1,2)-->
               <select
                 aria-label="Contact type"
                 v-model="contact.contact_type"
                 :class="
                   formErrors.time ? 'is-invalid form-select' : 'form-select'
+                "
+                :disabled="
+                  (userRoles.includes(Role.User, Role.Student) &&
+                    contact.contact_type == 1) ||
+                  (userRoles.includes(Role.User, Role.Student) &&
+                    contact.contact_type == 2)
                 "
               >
                 <option selected disabled :value="undefined">
@@ -86,27 +93,17 @@
                   :key="contactType.id"
                 >
                   <!-- MARK: show all contact types for Managers/ES -->
-                  <template v-if="userRoles.includes(Role.Manager)">
-                    <option :value="contactType.id">
-                      {{ contactType.name }}
-                    </option>
-                  </template>
-                  <!-- MARK: DISABLE qq/appointment for Advisers -->
-                  <template v-else>
-                    <option
-                      v-if="
-                        contactType.slug == 'quick-question' ||
-                        contactType.slug == 'appointment'
-                      "
-                      disabled
-                      :value="contactType.id"
-                    >
-                      {{ contactType.name }}
-                    </option>
-                    <option v-else :value="contactType.id">
-                      {{ contactType.name }}
-                    </option>
-                  </template>
+                  <option
+                    :disabled="
+                      (userRoles.includes(Role.User, Role.Student) &&
+                        contactType.slug == 'quick-question') ||
+                      (userRoles.includes(Role.User, Role.Student) &&
+                        contactType.slug == 'appointment')
+                    "
+                    :value="contactType.id"
+                  >
+                    {{ contactType.name }}
+                  </option>
                 </template>
               </select>
             </div>
