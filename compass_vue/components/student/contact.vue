@@ -32,6 +32,8 @@
                   <div class="text-muted small">
                     <i class="bi bi-person-circle me-1"></i
                     >{{ contact.app_user.uwnetid }} -- {{ contact.source }}
+                    --
+                    {{ contact.trans_id }}
                   </div>
                 </td>
                 <td class="align-bottom">
@@ -110,7 +112,7 @@
                     </div>
                   </template>
                 </td>
-                <td style="width: 20%" class="p-3">
+                <td style="width: 20%" class="p-3 text-end">
                   <!-- MARK: check if user matches override. not overriding. -->
                   <template v-if="userName == userOverride">
                     <AddEditContact
@@ -119,8 +121,8 @@
                       :person="person"
                       :contact-id="contact.id"
                       @contactUpdated="loadStudentContacts()"
-                      ><i class="bi bi-pencil text-dark me-2"></i>Edit
-                      contact</AddEditContact
+                      ><i class="bi bi-pencil text-dark me-2"></i
+                      >Edit</AddEditContact
                     >
                   </template>
                   <!-- MARK: if not, user is overriding. show edit button for override user. -->
@@ -131,10 +133,20 @@
                       :person="person"
                       :contact-id="contact.id"
                       @contactUpdated="loadStudentContacts()"
-                      ><i class="bi bi-pencil text-dark me-2"></i>Edit
-                      contact</AddEditContact
+                      ><i class="bi bi-pencil text-dark me-2"></i
+                      >Edit</AddEditContact
                     >
                   </template>
+                  <DeleteContact
+                    v-show="
+                      userRoles.includes(Role.Manager) &&
+                      inUserAccessGroup(contact)
+                    "
+                    :person="person"
+                    :contact-id="contact.id"
+                    @contactDeleted="removeContact(contact.id)"
+                    ><i class="bi bi-trash text-danger me-2"></i>Delete
+                  </DeleteContact>
                 </td>
               </tr>
             </tbody>
@@ -149,14 +161,17 @@
 </template>
 
 <script>
+import { Role } from "@/utils/roles.js";
 import dataMixin from "@/mixins/data_mixin.js";
 import AddEditContact from "@/components/add-contact.vue";
+import DeleteContact from "@/components/delete-contact.vue";
 import { formatUTCToLocalDateAndTimeZone } from "@/utils/dates";
 
 export default {
   mixins: [dataMixin],
   components: {
     AddEditContact,
+    DeleteContact,
   },
   props: {
     person: {
@@ -170,6 +185,9 @@ export default {
       contacts: {},
       userName: document.body.getAttribute("data-user-netid"),
       userOverride: document.body.getAttribute("data-user-override"),
+      userRoles: document.body.getAttribute("data-user-role").split(","),
+      userAccessGroup: document.body.getAttribute("data-user-access-group"),
+      Role: Role,
     };
   },
   created() {
@@ -187,6 +205,16 @@ export default {
     },
     contactDate: function (date) {
       return formatUTCToLocalDateAndTimeZone(date, "LLL");
+    },
+    inUserAccessGroup: function (contact) {
+      return contact.access_group.some(
+        (group) => group.access_group_id === this.userAccessGroup
+      );
+    },
+    removeContact: function (contactId) {
+      this.contacts = this.contacts.filter(
+        (contact) => contact.id !== contactId
+      );
     },
   },
 };

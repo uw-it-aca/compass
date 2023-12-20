@@ -3,18 +3,13 @@
     role="button"
     data-bs-toggle="modal"
     :data-bs-target="'#contactModal' + contactId"
-    class="btn text-nowrap"
+    class="btn btn-sm fs-9 btn-outline-gray text-dark rounded-3 px-2 py-1"
     @click="getFormData()"
-    :class="[
-      buttonType === 'button'
-        ? 'btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2'
-        : 'fs-9 btn-outline-gray text-dark rounded-3 px-2 py-1',
-    ]"
   >
     <slot>Add Contact</slot>
   </a>
 
-  <!-- contact modal -->
+  <!-- add/edit contact modal -->
   <div
     ref="contactModal"
     class="modal fade text-start"
@@ -239,13 +234,8 @@ import { Role } from "@/utils/roles";
 
 export default {
   mixins: [dataMixin],
-  inject: ["mq"],
   emits: ["contactUpdated"],
   props: {
-    buttonType: {
-      type: String,
-      required: true,
-    },
     person: {
       type: Object,
       required: true,

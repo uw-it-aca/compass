@@ -31,3 +31,8 @@ class ApiTest(TestCase):
         return self.client.post(url,
                                 data=body,
                                 content_type="application/json")
+
+    def delete_response(self, url_name, netid, **kwargs):
+        self._set_user(netid)
+        url = reverse(url_name, kwargs=kwargs)
+        return self.client.delete(url)
