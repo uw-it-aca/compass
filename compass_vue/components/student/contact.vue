@@ -113,14 +113,30 @@
                   </template>
                 </td>
                 <td style="width: 20%" class="p-3">
-                  <AddEditContact
-                    v-if="contact.app_user.uwnetid == userName"
-                    :person="person"
-                    :contact-id="contact.id"
-                    @contactUpdated="loadStudentContacts()"
-                    ><i class="bi bi-pencil text-dark me-2"></i>Edit
-                  </AddEditContact>
-
+                  <!-- MARK: check if user matches override. not overriding. -->
+                  <template v-if="userName == userOverride">
+                    <AddEditContact
+                      v-if="contact.app_user.uwnetid == userName"
+                      :button-type="'link'"
+                      :person="person"
+                      :contact-id="contact.id"
+                      @contactUpdated="loadStudentContacts()"
+                      ><i class="bi bi-pencil text-dark me-2"></i>Edit
+                      contact</AddEditContact
+                    >
+                  </template>
+                  <!-- MARK: if not, user is overriding. show edit button for override user. -->
+                  <template v-else>
+                    <AddEditContact
+                      v-if="contact.app_user.uwnetid == userOverride"
+                      :button-type="'link'"
+                      :person="person"
+                      :contact-id="contact.id"
+                      @contactUpdated="loadStudentContacts()"
+                      ><i class="bi bi-pencil text-dark me-2"></i>Edit
+                      contact</AddEditContact
+                    >
+                  </template>
                   <DeleteContact
                     v-show="
                       userRoles.includes(Role.Manager) &&

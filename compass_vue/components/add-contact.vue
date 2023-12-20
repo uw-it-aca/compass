@@ -91,15 +91,19 @@
                       {{ contactType.name }}
                     </option>
                   </template>
-                  <!-- MARK: hide qq/appointment for Advisers -->
+                  <!-- MARK: DISABLE qq/appointment for Advisers -->
                   <template v-else>
                     <option
                       v-if="
-                        contactType.slug !== 'quick-question' &&
-                        contactType.slug !== 'appointment'
+                        contactType.slug == 'quick-question' ||
+                        contactType.slug == 'appointment'
                       "
+                      disabled
                       :value="contactType.id"
                     >
+                      {{ contactType.name }}
+                    </option>
+                    <option v-else :value="contactType.id">
                       {{ contactType.name }}
                     </option>
                   </template>
