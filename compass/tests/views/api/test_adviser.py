@@ -52,7 +52,7 @@ class ContactAPITest(ApiTest):
         contact.save()
         contact.access_group.add(self.ag)
 
-        resp = self.get_response("adviser_contacts",
+        resp = self.get_response("adviser_checkins",
                                  "javerage",
                                  args=["javerage"])
         response = json.loads(resp.content)

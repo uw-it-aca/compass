@@ -3,18 +3,13 @@
     role="button"
     data-bs-toggle="modal"
     :data-bs-target="'#contactModal' + contactId"
-    class="btn text-nowrap"
+    class="btn btn-sm fs-9 btn-outline-gray text-dark rounded-3 px-2 py-1"
     @click="getFormData()"
-    :class="[
-      buttonType === 'button'
-        ? 'btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2'
-        : 'fs-9 btn-outline-gray text-dark rounded-3 px-2 py-1',
-    ]"
   >
     <slot>Add Contact</slot>
   </a>
 
-  <!-- contact modal -->
+  <!-- add/edit contact modal -->
   <div
     ref="contactModal"
     class="modal fade text-start"
@@ -76,11 +71,18 @@
               <span class="text-danger" v-if="formErrors.contact_type">
                 required
               </span>
+              <!-- MARK: disable editing contact_type if either qq/appointment (1,2) for Advisers -->
               <select
                 aria-label="Contact type"
                 v-model="contact.contact_type"
                 :class="
                   formErrors.time ? 'is-invalid form-select' : 'form-select'
+                "
+                :disabled="
+                  (userRoles.includes(Role.User, Role.Student) &&
+                    contact.contact_type == 1) ||
+                  (userRoles.includes(Role.User, Role.Student) &&
+                    contact.contact_type == 2)
                 "
               >
                 <option selected disabled :value="undefined">
@@ -90,24 +92,18 @@
                   v-for="contactType in contactTypes"
                   :key="contactType.id"
                 >
-                  <!-- MARK: show all contact types for Managers/ES -->
-                  <template v-if="userRoles.includes(Role.Manager)">
-                    <option :value="contactType.id">
-                      {{ contactType.name }}
-                    </option>
-                  </template>
-                  <!-- MARK: hide qq/appointment for Advisers -->
-                  <template v-else>
-                    <option
-                      v-if="
-                        contactType.slug !== 'quick-question' &&
-                        contactType.slug !== 'appointment'
-                      "
-                      :value="contactType.id"
-                    >
-                      {{ contactType.name }}
-                    </option>
-                  </template>
+                  <!-- MARK: disable contact_type if either qq/appointment for Advisers -->
+                  <option
+                    :disabled="
+                      (userRoles.includes(Role.User, Role.Student) &&
+                        contactType.slug == 'quick-question') ||
+                      (userRoles.includes(Role.User, Role.Student) &&
+                        contactType.slug == 'appointment')
+                    "
+                    :value="contactType.id"
+                  >
+                    {{ contactType.name }}
+                  </option>
                 </template>
               </select>
             </div>
@@ -235,13 +231,8 @@ import { Role } from "@/utils/roles";
 
 export default {
   mixins: [dataMixin],
-  inject: ["mq"],
   emits: ["contactUpdated"],
   props: {
-    buttonType: {
-      type: String,
-      required: true,
-    },
     person: {
       type: Object,
       required: true,

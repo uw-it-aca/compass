@@ -19,7 +19,7 @@
           <td>
             {{ formatDate(contact.checkin_date, "LLL") }}
           </td>
-          <td>{{ contact.source }}</td>
+          <td>{{ contact.source }} -- {{ contact.trans_id }}</td>
           <td>{{ contact.contact_type.name }}</td>
           <td>{{ contact.app_user.uwnetid }}</td>
           <td>

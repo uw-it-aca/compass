@@ -166,7 +166,14 @@ class ContactReadSerializer(serializers.ModelSerializer):
     contact_topics = ContactTopicSerializer(many=True, read_only=False)
     created_date = serializers.DateTimeField(default_timezone=pytz.utc)
     checkin_date = serializers.DateTimeField(default_timezone=pytz.utc)
+    access_group = AccessGroupSerializer(many=True, read_only=False)
     source = serializers.CharField(
+        max_length=None,
+        min_length=None,
+        allow_blank=False,
+        trim_whitespace=True,
+    )
+    trans_id = serializers.CharField(
         max_length=None,
         min_length=None,
         allow_blank=False,
@@ -187,6 +194,8 @@ class ContactReadSerializer(serializers.ModelSerializer):
             "contact_method",
             "contact_topics",
             "source",
+            "trans_id",
+            "access_group"
         ]
 
 

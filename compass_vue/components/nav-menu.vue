@@ -4,8 +4,10 @@
       <li class="nav-item mb-1">
         <router-link
           :to="'/'"
-          active-class="bg-dark-purple rounded-3"
           class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
+          :class="
+            $route.path.includes('/checkins') ? 'bg-dark-purple rounded-3' : ''
+          "
           ><i class="bi bi-calendar-check me-2"></i>Check-Ins</router-link
         >
       </li>

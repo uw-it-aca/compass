@@ -38,7 +38,7 @@
             <div class="mt-3 small">
               {{ person.student.student_number }}, {{ person.uwnetid }}<br />
               <span v-if="person.student.local_phone_number">
-                +1 {{ person.student.local_phone_number }}
+                {{ formatPhoneNumber(person.student.local_phone_number) }}
               </span>
             </div>
           </div>
@@ -139,11 +139,21 @@
                 </template>
               </KeyValue>
             </li>
-            <li class="mb-3">
+            <li>
               <KeyValue>
                 <template #key>Veteran Benefit</template>
                 <template #value>
                   <span>{{ person.student.veteran_benefit_desc }}</span>
+                </template>
+              </KeyValue>
+            </li>
+            <li class="mb-3">
+              <KeyValue>
+                <template #key>First Generation (4yr)</template>
+                <template #value>
+                  {{
+                    translateTrueFalse(person.student.first_generation_4yr_ind)
+                  }}
                 </template>
               </KeyValue>
             </li>
@@ -255,7 +265,7 @@
               <KeyValue>
                 <template #key>Phone</template>
                 <template #value>
-                  {{ person.student.emergency_phone }}
+                  {{ formatPhoneNumber(person.student.emergency_phone) }}
                 </template>
               </KeyValue>
             </li>
@@ -382,6 +392,7 @@
 import KeyValue from "@/components/_common/key-value.vue";
 import { translateTrueFalse } from "@/utils/translations";
 import { formatDate } from "@/utils/dates";
+import { formatPhoneNumber } from "@/utils/formats";
 
 export default {
   inject: ["mq"],
@@ -396,6 +407,7 @@ export default {
     return {
       translateTrueFalse,
       formatDate,
+      formatPhoneNumber,
     };
   },
   data() {
