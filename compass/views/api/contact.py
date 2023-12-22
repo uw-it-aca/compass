@@ -175,8 +175,8 @@ class ContactTopicsView(BaseAPIView):
 
     def get(self, request):
         try:
-            access_group = self.valid_user_permission(request)
-        except PermissionDenied:
+            access_group = self.get_access_group(request)
+        except AccessGroup.DoesNotExist:
             return self.response_unauthorized()
 
         contact_topics = ContactTopic.objects.filter(
@@ -194,8 +194,8 @@ class ContactTypesView(BaseAPIView):
 
     def get(self, request):
         try:
-            access_group = self.valid_user_permission(request)
-        except PermissionDenied:
+            access_group = self.get_access_group(request)
+        except AccessGroup.DoesNotExist:
             return self.response_unauthorized()
 
         contact_types = ContactType.objects.filter(
@@ -213,8 +213,8 @@ class ContactMethodsView(BaseAPIView):
 
     def get(self, request):
         try:
-            access_group = self.valid_user_permission(request)
-        except PermissionDenied:
+            access_group = self.get_access_group(request)
+        except AccessGroup.DoesNotExist:
             return self.response_unauthorized()
 
         contact_methods = ContactMethod.objects.filter(
