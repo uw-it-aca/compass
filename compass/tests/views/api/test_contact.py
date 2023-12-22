@@ -3,9 +3,7 @@
 
 
 from datetime import datetime
-from unittest import TestCase
 from django.test import Client
-from django.core.exceptions import PermissionDenied
 from django.contrib.auth.models import User
 from unittest.mock import MagicMock, patch
 from compass.views.api.contact import ContactOMADView
