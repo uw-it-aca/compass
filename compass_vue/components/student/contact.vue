@@ -163,10 +163,11 @@
                       ><span class="text-danger">Edit</span>
                     </ManagerEditContact>
                     <DeleteContact
+                      :button-type="'link'"
                       :person="person"
                       :contact-id="contact.id"
                       @contactDeleted="removeContact(contact.id)"
-                      ><i class="bi bi-trash text-danger me-2"></i>Delete
+                      ><i class="bi bi-trash text-danger me-2"></i><span class="text-danger">Delete</span>
                     </DeleteContact>
                   </template>
                 </td>
