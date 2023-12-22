@@ -26,11 +26,20 @@ class ApiTest(TestCase):
         session['samlUserdata'] = {'isMemberOf': [group]}
         session.save()
 
-    def post_response(self, url_name, body, **kwargs):
+    def post_response(self, url_name, body, netid=None, **kwargs):
+        if netid is not None:
+            self._set_user(netid)
         url = reverse(url_name, **kwargs)
         return self.client.post(url,
                                 data=body,
                                 content_type="application/json")
+
+    def put_response(self, url_name, netid, body, **kwargs):
+        self._set_user(netid)
+        url = reverse(url_name, kwargs=kwargs)
+        return self.client.put(url,
+                               data=body,
+                               content_type="application/json")
 
     def delete_response(self, url_name, netid, **kwargs):
         self._set_user(netid)

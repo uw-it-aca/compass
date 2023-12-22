@@ -97,6 +97,12 @@ const dataMixin = {
         .post(postUrl, { contact: contact, system_key: systemkey })
         .catch(this._handleError);
     },
+   updateStudentContact: async function (contact) {
+      let putUrl = "/api/internal/contact/" + contact.id + "/";
+      return axios
+        .put(putUrl, { contact: contact})
+        .catch(this._handleError);
+    },
     saveStudentAffiliation: async function (systemkey, affiliation) {
       let postUrl = "/api/internal/student/" + systemkey + "/affiliations/";
       if (affiliation.studentAffiliationId !== null) {

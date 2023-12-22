@@ -200,8 +200,7 @@ class ContactAPITest(ApiTest):
         self.assertEqual(contacts[1].trans_id, 1234567890)
 
     @patch('compass.dao.group.is_member_of_group')
-    def test_delete(self, mock_is_member):
-        mock_is_member.return_value = True
+    def test_delete(self, mock_is_member, return_value=True):
         test_id = {
             "adviser_netid": "javerage",
             "student_systemkey": "001234567",
@@ -219,7 +218,88 @@ class ContactAPITest(ApiTest):
         contacts = Contact.objects.all()
 
         c_id = contacts[0].id
-        self.delete_response('contact_view', 'javerage', contactid=c_id)
+        self.delete_response('contact_edit_view', 'javerage', contactid=c_id)
 
         contacts = Contact.objects.all()
         self.assertEqual(len(contacts), 0)
+
+    @patch('compass.dao.group.is_member_of_group', return_value=True)
+    def test_put(self, mock_is_member):
+        test_checkin = {
+            "adviser_netid": "javerage",
+            "student_systemkey": "001234567",
+            "contact_type": "appointment",
+            "checkin_date": "2012-01-19 17:21:00 PDT",
+            "source": "Compass",
+            "trans_id": 1234567890
+        }
+
+        token_str = "Token %s" % self.API_TOKEN
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=token_str)
+        resp = self.post_response('contact_omad',
+                                  test_checkin)
+
+        contact = Contact.objects.get(id=1)
+        self.assertIsNone(contact.notes)
+        self.assertEqual(contact.app_user.uwnetid, "javerage")
+
+        put_body = {
+            "contact": {
+                "id": 1,
+                "app_user": {
+                    "id": 1,
+                    "uwnetid": "jbothell"
+                },
+                "student": 1234,
+                "created_date": "2023-12-20T23:31:55.156661Z",
+                "checkin_date": "2023-12-01T15:18:00",
+                "notes": "test note",
+                "actions": "test1",
+                "contact_type": 1,
+                "contact_method": 1,
+                "contact_topics": [
+                    1
+                ],
+                "source": "Compass",
+                "trans_id": None,
+                "access_group": [
+                    {
+                        "id": 1,
+                        "name": "ADVISOR",
+                        "access_group_id": "u_test_group"
+                    }
+                ]
+            },
+            "system_key": "001111111"
+        }
+        r = self.put_response('contact_edit_view',
+                              "javerage",
+                              put_body,
+                              contactid=1)
+        self.assertEqual(r.status_code, 200)
+        contact = Contact.objects.get(id=1)
+        self.assertEqual(contact.notes, "test note")
+        self.assertEqual(contact.app_user.uwnetid, "javerage")
+
+    @patch('compass.dao.group.is_member_of_group', return_value=True)
+    def test_post(self, mock_is_member):
+        post_body = {
+            "contact": {
+                "contact_topics": [
+                    1
+                ],
+                "checkin_date": "2023-12-22T11:15",
+                "notes": "test",
+                "contact_type": 1,
+                "contact_method": 3
+            },
+            "system_key": "002365572"
+        }
+        r = self.post_response('contact_create_view',
+                               post_body,
+                               netid="javerage")
+        contacts = Contact.objects.all()
+        self.assertEqual(len(contacts), 1)
+        self.assertEqual(r.status_code, 201)
+        self.assertEqual(contacts[0].notes, "test")
