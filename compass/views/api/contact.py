@@ -11,12 +11,11 @@ from compass.models import (
 from compass.serializers import (
     ContactReadSerializer, ContactWriteSerializer, ContactTopicSerializer,
     ContactTypeSerializer, ContactMethodSerializer)
-from compass.exceptions import OverrideNotPermitted
 from dateutil import parser
 from django.utils.text import slugify
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.generics import GenericAPIView
+from django.core.exceptions import PermissionDenied
 from rest_framework.response import Response
 from rest_framework import status
 from userservice.user import UserService
@@ -49,38 +48,56 @@ class ContactView(BaseAPIView):
             return self.response_notfound()
 
         try:
-            # User must belong to a manager access group
-            access_group = self.get_access_group(request, require_manager=True)
-
-            # User's AG must match contact's AG
-            if access_group.id not in [ag.id for ag in
-                                       contact.access_group.all()]:
-                return self.response_unauthorized()
-
-            # User override not permitted here
-            self.valid_user_override()
-
-        except AccessGroup.DoesNotExist:
+            contact_ags = contact.access_group.all()
+            self.valid_user_permission(request,
+                                       access_groups=contact_ags,
+                                       allow_override=False,
+                                       require_manager=True)
+        except PermissionDenied:
             return self.response_unauthorized()
-        except OverrideNotPermitted as err:
-            return self.response_unauthorized(str(err))
 
         contact.delete()
+        logger.info("Contact deleted: %s" % contactid)
         return self.response_ok({})
 
-    def post(self, request, contactid=None):
+    def put(self, request, contactid):
+        contact_record = request.data.get('contact')
+        try:
+            contact = Contact.objects.get(id=contactid)
+        except Contact.DoesNotExist:
+            return self.response_badrequest("Unrecognized ContactId")
+
+        try:
+            contact_ags = contact.access_group.all()
+            self.valid_user_permission(request,
+                                       access_groups=contact_ags,
+                                       allow_override=False)
+        except PermissionDenied:
+            return self.response_unauthorized()
+
+        # Don't update these fields, use data from existing contact record
+        contact_record['student'] = contact.student.id
+        contact_record['access_group'] = [ag.id for ag in
+                                          contact.access_group.all()]
+        contact_record['app_user'] = contact.app_user.id
+        contact_record['created_date'] = contact.created_date
+
+        serializer = ContactWriteSerializer(contact, data=contact_record)
+        if serializer.is_valid():
+            serializer.save()
+            logger.info(f"Contact {contactid} updated: "
+                        f"{serializer.data}")
+            return self.response_ok(serializer.data)
+        return self.response_badrequest(serializer.errors)
+
+    def post(self, request):
         us = UserService()
         try:
-            # User must belong to an access group
+            self.valid_user_permission(request, allow_override=False)
             access_group = self.get_access_group(request)
 
-            # User override not permitted here
-            self.valid_user_override()
-
-        except AccessGroup.DoesNotExist:
+        except PermissionDenied:
             return self.response_unauthorized()
-        except OverrideNotPermitted as err:
-            return self.response_unauthorized(str(err))
 
         if not request.data:
             return self.response_badrequest()
@@ -97,58 +114,43 @@ class ContactView(BaseAPIView):
         student, _ = Student.objects.get_or_create(system_key=system_key)
         contact_record['student'] = student.id
         contact_record['access_group'] = [access_group.id]
-        created = False
-        if contactid:
-            try:
-                # update existing contact record if one exists
-                contact = Contact.objects.get(id=contactid)
-            except Contact.DoesNotExist:
-                return self.response_badrequest("Unrecognized ContactId")
+        try:
+            if isinstance(contact_record['contact_type'], str):
+                slug = slugify(contact_record['contact_type'])
+                contact_record['contact_type'] = \
+                    ContactType.objects.get(slug=slug).id
+            if isinstance(contact_record['contact_method'], str):
+                slug = slugify(contact_record['contact_method'])
+                contact_record['contact_method'] = \
+                    ContactMethod.objects.get(slug=slug).id
+            if isinstance(contact_record['contact_topics'], list):
+                topics = []
+                for t in contact_record['contact_topics']:
+                    if isinstance(t, str):
+                        slug = slugify(t)
+                        topics.append(
+                            ContactTopic.objects.get(
+                                slug=slug).id)
+                    else:
+                        topics.append(t)
 
-            serializer = ContactWriteSerializer(contact, data=contact_record)
+                contact_record['contact_topics'] = topics
 
-        else:
-            # create new contact record
-            try:
-                created = True
-                if isinstance(contact_record['contact_type'], str):
-                    slug = slugify(contact_record['contact_type'])
-                    contact_record['contact_type'] = \
-                        ContactType.objects.get(slug=slug).id
-                if isinstance(contact_record['contact_method'], str):
-                    slug = slugify(contact_record['contact_method'])
-                    contact_record['contact_method'] = \
-                        ContactMethod.objects.get(slug=slug).id
-                if isinstance(contact_record['contact_topics'], list):
-                    topics = []
-                    for t in contact_record['contact_topics']:
-                        if isinstance(t, str):
-                            slug = slugify(t)
-                            topics.append(
-                                ContactTopic.objects.get(
-                                    slug=slug).id)
-                        else:
-                            topics.append(t)
+            if 'checkin_date' not in contact_record:
+                contact_record['checkin_date'] = current_datetime_utc()
 
-                    contact_record['contact_topics'] = topics
+        except (KeyError, ContactType.DoesNotExist,
+                ContactMethod.DoesNotExist,
+                ContactTopic.DoesNotExist):
+            return self.response_badrequest("Unrecognized Contact Values")
 
-                if 'checkin_date' not in contact_record:
-                    contact_record['checkin_date'] = current_datetime_utc()
-
-            except (KeyError, ContactType.DoesNotExist,
-                    ContactMethod.DoesNotExist,
-                    ContactTopic.DoesNotExist):
-                return self.response_badrequest("Unrecognized Contact Values")
-
-            serializer = ContactWriteSerializer(data=contact_record)
+        serializer = ContactWriteSerializer(data=contact_record)
 
         if serializer.is_valid():
             serializer.save()
             logger.info(f"Contact saved for student {system_key}: "
                         f"{serializer.data}")
-            if created:
-                return self.response_created(serializer.data)
-            return self.response_ok(serializer.data)
+            return self.response_created(serializer.data)
         return self.response_badrequest(serializer.errors)
 
 
@@ -161,8 +163,8 @@ class ContactTopicsView(BaseAPIView):
 
     def get(self, request):
         try:
-            access_group = self.get_access_group(request)
-        except AccessGroup.DoesNotExist:
+            access_group = self.valid_user_permission(request)
+        except PermissionDenied:
             return self.response_unauthorized()
 
         contact_topics = ContactTopic.objects.filter(
@@ -180,8 +182,8 @@ class ContactTypesView(BaseAPIView):
 
     def get(self, request):
         try:
-            access_group = self.get_access_group(request)
-        except AccessGroup.DoesNotExist:
+            access_group = self.valid_user_permission(request)
+        except PermissionDenied:
             return self.response_unauthorized()
 
         contact_types = ContactType.objects.filter(
@@ -199,8 +201,8 @@ class ContactMethodsView(BaseAPIView):
 
     def get(self, request):
         try:
-            access_group = self.get_access_group(request)
-        except AccessGroup.DoesNotExist:
+            access_group = self.valid_user_permission(request)
+        except PermissionDenied:
             return self.response_unauthorized()
 
         contact_methods = ContactMethod.objects.filter(

@@ -295,20 +295,37 @@ export default {
       var contactModal = Modal.getInstance(
         document.getElementById("contactModal" + this.contactId)
       );
-      this.saveStudentContact(this.person.student.system_key, this.contact)
-        .then(() => {
-          this.$emit("contactUpdated");
-          contactModal.hide();
-        })
-        .catch((error) => {
-          if (error.response.status == 401) {
-            this.updatePermissionDenied = true;
-            this.errorResponsePermission = error.response.data;
-            setTimeout(() => (this.updatePermissionDenied = false), 3000);
-          } else {
-            this.errorResponse = error.response.data;
-          }
-        });
+      if (this.contact.id !== undefined){
+        this.updateStudentContact(this.contact)
+          .then(() => {
+            this.$emit("contactUpdated");
+            contactModal.hide();
+          })
+          .catch((error) => {q
+            if (error.response.status == 401) {
+              this.updatePermissionDenied = true;
+              this.errorResponsePermission = error.response.data;
+              setTimeout(() => (this.updatePermissionDenied = false), 3000);
+            } else {
+              this.errorResponse = error.response.data;
+            }
+          });
+      } else {
+        this.saveStudentContact(this.person.student.system_key, this.contact)
+          .then(() => {
+            this.$emit("contactUpdated");
+            contactModal.hide();
+          })
+          .catch((error) => {
+            if (error.response.status == 401) {
+              this.updatePermissionDenied = true;
+              this.errorResponsePermission = error.response.data;
+              setTimeout(() => (this.updatePermissionDenied = false), 3000);
+            } else {
+              this.errorResponse = error.response.data;
+            }
+          });
+      }
     },
     validateContactForm() {
       let is_invalid = false;
