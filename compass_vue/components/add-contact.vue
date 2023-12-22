@@ -3,7 +3,12 @@
     role="button"
     data-bs-toggle="modal"
     :data-bs-target="'#contactModal' + contactId"
-    class="btn btn-sm fs-9 btn-outline-gray text-dark rounded-3 px-2 py-1"
+    class="btn text-nowrap"
+    :class="[
+      buttonType === 'button'
+        ? 'btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2'
+        : 'btn btn-sm fs-9 btn-outline-gray text-dark rounded-3 px-2 py-1 ms-1',
+    ]"
     @click="getFormData()"
   >
     <slot>Add Contact</slot>
@@ -233,6 +238,10 @@ export default {
   mixins: [dataMixin],
   emits: ["contactUpdated"],
   props: {
+    buttonType: {
+      type: String,
+      required: true,
+    },
     person: {
       type: Object,
       required: true,
