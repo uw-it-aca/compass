@@ -228,7 +228,6 @@ class ContactWriteSerializer(serializers.ModelSerializer):
         return contact
 
     def update(self, instance, validated_data):
-        instance.app_user = validated_data.get("app_user", instance.app_user)
         instance.checkin_date = validated_data.get(
             "checkin_date", instance.checkin_date
         )

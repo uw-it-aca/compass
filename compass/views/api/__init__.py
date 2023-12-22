@@ -7,6 +7,7 @@ from compass.views.decorators import xhr_login_required
 from compass.exceptions import OverrideNotPermitted
 from django.conf import settings
 from django.utils.decorators import method_decorator
+from django.core.exceptions import PermissionDenied
 from rest_framework.generics import GenericAPIView
 from rest_framework.negotiation import BaseContentNegotiation
 from rest_framework.parsers import JSONParser
@@ -30,6 +31,33 @@ class BaseAPIView(GenericAPIView):
         access_group, role = AccessGroup.objects.access_group_for_user(
             request, require_manager=require_manager)
         return access_group
+
+    def valid_access_group(self,
+                           request,
+                           access_groups,
+                           require_manager=False):
+        user_ag = self.get_access_group(request, require_manager)
+        if user_ag not in access_groups:
+            raise PermissionDenied()
+
+    def valid_user_permission(self, request,
+                              access_groups=None,
+                              allow_override=True,
+                              require_manager=False):
+        try:
+            # Check if the user has an access group
+            self.get_access_group(request, require_manager)
+            # Check if user in list of supplied access groups
+            if access_groups:
+                self.valid_access_group(request, access_groups,
+                                        require_manager=require_manager)
+            # Check if override is allowed for action
+            if not allow_override:
+                self.valid_user_override()
+        except (PermissionDenied,
+                AccessGroup.DoesNotExist,
+                OverrideNotPermitted):
+            raise PermissionDenied()
 
     def response_ok(self, content):
         return Response(content, status=status.HTTP_200_OK)

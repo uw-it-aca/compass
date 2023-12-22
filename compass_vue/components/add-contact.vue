@@ -3,7 +3,12 @@
     role="button"
     data-bs-toggle="modal"
     :data-bs-target="'#contactModal' + contactId"
-    class="btn btn-sm fs-9 btn-outline-gray text-dark rounded-3 px-2 py-1"
+    class="btn text-nowrap"
+    :class="[
+      buttonType === 'button'
+        ? 'btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2'
+        : 'btn btn-sm fs-9 btn-outline-gray text-dark rounded-3 px-2 py-1 ms-1',
+    ]"
     @click="getFormData()"
   >
     <slot>Add Contact</slot>
@@ -233,6 +238,10 @@ export default {
   mixins: [dataMixin],
   emits: ["contactUpdated"],
   props: {
+    buttonType: {
+      type: String,
+      required: true,
+    },
     person: {
       type: Object,
       required: true,
@@ -295,20 +304,37 @@ export default {
       var contactModal = Modal.getInstance(
         document.getElementById("contactModal" + this.contactId)
       );
-      this.saveStudentContact(this.person.student.system_key, this.contact)
-        .then(() => {
-          this.$emit("contactUpdated");
-          contactModal.hide();
-        })
-        .catch((error) => {
-          if (error.response.status == 401) {
-            this.updatePermissionDenied = true;
-            this.errorResponsePermission = error.response.data;
-            setTimeout(() => (this.updatePermissionDenied = false), 3000);
-          } else {
-            this.errorResponse = error.response.data;
-          }
-        });
+      if (this.contact.id !== undefined){
+        this.updateStudentContact(this.contact)
+          .then(() => {
+            this.$emit("contactUpdated");
+            contactModal.hide();
+          })
+          .catch((error) => {q
+            if (error.response.status == 401) {
+              this.updatePermissionDenied = true;
+              this.errorResponsePermission = error.response.data;
+              setTimeout(() => (this.updatePermissionDenied = false), 3000);
+            } else {
+              this.errorResponse = error.response.data;
+            }
+          });
+      } else {
+        this.saveStudentContact(this.person.student.system_key, this.contact)
+          .then(() => {
+            this.$emit("contactUpdated");
+            contactModal.hide();
+          })
+          .catch((error) => {
+            if (error.response.status == 401) {
+              this.updatePermissionDenied = true;
+              this.errorResponsePermission = error.response.data;
+              setTimeout(() => (this.updatePermissionDenied = false), 3000);
+            } else {
+              this.errorResponse = error.response.data;
+            }
+          });
+      }
     },
     validateContactForm() {
       let is_invalid = false;

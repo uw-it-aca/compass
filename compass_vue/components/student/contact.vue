@@ -113,40 +113,63 @@
                   </template>
                 </td>
                 <td style="width: 20%" class="p-3 text-end">
-                  <!-- MARK: check if user matches override. not overriding. -->
-                  <template v-if="userName == userOverride">
-                    <AddEditContact
-                      v-if="contact.app_user.uwnetid == userName"
-                      :button-type="'link'"
-                      :person="person"
-                      :contact-id="contact.id"
-                      @contactUpdated="loadStudentContacts()"
-                      ><i class="bi bi-pencil text-dark me-2"></i
-                      >Edit</AddEditContact
-                    >
+                  <!-- MARK: user/student role functionality -->
+                  <template
+                    v-if="
+                      userRoles.includes(Role.User, Role.Student) &&
+                      inUserAccessGroup(contact)
+                    "
+                  >
+                    <!-- MARK: check if user matches override. not overriding. -->
+                    <template v-if="userName == userOverride">
+                      <AddEditContact
+                        v-if="contact.app_user.uwnetid == userName"
+                        :button-type="'link'"
+                        :person="person"
+                        :contact-id="contact.id"
+                        @contactUpdated="loadStudentContacts()"
+                        ><i class="bi bi-pencil text-dark me-2"></i
+                        >Edit</AddEditContact
+                      >
+                    </template>
+                    <!-- MARK: if not, user is overriding. show edit button for override user. -->
+                    <template v-else>
+                      <AddEditContact
+                        v-if="contact.app_user.uwnetid == userOverride"
+                        :button-type="'link'"
+                        :person="person"
+                        :contact-id="contact.id"
+                        @contactUpdated="loadStudentContacts()"
+                        ><i class="bi bi-pencil text-dark me-2"></i
+                        >Edit</AddEditContact
+                      >
+                    </template>
                   </template>
-                  <!-- MARK: if not, user is overriding. show edit button for override user. -->
-                  <template v-else>
-                    <AddEditContact
-                      v-if="contact.app_user.uwnetid == userOverride"
-                      :button-type="'link'"
-                      :person="person"
-                      :contact-id="contact.id"
-                      @contactUpdated="loadStudentContacts()"
-                      ><i class="bi bi-pencil text-dark me-2"></i
-                      >Edit</AddEditContact
-                    >
-                  </template>
-                  <DeleteContact
-                    v-show="
+
+                  <!-- MARK: manager(ES) role funtionality -->
+                  <template
+                    v-if="
                       userRoles.includes(Role.Manager) &&
                       inUserAccessGroup(contact)
                     "
-                    :person="person"
-                    :contact-id="contact.id"
-                    @contactDeleted="removeContact(contact.id)"
-                    ><i class="bi bi-trash text-danger me-2"></i>Delete
-                  </DeleteContact>
+                  >
+                    <ManagerEditContact
+                      :button-type="'link'"
+                      :person="person"
+                      :contact-id="contact.id"
+                      @contactUpdated="loadStudentContacts()"
+                    >
+                      <i class="bi bi-pencil text-danger me-2"></i
+                      ><span class="text-danger">Edit</span>
+                    </ManagerEditContact>
+                    <DeleteContact
+                      :button-type="'link'"
+                      :person="person"
+                      :contact-id="contact.id"
+                      @contactDeleted="removeContact(contact.id)"
+                      ><i class="bi bi-trash text-danger me-2"></i><span class="text-danger">Delete</span>
+                    </DeleteContact>
+                  </template>
                 </td>
               </tr>
             </tbody>
@@ -164,6 +187,7 @@
 import { Role } from "@/utils/roles.js";
 import dataMixin from "@/mixins/data_mixin.js";
 import AddEditContact from "@/components/add-contact.vue";
+import ManagerEditContact from "@/components/add-contact.vue";
 import DeleteContact from "@/components/delete-contact.vue";
 import { formatUTCToLocalDateAndTimeZone } from "@/utils/dates";
 
@@ -171,6 +195,7 @@ export default {
   mixins: [dataMixin],
   components: {
     AddEditContact,
+    ManagerEditContact,
     DeleteContact,
   },
   props: {
