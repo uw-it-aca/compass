@@ -5,11 +5,12 @@
 from datetime import datetime
 from unittest import TestCase
 from django.test import Client
+from django.core.exceptions import PermissionDenied
 from django.contrib.auth.models import User
 from unittest.mock import MagicMock, patch
 from compass.views.api.contact import ContactOMADView
 from compass.tests import ApiTest
-from compass.models import AccessGroup, Contact
+from compass.models import AccessGroup, Contact, AppUser
 from rest_framework.authtoken.models import Token
 
 
@@ -273,14 +274,21 @@ class ContactAPITest(ApiTest):
             },
             "system_key": "001111111"
         }
+        AppUser(uwnetid="jbothell").save()
         r = self.put_response('contact_edit_view',
-                              "javerage",
+                              "jbothell",
                               put_body,
                               contactid=1)
         self.assertEqual(r.status_code, 200)
         contact = Contact.objects.get(id=1)
         self.assertEqual(contact.notes, "test note")
         self.assertEqual(contact.app_user.uwnetid, "javerage")
+
+        r = self.put_response('contact_edit_view',
+                              "javerage",
+                              put_body,
+                              contactid=1)
+        self.assertEqual(r.status_code, 200)
 
     @patch('compass.dao.group.is_member_of_group', return_value=True)
     def test_post(self, mock_is_member):
