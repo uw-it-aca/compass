@@ -31,7 +31,7 @@
                   </div>
                   <div class="text-muted small">
                     <i class="bi bi-person-circle me-1"></i
-                    >{{ contact.app_user.uwnetid }} {{ contact.app_user }} --
+                    >{{ contact.app_user.uwnetid }} --
                     {{ contact.source }}
                     --
                     {{ contact.trans_id }}
