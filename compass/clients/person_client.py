@@ -110,7 +110,7 @@ class CompassPersonClient(UWPersonClient):
 
         person_data = cache.get(cache_key)
         if person_data is not None:
-            return person_data.from_dict()
+            return Person().from_dict(person_data)
 
         expires = getattr(settings, 'APPUSER_PERSON_EXPIRES', 60 * 60 * 24)
         person = self.get_person_by_uwnetid(
