@@ -84,9 +84,13 @@
                   formErrors.time ? 'is-invalid form-select' : 'form-select'
                 "
                 :disabled="
-                  (userRoles.includes(Role.User, Role.Student) &&
+                  (userRoles.includes(Role.User) &&
                     contact.contact_type == 1) ||
-                  (userRoles.includes(Role.User, Role.Student) &&
+                  (userRoles.includes(Role.Student) &&
+                    contact.contact_type == 1) ||
+                  (userRoles.includes(Role.User) &&
+                    contact.contact_type == 2) ||
+                  (userRoles.includes(Role.Student) &&
                     contact.contact_type == 2)
                 "
               >
@@ -100,9 +104,13 @@
                   <!-- MARK: disable contact_type if either qq/appointment for Advisers -->
                   <option
                     :disabled="
-                      (userRoles.includes(Role.User, Role.Student) &&
+                      (userRoles.includes(Role.User) &&
                         contactType.slug == 'quick-question') ||
-                      (userRoles.includes(Role.User, Role.Student) &&
+                      (userRoles.includes(Role.Student) &&
+                        contactType.slug == 'quick-question') ||
+                      (userRoles.includes(Role.User) &&
+                        contactType.slug == 'appointment') ||
+                      (userRoles.includes(Role.Student) &&
                         contactType.slug == 'appointment')
                     "
                     :value="contactType.id"
@@ -304,13 +312,14 @@ export default {
       var contactModal = Modal.getInstance(
         document.getElementById("contactModal" + this.contactId)
       );
-      if (this.contact.id !== undefined){
+      if (this.contact.id !== undefined) {
         this.updateStudentContact(this.contact)
           .then(() => {
             this.$emit("contactUpdated");
             contactModal.hide();
           })
-          .catch((error) => {q
+          .catch((error) => {
+            q;
             if (error.response.status == 401) {
               this.updatePermissionDenied = true;
               this.errorResponsePermission = error.response.data;
