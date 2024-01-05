@@ -117,8 +117,10 @@
                   <!-- MARK: user/student role functionality -->
                   <template
                     v-if="
-                      userRoles.includes(Role.User, Role.Student) &&
-                      inUserAccessGroup(contact)
+                      (userRoles.includes(Role.User) &&
+                        inUserAccessGroup(contact)) ||
+                      (userRoles.includes(Role.Student) &&
+                        inUserAccessGroup(contact))
                     "
                   >
                     <!-- MARK: check if user matches override. not overriding. -->
