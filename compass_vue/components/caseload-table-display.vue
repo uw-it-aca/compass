@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="person in persons" :key="person.uwnetid">
+        <tr v-for="person in sortedPersons" :key="person.uwnetid">
           <td class="ps-3">
             <profile-mini :person="person"></profile-mini>
           </td>
@@ -117,6 +117,13 @@ export default {
   },
   data() {
     return {};
+  },
+  computed: {
+    sortedPersons() {
+      return this.persons.sort(function(a, b){
+        return a.surname > b.surname ? 1 : -1;
+      });
+    },
   },
   methods: {
     getScholarshipData: function (person) {
