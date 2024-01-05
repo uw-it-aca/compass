@@ -23,6 +23,8 @@ import pytz
 
 
 class AppUserSerializer(serializers.ModelSerializer):
+    display_name = serializers.CharField(read_only=True)
+
     class Meta:
         model = AppUser
         fields = ["id", "uwnetid", "display_name"]
