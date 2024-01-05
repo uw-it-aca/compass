@@ -24,7 +24,8 @@ class AppUserManager(models.Manager):
         needed.
         """
         # request the current person object for the user
-        person = CompassPersonClient().get_person_by_uwnetid(uwnetid)
+        person = CompassPersonClient().get_person_by_uwnetid(
+            uwnetid, include_employee=False, include_student=False)
         # check the AppUser table to see if they have an existing entry
         user = None
         for netid in person.prior_uwnetids + [person.uwnetid]:
