@@ -9,3 +9,6 @@ class MockedCompassPersonClient(MockedUWPersonClient):
 
     def get_adviser_caseload(self, uwnetid):
         return self.get_persons_by_adviser_netid(uwnetid)
+
+    def get_appuser_by_uwnetid(self, uwnetid):
+        return self.get_person_by_uwnetid(uwnetid)

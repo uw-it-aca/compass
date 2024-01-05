@@ -1,7 +1,8 @@
 # Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-
+from django.conf import settings
+from django.core.cache import cache
 from uw_person_client import UWPersonClient
 from uw_person_client.components import Person, Student, Transcript, Degree
 from uw_person_client.exceptions import (
@@ -103,3 +104,16 @@ class CompassPersonClient(UWPersonClient):
 
         # sorting by display name, can't get it to work in SQL-Alchemy
         return sorted(persons.values(), key=lambda p: p.display_name)
+
+    def get_appuser_by_uwnetid(self, uwnetid):
+        cache_key = f'appuser_{uwnetid}'
+
+        person_data = cache.get(cache_key)
+        if person_data is not None:
+            return person_data.from_dict()
+
+        expires = getattr(settings, 'APPUSER_PERSON_EXPIRES', 60 * 60 * 24)
+        person = self.get_person_by_uwnetid(
+            uwnetid, include_employee=False, include_student=False)
+        cache.set(cache_key, person.to_dict(), timeout=expires)
+        return person
