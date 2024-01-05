@@ -25,7 +25,7 @@ import pytz
 class AppUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = AppUser
-        fields = ["id", "uwnetid"]
+        fields = ["id", "uwnetid", "display_name"]
         extra_kwargs = {
             "uwnetid": {"validators": []},
         }

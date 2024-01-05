@@ -10,12 +10,14 @@ class AppUserTest(TestCase):
     def test_upsert_create(self):
         user = AppUser.objects.upsert_appuser("javerage")
         self.assertEqual(user.uwnetid, "javerage")
+        self.assertEqual(user.display_name, "Jamesy McJamesy")
         self.assertEqual(len(AppUser.objects.filter(uwnetid="javerage")), 1)
 
     def test_upsert_update(self):
         AppUser(uwnetid="jadviser1").save()
         user = AppUser.objects.upsert_appuser("jadviser")
         self.assertEqual(user.uwnetid, "jadviser")
+        self.assertEqual(user.display_name, "Jay Adviser")
         self.assertEqual(len(AppUser.objects.filter(uwnetid="jadviser")), 1)
         self.assertRaises(AppUser.DoesNotExist,
                           AppUser.objects.get,

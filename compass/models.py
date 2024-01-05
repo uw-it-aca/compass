@@ -76,6 +76,12 @@ class AppUser(models.Model):
     def __str__(self):
         return f"{self.uwnetid}"
 
+    @property
+    def display_name(self):
+        if self.uwnetid:
+            person = CompassPersonClient().get_appuser_by_uwnetid(self.uwnetid)
+            return person.display_name
+
 
 class Student(models.Model):
     """
