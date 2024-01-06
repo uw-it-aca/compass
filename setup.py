@@ -39,6 +39,7 @@ setup(
         'urllib3~=1.25',
         'uw-person-client~=1.2',
         'python-dateutil~=2.8',
+        'lxml==4.9.4'
     ],
     license="Apache License, Version 2.0",
     description="A application for managing student advising information.",

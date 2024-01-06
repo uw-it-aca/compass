@@ -31,7 +31,8 @@
                   </div>
                   <div class="text-muted small">
                     <i class="bi bi-person-circle me-1"></i
-                    >{{ contact.app_user.uwnetid }} -- {{ contact.source }}
+                    >{{ contact.app_user.uwnetid }} --
+                    {{ contact.source }}
                     --
                     {{ contact.trans_id }}
                   </div>
@@ -84,7 +85,7 @@
 
                   <div v-if="contact.notes" class="mt-3">
                     <span class="small text-muted visually-hidden">Notes</span>
-                    <p class="text-dark small">
+                    <p class="text-dark small text-break">
                       {{ contact.notes }}
                     </p>
                   </div>
@@ -95,7 +96,7 @@
                     <span class="small text-muted visually-hidden"
                       >Actions</span
                     >
-                    <p class="text-muted small">
+                    <p class="text-muted small text-break">
                       {{ contact.actions }}
                     </p>
                   </div>
@@ -116,8 +117,10 @@
                   <!-- MARK: user/student role functionality -->
                   <template
                     v-if="
-                      userRoles.includes(Role.User, Role.Student) &&
-                      inUserAccessGroup(contact)
+                      (userRoles.includes(Role.User) &&
+                        inUserAccessGroup(contact)) ||
+                      (userRoles.includes(Role.Student) &&
+                        inUserAccessGroup(contact))
                     "
                   >
                     <!-- MARK: check if user matches override. not overriding. -->
@@ -167,7 +170,8 @@
                       :person="person"
                       :contact-id="contact.id"
                       @contactDeleted="removeContact(contact.id)"
-                      ><i class="bi bi-trash text-danger me-2"></i><span class="text-danger">Delete</span>
+                      ><i class="bi bi-trash text-danger me-2"></i
+                      ><span class="text-danger">Delete</span>
                     </DeleteContact>
                   </template>
                 </td>

@@ -1,4 +1,4 @@
-# Copyright 2023 UW-IT, University of Washington
+# Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
@@ -23,9 +23,11 @@ import pytz
 
 
 class AppUserSerializer(serializers.ModelSerializer):
+    display_name = serializers.CharField()
+
     class Meta:
         model = AppUser
-        fields = ["id", "uwnetid"]
+        fields = ["id", "uwnetid", "display_name"]
         extra_kwargs = {
             "uwnetid": {"validators": []},
         }

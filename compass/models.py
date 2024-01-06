@@ -1,4 +1,4 @@
-# Copyright 2023 UW-IT, University of Washington
+# Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
@@ -24,7 +24,8 @@ class AppUserManager(models.Manager):
         needed.
         """
         # request the current person object for the user
-        person = CompassPersonClient().get_person_by_uwnetid(uwnetid)
+        person = CompassPersonClient().get_person_by_uwnetid(
+            uwnetid, include_employee=False, include_student=False)
         # check the AppUser table to see if they have an existing entry
         user = None
         for netid in person.prior_uwnetids + [person.uwnetid]:
@@ -75,6 +76,12 @@ class AppUser(models.Model):
 
     def __str__(self):
         return f"{self.uwnetid}"
+
+    @property
+    def display_name(self):
+        if self.uwnetid:
+            person = CompassPersonClient().get_appuser_by_uwnetid(self.uwnetid)
+            return person.display_name
 
 
 class Student(models.Model):

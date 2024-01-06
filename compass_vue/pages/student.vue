@@ -133,7 +133,11 @@
                       <StudentContact :person="person"></StudentContact>
                     </div>
                     <div class="col-xl-3">
-                      <StudentVisits :person="person"></StudentVisits>
+                      <!-- MARK: only show visits to OMAD access group -->
+                      <StudentVisits
+                        v-show="inUserAccessGroup()"
+                        :person="person"
+                      ></StudentVisits>
                     </div>
                   </div>
                 </axdd-tabs-panel>
@@ -222,6 +226,7 @@ export default {
       isError: false,
       accessGroups: [],
       userRoles: document.body.getAttribute("data-user-role").split(","),
+      userAccessGroup: document.body.getAttribute("data-user-access-group"),
       Role: Role,
     };
   },
@@ -266,6 +271,12 @@ export default {
           this.accessGroups = response.data;
         }
       });
+    },
+    inUserAccessGroup: function () {
+      // check to see if userAccessGroup is in accessGroups
+      return this.accessGroups.some(
+        (group) => group.access_group_id === this.userAccessGroup
+      );
     },
   },
 };
