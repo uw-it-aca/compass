@@ -257,7 +257,7 @@ class ContactOMADView(TokenAPIView):
             raise ValueError("Check-in date not specified")
         else:
             try:
-                dt = parser.parse(checkin_date_str)
+                dt = parser.parse(checkin_date_str, tzinfos={'PDT': 'UTC-7'})
                 if dt.tzinfo is None:
                     raise ValueError("Invalid check-in date, missing timezone")
                 return dt

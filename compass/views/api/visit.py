@@ -83,7 +83,7 @@ class VisitOMADView(TokenAPIView):
             return None
 
         try:
-            dt = parser.parse(date_str)
+            dt = parser.parse(date_str, tzinfos={'PDT': 'UTC-7'})
             if dt.tzinfo is None:
                 raise ValueError("Invalid check-in date, missing timezone")
             return dt.astimezone(UTC)
