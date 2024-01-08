@@ -7,7 +7,7 @@ from django.db.utils import IntegrityError
 from django.utils.text import slugify
 from django.utils.timezone import utc
 from simple_history.models import HistoricalRecords
-from compass.clients import CompassPersonClient
+from compass.clients import CompassPersonClient, PersonNotFoundException
 from compass.dao.group import is_group_member
 from compass.dao import current_datetime
 from datetime import datetime, timedelta
@@ -80,8 +80,12 @@ class AppUser(models.Model):
     @property
     def display_name(self):
         if self.uwnetid:
-            person = CompassPersonClient().get_appuser_by_uwnetid(self.uwnetid)
-            return person.display_name
+            try:
+                person = CompassPersonClient().get_appuser_by_uwnetid(
+                    self.uwnetid)
+                return person.display_name
+            except PersonNotFoundException:
+                return self.uwnetid
 
 
 class Student(models.Model):
