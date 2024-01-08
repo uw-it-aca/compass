@@ -115,9 +115,7 @@
                     </p>
                   </div>
 
-                  <div
-                    class="mt-4 small d-flex justify-content-between"
-                  >
+                  <div class="mt-4 small d-flex justify-content-between">
                     <div class="text-secondary">
                       {{
                         formatUTCToLocalDateAndTimeZone(
