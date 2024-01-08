@@ -2,9 +2,12 @@ import dayjs from "dayjs";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import relativeTime from "dayjs/plugin/relativeTime";
+
 dayjs.extend(localizedFormat);
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(relativeTime);
 
 const LOCAL_TIMEZONE = "America/Los_Angeles";
 
@@ -65,6 +68,11 @@ function getMinutesApart(startDate, endDate) {
   return dayjs(endDate).diff(startDate, "minutes");
 }
 
+function getTimeFromNow(date) {
+  return dayjs().to(dayjs(date));
+  //return dayjs().fromNow(date);
+}
+
 export {
   formatDate,
   formatUTCToLocalDate,
@@ -73,4 +81,5 @@ export {
   getYesterday,
   getWeeksApart,
   getMinutesApart,
+  getTimeFromNow,
 };

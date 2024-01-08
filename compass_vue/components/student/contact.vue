@@ -18,26 +18,26 @@
           <table class="table m-0">
             <thead class="table-light text-muted small">
               <tr>
-                <th class="ps-3">Date</th>
-                <th>Details</th>
+                <th class="ps-3">Details</th>
                 <th>&nbsp;</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="contact in contacts" :key="contact.id">
-                <td scope="row" class="ps-3" style="width: 25%">
-                  <div class="small">
-                    {{ contactDate(contact.checkin_date) }}
+                <td class="ps-3 align-bottom">
+                  <div class="small d-flex justify-content-between mb-4">
+                    <div>
+                      <strong>{{ contact.app_user.display_name }}</strong>
+                      <span class="text-secondary ms-1"
+                        >({{ contact.app_user.uwnetid }})</span
+                      >
+                    </div>
+                    <div class="text-secondary">
+                      <i class="bi bi-calendar-event text-gray me-1"></i>
+                      {{ getTimeFromNow(contact.checkin_date) }}
+                    </div>
                   </div>
-                  <div class="text-muted small">
-                    <i class="bi bi-person-circle me-1"></i
-                    >{{ contact.app_user.uwnetid }} --
-                    {{ contact.source }}
-                    --
-                    {{ contact.trans_id }}
-                  </div>
-                </td>
-                <td class="align-bottom">
+
                   <template v-if="contact.contact_type">
                     <div
                       v-if="contact.contact_type.slug == 'parent'"
@@ -70,7 +70,7 @@
 
                   <ul
                     v-if="contact.contact_topics"
-                    class="list-unstyled mt-2 mb-0"
+                    class="list-unstyled mt-1 mb-0"
                   >
                     <template v-for="topic in contact.contact_topics">
                       <li
@@ -83,8 +83,24 @@
                     </template>
                   </ul>
 
+                  <template v-if="contact.contact_type">
+                    <div
+                      v-if="contact.contact_type.slug == 'parent'"
+                      class="my-3"
+                    >
+                      <span class="small text-muted visually-hidden"
+                        >Parent</span
+                      >
+                      <div class="text-danger fs-8">
+                        <i class="bi bi-exclamation-octagon-fill me-1"></i
+                        >Parent contacts should not be discussed this contact
+                        with their student.
+                      </div>
+                    </div>
+                  </template>
+
                   <div v-if="contact.notes" class="mt-3">
-                    <span class="small text-muted visually-hidden">Notes</span>
+                    <span class="small visually-hidden">Notes</span>
                     <p class="text-dark small text-break">
                       {{ contact.notes }}
                     </p>
@@ -93,27 +109,30 @@
                     v-if="contact.actions"
                     class="border-top border-light pt-3"
                   >
-                    <span class="small text-muted visually-hidden"
-                      >Actions</span
-                    >
-                    <p class="text-muted small text-break">
+                    <span class="small visually-hidden">Actions</span>
+                    <p class="small text-break">
                       {{ contact.actions }}
                     </p>
                   </div>
-                  <template v-if="contact.contact_type">
-                    <div v-if="contact.contact_type.slug == 'parent'">
-                      <span class="small text-muted visually-hidden"
-                        >Parent</span
-                      >
-                      <div class="text-danger fs-8">
-                        <i class="bi bi-exclamation-octagon-fill me-1"></i
-                        >Parent contacts should be treated as private. Do not
-                        discuss this contact with their student.
-                      </div>
+
+                  <div
+                    class="mt-4 small d-flex justify-content-between"
+                  >
+                    <div class="text-secondary">
+                      {{
+                        formatUTCToLocalDateAndTimeZone(
+                          contact.checkin_date,
+                          "LLL"
+                        )
+                      }}
                     </div>
-                  </template>
+                    <div v-show="contact.source == 'Checkin'">
+                      <i class="bi bi-journal-check text-gray me-1"></i
+                      >{{ contact.source }} {{ contact.trans_id }}
+                    </div>
+                  </div>
                 </td>
-                <td style="width: 20%" class="p-3 text-end">
+                <td style="width: 25%" class="p-3 text-end">
                   <!-- MARK: user/student role functionality -->
                   <template
                     v-if="
@@ -193,7 +212,7 @@ import dataMixin from "@/mixins/data_mixin.js";
 import AddEditContact from "@/components/add-contact.vue";
 import ManagerEditContact from "@/components/add-contact.vue";
 import DeleteContact from "@/components/delete-contact.vue";
-import { formatUTCToLocalDateAndTimeZone } from "@/utils/dates";
+import { formatUTCToLocalDateAndTimeZone, getTimeFromNow } from "@/utils/dates";
 
 export default {
   mixins: [dataMixin],
@@ -208,7 +227,12 @@ export default {
       required: true,
     },
   },
-  setup() {},
+  setup() {
+    return {
+      formatUTCToLocalDateAndTimeZone,
+      getTimeFromNow,
+    };
+  },
   data() {
     return {
       contacts: {},
@@ -231,9 +255,6 @@ export default {
           }
         }
       );
-    },
-    contactDate: function (date) {
-      return formatUTCToLocalDateAndTimeZone(date, "LLL");
     },
     inUserAccessGroup: function (contact) {
       return contact.access_group.some(
