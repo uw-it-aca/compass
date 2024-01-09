@@ -427,3 +427,16 @@ class VisitType(BaseAccessGroupContent):
     name = models.CharField(unique=True, max_length=50)
     slug = models.SlugField(unique=True, max_length=50)
     editable = models.BooleanField(default=False)
+
+
+class OMADContactQueue(models.Model):
+    """
+    Stores raw contacts from the OMAD check-in system for processing into
+    Contacts.  Successfully created contacts will be removed from this table.
+    """
+
+    json = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    process_attempted_date = models.DateTimeField(null=True)
+    processing_error = models.TextField(null=True)
+    processing_attempts = models.IntegerField(default=0)
