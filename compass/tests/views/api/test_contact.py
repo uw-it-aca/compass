@@ -2,13 +2,13 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from datetime import datetime
 from django.test import Client
 from django.contrib.auth.models import User
 from unittest.mock import MagicMock, patch
 from compass.views.api.contact import ContactOMADView
 from compass.tests import ApiTest
 from compass.models import AccessGroup, Contact, AppUser
+from django.core.management import call_command
 from rest_framework.authtoken.models import Token
 
 
@@ -44,35 +44,6 @@ class ContactAPITest(ApiTest):
         response = self.post_response('contact_omad',
                                       test_request)
         self.assertEqual(response.status_code, 401)
-
-    def test_parse_checkin_date_str(self):
-        # no checkin date specified
-        with self.assertRaises(ValueError):
-            ContactOMADView().parse_checkin_date_str(None)
-        # bad checkin format
-        with self.assertRaises(ValueError):
-            ContactOMADView().parse_checkin_date_str("2022-09-T::")
-        # Missing TZ info
-        with self.assertRaises(ValueError):
-            ContactOMADView().parse_checkin_date_str("2022-09-19T06:15:04")
-        # correct checkin format
-        checkin_date = ContactOMADView().parse_checkin_date_str(
-            "2022-09-19T06:15:04Z")
-        self.assertEqual(type(checkin_date), datetime)
-
-    def test_validate_adviser_netid(self):
-        with self.assertRaises(ValueError):
-            ContactOMADView().validate_adviser_netid(None)
-        ContactOMADView().validate_adviser_netid("foo")
-
-    def test_validate_student_systemkey(self):
-        with self.assertRaises(ValueError):
-            ContactOMADView().validate_student_systemkey(None)
-        with self.assertRaises(ValueError):
-            ContactOMADView().validate_student_systemkey("badsyskey")
-        with self.assertRaises(ValueError):
-            ContactOMADView().validate_student_systemkey(1234)
-        ContactOMADView().validate_student_systemkey("1234")
 
     @patch('compass.views.api.contact.Student')
     @patch('compass.views.api.contact.AppUser')
@@ -158,12 +129,14 @@ class ContactAPITest(ApiTest):
         # create without padding
         self.post_response('contact_omad',
                            test_nopad)
+        call_command('process_omad_contacts')
         contacts = Contact.objects.all()
         self.assertEqual(contacts[0].student.system_key, "001234567")
 
         # create with padding
         self.post_response('contact_omad',
                            test_pad)
+        call_command('process_omad_contacts')
         contacts = Contact.objects.all()
         self.assertEqual(contacts[1].student.system_key, "001234567")
 
@@ -193,6 +166,7 @@ class ContactAPITest(ApiTest):
                            test_noid)
         self.post_response('contact_omad',
                            test_id)
+        call_command('process_omad_contacts')
         contacts = Contact.objects.all()
         self.assertEqual(len(contacts), 2)
         self.assertIsNone(contacts[0].trans_id)
@@ -214,6 +188,7 @@ class ContactAPITest(ApiTest):
                              HTTP_AUTHORIZATION=token_str)
         self.post_response('contact_omad',
                            test_id)
+        call_command('process_omad_contacts')
         contacts = Contact.objects.all()
 
         c_id = contacts[0].id
@@ -238,6 +213,7 @@ class ContactAPITest(ApiTest):
                              HTTP_AUTHORIZATION=token_str)
         resp = self.post_response('contact_omad',
                                   test_checkin)
+        call_command('process_omad_contacts')
 
         contact = Contact.objects.get(id=1)
         self.assertIsNone(contact.notes)

@@ -14,7 +14,6 @@ import traceback
 logger = getLogger(__name__)
 
 
-
 class Command(BaseCommand):
     help = "process OMAD contacts"
 
@@ -33,7 +32,7 @@ class Command(BaseCommand):
             try:
                 self.process_contact(contact)
             except Exception as e:
-                logger.exception(f"Error processing contact {contact.id}: {e}")
+                logger.exception(f"Error processing contact {contact.id}")
                 contact.processing_attempts += 1
                 contact.process_attempted_date = datetime.now()
                 contact.processing_error = repr(e)
