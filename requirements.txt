@@ -1,1 +1,2 @@
+uw-person-client @ git+https://github.com/uw-it-aca/uw-person-client@bug/major-mapping-errors
 -e .
