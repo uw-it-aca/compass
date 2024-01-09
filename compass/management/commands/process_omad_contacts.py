@@ -9,10 +9,10 @@ from compass.models import (
     AccessGroup, AppUser, Contact, Student)
 from logging import getLogger
 from compass.dao.contact import (validate_contact_post_data,
-                                 pad_student_systemkey,
-                                 parse_checkin_date_str,
-                                 parse_contact_type_str)
+                                 pad_student_systemkey)
+import traceback
 logger = getLogger(__name__)
+
 
 
 class Command(BaseCommand):
@@ -33,10 +33,11 @@ class Command(BaseCommand):
             try:
                 self.process_contact(contact)
             except Exception as e:
-                logger.error(f"Error processing contact {contact.id}: {e}")
+                logger.exception(f"Error processing contact {contact.id}: {e}")
                 contact.processing_attempts += 1
                 contact.process_attempted_date = datetime.now()
                 contact.processing_error = repr(e)
+                contact.stack_trace = traceback.format_exc()
                 contact.save()
                 continue
             contact.delete()
@@ -52,10 +53,6 @@ class Command(BaseCommand):
             contact_dict["adviser_netid"])
 
         # Parse/format data
-        contact_dict["checkin_date"] = parse_checkin_date_str(
-            contact_dict.get("checkin_date"))
-        contact_dict["contact_type"] = parse_contact_type_str(
-            contact_dict.get("contact_type"), access_group)
         student_systemkey = pad_student_systemkey(
             contact_dict["student_systemkey"])
 

@@ -439,4 +439,10 @@ class OMADContactQueue(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     process_attempted_date = models.DateTimeField(null=True)
     processing_error = models.TextField(null=True)
+    stack_trace = models.TextField(null=True)
     processing_attempts = models.IntegerField(default=0)
+
+    def __str__(self):
+        return f"#{self.id} created: {self.created} " \
+               f"attempts: {self.processing_attempts} " \
+               f"err: {self.processing_error}"
