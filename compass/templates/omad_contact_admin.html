@@ -1,0 +1,73 @@
+{% extends 'supporttools/base.html' %}
+{% load static %}
+
+{% block content %}
+  <style>
+    table {
+      border-collapse: collapse;
+      table-layout: fixed;
+      width: 100%;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+    tr:nth-child(even) {background-color: #f2f2f2;}
+    details {
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      padding: 0.5em 0.5em 0;
+    }
+
+    summary {
+      font-weight: bold;
+      margin: -0.5em -0.5em 0;
+      padding: 0.5em;
+    }
+
+    details[open] {
+      padding: 0.5em;
+    }
+
+    details[open] summary {
+      border-bottom: 1px solid #aaa;
+      margin-bottom: 0.5em;
+    }
+  </style>
+  <h1>OMAD Contact Processing Queue</h1>
+  <table>
+    <colgroup>
+      <col style="width: auto">
+      <col style="width: auto">
+      <col style="width: auto">
+      <col style="width: auto">
+      <col style="width: auto">
+      <col style="width: 60%">
+    </colgroup>
+    <tr>
+      <th>ID</th>
+      <th>Created</th>
+      <th>Processing attempts</th>
+      <th>Last attempted</th>
+      <th>Last error</th>
+      <th>Contact JSON</th>
+    </tr>
+    {% for contact in contacts %}
+      <tr>
+        <td>{{ contact.id }}</td>
+        <td>{{ contact.created }}</td>
+        <td>{{ contact.processing_attempts }}</td>
+        <td>{{ contact.process_attempted_date }}</td>
+        <td>{{ contact.processing_error }}</td>
+        <td>
+          {{ contact.json }}
+          <details>
+            <summary>Show traceback</summary>
+            <pre>{{ contact.stack_trace }}</pre>
+          </details>
+
+        </td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock content %}

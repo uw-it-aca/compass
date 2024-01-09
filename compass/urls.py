@@ -7,6 +7,7 @@ from compass.admin import admin_site
 from django.conf import settings
 from django.views.generic import TemplateView
 from compass.views.pages import LandingView
+from compass.views.admin.contact import OMADContactAdminView
 from compass.views.api.student import (
     StudentContactsView,
     StudentSchedulesView,
@@ -133,6 +134,11 @@ urlpatterns += [
         r"^api/internal/photo/(?P<photo_key>[a-z0-9]*)/$",
         PhotoView.as_view(),
         name="photo",
+    ),
+    re_path(
+        r"^api/internal/support/omad_contact/$",
+        OMADContactAdminView.as_view(),
+        name="omad_contact_admin",
     ),
     re_path(
         r"^api/internal/support/$",
