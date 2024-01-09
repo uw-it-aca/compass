@@ -57,7 +57,8 @@ class CompassPersonClient(UWPersonClient):
              self.DB.Student.enroll_status_desc,
              self.DB.Student.id,
              self.DB.Transcript.scholarship_type,
-             self.DB.Transcript.scholarship_desc)\
+             self.DB.Transcript.scholarship_desc,
+             self.DB.Person.surname)\
             .join(self.DB.Person)\
             .join(self.DB.StudentToAdviser)\
             .join(self.DB.Adviser)\
@@ -94,6 +95,7 @@ class CompassPersonClient(UWPersonClient):
             latest_transcript = Transcript()
             latest_transcript.scholarship_type = item[17]
             latest_transcript.scholarship_desc = item[18]
+            person.surname = item[19]
             student.transcripts = [latest_transcript]
             student.degrees = []
             person.student = student
@@ -102,8 +104,8 @@ class CompassPersonClient(UWPersonClient):
         for degree in self.get_degrees(persons.keys()):
             persons[degree.student_id].student.degrees.append(degree)
 
-        # sorting by display name, can't get it to work in SQL-Alchemy
-        return sorted(persons.values(), key=lambda p: p.display_name)
+        # sorting by surname, can't get it to work in SQL-Alchemy
+        return sorted(persons.values(), key=lambda p: p.surname)
 
     def get_appuser_by_uwnetid(self, uwnetid):
         cache_key = f'appuser_{uwnetid}'
