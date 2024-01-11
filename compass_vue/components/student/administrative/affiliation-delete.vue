@@ -69,11 +69,10 @@
 </template>
 
 <script>
-import dataMixin from "@/mixins/data_mixin.js";
 import { Modal } from "bootstrap";
+import { deleteStudentAffiliation, saveStudentContact } from "@/utils/data";
 
 export default {
-  mixins: [dataMixin],
   emits: ["affiliationsUpdated"],
   props: {
     person: {
@@ -88,6 +87,12 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return {
+      deleteStudentAffiliation,
+      saveStudentContact
+    };
   },
   data() {
     return {

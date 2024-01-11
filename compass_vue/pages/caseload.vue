@@ -167,15 +167,19 @@ import SearchStudent from "@/components/search-student.vue";
 import CaseloadTableDisplay from "@/components/caseload-table-display.vue";
 import CaseloadTableLoading from "@/components/caseload-table-loading.vue";
 import Layout from "@/layout.vue";
-import dataMixin from "@/mixins/data_mixin.js";
+import { getAdviserCaseload } from "@/utils/data";
 
 export default {
-  mixins: [dataMixin],
   components: {
     layout: Layout,
     "search-student": SearchStudent,
     "table-display": CaseloadTableDisplay,
     "table-loading": CaseloadTableLoading,
+  },
+  setup() {
+    return {
+      getAdviserCaseload,
+    };
   },
   data() {
     return {
@@ -229,6 +233,7 @@ export default {
     };
   },
   created: function () {
+    // setup() exposed properties can be accessed on `this`
     this.loadAdviserCaseload(this.adviserNetId);
   },
   computed: {

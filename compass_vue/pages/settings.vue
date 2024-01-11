@@ -36,15 +36,19 @@
 
 <script>
 import Layout from "@/layout.vue";
-import dataMixin from "@/mixins/data_mixin.js";
+import { getAccessGroups } from "@/utils/data";
 
 import SettingsForm from "@/components/settings/settings-form.vue";
 
 export default {
-  mixins: [dataMixin],
   components: {
     layout: Layout,
     SettingsForm,
+  },
+  setup() {
+    return {
+      getAccessGroups,
+    };
   },
   data() {
     return {
@@ -58,6 +62,7 @@ export default {
   },
   methods: {
     loadAccessGroups: function () {
+      // setup() exposed properties can be accessed on `this`
       this.getAccessGroups().then((response) => {
         if (response.data) {
           this.accessGroups = response.data;

@@ -120,12 +120,15 @@
 </template>
 
 <script>
-import dataMixin from "@/mixins/data_mixin.js";
 import { Modal } from "bootstrap";
-import { getCohorts } from "@/utils/cohorts.js";
+import { getCohorts } from "@/utils/cohorts";
+import {
+  clearOverride,
+  saveStudentAffiliation,
+  saveStudentContact,
+} from "@/utils/data";
 
 export default {
-  mixins: [dataMixin],
   emits: ["affiliationsUpdated"],
   props: {
     person: {
@@ -144,6 +147,13 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return {
+      clearOverride,
+      saveStudentAffiliation,
+      saveStudentContact,
+    };
   },
   data() {
     return {
