@@ -205,15 +205,14 @@
 </template>
 
 <script>
-import { Role } from "@/utils/roles.js";
-import dataMixin from "@/mixins/data_mixin.js";
 import AddEditContact from "@/components/add-contact.vue";
 import ManagerEditContact from "@/components/add-contact.vue";
 import DeleteContact from "@/components/delete-contact.vue";
+import { Role } from "@/utils/roles";
 import { formatUTCToLocalDateAndTimeZone, getTimeFromNow } from "@/utils/dates";
+import { getStudentContacts } from "@/utils/data";
 
 export default {
-  mixins: [dataMixin],
   components: {
     AddEditContact,
     ManagerEditContact,
@@ -229,6 +228,7 @@ export default {
     return {
       formatUTCToLocalDateAndTimeZone,
       getTimeFromNow,
+      getStudentContacts,
     };
   },
   data() {

@@ -124,11 +124,10 @@
 </template>
 
 <script>
-import dataMixin from "@/mixins/data_mixin.js";
 import { translateMilitaryTime } from "@/utils/translations";
+import { getStudentSchedules } from "@/utils/data";
 
 export default {
-  mixins: [dataMixin],
   components: {},
   props: {
     person: {
@@ -137,7 +136,10 @@ export default {
     },
   },
   setup() {
-    return { translateMilitaryTime };
+    return {
+      translateMilitaryTime,
+      getStudentSchedules,
+    };
   },
   data() {
     return {

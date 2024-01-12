@@ -22,16 +22,20 @@
 </template>
 
 <script>
-import dataMixin from "@/mixins/data_mixin.js";
+import { getStudentDetail } from "@/utils/data";
 
 export default {
-  mixins: [dataMixin],
   props: {
     error: {
       type: Boolean,
       required: false,
       default: false,
     },
+  },
+  setup() {
+    return {
+      getStudentDetail,
+    };
   },
   data() {
     return {

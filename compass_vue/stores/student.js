@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
-import dataMixin from "@/mixins/data_mixin.js";
+import { getStudentTranscripts } from "@/utils/data";
 
 export const useStudentStore = defineStore({
   id: "student",
   state: () => {
     return {
+      getStudentTranscripts,
       studentData: {},
     };
   },
@@ -13,11 +14,9 @@ export const useStudentStore = defineStore({
     fetchStudentTranscripts(uwregid) {
       if (!Object.prototype.hasOwnProperty.call(this.studentData, uwregid)) {
         this.studentData[uwregid] = {
-          request: dataMixin.methods
-            .getStudentTranscripts(uwregid)
-            .then((response) => {
-              this.studentData[uwregid].data = response.data;
-            }),
+          request: this.getStudentTranscripts(uwregid).then((response) => {
+            this.studentData[uwregid].data = response.data;
+          }),
         };
       }
       return this.studentData[uwregid].request;

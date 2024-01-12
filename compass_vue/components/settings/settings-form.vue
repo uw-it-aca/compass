@@ -80,10 +80,9 @@
 </template>
 
 <script>
-import dataMixin from "@/mixins/data_mixin.js";
+import { getSettings, saveSettings } from "@/utils/data";
 
 export default {
-  mixins: [dataMixin],
   props: {
     settingLabel: {
       type: String,
@@ -99,6 +98,12 @@ export default {
     },
   },
   components: {},
+  setup() {
+    return {
+      getSettings,
+      saveSettings,
+    };
+  },
   data() {
     return {
       settings: [],

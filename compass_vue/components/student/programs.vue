@@ -69,11 +69,10 @@
 </template>
 
 <script>
-import dataMixin from "@/mixins/data_mixin.js";
 import { useAffiliationStore } from "@/stores/affiliations";
+import { saveStudent } from "@/utils/data";
 
 export default {
-  mixins: [dataMixin],
   props: {
     person: {
       type: Object,
@@ -81,6 +80,13 @@ export default {
     },
   },
   components: {},
+  setup() {
+    const storeAffiliations = useAffiliationStore();
+    return {
+      storeAffiliations,
+      saveStudent,
+    };
+  },
   data() {
     return {
       groupedPrograms: this.person.student.compass_group_affiliations,
@@ -90,10 +96,6 @@ export default {
       userName: document.body.getAttribute("data-user-netid"),
       userOverride: document.body.getAttribute("data-user-override"),
     };
-  },
-  setup() {
-    const storeAffiliations = useAffiliationStore();
-    return { storeAffiliations };
   },
   created: function () {
     this.loadPrograms();

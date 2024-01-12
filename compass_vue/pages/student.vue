@@ -176,9 +176,7 @@
 </template>
 
 <script>
-import { Role } from "@/utils/roles.js";
 import Layout from "@/layout.vue";
-import dataMixin from "@/mixins/data_mixin.js";
 import StudentProfile from "@/components/student/profile.vue";
 import StudentProfileLoading from "@/components/student/profile-loading.vue";
 import StudentAcademics from "@/components/student/academics.vue";
@@ -191,9 +189,10 @@ import StudentAdviser from "@/components/student/adviser.vue";
 import StudentVisits from "@/components/student/visits.vue";
 import SearchStudent from "@/components/search-student.vue";
 import AffiliationAddEdit from "@/components/student/administrative/affiliation.vue";
+import { Role } from "@/utils/roles";
+import { getStudentDetail, getAccessGroups } from "@/utils/data";
 
 export default {
-  mixins: [dataMixin],
   inject: ["mq"],
   components: {
     layout: Layout,
@@ -218,6 +217,13 @@ export default {
       this.loadStudent(this.$route.params.id);
       //}, 3000);
     }
+  },
+  // composition api
+  setup() {
+    return {
+      getStudentDetail,
+      getAccessGroups,
+    };
   },
   data() {
     return {
@@ -248,6 +254,7 @@ export default {
   //  },
   methods: {
     loadStudent: function (studentNetID) {
+      // setup() exposed properties can be accessed on `this`
       this.getStudentDetail(studentNetID)
         .then((response) => {
           if (response.data) {
@@ -266,6 +273,7 @@ export default {
         });
     },
     loadAccessGroups: function () {
+      // setup() exposed properties can be accessed on `this`
       this.getAccessGroups().then((response) => {
         if (response.data) {
           this.accessGroups = response.data;

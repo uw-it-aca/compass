@@ -41,17 +41,20 @@
 import SearchStudent from "@/components/search-student.vue";
 import CheckInTableLoading from "@/components/checkin-table-loading.vue";
 import CheckInTableDisplay from "@/components/checkin-table-display.vue";
-
 import Layout from "@/layout.vue";
-import dataMixin from "@/mixins/data_mixin.js";
+import { getAdviserCheckIns } from "@/utils/data";
 
 export default {
-  mixins: [dataMixin],
   components: {
     layout: Layout,
     "search-student": SearchStudent,
     "table-loading": CheckInTableLoading,
     "table-display": CheckInTableDisplay,
+  },
+  setup() {
+    return {
+      getAdviserCheckIns,
+    };
   },
   data() {
     return {
@@ -70,6 +73,7 @@ export default {
   methods: {
     loadAdviserCheckInsList: function (netid) {
       let _this = this;
+      // setup() exposed properties can be accessed on `this`
       this.getAdviserCheckIns(netid).then((response) => {
         if (response.data) {
           _this.contacts = response.data;
