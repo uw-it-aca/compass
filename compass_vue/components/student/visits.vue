@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import dataMixin from "@/mixins/data_mixin.js";
+import { getStudentVisits } from "@/utils/data";
 import {
   formatUTCToLocalDate,
   formatUTCToLocalDateAndTimeZone,
@@ -46,13 +46,17 @@ import {
 } from "@/utils/dates.js";
 
 export default {
-  mixins: [dataMixin],
   components: {},
   props: {
     person: {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return {
+      getStudentVisits,
+    };
   },
   data() {
     return {

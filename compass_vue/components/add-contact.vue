@@ -238,12 +238,19 @@
 </template>
 
 <script>
-import dataMixin from "@/mixins/data_mixin.js";
+import {
+  getStudentContactTopics,
+  getStudentContactTypes,
+  getStudentContactMethods,
+  getStudentContact,
+  saveStudentContact,
+  updateStudentContact,
+} from "@/utils/data";
+
 import { Modal } from "bootstrap";
 import { Role } from "@/utils/roles";
 
 export default {
-  mixins: [dataMixin],
   emits: ["contactUpdated"],
   props: {
     buttonType: {
@@ -258,6 +265,16 @@ export default {
       type: Number,
       default: null,
     },
+  },
+  setup() {
+    return {
+      getStudentContactTopics,
+      getStudentContactTypes,
+      getStudentContactMethods,
+      getStudentContact,
+      saveStudentContact,
+      updateStudentContact,
+    };
   },
   data() {
     return {
@@ -319,7 +336,6 @@ export default {
             contactModal.hide();
           })
           .catch((error) => {
-            q;
             if (error.response.status == 401) {
               this.updatePermissionDenied = true;
               this.errorResponsePermission = error.response.data;

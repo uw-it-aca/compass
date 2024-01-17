@@ -36,17 +36,26 @@
 </template>
 
 <script>
-import dataMixin from "@/mixins/data_mixin.js";
-import { formatDate, getMinutesApart } from "@/utils/dates.js";
+import {
+  getEligibilities,
+  getStudentEligibility,
+  setStudentEligibility,
+} from "@/utils/data";
 
 export default {
-  mixins: [dataMixin],
   components: {},
   props: {
     person: {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return {
+      getEligibilities,
+      getStudentEligibility,
+      setStudentEligibility,
+    };
   },
   data() {
     return {

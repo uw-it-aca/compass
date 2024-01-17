@@ -45,11 +45,10 @@
 import QuarterWeek from "@/components/_common/quarter-week.vue";
 import NavMenu from "@/components/nav-menu.vue";
 import NavMessage from "@/components/nav-message.vue";
-import dataMixin from "@/mixins/data_mixin.js";
+import { clearOverride } from "@/utils/data";
 
 export default {
   name: "CompassApp",
-  mixins: [dataMixin],
   components: {
     NavMenu,
     NavMessage,
@@ -60,6 +59,11 @@ export default {
       type: String,
       required: true,
     },
+  },
+  setup() {
+    return {
+      clearOverride,
+    };
   },
   data() {
     return {
@@ -86,6 +90,7 @@ export default {
   },
   methods: {
     clearUserOverride: function () {
+      // setup() exposed properties can be accessed on `this`
       this.clearOverride().then(() => {
         window.location.href = "/support";
       });

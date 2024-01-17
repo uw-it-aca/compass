@@ -7,11 +7,10 @@ from compass.views.api import (
     BaseAPIView, JSONClientContentNegotiation, TokenAPIView)
 from compass.models import (
     AccessGroup, AppUser, Contact, ContactTopic, ContactType, ContactMethod,
-    Student)
+    Student, OMADContactQueue)
 from compass.serializers import (
     ContactReadSerializer, ContactWriteSerializer, ContactTopicSerializer,
     ContactTypeSerializer, ContactMethodSerializer)
-from dateutil import parser
 from django.utils.text import slugify
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
@@ -20,6 +19,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from userservice.user import UserService
 from logging import getLogger
+import json
+from compass.dao.contact import validate_contact_post_data
 from uw_person_client.exceptions import PersonNotFoundException
 
 
@@ -242,95 +243,19 @@ class ContactOMADView(TokenAPIView):
     # Force JSON so clients aren't required to send ContentType header
     content_negotiation_class = JSONClientContentNegotiation
 
-    def parse_contact_type_str(self, contact_type_str, access_group):
-        try:
-            return ContactType.objects.get(access_group=access_group,
-                                           slug=contact_type_str)
-        except ContactType.DoesNotExist:
-            raise ValueError(
-                f"Contact type '{contact_type_str}' does not exist "
-                f"for the {access_group.name} access group.")
-
-    def parse_checkin_date_str(self, checkin_date_str):
-        # parse checkin date
-        if checkin_date_str is None:
-            raise ValueError("Check-in date not specified")
-        else:
-            try:
-                dt = parser.parse(checkin_date_str)
-                if dt.tzinfo is None:
-                    raise ValueError("Invalid check-in date, missing timezone")
-                return dt
-            except parser.ParserError as e:
-                raise ValueError(f"Invalid check-in date: {e}")
-
-    def validate_adviser_netid(self, adviser_netid):
-        if adviser_netid is None:
-            raise ValueError("Missing adviser netid")
-
-    def validate_student_systemkey(self, student_systemkey):
-        if student_systemkey is None:
-            raise ValueError("Missing student systemkey")
-
-        try:
-            if not student_systemkey.isdigit():
-                raise ValueError("Student systemkey is not a positive integer")
-        except AttributeError as e:
-            raise ValueError(f"Invalid student systemkey: {e}")
-
-    @staticmethod
-    def pad_student_systemkey(student_systemkey):
-        return student_systemkey.zfill(9)
-
     def post(self, request):
         contact_dict = request.data
+        queued_contact = OMADContactQueue.objects.create(
+            json=json.dumps(contact_dict)
+        )
+        logger.info(f"OMAD contact queued, id: {queued_contact.id}")
         try:
-            access_group = AccessGroup.objects.by_name("OMAD")
-            # check that adviser netid is defined
-            self.validate_adviser_netid(contact_dict.get("adviser_netid"))
-            # check that system key is defined
-            self.validate_student_systemkey(
-                contact_dict.get("student_systemkey"))
-            # parse checkin date to ensure it is in the correct format
-            contact_dict["checkin_date"] = self.parse_checkin_date_str(
-                contact_dict.get("checkin_date"))
-            # verify that the specified contact type exists in OMAD
-            contact_dict["contact_type"] = self.parse_contact_type_str(
-                contact_dict.get("contact_type"), access_group)
+            validate_contact_post_data(contact_dict)
         except AccessGroup.DoesNotExist as e:
             return Response(repr(e), status=status.HTTP_501_NOT_IMPLEMENTED)
         except ValueError as e:
             return Response(repr(e), status=status.HTTP_400_BAD_REQUEST)
-        # if the adviser is a member of the omad group and the contact record
-        # was successfully parsed, create an app-user and a student record for
-        # them if one doesn't already exist
-        try:
-            app_user = AppUser.objects.upsert_appuser(
-                contact_dict["adviser_netid"])
         except PersonNotFoundException as e:
-            logger.error("ContactOMADView: Person not found for "
-                         "adviser_netid: %s" % contact_dict["adviser_netid"])
             return Response("Person record for adviser not found",
                             status=status.HTTP_400_BAD_REQUEST)
-
-        student_systemkey = self.pad_student_systemkey(
-            contact_dict["student_systemkey"])
-        # student_systemkey = contact_dict["student_systemkey"]
-        student, _ = Student.objects.get_or_create(
-            system_key=student_systemkey)
-        # create the new contact record
-        contact = Contact()
-        contact.app_user = app_user
-        contact.student = student
-        contact.contact_type = contact_dict["contact_type"]
-        contact.checkin_date = contact_dict["checkin_date"]
-        contact.source = "Checkin"
-        try:
-            contact.trans_id = contact_dict["trans_id"]
-        except KeyError:
-            pass
-        contact.save()
-        contact.access_group.add(access_group)
-        logger.info(f"Checkin contact {contact.contact_type} added for "
-                    f"student {student.system_key}")
         return Response(status=status.HTTP_201_CREATED)

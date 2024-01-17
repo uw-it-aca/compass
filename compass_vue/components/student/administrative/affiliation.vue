@@ -71,14 +71,13 @@
 </template>
 
 <script>
-import dataMixin from "@/mixins/data_mixin.js";
 import AffiliationAdd from "@/components/student/administrative/affiliation-add.vue";
 import AffiliationDelete from "@/components/student/administrative/affiliation-delete.vue";
 import AffiliationEdit from "@/components/student/administrative/affiliation-edit.vue";
 import { useAffiliationStore } from "@/stores/affiliations";
+import { getStudentAffiliations } from "@/utils/data";
 
 export default {
-  mixins: [dataMixin],
   components: {
     AffiliationAdd,
     AffiliationEdit,
@@ -89,6 +88,10 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    const storeAffiliations = useAffiliationStore();
+    return { storeAffiliations, getStudentAffiliations };
   },
   data() {
     return {
@@ -101,10 +104,6 @@ export default {
   created() {
     this.loadAffiliationData();
   },
-  setup() {
-    const storeAffiliations = useAffiliationStore();
-    return { storeAffiliations };
-  },
   methods: {
     loadAffiliationData() {
       this.getStudentAffiliations(this.person.student.system_key).then(
@@ -115,7 +114,7 @@ export default {
         }
       );
 
-      this.storeAffiliations.getAffiliations.then(() => {
+      this.storeAffiliations.fetchAffiliations.then(() => {
         this.affiliations = this.storeAffiliations.affiliations.data;
       });
     },

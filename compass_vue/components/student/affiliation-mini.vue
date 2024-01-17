@@ -35,17 +35,21 @@
 </template>
 
 <script>
-import dataMixin from "@/mixins/data_mixin.js";
 import KeyValue from "@/components/_common/key-value.vue";
+import { getStudentAffiliations } from "@/utils/data";
 
 export default {
-  mixins: [dataMixin],
   components: { KeyValue },
   props: {
     person: {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return {
+      getStudentAffiliations,
+    };
   },
   data() {
     return {

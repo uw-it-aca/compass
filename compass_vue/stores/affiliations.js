@@ -1,19 +1,20 @@
 import { defineStore } from "pinia";
-import dataMixin from "@/mixins/data_mixin.js";
+import { getAffiliations } from "@/utils/data";
 
 export const useAffiliationStore = defineStore({
   id: "affiliation",
   state: () => {
     return {
+      getAffiliations,
       affiliations: {},
       affiliationsLoaded: false,
     };
   },
   getters: {
-    getAffiliations(state) {
+    fetchAffiliations(state) {
       if (!state.affiliationsLoaded) {
         state.affiliations = {
-          request: dataMixin.methods.getAffiliations().then((response) => {
+          request: this.getAffiliations().then((response) => {
             state.affiliations.data = response.data;
           }),
         };

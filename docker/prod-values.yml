@@ -201,3 +201,18 @@ environmentVariablesSecrets:
     name: UW_PERSON_DB_DATABASE
     secretName: compass.uw.edu-shared-secrets
     secretKey: person-db-database
+
+daemon:
+  enabled: true
+  daemons:
+    - name: process-omad-contact-queue
+      replicaCount: 1
+      command: ["/scripts/management_daemon.sh"]
+      args: ["--delay", "5", "process_omad_contacts"]
+      resources:
+        limits:
+          cpu: 500m
+          memory: 256Mi
+        requests:
+          cpu: 25m
+          memory: 64Mi

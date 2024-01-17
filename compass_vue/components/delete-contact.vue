@@ -11,10 +11,9 @@
 </template>
 
 <script>
-import dataMixin from "@/mixins/data_mixin.js";
+import { deleteStudentContact } from "@/utils/data";
 
 export default {
-  mixins: [dataMixin],
   inject: ["mq"],
   emits: ["contactDeleted"],
   props: {
@@ -30,6 +29,11 @@ export default {
       type: Number,
       default: null,
     },
+  },
+  setup() {
+    return {
+      deleteStudentContact,
+    };
   },
   data() {
     return {};
