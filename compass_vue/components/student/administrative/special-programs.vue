@@ -17,6 +17,20 @@
           <span class="ms-2">January 17, 2024</span><br />
           Modified by: <span class="text-muted">javereage</span>
         </div>
+        <div class="mt-2 text-end">
+          <button
+            type="button"
+            class="btn btn-outline-gray btn-sm text-danger rounded-3 px-2 py-1 fs-9"
+          >
+            <i class="bi bi-pencil me-2"></i>Edit
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-gray btn-sm text-danger rounded-3 px-2 py-1 fs-9 ms-1"
+          >
+            <i class="bi bi-trash ms-e"></i>Delete
+          </button>
+        </div>
       </div>
       <!-- MARK: set affiliation date -->
       <div>
