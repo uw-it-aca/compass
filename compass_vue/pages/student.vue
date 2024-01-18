@@ -163,7 +163,9 @@
                     <div class="col-xl-9">
                       <AffiliationAddEdit :person="person"></AffiliationAddEdit>
                     </div>
-                    <div class="col-xl-3">&nbsp;</div>
+                    <div class="col-xl-3">
+                      <SpecialPrograms :person="person"></SpecialPrograms>
+                    </div>
                   </div>
                 </axdd-tabs-panel>
               </template>
@@ -189,6 +191,8 @@ import StudentAdviser from "@/components/student/adviser.vue";
 import StudentVisits from "@/components/student/visits.vue";
 import SearchStudent from "@/components/search-student.vue";
 import AffiliationAddEdit from "@/components/student/administrative/affiliation.vue";
+import SpecialPrograms from "@/components/student/administrative/special-programs.vue";
+
 import { Role } from "@/utils/roles";
 import { getStudentDetail, getAccessGroups } from "@/utils/data";
 
@@ -208,6 +212,7 @@ export default {
     StudentVisits,
     SearchStudent,
     AffiliationAddEdit,
+    SpecialPrograms,
   },
   created: function () {
     this.loadAccessGroups();
