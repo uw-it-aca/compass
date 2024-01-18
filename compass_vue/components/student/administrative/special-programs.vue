@@ -13,16 +13,21 @@
       <!-- MARK: if now affiliation date set -->
       <div class="mb-3">
         <div class="small">
-          <strong>Affiliation Date:</strong> January 17, 2024<br />
-          <span class="text-muted">javereage</span>
+          <strong>Affiliation Date:</strong>
+          <span class="ms-2">January 17, 2024</span><br />
+          Modified by: <span class="text-muted">javereage</span>
         </div>
       </div>
       <!-- MARK: set affiliation date -->
       <div>
         <div class="mb-3">
           <label for="affiliation_date" class="form-label small fw-bold me-2"
-            >Affiliation Date</label
+            >Affiliation Date: --</label
           >
+          <p class="small text-muted">
+            No affiliation date has been set for this student. Specify a date
+            below.
+          </p>
           <input
             type="date"
             id="affiliation_date"
