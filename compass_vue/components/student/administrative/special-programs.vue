@@ -11,56 +11,42 @@
         </li>
       </ul>
       <!-- MARK: if now affiliation date set -->
-      <div class="mb-3">
+      <div class="mb-3" v-if="program_data.program_date">
         <div class="small">
           <strong>Affiliation Date:</strong>
-          <span class="ms-2">January 17, 2024</span><br />
-          Modified by: <span class="text-muted">javereage</span>
+          <span class="ms-2">{{ formatDate(program_data.program_date, "MMMM D, YYYY") }}</span><br />
+          <span v-if="program_data.modified_by">Modified by: <span class="text-muted">{{ program_data.modified_by.uwnetid }}</span></span>
         </div>
         <div class="mt-2 text-end">
-          <button
-            type="button"
-            class="btn btn-outline-gray btn-sm text-danger rounded-3 px-2 py-1 fs-9"
+          <SpecialProgramEdit
+            :button-type="'button'"
+            :person="person"
+            :program_data="program_data"
+            @specialProgramUpdated="loadSpecialProgramData()"
           >
             <i class="bi bi-pencil me-2"></i>Edit
-          </button>
-          <button
-            type="button"
-            class="btn btn-outline-gray btn-sm text-danger rounded-3 px-2 py-1 fs-9 ms-1"
+          </SpecialProgramEdit>
+          <SpecialProgramDelete
+            :button-type="'button'"
+            :person="person"
+            :program_data="program_data"
+            @specialProgramUpdated="loadSpecialProgramData()"
           >
             <i class="bi bi-trash ms-e"></i>Delete
-          </button>
+          </SpecialProgramDelete>
         </div>
       </div>
       <!-- MARK: set affiliation date -->
-      <div>
-        <div class="mb-3">
-          <label for="affiliation_date" class="form-label small fw-bold me-2"
-            >Affiliation Date: --</label
+      <div v-else>
+        <div class="mt-3 text-center">
+          <SpecialProgramEdit
+            :button-type="'button'"
+            :person="person"
+            :program_data="program_data"
+            @specialProgramUpdated="loadSpecialProgramData()"
           >
-          <p class="small text-muted">
-            No affiliation date has been set for this student. Specify a date
-            below.
-          </p>
-          <input
-            type="date"
-            id="affiliation_date"
-            class="form-control form-control-sm"
-          />
-        </div>
-        <div class="text-end">
-          <button
-            type="button"
-            class="btn btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2 me-2"
-          >
-            Cancel
-          </button>
-          <button
-            type="button"
-            class="btn btn-sm btn-purple rounded-3 px-3 py-2"
-          >
-            Save
-          </button>
+            <i class="bi bi-pencil me-2"></i>Add Affiliation Date
+          </SpecialProgramEdit>
         </div>
       </div>
     </template>
@@ -68,20 +54,56 @@
 </template>
 
 <script>
+import { formatDate } from "@/utils/dates";
+import { getStudentSpecialProgram } from "@/utils/data";
+import SpecialProgramEdit from "@/components/student/administrative/special-programs-edit.vue";
+import SpecialProgramDelete from "@/components/student/administrative/special-programs-delete.vue";
+
+
 export default {
+  components: {
+    SpecialProgramEdit,
+    SpecialProgramDelete,
+  },
   props: {
     person: {
       type: Object,
       required: true,
     },
   },
+  setup() {
+    return {
+      formatDate,
+      getStudentSpecialProgram
+    };
+  },
   data() {
     return {
       userNetid: document.body.getAttribute("data-user-netid"),
       userRole: document.body.getAttribute("data-user-role"),
-      affiliations_date: "",
+      program_data: { program_date: null },
     };
   },
-  components: {},
+  created() {
+    this.loadSpecialProgramData();
+  },
+  methods: {
+    loadSpecialProgramData() {
+      this.getStudentSpecialProgram(this.person.student.system_key,
+          this.person.student.special_program_code).then(
+        (response) => {
+          this.program_data = response.data;
+        }
+      )
+      .catch((error) => {
+        if (error.response.status === 404) {
+              this.program_data = { program_date: null };
+        } else {
+          console.log('Cannot get special program metadata for '
+          + this.person.student.system_key + ': ' + error.response.data);
+        }
+      });
+    },
+  },
 };
 </script>
