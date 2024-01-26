@@ -65,7 +65,7 @@ class SpecialProgramView(BaseAPIView):
                 program_code=int(program_code), program_date=program_date,
                 modified_by=app_user, modified_date=current_datetime_utc())
             ssp.save()
-                
+
             serializer = SpecialProgramSerializer(ssp)
             logger.info(f"SpecialProgram for {systemkey} saved: "
                         f"{serializer.data}")
@@ -94,7 +94,7 @@ class SpecialProgramView(BaseAPIView):
             special_program = request.data.get('special_program')
             program_date = datetime.strptime(
                 special_program.get("program_date"), '%Y-%m-%d').date()
-            
+
             ssp = SpecialProgram.objects.get(
                 access_group=access_group, student=student,
                 program_code=int(program_code))

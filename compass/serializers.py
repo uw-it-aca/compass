@@ -360,4 +360,3 @@ class SpecialProgramSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             "access_group_id": {"validators": []},
         }
-
