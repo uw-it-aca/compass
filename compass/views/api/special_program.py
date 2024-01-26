@@ -8,7 +8,8 @@ from compass.dao import current_datetime_utc
 from compass.models import AccessGroup, Student, AppUser, SpecialProgram
 from compass.serializers import SpecialProgramSerializer
 from compass.exceptions import OverrideNotPermitted
-from userservice.user import UserService
+from django.core.exceptions import PermissionDenied
+from django.db.utils import IntegrityError
 import json
 from datetime import datetime
 from logging import getLogger
@@ -50,16 +51,9 @@ class SpecialProgramView(BaseAPIView):
             return self.response_badrequest("Invalid systemkey")
 
         try:
+            self.valid_user_permission(request, require_manager=True)
             access_group = self.get_access_group(request)
-
-            self.valid_user_override()
-
-            try:
-                us = UserService()
-                app_user = AppUser.objects.get(uwnetid=us.get_user())
-            except AppUser.DoesNotExist:
-                return self.response_unauthorized("Unrecognized AppUser")
-
+            app_user = self.get_app_user()
             student = Student.objects.get(system_key=systemkey)
 
             special_program = request.data.get('special_program')
@@ -75,13 +69,15 @@ class SpecialProgramView(BaseAPIView):
             serializer = SpecialProgramSerializer(ssp)
             logger.info(f"SpecialProgram for {systemkey} saved: "
                         f"{serializer.data}")
-            return self.response_ok(serializer.data)
+            return self.response_created(serializer.data)
         except Student.DoesNotExist:
             return self.response_notfound("Unknown student")
         except ValueError:
             return self.response_badrequest('Invalid Request Data')
-        except AccessGroup.DoesNotExist:
+        except (PermissionDenied, AccessGroup.DoesNotExist):
             return self.response_unauthorized()
+        except IntegrityError:
+            return self.response_badrequest("Prior Special Program Record")
         except OverrideNotPermitted as err:
             return self.response_unauthorized(err)
 
@@ -90,16 +86,9 @@ class SpecialProgramView(BaseAPIView):
             return self.response_badrequest("Invalid systemkey")
 
         try:
+            self.valid_user_permission(request, require_manager=True)
             access_group = self.get_access_group(request)
-
-            self.valid_user_override()
-
-            try:
-                us = UserService()
-                app_user = AppUser.objects.get(uwnetid=us.get_user())
-            except AppUser.DoesNotExist:
-                return self.response_unauthorized("Unrecognized AppUser")
-
+            app_user = self.get_app_user()
             student = Student.objects.get(system_key=systemkey)
 
             special_program = request.data.get('special_program')
@@ -122,7 +111,7 @@ class SpecialProgramView(BaseAPIView):
             return self.response_notfound("Unknown student")
         except (SpecialProgram.DoesNotExist, ValueError):
             return self.response_badrequest('Invalid Request Data')
-        except AccessGroup.DoesNotExist:
+        except (PermissionDenied, AccessGroup.DoesNotExist):
             return self.response_unauthorized()
         except OverrideNotPermitted as err:
             return self.response_unauthorized(err)

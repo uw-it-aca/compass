@@ -59,6 +59,13 @@ class BaseAPIView(GenericAPIView):
                 OverrideNotPermitted):
             raise PermissionDenied()
 
+    def get_app_user(self):
+        try:
+            us = UserService()
+            return AppUser.objects.get(uwnetid=us.get_user())
+        except AppUser.DoesNotExist:
+            raise PermissionDenied()
+
     def response_ok(self, content):
         return Response(content, status=status.HTTP_200_OK)
 
