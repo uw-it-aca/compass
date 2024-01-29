@@ -20,7 +20,9 @@
       <div class="modal-content">
         <form ref="form" @submit="editSpecialProgram">
           <div class="modal-header">
-            <h5 class="modal-title h6 m-0 fw-bold">Edit Special Programs Date</h5>
+            <h5 class="modal-title h6 m-0 fw-bold">
+              Edit Special Programs Date
+            </h5>
             <button
               type="button"
               class="btn-close"
@@ -30,18 +32,25 @@
           </div>
           <div class="modal-body">
             <div class="mb-3">
-              <lable class="form-label small fw-bold">Specify date below.</lable>
+              <lable class="form-label small fw-bold"
+                >Specify date below.</lable
+              >
               <input
                 type="date"
                 id="affiliation_date"
                 :value="program_date"
-                @input="program_date = new Date($event.target.valueAsDate).toISOString().slice(0, 10)
-"
+                @input="
+                  program_date = new Date($event.target.valueAsDate)
+                    .toISOString()
+                    .slice(0, 10)
+                "
                 class="form-control form-control-sm"
               />
             </div>
             <div v-if="this.errorResponse" class="text-danger">
-               Problem Changing Date: {{ this.errorResponse.statusText }} ({{ this.errorResponse.data }})
+              Problem Changing Date: {{ this.errorResponse.statusText }} ({{
+                this.errorResponse.data
+              }})
             </div>
           </div>
 
@@ -69,8 +78,10 @@
 <script>
 import { Modal } from "bootstrap";
 import { getToday } from "@/utils/dates";
-import { saveStudentSpecialProgram, updateStudentSpecialProgram } from "@/utils/data";
-
+import {
+  saveStudentSpecialProgram,
+  updateStudentSpecialProgram,
+} from "@/utils/data";
 
 export default {
   emits: ["specialProgramUpdated"],
@@ -96,7 +107,9 @@ export default {
       updatePermissionDenied: false,
       errorResponse: null,
       formErrors: null,
-      program_date: this.program_data.program_date ? new Date(this.program_data.program_date).toISOString().slice(0,10) : this.getToday().format('YYYY-MM-DD'),
+      program_date: this.program_data.program_date
+        ? new Date(this.program_data.program_date).toISOString().slice(0, 10)
+        : this.getToday().format("YYYY-MM-DD"),
     };
   },
   mounted() {
@@ -111,22 +124,27 @@ export default {
   },
   methods: {
     editSpecialProgram() {
-      let store = (this.program_data.hasOwnProperty('program_code')) ? this.updateStudentSpecialProgram : this.saveStudentSpecialProgram,
-          program_data_copy = JSON.parse(JSON.stringify(this.program_data))
+      let store = this.program_data.hasOwnProperty("program_code")
+          ? this.updateStudentSpecialProgram
+          : this.saveStudentSpecialProgram,
+        program_data_copy = JSON.parse(JSON.stringify(this.program_data));
 
       program_data_copy.program_date = this.program_date;
 
       event.preventDefault();
-      store(this.person.student.system_key,
-          this.person.student.special_program_code, program_data_copy)
-      .then(() => {
-        this.program_data.program_date = this.program_date;
-        this.$emit("specialProgramUpdated");
-        this.hideModal();
-      })
-      .catch((error) => {
-        this.errorResponse = error.response;
-      });
+      store(
+        this.person.student.system_key,
+        this.person.student.special_program_code,
+        program_data_copy
+      )
+        .then(() => {
+          this.program_data.program_date = this.program_date;
+          this.$emit("specialProgramUpdated");
+          this.hideModal();
+        })
+        .catch((error) => {
+          this.errorResponse = error.response;
+        });
     },
     hideModal() {
       var editSpecialProgramModal = Modal.getInstance(

@@ -20,7 +20,9 @@
       <div class="modal-content">
         <form ref="form" @submit="deleteSpecialProgram">
           <div class="modal-header">
-            <h5 class="modal-title h6 m-0 fw-bold">Delete Special Programs Date</h5>
+            <h5 class="modal-title h6 m-0 fw-bold">
+              Delete Special Programs Date
+            </h5>
             <button
               type="button"
               class="btn-close"
@@ -36,7 +38,7 @@
               </div>
             </div>
             <div v-if="this.errorResponse" class="text-danger">
-               Problem Deleting Date: {{ this.errorResponse.statusText }}
+              Problem Deleting Date: {{ this.errorResponse.statusText }}
             </div>
           </div>
 
@@ -79,7 +81,7 @@ export default {
   },
   setup() {
     return {
-      deleteStudentSpecialProgram
+      deleteStudentSpecialProgram,
     };
   },
   data() {
@@ -101,15 +103,17 @@ export default {
   methods: {
     deleteSpecialProgram() {
       event.preventDefault();
-      this.deleteStudentSpecialProgram(this.person.student.system_key,
-        this.person.student.special_program_code)
-      .then(() => {
-        this.$emit("specialProgramUpdated");
-        this.hideModal();
-      })
-      .catch((error) => {
-        this.errorResponse = error.response;
-      });
+      this.deleteStudentSpecialProgram(
+        this.person.student.system_key,
+        this.person.student.special_program_code
+      )
+        .then(() => {
+          this.$emit("specialProgramUpdated");
+          this.hideModal();
+        })
+        .catch((error) => {
+          this.errorResponse = error.response;
+        });
     },
     hideModal() {
       var deleteSpecialProgramModal = Modal.getInstance(

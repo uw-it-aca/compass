@@ -14,8 +14,16 @@
       <div class="mb-3" v-if="program_data.program_date">
         <div class="small">
           <strong>Affiliation Date:</strong>
-          <span class="ms-2">{{ formatDate(program_data.program_date, "MMMM D, YYYY") }}</span><br />
-          <span v-if="program_data.modified_by">Modified by: <span class="text-muted">{{ program_data.modified_by.uwnetid }}</span></span>
+          <span class="ms-2">{{
+            formatDate(program_data.program_date, "MMMM D, YYYY")
+          }}</span
+          ><br />
+          <span v-if="program_data.modified_by"
+            >Modified by:
+            <span class="text-muted">{{
+              program_data.modified_by.uwnetid
+            }}</span></span
+          >
         </div>
         <div class="mt-2 text-end">
           <SpecialProgramEdit
@@ -38,7 +46,11 @@
       </div>
       <!-- MARK: set affiliation date -->
       <div v-else>
-        <div class="mt-3 text-center">
+        <div class="mt-3">
+          <p class="text-muted small">
+            No affiliation date has been set for this student. Specify a date
+            below.
+          </p>
           <SpecialProgramEdit
             :button-type="'button'"
             :person="person"
@@ -59,7 +71,6 @@ import { getStudentSpecialProgram } from "@/utils/data";
 import SpecialProgramEdit from "@/components/student/administrative/special-programs-edit.vue";
 import SpecialProgramDelete from "@/components/student/administrative/special-programs-delete.vue";
 
-
 export default {
   components: {
     SpecialProgramEdit,
@@ -74,7 +85,7 @@ export default {
   setup() {
     return {
       formatDate,
-      getStudentSpecialProgram
+      getStudentSpecialProgram,
     };
   },
   data() {
@@ -89,20 +100,25 @@ export default {
   },
   methods: {
     loadSpecialProgramData() {
-      this.getStudentSpecialProgram(this.person.student.system_key,
-          this.person.student.special_program_code).then(
-        (response) => {
-          this.program_data = response.data;
-        }
+      this.getStudentSpecialProgram(
+        this.person.student.system_key,
+        this.person.student.special_program_code
       )
-      .catch((error) => {
-        if (error.response.status === 404) {
-              this.program_data = { program_date: null };
-        } else {
-          console.log('Cannot get special program metadata for '
-          + this.person.student.system_key + ': ' + error.response.data);
-        }
-      });
+        .then((response) => {
+          this.program_data = response.data;
+        })
+        .catch((error) => {
+          if (error.response.status === 404) {
+            this.program_data = { program_date: null };
+          } else {
+            console.log(
+              "Cannot get special program metadata for " +
+                this.person.student.system_key +
+                ": " +
+                error.response.data
+            );
+          }
+        });
     },
   },
 };
