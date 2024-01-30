@@ -446,3 +446,20 @@ class OMADContactQueue(models.Model):
         return f"#{self.id} created: {self.created} " \
                f"attempts: {self.processing_attempts} " \
                f"err: {self.processing_error}"
+
+
+class SpecialProgram(models.Model):
+    """
+    Student's assigned Special Program Code plus adviser group meta data
+    """
+
+    student = models.ForeignKey("Student", on_delete=models.CASCADE)
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
+    program_code = models.SmallIntegerField()
+    program_date = models.DateField(null=True)
+    modified_by = models.ForeignKey(
+        "AppUser", on_delete=models.SET_NULL, null=True)
+    modified_date = models.DateTimeField(null=True)
+
+    class Meta:
+        unique_together = ('student', 'program_code', 'access_group',)

@@ -8,12 +8,13 @@ from compass.dao.person import (
     valid_uwnetid, valid_uwregid, valid_student_number, valid_system_key)
 from compass.dao import current_datetime_utc
 from compass.models import (
-    AccessGroup, Student, Contact, StudentAffiliation, Affiliation, Cohort,
-    Visit, EligibilityType, StudentEligibility)
+    AccessGroup, Student, AppUser, Contact, StudentAffiliation, Affiliation,
+    Cohort, Visit, EligibilityType, StudentEligibility, SpecialProgram)
 from compass.serializers import (
     ContactReadSerializer, StudentAffiliationReadSerializer,
     VisitReadSerializer, StudentWriteSerializer,
-    StudentEligibilitySerializer, EligibilityTypeSerializer)
+    StudentEligibilitySerializer, EligibilityTypeSerializer,
+    SpecialProgramSerializer)
 from compass.clients import (
     CompassPersonClient, PersonNotFoundException)
 from compass.exceptions import OverrideNotPermitted

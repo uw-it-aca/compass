@@ -17,6 +17,7 @@ from compass.models import (
     StudentAffiliation,
     StudentEligibility,
     EligibilityType,
+    SpecialProgram,
 )
 from rest_framework import serializers
 import pytz
@@ -341,3 +342,21 @@ class StudentEligibilitySerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentEligibility
         fields = ["id", "student", "eligibility"]
+
+
+class SpecialProgramSerializer(serializers.ModelSerializer):
+    access_group = AccessGroupSerializer(many=False, read_only=False)
+    modified_by = AppUserSerializer(many=False, read_only=False)
+
+    class Meta:
+        model = SpecialProgram
+        fields = [
+            "id",
+            "access_group",
+            "program_code",
+            "program_date",
+            "modified_by",
+            "modified_date"]
+        extra_kwargs = {
+            "access_group_id": {"validators": []},
+        }

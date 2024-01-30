@@ -169,6 +169,34 @@ async function getStudentVisits(systemkey) {
   return axios.get("/api/internal/student/" + systemkey + "/visits/");
 }
 
+async function getStudentSpecialProgram(systemkey, special_program_code) {
+  return axios.get(
+    "/api/internal/student/" +
+      systemkey +
+      "/special_program/" + special_program_code);
+}
+
+async function saveStudentSpecialProgram(systemkey, special_program_code, data) {
+  let postUrl = "/api/internal/student/" +
+      systemkey +
+      "/special_program/" + special_program_code;
+  return axios.post(postUrl, { special_program: data }).catch(_handleError);
+}
+
+async function updateStudentSpecialProgram(systemkey, special_program_code, data) {
+  let putUrl = "/api/internal/student/" +
+      systemkey +
+      "/special_program/" + special_program_code;
+  return axios.put(putUrl, { special_program: data }).catch(_handleError);
+}
+
+async function deleteStudentSpecialProgram(systemkey, special_program_code) {
+  return axios.delete(
+    "/api/internal/student/" +
+      systemkey +
+      "/special_program/" + special_program_code);
+}
+
 async function getAdviserCaseload(adviserNetId) {
   return axios
     .get("/api/internal/adviser/" + adviserNetId + "/caseload/")
@@ -212,6 +240,10 @@ export {
   deleteStudentContact,
   getStudentAffiliations,
   getStudentVisits,
+  getStudentSpecialProgram,
+  saveStudentSpecialProgram,
+  updateStudentSpecialProgram,
+  deleteStudentSpecialProgram,
   getAdviserCaseload,
   getAdviserCheckIns,
   getAccessGroups,

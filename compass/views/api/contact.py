@@ -69,12 +69,7 @@ class ContactView(BaseAPIView):
             return self.response_badrequest("Unrecognized ContactId")
 
         try:
-            us = UserService()
-            app_user = AppUser.objects.get(uwnetid=us.get_user())
-        except AppUser.DoesNotExist:
-            return self.response_unauthorized("Unrecognized AppUser")
-
-        try:
+            app_user = self.get_app_user()
             contact_ags = contact.access_group.all()
             if contact.app_user == app_user:
                 self.valid_user_permission(request,
