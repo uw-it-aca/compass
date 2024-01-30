@@ -1,4 +1,4 @@
-# Copyright 2023 UW-IT, University of Washington
+# Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
@@ -43,8 +43,8 @@ class Command(BaseCommand):
 
                 try:
                     if False:
-                        student, pds_student = self._get_student(student_number)
-                        program_code = int(pds_student.special_program_code)
+                        student, pds = self._get_student(student_number)
+                        program_code = int(pds.special_program_code)
                     else:
                         program_code = 1
                 except ValueError:
@@ -57,12 +57,14 @@ class Command(BaseCommand):
 
                 if not a.EOP_Date or len(a.EOP_Date) == 0:
                     if seen[student_number] > 1:
-                        print(f"{student_number} (seen {seen[student_number]} "
-                              f"times) missing EOP_Date {modified_date}")
+                        self._error(f"{student_number} (seen "
+                                    f"{seen[student_number]} times) "
+                                    f"missing EOP_Date {modified_date}")
 
                 if not a.date_modified or len(a.date_modified) == 0:
-                    print(f"{student_number} (seen {seen[student_number]} "
-                          f"times) missing modified date")
+                    self._error(f"{student_number} (seen "
+                                f"{seen[student_number]} times) "
+                                f"missing modified date")
 
                 date = datetime.strptime(a.EOP_Date, '%Y-%m-%d').date() if (
                     a.EOP_Date and len(a.EOP_Date)) else None
