@@ -16,7 +16,7 @@
     aria-labelledby="editSpecialProgramModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-md">
       <div class="modal-content">
         <form ref="form" @submit="editSpecialProgram">
           <div class="modal-header">

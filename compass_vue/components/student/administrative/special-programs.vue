@@ -11,21 +11,14 @@
         </li>
       </ul>
       <!-- MARK: if now affiliation date set -->
-      <div class="mb-3" v-if="program_data.program_date">
-        <div class="small">
-          <strong>Affiliation Date:</strong>
-          <span class="ms-2">{{
+      <div v-if="program_data.program_date">
+        <p>
+          This student affiliated on<br />
+          <span class="fw-bold">{{
             formatDate(program_data.program_date, "MMMM D, YYYY")
-          }}</span
-          ><br />
-          <span v-if="program_data.modified_by"
-            >Modified by:
-            <span class="text-muted">{{
-              program_data.modified_by.uwnetid
-            }}</span></span
-          >
-        </div>
-        <div class="mt-2 text-end">
+          }}</span>
+        </p>
+        <div class="my-3  text-end">
           <SpecialProgramEdit
             :button-type="'button'"
             :person="person"
@@ -43,22 +36,27 @@
             <i class="bi bi-trash ms-e"></i>Delete
           </SpecialProgramDelete>
         </div>
+        <p class="small text-muted m-0" v-if="program_data.modified_by">
+          Last updated by:
+          <span class="text-muted">{{ program_data.modified_by.uwnetid }}</span>
+        </p>
       </div>
       <!-- MARK: set affiliation date -->
       <div v-else>
         <div class="mt-3">
-          <p class="text-muted small">
-            No affiliation date has been set for this student. Specify a date
-            below.
+          <p class="text-muted">
+            No affiliation date has been set for this student.
           </p>
-          <SpecialProgramEdit
-            :button-type="'button'"
-            :person="person"
-            :program_data="program_data"
-            @specialProgramUpdated="loadSpecialProgramData()"
-          >
-            <i class="bi bi-pencil me-2"></i>Add Affiliation Date
-          </SpecialProgramEdit>
+          <div class="text-end">
+            <SpecialProgramAdd
+              :button-type="'button'"
+              :person="person"
+              :program_data="program_data"
+              @specialProgramUpdated="loadSpecialProgramData()"
+            >
+              <i class="bi bi-calendar-plus-fill me-2"></i>Add affiliation date
+            </SpecialProgramAdd>
+          </div>
         </div>
       </div>
     </template>
@@ -68,11 +66,13 @@
 <script>
 import { formatDate } from "@/utils/dates";
 import { getStudentSpecialProgram } from "@/utils/data";
+import SpecialProgramAdd from "@/components/student/administrative/special-programs-add.vue";
 import SpecialProgramEdit from "@/components/student/administrative/special-programs-edit.vue";
 import SpecialProgramDelete from "@/components/student/administrative/special-programs-delete.vue";
 
 export default {
   components: {
+    SpecialProgramAdd,
     SpecialProgramEdit,
     SpecialProgramDelete,
   },

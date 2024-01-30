@@ -2,26 +2,26 @@
   <a
     role="button"
     data-bs-toggle="modal"
-    :data-bs-target="'#deleteSpecialProgramModal'"
-    class="btn btn-sm fs-9 btn-outline-gray text-danger rounded-3 px-2 py-1 ms-1"
+    :data-bs-target="'#editSpecialProgramModal'"
+    class="btn text-nowrap btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2"
   >
-    <slot>Delete Special Program Date</slot>
+    <slot>Add Program Date</slot>
   </a>
 
   <div
     ref="specialProgramModal"
     class="modal fade text-start"
-    :id="'deleteSpecialProgramModal'"
+    :id="'editSpecialProgramModal'"
     tabindex="-1"
-    aria-labelledby="deleteSpecialProgramModalLabel"
+    aria-labelledby="editSpecialProgramModalLabel"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-dialog-centered modal-md">
       <div class="modal-content">
-        <form ref="form" @submit="deleteSpecialProgram">
+        <form ref="form" @submit="editSpecialProgram">
           <div class="modal-header">
             <h5 class="modal-title h6 m-0 fw-bold">
-              Delete Special Programs Date
+              Add Special Programs Date
             </h5>
             <button
               type="button"
@@ -32,13 +32,25 @@
           </div>
           <div class="modal-body">
             <div class="mb-3">
-              <div class="mb-3 text-secondary">
-                Warning: Consider carefully before deleting Special Programs
-                Code's Date value as there is no way to undo this action.
-              </div>
+              <lable class="form-label small fw-bold"
+                >Specify date below.</lable
+              >
+              <input
+                type="date"
+                id="affiliation_date"
+                :value="program_date"
+                @input="
+                  program_date = new Date($event.target.valueAsDate)
+                    .toISOString()
+                    .slice(0, 10)
+                "
+                class="form-control form-control-sm"
+              />
             </div>
             <div v-if="this.errorResponse" class="text-danger">
-              Problem Deleting Date: {{ this.errorResponse.statusText }}
+              Problem Changing Date: {{ this.errorResponse.statusText }} ({{
+                this.errorResponse.data
+              }})
             </div>
           </div>
 
@@ -52,8 +64,8 @@
               />
               <input
                 type="submit"
-                class="btn btn-primary bg-danger"
-                value="Delete"
+                class="btn btn-primary bg-purple"
+                value="Save"
               />
             </div>
           </div>
@@ -65,7 +77,11 @@
 
 <script>
 import { Modal } from "bootstrap";
-import { deleteStudentSpecialProgram } from "@/utils/data";
+import { getToday } from "@/utils/dates";
+import {
+  saveStudentSpecialProgram,
+  updateStudentSpecialProgram,
+} from "@/utils/data";
 
 export default {
   emits: ["specialProgramUpdated"],
@@ -81,13 +97,19 @@ export default {
   },
   setup() {
     return {
-      deleteStudentSpecialProgram,
+      saveStudentSpecialProgram,
+      updateStudentSpecialProgram,
+      getToday,
     };
   },
   data() {
     return {
       updatePermissionDenied: false,
-      errorResponse: "",
+      errorResponse: null,
+      formErrors: null,
+      program_date: this.program_data.program_date
+        ? new Date(this.program_data.program_date).toISOString().slice(0, 10)
+        : this.getToday().format("YYYY-MM-DD"),
     };
   },
   mounted() {
@@ -101,13 +123,22 @@ export default {
     );
   },
   methods: {
-    deleteSpecialProgram() {
+    editSpecialProgram() {
+      let store = this.program_data.hasOwnProperty("program_code")
+          ? this.updateStudentSpecialProgram
+          : this.saveStudentSpecialProgram,
+        program_data_copy = JSON.parse(JSON.stringify(this.program_data));
+
+      program_data_copy.program_date = this.program_date;
+
       event.preventDefault();
-      this.deleteStudentSpecialProgram(
+      store(
         this.person.student.system_key,
-        this.person.student.special_program_code
+        this.person.student.special_program_code,
+        program_data_copy
       )
         .then(() => {
+          this.program_data.program_date = this.program_date;
           this.$emit("specialProgramUpdated");
           this.hideModal();
         })
@@ -116,11 +147,11 @@ export default {
         });
     },
     hideModal() {
-      var deleteSpecialProgramModal = Modal.getInstance(
-        document.getElementById("deleteSpecialProgramModal")
+      var editSpecialProgramModal = Modal.getInstance(
+        document.getElementById("editSpecialProgramModal")
       );
 
-      deleteSpecialProgramModal.hide();
+      editSpecialProgramModal.hide();
     },
     formShown() {
       this.clearFormErrors();
