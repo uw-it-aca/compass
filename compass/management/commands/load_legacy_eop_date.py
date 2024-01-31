@@ -5,7 +5,7 @@
 from django.core.management.base import BaseCommand
 from uw_person_client import UWPersonClient
 from uw_person_client.exceptions import PersonNotFoundException
-from compass.models import AccessGroup, Student, StudentProgram
+from compass.models import AccessGroup, Student, SpecialProgram
 from datetime import datetime, date
 from pytz import timezone
 import string
@@ -42,11 +42,8 @@ class Command(BaseCommand):
                     seen[student_number] = 1
 
                 try:
-                    if False:
-                        student, pds = self._get_student(student_number)
-                        program_code = int(pds.special_program_code)
-                    else:
-                        program_code = 1
+                    student, pds = self._get_student(student_number)
+                    program_code = int(pds.special_program_code)
                 except ValueError:
                     self._error(
                         f"Malformed program code for {student_number}: "
@@ -59,7 +56,7 @@ class Command(BaseCommand):
                     if seen[student_number] > 1:
                         self._error(f"{student_number} (seen "
                                     f"{seen[student_number]} times) "
-                                    f"missing EOP_Date {modified_date}")
+                                    f"missing EOP_Date {a.date_modified}")
 
                 if not a.date_modified or len(a.date_modified) == 0:
                     self._error(f"{student_number} (seen "
@@ -68,13 +65,19 @@ class Command(BaseCommand):
 
                 date = datetime.strptime(a.EOP_Date, '%Y-%m-%d').date() if (
                     a.EOP_Date and len(a.EOP_Date)) else None
-                modified_date = datetime.fromisoformat(a.date_modified) if (
-                    a.date_modified and len(a.date_modified) > 1) else None
 
-                sp, created = StudentProgram.objects.uppate_or_create(
+                if (a.date_modified and len(a.date_modified) > 1):
+                    naive_date = datetime.fromisoformat(a.date_modified)
+                    pacific = pytz.timezone('US/Pacific')
+                    date = pacific.localize(naive_date)
+                    modified_date = date.astimezone(pytz.utc)
+                else:
+                    modified_date = None
+
+                sp, created = SpecialProgram.objects.update_or_create(
                     student=student, access_group=self.access_group,
                     program_code=program_code, defaults={
-                        'date': date, 'modified_date': modified_date})
+                        'program_date': date, 'modified_date': modified_date})
 
                 print(f"{'Stored' if created else 'Updated'} "
                       f"{student_number} ({student.system_key}) with "
