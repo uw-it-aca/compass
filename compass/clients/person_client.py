@@ -108,14 +108,34 @@ class CompassPersonClient(UWPersonClient):
         return sorted(persons.values(), key=lambda p: p.surname)
 
     def get_appuser_by_uwnetid(self, uwnetid):
+        """
+        Returns a cached "thin" person model for use with AppUser.
+        """
         cache_key = f'appuser_{uwnetid}'
 
         person_data = cache.get(cache_key)
         if person_data is not None:
             return Person().from_dict(person_data)
 
-        expires = getattr(settings, 'APPUSER_PERSON_EXPIRES', 60 * 60 * 24)
-        person = self.get_person_by_uwnetid(
-            uwnetid, include_employee=False, include_student=False)
-        cache.set(cache_key, person.to_dict(), timeout=expires)
+        sqla_person = self.DB.session.query(self.DB.Person).filter(
+            or_(self.DB.Person.uwnetid == uwnetid,
+                self.DB.Person.prior_uwnetids.any(uwnetid))
+        ).one_or_none()
+
+        if sqla_person is None:
+            raise PersonNotFoundException()
+
+        person = Person()
+        person.uwnetid = sqla_person.uwnetid
+        person.uwregid = sqla_person.uwregid
+        person.prior_uwnetids = sqla_person.prior_uwnetids
+        person.prior_uwregids = sqla_person.prior_uwregids
+        person.system_key = sqla_person.system_key
+        person.display_name = sqla_person.display_name
+
+        cache.set(
+            cache_key,
+            person.to_dict(),
+            timeout=getattr(settings, 'APPUSER_PERSON_EXPIRES', 60 * 60 * 24)
+        )
         return person
