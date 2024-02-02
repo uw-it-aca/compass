@@ -353,7 +353,6 @@ class SpecialProgramSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "access_group",
-            "program_code",
             "program_date",
             "modified_by",
             "modified_date"]

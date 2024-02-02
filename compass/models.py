@@ -449,16 +449,15 @@ class OMADContactQueue(models.Model):
 
 class SpecialProgram(models.Model):
     """
-    Student's assigned Special Program Code plus adviser group meta data
+    Advisor group meta data for Student Special Program
     """
 
     student = models.ForeignKey("Student", on_delete=models.CASCADE)
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    program_code = models.SmallIntegerField()
     program_date = models.DateField(null=True)
     modified_by = models.ForeignKey(
         "AppUser", on_delete=models.SET_NULL, null=True)
     modified_date = models.DateTimeField(null=True)
 
     class Meta:
-        unique_together = ('student', 'program_code', 'access_group',)
+        unique_together = ('student', 'access_group',)

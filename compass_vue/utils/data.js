@@ -169,32 +169,28 @@ async function getStudentVisits(systemkey) {
   return axios.get("/api/internal/student/" + systemkey + "/visits/");
 }
 
-async function getStudentSpecialProgram(systemkey, special_program_code) {
-  return axios.get(
-    "/api/internal/student/" +
-      systemkey +
-      "/special_program/" + special_program_code);
+async function getStudentSpecialProgram(systemkey) {
+  let getUrl = "/api/internal/student/" + systemkey + "/special_program/";
+
+  return axios.get(getUrl);
 }
 
-async function saveStudentSpecialProgram(systemkey, special_program_code, data) {
-  let postUrl = "/api/internal/student/" +
-      systemkey +
-      "/special_program/" + special_program_code;
+async function saveStudentSpecialProgram(systemkey, data) {
+  let postUrl = "/api/internal/student/" + systemkey + "/special_program/";
+
   return axios.post(postUrl, { special_program: data }).catch(_handleError);
 }
 
-async function updateStudentSpecialProgram(systemkey, special_program_code, data) {
-  let putUrl = "/api/internal/student/" +
-      systemkey +
-      "/special_program/" + special_program_code;
+async function updateStudentSpecialProgram(systemkey, data) {
+  let putUrl = "/api/internal/student/" + systemkey + "/special_program/";
+
   return axios.put(putUrl, { special_program: data }).catch(_handleError);
 }
 
-async function deleteStudentSpecialProgram(systemkey, special_program_code) {
-  return axios.delete(
-    "/api/internal/student/" +
-      systemkey +
-      "/special_program/" + special_program_code);
+async function deleteStudentSpecialProgram(systemkey) {
+  let deleteUrl = "/api/internal/student/" + systemkey + "/special_program/";
+
+  return axios.delete(deleteUrl);
 }
 
 async function getAdviserCaseload(adviserNetId) {

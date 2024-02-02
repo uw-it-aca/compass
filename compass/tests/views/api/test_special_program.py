@@ -15,8 +15,8 @@ class SpecialProgramAPITest(ApiTest):
         'initial_data/student.json',
         'initial_data/specialprogram.json',
     ]
-    url_kwargs1 = {'systemkey': '532353230', 'program_code': '0'}
-    url_kwargs2 = {'systemkey': '123123123', 'program_code': '0'}
+    url_kwargs1 = {'systemkey': '532353230'}
+    url_kwargs2 = {'systemkey': '123123123'}
 
     @patch('compass.dao.group.is_member_of_group', return_value=True)
     def test_get(self, mock_is_member):
@@ -25,6 +25,11 @@ class SpecialProgramAPITest(ApiTest):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data.get('program_date'), '2023-12-31')
+
+        response = self.get_response(
+            'special_program_view', 'jadviser', kwargs=self.url_kwargs2)
+
+        self.assertEqual(response.status_code, 404)
 
     @patch('compass.dao.group.is_member_of_group', return_value=True)
     def test_post(self, mock_is_member):
@@ -44,7 +49,7 @@ class SpecialProgramAPITest(ApiTest):
     def test_post_permission_failure(self, mock_is_member):
         data = {
             'special_program': {
-                'program_date': '2024-01-01'
+                'program_date': '2024-13-33'
             }
         }
 
