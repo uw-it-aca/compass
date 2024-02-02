@@ -5,7 +5,7 @@
 from compass.views.api import BaseAPIView, TokenAPIView
 from compass.models import Visit, Student, AccessGroup, VisitType
 from compass.serializers import VisitReadSerializer, VisitTypeSerializer
-from uw_person_client import UWPersonClient
+from compass.clients import CompassPersonClient
 from rest_framework.response import Response
 from rest_framework import status
 from dateutil import parser
@@ -51,18 +51,12 @@ class VisitOMADView(TokenAPIView):
             raise ValueError('Missing Student NetID')
 
         try:
-            person = UWPersonClient().get_person_by_uwnetid(
-                netid, include_employee=False, include_student=True,
-                include_student_transcripts=False,
-                include_student_transfers=False, include_student_sports=False,
-                include_student_advisers=False, include_student_majors=False,
-                include_student_pending_majors=False,
-                include_student_holds=False, include_student_degrees=False)
+            person = CompassPersonClient().get_appuser_by_uwnetid(netid)
         except Exception as ex:
             raise ValueError(f'IC Visit Error: {netid}: {ex}')
 
-        syskey = person.student.system_key
-        student, created = Student.objects.get_or_create(system_key=syskey)
+        student, created = Student.objects.get_or_create(
+            system_key=person.system_key)
         return student
 
     def _valid_visit_type(self, name, access_group):
