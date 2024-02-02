@@ -5,7 +5,6 @@
   "fields": {
    "student": 2,
    "access_group": 1,
-   "program_code": 0,
    "program_date": "2023-12-31",
    "modified_by": null,
    "modified_date": null

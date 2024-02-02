@@ -124,19 +124,12 @@ export default {
   },
   methods: {
     editSpecialProgram() {
-      let store = this.program_data.hasOwnProperty("program_code")
-          ? this.updateStudentSpecialProgram
-          : this.saveStudentSpecialProgram,
-        program_data_copy = JSON.parse(JSON.stringify(this.program_data));
+      let program_data_copy = JSON.parse(JSON.stringify(this.program_data));
 
       program_data_copy.program_date = this.program_date;
 
       event.preventDefault();
-      store(
-        this.person.student.system_key,
-        this.person.student.special_program_code,
-        program_data_copy
-      )
+      this.updateStudentSpecialProgram(this.person.student.system_key, program_data_copy)
         .then(() => {
           this.program_data.program_date = this.program_date;
           this.$emit("specialProgramUpdated");

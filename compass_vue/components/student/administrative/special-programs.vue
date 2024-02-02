@@ -100,10 +100,7 @@ export default {
   },
   methods: {
     loadSpecialProgramData() {
-      this.getStudentSpecialProgram(
-        this.person.student.system_key,
-        this.person.student.special_program_code
-      )
+      this.getStudentSpecialProgram(this.person.student.system_key)
         .then((response) => {
           this.program_data = response.data;
         })

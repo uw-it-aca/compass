@@ -98,8 +98,7 @@ urlpatterns += [
         StudentEligibilityView.as_view(),
     ),
     re_path(
-        r"^api/internal/student/(?P<systemkey>[\w]+)/"
-        r"special_program/(?P<program_code>[\w]+)$",
+        r"^api/internal/student/(?P<systemkey>[\w]+)/special_program/$",
         SpecialProgramView.as_view(),
         name="special_program_view"
     ),

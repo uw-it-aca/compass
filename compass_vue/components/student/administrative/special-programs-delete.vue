@@ -103,10 +103,7 @@ export default {
   methods: {
     deleteSpecialProgram() {
       event.preventDefault();
-      this.deleteStudentSpecialProgram(
-        this.person.student.system_key,
-        this.person.student.special_program_code
-      )
+      this.deleteStudentSpecialProgram(this.person.student.system_key)
         .then(() => {
           this.$emit("specialProgramUpdated");
           this.hideModal();
