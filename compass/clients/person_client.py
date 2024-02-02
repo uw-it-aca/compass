@@ -3,7 +3,7 @@
 
 from django.conf import settings
 from django.core.cache import cache
-from uw_person_client import UWPersonClient
+from uw_person_client.clients.core_client import UWPersonClient, or_
 from uw_person_client.components import Person, Student, Transcript, Degree
 from uw_person_client.exceptions import (
     PersonNotFoundException, AdviserNotFoundException)
