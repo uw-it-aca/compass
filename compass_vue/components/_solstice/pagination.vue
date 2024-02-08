@@ -1,41 +1,45 @@
 <template>
   <slot></slot>
-  <nav aria-label="Page navigation example">
-    <ul class="pagination pagination-sm justify-content-center">
-      <li class="page-item">
-        <a
-          class="page-link"
-          :class="currentPage == 1 ? 'disabled' : ''"
-          href="#"
-          role="button"
-          @click="$emit('changePage', currentPage - 1)"
-          >Previous</a
-        >
-      </li>
-      <template v-for="page in pages" :key="page">
-        <li class="page-item">
-          <a
-            class="page-link"
-            :class="page == currentPage ? 'active' : ''"
-            href="#"
-            role="button"
-            @click="$emit('changePage', page)"
-            >{{ page }}</a
-          >
-        </li>
-      </template>
-      <li class="page-item">
-        <a
-          class="page-link"
-          :class="currentPage == pageCount ? 'disabled' : ''"
-          href="#"
-          role="button"
-          @click="$emit('changePage', currentPage + 1)"
-          >Next</a
-        >
-      </li>
-    </ul>
-  </nav>
+  <tr class="border-0">
+    <td colspan="100%" class="border-0">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-sm justify-content-center m-0">
+          <li class="page-item">
+            <a
+              class="page-link"
+              :class="currentPage == 1 ? 'disabled' : ''"
+              href="#"
+              role="button"
+              @click="$emit('changePage', currentPage - 1)"
+              >Previous</a
+            >
+          </li>
+          <template v-for="page in pages" :key="page">
+            <li class="page-item">
+              <a
+                class="page-link"
+                :class="page == currentPage ? 'active' : ''"
+                href="#"
+                role="button"
+                @click="$emit('changePage', page)"
+                >{{ page }}</a
+              >
+            </li>
+          </template>
+          <li class="page-item">
+            <a
+              class="page-link"
+              :class="currentPage == pageCount ? 'disabled' : ''"
+              href="#"
+              role="button"
+              @click="$emit('changePage', currentPage + 1)"
+              >Next</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </td>
+  </tr>
 </template>
 <script>
 import { computed } from "vue";
