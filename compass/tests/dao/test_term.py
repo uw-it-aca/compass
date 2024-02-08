@@ -4,6 +4,8 @@
 
 from django.test import TestCase
 from uw_sws.util import fdao_sws_override
+from uw_sws.models import Term
+import datetime
 from compass.dao.term import *
 
 
@@ -32,7 +34,7 @@ class TermDAOFunctionsTest(TestCase):
                 'next_term_year': 2014,
                 'term_first_day': '2013-09-25',
                 'term_last_day': '2013-12-06',
-                'term_week': 3,
+                'term_week': 4,
             })
 
         with self.settings(CURRENT_DATETIME_OVERRIDE='2013-12-23 00:00:00'):
@@ -51,7 +53,7 @@ class TermDAOFunctionsTest(TestCase):
                 'next_term_year': 2014,
                 'term_first_day': '2013-09-25',
                 'term_last_day': '2013-12-06',
-                'term_week': 13,
+                'term_week': 14,
             })
 
         with self.settings(CURRENT_DATETIME_OVERRIDE='2013-06-30 00:00:00'):
@@ -70,5 +72,13 @@ class TermDAOFunctionsTest(TestCase):
                 'next_term_year': 2013,
                 'term_first_day': '2013-06-24',
                 'term_last_day': '2013-08-23',
-                'term_week': 1,
+                'term_week': 2,
             })
+
+    def test_week_of_term(self):
+        term = Term()
+        term.first_day_quarter = datetime.date(2024, 2, 7)
+        self.assertEqual(week_of_term(term, datetime.date(2024, 2, 7)), 1)
+        self.assertEqual(week_of_term(term, datetime.date(2024, 2, 10)), 1)
+        # Ensure week ticks over on Sunday, not relative to first day
+        self.assertEqual(week_of_term(term, datetime.date(2024, 2, 11)), 2)
