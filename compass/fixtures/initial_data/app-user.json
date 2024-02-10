@@ -1,0 +1,9 @@
+[
+{
+    "model": "compass.appuser",
+    "pk": 1,
+    "fields": {
+        "uwnetid": "jadviser"
+    }
+}
+]

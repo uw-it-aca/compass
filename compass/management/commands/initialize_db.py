@@ -13,6 +13,7 @@ class Command(BaseCommand):
         call_command('loaddata', 'initial_data/affiliations.json')
         call_command('loaddata', 'initial_data/cohorts.json')
         call_command('loaddata', 'initial_data/student.json')
+        call_command('loaddata', 'initial_data/app-user.json')
         call_command('loaddata', 'initial_data/student-affiliations.json')
         call_command('loaddata', 'initial_data/contact-types.json')
         call_command('loaddata', 'initial_data/contact-methods.json')
@@ -20,3 +21,4 @@ class Command(BaseCommand):
         call_command('loaddata', 'initial_data/visit-types.json')
         call_command('loaddata', 'initial_data/visit.json')
         call_command('loaddata', 'initial_data/eligibility-types.json')
+        call_command('loaddata', 'initial_data/specialprogram.json')

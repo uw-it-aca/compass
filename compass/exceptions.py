@@ -10,3 +10,8 @@ Custom exceptions used by Compass.
 class OverrideNotPermitted(Exception):
     def __str__(self):
         return "Action not permitted while using admin override"
+
+
+class InvalidSystemKey(Exception):
+    def __str__(self):
+        return "system_ey is invalid"

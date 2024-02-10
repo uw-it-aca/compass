@@ -24,8 +24,7 @@ class AppUserManager(models.Manager):
         needed.
         """
         # request the current person object for the user
-        person = CompassPersonClient().get_person_by_uwnetid(
-            uwnetid, include_employee=False, include_student=False)
+        person = CompassPersonClient().get_appuser_by_uwnetid(uwnetid)
         # check the AppUser table to see if they have an existing entry
         user = None
         for netid in person.prior_uwnetids + [person.uwnetid]:
@@ -446,3 +445,19 @@ class OMADContactQueue(models.Model):
         return f"#{self.id} created: {self.created} " \
                f"attempts: {self.processing_attempts} " \
                f"err: {self.processing_error}"
+
+
+class SpecialProgram(models.Model):
+    """
+    Advisor group meta data for Student Special Program
+    """
+
+    student = models.ForeignKey("Student", on_delete=models.CASCADE)
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
+    program_date = models.DateField(null=True)
+    modified_by = models.ForeignKey(
+        "AppUser", on_delete=models.SET_NULL, null=True)
+    modified_date = models.DateTimeField(null=True)
+
+    class Meta:
+        unique_together = ('student', 'access_group',)

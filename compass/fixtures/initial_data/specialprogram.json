@@ -1,0 +1,13 @@
+[
+ {
+  "model": "compass.specialprogram",
+  "pk": 1,
+  "fields": {
+   "student": 2,
+   "access_group": 1,
+   "program_date": "2023-12-31",
+   "modified_by": null,
+   "modified_date": null
+  }
+ }
+]

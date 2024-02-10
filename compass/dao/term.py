@@ -4,10 +4,22 @@
 
 from uw_sws.term import get_term_by_date, get_term_after
 from compass.dao import current_datetime
+import datetime
 
 
 def current_term():
     return get_term_by_date(current_datetime().date())
+
+
+def week_of_term(term, current_date):
+    """
+    Returns the calendar week of the term for the given date.
+    """
+    start_date = term.first_day_quarter
+    start_of_first_week = start_date - datetime.timedelta(
+        days=start_date.isoweekday() % 7)
+    difference = (current_date - start_of_first_week).days
+    return difference // 7 + 1
 
 
 def term_context():
@@ -39,7 +51,7 @@ def term_context():
         'bterm_first_day': curr_term.bterm_first_date.isoformat() if (
             curr_term.bterm_first_date) else None,
         'last_final_exam_date': curr_term.last_final_exam_date.isoformat(),
-        'term_week': curr_term.get_week_of_term_for_date(current_dt),
+        'term_week': week_of_term(curr_term, current_dt.date()),
         'is_finals': is_finals,
         'is_break': is_break,
         'break_term_year': break_term.year,

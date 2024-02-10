@@ -71,7 +71,7 @@ class ViewAPITest(ApiTest):
 
     @patch('compass.views.api.visit.Visit')
     @patch('compass.views.api.visit.VisitType')
-    @patch('compass.views.api.visit.UWPersonClient')
+    @patch('compass.views.api.visit.CompassPersonClient')
     @patch('compass.views.api.visit.Student')
     @patch('compass.views.api.visit.AccessGroup')
     def test_post(self, mock_access_group_cls,
