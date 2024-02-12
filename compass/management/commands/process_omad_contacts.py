@@ -3,7 +3,7 @@
 
 from django.core.management.base import BaseCommand
 from compass.models import OMADContactQueue
-from datetime import datetime
+from datetime import datetime, timezone
 import json
 from compass.models import (
     AccessGroup, AppUser, Contact, Student)
@@ -34,7 +34,7 @@ class Command(BaseCommand):
             except Exception as e:
                 logger.exception(f"Error processing contact {contact.id}")
                 contact.processing_attempts += 1
-                contact.process_attempted_date = datetime.now()
+                contact.process_attempted_date = datetime.now(timezone.utc)
                 contact.processing_error = repr(e)
                 contact.stack_trace = traceback.format_exc()
                 contact.save()

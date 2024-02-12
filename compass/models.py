@@ -5,12 +5,11 @@
 from django.db import models, transaction
 from django.db.utils import IntegrityError
 from django.utils.text import slugify
-from django.utils.timezone import utc
 from simple_history.models import HistoricalRecords
 from compass.clients import CompassPersonClient, PersonNotFoundException
 from compass.dao.group import is_group_member
 from compass.dao import current_datetime
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 
 class AppUserManager(models.Manager):
@@ -233,8 +232,8 @@ class ContactManager(models.Manager):
         kwargs = {"app_user__uwnetid": adviser_uwnetid, "source": "Checkin"}
 
         if offset_hours is not None and offset_hours > 0:
-            cutoff_dt = current_datetime() - timedelta(hours=offset_hours)
-            kwargs["checkin_date__gte"] = cutoff_dt.replace(tzinfo=utc)
+            cutoffdt = current_datetime() - timedelta(hours=offset_hours)
+            kwargs["checkin_date__gte"] = cutoffdt.replace(tzinfo=timezone.utc)
 
         return super().get_queryset().filter(**kwargs).order_by("checkin_date")
 

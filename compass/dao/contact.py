@@ -1,6 +1,7 @@
 # Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+from django.conf import settings
 from compass.models import ContactType, AccessGroup, AppUser
 from dateutil import parser
 
@@ -52,7 +53,8 @@ def parse_checkin_date_str(checkin_date_str):
         raise ValueError("Check-in date not specified")
     else:
         try:
-            dt = parser.parse(checkin_date_str)
+            dt = parser.parse(checkin_date_str,
+                              tzinfos=getattr(settings, "TZINFOS", {}))
             if dt.tzinfo is None:
                 raise ValueError("Invalid check-in date, missing timezone")
             return dt
