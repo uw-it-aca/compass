@@ -95,6 +95,9 @@ environmentVariables:
   - name: UW_PERSON_CLIENT_ENV
     value: PROD
 
+  - name: SQLALCHEMY_WARN_20
+    value: "1"
+
 externalSecrets:
   enabled: true
   secrets:
