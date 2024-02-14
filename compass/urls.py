@@ -33,6 +33,7 @@ from compass.views.api.settings import SettingsView
 from compass.views.api.photo import PhotoView
 from compass.views.api.affiliation import AffiliationsView
 from compass.views.api.support import SupportView
+from compass.views.api.user_prefs import UserPreferenceView
 
 # start with an empty url array
 urlpatterns = []
@@ -149,6 +150,11 @@ urlpatterns += [
     re_path(
         r"^api/internal/support/$",
         SupportView.as_view(),
+    ),
+    re_path(
+        r"^api/internal/userprefs/$",
+        UserPreferenceView.as_view(),
+        name="user_preference_view",
     ),
     re_path(
         r"^api/v1/contact/omad/$",

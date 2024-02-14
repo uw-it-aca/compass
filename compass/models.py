@@ -460,3 +460,29 @@ class SpecialProgram(models.Model):
 
     class Meta:
         unique_together = ('student', 'access_group',)
+
+
+class UserPreference(models.Model):
+    """
+    User preferences for the app, allowed preferences are defied per component
+    """
+    ALLOWED_PREFERENCES = {"caseload_filters": ["class", "campus", "degree",
+                                                "scholarship", "registered",
+                                                "holds"]
+                           }
+
+    app_user = models.ForeignKey("AppUser", on_delete=models.CASCADE)
+    key = models.CharField(max_length=50)
+    value = models.TextField()
+    component = models.CharField(max_length=50)
+
+    class Meta:
+        unique_together = ('app_user', 'key', 'component',)
+
+    @classmethod
+    def validate_preference(cls, component, preference):
+        if component not in cls.ALLOWED_PREFERENCES:
+            return False
+        if preference not in cls.ALLOWED_PREFERENCES[component]:
+            return False
+        return True
