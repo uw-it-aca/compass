@@ -134,6 +134,9 @@
                       </option>
                     </select>
                   </div>
+                  <a href="#" @click.prevent="saveFilterPreferences">
+                    Set current filters as default
+                  </a>
                 </div>
               </div>
             </div>
@@ -167,7 +170,7 @@ import SearchStudent from "@/components/search-student.vue";
 import CaseloadTableDisplay from "@/components/caseload-table-display.vue";
 import CaseloadTableLoading from "@/components/caseload-table-loading.vue";
 import Layout from "@/layout.vue";
-import { getAdviserCaseload } from "@/utils/data";
+import { getAdviserCaseload, savePreferences } from "@/utils/data";
 
 export default {
   components: {
@@ -317,6 +320,18 @@ export default {
       } else {
         return "";
       }
+    },
+    saveFilterPreferences: function () {
+      savePreferences({
+        caseload_filters: {
+          class: this.selectedClass,
+          campus: this.selectedCampus,
+          degree: this.selectedDegree,
+          scholarship: this.selectedScholarship,
+          registered: this.selectedRegistration,
+          holds: this.selectedHolds,
+        },
+      });
     },
   },
 };
