@@ -238,7 +238,7 @@ export default {
   created: function () {
     // setup() exposed properties can be accessed on `this`
     this.loadAdviserCaseload(this.adviserNetId);
-    this.loadFilterPreferences()
+    this.loadFilterPreferences();
   },
   computed: {
     filteredPersons: function () {
@@ -306,17 +306,17 @@ export default {
     },
     loadAdviserCaseload: function (netid) {
       this.getAdviserCaseload(netid).then((response) => {
-        this.persons = response.data.sort(function(a, b){
+        this.persons = response.data.sort(function (a, b) {
           return a.surname > b.surname ? 1 : -1;
-        });;
+        });
         this.isLoading = false;
       });
     },
     showPriorityRing: function (priorityValue) {
       // mocked display
-      if (priorityValue == "-3.4") {
+      if (priorityValue === "-3.4") {
         return "border-danger";
-      } else if (priorityValue == "2.2") {
+      } else if (priorityValue === "2.2") {
         return "border-warning";
       } else {
         return "";
@@ -336,13 +336,28 @@ export default {
     },
     loadFilterPreferences: function () {
       let user_prefs = window.userPreferences;
-      this.selectedClass = user_prefs.caseload_filters.class;
-      this.selectedCampus = user_prefs.caseload_filters.campus;
-      this.selectedDegree = user_prefs.caseload_filters.degree;
-      this.selectedScholarship = user_prefs.caseload_filters.scholarship;
-      this.selectedRegistration = user_prefs.caseload_filters.registered;
-      this.selectedHolds = user_prefs.caseload_filters.holds;
-    }
+      if (user_prefs.caseload_filters) {
+        this.selectedClass = user_prefs.caseload_filters.class;
+        this.selectedCampus = user_prefs.caseload_filters.campus;
+        this.selectedDegree = user_prefs.caseload_filters.degree;
+        this.selectedScholarship = user_prefs.caseload_filters.scholarship;
+        this.selectedRegistration = this.getBooleanFromString(
+          user_prefs.caseload_filters.registered
+        );
+        this.selectedHolds = this.getBooleanFromString(
+          user_prefs.caseload_filters.holds
+        );
+      }
+    },
+    getBooleanFromString: function (string) {
+      if (string === "True") {
+        return true;
+      } else if (string === "False") {
+        return false;
+      } else {
+        return undefined;
+      }
+    },
   },
 };
 </script>

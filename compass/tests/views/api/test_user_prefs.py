@@ -46,3 +46,24 @@ class UserPrefsAPITest(ApiTest):
         self.assertEqual(len(prefs), 1)
         self.assertEqual(r.status_code, 202)
         self.assertIn("invalid_key", r.content.decode())
+
+    @patch('compass.dao.group.is_member_of_group', return_value=True)
+    def test_remove_preference(self, mock_is_member):
+        UserPreference.objects.create(
+            app_user=self.APP_USER,
+            component="caseload_filters",
+            key="class",
+            value="senior"
+        )
+        prefs = UserPreference.objects.all()
+        self.assertEqual(len(prefs), 1)
+
+        put_body = {
+            "caseload_filters": {}
+        }
+        r = self.put_response('user_preference_view',
+                              self.APP_USER,
+                              put_body)
+        prefs = UserPreference.objects.all()
+        self.assertEqual(len(prefs), 0)
+        self.assertEqual(r.status_code, 200)
