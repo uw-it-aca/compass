@@ -19,17 +19,8 @@ class UserPreferenceView(BaseAPIView):
             us = UserService()
             app_user = AppUser.objects.upsert_appuser(us.get_user())
             user_prefs = request.data
-            invalid_keys = []
-            for component, prefs in user_prefs.items():
-                for key, value in prefs.items():
-                    if UserPreference.validate_preference(component, key):
-                        UserPreference.objects.update_or_create(
-                            app_user=app_user,
-                            component=component,
-                            key=key,
-                            defaults={'value': value})
-                    else:
-                        invalid_keys.append(f"{component}.{key}")
+            invalid_keys = UserPreference.update_by_user_component(app_user,
+                                                                   user_prefs)
             if invalid_keys:
                 return self.response_accepted("Some keys were not accepted: " +
                                               ", ".join(invalid_keys))

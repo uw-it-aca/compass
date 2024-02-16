@@ -238,6 +238,7 @@ export default {
   created: function () {
     // setup() exposed properties can be accessed on `this`
     this.loadAdviserCaseload(this.adviserNetId);
+    this.loadFilterPreferences()
   },
   computed: {
     filteredPersons: function () {
@@ -333,6 +334,15 @@ export default {
         },
       });
     },
+    loadFilterPreferences: function () {
+      let user_prefs = window.userPreferences;
+      this.selectedClass = user_prefs.caseload_filters.class;
+      this.selectedCampus = user_prefs.caseload_filters.campus;
+      this.selectedDegree = user_prefs.caseload_filters.degree;
+      this.selectedScholarship = user_prefs.caseload_filters.scholarship;
+      this.selectedRegistration = user_prefs.caseload_filters.registered;
+      this.selectedHolds = user_prefs.caseload_filters.holds;
+    }
   },
 };
 </script>

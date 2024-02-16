@@ -486,3 +486,25 @@ class UserPreference(models.Model):
         if preference not in cls.ALLOWED_PREFERENCES[component]:
             return False
         return True
+
+    @classmethod
+    def update_by_user_component(cls, app_user, pref_dict):
+        invalid_keys = []
+        for component, prefs in pref_dict.items():
+            submitted_pref_keys = []
+            for key, value in prefs.items():
+                # Save prefs in dict
+                if cls.validate_preference(component, key):
+                    submitted_pref_keys.append(key)
+                    cls.objects.update_or_create(
+                        app_user=app_user,
+                        component=component,
+                        key=key,
+                        defaults={'value': value})
+                else:
+                    invalid_keys.append(f"{component}.{key}")
+            # Remove prefs not in dict
+            cls.objects.filter(app_user=app_user,
+                               component=component).exclude(
+                key__in=submitted_pref_keys).delete()
+        return invalid_keys
