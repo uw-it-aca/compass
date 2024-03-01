@@ -460,3 +460,51 @@ class SpecialProgram(models.Model):
 
     class Meta:
         unique_together = ('student', 'access_group',)
+
+
+class UserPreference(models.Model):
+    """
+    User preferences for the app, allowed preferences are defied per component
+    """
+    ALLOWED_PREFERENCES = {"caseload_filters": ["class", "campus", "degree",
+                                                "scholarship", "registered",
+                                                "holds"]
+                           }
+
+    app_user = models.ForeignKey("AppUser", on_delete=models.CASCADE)
+    key = models.CharField(max_length=50)
+    value = models.TextField()
+    component = models.CharField(max_length=50)
+
+    class Meta:
+        unique_together = ('app_user', 'key', 'component',)
+
+    @classmethod
+    def validate_preference(cls, component, preference):
+        if component not in cls.ALLOWED_PREFERENCES:
+            return False
+        if preference not in cls.ALLOWED_PREFERENCES[component]:
+            return False
+        return True
+
+    @classmethod
+    def update_by_user_component(cls, app_user, pref_dict):
+        invalid_keys = []
+        for component, prefs in pref_dict.items():
+            submitted_pref_keys = []
+            for key, value in prefs.items():
+                # Save prefs in dict
+                if cls.validate_preference(component, key):
+                    submitted_pref_keys.append(key)
+                    cls.objects.update_or_create(
+                        app_user=app_user,
+                        component=component,
+                        key=key,
+                        defaults={'value': value})
+                else:
+                    invalid_keys.append(f"{component}.{key}")
+            # Remove prefs not in dict
+            cls.objects.filter(app_user=app_user,
+                               component=component).exclude(
+                key__in=submitted_pref_keys).delete()
+        return invalid_keys

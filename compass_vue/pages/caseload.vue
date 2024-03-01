@@ -135,6 +135,25 @@
                     </select>
                   </div>
                 </div>
+                <div class="text-end mt-3">
+                  <button
+                    v-if="!unsavedPreferences"
+                    disabled
+                    type="button"
+                    class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
+                    @click="saveFilterPreferences"
+                  >
+                    <i class="bi bi-star-fill me-2"></i>Using saved filters
+                  </button>
+                  <button
+                    v-else
+                    type="button"
+                    class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
+                    @click="saveFilterPreferences"
+                  >
+                    <i class="bi bi-star me-2"></i>Set filters as default
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -167,7 +186,7 @@ import SearchStudent from "@/components/search-student.vue";
 import CaseloadTableDisplay from "@/components/caseload-table-display.vue";
 import CaseloadTableLoading from "@/components/caseload-table-loading.vue";
 import Layout from "@/layout.vue";
-import { getAdviserCaseload } from "@/utils/data";
+import { getAdviserCaseload, savePreferences } from "@/utils/data";
 
 export default {
   components: {
@@ -230,11 +249,13 @@ export default {
         { id: true, value: "Yes" },
         { id: false, value: "No" },
       ],
+      saveCount: 0,
     };
   },
   created: function () {
     // setup() exposed properties can be accessed on `this`
     this.loadAdviserCaseload(this.adviserNetId);
+    this.loadFilterPreferences();
   },
   computed: {
     filteredPersons: function () {
@@ -294,6 +315,30 @@ export default {
       }
       return filteredPersons;
     },
+    unsavedPreferences: function () {
+      // Reference saveCount to trigger re-compute on save
+      this.saveCount;
+
+      let caseload_filter_prefs = {};
+      if ("caseload_filters" in window.userPreferences) {
+        caseload_filter_prefs = window.userPreferences.caseload_filters;
+      }
+      return (
+        this.selectedClass !== (caseload_filter_prefs.class || undefined) ||
+        this.selectedCampus !== (caseload_filter_prefs.campus || undefined) ||
+        this.selectedDegree !== (caseload_filter_prefs.degree || undefined) ||
+        this.selectedScholarship !==
+          (caseload_filter_prefs.scholarship || undefined) ||
+        this.selectedRegistration !==
+          (caseload_filter_prefs.registered !== undefined
+            ? this.getBooleanFromString(caseload_filter_prefs.registered)
+            : undefined) ||
+        this.selectedHolds !==
+          (caseload_filter_prefs.holds !== undefined
+            ? this.getBooleanFromString(caseload_filter_prefs.holds)
+            : undefined)
+      );
+    },
   },
   methods: {
     capitalizeFirstLetter: function (string) {
@@ -302,20 +347,77 @@ export default {
     },
     loadAdviserCaseload: function (netid) {
       this.getAdviserCaseload(netid).then((response) => {
-        this.persons = response.data.sort(function(a, b){
+        this.persons = response.data.sort(function (a, b) {
           return a.surname > b.surname ? 1 : -1;
-        });;
+        });
         this.isLoading = false;
       });
     },
     showPriorityRing: function (priorityValue) {
       // mocked display
-      if (priorityValue == "-3.4") {
+      if (priorityValue === "-3.4") {
         return "border-danger";
-      } else if (priorityValue == "2.2") {
+      } else if (priorityValue === "2.2") {
         return "border-warning";
       } else {
         return "";
+      }
+    },
+    saveFilterPreferences: function () {
+      savePreferences({
+        caseload_filters: {
+          class: this.selectedClass,
+          campus: this.selectedCampus,
+          degree: this.selectedDegree,
+          scholarship: this.selectedScholarship,
+          registered: this.selectedRegistration,
+          holds: this.selectedHolds,
+        },
+      });
+      // Update window.userPreferences
+      window.userPreferences.caseload_filters = {
+        class: this.selectedClass,
+        campus: this.selectedCampus,
+        degree: this.selectedDegree,
+        scholarship: this.selectedScholarship,
+        registered:
+          this.selectedRegistration === undefined
+            ? undefined
+            : this.selectedRegistration
+            ? "True"
+            : "False",
+        holds:
+          this.selectedHolds === undefined
+            ? undefined
+            : this.selectedHolds
+            ? "True"
+            : "False",
+      };
+      // Counter to trigger re-compute on unsavedPreferences
+      this.saveCount++;
+    },
+    loadFilterPreferences: function () {
+      let user_prefs = window.userPreferences;
+      if (user_prefs.caseload_filters) {
+        this.selectedClass = user_prefs.caseload_filters.class;
+        this.selectedCampus = user_prefs.caseload_filters.campus;
+        this.selectedDegree = user_prefs.caseload_filters.degree;
+        this.selectedScholarship = user_prefs.caseload_filters.scholarship;
+        this.selectedRegistration = this.getBooleanFromString(
+          user_prefs.caseload_filters.registered
+        );
+        this.selectedHolds = this.getBooleanFromString(
+          user_prefs.caseload_filters.holds
+        );
+      }
+    },
+    getBooleanFromString: function (string) {
+      if (string === "True") {
+        return true;
+      } else if (string === "False") {
+        return false;
+      } else {
+        return undefined;
       }
     },
   },

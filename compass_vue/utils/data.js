@@ -213,6 +213,10 @@ async function clearOverride() {
   return axios.post("/api/internal/support/", { clear_override: true });
 }
 
+async function savePreferences(preferences) {
+  return axios.put("/api/internal/userprefs/", preferences);
+}
+
 export {
   getStudentDetail,
   saveStudent,
@@ -244,4 +248,5 @@ export {
   getAdviserCheckIns,
   getAccessGroups,
   clearOverride,
+  savePreferences
 };
