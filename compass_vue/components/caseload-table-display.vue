@@ -146,3 +146,9 @@ export default {
   },
 };
 </script>
+
+<style lang="scss">
+.table td {
+  background: transparent !important;
+}
+</style>

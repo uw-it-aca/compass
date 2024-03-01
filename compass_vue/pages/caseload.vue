@@ -134,10 +134,25 @@
                       </option>
                     </select>
                   </div>
-                  <a href="#" @click.prevent="saveFilterPreferences">
-                    Set current filters as default
-                  </a>
-                  <span v-if="unsavedPreferences">Unsaved Changes</span>
+                </div>
+                <div class="text-end mt-3">
+                  <button
+                    v-if="!unsavedPreferences"
+                    disabled
+                    type="button"
+                    class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
+                    @click="saveFilterPreferences"
+                  >
+                    <i class="bi bi-star-fill me-2"></i>Using saved filters
+                  </button>
+                  <button
+                    v-else
+                    type="button"
+                    class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
+                    @click="saveFilterPreferences"
+                  >
+                    <i class="bi bi-star me-2"></i>Set filters as default
+                  </button>
                 </div>
               </div>
             </div>
