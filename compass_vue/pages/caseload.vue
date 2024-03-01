@@ -137,6 +137,7 @@
                   <a href="#" @click.prevent="saveFilterPreferences">
                     Set current filters as default
                   </a>
+                  <span v-if="unsavedPreferences">Unsaved Changes</span>
                 </div>
               </div>
             </div>
@@ -233,6 +234,7 @@ export default {
         { id: true, value: "Yes" },
         { id: false, value: "No" },
       ],
+      saveCount: 0,
     };
   },
   created: function () {
@@ -298,6 +300,30 @@ export default {
       }
       return filteredPersons;
     },
+    unsavedPreferences: function () {
+      // Reference saveCount to trigger re-compute on save
+      this.saveCount;
+
+      let caseload_filter_prefs = {};
+      if ("caseload_filters" in window.userPreferences) {
+        caseload_filter_prefs = window.userPreferences.caseload_filters;
+      }
+      return (
+        this.selectedClass !== (caseload_filter_prefs.class || undefined) ||
+        this.selectedCampus !== (caseload_filter_prefs.campus || undefined) ||
+        this.selectedDegree !== (caseload_filter_prefs.degree || undefined) ||
+        this.selectedScholarship !==
+          (caseload_filter_prefs.scholarship || undefined) ||
+        this.selectedRegistration !==
+          (caseload_filter_prefs.registered !== undefined
+            ? this.getBooleanFromString(caseload_filter_prefs.registered)
+            : undefined) ||
+        this.selectedHolds !==
+          (caseload_filter_prefs.holds !== undefined
+            ? this.getBooleanFromString(caseload_filter_prefs.holds)
+            : undefined)
+      );
+    },
   },
   methods: {
     capitalizeFirstLetter: function (string) {
@@ -333,6 +359,27 @@ export default {
           holds: this.selectedHolds,
         },
       });
+      // Update window.userPreferences
+      window.userPreferences.caseload_filters = {
+        class: this.selectedClass,
+        campus: this.selectedCampus,
+        degree: this.selectedDegree,
+        scholarship: this.selectedScholarship,
+        registered:
+          this.selectedRegistration === undefined
+            ? undefined
+            : this.selectedRegistration
+            ? "True"
+            : "False",
+        holds:
+          this.selectedHolds === undefined
+            ? undefined
+            : this.selectedHolds
+            ? "True"
+            : "False",
+      };
+      // Counter to trigger re-compute on unsavedPreferences
+      this.saveCount++;
     },
     loadFilterPreferences: function () {
       let user_prefs = window.userPreferences;

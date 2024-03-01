@@ -58,5 +58,5 @@ def auth_user(request):
 
 def user_preferences(request):
     us = UserService()
-    netid = us.get_original_user()
+    netid = us.get_user()
     return {'user_preferences': get_user_preferences(netid)}
