@@ -1,12 +1,12 @@
 {
   "recommendations": [
-    "batisteo.vscode-django",
+    "editorconfig.editorconfig",
     "ms-python.black-formatter",
     "ms-python.python",
-    "editorconfig.editorconfig",
-    "dbaeumer.vscode-eslint",
+    "batisteo.vscode-django",
     "esbenp.prettier-vscode",
     "vue.volar",
+    "dbaeumer.vscode-eslint",
     "stylelint.vscode-stylelint"
   ]
 }
