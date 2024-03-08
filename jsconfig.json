@@ -1,0 +1,8 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./compass_vue/*"]
+    }
+  },
+  "exclude": ["node_modules", "static"]
+}
