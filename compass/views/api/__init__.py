@@ -72,6 +72,9 @@ class BaseAPIView(GenericAPIView):
     def response_created(self, content):
         return Response(content, status=status.HTTP_201_CREATED)
 
+    def response_accepted(self, content):
+        return Response(content, status=status.HTTP_202_ACCEPTED)
+
     def response_badrequest(self, content="Missing parameters"):
         return Response(content, status=status.HTTP_400_BAD_REQUEST)
 

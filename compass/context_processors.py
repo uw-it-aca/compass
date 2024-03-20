@@ -10,6 +10,7 @@ from persistent_message.models import Message
 from compass.dao.term import term_context
 from compass.dao import current_datetime
 from compass.models import AccessGroup
+from compass.dao.preferences import get_user_preferences
 
 
 def google_analytics(request):
@@ -53,3 +54,9 @@ def auth_user(request):
         ret['messages'].append(message.render())
 
     return ret
+
+
+def user_preferences(request):
+    us = UserService()
+    netid = us.get_user()
+    return {'user_preferences': get_user_preferences(netid)}

@@ -1,4 +1,4 @@
-ARG DJANGO_CONTAINER_VERSION=1.4.1
+ARG DJANGO_CONTAINER_VERSION=2.0.2
 
 FROM us-docker.pkg.dev/uwit-mci-axdd/containers/django-container:${DJANGO_CONTAINER_VERSION} as app-prebundler-container
 
@@ -18,7 +18,10 @@ RUN chmod u+x /scripts/app_start.sh
 RUN /app/bin/pip install -r requirements.txt
 RUN /app/bin/pip install psycopg2
 
-FROM node:lts-bullseye AS node-bundler
+# latest node + ubuntu
+FROM node:20 AS node-base
+FROM ubuntu:22.04 AS node-bundler
+COPY --from=node-base / /
 
 ADD ./package.json /app/
 WORKDIR /app/

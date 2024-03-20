@@ -43,6 +43,7 @@ TEMPLATES = [
                 'compass.context_processors.google_analytics',
                 'compass.context_processors.django_debug',
                 'compass.context_processors.auth_user',
+                'compass.context_processors.user_preferences',
             ],
         }
     }
@@ -115,6 +116,8 @@ UW_PERSON_DB_DATABASE = os.getenv('UW_PERSON_DB_DATABASE', '')
 UW_PERSON_DB_PORT = os.getenv('UW_PERSON_DB_PORT', '')
 UW_PERSON_DB_POOL_SIZE = os.getenv('UW_PERSON_DB_POOL_SIZE', 1)
 UW_PERSON_DB_MAX_OVERFLOW = os.getenv('UW_PERSON_DB_MAX_OVERFLOW', 2)
+
+TZINFOS = {"PDT": -7 * 3600}
 
 LOGGING = {
     'version': 1,
