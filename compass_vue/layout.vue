@@ -38,6 +38,7 @@
       </slot>
       <slot name="content"></slot>
     </template>
+    <template #footer></template>
   </axdd-sidebar>
 </template>
 

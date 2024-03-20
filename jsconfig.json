@@ -4,5 +4,5 @@
       "@/*": ["./compass_vue/*"]
     }
   },
-  "exclude": ["node_modules", "static"]
+  "exclude": ["node_modules", "compass"]
 }
