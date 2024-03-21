@@ -13,9 +13,5 @@ def get_user_preferences(netid):
                 prefs[pref.component] = {}
             prefs[pref.component][pref.key] = pref.value
         return prefs
-    except AppUser.DoesNotExist:
-        return None
-    except UserPreference.DoesNotExist:
-        return None
-    except Exception:
+    except (AppUser.DoesNotExist, UserPreference.DoesNotExist, Exception):
         return None
