@@ -3,10 +3,10 @@
 
 
 from compass.views.api import BaseAPIView
-from compass.dao.person import valid_uwnetid
+from compass.dao.person import (
+    valid_uwnetid, get_person_by_system_key, get_adviser_caseload,
+    PersonNotFoundException, AdviserNotFoundException)
 from compass.dao.photo import PhotoDAO
-from compass.clients import (
-    CompassPersonClient, PersonNotFoundException, AdviserNotFoundException)
 from compass.models import Contact
 from compass.serializers import ContactReadSerializer
 
@@ -21,15 +21,12 @@ class AdviserCheckInsView(BaseAPIView):
         if not valid_uwnetid(adviser_netid):
             return self.response_badrequest('Invalid uwnetid')
 
-        client = CompassPersonClient()
         contacts = []
         photo_dao = PhotoDAO()
         for contact in Contact.objects.by_adviser(adviser_netid):
             contact_dict = ContactReadSerializer(contact, many=False).data
             try:
-                person = client.get_person_by_system_key(
-                    contact.student.system_key
-                )
+                person = get_person_by_system_key(contact.student.system_key)
                 person.photo_url = photo_dao.get_photo_url(person.uwregid)
                 contact_dict["student"] = person.to_dict()
                 contacts.append(contact_dict)
@@ -48,13 +45,15 @@ class AdviserCaseloadView(BaseAPIView):
         if not valid_uwnetid(adviser_netid):
             return self.response_badrequest('Invalid uwnetid')
 
-        client = CompassPersonClient()
         try:
-            persons = client.get_adviser_caseload(adviser_netid)
+            queryset = get_adviser_caseload(adviser_netid)
         except AdviserNotFoundException:
-            persons = []
-        photo_dao = PhotoDAO()
-        for person in persons:
-            person.photo_url = photo_dao.get_photo_url(person.uwregid)
+            queryset = []
 
-        return self.response_ok([person.to_dict() for person in persons])
+        photo_dao = PhotoDAO()
+        students = []
+        for row in queryset:
+            row['photo_url'] = photo_dao.get_photo_url(row['uwregid'])
+            students.append(row)
+
+        return self.response_ok(students)

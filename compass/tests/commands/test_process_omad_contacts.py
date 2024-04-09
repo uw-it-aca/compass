@@ -3,14 +3,14 @@
 
 
 from django.core.management import call_command
-from django.test import TestCase
+from compass.tests import CompassTestCase
 from compass.models import OMADContactQueue, Contact, AccessGroup
 import json
 from rest_framework.authtoken.models import Token
 from django.contrib.auth.models import User
 
 
-class TestOMADContactProcessing(TestCase):
+class TestOMADContactProcessing(CompassTestCase):
     API_TOKEN = None
 
     def setUp(self):
@@ -52,7 +52,8 @@ class TestOMADContactProcessing(TestCase):
         call_command('process_omad_contacts')
         contact = OMADContactQueue.objects.all()[0]
         self.assertEqual(contact.processing_attempts, 1)
-        self.assertEqual(contact.processing_error, "PersonNotFoundException()")
+        self.assertEqual(contact.processing_error,
+                         "PersonNotFoundException('javerage123')")
 
         # reprocess with flag
         call_command('process_omad_contacts', reprocess=True)

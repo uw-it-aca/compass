@@ -2,6 +2,7 @@ from .base_settings import *
 
 INSTALLED_APPS += [
     'compass.apps.CompassConfig',
+    'uw_person_client',
     'django_user_agents',
     'simple_history',
     'supporttools',
@@ -11,17 +12,6 @@ INSTALLED_APPS += [
     'rest_framework',
     'rest_framework.authtoken'
 ]
-
-if os.getenv("ENV") == "localdev":
-    DEBUG = True
-
-if os.getenv("ENV") == "localdev":
-    VITE_MANIFEST_PATH = os.path.join(
-        BASE_DIR, "compass", "static", "manifest.json"
-    )
-else:
-    VITE_MANIFEST_PATH = os.path.join(os.sep, "static", "manifest.json")
-
 
 MIDDLEWARE += [
     'userservice.user.UserServiceMiddleware',
@@ -54,6 +44,9 @@ DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 
 if os.getenv("ENV") == "localdev":
     DEBUG = True
+    VITE_MANIFEST_PATH = os.path.join(
+        BASE_DIR, "compass", "static", "manifest.json"
+    )
     RESTCLIENTS_DAO_CACHE_CLASS = None
     CURRENT_DATETIME_OVERRIDE = "2020-10-15 00:00:00"
 
@@ -64,6 +57,11 @@ if os.getenv("ENV") == "localdev":
                                  'db.sqlite3'),
         }
     }
+
+    MIGRATION_MODULES = {
+        'uw_person_client': 'uw_person_client.test_migrations',
+    }
+    FIXTURE_DIRS = ['uw_person_client/fixtures']
     TEST_ACCESS_GROUP = 'u_test_group'
     COMPASS_ADMIN_GROUP = TEST_ACCESS_GROUP
     COMPASS_SUPPORT_GROUP = TEST_ACCESS_GROUP
@@ -76,6 +74,7 @@ if os.getenv("ENV") == "localdev":
         'isMemberOf': [TEST_ACCESS_GROUP, 'u_astra_group1-manager'],
     }
 else:
+    VITE_MANIFEST_PATH = os.path.join(os.sep, "static", "manifest.json")
     RESTCLIENTS_DAO_CACHE_CLASS = 'compass.cache.CompassRestclientCache'
     COMPASS_ADMIN_GROUP = os.getenv('ADMIN_GROUP', '')
     COMPASS_SUPPORT_GROUP = os.getenv('SUPPORT_GROUP', '')
@@ -108,14 +107,17 @@ ALLOW_USER_OVERRIDE_FOR_WRITE = (os.getenv('ENV', 'localdev') != 'prod')
 # IDCard photo config
 IDCARD_TOKEN_EXPIRES = 60 * 60
 
-# PDS config
-UW_PERSON_DB_USERNAME = os.getenv('UW_PERSON_DB_USERNAME', '')
-UW_PERSON_DB_PASSWORD = os.getenv('UW_PERSON_DB_PASSWORD', '')
-UW_PERSON_DB_HOSTNAME = os.getenv('UW_PERSON_DB_HOSTNAME', '')
-UW_PERSON_DB_DATABASE = os.getenv('UW_PERSON_DB_DATABASE', '')
-UW_PERSON_DB_PORT = os.getenv('UW_PERSON_DB_PORT', '')
-UW_PERSON_DB_POOL_SIZE = os.getenv('UW_PERSON_DB_POOL_SIZE', 1)
-UW_PERSON_DB_MAX_OVERFLOW = os.getenv('UW_PERSON_DB_MAX_OVERFLOW', 2)
+# PDS config, default values are for localdev
+DATABASES['uw_person'] = {
+    'ENGINE': 'django.db.backends.postgresql',
+    'HOST': os.getenv('UW_PERSON_DB_HOST', 'postgres'),
+    'PORT': os.getenv('UW_PERSON_DB_PORT', '5432'),
+    'NAME': os.getenv('UW_PERSON_DB_NAME', 'postgres'),
+    'USER': os.getenv('UW_PERSON_DB_USER', 'postgres'),
+    'PASSWORD': os.getenv('UW_PERSON_DB_PASSWORD', 'postgres'),
+}
+
+DATABASE_ROUTERS = ['compass.routers.UWPersonRouter']
 
 TZINFOS = {"PDT": -7 * 3600}
 

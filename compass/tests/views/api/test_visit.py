@@ -71,12 +71,12 @@ class ViewAPITest(ApiTest):
 
     @patch('compass.views.api.visit.Visit')
     @patch('compass.views.api.visit.VisitType')
-    @patch('compass.views.api.visit.CompassPersonClient')
+    @patch('compass.views.api.visit.get_appuser_by_uwnetid')
     @patch('compass.views.api.visit.Student')
     @patch('compass.views.api.visit.AccessGroup')
     def test_post(self, mock_access_group_cls,
                   mock_student_cls,
-                  mock_person_client_cls,
+                  mock_get_appuser_by_uwnetid,
                   mock_visit_type_cls,
                   mock_visit_cls):
 
@@ -91,8 +91,7 @@ class ViewAPITest(ApiTest):
             return_value=mock_student)
 
         mock_visit_type = MagicMock()
-        mock_visit_type_cls.objects.get.return_value = \
-            mock_visit_type
+        mock_visit_type_cls.objects.get.return_value = mock_visit_type
 
         mock_view._valid_visit_type = MagicMock(
             return_value=mock_visit_type)

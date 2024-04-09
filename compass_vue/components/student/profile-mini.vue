@@ -21,8 +21,8 @@
         </div>
       </div>
       <div class="text-secondary small">
-        <router-link :to="{ path: '/student/' + person.student.student_number }"
-          >{{ person.student.student_number }} </router-link
+        <router-link :to="{ path: '/student/' + person.student_number }"
+          >{{ person.student_number }} </router-link
         >,
         <router-link :to="{ path: '/student/' + person.uwnetid }"
           >{{ person.uwnetid }}
