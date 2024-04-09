@@ -64,7 +64,8 @@ def get_person_by_system_key(system_key, **kwargs):
 
 
 def get_person_by_student_number(student_number, **kwargs):
-    return Person.objects.get_person_by_student_number(student_number, **kwargs)
+    return Person.objects.get_person_by_student_number(
+        student_number, **kwargs)
 
 
 def get_appuser_by_uwnetid(uwnetid):
@@ -91,14 +92,14 @@ def get_adviser_caseload(uwnetid):
     adviser = Adviser.objects.get_adviser_by_uwnetid(uwnetid)
 
     return Student.objects.annotate(latest_transcript=Subquery(
-            Transcript.objects.filter(student=OuterRef('pk')
-                ).values(json=JSONObject(
+            Transcript.objects.filter(
+                student=OuterRef('pk')).values(json=JSONObject(
                     scholarship_type='scholarship_type',
                     scholarship_desc='scholarship_desc')
                 ).order_by('-tran_term__year', '-tran_term__quarter')[:1])
         ).annotate(latest_degree=Subquery(
-            Degree.objects.filter(student=OuterRef('pk')
-                ).values(json=JSONObject(
+            Degree.objects.filter(
+                student=OuterRef('pk')).values(json=JSONObject(
                     degree_status_desc='degree_status_desc')
                 ).order_by('-degree_date')[:1])
         ).filter(advisers__in=[adviser]).values(
