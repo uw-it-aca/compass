@@ -1,12 +1,12 @@
 # Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from django.test import TestCase
+from compass.tests import CompassTestCase
 from compass.models import AppUser, Contact, Student, AccessGroup, ContactType
 from datetime import datetime, timezone
 
 
-class AppUserTest(TestCase):
+class AppUserTest(CompassTestCase):
     def test_upsert_create(self):
         user = AppUser.objects.upsert_appuser("javerage")
         self.assertEqual(user.uwnetid, "javerage")

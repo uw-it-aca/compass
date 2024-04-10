@@ -5,7 +5,7 @@ from django.conf import settings
 from compass.views.api import BaseAPIView, TokenAPIView
 from compass.models import Visit, Student, AccessGroup, VisitType
 from compass.serializers import VisitReadSerializer, VisitTypeSerializer
-from compass.clients import CompassPersonClient
+from compass.dao.person import get_appuser_by_uwnetid
 from rest_framework.response import Response
 from rest_framework import status
 from dateutil import parser
@@ -51,7 +51,7 @@ class VisitOMADView(TokenAPIView):
             raise ValueError('Missing Student NetID')
 
         try:
-            person = CompassPersonClient().get_appuser_by_uwnetid(netid)
+            person = get_appuser_by_uwnetid(netid)
         except Exception as ex:
             raise ValueError(f'IC Visit Error: {netid}: {ex}')
 

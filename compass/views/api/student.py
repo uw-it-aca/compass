@@ -5,7 +5,9 @@
 from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
 from compass.dao.person import (
-    valid_uwnetid, valid_uwregid, valid_student_number, valid_system_key)
+    valid_uwnetid, valid_uwregid, valid_student_number, valid_system_key,
+    get_person_by_uwnetid, get_person_by_uwregid, get_person_by_student_number,
+    PersonNotFoundException)
 from compass.dao import current_datetime_utc
 from compass.models import (
     AccessGroup, Student, AppUser, Contact, StudentAffiliation, Affiliation,
@@ -15,8 +17,6 @@ from compass.serializers import (
     VisitReadSerializer, StudentWriteSerializer,
     StudentEligibilitySerializer, EligibilityTypeSerializer,
     SpecialProgramSerializer)
-from compass.clients import (
-    CompassPersonClient, PersonNotFoundException)
 from compass.exceptions import OverrideNotPermitted
 from restclients_core.exceptions import DataFailureException
 from uw_sws.term import (
@@ -38,14 +38,16 @@ class StudentView(BaseAPIView):
     '''
     def get(self, request, identifier):
         try:
-            client = CompassPersonClient()
-            client_args = {'include_student_transcripts': False}
+            includes = {
+                'include_student': True,
+                'include_student_holds': True,
+                'include_student_transfers': True,
+                'include_student_degrees': True,
+            }
             if valid_uwnetid(identifier):
-                person = client.get_person_by_uwnetid(identifier,
-                                                      **client_args)
+                person = get_person_by_uwnetid(identifier, **includes)
             elif valid_student_number(identifier):
-                person = client.get_person_by_student_number(identifier,
-                                                             **client_args)
+                person = get_person_by_student_number(identifier, **includes)
             else:
                 return self.response_badrequest('Invalid student identifier')
 
@@ -272,8 +274,8 @@ class StudentTranscriptsView(BaseAPIView):
     /api/internal/student/[uwregid]/transcripts/
     '''
     def get(self, request, uwregid):
-        client = CompassPersonClient()
-        person = client.get_person_by_uwregid(uwregid)
+        person = get_person_by_uwregid(
+            uwregid, include_student=True, include_student_transcripts=True)
 
         transcripts = []
         for transcript in sorted(person.student.transcripts, key=lambda t: (

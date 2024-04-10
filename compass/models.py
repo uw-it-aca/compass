@@ -6,7 +6,7 @@ from django.db import models, transaction
 from django.db.utils import IntegrityError
 from django.utils.text import slugify
 from simple_history.models import HistoricalRecords
-from compass.clients import CompassPersonClient, PersonNotFoundException
+from compass.dao.person import get_appuser_by_uwnetid, PersonNotFoundException
 from compass.dao.group import is_group_member
 from compass.dao import current_datetime
 from datetime import datetime, timedelta, timezone
@@ -23,7 +23,7 @@ class AppUserManager(models.Manager):
         needed.
         """
         # request the current person object for the user
-        person = CompassPersonClient().get_appuser_by_uwnetid(uwnetid)
+        person = get_appuser_by_uwnetid(uwnetid)
         # check the AppUser table to see if they have an existing entry
         user = None
         for netid in person.prior_uwnetids + [person.uwnetid]:
@@ -79,8 +79,7 @@ class AppUser(models.Model):
     def display_name(self):
         if self.uwnetid:
             try:
-                person = CompassPersonClient().get_appuser_by_uwnetid(
-                    self.uwnetid)
+                person = get_appuser_by_uwnetid(self.uwnetid)
                 return person.display_name
             except PersonNotFoundException:
                 return self.uwnetid

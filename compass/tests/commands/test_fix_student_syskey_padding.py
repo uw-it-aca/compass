@@ -3,7 +3,7 @@
 
 
 from django.core.management import call_command
-from django.test import TestCase
+from compass.tests import CompassTestCase
 from compass.models import Contact, Student, StudentAffiliation, \
     Visit, StudentEligibility, Affiliation, Cohort, AccessGroup, AppUser, \
     ContactType, ContactMethod, EligibilityType
@@ -11,7 +11,7 @@ from datetime import datetime
 import pytz
 
 
-class TestFixSyskey(TestCase):
+class TestFixSyskey(CompassTestCase):
     student_pad = None
     student_nopad = None
     student_onlypad = None

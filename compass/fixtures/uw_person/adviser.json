@@ -1,0 +1,10 @@
+[
+    {
+        "model": "uw_person_client.StudentToAdviser",
+        "pk": 100,
+        "fields": {
+            "student": 100,
+            "adviser": 1
+        }
+    }
+]

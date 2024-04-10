@@ -1,0 +1,24 @@
+[
+    {
+        "model": "uw_person_client.Person",
+        "pk": 100,
+        "fields": {
+            "is_active_employee": false,
+            "is_active_student": true,
+            "display_name": "Lisa Simpson",
+            "first_name": "Lisa",
+            "full_name": "Lisa Simpson",
+            "preferred_first_name": "Lisa",
+            "preferred_middle_name": null,
+            "preferred_surname": "Simpson",
+            "prior_uwnetids": ["lisa1"],
+            "prior_uwregids": [],
+            "pronouns": "she/her/hers",
+            "surname": "Simpson",
+            "system_key": "888777333",
+            "uwnetid": "lisa",
+            "uwregid": "5432AAB8B36701E5BE06100432496AAA",
+            "whitepages_publish": true
+        }
+    }
+]
