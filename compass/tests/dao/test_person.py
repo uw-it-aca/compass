@@ -94,8 +94,13 @@ class TestPerson(CompassTestCase):
 
     def test_get_adviser_caseload(self):
         students = get_adviser_caseload('jadviser')
+        self.assertEqual(len(students), 3)
+
         s1 = students[0]
         self.assertEqual(s1['surname'], 'Average')
 
         s2 = students[1]
-        self.assertEqual(s2['surname'], 'Student')
+        self.assertEqual(s2['surname'], 'Simpson')
+
+        s3 = students[2]
+        self.assertEqual(s3['surname'], 'Student')

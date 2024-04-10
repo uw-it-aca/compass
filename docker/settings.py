@@ -61,7 +61,7 @@ if os.getenv("ENV") == "localdev":
     MIGRATION_MODULES = {
         'uw_person_client': 'uw_person_client.test_migrations',
     }
-    FIXTURE_DIRS = ['uw_person_client/fixtures']
+    FIXTURE_DIRS = ['uw_person_client/fixtures', 'compass/fixtures/uw_person']
     TEST_ACCESS_GROUP = 'u_test_group'
     COMPASS_ADMIN_GROUP = TEST_ACCESS_GROUP
     COMPASS_SUPPORT_GROUP = TEST_ACCESS_GROUP
