@@ -51,8 +51,9 @@ class StudentView(BaseAPIView):
             else:
                 return self.response_badrequest('Invalid student identifier')
 
-            person.photo_url = PhotoDAO().get_photo_url(person.uwregid)
-            return self.response_ok(person.to_dict())
+            person_dict = person.to_dict()
+            person_dict['photo_url'] = PhotoDAO().get_photo_url(person.uwregid)
+            return self.response_ok(person_dict)
         except PersonNotFoundException:
             return self.response_notfound()
 
