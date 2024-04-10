@@ -54,6 +54,7 @@ class TestPerson(CompassTestCase):
             'include_student': True,
             'include_student_holds': True,
             'include_student_transfers': True,
+            'include_student_transcripts': True,
             'include_student_degrees': True,
         }
         person = get_person_by_uwnetid('javerage', **includes)
@@ -61,8 +62,25 @@ class TestPerson(CompassTestCase):
         self.assertEqual(person.student.student_number, '1033334')
         self.assertEqual(len(person.student.holds.all()), 2)
         self.assertEqual(len(person.student.transfers.all()), 1)
+        self.assertEqual(len(person.student.transcripts.all()), 2)
         self.assertEqual(len(person.student.degrees.all()), 1)
-        self.assertEqual(person.student.transcripts, None)
+
+    def test_get_person_by_uwregid(self):
+        includes = {
+            'include_student': True,
+            'include_student_holds': True,
+            'include_student_transfers': True,
+            'include_student_transcripts': True,
+            'include_student_degrees': True,
+        }
+        person = get_person_by_uwregid('9136CCB8F66711D5BE060004AC494FFE',
+                                       **includes)
+        self.assertEqual(person.uwnetid, 'javerage')
+        self.assertEqual(person.student.student_number, '1033334')
+        self.assertEqual(len(person.student.holds.all()), 2)
+        self.assertEqual(len(person.student.transfers.all()), 1)
+        self.assertEqual(len(person.student.transcripts.all()), 2)
+        self.assertEqual(len(person.student.degrees.all()), 1)
 
     def test_get_person_by_student_number(self):
         includes = {
@@ -87,6 +105,25 @@ class TestPerson(CompassTestCase):
 
         self.assertRaises(
             PersonNotFoundException, get_person_by_system_key, '111111111')
+
+    def test_get_transcripts_by_uwregid(self):
+        self.assertRaises(PersonNotFoundException,
+                          get_transcripts_by_uwregid,
+                          '11111111EEEEEEEEBBBBBBBB00000000')
+
+        transcripts = get_transcripts_by_uwregid(
+            'FBB38FE46A7C11D5A4AE0004AC494FFE')
+        self.assertEqual(len(transcripts), 0)
+
+        transcripts = get_transcripts_by_uwregid(
+            '9136CCB8F66711D5BE060004AC494FFE')
+        self.assertEqual(len(transcripts), 2)
+
+        # default transcript sorting
+        t1 = transcripts[0]
+        t2 = transcripts[1]
+        self.assertLess(int(f'{t2.tran_term.year}{t2.tran_term.quarter}'),
+                        int(f'{t1.tran_term.year}{t1.tran_term.quarter}'))
 
     def test_get_adviser_caseload_not_found(self):
         self.assertRaises(

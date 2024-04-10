@@ -1,7 +1,7 @@
 [
     {
         "model": "uw_person_client.Transcript",
-        "pk": 1,
+        "pk": 100,
         "fields": {
             "student": 100,
             "tran_term": 1,
