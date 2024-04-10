@@ -6,8 +6,8 @@ from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
 from compass.dao.person import (
     valid_uwnetid, valid_uwregid, valid_student_number, valid_system_key,
-    get_person_by_uwnetid, get_person_by_uwregid, get_person_by_student_number,
-    PersonNotFoundException)
+    get_person_by_uwnetid, get_person_by_student_number,
+    get_transcripts_by_uwregid, PersonNotFoundException)
 from compass.dao import current_datetime_utc
 from compass.models import (
     AccessGroup, Student, AppUser, Contact, StudentAffiliation, Affiliation,
@@ -274,24 +274,27 @@ class StudentTranscriptsView(BaseAPIView):
     /api/internal/student/[uwregid]/transcripts/
     '''
     def get(self, request, uwregid):
-        person = get_person_by_uwregid(
-            uwregid, include_student=True, include_student_transcripts=True)
+        try:
+            transcripts = get_transcripts_by_uwregid(uwregid)
+        except PersonNotFoundException as ex:
+            return self.response_notfound("Unknown student")
 
-        transcripts = []
-        for transcript in sorted(person.student.transcripts, key=lambda t: (
-                t.tran_term.year, t.tran_term.quarter), reverse=True):
+        transcript_data = []
+        for transcript in transcripts:
             term = get_term_by_year_and_quarter(
                 transcript.tran_term.year,
                 TERMS[transcript.tran_term.quarter])
+
+            transcript_dict = transcript.to_dict()
             try:
                 class_schedule = get_schedule_by_regid_and_term(
                     uwregid, term)
-                transcript.class_schedule = class_schedule.json_data()
+                transcript_dict['class_schedule'] = class_schedule.json_data()
             except DataFailureException:
-                transcript.class_schedule = None
-            transcripts.append(transcript.to_dict())
+                transcript_dict['class_schedule'] = None
+            transcript_data.append(transcript_dict)
 
-        return self.response_ok(transcripts)
+        return self.response_ok(transcript_data)
 
 
 class StudentEligibilityView(BaseAPIView):

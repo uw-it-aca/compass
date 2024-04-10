@@ -68,6 +68,15 @@ def get_person_by_student_number(student_number, **kwargs):
         student_number, **kwargs)
 
 
+def get_transcripts_by_uwregid(uwregid):
+    person = get_person_by_uwregid(
+        uwregid, include_student=True, include_student_transcripts=True)
+
+    if person.student is not None and person.student.transcripts is not None:
+        return person.student.transcripts.all()
+    return []
+
+
 def get_appuser_by_uwnetid(uwnetid):
     """
     Returns a cached person model for use with AppUser.
