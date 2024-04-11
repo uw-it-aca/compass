@@ -2,9 +2,11 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+from django.urls import reverse
 from compass.tests import CompassTestCase
 from compass.dao.person import *
 from uw_pws.util import fdao_pws_override
+import mock
 
 
 @fdao_pws_override
@@ -129,15 +131,25 @@ class TestPerson(CompassTestCase):
         self.assertRaises(
             AdviserNotFoundException, get_adviser_caseload, 'javerage')
 
-    def test_get_adviser_caseload(self):
+    @mock.patch.object(PhotoDAO, 'generate_photo_key')
+    def test_get_adviser_caseload(self, mock_photo_key):
+        key = 'testtesttesttest'
+        mock_photo_key.return_value = key
+
         students = get_adviser_caseload('jadviser')
         self.assertEqual(len(students), 3)
 
         s1 = students[0]
-        self.assertEqual(s1['surname'], 'Average')
+        self.assertEqual(s1['display_name'], 'Jamesy McJamesy')
+        self.assertEqual(s1['photo_url'], reverse('photo', kwargs={
+            'uwregid': s1['uwregid'], 'photo_key': key}))
 
         s2 = students[1]
-        self.assertEqual(s2['surname'], 'Simpson')
+        self.assertEqual(s2['display_name'], 'Lisa Simpson')
+        self.assertEqual(s2['photo_url'], reverse('photo', kwargs={
+            'uwregid': s2['uwregid'], 'photo_key': key}))
 
         s3 = students[2]
-        self.assertEqual(s3['surname'], 'Student')
+        self.assertEqual(s3['display_name'], 'James Bothell Student')
+        self.assertEqual(s3['photo_url'], reverse('photo', kwargs={
+            'uwregid': s3['uwregid'], 'photo_key': key}))

@@ -1,8 +1,8 @@
 # Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from django.db.models import OuterRef, Subquery, F
-from django.db.models.functions import JSONObject
+from django.db.models import CharField, OuterRef, Subquery, Value, F
+from django.db.models.functions import JSONObject, Concat
 from django.conf import settings
 from django.core.cache import cache
 from uw_person_client.models import (
@@ -10,6 +10,7 @@ from uw_person_client.models import (
 from uw_person_client.exceptions import (
     PersonNotFoundException, AdviserNotFoundException)
 from uw_pws import PWS, InvalidNetID, DataFailureException
+from compass.dao.photo import PhotoDAO
 import re
 
 system_key_re = re.compile(r'^\d{9}$')
@@ -99,6 +100,7 @@ def get_appuser_by_uwnetid(uwnetid):
 
 def get_adviser_caseload(uwnetid):
     adviser = Adviser.objects.get_adviser_by_uwnetid(uwnetid)
+    photo_key = PhotoDAO().generate_photo_key()
 
     return Student.objects.annotate(latest_transcript=Subquery(
             Transcript.objects.filter(
@@ -110,10 +112,9 @@ def get_adviser_caseload(uwnetid):
             Degree.objects.filter(
                 student=OuterRef('pk')).values(json=JSONObject(
                     degree_status_desc='degree_status_desc')
-                ).order_by('-degree_date')[:1])
+                ).order_by('-degree_index')[:1])
         ).filter(advisers__in=[adviser]).values(
             'student_number',
-            'gender',
             'class_desc',
             'academic_term__year',
             'academic_term__quarter',
@@ -123,19 +124,18 @@ def get_adviser_caseload(uwnetid):
             'special_program_code',
             'special_program_desc',
             'enroll_status_code',
-            'enroll_status_request_code',
-            'enroll_status_desc',
-            'person__display_name',
             'person__uwnetid',
             'person__uwregid',
             'person__pronouns',
-            'person__surname',
+            'person__display_name',
             'latest_transcript',
             'latest_degree'
         ).annotate(
-            display_name=F('person__display_name'),
             uwnetid=F('person__uwnetid'),
             uwregid=F('person__uwregid'),
             pronouns=F('person__pronouns'),
-            surname=F('person__surname')
-        ).order_by('person__surname')
+            display_name=F('person__display_name'),
+            photo_url=Concat(
+                Value('/api/internal/photo/'), F('person__uwregid'),
+                Value(f'/{photo_key}/'), output_field=CharField())
+        ).order_by('person__surname', 'person__first_name')

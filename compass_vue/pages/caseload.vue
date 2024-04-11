@@ -347,9 +347,9 @@ export default {
     },
     loadAdviserCaseload: function (netid) {
       this.getAdviserCaseload(netid).then((response) => {
-        this.persons = response.data.sort(function (a, b) {
-          return a.surname > b.surname ? 1 : -1;
-        });
+        if (response.data) {
+          this.persons = response.data;
+        }
         this.isLoading = false;
       });
     },

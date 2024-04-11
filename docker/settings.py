@@ -105,7 +105,7 @@ PERSISTENT_MESSAGE_AUTH_MODULE = 'compass.dao.group.can_manage_persistent_messag
 ALLOW_USER_OVERRIDE_FOR_WRITE = (os.getenv('ENV', 'localdev') != 'prod')
 
 # IDCard photo config
-IDCARD_TOKEN_EXPIRES = 60 * 60
+IDCARD_TOKEN_EXPIRES = 60 * 5
 
 # PDS config, default values are for localdev
 DATABASES['uw_person'] = {

@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+from django.urls import reverse
 from compass.views.api import BaseAPIView
 from compass.dao.person import (
     valid_uwnetid, get_person_by_system_key, get_adviser_caseload,
@@ -22,13 +23,16 @@ class AdviserCheckInsView(BaseAPIView):
             return self.response_badrequest('Invalid uwnetid')
 
         contacts = []
-        photo_dao = PhotoDAO()
+        photo_key = PhotoDAO().generate_photo_key()
         for contact in Contact.objects.by_adviser(adviser_netid):
             contact_dict = ContactReadSerializer(contact, many=False).data
             try:
                 person = get_person_by_system_key(contact.student.system_key)
-                person.photo_url = photo_dao.get_photo_url(person.uwregid)
-                contact_dict["student"] = person.to_dict()
+                person_dict = person.to_dict()
+                person_dict['photo_url'] = reverse('photo', kwargs={
+                    'uwregid': person.uwregid,
+                    'photo_key': photo_key})
+                contact_dict["student"] = person_dict
                 contacts.append(contact_dict)
             except PersonNotFoundException:
                 pass
@@ -50,10 +54,4 @@ class AdviserCaseloadView(BaseAPIView):
         except AdviserNotFoundException:
             queryset = []
 
-        photo_dao = PhotoDAO()
-        students = []
-        for row in queryset:
-            row['photo_url'] = photo_dao.get_photo_url(row['uwregid'])
-            students.append(row)
-
-        return self.response_ok(students)
+        return self.response_ok(list(queryset))

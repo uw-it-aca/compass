@@ -70,11 +70,11 @@ urlpatterns += [
         StudentView.as_view(),
     ),
     re_path(
-        r"^api/internal/student/(?P<uwregid>[-@:\w]+)/schedules/$",
+        r"^api/internal/student/(?P<uwregid>[a-fA-F0-9]{32})/schedules/$",
         StudentSchedulesView.as_view(),
     ),
     re_path(
-        r"^api/internal/student/(?P<uwregid>[-@:\w]+)/transcripts/$",
+        r"^api/internal/student/(?P<uwregid>[a-fA-F0-9]{32})/transcripts/$",
         StudentTranscriptsView.as_view(),
     ),
     re_path(
@@ -138,7 +138,8 @@ urlpatterns += [
         AdviserCaseloadView.as_view(),
     ),
     re_path(
-        r"^api/internal/photo/(?P<photo_key>[a-z0-9]*)/$",
+        r"^api/internal/photo/(?P<uwregid>[a-fA-F0-9]{32})/"
+        r"(?P<photo_key>[a-z0-9]{16})/$",
         PhotoView.as_view(),
         name="photo",
     ),
