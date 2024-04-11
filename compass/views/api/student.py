@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+from django.urls import reverse
 from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
 from compass.dao.person import (
@@ -52,7 +53,10 @@ class StudentView(BaseAPIView):
                 return self.response_badrequest('Invalid student identifier')
 
             person_dict = person.to_dict()
-            person_dict['photo_url'] = PhotoDAO().get_photo_url(person.uwregid)
+            photo_key = PhotoDAO().generate_photo_key()
+            person_dict['photo_url'] = reverse('photo', kwargs={
+                'uwregid': person.uwregid,
+                'photo_key': photo_key})
             return self.response_ok(person_dict)
         except PersonNotFoundException:
             return self.response_notfound()
