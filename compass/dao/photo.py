@@ -16,7 +16,7 @@ class PhotoDAO():
 
     def generate_photo_key(self, image_size='medium'):
         photo_key = ''.join(random.SystemRandom().choice(
-            string.ascii_lowercase + string.digits) for _ in range(16))
+            string.ascii_uppercase + string.digits) for _ in range(16))
 
         data = {'image_size': image_size}
         expires = getattr(settings, 'IDCARD_TOKEN_EXPIRES', 60 * 5)

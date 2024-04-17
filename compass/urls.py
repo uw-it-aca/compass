@@ -141,7 +141,7 @@ urlpatterns += [
     ),
     re_path(
         r"^api/internal/photo/(?P<uwregid>[a-fA-F0-9]{32})/"
-        r"(?P<photo_key>[a-z0-9]{16})/$",
+        r"(?P<photo_key>[a-zA-Z0-9]{16})/$",
         PhotoView.as_view(),
         name="photo",
     ),
