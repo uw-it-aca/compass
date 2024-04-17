@@ -100,7 +100,7 @@ def get_appuser_by_uwnetid(uwnetid):
 
 def get_adviser_caseload(uwnetid):
     adviser = Adviser.objects.get_adviser_by_uwnetid(uwnetid)
-    photo_key = PhotoDAO().generate_photo_key()
+    photo_key = PhotoDAO().generate_photo_key(image_size='small')
 
     return Student.objects.annotate(latest_transcript=Subquery(
             Transcript.objects.filter(
