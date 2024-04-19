@@ -12,5 +12,12 @@
     "fields": {
         "system_key": "532353230"
     }
+},
+{
+    "model": "compass.student",
+    "pk": 3,
+    "fields": {
+        "system_key": "888777333"
+    }
 }
 ]

@@ -127,7 +127,36 @@ class TestPerson(CompassTestCase):
         self.assertLess(int(f'{t2.tran_term.year}{t2.tran_term.quarter}'),
                         int(f'{t1.tran_term.year}{t1.tran_term.quarter}'))
 
-    def test_get_adviser_caseload_not_found(self):
+    @mock.patch.object(PhotoDAO, 'generate_photo_key')
+    def test_get_students_by_system_keys(self, mock_photo_key):
+        key = 'testtesttesttest'
+        mock_photo_key.return_value = key
+
+        system_keys = ['532353230', '820582050', '888777333']
+        students = get_students_by_system_keys(system_keys)
+
+        self.assertEqual(len(students), 3)
+
+        s1 = students['532353230']
+        self.assertEqual(s1['display_name'], 'Jamesy McJamesy')
+        self.assertEqual(s1['photo_url'], reverse('photo', kwargs={
+            'uwregid': s1['person__uwregid'], 'photo_key': key}))
+        self.assertEqual(len(s1['adviser_uwnetids']), 1)
+
+        s2 = students['820582050']
+        self.assertEqual(s2['display_name'], 'James Bothell Student')
+        self.assertEqual(s2['photo_url'], reverse('photo', kwargs={
+            'uwregid': s2['person__uwregid'], 'photo_key': key}))
+        self.assertEqual(len(s2['adviser_uwnetids']), 1)
+
+        s3 = students['888777333']
+        self.assertEqual(s3['display_name'], 'Lisa Simpson')
+        self.assertEqual(s3['photo_url'], reverse('photo', kwargs={
+            'uwregid': s3['person__uwregid'], 'photo_key': key}))
+        self.assertEqual(len(s3['adviser_uwnetids']), 2)
+
+    @mock.patch.object(PhotoDAO, 'generate_photo_key')
+    def test_get_adviser_caseload_not_found(self, mock_photo_key):
         self.assertRaises(
             AdviserNotFoundException, get_adviser_caseload, 'javerage')
 
