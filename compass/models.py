@@ -3,6 +3,7 @@
 
 
 from django.db import models, transaction
+from django.db.models.functions import Cast
 from django.db.utils import IntegrityError
 from django.utils.text import slugify
 from simple_history.models import HistoricalRecords
@@ -228,13 +229,20 @@ class AccessGroup(models.Model):
 class ContactManager(models.Manager):
     def by_adviser(self, adviser_uwnetid, offset_hours=72):
         # Only return contacts from the checkin system, not manual contacts
-        kwargs = {"app_user__uwnetid": adviser_uwnetid, "source": "Checkin"}
+        kwargs = {'app_user__uwnetid': adviser_uwnetid, 'source': 'Checkin'}
 
         if offset_hours is not None and offset_hours > 0:
             cutoffdt = current_datetime() - timedelta(hours=offset_hours)
-            kwargs["checkin_date__gte"] = cutoffdt.replace(tzinfo=timezone.utc)
+            kwargs['checkin_date__gte'] = cutoffdt.replace(tzinfo=timezone.utc)
 
-        return super().get_queryset().filter(**kwargs).order_by("checkin_date")
+        return super().get_queryset().filter(**kwargs).values(
+                'student__system_key',
+                'app_user__uwnetid',
+                'contact_type__name',
+                'source',
+                'trans_id',
+                checkin_date_str=Cast('checkin_date', models.TextField())
+            ).order_by('-checkin_date')
 
 
 class Contact(models.Model):

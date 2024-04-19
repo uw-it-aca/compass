@@ -3,6 +3,7 @@
 
 from django.db.models import CharField, OuterRef, Subquery, Value, F
 from django.db.models.functions import JSONObject, Concat
+from django.contrib.postgres.aggregates import ArrayAgg
 from django.conf import settings
 from django.core.cache import cache
 from uw_person_client.models import (
@@ -96,6 +97,31 @@ def get_appuser_by_uwnetid(uwnetid):
         timeout=getattr(settings, 'APPUSER_PERSON_EXPIRES', 60 * 60 * 24)
     )
     return person
+
+
+def get_students_by_system_keys(system_keys, **kwargs):
+    photo_key = PhotoDAO().generate_photo_key()
+    students = Student.objects.filter(system_key__in=system_keys).values(
+            'system_key',
+            'student_number',
+            'person__uwnetid',
+            'person__uwregid',
+            'person__pronouns',
+            'person__display_name'
+        ).annotate(
+            uwnetid=F('person__uwnetid'),
+            pronouns=F('person__pronouns'),
+            display_name=F('person__display_name'),
+            photo_url=Concat(
+                Value('/api/internal/photo/'), F('person__uwregid'),
+                Value(f'/{photo_key}/'), output_field=CharField()),
+            adviser_uwnetids=ArrayAgg('advisers__employee__person__uwnetid')
+        )
+
+    students_dict = {}
+    for student in students:
+        students_dict[student['system_key']] = student
+    return students_dict
 
 
 def get_adviser_caseload(uwnetid):

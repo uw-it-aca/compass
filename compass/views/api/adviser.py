@@ -5,9 +5,8 @@
 from django.urls import reverse
 from compass.views.api import BaseAPIView
 from compass.dao.person import (
-    valid_uwnetid, get_person_by_system_key, get_adviser_caseload,
+    valid_uwnetid, get_students_by_system_keys, get_adviser_caseload,
     PersonNotFoundException, AdviserNotFoundException)
-from compass.dao.photo import PhotoDAO
 from compass.models import Contact
 from compass.serializers import ContactReadSerializer
 
@@ -22,21 +21,19 @@ class AdviserCheckInsView(BaseAPIView):
         if not valid_uwnetid(adviser_netid):
             return self.response_badrequest('Invalid uwnetid')
 
-        contacts = []
-        photo_key = PhotoDAO().generate_photo_key()
-        for contact in Contact.objects.by_adviser(adviser_netid):
-            contact_dict = ContactReadSerializer(contact, many=False).data
-            try:
-                person = get_person_by_system_key(contact.student.system_key)
-                person_dict = person.to_dict()
-                person_dict['photo_url'] = reverse('photo', kwargs={
-                    'uwregid': person.uwregid,
-                    'photo_key': photo_key})
-                contact_dict["student"] = person_dict
-                contacts.append(contact_dict)
-            except PersonNotFoundException:
-                pass
-        return self.response_ok([contact for contact in contacts])
+        contacts = Contact.objects.by_adviser(adviser_netid)
+
+        if not len(contacts):
+            return self.response_ok([])
+
+        system_keys = [s['student__system_key'] for s in contacts]
+        students = get_students_by_system_keys(system_keys)
+
+        for contact in contacts:
+            system_key = contact['student__system_key']
+            contact['student'] = students[system_key]
+
+        return self.response_ok(list(contacts))
 
 
 class AdviserCaseloadView(BaseAPIView):
