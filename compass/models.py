@@ -10,7 +10,7 @@ from simple_history.models import HistoricalRecords
 from compass.dao.person import get_appuser_by_uwnetid, PersonNotFoundException
 from compass.dao.group import is_group_member
 from compass.dao import current_datetime
-from datetime import datetime, timedelta, timezone
+from compass.utils import weekdays_before
 
 
 class AppUserManager(models.Manager):
@@ -227,13 +227,13 @@ class AccessGroup(models.Model):
 
 
 class ContactManager(models.Manager):
-    def by_adviser(self, adviser_uwnetid, offset_hours=72):
+    def by_adviser(self, adviser_uwnetid, from_days=3):
         # Only return contacts from the checkin system, not manual contacts
         kwargs = {'app_user__uwnetid': adviser_uwnetid, 'source': 'Checkin'}
 
-        if offset_hours is not None and offset_hours > 0:
-            cutoffdt = current_datetime() - timedelta(hours=offset_hours)
-            kwargs['checkin_date__gte'] = cutoffdt.replace(tzinfo=timezone.utc)
+        if from_days is not None and from_days > 0:
+            start_date = weekdays_before(current_datetime().date(), from_days)
+            kwargs['checkin_date__gte'] = start_date
 
         return super().get_queryset().filter(**kwargs).values(
                 'student__system_key',
@@ -242,7 +242,7 @@ class ContactManager(models.Manager):
                 'source',
                 'trans_id',
                 checkin_date_str=Cast('checkin_date', models.TextField())
-            ).order_by('-checkin_date')
+            ).order_by('checkin_date')
 
 
 class Contact(models.Model):
