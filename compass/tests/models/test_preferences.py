@@ -1,11 +1,11 @@
 # Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from django.test import TestCase
+from compass.tests import CompassTestCase
 from compass.models import UserPreference
 
 
-class UserPreferenceTest(TestCase):
+class UserPreferenceTest(CompassTestCase):
     def test_validation(self):
         self.assertTrue(UserPreference.validate_preference("caseload_filters",
                                                            "class"))

@@ -1,13 +1,19 @@
 # Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
 
 
-class ApiTest(TestCase):
+class CompassTestCase(TestCase):
+    databases = '__all__'
+    fixtures = ['person.json', 'employee.json', 'term.json', 'major.json',
+                'student.json', 'adviser.json', 'transfer.json',
+                'transcript.json', 'hold.json', 'degree.json', 'sport.json']
+
+
+class ApiTest(CompassTestCase):
     def setUp(self):
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_X_REQUESTED_WITH='XMLHttpRequest')

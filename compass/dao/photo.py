@@ -6,40 +6,30 @@ import string
 from django.conf import settings
 from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
-from django.urls import reverse
 from uw_pws import PWS
 from urllib.parse import urlparse, urlunparse
 
 
 class PhotoDAO():
-
-    def __init__(self):
-        super().__init__()
-
     def cache_key(self, key):
         return 'idphoto-key-{}'.format(key)
 
-    def get_photo(self, photo_key):
+    def generate_photo_key(self, image_size='medium'):
+        photo_key = ''.join(random.SystemRandom().choice(
+            string.ascii_uppercase + string.digits) for _ in range(16))
+
+        data = {'image_size': image_size}
+        expires = getattr(settings, 'IDCARD_TOKEN_EXPIRES', 60 * 5)
+        cache.set(self.cache_key(photo_key), data, timeout=expires)
+        return photo_key
+
+    def get_photo(self, uwregid, photo_key):
         data = cache.get(self.cache_key(photo_key))
-        cache.delete(self.cache_key(photo_key))
 
         if data is None:
             raise ObjectDoesNotExist()
 
-        return PWS().get_idcard_photo(
-            data.get('reg_id'), size=data.get('image_size'))
-
-    def get_photo_url(self, reg_id, image_size="medium"):
-        """ Returns a url for the IDPhoto
-        """
-        if PWS().valid_uwregid(reg_id):
-            photo_key = ''.join(random.SystemRandom().choice(
-                string.ascii_lowercase + string.digits) for _ in range(16))
-
-            data = {'reg_id': reg_id, 'image_size': image_size}
-            expires = getattr(settings, 'IDCARD_TOKEN_EXPIRES', 60 * 60)
-            cache.set(self.cache_key(photo_key), data, timeout=expires)
-            return reverse('photo', kwargs={'photo_key': photo_key})
+        return PWS().get_idcard_photo(uwregid, size=data.get('image_size'))
 
     def get_avatar_url(self, url, image_size):
         """ Modifies the passed url based on image_size

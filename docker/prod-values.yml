@@ -5,9 +5,9 @@ autoscaling:
 resources:
   limits:
     cpu: 250m
-    memory: 1.0Gi
+    memory: 768Mi
   requests:
-    cpu: 50m
+    cpu: 100m
     memory: 256Mi
 targetAverageUtilization: 100
 
@@ -106,9 +106,6 @@ environmentVariables:
   - name: CLUSTER_CNAME
     value: compass.uw.edu
 
-  - name: UW_PERSON_CLIENT_ENV
-    value: PROD
-
 externalSecrets:
   enabled: true
   secrets:
@@ -182,7 +179,7 @@ environmentVariablesSecrets:
     secretName: compass.uw.edu-uw-idp-cert
     secretKey: uw-idp-cert
   personDBUser:
-    name: UW_PERSON_DB_USERNAME
+    name: UW_PERSON_DB_USER
     secretName: compass.uw.edu-shared-secrets
     secretKey: person-db-user
   personDBPass:
@@ -190,7 +187,7 @@ environmentVariablesSecrets:
     secretName: compass.uw.edu-shared-secrets
     secretKey: person-db-pass
   personDBHost:
-    name: UW_PERSON_DB_HOSTNAME
+    name: UW_PERSON_DB_HOST
     secretName: compass.uw.edu-shared-secrets
     secretKey: person-db-host
   personDBPort:
@@ -198,7 +195,7 @@ environmentVariablesSecrets:
     secretName: compass.uw.edu-shared-secrets
     secretKey: person-db-port
   personDBDatabase:
-    name: UW_PERSON_DB_DATABASE
+    name: UW_PERSON_DB_NAME
     secretName: compass.uw.edu-shared-secrets
     secretKey: person-db-database
 

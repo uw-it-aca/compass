@@ -262,20 +262,20 @@ export default {
       let filteredPersons = this.persons;
       if (this.selectedClass) {
         filteredPersons = filteredPersons.filter((person) => {
-          return person.student.class_desc === this.selectedClass;
+          return person.class_desc === this.selectedClass;
         });
       }
       if (this.selectedDegree) {
         filteredPersons = filteredPersons.filter((person) => {
           try {
             return (
-              person.student.degrees[0].degree_status_desc ===
+              person.latest_degree.degree_status_desc ===
               this.selectedDegree
             );
           } catch (error) {
             try {
               return (
-                person.student.degrees.length === 0 &&
+                person.latest_degree.length === 0 &&
                 this.selectedDegree === "none"
               );
             } catch (error) {
@@ -288,7 +288,7 @@ export default {
         filteredPersons = filteredPersons.filter((person) => {
           try {
             return (
-              person.student.transcripts[0].scholarship_type ===
+              person.latest_transcript.scholarship_type ===
               this.selectedScholarship
             );
           } catch (error) {
@@ -298,19 +298,19 @@ export default {
       }
       if (this.selectedCampus) {
         filteredPersons = filteredPersons.filter(
-          (person) => person.student.campus_desc === this.selectedCampus
+          (person) => person.campus_desc === this.selectedCampus
         );
       }
       if (this.selectedRegistration !== undefined) {
         filteredPersons = filteredPersons.filter(
           (person) =>
-            person.student.registered_in_quarter === this.selectedRegistration
+            person.registered_in_quarter === this.selectedRegistration
         );
       }
       if (this.selectedHolds !== undefined) {
         filteredPersons = filteredPersons.filter(
           (person) =>
-            person.student.registration_hold_ind === this.selectedHolds
+            person.registration_hold_ind === this.selectedHolds
         );
       }
       return filteredPersons;
@@ -347,9 +347,9 @@ export default {
     },
     loadAdviserCaseload: function (netid) {
       this.getAdviserCaseload(netid).then((response) => {
-        this.persons = response.data.sort(function (a, b) {
-          return a.surname > b.surname ? 1 : -1;
-        });
+        if (response.data) {
+          this.persons = response.data;
+        }
         this.isLoading = false;
       });
     },

@@ -14,8 +14,8 @@
           <td class="ps-3">
             <profile-mini :person="person"></profile-mini>
           </td>
-          <td class="small">{{ person.student.class_desc }}</td>
-          <td class="small">{{ person.student.campus_desc }}</td>
+          <td class="small">{{ person.class_desc }}</td>
+          <td class="small">{{ person.campus_desc }}</td>
           <td class="small">
             <ul class="list-inline d-flex m-0">
               <li class="list-inline-item d-none">
@@ -23,14 +23,14 @@
                 <!-- show N/A when student isn't in any special program -->
 
                 <span
-                  v-if="person.student.special_program_code === '0'"
+                  v-if="person.special_program_code === '0'"
                   class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1 text-bg-secondary"
                 >
                   N/A</span
                 >
                 <span v-else class="badge text-bg-success">
-                  {{ person.student.special_program_code }},
-                  {{ person.student.special_program_desc }}
+                  {{ person.special_program_code }},
+                  {{ person.special_program_desc }}
                 </span>
               </li>
               <li class="list-inline-item flex-fill w-25">
@@ -59,28 +59,28 @@
                 <span
                   class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1"
                   :class="
-                    !person.student.registered_in_quarter
+                    !person.registered_in_quarter
                       ? 'text-bg-danger'
                       : 'text-bg-secondary'
                   "
                 >
-                  {{ translateTrueFalse(person.student.registered_in_quarter) }}
+                  {{ translateTrueFalse(person.registered_in_quarter) }}
                 </span>
               </li>
               <li class="list-inline-item d-none">
-                Enrollment Status Code: {{ person.student.enroll_status_code }}
+                Enrollment Status Code: {{ person.enroll_status_code }}
               </li>
               <li class="list-inline-item flex-fill w-25">
                 <div>Holds</div>
                 <span
                   class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1"
                   :class="
-                    person.student.registration_hold_ind
+                    person.registration_hold_ind
                       ? 'text-bg-danger'
                       : 'text-bg-secondary'
                   "
                 >
-                  {{ translateTrueFalse(person.student.registration_hold_ind) }}
+                  {{ translateTrueFalse(person.registration_hold_ind) }}
                 </span>
               </li>
             </ul>
@@ -122,8 +122,8 @@ export default {
     getScholarshipData: function (person) {
       try {
         return {
-          scholarship_type: person.student.transcripts[0].scholarship_type,
-          scholarship_desc: person.student.transcripts[0].scholarship_desc,
+          scholarship_type: person.latest_transcript.scholarship_type,
+          scholarship_desc: person.latest_transcript.scholarship_desc,
         };
       } catch (err) {
         return {
@@ -135,7 +135,7 @@ export default {
     getDegreeData: function (person) {
       try {
         return {
-          degree_desc: person.student.degrees[0].degree_status_desc,
+          degree_desc: person.latest_degree.degree_status_desc,
         };
       } catch (err) {
         return {

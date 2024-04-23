@@ -2,13 +2,13 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.test import TestCase
 from datetime import datetime
+from compass.tests import CompassTestCase
 from compass.dao.contact import (
     parse_checkin_date_str, validate_adviser_netid, validate_student_systemkey)
 
 
-class ContactDaoTest(TestCase):
+class ContactDaoTest(CompassTestCase):
     def test_parse_checkin_date_str(self):
         # no checkin date specified
         with self.assertRaises(ValueError):

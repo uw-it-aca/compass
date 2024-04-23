@@ -1,0 +1,31 @@
+[
+    {
+        "model": "uw_person_client.Adviser",
+        "pk": 100,
+        "fields": {
+            "employee": 100,
+            "advising_email": "badviser@uw.edu",
+            "advising_phone_number": "+1 999 867-5309",
+            "advising_program": "OMAD Advising",
+            "advising_pronouns": null,
+            "booking_url": "https://go.oncehub.com/jadviser",
+            "is_dept_adviser": false
+        }
+    },
+    {
+        "model": "uw_person_client.StudentToAdviser",
+        "pk": 100,
+        "fields": {
+            "student": 100,
+            "adviser": 1
+        }
+    },
+    {
+        "model": "uw_person_client.StudentToAdviser",
+        "pk": 101,
+        "fields": {
+            "student": 100,
+            "adviser": 100
+        }
+    }
+]

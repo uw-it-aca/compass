@@ -1,0 +1,15 @@
+[
+    {
+        "model": "uw_person_client.Employee",
+        "pk": 100,
+        "fields": {
+            "person": 101,
+            "email_addresses": [],
+            "employee_affiliation_state": "current",
+            "employee_number": "300000000",
+            "home_department": "Bothell: Student Advising",
+            "department": "Bothell: Student Advising",
+            "title": "Academic Counselor (E S 6)"
+        }
+    }
+]

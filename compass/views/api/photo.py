@@ -14,13 +14,13 @@ class PhotoView(BaseAPIView):
     date_format = '%a, %d %b %Y %H:%M:%S GMT'
 
     def get(self, request, *args, **kwargs):
+        uwregid = kwargs.get('uwregid')
         photo_key = kwargs.get('photo_key')
         now = datetime.utcnow()
         expires = now + timedelta(seconds=self.cache_time)
         try:
-            photo = PhotoDAO().get_photo(photo_key)
-            response = StreamingHttpResponse(photo,
-                                             content_type='image/jpeg')
+            photo = PhotoDAO().get_photo(uwregid, photo_key)
+            response = StreamingHttpResponse(photo, content_type='image/jpeg')
             response['Cache-Control'] = 'public,max-age={}'.format(
                 self.cache_time)
             response['Expires'] = expires.strftime(self.date_format)

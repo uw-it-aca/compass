@@ -2,10 +2,13 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+from django.urls import reverse
 from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
 from compass.dao.person import (
-    valid_uwnetid, valid_uwregid, valid_student_number, valid_system_key)
+    valid_uwnetid, valid_uwregid, valid_student_number, valid_system_key,
+    get_person_by_uwnetid, get_person_by_student_number,
+    get_transcripts_by_uwregid, PersonNotFoundException)
 from compass.dao import current_datetime_utc
 from compass.models import (
     AccessGroup, Student, AppUser, Contact, StudentAffiliation, Affiliation,
@@ -15,8 +18,6 @@ from compass.serializers import (
     VisitReadSerializer, StudentWriteSerializer,
     StudentEligibilitySerializer, EligibilityTypeSerializer,
     SpecialProgramSerializer)
-from compass.clients import (
-    CompassPersonClient, PersonNotFoundException)
 from compass.exceptions import OverrideNotPermitted
 from restclients_core.exceptions import DataFailureException
 from uw_sws.term import (
@@ -38,19 +39,25 @@ class StudentView(BaseAPIView):
     '''
     def get(self, request, identifier):
         try:
-            client = CompassPersonClient()
-            client_args = {'include_student_transcripts': False}
+            includes = {
+                'include_student': True,
+                'include_student_holds': True,
+                'include_student_transfers': True,
+                'include_student_degrees': True,
+            }
             if valid_uwnetid(identifier):
-                person = client.get_person_by_uwnetid(identifier,
-                                                      **client_args)
+                person = get_person_by_uwnetid(identifier, **includes)
             elif valid_student_number(identifier):
-                person = client.get_person_by_student_number(identifier,
-                                                             **client_args)
+                person = get_person_by_student_number(identifier, **includes)
             else:
                 return self.response_badrequest('Invalid student identifier')
 
-            person.photo_url = PhotoDAO().get_photo_url(person.uwregid)
-            return self.response_ok(person.to_dict())
+            person_dict = person.to_dict()
+            photo_key = PhotoDAO().generate_photo_key()
+            person_dict['photo_url'] = reverse('photo', kwargs={
+                'uwregid': person.uwregid,
+                'photo_key': photo_key})
+            return self.response_ok(person_dict)
         except PersonNotFoundException:
             return self.response_notfound()
 
@@ -272,24 +279,27 @@ class StudentTranscriptsView(BaseAPIView):
     /api/internal/student/[uwregid]/transcripts/
     '''
     def get(self, request, uwregid):
-        client = CompassPersonClient()
-        person = client.get_person_by_uwregid(uwregid)
+        try:
+            transcripts = get_transcripts_by_uwregid(uwregid)
+        except PersonNotFoundException as ex:
+            return self.response_notfound("Unknown student")
 
-        transcripts = []
-        for transcript in sorted(person.student.transcripts, key=lambda t: (
-                t.tran_term.year, t.tran_term.quarter), reverse=True):
+        transcript_data = []
+        for transcript in transcripts:
             term = get_term_by_year_and_quarter(
                 transcript.tran_term.year,
                 TERMS[transcript.tran_term.quarter])
+
+            transcript_dict = transcript.to_dict()
             try:
                 class_schedule = get_schedule_by_regid_and_term(
                     uwregid, term)
-                transcript.class_schedule = class_schedule.json_data()
+                transcript_dict['class_schedule'] = class_schedule.json_data()
             except DataFailureException:
-                transcript.class_schedule = None
-            transcripts.append(transcript.to_dict())
+                transcript_dict['class_schedule'] = None
+            transcript_data.append(transcript_dict)
 
-        return self.response_ok(transcripts)
+        return self.response_ok(transcript_data)
 
 
 class StudentEligibilityView(BaseAPIView):

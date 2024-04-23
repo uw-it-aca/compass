@@ -17,18 +17,18 @@
             <profile-mini :person="contact.student"></profile-mini>
           </td>
           <td>
-            {{ formatDate(contact.checkin_date, "LLL") }}
+            {{ formatDate(contact.checkin_date_str, "LLL") }}
           </td>
           <td>{{ contact.source }} -- {{ contact.trans_id }}</td>
-          <td>{{ contact.contact_type.name }}</td>
-          <td>{{ contact.app_user.uwnetid }}</td>
+          <td>{{ contact.contact_type__name }}</td>
+          <td>{{ contact.app_user__uwnetid }}</td>
           <td>
             <ul class="list-unstyled">
               <li
-                v-for="(adviser, index) in contact.student.student.advisers"
+                v-for="(uwnetid, index) in contact.student.adviser_uwnetids"
                 :key="index"
               >
-                {{ adviser.uwnetid }}
+                {{ uwnetid }}
               </li>
             </ul>
           </td>

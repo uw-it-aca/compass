@@ -1,0 +1,46 @@
+[
+    {
+        "model": "uw_person_client.Person",
+        "pk": 100,
+        "fields": {
+            "is_active_employee": false,
+            "is_active_student": true,
+            "display_name": "Lisa Simpson",
+            "first_name": "Lisa",
+            "full_name": "Lisa Simpson",
+            "preferred_first_name": "Lisa",
+            "preferred_middle_name": null,
+            "preferred_surname": "Simpson",
+            "prior_uwnetids": ["lisa1"],
+            "prior_uwregids": [],
+            "pronouns": "she/her/hers",
+            "surname": "Simpson",
+            "system_key": "888777333",
+            "uwnetid": "lisa",
+            "uwregid": "5432AAB8B36701E5BE06100432496AAA",
+            "whitepages_publish": true
+        }
+    },
+    {
+        "model": "uw_person_client.Person",
+        "pk": 101,
+        "fields": {
+            "is_active_employee": true,
+            "is_active_student": false,
+            "display_name": "B Bothell Adviser",
+            "first_name": "B",
+            "full_name": "B Advisor",
+            "preferred_first_name": "J",
+            "preferred_middle_name": null,
+            "preferred_surname": "Advisor",
+            "prior_uwnetids": [],
+            "prior_uwregids": [],
+            "pronouns": "he/him/his",
+            "surname": "Advisor",
+            "system_key": "888777555",
+            "uwnetid": "badvisor",
+            "uwregid": "5432AAB8B36701E5BE06100432CCC123",
+            "whitepages_publish": true
+        }
+    }
+]

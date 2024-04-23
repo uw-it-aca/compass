@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+from django.urls import reverse
 from compass.views.api import BaseAPIView
-from compass.dao.person import valid_uwnetid
-from compass.dao.photo import PhotoDAO
-from compass.clients import (
-    CompassPersonClient, PersonNotFoundException, AdviserNotFoundException)
+from compass.dao.person import (
+    valid_uwnetid, get_students_by_system_keys, get_adviser_caseload,
+    PersonNotFoundException, AdviserNotFoundException)
 from compass.models import Contact
 from compass.serializers import ContactReadSerializer
 
@@ -21,21 +21,19 @@ class AdviserCheckInsView(BaseAPIView):
         if not valid_uwnetid(adviser_netid):
             return self.response_badrequest('Invalid uwnetid')
 
-        client = CompassPersonClient()
-        contacts = []
-        photo_dao = PhotoDAO()
-        for contact in Contact.objects.by_adviser(adviser_netid):
-            contact_dict = ContactReadSerializer(contact, many=False).data
-            try:
-                person = client.get_person_by_system_key(
-                    contact.student.system_key
-                )
-                person.photo_url = photo_dao.get_photo_url(person.uwregid)
-                contact_dict["student"] = person.to_dict()
-                contacts.append(contact_dict)
-            except PersonNotFoundException:
-                pass
-        return self.response_ok([contact for contact in contacts])
+        contacts = Contact.objects.by_adviser(adviser_netid)
+
+        if not len(contacts):
+            return self.response_ok([])
+
+        system_keys = [s['student__system_key'] for s in contacts]
+        students = get_students_by_system_keys(system_keys)
+
+        for contact in contacts:
+            system_key = contact['student__system_key']
+            contact['student'] = students[system_key]
+
+        return self.response_ok(list(contacts))
 
 
 class AdviserCaseloadView(BaseAPIView):
@@ -48,13 +46,9 @@ class AdviserCaseloadView(BaseAPIView):
         if not valid_uwnetid(adviser_netid):
             return self.response_badrequest('Invalid uwnetid')
 
-        client = CompassPersonClient()
         try:
-            persons = client.get_adviser_caseload(adviser_netid)
+            queryset = get_adviser_caseload(adviser_netid)
         except AdviserNotFoundException:
-            persons = []
-        photo_dao = PhotoDAO()
-        for person in persons:
-            person.photo_url = photo_dao.get_photo_url(person.uwregid)
+            queryset = []
 
-        return self.response_ok([person.to_dict() for person in persons])
+        return self.response_ok(list(queryset))

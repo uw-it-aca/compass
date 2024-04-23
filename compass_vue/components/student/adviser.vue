@@ -10,66 +10,66 @@
           <template v-for="(adviser, index) in advisers" :key="adviser.id">
             <li
               v-if="
-                adviser.employee.adviser.advising_program == 'OMAD Advising'
+                adviser.advising_program == 'OMAD Advising'
               "
               class="mb-3"
             >
               <div class="d-flex">
                 <i class="bi bi-person-square text-gray me-3"></i>
                 <div class="flex-fill">
-                  <strong>{{ adviser.display_name }}</strong> ({{
-                    adviser.uwnetid
+                  <strong>{{ adviser.employee.person.display_name }}</strong> ({{
+                    adviser.employee.person.uwnetid
                   }})<br /><span class="small text-muted text-capitalize">{{
-                    adviser.pronouns
+                    adviser.employee.person.pronouns
                   }}</span>
                 </div>
               </div>
               <div>
                 <i class="bi bi-envelope-fill text-gray me-3"></i>
-                <span>{{ adviser.employee.adviser.advising_email }}</span>
+                <span>{{ adviser.advising_email }}</span>
               </div>
               <div>
                 <i class="bi bi-telephone text-gray me-3"></i>
                 <span>{{
-                  adviser.employee.adviser.advising_phone_number
+                  adviser.advising_phone_number
                 }}</span>
               </div>
               <div>
                 <i class="bi bi-building text-gray me-3"></i>
-                <span>{{ adviser.employee.adviser.advising_program }}</span>
+                <span>{{ adviser.advising_program }}</span>
               </div>
             </li>
           </template>
           <template v-for="(adviser, index) in advisers" :key="adviser.id">
             <li
               v-if="
-                adviser.employee.adviser.advising_program != 'OMAD Advising'
+                adviser.advising_program != 'OMAD Advising'
               "
               class="mb-3"
             >
               <div class="d-flex">
                 <i class="bi bi-person-square text-gray me-3"></i>
                 <div class="flex-fill">
-                  <strong>{{ adviser.display_name }}</strong> ({{
-                    adviser.uwnetid
+                  <strong>{{ adviser.employee.person.display_name }}</strong> ({{
+                    adviser.employee.person.uwnetid
                   }})<br /><span class="small text-muted text-capitalize">{{
-                    adviser.pronouns
+                    adviser.employee.person.pronouns
                   }}</span>
                 </div>
               </div>
               <div>
                 <i class="bi bi-envelope-fill text-gray me-3"></i>
-                <span>{{ adviser.employee.adviser.advising_email }}</span>
+                <span>{{ adviser.advising_email }}</span>
               </div>
               <div>
                 <i class="bi bi-telephone text-gray me-3"></i>
                 <span>{{
-                  adviser.employee.adviser.advising_phone_number
+                  adviser.advising_phone_number
                 }}</span>
               </div>
               <div>
                 <i class="bi bi-building text-gray me-3"></i>
-                <span>{{ adviser.employee.adviser.advising_program }}</span>
+                <span>{{ adviser.advising_program }}</span>
               </div>
             </li>
           </template>
