@@ -11,6 +11,7 @@ from compass.dao.person import get_appuser_by_uwnetid, PersonNotFoundException
 from compass.dao.group import is_group_member
 from compass.dao import current_datetime
 from compass.utils import weekdays_before
+from datetime import datetime, timezone
 
 
 class AppUserManager(models.Manager):
@@ -233,7 +234,8 @@ class ContactManager(models.Manager):
 
         if from_days is not None and from_days > 0:
             start_date = weekdays_before(current_datetime().date(), from_days)
-            kwargs['checkin_date__gte'] = start_date
+            kwargs['checkin_date__gte'] = datetime.combine(
+                start_date, datetime.min.time(), tzinfo=timezone.utc)
 
         return super().get_queryset().filter(**kwargs).values(
                 'student__system_key',
