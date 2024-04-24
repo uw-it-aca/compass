@@ -233,9 +233,11 @@ class ContactManager(models.Manager):
         kwargs = {'app_user__uwnetid': adviser_uwnetid, 'source': 'Checkin'}
 
         if from_days is not None and from_days > 0:
-            start_date = weekdays_before(current_datetime().date(), from_days)
-            kwargs['checkin_date__gte'] = datetime.combine(
-                start_date, datetime.min.time(), tzinfo=timezone.utc)
+            start_date = weekdays_before(current_datetime(), from_days)
+
+            # Reset the start_date to midnight and add TZ
+            kwargs['checkin_date__gte'] = start_date.replace(
+                hour=0, minute=0, second=0, tzinfo=timezone.utc)
 
         return super().get_queryset().filter(**kwargs).values(
                 'student__system_key',
