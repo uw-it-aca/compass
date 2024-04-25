@@ -295,7 +295,8 @@ class StudentTranscriptsView(BaseAPIView):
                 class_schedule = get_schedule_by_regid_and_term(
                     uwregid, term)
                 transcript_dict['class_schedule'] = class_schedule.json_data()
-            except DataFailureException:
+            except DataFailureException as ex:
+                logger.info(f'Error fetching class schedule: {ex}')
                 transcript_dict['class_schedule'] = None
             transcript_data.append(transcript_dict)
 
