@@ -296,7 +296,8 @@ class StudentTranscriptsView(BaseAPIView):
                     uwregid, term)
                 transcript_dict['class_schedule'] = class_schedule.json_data()
             except DataFailureException as ex:
-                logger.info(f'Error fetching class schedule: {ex}')
+                logger.info(
+                    f'Error fetching class schedule for {uwregid}: {ex}')
                 transcript_dict['class_schedule'] = None
             transcript_data.append(transcript_dict)
 
