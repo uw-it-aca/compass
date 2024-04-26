@@ -286,16 +286,18 @@ class StudentTranscriptsView(BaseAPIView):
 
         transcript_data = []
         for transcript in transcripts:
-            term = get_term_by_year_and_quarter(
-                transcript.tran_term.year,
-                TERMS[transcript.tran_term.quarter])
-
             transcript_dict = transcript.to_dict()
             try:
+                term = get_term_by_year_and_quarter(
+                    transcript.tran_term.year,
+                    TERMS[transcript.tran_term.quarter])
+
                 class_schedule = get_schedule_by_regid_and_term(
                     uwregid, term)
                 transcript_dict['class_schedule'] = class_schedule.json_data()
-            except DataFailureException:
+            except DataFailureException as ex:
+                logger.info(
+                    f'Error fetching class schedule for {uwregid}: {ex}')
                 transcript_dict['class_schedule'] = None
             transcript_data.append(transcript_dict)
 
