@@ -12,8 +12,6 @@ then
   source "/app/bin/activate"
 
   cd /app
-  python manage.py migrate
   python manage.py initialize_db
-  python manage.py loaddata person employee term major student adviser transfer transcript hold degree sport
 
 fi
