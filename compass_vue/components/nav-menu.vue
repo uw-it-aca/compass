@@ -29,7 +29,36 @@
           <span class="visually-hidden">Navigation separator</span></a
         >
       </li>
-
+      <li class="nav-item mb-1 fs-8 text-secondary">ENROLLMENT SERVICES</li>
+      <li class="nav-item mb-1">
+        <router-link
+          :to="'/reports'"
+          class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
+          :class="
+            $route.path.includes('/reports') ? 'bg-dark-purple rounded-3' : ''
+          "
+          ><i class="bi bi-bar-chart-line-fill me-2"></i>Reports</router-link
+        >
+      </li>
+      <li class="nav-item mb-1">
+        <router-link
+          :to="'/affiliations'"
+          class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
+          :class="
+            $route.path.includes('/affiliations') ? 'bg-dark-purple rounded-3' : ''
+          "
+          ><i class="bi bi-cart-plus-fill me-2"></i>Affiliations</router-link
+        >
+      </li>
+      <li aria-hidden="true" class="nav-item mt-1 mb-2">
+        <a
+          href="#"
+          class="nav-link disabled text-gray d-block p-0 internal-link"
+          ><hr class="m-0 bg-gray" />
+          <span class="visually-hidden">Navigation separator</span></a
+        >
+      </li>
+      <li class="nav-item mb-1 fs-8 text-secondary">ADVISOR RESOURCES</li>
       <li class="nav-item mb-1">
         <a
           href="https://sdb.admin.uw.edu/sisAdvising/securid/overview.aspx"
