@@ -34,7 +34,7 @@
     </template>
     <template #main>
       <slot name="title">
-        <h1 class="visually-hidden">{{ pageTitle }}</h1>
+        <h1 class="fw-bold">{{ pageTitle }}</h1>
       </slot>
       <slot name="content"></slot>
     </template>

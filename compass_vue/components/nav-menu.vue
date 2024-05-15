@@ -21,15 +21,17 @@
           ><i class="bi bi-people-fill me-2"></i>Caseload</router-link
         >
       </li>
+
       <li aria-hidden="true" class="nav-item mt-1 mb-2">
         <a
           href="#"
           class="nav-link disabled text-gray d-block p-0 internal-link"
-          ><hr class="m-0 bg-gray" />
-          <span class="visually-hidden">Navigation separator</span></a
+          >
+          <span class="fs-8 text-secondary text-uppercase">Enrollment Services</span>
+          <hr class="m-0 bg-gray" /></a
         >
       </li>
-      <li class="nav-item mb-1 fs-8 text-secondary">ENROLLMENT SERVICES</li>
+
       <li class="nav-item mb-1">
         <router-link
           :to="'/reports'"
@@ -50,15 +52,18 @@
           ><i class="bi bi-cart-plus-fill me-2"></i>Affiliations</router-link
         >
       </li>
+
+
       <li aria-hidden="true" class="nav-item mt-1 mb-2">
         <a
           href="#"
           class="nav-link disabled text-gray d-block p-0 internal-link"
-          ><hr class="m-0 bg-gray" />
-          <span class="visually-hidden">Navigation separator</span></a
+          >
+          <span class="fs-8 text-secondary text-uppercase">Advising Resources</span>
+          <hr class="m-0 bg-gray" /></a
         >
       </li>
-      <li class="nav-item mb-1 fs-8 text-secondary">ADVISOR RESOURCES</li>
+
       <li class="nav-item mb-1">
         <a
           href="https://sdb.admin.uw.edu/sisAdvising/securid/overview.aspx"
