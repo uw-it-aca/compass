@@ -18,7 +18,7 @@
               </div>
               <div class="me-3">
                 <p>Select Affliations</p>
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select" aria-label="Select affiliation">
                   <option selected disabled>Choose one...</option>
                   <option value="1">CAMP</option>
                   <option value="2">TRIO-SSS</option>
@@ -27,7 +27,7 @@
               </div>
               <div>
                 <p>Select Cohort</p>
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select" aria-label="Select cohort">
                   <option selected disabled>Choose one...</option>
                   <option value="1">2024-2025</option>
                   <option value="2">2023-2024</option>
@@ -39,7 +39,7 @@
               <button
                 type="button"
                 class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
-                @click="saveFilterPreferences"
+                @click="processUpload"
               >
                 Process Batch
               </button>
@@ -49,9 +49,51 @@
       </div>
 
       <div class="row my-4">
-        <div class="col">asdfasdf</div>
+        <div class="col">
+          <p>Upload resulsts...</p>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Student Number</th>
+                <th scope="col">First</th>
+                <th scope="col">Last</th>
+                <th scope="col">NetID</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">2310335</th>
+                <td>Louis</td>
+                <td>King</td>
+                <td>lking</td>
+                <td>Uploaded</td>
+              </tr>
+              <tr>
+                <th scope="row">3776803</th>
+                <td>Nellie</td>
+                <td>Woods</td>
+                <td>nwoods</td>
+                <td>Uploaded</td>
+              </tr>
+              <tr>
+                <th scope="row">6640182</th>
+                <td>Jeffery</td>
+                <td>Bridges</td>
+                <td>jeffbridges</td>
+                <td>error</td>
+              </tr>
+              <tr>
+                <th scope="row">1776982</th>
+                <td>Cecelia</td>
+                <td>Glover</td>
+                <td>ceceglove</td>
+                <td>Uploaded</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-
     </template>
   </layout>
 </template>
@@ -68,6 +110,11 @@ export default {
       pageTitle: "Affiliations",
       isLoading: true,
     };
+  },
+  methods: {
+    processUpload: function () {
+      alert("jfsdalkj");
+    },
   },
 };
 </script>
