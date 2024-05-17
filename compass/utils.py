@@ -3,6 +3,25 @@
 
 from datetime import timedelta
 
+STUDENT_NUM_LEN = 7
+STUDENT_SYSKEY_LEN = 9
+
+
+def zfill_or_none(value, length):
+    value = str(value).zfill(length) if (
+        value and len(str(value)) > 0) else None
+    if value == "0" * length:
+        return None
+    return value
+
+
+def format_system_key(value):
+    return zfill_or_none(int(value), STUDENT_SYSKEY_LEN)
+
+
+def format_student_number(value):
+    return zfill_or_none(value, STUDENT_NUM_LEN)
+
 
 def weekdays_before(end_date, offset_days=3):
     """

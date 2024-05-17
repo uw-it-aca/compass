@@ -2,11 +2,29 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from django.test import TestCase
-from compass.utils import weekdays_before
+from compass.utils import weekdays_before, zfill_or_none
 from datetime import datetime, date
 
 
 class TestUtils(TestCase):
+    def test_zfill_or_none(self):
+        return_value = zfill_or_none("12345", 7)
+        self.assertEqual(return_value, "0012345")
+        return_value = zfill_or_none("1234567", 7)
+        self.assertEqual(return_value, "1234567")
+        return_value = zfill_or_none("12345678", 7)
+        self.assertEqual(return_value, "12345678")
+        return_value = zfill_or_none("123", 5)
+        self.assertEqual(return_value, "00123")
+        return_value = zfill_or_none("0", 7)
+        self.assertEqual(return_value, None)
+        return_value = zfill_or_none(1234, 7)
+        self.assertEqual(return_value, "0001234")
+        return_value = zfill_or_none(None, 7)
+        self.assertEqual(return_value, None)
+        return_value = zfill_or_none("", 7)
+        self.assertEqual(return_value, None)
+
     def test_weekdays_before(self):
         # date
         val = weekdays_before(date(2024, 4, 19), offset_days=3)

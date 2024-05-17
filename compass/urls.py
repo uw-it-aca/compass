@@ -13,6 +13,7 @@ from compass.views.api.student import (
     StudentSchedulesView,
     StudentTranscriptsView,
     StudentAffiliationsView,
+    StudentAffiliationsImportView,
     StudentVisitsView,
     StudentEligibilityView,
     StudentView,
@@ -86,6 +87,10 @@ urlpatterns += [
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/affiliations/$",
         StudentAffiliationsView.as_view(),
+    ),
+    re_path(
+        r"^api/internal/import/affiliations/(?P<affiliation_id>[\w]+)/$",
+        StudentAffiliationsImportView.as_view(),
     ),
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)"
