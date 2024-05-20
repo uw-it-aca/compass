@@ -18,20 +18,34 @@
               </div>
               <div class="me-3">
                 <p>Select Affliations</p>
-                <select class="form-select" aria-label="Select affiliation">
-                  <option selected disabled>Choose one...</option>
-                  <option value="1">CAMP</option>
-                  <option value="2">TRIO-SSS</option>
-                  <option value="3">Champions</option>
+                <select name="affiliation" class="form-select" aria-label="Select affiliation">
+                  <option selected disabled :value="undefined">
+                    Choose one...
+                  </option>
+                  <template
+                    v-for="affiliation in affiliations"
+                    :key="affiliation.id"
+                  >
+                    <option :value="affiliation.id">
+                      {{ affiliation.name }}
+                    </option>
+                  </template>
                 </select>
               </div>
               <div>
                 <p>Select Cohort</p>
-                <select class="form-select" aria-label="Select cohort">
-                  <option selected disabled>Choose one...</option>
-                  <option value="1">2024-2025</option>
-                  <option value="2">2023-2024</option>
-                  <option value="3">2022-2023</option>
+                <select name="cohort" class="form-select" aria-label="Select cohort">
+                  <option selected disabled :value="undefined">
+                    Choose one...
+                  </option>
+                  <template
+                    v-for="(cohort, index) in cohorts"
+                    :key="index"
+                  >
+                    <option :value="index">
+                      {{ cohort.start_year }}-{{ cohort.end_year }}
+                    </option>
+                  </template>
                 </select>
               </div>
             </div>
@@ -100,18 +114,37 @@
 
 <script>
 import Layout from "@/layout.vue";
+import { getAffiliations } from "@/utils/data";
+import { getCohorts } from "@/utils/cohorts";
 
 export default {
   components: {
     layout: Layout,
   },
+  setup() {
+    return {
+      getAffiliations,
+    };
+  },
   data() {
     return {
       pageTitle: "Affiliations",
       isLoading: true,
+      affiliations: [],
+      cohorts: getCohorts(5),
     };
   },
+  created: function () {
+    this.loadAffiliations();
+  },
   methods: {
+    loadAffiliations() {
+      this.getAffiliations().then((response) => {
+        if (response.data) {
+          this.affiliations = response.data;
+        }
+      });
+    },
     processUpload: function () {
       alert("jfsdalkj");
     },
