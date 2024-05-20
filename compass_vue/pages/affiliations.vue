@@ -42,7 +42,7 @@
                     v-for="(cohort, index) in cohorts"
                     :key="index"
                   >
-                    <option :value="index">
+                    <option :value="cohort.start_year + '-' + cohort.end_year">
                       {{ cohort.start_year }}-{{ cohort.end_year }}
                     </option>
                   </template>
