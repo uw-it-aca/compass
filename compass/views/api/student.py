@@ -264,16 +264,20 @@ class StudentAffiliationsImportView(BaseAPIView):
             return self.response_unauthorized()
 
         affiliation_id = kwargs.get("affiliation_id")
-        cohort_id = request.data.get("cohort_id")
         try:
             affiliation = Affiliation.objects.get(
                 id=affiliation_id, access_group=access_group)
-            cohort = Cohort.objects.get(id=cohort_id)
         except Affiliation.DoesNotExist:
             return self.response_badrequest(
                 content="Unknown or unpermitted affiliation")
-        except Cohort.DoesNotExist:
-            return self.response_badrequest('Unknown cohort')
+
+        try:
+            (start, end) = request.data.get("cohort").split("-", maxsplit=1)
+            cohort = Cohort.objects.get(start_year=start, end_year=end)
+        except AttributeError:
+            return self.response_badrequest("Missing cohort")
+        except (ValueError, Cohort.DoesNotExist):
+            return self.response_badrequest("Unknown cohort")
 
         uploaded_file = request.FILES.get("file")
         if uploaded_file is None:
