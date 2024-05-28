@@ -89,7 +89,7 @@ urlpatterns += [
         StudentAffiliationsView.as_view(),
     ),
     re_path(
-        r"^api/internal/import/affiliations/(?P<affiliation_id>[\w]+)/$",
+        r"^api/internal/student/affiliations/(?P<affiliation_id>[\w]+)/import/$", # noqa
         StudentAffiliationsImportView.as_view(),
     ),
     re_path(

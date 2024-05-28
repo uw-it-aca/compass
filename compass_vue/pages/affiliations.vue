@@ -114,7 +114,10 @@
 
 <script>
 import Layout from "@/layout.vue";
-import { getAffiliations } from "@/utils/data";
+import {
+    getAffiliations,
+    importStudentAffiliations,
+} from "@/utils/data";
 import { getCohorts } from "@/utils/cohorts";
 
 export default {
@@ -124,6 +127,7 @@ export default {
   setup() {
     return {
       getAffiliations,
+      importStudentAffiliations,
     };
   },
   data() {
@@ -146,7 +150,6 @@ export default {
       });
     },
     processUpload: function () {
-      alert("jfsdalkj");
     },
   },
 };

@@ -120,6 +120,20 @@ async function saveStudentAffiliation(systemkey, affiliation) {
   return axios.post(postUrl, { affiliation: affiliation }).catch(_handleError);
 }
 
+async function importStudentAffiliations(affiliation_id, file, cohort) {
+    var postUrl = "/api/internal/student/affiliations/" + affiliation_id + "/import/",
+        formData = new FormData();
+
+    formData.append("file", file.files[0]);
+    formData.append("cohort", cohort);
+
+    return axios.post(postUrl, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    }).catch(_handleError);
+}
+
 async function deleteStudentAffiliation(systemkey, affiliation_id) {
   return axios
     .delete(
@@ -232,6 +246,7 @@ export {
   updateStudentContact,
   saveStudentAffiliation,
   deleteStudentAffiliation,
+  importStudentAffiliations,
   getStudentContacts,
   getStudentContact,
   getStudentContactTopics,
