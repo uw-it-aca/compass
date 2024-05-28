@@ -2,28 +2,37 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from django.test import TestCase
-from compass.utils import weekdays_before, zfill_or_none
+from compass.utils import (
+    weekdays_before, format_system_key, format_student_number)
 from datetime import datetime, date
 
 
 class TestUtils(TestCase):
-    def test_zfill_or_none(self):
-        return_value = zfill_or_none("12345", 7)
-        self.assertEqual(return_value, "0012345")
-        return_value = zfill_or_none("1234567", 7)
-        self.assertEqual(return_value, "1234567")
-        return_value = zfill_or_none("12345678", 7)
-        self.assertEqual(return_value, "12345678")
-        return_value = zfill_or_none("123", 5)
-        self.assertEqual(return_value, "00123")
-        return_value = zfill_or_none("0", 7)
-        self.assertEqual(return_value, None)
-        return_value = zfill_or_none(1234, 7)
-        self.assertEqual(return_value, "0001234")
-        return_value = zfill_or_none(None, 7)
-        self.assertEqual(return_value, None)
-        return_value = zfill_or_none("", 7)
-        self.assertEqual(return_value, None)
+    def test_format_system_key(self):
+        self.assertEqual(format_system_key('123'), '000000123')
+        self.assertEqual(format_system_key('1234567'), '001234567')
+        self.assertEqual(format_system_key('12345678'), '012345678')
+        self.assertEqual(format_system_key('123456789'), '123456789')
+        self.assertEqual(format_system_key('1234567890'), '1234567890')
+        self.assertEqual(format_system_key(1234), '000001234', 'integer')
+        self.assertEqual(format_system_key('1abcdef'), None)
+        self.assertEqual(format_system_key(1.55), None, 'decimal')
+        self.assertEqual(format_system_key(0), None, 'zero')
+        self.assertEqual(format_system_key('000'), None)
+        self.assertEqual(format_system_key(None), None)
+        self.assertEqual(format_system_key(''), None)
+
+    def test_format_student_number(self):
+        self.assertEqual(format_student_number('123'), '0000123')
+        self.assertEqual(format_student_number('123456'), '0123456')
+        self.assertEqual(format_student_number('1234567890'), '1234567890')
+        self.assertEqual(format_student_number(1234), '0001234', 'integer')
+        self.assertEqual(format_student_number('1abcdef'), None)
+        self.assertEqual(format_student_number(1.55), None, 'decimal')
+        self.assertEqual(format_student_number(0), None, 'zero')
+        self.assertEqual(format_student_number('000'), None)
+        self.assertEqual(format_student_number(None), None)
+        self.assertEqual(format_student_number(''), None)
 
     def test_weekdays_before(self):
         # date

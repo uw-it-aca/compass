@@ -9,14 +9,14 @@ STUDENT_SYSKEY_LEN = 9
 
 def zfill_or_none(value, length):
     value = str(value).zfill(length) if (
-        value and len(str(value)) > 0) else None
-    if value == "0" * length:
+        value and str(value).isdigit()) else None
+    if value == '0' * length:
         return None
     return value
 
 
 def format_system_key(value):
-    return zfill_or_none(int(value), STUDENT_SYSKEY_LEN)
+    return zfill_or_none(value, STUDENT_SYSKEY_LEN)
 
 
 def format_student_number(value):

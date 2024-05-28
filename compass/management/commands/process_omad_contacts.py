@@ -2,15 +2,15 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from django.core.management.base import BaseCommand
-from compass.models import OMADContactQueue
+from compass.models import (
+    AccessGroup, AppUser, Contact, Student, OMADContactQueue)
+from compass.dao.contact import validate_contact_post_data
+from compass.utils import format_system_key
 from datetime import datetime, timezone
 import json
-from compass.models import (
-    AccessGroup, AppUser, Contact, Student)
 from logging import getLogger
-from compass.dao.contact import (validate_contact_post_data,
-                                 pad_student_systemkey)
 import traceback
+
 logger = getLogger(__name__)
 
 
@@ -52,7 +52,7 @@ class Command(BaseCommand):
             contact_dict["adviser_netid"])
 
         # Parse/format data
-        student_systemkey = pad_student_systemkey(
+        student_systemkey = format_system_key(
             contact_dict["student_systemkey"])
 
         student, _ = Student.objects.get_or_create(

@@ -72,7 +72,7 @@ class StudentCSV():
 
     def persons_from_file(self, fileobj):
         """
-        Convert CSV file object into normalized JSON
+        Reads a CSV file object, and returns a list of person JSON objects
 
         Supported column names are contained in self.student_identifiers
 
