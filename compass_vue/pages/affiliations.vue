@@ -80,14 +80,14 @@
                 v-for="(person, index) in responseData" :key="index"
               >
               <tr v-if=person.error>
-                <td scope="row">{{ person.student_number }}</th>
+                <td scope="row">{{ person.student_number }}</td>
                 <td>{{ person.first_name }}</td>
                 <td>{{ person.last_name }}</td>
                 <td>{{ person.uwnetid }}</td>
                 <td>Updated</td>
               </tr>
               <tr v-else>
-                <td scope="row" colspan="5">{{ person.error }}</th>
+                <td scope="row" colspan="5">{{ person.error }}</td>
               </tr>
               </template>
             </tbody>
