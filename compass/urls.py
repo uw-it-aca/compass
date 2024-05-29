@@ -13,6 +13,7 @@ from compass.views.api.student import (
     StudentSchedulesView,
     StudentTranscriptsView,
     StudentAffiliationsView,
+    StudentAffiliationsImportView,
     StudentVisitsView,
     StudentEligibilityView,
     StudentView,
@@ -86,6 +87,10 @@ urlpatterns += [
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/affiliations/$",
         StudentAffiliationsView.as_view(),
+    ),
+    re_path(
+        r"^api/internal/student/affiliations/(?P<affiliation_id>[\w]+)/import/$",  # noqa
+        StudentAffiliationsImportView.as_view(),
     ),
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)"
@@ -170,7 +175,10 @@ urlpatterns += [
         name="visit_omad"
     ),
     # vue-router paths
-    re_path(r"^(checkins|student|caseload|reports).*$", LandingView.as_view()),
+    re_path(
+        r"^(checkins|student|caseload|reports|affiliations).*$",
+        LandingView.as_view()
+    ),
     # default landing
     re_path(r"^$", LandingView.as_view(), name="index"),
 ]

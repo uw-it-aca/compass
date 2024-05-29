@@ -9,6 +9,7 @@ from compass.dao.person import (
     valid_uwnetid, valid_uwregid, valid_student_number, valid_system_key,
     get_person_by_uwnetid, get_person_by_student_number,
     get_transcripts_by_uwregid, PersonNotFoundException)
+from compass.dao.csv import StudentCSV
 from compass.dao import current_datetime_utc
 from compass.models import (
     AccessGroup, Student, AppUser, Contact, StudentAffiliation, Affiliation,
@@ -18,7 +19,7 @@ from compass.serializers import (
     VisitReadSerializer, StudentWriteSerializer,
     StudentEligibilitySerializer, EligibilityTypeSerializer,
     SpecialProgramSerializer)
-from compass.exceptions import OverrideNotPermitted
+from compass.exceptions import OverrideNotPermitted, InvalidCSV
 from restclients_core.exceptions import DataFailureException
 from uw_sws.term import (
     get_current_term, get_next_term, get_term_after,
@@ -248,6 +249,66 @@ class StudentAffiliationsView(BaseAPIView):
             return self.response_unauthorized()
         except OverrideNotPermitted as err:
             return self.response_unauthorized(err)
+
+
+class StudentAffiliationsImportView(BaseAPIView):
+    '''
+    API endpoint for assigning the passed affiliation to multiple students
+
+    /api/internal/import/affiliations/[affiliation_id]
+    '''
+    def post(self, request, *args, **kwargs):
+        try:
+            access_group = self.get_access_group(request, require_manager=True)
+            self.valid_user_override()
+        except AccessGroup.DoesNotExist:
+            return self.response_unauthorized()
+        except OverrideNotPermitted as err:
+            return self.response_unauthorized(err)
+
+        affiliation_id = kwargs.get("affiliation_id")
+        try:
+            affiliation = Affiliation.objects.get(
+                id=affiliation_id, access_group=access_group)
+        except Affiliation.DoesNotExist:
+            return self.response_badrequest(
+                content="Unknown or unpermitted affiliation")
+
+        cohort_str = request.data.get("cohort")
+        try:
+            (start, end) = cohort_str.split("-", maxsplit=1)
+            cohort = Cohort.objects.get(start_year=start, end_year=end)
+        except AttributeError:
+            return self.response_badrequest("Missing cohort")
+        except (ValueError, Cohort.DoesNotExist):
+            return self.response_badrequest(f"Unknown cohort {cohort_str}")
+
+        uploaded_file = request.FILES.get("file")
+        if uploaded_file is None:
+            return self.response_badrequest(content="Missing file")
+
+        try:
+            person_data = StudentCSV().persons_from_file(uploaded_file)
+        except InvalidCSV as ex:
+            logger.info(
+                f"POST upload failed for {uploaded_file.name}: {ex.error}")
+            return self.response_badrequest(f"Invalid CSV file: {ex.error}")
+
+        for p in person_data:
+            if hasattr(p, "system_key"):
+                student, _ = Student.objects.get_or_create(
+                    system_key=p["system_key"])
+                sa, _ = StudentAffiliation.objects.get_or_create(
+                    student=student, affiliation=affiliation)
+                sa.date = current_datetime_utc().date()
+                sa.cohorts.clear()
+                sa.cohorts.add(cohort)
+                sa.save()
+                logger.info(
+                    f"StudentAffiliation for {student.systemkey} added: "
+                    f"{affiliation.name} ({affiliation.id}), {cohort_str}")
+
+        return self.response_ok(person_data)
 
 
 class StudentVisitsView(BaseAPIView):
