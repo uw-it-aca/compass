@@ -106,6 +106,8 @@ externalSecrets:
           property: group-id-support
         - name: google-analytics-key
           property: google-analytics-key
+        - name: storage-bucket-name
+          property: storage-bucket-name
     - name: test.compass.uw.edu-sql-secrets
       externalKey: compass/shared/sql-secrets
       data:
@@ -126,6 +128,8 @@ externalSecrets:
           property: person-db-port
         - name: person-db-database
           property: person-db-database
+        - name: storage-project-id
+          property: storage-project-id
     - name: test.compass.uw.edu-ic-certs
       externalKey: compass/prod/ic-certs
       data:
@@ -189,6 +193,14 @@ environmentVariablesSecrets:
     name: UW_PERSON_DB_NAME
     secretName: test.compass.uw.edu-shared-secrets
     secretKey: person-db-database
+  storageBucketName:
+    name: STORAGE_BUCKET_NAME
+    secretName: test.compass.uw.edu-secrets
+    secretKey: storage-bucket-name
+  storageProjectId:
+    name: STORAGE_PROJECT_ID
+    secretName: test.compass.uw.edu-shared-secrets
+    secretKey: storage-project-id
 
 daemon:
   enabled: true
