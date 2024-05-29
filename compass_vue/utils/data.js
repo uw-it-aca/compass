@@ -120,11 +120,11 @@ async function saveStudentAffiliation(systemkey, affiliation) {
   return axios.post(postUrl, { affiliation: affiliation }).catch(_handleError);
 }
 
-async function importStudentAffiliations(affiliation_id, file, cohort) {
+async function uploadStudentAffiliations(affiliation_id, file, cohort) {
     var postUrl = "/api/internal/student/affiliations/" + affiliation_id + "/import/",
         formData = new FormData();
 
-    formData.append("file", file.files[0]);
+    formData.append("file", file);
     formData.append("cohort", cohort);
 
     return axios.post(postUrl, formData, {
@@ -246,7 +246,7 @@ export {
   updateStudentContact,
   saveStudentAffiliation,
   deleteStudentAffiliation,
-  importStudentAffiliations,
+  uploadStudentAffiliations,
   getStudentContacts,
   getStudentContact,
   getStudentContactTopics,

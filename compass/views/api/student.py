@@ -260,8 +260,11 @@ class StudentAffiliationsImportView(BaseAPIView):
     def post(self, request, *args, **kwargs):
         try:
             access_group = self.get_access_group(request, require_manager=True)
+            self.valid_user_override()
         except AccessGroup.DoesNotExist:
             return self.response_unauthorized()
+        except OverrideNotPermitted as err:
+            return self.response_unauthorized(err)
 
         affiliation_id = kwargs.get("affiliation_id")
         try:
@@ -271,8 +274,9 @@ class StudentAffiliationsImportView(BaseAPIView):
             return self.response_badrequest(
                 content="Unknown or unpermitted affiliation")
 
+        cohort_str = request.data.get("cohort")
         try:
-            (start, end) = request.data.get("cohort").split("-", maxsplit=1)
+            (start, end) = cohort_str.split("-", maxsplit=1)
             cohort = Cohort.objects.get(start_year=start, end_year=end)
         except AttributeError:
             return self.response_badrequest("Missing cohort")
@@ -300,6 +304,9 @@ class StudentAffiliationsImportView(BaseAPIView):
                 sa.cohorts.clear()
                 sa.cohorts.add(cohort)
                 sa.save()
+                logger.info(
+                    f"StudentAffiliation for {student.systemkey} added: "
+                    f"{affiliation.name} ({affiliation.id}), {cohort_str}")
 
         return self.response_ok(person_data)
 

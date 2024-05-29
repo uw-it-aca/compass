@@ -14,11 +14,11 @@
                 <label for="formFile" class="form-label fw-bold"
                   >Select students</label
                 >
-                <input class="form-control" type="file" id="formFile" />
+                <input class="form-control" type="file" id="formFile" @change="addFile"/>
               </div>
               <div class="me-3">
                 <p>Select Affliations</p>
-                <select name="affiliation" class="form-select" aria-label="Select affiliation">
+                <select name="affiliation" class="form-select" aria-label="Select affiliation" @change="addAffliation">
                   <option selected disabled :value="undefined">
                     Choose one...
                   </option>
@@ -34,7 +34,7 @@
               </div>
               <div>
                 <p>Select Cohort</p>
-                <select name="cohort" class="form-select" aria-label="Select cohort">
+                <select name="cohort" class="form-select" aria-label="Select cohort" @change="addCohort">
                   <option selected disabled :value="undefined">
                     Choose one...
                   </option>
@@ -116,7 +116,7 @@
 import Layout from "@/layout.vue";
 import {
     getAffiliations,
-    importStudentAffiliations,
+    uploadStudentAffiliations,
 } from "@/utils/data";
 import { getCohorts } from "@/utils/cohorts";
 
@@ -124,10 +124,16 @@ export default {
   components: {
     layout: Layout,
   },
+  props: {
+    cohortCount: {
+      type: Number,
+      default: 5,
+    },
+  },
   setup() {
     return {
       getAffiliations,
-      importStudentAffiliations,
+      uploadStudentAffiliations,
     };
   },
   data() {
@@ -135,13 +141,25 @@ export default {
       pageTitle: "Affiliations",
       isLoading: true,
       affiliations: [],
-      cohorts: getCohorts(5),
+      cohorts: getCohorts(this.cohortCount),
+      file: null,
+      affiliationId: null,
+      cohortName: null,
     };
   },
   created: function () {
     this.loadAffiliations();
   },
   methods: {
+    addFile(e) {
+        this.file = e.target.files[0];
+    },
+    addAffliation(e) {
+        this.affiliationId = e.target.value;
+    },
+    addCohort(e) {
+        this.cohortName = e.target.value;
+    },
     loadAffiliations() {
       this.getAffiliations().then((response) => {
         if (response.data) {
@@ -149,7 +167,34 @@ export default {
         }
       });
     },
-    processUpload: function () {
+    validateForm() {
+      let is_invalid = false;
+      if (this.file === null) {
+        is_invalid = true;
+      }
+      if (this.affiliationId === null) {
+        is_invalid = true;
+      }
+      if (this.cohortName === null) {
+        is_invalid = true;
+      }
+      return !is_invalid;
+    },
+    displayResults(response) {
+
+    },
+    processUpload() {
+      if (!this.validateForm()) {
+        alert("Missing form values: affiliationId=" + this.affiliationId + ", cohortName=" + this.cohortName + ", file=" + this.file);
+        return;
+      }
+      this.uploadStudentAffiliations(this.affiliationId, this.file, this.cohortName)
+        .then((response) => {
+          this.displayResults(response);
+        })
+        .catch((error) => {
+          alert(error.response.data);
+        });
     },
   },
 };
