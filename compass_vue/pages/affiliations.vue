@@ -64,7 +64,7 @@
 
       <div class="row my-4">
         <div class="col">
-          <p>Upload resulsts...</p>
+          <p>Upload results...</p>
           <table class="table">
             <thead>
               <tr>
@@ -76,34 +76,20 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <th scope="row">2310335</th>
-                <td>Louis</td>
-                <td>King</td>
-                <td>lking</td>
-                <td>Uploaded</td>
+              <template
+                v-for="(person, index) in responseData" :key="index"
+              >
+              <tr v-if=person.error>
+                <td scope="row">{{ person.student_number }}</th>
+                <td>{{ person.first_name }}</td>
+                <td>{{ person.last_name }}</td>
+                <td>{{ person.uwnetid }}</td>
+                <td>Updated</td>
               </tr>
-              <tr>
-                <th scope="row">3776803</th>
-                <td>Nellie</td>
-                <td>Woods</td>
-                <td>nwoods</td>
-                <td>Uploaded</td>
+              <tr v-else>
+                <td scope="row" colspan="5">{{ person.error }}</th>
               </tr>
-              <tr>
-                <th scope="row">6640182</th>
-                <td>Jeffery</td>
-                <td>Bridges</td>
-                <td>jeffbridges</td>
-                <td>error</td>
-              </tr>
-              <tr>
-                <th scope="row">1776982</th>
-                <td>Cecelia</td>
-                <td>Glover</td>
-                <td>ceceglove</td>
-                <td>Uploaded</td>
-              </tr>
+              </template>
             </tbody>
           </table>
         </div>
@@ -145,6 +131,7 @@ export default {
       file: null,
       affiliationId: null,
       cohortName: null,
+      responseData: [],
     };
   },
   created: function () {
@@ -180,9 +167,6 @@ export default {
       }
       return !is_invalid;
     },
-    displayResults(response) {
-
-    },
     processUpload() {
       if (!this.validateForm()) {
         alert("Missing form values: affiliationId=" + this.affiliationId + ", cohortName=" + this.cohortName + ", file=" + this.file);
@@ -190,7 +174,7 @@ export default {
       }
       this.uploadStudentAffiliations(this.affiliationId, this.file, this.cohortName)
         .then((response) => {
-          this.displayResults(response);
+          this.responseData = response.data;
         })
         .catch((error) => {
           alert(error.response.data);
