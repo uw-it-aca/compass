@@ -281,7 +281,7 @@ class StudentAffiliationsImportView(BaseAPIView):
         except AttributeError:
             return self.response_badrequest("Missing cohort")
         except (ValueError, Cohort.DoesNotExist):
-            return self.response_badrequest("Unknown cohort")
+            return self.response_badrequest(f"Unknown cohort {cohort_str}")
 
         uploaded_file = request.FILES.get("file")
         if uploaded_file is None:
@@ -289,10 +289,10 @@ class StudentAffiliationsImportView(BaseAPIView):
 
         try:
             person_data = StudentCSV().persons_from_file(uploaded_file)
-        except InvalidCSV as err:
-            logger.error("POST upload failed for {}: {}".format(
-                uploaded_file.name, err))
-            return self.response_badrequest(content=err)
+        except InvalidCSV as ex:
+            logger.info(
+                f"POST upload failed for {uploaded_file.name}: {ex.error}")
+            return self.response_badrequest(f"Invalid CSV file: {ex.error}")
 
         for p in person_data:
             if hasattr(p, "system_key"):

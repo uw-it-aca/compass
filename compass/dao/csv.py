@@ -48,7 +48,8 @@ class StudentCSV():
     def __init__(self):
         self.encoding = None
         self.student_identifiers = [
-            'studentid', 'studentno', 'studentnum', 'studentnumber']
+            'studentid', 'studentno', 'studentnum', 'studentnumber',
+            'studentidnumber']
 
     def decode_file(self, csvfile):
         if not self.encoding:
