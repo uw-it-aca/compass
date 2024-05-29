@@ -32,7 +32,7 @@
         >
       </li>
 
-      <li class="nav-item mb-1">
+      <li v-show="false" class="nav-item mb-1">
         <router-link
           :to="'/reports'"
           class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
@@ -49,7 +49,7 @@
           :class="
             $route.path.includes('/affiliations') ? 'bg-dark-purple rounded-3' : ''
           "
-          ><i class="bi bi-cart-plus-fill me-2"></i>Affiliations</router-link
+          ><i class="bi bi-cart4 me-2"></i>Batch Affiliations</router-link
         >
       </li>
 

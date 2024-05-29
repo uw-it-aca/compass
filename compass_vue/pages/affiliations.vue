@@ -4,21 +4,32 @@
   <layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
-      <h2>Upload Batch Affiliations</h2>
-
       <div class="row my-4 small">
         <div class="col">
           <div class="bg-light p-3 rounded-3">
             <div class="d-flex">
               <div class="me-3">
                 <label for="formFile" class="form-label fw-bold"
-                  >Select students</label
+                  >Upload students</label
                 >
-                <input class="form-control" type="file" id="formFile" @change="addFile"/>
+                <input
+                  class="form-control form-control-sm"
+                  type="file"
+                  id="formFile"
+                  @change="addFile"
+                />
               </div>
               <div class="me-3">
-                <p>Select Affliations</p>
-                <select name="affiliation" class="form-select" aria-label="Select affiliation" @change="addAffliation">
+                <label for="formAffiliation" class="form-label fw-bold"
+                  >Select affiliations</label
+                >
+                <select
+                  id="formAffiliation"
+                  name="affiliation"
+                  class="form-select form-select-sm"
+                  aria-label="Select affiliation"
+                  @change="addAffliation"
+                >
                   <option selected disabled :value="undefined">
                     Choose one...
                   </option>
@@ -33,15 +44,20 @@
                 </select>
               </div>
               <div>
-                <p>Select Cohort</p>
-                <select name="cohort" class="form-select" aria-label="Select cohort" @change="addCohort">
+                <label for="formCohort" class="form-label fw-bold"
+                  >Select cohort</label
+                >
+                <select
+                  id="formCohort"
+                  name="cohort"
+                  class="form-select form-select-sm"
+                  aria-label="Select cohort"
+                  @change="addCohort"
+                >
                   <option selected disabled :value="undefined">
                     Choose one...
                   </option>
-                  <template
-                    v-for="(cohort, index) in cohorts"
-                    :key="index"
-                  >
+                  <template v-for="(cohort, index) in cohorts" :key="index">
                     <option :value="cohort.start_year + '-' + cohort.end_year">
                       {{ cohort.start_year }}-{{ cohort.end_year }}
                     </option>
@@ -62,9 +78,8 @@
         </div>
       </div>
 
-      <div class="row my-4">
+      <div v-if="responseData.length !== 0" class="row my-4">
         <div class="col">
-          <p>Upload results...</p>
           <table class="table">
             <thead>
               <tr>
@@ -76,34 +91,30 @@
               </tr>
             </thead>
             <tbody>
-              <template
-                v-for="(person, index) in responseData" :key="index"
-              >
-              <tr v-if=person.error>
-                <td scope="row">{{ person.student_number }}</td>
-                <td>{{ person.first_name }}</td>
-                <td>{{ person.last_name }}</td>
-                <td>{{ person.uwnetid }}</td>
-                <td>Updated</td>
-              </tr>
-              <tr v-else>
-                <td scope="row" colspan="5">{{ person.error }}</td>
-              </tr>
+              <template v-for="(person, index) in responseData" :key="index">
+                <tr v-if="!person.error">
+                  <td scope="row">{{ person.student_number }}</td>
+                  <td>{{ person.first_name }}</td>
+                  <td>{{ person.last_name }}</td>
+                  <td>{{ person.uwnetid }}</td>
+                  <td>Updated</td>
+                </tr>
+                <tr v-else>
+                  <td scope="row" colspan="5" class="text-end">{{ person.error }}</td>
+                </tr>
               </template>
             </tbody>
           </table>
         </div>
       </div>
+      <div v-else>You have not uploaded any students yet.</div>
     </template>
   </layout>
 </template>
 
 <script>
 import Layout from "@/layout.vue";
-import {
-    getAffiliations,
-    uploadStudentAffiliations,
-} from "@/utils/data";
+import { getAffiliations, uploadStudentAffiliations } from "@/utils/data";
 import { getCohorts } from "@/utils/cohorts";
 
 export default {
@@ -124,7 +135,7 @@ export default {
   },
   data() {
     return {
-      pageTitle: "Affiliations",
+      pageTitle: "Upload Batch Affiliations",
       isLoading: true,
       affiliations: [],
       cohorts: getCohorts(this.cohortCount),
@@ -139,13 +150,13 @@ export default {
   },
   methods: {
     addFile(e) {
-        this.file = e.target.files[0];
+      this.file = e.target.files[0];
     },
     addAffliation(e) {
-        this.affiliationId = e.target.value;
+      this.affiliationId = e.target.value;
     },
     addCohort(e) {
-        this.cohortName = e.target.value;
+      this.cohortName = e.target.value;
     },
     loadAffiliations() {
       this.getAffiliations().then((response) => {
@@ -169,10 +180,21 @@ export default {
     },
     processUpload() {
       if (!this.validateForm()) {
-        alert("Missing form values: affiliationId=" + this.affiliationId + ", cohortName=" + this.cohortName + ", file=" + this.file);
+        alert(
+          "Missing form values: affiliationId=" +
+            this.affiliationId +
+            ", cohortName=" +
+            this.cohortName +
+            ", file=" +
+            this.file
+        );
         return;
       }
-      this.uploadStudentAffiliations(this.affiliationId, this.file, this.cohortName)
+      this.uploadStudentAffiliations(
+        this.affiliationId,
+        this.file,
+        this.cohortName
+      )
         .then((response) => {
           this.responseData = response.data;
         })
