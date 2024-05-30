@@ -295,18 +295,24 @@ class StudentAffiliationsImportView(BaseAPIView):
             return self.response_badrequest(f"Invalid CSV file: {ex.error}")
 
         for p in person_data:
-            if hasattr(p, "system_key"):
-                student, _ = Student.objects.get_or_create(
-                    system_key=p["system_key"])
-                sa, _ = StudentAffiliation.objects.get_or_create(
-                    student=student, affiliation=affiliation)
-                sa.date = current_datetime_utc().date()
-                sa.cohorts.clear()
-                sa.cohorts.add(cohort)
-                sa.save()
-                logger.info(
-                    f"StudentAffiliation for {student.systemkey} added: "
-                    f"{affiliation.name} ({affiliation.id}), {cohort_str}")
+            if "error" in p:
+                continue
+
+            student, _ = Student.objects.get_or_create(
+                system_key=p["system_key"])
+            sa, _ = StudentAffiliation.objects.get_or_create(
+                student=student, affiliation=affiliation)
+            sa.date = current_datetime_utc().date()
+            sa.cohorts.clear()
+            sa.cohorts.add(cohort)
+            sa.save()
+
+            logger.info(
+                f"StudentAffiliation for {student.systemkey} added: "
+                f"{affiliation.name} ({affiliation.id}), {cohort_str}")
+
+            serializer = StudentAffiliationReadSerializer(sa)
+            p['affiliation'] = serializer.data
 
         return self.response_ok(person_data)
 

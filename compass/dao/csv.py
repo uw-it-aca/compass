@@ -88,7 +88,6 @@ class StudentCSV():
                 row.get(*self.student_identifiers))
 
             if student_number is None:
-                persons.append({'error': 'Missing student number'})
                 continue
 
             try:
@@ -98,6 +97,8 @@ class StudentCSV():
                 persons.append(person_dict)
             except PersonNotFoundException:
                 persons.append({
-                    'error': f'Student number {student_number} not found'})
+                    'student_number': student_number,
+                    'error': f'Student number not found'
+                })
 
         return persons
