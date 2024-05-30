@@ -44,8 +44,7 @@ class StudentCSVTest(CompassTestCase):
             self.assertEqual(result[1]['uwnetid'], 'lisa')
             self.assertEqual(result[2]['student_number'], '1233334')
             self.assertEqual(result[2]['uwnetid'], 'jbothell')
-            self.assertEqual(result[3]['error'],
-                             'Student number 7000000 not found')
+            self.assertEqual(result[3]['error'], 'Student number not found')
 
 
 class InsensitiveDictReaderTest(StudentCSVTest):
