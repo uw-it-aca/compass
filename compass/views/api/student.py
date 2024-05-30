@@ -308,7 +308,7 @@ class StudentAffiliationsImportView(BaseAPIView):
             sa.save()
 
             logger.info(
-                f"StudentAffiliation for {student.systemkey} added: "
+                f"StudentAffiliation for {student.system_key} added: "
                 f"{affiliation.name} ({affiliation.id}), {cohort_str}")
 
             serializer = StudentAffiliationReadSerializer(sa)
