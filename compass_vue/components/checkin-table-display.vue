@@ -8,7 +8,7 @@
           <th scope="col" style="width: 15%">Source</th>
           <th scope="col" style="width: 15%">Contact Type</th>
           <th scope="col" style="width: 15%">Meeting With</th>
-          <th scope="col">Assigned Adviser</th>
+          <th scope="col" class="text-nowrap">Assigned Adviser</th>
         </tr>
       </thead>
       <tbody>
@@ -36,7 +36,7 @@
       </tbody>
     </table>
   </div>
-  <div v-else>No students to meet with.</div>
+  <div v-else>You have not met with any students recently.</div>
 </template>
 
 <script>

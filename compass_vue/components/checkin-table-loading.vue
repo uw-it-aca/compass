@@ -8,7 +8,7 @@
           <th scope="col" style="width: 15%">Source</th>
           <th scope="col" style="width: 15%">Contact Type</th>
           <th scope="col" style="width: 15%">Meeting With</th>
-          <th scope="col">Assigned Adviser</th>
+          <th scope="col" class="text-nowrap">Assigned Adviser</th>
         </tr>
       </thead>
       <tbody>

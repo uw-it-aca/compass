@@ -78,36 +78,84 @@
         </div>
       </div>
 
-      <div v-if="responseData.length !== 0" class="row my-4">
+      <div class="row my-4">
         <div class="col">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">Student Number</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">NetID</th>
-                <th scope="col">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <template v-for="(person, index) in responseData" :key="index">
-                <tr v-if="!person.error">
-                  <td scope="row">{{ person.student_number }}</td>
-                  <td>{{ person.first_name }}</td>
-                  <td>{{ person.last_name }}</td>
-                  <td>{{ person.uwnetid }}</td>
-                  <td>Updated</td>
-                </tr>
-                <tr v-else>
-                  <td scope="row" colspan="5" class="text-end">{{ person.error }}</td>
-                </tr>
-              </template>
-            </tbody>
-          </table>
+          <axdd-card>
+            <template #heading-action>
+              <axdd-card-heading :level="2"
+                >Students</axdd-card-heading
+              >
+            </template>
+            <template #body>
+              <div
+                v-if="responseData.length !== 0"
+                class="table-responsive m-n3"
+              >
+                <table class="table m-0">
+                  <thead class="table-light text-muted small">
+                    <tr>
+                      <th scope="col" class="ps-3" style="width: 20%">Student Number</th>
+                      <th scope="col" style="width: 20%">First</th>
+                      <th scope="col">Last</th>
+                      <th scope="col">NetID</th>
+                      <th scope="col" style="width: 40%">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody v-if="isLoading">
+                    <tr v-for="item in 15" :key="item">
+                      <td class="placeholder-glow ps-3">
+                        <div>
+                          <span class="placeholder bg-light-gray col-10"></span>
+                        </div>
+                      </td>
+                      <td class="placeholder-glow">
+                        <div>
+                          <span class="placeholder bg-light-gray col-10"></span>
+                        </div>
+                      </td>
+                      <td class="placeholder-glow">
+                        <div>
+                          <span class="placeholder bg-light-gray col-10"></span>
+                        </div>
+                      </td>
+                      <td class="placeholder-glow">
+                        <div>
+                          <span class="placeholder bg-light-gray col-10"></span>
+                        </div>
+                      </td>
+                      <td class="placeholder-glow">
+                        <div>
+                          <span class="placeholder bg-light-gray col-10"></span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody v-else>
+                    <template
+                      v-for="(person, index) in responseData"
+                      :key="index"
+                    >
+                      <tr v-if="!person.error">
+                        <td scope="row" class="ps-3">{{ person.student_number }}</td>
+                        <td>{{ person.first_name }}</td>
+                        <td>{{ person.surname }}</td>
+                        <td>{{ person.uwnetid }}</td>
+                        <td>Updated</td>
+                      </tr>
+                      <tr v-else>
+                        <td scope="row" colspan="5" class="text-end pe-3">
+                          {{ person.error }}
+                        </td>
+                      </tr>
+                    </template>
+                  </tbody>
+                </table>
+              </div>
+              <div v-else>You have not uploaded any students.</div>
+            </template>
+          </axdd-card>
         </div>
       </div>
-      <div v-else>You have not uploaded any students yet.</div>
     </template>
   </layout>
 </template>
@@ -197,6 +245,10 @@ export default {
       )
         .then((response) => {
           this.responseData = response.data;
+          // MARK: give time for the loading spinner to appear
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 5000);
         })
         .catch((error) => {
           alert(error.response.data);
