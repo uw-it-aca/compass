@@ -1,8 +1,7 @@
 # Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.dao.person import (
-    get_person_by_student_number, PersonNotFoundException)
+from compass.dao.person import get_students_by_student_numbers
 from compass.utils import format_student_number
 from compass.exceptions import InvalidCSV
 from logging import getLogger
@@ -71,7 +70,7 @@ class StudentCSV():
 
         fileobj.seek(0, 0)
 
-    def persons_from_file(self, fileobj):
+    def students_from_file(self, fileobj):
         """
         Reads a CSV file object, and returns a list of person JSON objects
 
@@ -82,23 +81,25 @@ class StudentCSV():
         self.validate(fileobj)
         decoded_file = self.decode_file(fileobj.read()).splitlines()
 
-        persons = []
+        student_numbers = []
         for row in InsensitiveDictReader(decoded_file, dialect=self.dialect):
             student_number = format_student_number(
                 row.get(*self.student_identifiers))
 
-            if student_number is None:
-                continue
+            if student_number is not None:
+                student_numbers.append(student_number)
 
-            try:
-                person = get_person_by_student_number(student_number)
-                person_dict = person.to_dict()
-                person_dict['student_number'] = student_number
-                persons.append(person_dict)
-            except PersonNotFoundException:
-                persons.append({
-                    'student_number': student_number,
-                    'error': f'Student number not found'
-                })
+        students = []
+        if len(student_numbers):
+            students_dict = get_students_by_student_numbers(student_numbers)
 
-        return persons
+            for sn in student_numbers:
+                if sn in students_dict:
+                    students.append(students_dict[sn])
+                else:
+                    students.append({
+                        'student_number': sn,
+                        'error': 'Student number not found',
+                    })
+
+        return students

@@ -288,7 +288,7 @@ class StudentAffiliationsImportView(BaseAPIView):
             return self.response_badrequest(content="Missing file")
 
         try:
-            person_data = StudentCSV().persons_from_file(uploaded_file)
+            person_data = StudentCSV().students_from_file(uploaded_file)
         except InvalidCSV as ex:
             logger.info(
                 f"POST upload failed for {uploaded_file.name}: {ex.error}")
