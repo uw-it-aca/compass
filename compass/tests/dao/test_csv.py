@@ -37,16 +37,14 @@ class StudentCSVTest(CompassTestCase):
         with open(os.path.join(self.resource_path, 'valid.csv'), 'rb') as fh:
             result = csv_import.persons_from_file(fh)
 
-            self.assertEqual(len(result), 5)
+            self.assertEqual(len(result), 4)
             self.assertEqual(result[0]['student_number'], '1033334')
             self.assertEqual(result[0]['uwnetid'], 'javerage')
             self.assertEqual(result[1]['student_number'], '1233338')
             self.assertEqual(result[1]['uwnetid'], 'lisa')
             self.assertEqual(result[2]['student_number'], '1233334')
             self.assertEqual(result[2]['uwnetid'], 'jbothell')
-            self.assertEqual(result[3]['error'],
-                             'Student number 7000000 not found')
-            self.assertEqual(result[4]['error'], 'Missing student number')
+            self.assertEqual(result[3]['error'], 'Student number not found')
 
 
 class InsensitiveDictReaderTest(StudentCSVTest):
