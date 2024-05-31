@@ -31,11 +31,11 @@ class StudentCSVTest(CompassTestCase):
             self.assertRaisesRegex(InvalidCSV, 'Missing student identifier',
                                    csv_import.validate, fh)
 
-    def test_persons_from_file(self):
+    def test_students_from_file(self):
         csv_import = StudentCSV()
 
         with open(os.path.join(self.resource_path, 'valid.csv'), 'rb') as fh:
-            result = csv_import.persons_from_file(fh)
+            result = csv_import.students_from_file(fh)
 
             self.assertEqual(len(result), 4)
             self.assertEqual(result[0]['student_number'], '1033334')

@@ -155,6 +155,21 @@ class TestPerson(CompassTestCase):
             'uwregid': s3['person__uwregid'], 'photo_key': key}))
         self.assertEqual(len(s3['adviser_uwnetids']), 2)
 
+    def test_get_students_by_student_numbers(self):
+        student_numbers = ['1033334', '1233334', '1233338']
+        students = get_students_by_student_numbers(student_numbers)
+
+        self.assertEqual(len(students), 3)
+
+        s1 = students['1033334']
+        self.assertEqual(s1['uwnetid'], 'javerage')
+
+        s2 = students['1233334']
+        self.assertEqual(s2['uwnetid'], 'jbothell')
+
+        s3 = students['1233338']
+        self.assertEqual(s3['uwnetid'], 'lisa')
+
     @mock.patch.object(PhotoDAO, 'generate_photo_key')
     def test_get_adviser_caseload_not_found(self, mock_photo_key):
         self.assertRaises(

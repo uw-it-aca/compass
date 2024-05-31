@@ -101,7 +101,9 @@ def get_appuser_by_uwnetid(uwnetid):
 
 def get_students_by_system_keys(system_keys, **kwargs):
     photo_key = PhotoDAO().generate_photo_key()
-    students = Student.objects.filter(system_key__in=system_keys).values(
+    students = Student.objects.filter(
+            system_key__in=system_keys
+        ).values(
             'system_key',
             'student_number',
             'person__uwnetid',
@@ -121,6 +123,27 @@ def get_students_by_system_keys(system_keys, **kwargs):
     students_dict = {}
     for student in students:
         students_dict[student['system_key']] = student
+    return students_dict
+
+
+def get_students_by_student_numbers(student_numbers, **kwargs):
+    students = Student.objects.filter(
+            student_number__in=student_numbers
+        ).values(
+            'system_key',
+            'student_number',
+            'person__uwnetid',
+            'person__first_name',
+            'person__surname',
+        ).annotate(
+            uwnetid=F('person__uwnetid'),
+            first_name=F('person__first_name'),
+            surname=F('person__surname')
+        )
+
+    students_dict = {}
+    for student in students:
+        students_dict[student['student_number']] = student
     return students_dict
 
 
