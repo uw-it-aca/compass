@@ -300,10 +300,11 @@ class StudentAffiliationsImportView(BaseAPIView):
 
             student, _ = Student.objects.get_or_create(
                 system_key=p["system_key"])
+
             sa, _ = StudentAffiliation.objects.get_or_create(
                 student=student, affiliation=affiliation)
+
             sa.date = current_datetime_utc().date()
-            sa.cohorts.clear()
             sa.cohorts.add(cohort)
             sa.save()
 

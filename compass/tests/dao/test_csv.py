@@ -22,14 +22,22 @@ class StudentCSVTest(CompassTestCase):
             self.assertEqual(csv_import.dialect.delimiter, ',')
 
         with open(os.path.join(
+                self.resource_path, 'empty.csv'), 'rb') as fh:
+            self.assertRaisesRegex(
+                InvalidCSV, 'Could not determine delimiter',
+                csv_import.validate, fh)
+
+        with open(os.path.join(
                 self.resource_path, 'missing_header.csv'), 'rb') as fh:
-            self.assertRaisesRegex(InvalidCSV, 'Missing student identifier',
-                                   csv_import.validate, fh)
+            self.assertRaisesRegex(
+                InvalidCSV, 'Missing header row or student identifier',
+                csv_import.validate, fh)
 
         with open(os.path.join(
                 self.resource_path, 'missing_student_id.csv'), 'rb') as fh:
-            self.assertRaisesRegex(InvalidCSV, 'Missing student identifier',
-                                   csv_import.validate, fh)
+            self.assertRaisesRegex(
+                InvalidCSV, 'Missing header row or student identifier',
+                csv_import.validate, fh)
 
     def test_students_from_file(self):
         csv_import = StudentCSV()

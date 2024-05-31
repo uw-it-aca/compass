@@ -58,15 +58,18 @@ class StudentCSV():
 
     def validate(self, fileobj):
         # Read the first line of the file to validate the header
-        decoded_file = self.decode_file(fileobj.readline())
-        self.has_header = csv.Sniffer().has_header(decoded_file)
-        self.dialect = csv.Sniffer().sniff(decoded_file)
+        try:
+            decoded_file = self.decode_file(fileobj.readline())
+            self.has_header = csv.Sniffer().has_header(decoded_file)
+            self.dialect = csv.Sniffer().sniff(decoded_file)
+        except Exception as err:
+            raise InvalidCSV(str(err))
 
         reader = InsensitiveDictReader(decoded_file.splitlines(),
                                        dialect=self.dialect)
 
         if not (any(s in reader.fieldnames for s in self.student_identifiers)):
-            raise InvalidCSV('Missing student identifier')
+            raise InvalidCSV('Missing header row or student identifier')
 
         fileobj.seek(0, 0)
 
