@@ -13,8 +13,9 @@ from compass.dao.person import (
 from compass.dao.csv import StudentCSV
 from compass.dao import current_datetime_utc
 from compass.models import (
-    AccessGroup, Student, AppUser, Contact, StudentAffiliation, Affiliation,
-    Cohort, Visit, EligibilityType, StudentEligibility, SpecialProgram)
+    AccessGroup, Student, AppUser, Contact, ContactType, ContactMethod,
+    ContactTopic, StudentAffiliation, Affiliation, Cohort, Visit,
+    EligibilityType, StudentEligibility, SpecialProgram)
 from compass.serializers import (
     ContactReadSerializer, ContactWriteSerializer, StudentWriteSerializer,
     StudentAffiliationReadSerializer, VisitReadSerializer,
@@ -300,9 +301,9 @@ class StudentAffiliationsImportView(BaseAPIView):
                 UserService().get_user()).id,
             'student': None,
             'access_group': [access_group.id],
-            'contact_type': 'Admin',
-            'contact_method': 'Internal',
-            'contact_topics': ['Other'],
+            'contact_type': ContactType.objects.get(slug='admin').id,
+            'contact_method': ContactMethod.objects.get(slug='internal').id,
+            'contact_topics': [ContactTopic.objects.get(slug='other').id],
             'checkin_date': current_datetime_utc(),
             'notes': 'Affiliation updated by batch import',
         }
