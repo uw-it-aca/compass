@@ -3,6 +3,7 @@
 
 
 from django.urls import reverse
+from userservice.user import UserService
 from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
 from compass.dao.person import (
@@ -15,8 +16,8 @@ from compass.models import (
     AccessGroup, Student, AppUser, Contact, StudentAffiliation, Affiliation,
     Cohort, Visit, EligibilityType, StudentEligibility, SpecialProgram)
 from compass.serializers import (
-    ContactReadSerializer, StudentAffiliationReadSerializer,
-    VisitReadSerializer, StudentWriteSerializer,
+    ContactReadSerializer, ContactWriteSerializer, StudentWriteSerializer,
+    StudentAffiliationReadSerializer, VisitReadSerializer,
     StudentEligibilitySerializer, EligibilityTypeSerializer,
     SpecialProgramSerializer)
 from compass.exceptions import OverrideNotPermitted, InvalidCSV
@@ -294,6 +295,18 @@ class StudentAffiliationsImportView(BaseAPIView):
                 f"POST upload failed for {uploaded_file.name}: {ex.error}")
             return self.response_badrequest(f"Invalid CSV file: {ex.error}")
 
+        contact_dict = {
+            'app_user': AppUser.objects.upsert_appuser(
+                UserService().get_user()).id,
+            'student': None,
+            'access_group': [access_group.id],
+            'contact_type': 'Admin',
+            'contact_method': 'Internal',
+            'contact_topics': ['Other'],
+            'checkin_date': current_datetime_utc(),
+            'notes': 'Affiliation updated by batch import',
+        }
+
         for p in person_data:
             if "error" in p:
                 continue
@@ -308,12 +321,18 @@ class StudentAffiliationsImportView(BaseAPIView):
             sa.cohorts.add(cohort)
             sa.save()
 
+            # Create a Contact from advisor type 'Admin'
+            contact_dict['student'] = student.id
+            contact_serializer = ContactWriteSerializer(data=contact_dict)
+            if contact_serializer.is_valid():
+                contact_serializer.save()
+
             logger.info(
                 f"StudentAffiliation for {student.system_key} added: "
                 f"{affiliation.name} ({affiliation.id}), {cohort_str}")
 
-            serializer = StudentAffiliationReadSerializer(sa)
-            p['affiliation'] = serializer.data
+            sa_serializer = StudentAffiliationReadSerializer(sa)
+            p['affiliation'] = sa_serializer.data
 
         return self.response_ok(person_data)
 
