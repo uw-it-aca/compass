@@ -136,14 +136,19 @@
                       :key="index"
                     >
                       <tr v-if="!person.error">
-                        <td scope="row" class="ps-3">{{ person.student_number }}</td>
+                        <td scope="row" class="ps-3">
+                          <router-link :to="{ path: '/student/' + person.student_number }">
+                            {{ person.student_number }}
+                          </router-link>
+                        </td>
                         <td>{{ person.first_name }}</td>
                         <td>{{ person.surname }}</td>
                         <td>{{ person.uwnetid }}</td>
                         <td>Updated</td>
                       </tr>
                       <tr v-else>
-                        <td scope="row" colspan="5" class="text-end pe-3">
+                        <td scope="row" class="ps-3">{{ person.student_number }}</td>
+                        <td scope="row" colspan="4" class="text-end pe-3">
                           {{ person.error }}
                         </td>
                       </tr>
