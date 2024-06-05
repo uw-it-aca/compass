@@ -274,9 +274,6 @@ export default {
   },
   data() {
     return {
-      contactTopics: [],
-      contactMethods: [],
-      contactTypes: [],
       contact: this.getDefaultContact(),
       formErrors: {},
       updatePermissionDenied: false,
@@ -287,10 +284,16 @@ export default {
       submitAttempted: false,
     };
   },
-  created() {
-    this.loadContactTopics();
-    this.loadContactTypes();
-    this.loadContactMethods();
+  computed: {
+    contactTopics() {
+      return this.storeContact.contactTopics;
+    },
+    contactTypes() {
+      return this.storeContact.contactTypes;
+    },
+    contactMethods() {
+      return this.storeContact.contactMethods;
+    },
   },
   mounted() {
     this.$refs.contactModal.addEventListener(
@@ -447,21 +450,6 @@ export default {
           // update the current contact
           this.contact = newContact;
         }
-      });
-    },
-    loadContactTopics() {
-      this.storeContact.fetchStudentContactTopics().then(() => {
-        this.contactTopics = this.storeContact.contactTopics.data;
-      });
-    },
-    loadContactTypes() {
-      this.storeContact.fetchStudentContactTypes().then(() => {
-        this.contactTypes = this.storeContact.contactTypes.data;
-      });
-    },
-    loadContactMethods() {
-      this.storeContact.fetchStudentContactMethods().then(() => {
-        this.contactMethods = this.storeContact.contactMethods.data;
       });
     },
     clearFormErrors() {

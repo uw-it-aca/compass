@@ -9,42 +9,39 @@ export const useContactStore = defineStore({
   id: "contact",
   state: () => {
     return {
-      getStudentContactTopics,
-      getStudentContactTypes,
-      getStudentContactMethods,
-      contactTopics: {},
-      contactMethods: {},
-      contactTypes: {},
+      _contactTopics: {},
+      _contactMethods: {},
+      _contactTypes: {},
     };
   },
-  getters: {},
-  actions: {
-    fetchStudentContactTopics() {
-      if (!Object.prototype.hasOwnProperty.call(this.contactTopics, 'request')) {
-        this.contactTopics.request = this.getStudentContactTopics().then(
+  getters: {
+    contactTopics(state) {
+      if (!Object.prototype.hasOwnProperty.call(this._contactTopics, 'request')) {
+        this._contactTopics.request = getStudentContactTopics().then(
           (response) => {
-            this.contactTopics.data = response.data;
+            this._contactTopics.data = response.data;
           });
       }
-      return this.contactTopics.request;
+      return this._contactTopics.request;
     },
-    fetchStudentContactTypes() {
-      if (!Object.prototype.hasOwnProperty.call(this.contactTypes, 'request')) {
-        this.contactTypes.request = this.getStudentContactTypes().then(
+    contactTypes(state) {
+      if (!Object.prototype.hasOwnProperty.call(this._contactTypes, 'request')) {
+        this._contactTypes.request = getStudentContactTypes().then(
           (response) => {
-            this.contactTypes.data = response.data;
+            this._contactTypes.data = response.data;
           });
       }
-      return this.contactTypes.request;
+      return this._contactTypes.request;
     },
-    fetchStudentContactMethods() {
-      if (!Object.prototype.hasOwnProperty.call(this.contactMethods, 'request')) {
-        this.contactMethods.request = this.getStudentContactMethods().then(
+    contactMethods(state) {
+      if (!Object.prototype.hasOwnProperty.call(this._contactMethods, 'request')) {
+        this._contactMethods.request = getStudentContactMethods().then(
           (response) => {
-            this.contactMethods.data = response.data;
+            this._contactMethods.data = response.data;
           });
       }
-      return this.contactMethods.request;
+      return this._contactMethods.request;
     },
   },
+  actions: {},
 });
