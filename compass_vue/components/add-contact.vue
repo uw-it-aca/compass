@@ -238,15 +238,12 @@
 </template>
 
 <script>
+import { useContactStore } from "@/stores/contact";
 import {
-  getStudentContactTopics,
-  getStudentContactTypes,
-  getStudentContactMethods,
   getStudentContact,
   saveStudentContact,
   updateStudentContact,
 } from "@/utils/data";
-
 import { Modal } from "bootstrap";
 import { Role } from "@/utils/roles";
 
@@ -267,10 +264,9 @@ export default {
     },
   },
   setup() {
+    const storeContact = useContactStore();
     return {
-      getStudentContactTopics,
-      getStudentContactTypes,
-      getStudentContactMethods,
+      storeContact,
       getStudentContact,
       saveStudentContact,
       updateStudentContact,
@@ -278,9 +274,6 @@ export default {
   },
   data() {
     return {
-      contactTopics: [],
-      contactMethods: [],
-      contactTypes: [],
       contact: this.getDefaultContact(),
       formErrors: {},
       updatePermissionDenied: false,
@@ -291,10 +284,16 @@ export default {
       submitAttempted: false,
     };
   },
-  created() {
-    this.getContactTopics();
-    this.getContactTypes();
-    this.getContactMethods();
+  computed: {
+    contactTopics() {
+      return this.storeContact.contactTopics;
+    },
+    contactTypes() {
+      return this.storeContact.contactTypes;
+    },
+    contactMethods() {
+      return this.storeContact.contactMethods;
+    },
   },
   mounted() {
     this.$refs.contactModal.addEventListener(
@@ -450,27 +449,6 @@ export default {
           );
           // update the current contact
           this.contact = newContact;
-        }
-      });
-    },
-    getContactTopics() {
-      this.getStudentContactTopics().then((response) => {
-        if (response.data) {
-          this.contactTopics = response.data;
-        }
-      });
-    },
-    getContactTypes() {
-      this.getStudentContactTypes().then((response) => {
-        if (response.data) {
-          this.contactTypes = response.data;
-        }
-      });
-    },
-    getContactMethods() {
-      this.getStudentContactMethods().then((response) => {
-        if (response.data) {
-          this.contactMethods = response.data;
         }
       });
     },
