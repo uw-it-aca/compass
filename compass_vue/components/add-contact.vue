@@ -238,15 +238,12 @@
 </template>
 
 <script>
+import { useContactStore } from "@/stores/contact";
 import {
-  getStudentContactTopics,
-  getStudentContactTypes,
-  getStudentContactMethods,
   getStudentContact,
   saveStudentContact,
   updateStudentContact,
 } from "@/utils/data";
-
 import { Modal } from "bootstrap";
 import { Role } from "@/utils/roles";
 
@@ -267,10 +264,9 @@ export default {
     },
   },
   setup() {
+    const storeContact = useContactStore();
     return {
-      getStudentContactTopics,
-      getStudentContactTypes,
-      getStudentContactMethods,
+      storeContact,
       getStudentContact,
       saveStudentContact,
       updateStudentContact,
@@ -292,9 +288,9 @@ export default {
     };
   },
   created() {
-    this.getContactTopics();
-    this.getContactTypes();
-    this.getContactMethods();
+    this.loadContactTopics();
+    this.loadContactTypes();
+    this.loadContactMethods();
   },
   mounted() {
     this.$refs.contactModal.addEventListener(
@@ -453,25 +449,19 @@ export default {
         }
       });
     },
-    getContactTopics() {
-      this.getStudentContactTopics().then((response) => {
-        if (response.data) {
-          this.contactTopics = response.data;
-        }
+    loadContactTopics() {
+      this.storeContact.fetchStudentContactTopics().then(() => {
+        this.contactTopics = this.storeContact.contactTopics.data;
       });
     },
-    getContactTypes() {
-      this.getStudentContactTypes().then((response) => {
-        if (response.data) {
-          this.contactTypes = response.data;
-        }
+    loadContactTypes() {
+      this.storeContact.fetchStudentContactTypes().then(() => {
+        this.contactTypes = this.storeContact.contactTypes.data;
       });
     },
-    getContactMethods() {
-      this.getStudentContactMethods().then((response) => {
-        if (response.data) {
-          this.contactMethods = response.data;
-        }
+    loadContactMethods() {
+      this.storeContact.fetchStudentContactMethods().then(() => {
+        this.contactMethods = this.storeContact.contactMethods.data;
       });
     },
     clearFormErrors() {
