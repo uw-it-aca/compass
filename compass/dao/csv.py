@@ -119,7 +119,7 @@ class StudentCSV():
                 else:
                     students.append({
                         identifier: sid,
-                        'error': f'{identifier} not found',
+                        'error': f'Student not found',
                     })
 
         return students
