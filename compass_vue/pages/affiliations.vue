@@ -70,6 +70,7 @@
                 type="button"
                 class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
                 @click="processUpload"
+                :disabled="isLoading"
               >
                 Process Batch
               </button>
@@ -189,7 +190,7 @@ export default {
   data() {
     return {
       pageTitle: "Upload Batch Affiliations",
-      isLoading: true,
+      isLoading: false,
       affiliations: [],
       cohorts: getCohorts(this.cohortCount),
       file: null,
@@ -232,7 +233,12 @@ export default {
       return !is_invalid;
     },
     processUpload() {
+
+      // immediately show loading placeholder
+      this.isLoading = true;
+
       if (!this.validateForm()) {
+        this.isLoading = false;
         alert(
           "Missing form values: affiliationId=" +
             this.affiliationId +
@@ -253,9 +259,10 @@ export default {
           // MARK: give time for the loading spinner to appear
           setTimeout(() => {
             this.isLoading = false;
-          }, 5000);
+          }, 1000);
         })
         .catch((error) => {
+          this.isLoading = false;
           alert(error.response.data);
         });
     },
