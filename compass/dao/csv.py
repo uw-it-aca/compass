@@ -1,8 +1,9 @@
 # Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.dao.person import get_students_by_student_numbers
-from compass.utils import format_student_number
+from compass.dao.person import (
+    get_students_by_system_keys, get_students_by_student_numbers)
+from compass.utils import format_system_key, format_student_number
 from compass.exceptions import InvalidCSV
 from logging import getLogger
 import chardet
@@ -46,9 +47,12 @@ class InsensitiveDictReader(csv.DictReader):
 class StudentCSV():
     def __init__(self):
         self.encoding = None
-        self.student_identifiers = [
-            'studentid', 'studentno', 'studentnum', 'studentnumber',
-            'studentidnumber']
+        self.has_header = False
+        self.dialect = None
+        self.student_id_col = None
+        self.system_key_cols = ['systemkey', 'syskey']
+        self.student_num_cols = ['studentid', 'studentno', 'studentnum',
+                                 'studentnumber', 'studentidnumber']
 
     def decode_file(self, csvfile):
         if not self.encoding:
@@ -68,7 +72,11 @@ class StudentCSV():
         reader = InsensitiveDictReader(decoded_file.splitlines(),
                                        dialect=self.dialect)
 
-        if not (any(s in reader.fieldnames for s in self.student_identifiers)):
+        self.student_id_col = next((
+            s for s in (self.system_key_cols + self.student_num_cols) if s in (
+                reader.fieldnames)), None)
+
+        if self.student_id_col is None:
             raise InvalidCSV('Missing header row or student identifier')
 
         fileobj.seek(0, 0)
@@ -77,32 +85,41 @@ class StudentCSV():
         """
         Reads a CSV file object, and returns a list of person JSON objects
 
-        Supported column names are contained in self.student_identifiers
+        Supported column names are contained in self.system_key_cols and
+        self.student_num_cols, with priority given to system_keys.
 
         All other field names are ignored.
         """
         self.validate(fileobj)
         decoded_file = self.decode_file(fileobj.read()).splitlines()
 
-        student_numbers = []
+        student_ids = []
         for row in InsensitiveDictReader(decoded_file, dialect=self.dialect):
-            student_number = format_student_number(
-                row.get(*self.student_identifiers))
+            if self.student_id_col in self.system_key_cols:
+                student_id = format_system_key(row.get(self.student_id_col))
+            else:
+                student_id = format_student_number(
+                    row.get(self.student_id_col))
 
-            if student_number is not None:
-                student_numbers.append(student_number)
+            if student_id is not None:
+                student_ids.append(student_id)
 
         students = []
-        if len(student_numbers):
-            students_dict = get_students_by_student_numbers(student_numbers)
+        if len(student_ids):
+            if self.student_id_col in self.system_key_cols:
+                identifier = 'system_key'
+                students_dict = get_students_by_system_keys(student_ids)
+            else:
+                identifier = 'student_number'
+                students_dict = get_students_by_student_numbers(student_ids)
 
-            for sn in student_numbers:
-                if sn in students_dict:
-                    students.append(students_dict[sn])
+            for sid in student_ids:
+                if sid in students_dict:
+                    students.append(students_dict[sid])
                 else:
                     students.append({
-                        'student_number': sn,
-                        'error': 'Student not found',
+                        identifier: sid,
+                        'error': f'{identifier} not found',
                     })
 
         return students

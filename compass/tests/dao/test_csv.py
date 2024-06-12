@@ -16,10 +16,26 @@ class StudentCSVTest(CompassTestCase):
     def test_validate(self):
         csv_import = StudentCSV()
 
-        with open(os.path.join(self.resource_path, 'valid.csv'), 'rb') as fh:
+        with open(os.path.join(
+                self.resource_path, 'valid_system_key.csv'), 'rb') as fh:
             r = csv_import.validate(fh)
             self.assertEqual(csv_import.has_header, True)
             self.assertEqual(csv_import.dialect.delimiter, ',')
+            self.assertEqual(csv_import.student_id_col, 'systemkey')
+
+        with open(os.path.join(
+                self.resource_path, 'valid_student_num.csv'), 'rb') as fh:
+            r = csv_import.validate(fh)
+            self.assertEqual(csv_import.has_header, True)
+            self.assertEqual(csv_import.dialect.delimiter, ',')
+            self.assertEqual(csv_import.student_id_col, 'studentno')
+
+        with open(os.path.join(
+                self.resource_path, 'valid_multiple_ids.csv'), 'rb') as fh:
+            r = csv_import.validate(fh)
+            self.assertEqual(csv_import.has_header, True)
+            self.assertEqual(csv_import.dialect.delimiter, ',')
+            self.assertEqual(csv_import.student_id_col, 'systemkey')
 
         with open(os.path.join(
                 self.resource_path, 'empty.csv'), 'rb') as fh:
@@ -42,7 +58,8 @@ class StudentCSVTest(CompassTestCase):
     def test_students_from_file(self):
         csv_import = StudentCSV()
 
-        with open(os.path.join(self.resource_path, 'valid.csv'), 'rb') as fh:
+        with open(os.path.join(
+                self.resource_path, 'valid_student_num.csv'), 'rb') as fh:
             result = csv_import.students_from_file(fh)
 
             self.assertEqual(len(result), 4)
@@ -52,7 +69,20 @@ class StudentCSVTest(CompassTestCase):
             self.assertEqual(result[1]['uwnetid'], 'lisa')
             self.assertEqual(result[2]['student_number'], '1233334')
             self.assertEqual(result[2]['uwnetid'], 'jbothell')
-            self.assertEqual(result[3]['error'], 'Student not found')
+            self.assertEqual(result[3]['error'], 'student_number not found')
+
+        with open(os.path.join(
+                self.resource_path, 'valid_system_key.csv'), 'rb') as fh:
+            result = csv_import.students_from_file(fh)
+
+            self.assertEqual(len(result), 4)
+            self.assertEqual(result[0]['student_number'], '1033334')
+            self.assertEqual(result[0]['uwnetid'], 'javerage')
+            self.assertEqual(result[1]['student_number'], '1233338')
+            self.assertEqual(result[1]['uwnetid'], 'lisa')
+            self.assertEqual(result[2]['student_number'], '1233334')
+            self.assertEqual(result[2]['uwnetid'], 'jbothell')
+            self.assertEqual(result[3]['error'], 'system_key not found')
 
 
 class InsensitiveDictReaderTest(StudentCSVTest):

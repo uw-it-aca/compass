@@ -109,11 +109,15 @@ def get_students_by_system_keys(system_keys, **kwargs):
             'person__uwnetid',
             'person__uwregid',
             'person__pronouns',
-            'person__display_name'
+            'person__display_name',
+            'person__first_name',
+            'person__surname',
         ).annotate(
             uwnetid=F('person__uwnetid'),
             pronouns=F('person__pronouns'),
             display_name=F('person__display_name'),
+            first_name=F('person__first_name'),
+            surname=F('person__surname'),
             photo_url=Concat(
                 Value('/api/internal/photo/'), F('person__uwregid'),
                 Value(f'/{photo_key}/'), output_field=CharField()),
@@ -133,10 +137,15 @@ def get_students_by_student_numbers(student_numbers, **kwargs):
             'system_key',
             'student_number',
             'person__uwnetid',
+            'person__uwregid',
+            'person__pronouns',
+            'person__display_name',
             'person__first_name',
             'person__surname',
         ).annotate(
             uwnetid=F('person__uwnetid'),
+            pronouns=F('person__pronouns'),
+            display_name=F('person__display_name'),
             first_name=F('person__first_name'),
             surname=F('person__surname')
         )
