@@ -70,6 +70,7 @@
                 type="button"
                 class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
                 @click="processUpload"
+                :disabled="isLoading"
               >
                 Process Batch
               </button>
@@ -98,7 +99,7 @@
                       <th scope="col" style="width: 20%">First</th>
                       <th scope="col">Last</th>
                       <th scope="col">NetID</th>
-                      <th scope="col" style="width: 40%">Status</th>
+                      <th scope="col" style="width: 40%">Affiliation Status</th>
                     </tr>
                   </thead>
                   <tbody v-if="isLoading">
@@ -144,13 +145,14 @@
                         <td>{{ person.first_name }}</td>
                         <td>{{ person.surname }}</td>
                         <td>{{ person.uwnetid }}</td>
-                        <td>Updated</td>
+                        <td><span class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1 text-bg-success">Completed</span></td>
                       </tr>
                       <tr v-else>
                         <td scope="row" class="ps-3">{{ person.student_number }}</td>
-                        <td scope="row" colspan="4" class="text-end pe-3">
+                        <td scope="row" colspan="3">
                           {{ person.error }}
                         </td>
+                        <td><span class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1 text-bg-danger">Error</span></td>
                       </tr>
                     </template>
                   </tbody>
@@ -189,7 +191,7 @@ export default {
   data() {
     return {
       pageTitle: "Upload Batch Affiliations",
-      isLoading: true,
+      isLoading: false,
       affiliations: [],
       cohorts: getCohorts(this.cohortCount),
       file: null,
@@ -232,7 +234,12 @@ export default {
       return !is_invalid;
     },
     processUpload() {
+
+      // immediately show loading placeholder
+      this.isLoading = true;
+
       if (!this.validateForm()) {
+        this.isLoading = false;
         alert(
           "Missing form values: affiliationId=" +
             this.affiliationId +
@@ -253,9 +260,10 @@ export default {
           // MARK: give time for the loading spinner to appear
           setTimeout(() => {
             this.isLoading = false;
-          }, 5000);
+          }, 1000);
         })
         .catch((error) => {
+          this.isLoading = false;
           alert(error.response.data);
         });
     },
