@@ -99,7 +99,7 @@
                       <th scope="col" style="width: 20%">First</th>
                       <th scope="col">Last</th>
                       <th scope="col">NetID</th>
-                      <th scope="col" style="width: 40%">Status</th>
+                      <th scope="col" style="width: 40%">Affiliation Status</th>
                     </tr>
                   </thead>
                   <tbody v-if="isLoading">
@@ -145,13 +145,14 @@
                         <td>{{ person.first_name }}</td>
                         <td>{{ person.surname }}</td>
                         <td>{{ person.uwnetid }}</td>
-                        <td>Updated</td>
+                        <td><span class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1 text-bg-success">Completed</span></td>
                       </tr>
                       <tr v-else>
                         <td scope="row" class="ps-3">{{ person.student_number }}</td>
-                        <td scope="row" colspan="4" class="text-end pe-3">
+                        <td scope="row" colspan="3">
                           {{ person.error }}
                         </td>
+                        <td><span class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1 text-bg-danger">Error</span></td>
                       </tr>
                     </template>
                   </tbody>
