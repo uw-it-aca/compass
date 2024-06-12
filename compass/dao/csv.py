@@ -85,8 +85,8 @@ class StudentCSV():
         """
         Reads a CSV file object, and returns a list of person JSON objects
 
-        Supported column names are contained in self.system_keys and
-        self.student_numbers, with priority given to system_keys.
+        Supported column names are contained in self.system_key_cols and
+        self.student_num_cols, with priority given to system_keys.
 
         All other field names are ignored.
         """
