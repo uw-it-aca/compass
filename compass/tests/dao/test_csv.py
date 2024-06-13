@@ -69,7 +69,7 @@ class StudentCSVTest(CompassTestCase):
             self.assertEqual(result[1]['uwnetid'], 'lisa')
             self.assertEqual(result[2]['student_number'], '1233334')
             self.assertEqual(result[2]['uwnetid'], 'jbothell')
-            self.assertEqual(result[3]['error'], 'student_number not found')
+            self.assertEqual(result[3]['error'], 'Student not found')
 
         with open(os.path.join(
                 self.resource_path, 'valid_system_key.csv'), 'rb') as fh:
@@ -82,7 +82,7 @@ class StudentCSVTest(CompassTestCase):
             self.assertEqual(result[1]['uwnetid'], 'lisa')
             self.assertEqual(result[2]['student_number'], '1233334')
             self.assertEqual(result[2]['uwnetid'], 'jbothell')
-            self.assertEqual(result[3]['error'], 'system_key not found')
+            self.assertEqual(result[3]['error'], 'Student not found')
 
 
 class InsensitiveDictReaderTest(StudentCSVTest):
