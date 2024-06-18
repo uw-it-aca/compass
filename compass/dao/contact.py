@@ -43,10 +43,6 @@ def validate_student_systemkey(student_systemkey):
         raise ValueError(f"Invalid student systemkey: {e}")
 
 
-def pad_student_systemkey(student_systemkey):
-    return student_systemkey.zfill(9)
-
-
 def parse_checkin_date_str(checkin_date_str):
     # parse checkin date
     if checkin_date_str is None:

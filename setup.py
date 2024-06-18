@@ -39,6 +39,7 @@ setup(
         'urllib3~=1.25',
         'django-person-client',
         'python-dateutil~=2.8',
+        'chardet~=5.0',
         'lxml==4.9.4',
         'xmlsec==1.3.13'
     ],

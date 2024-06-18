@@ -1,0 +1,47 @@
+import { defineStore } from "pinia";
+import {
+  getStudentContactTopics,
+  getStudentContactTypes,
+  getStudentContactMethods,
+} from "@/utils/data";
+
+export const useContactStore = defineStore({
+  id: "contact",
+  state: () => {
+    return {
+      _contactTopics: {},
+      _contactMethods: {},
+      _contactTypes: {},
+    };
+  },
+  getters: {
+    contactTopics(state) {
+      if (!Object.prototype.hasOwnProperty.call(this._contactTopics, 'request')) {
+        this._contactTopics.request = getStudentContactTopics().then(
+          (response) => {
+            this._contactTopics.data = response.data;
+          });
+      }
+      return this._contactTopics.request;
+    },
+    contactTypes(state) {
+      if (!Object.prototype.hasOwnProperty.call(this._contactTypes, 'request')) {
+        this._contactTypes.request = getStudentContactTypes().then(
+          (response) => {
+            this._contactTypes.data = response.data;
+          });
+      }
+      return this._contactTypes.request;
+    },
+    contactMethods(state) {
+      if (!Object.prototype.hasOwnProperty.call(this._contactMethods, 'request')) {
+        this._contactMethods.request = getStudentContactMethods().then(
+          (response) => {
+            this._contactMethods.data = response.data;
+          });
+      }
+      return this._contactMethods.request;
+    },
+  },
+  actions: {},
+});

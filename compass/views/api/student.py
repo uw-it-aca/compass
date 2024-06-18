@@ -3,22 +3,25 @@
 
 
 from django.urls import reverse
+from userservice.user import UserService
 from compass.views.api import BaseAPIView
 from compass.dao.photo import PhotoDAO
 from compass.dao.person import (
     valid_uwnetid, valid_uwregid, valid_student_number, valid_system_key,
     get_person_by_uwnetid, get_person_by_student_number,
     get_transcripts_by_uwregid, PersonNotFoundException)
+from compass.dao.csv import StudentCSV
 from compass.dao import current_datetime_utc
 from compass.models import (
-    AccessGroup, Student, AppUser, Contact, StudentAffiliation, Affiliation,
-    Cohort, Visit, EligibilityType, StudentEligibility, SpecialProgram)
+    AccessGroup, Student, AppUser, Contact, ContactType, ContactMethod,
+    ContactTopic, StudentAffiliation, Affiliation, Cohort, Visit,
+    EligibilityType, StudentEligibility, SpecialProgram)
 from compass.serializers import (
-    ContactReadSerializer, StudentAffiliationReadSerializer,
-    VisitReadSerializer, StudentWriteSerializer,
+    ContactReadSerializer, ContactWriteSerializer, StudentWriteSerializer,
+    StudentAffiliationReadSerializer, VisitReadSerializer,
     StudentEligibilitySerializer, EligibilityTypeSerializer,
     SpecialProgramSerializer)
-from compass.exceptions import OverrideNotPermitted
+from compass.exceptions import OverrideNotPermitted, InvalidCSV
 from restclients_core.exceptions import DataFailureException
 from uw_sws.term import (
     get_current_term, get_next_term, get_term_after,
@@ -248,6 +251,91 @@ class StudentAffiliationsView(BaseAPIView):
             return self.response_unauthorized()
         except OverrideNotPermitted as err:
             return self.response_unauthorized(err)
+
+
+class StudentAffiliationsImportView(BaseAPIView):
+    '''
+    API endpoint for assigning the passed affiliation to multiple students
+
+    /api/internal/import/affiliations/[affiliation_id]
+    '''
+    def post(self, request, *args, **kwargs):
+        try:
+            access_group = self.get_access_group(request, require_manager=True)
+            self.valid_user_override()
+        except AccessGroup.DoesNotExist:
+            return self.response_unauthorized()
+        except OverrideNotPermitted as err:
+            return self.response_unauthorized(err)
+
+        affiliation_id = kwargs.get("affiliation_id")
+        try:
+            affiliation = Affiliation.objects.get(
+                id=affiliation_id, access_group=access_group)
+        except Affiliation.DoesNotExist:
+            return self.response_badrequest(
+                content="Unknown or unpermitted affiliation")
+
+        cohort_str = request.data.get("cohort")
+        try:
+            (start, end) = cohort_str.split("-", maxsplit=1)
+            cohort = Cohort.objects.get(start_year=start, end_year=end)
+        except AttributeError:
+            return self.response_badrequest("Missing cohort")
+        except (ValueError, Cohort.DoesNotExist):
+            return self.response_badrequest(f"Unknown cohort {cohort_str}")
+
+        uploaded_file = request.FILES.get("file")
+        if uploaded_file is None:
+            return self.response_badrequest(content="Missing file")
+
+        try:
+            person_data = StudentCSV().students_from_file(uploaded_file)
+        except InvalidCSV as ex:
+            logger.info(
+                f"POST upload failed for {uploaded_file.name}: {ex.error}")
+            return self.response_badrequest(f"Invalid CSV file: {ex.error}")
+
+        contact_dict = {
+            'app_user': AppUser.objects.upsert_appuser(
+                UserService().get_user()).id,
+            'student': None,
+            'access_group': [access_group.id],
+            'contact_type': ContactType.objects.get(slug='admin').id,
+            'contact_method': ContactMethod.objects.get(slug='internal').id,
+            'contact_topics': [ContactTopic.objects.get(slug='other').id],
+            'checkin_date': current_datetime_utc(),
+            'notes': 'Affiliation updated by batch import',
+        }
+
+        for p in person_data:
+            if "error" in p:
+                continue
+
+            student, _ = Student.objects.get_or_create(
+                system_key=p["system_key"])
+
+            sa, _ = StudentAffiliation.objects.get_or_create(
+                student=student, affiliation=affiliation)
+
+            sa.date = current_datetime_utc().date()
+            sa.cohorts.add(cohort)
+            sa.save()
+
+            # Create a Contact from advisor type 'Admin'
+            contact_dict['student'] = student.id
+            contact_serializer = ContactWriteSerializer(data=contact_dict)
+            if contact_serializer.is_valid():
+                contact_serializer.save()
+
+            logger.info(
+                f"StudentAffiliation for {student.system_key} added: "
+                f"{affiliation.name} ({affiliation.id}), {cohort_str}")
+
+            sa_serializer = StudentAffiliationReadSerializer(sa)
+            p['affiliation'] = sa_serializer.data
+
+        return self.response_ok(person_data)
 
 
 class StudentVisitsView(BaseAPIView):
