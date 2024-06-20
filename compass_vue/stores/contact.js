@@ -22,7 +22,7 @@ export const useContactStore = defineStore({
             this._contactTopics.data = response.data;
           });
       }
-      return this._contactTopics.request;
+      return this._contactTopics.data;
     },
     contactTypes(state) {
       if (!Object.prototype.hasOwnProperty.call(this._contactTypes, 'request')) {
@@ -31,7 +31,7 @@ export const useContactStore = defineStore({
             this._contactTypes.data = response.data;
           });
       }
-      return this._contactTypes.request;
+      return this._contactTypes.data;
     },
     contactMethods(state) {
       if (!Object.prototype.hasOwnProperty.call(this._contactMethods, 'request')) {
@@ -40,7 +40,7 @@ export const useContactStore = defineStore({
             this._contactMethods.data = response.data;
           });
       }
-      return this._contactMethods.request;
+      return this._contactMethods.data;
     },
   },
   actions: {},
