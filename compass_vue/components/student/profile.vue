@@ -110,7 +110,7 @@
               </KeyValue>
             </li>
             <li>
-              <KeyValue>
+              <KeyValue v-if="person.student.hispanic_code !== null">
                 <template #key>Hispanic</template>
                 <template #value>
                   {{ person.student.hispanic_code }},
@@ -118,6 +118,12 @@
                   {{ person.student.hispanic_long_desc }},
                   {{ person.student.hispanic_group_code }},
                   {{ person.student.hispanic_group_desc }}
+                </template>
+              </KeyValue>
+              <KeyValue v-else>
+                <template #key>Hispanic</template>
+                <template #value>
+                  Not indicated
                 </template>
               </KeyValue>
             </li>
@@ -174,7 +180,7 @@
                     v-for="(sport, index) in person.student.sports"
                     :key="sport.code"
                   >
-                    {{ sport.sport_code }}
+                    {{ sport.sport_code }}, {{ sport.sport_descrip }}
                     <span v-if="index + 1 < person.student.sports.length"
                       >,
                     </span>
