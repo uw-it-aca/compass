@@ -3,23 +3,23 @@
 
 
 from django.test import TestCase
-from compass.dao.storage import StorageDao, get_term_and_week_from_filename
+from compass.dao.storage import RADStorageDao, get_term_and_week_from_filename
 
 
 class TestStorage(TestCase):
     def test_get_term_and_week_from_filename(self):
         filename = "2023-spring-week-6-compass-data.csv"
-        term, week = get_term_and_week_from_filename(filename)
+        term, week = RADStorageDao.get_term_and_week_from_filename(filename)
         self.assertEqual(term, "2023-spring")
         self.assertEqual(week, 6)
 
-        term, week = get_term_and_week_from_filename("compass_data/" +
-                                                     filename)
+        term, week = RADStorageDao.get_term_and_week_from_filename(
+            "compass_data/" + filename)
         self.assertEqual(term, "2023-spring")
         self.assertEqual(week, 6)
 
     def test_files_list(self):
-        dao = StorageDao()
+        dao = RADStorageDao()
         files = dao.get_files_list()
         self.assertEqual(len(files), 3)
         self.assertIn("2023-spring-week-6-compass-data.csv", files)
@@ -27,15 +27,17 @@ class TestStorage(TestCase):
         self.assertIn("2024-spring-week-6-compass-data.csv", files)
 
     def test_latest_file(self):
-        dao = StorageDao()
+        dao = RADStorageDao()
         latest_file = dao.get_latest_file()
-        self.assertEqual(latest_file, '2024-spring-week-6-compass-data.csv')
+        self.assertEqual(latest_file,
+                         '2024-spring-week-6-compass-data.csv')
 
     def test_download(self):
-        dao = StorageDao()
+        dao = RADStorageDao()
         file = dao.download_from_bucket('2023-spring-week-6-compass-data.csv')
         self.assertIsNotNone(file)
-        contents = ("uw_netid,student_no,student_name_lowc,activity,assignments"
+        contents = ("uw_netid,student_no,student_name_lowc,"
+                    "activity,assignments"
                     ",grades,pred,sign_in,stem,incoming_freshman,premajor,"
                     "eop,international,isso,engineering,informatics,"
                     "campus_code,summer,class_code,sport_code\n")

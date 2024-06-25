@@ -4,26 +4,7 @@ import logging
 from django.core.files.storage import default_storage
 
 
-def get_term_and_week_from_filename(rad_file_name):
-    """
-    Extracts term and week from Compass RAD data file name
-
-    For example:
-
-    "compass_data/2021-spring-week-10-compass-data.csv" -> "2021-spring", 10
-    """
-    try:
-        if rad_file_name.startswith("compass_data/"):
-            rad_file_name = rad_file_name.split("/")[1]
-        parts = rad_file_name.split("-")
-        term = f"{parts[0]}-{parts[1]}"
-        week = int(parts[3])
-    except IndexError:
-        raise ValueError(f"Unable to parse RAD file name: {rad_file_name}")
-    return term, week
-
-
-class StorageDao():
+class RADStorageDao():
     def get_files_list(self, path=''):
         """
         Returns list of file names at the given path.
@@ -42,13 +23,28 @@ class StorageDao():
                       f"{','.join(filenames)}")
         return filenames
 
+    def get_file_by_year_quarter_week(self, year, quarter, week):
+        """
+        Returns the file name for the given year, quarter, and week.
+
+        :param year: Year to search for
+        :type year: int
+        :param quarter: Quarter to search for
+        :type quarter: str
+        :param week: Week to search for
+        :type week: int
+        """
+        filename = f"{year}-{quarter}-week-{week}-compass-data.csv"
+        return self.download_from_bucket(filename)
+
     def get_latest_file(self):
         """
         Return latest Compass RAD file in bucket
         """
         files = []
         for filename in self.get_files_list():
-            sis_term_id, week_num = get_term_and_week_from_filename(filename)
+            sis_term_id, week_num = (
+                self.get_term_and_week_from_filename(filename))
             year = sis_term_id.split("-")[0]
             # TODO: Implement Week.sis_term_to_quarter_number
             quarter_num = 0
@@ -62,7 +58,8 @@ class StorageDao():
                reverse=True)
         return files[0]["gcs_file"]
 
-    def download_from_bucket(self, url_key):
+    @staticmethod
+    def download_from_bucket(url_key):
         """
         Downloads file a given url_key path from the configured bucket.
 
@@ -72,3 +69,44 @@ class StorageDao():
         with default_storage.open(url_key, mode='rb') as f:
             content = f.read()
             return content.decode('utf-8')
+
+    @staticmethod
+    def get_term_and_week_from_filename(rad_file_name):
+        """
+        Extracts term and week from Compass RAD data file name
+
+        For example:
+
+        "compass_data/2021-spring-week-10-compass-data.csv"
+        -> "2021-spring", 10
+        """
+        try:
+            if rad_file_name.startswith("compass_data/"):
+                rad_file_name = rad_file_name.split("/")[1]
+            parts = rad_file_name.split("-")
+            term = f"{parts[0]}-{parts[1]}"
+            week = int(parts[3])
+        except IndexError:
+            raise ValueError(f"Unable to parse RAD file name: {rad_file_name}")
+        return term, week
+
+    @staticmethod
+    def get_year_quarter_week_from_filename(rad_file_name):
+        """
+        Extracts term, week and year from Compass RAD data file name
+
+        For example:
+
+        "compass_data/2021-spring-week-10-compass-data.csv"
+         -> "2021", "spring", 10
+        """
+        try:
+            if rad_file_name.startswith("compass_data/"):
+                rad_file_name = rad_file_name.split("/")[1]
+            parts = rad_file_name.split("-")
+            year = parts[0]
+            quarter = parts[1]
+            week = int(parts[3])
+        except IndexError:
+            raise ValueError(f"Unable to parse RAD file name: {rad_file_name}")
+        return year, quarter, week
