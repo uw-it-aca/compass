@@ -22,7 +22,7 @@
         >
       </li>
 
-      <li aria-hidden="true" class="nav-item mt-1 mb-2">
+      <li v-show="userRoles.includes(Role.Manager)" aria-hidden="true" class="nav-item mt-1 mb-2">
         <a
           href="#"
           class="nav-link disabled text-gray d-block p-0 internal-link"
@@ -42,7 +42,7 @@
           ><i class="bi bi-bar-chart-line-fill me-2"></i>Reports</router-link
         >
       </li>
-      <li class="nav-item mb-1">
+      <li v-show="userRoles.includes(Role.Manager)" class="nav-item mb-1">
         <router-link
           :to="'/affiliations'"
           class="nav-link text-gray d-block px-3 py-2 bg-dark-purple-hover rounded-3"
