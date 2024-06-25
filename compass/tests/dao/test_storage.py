@@ -3,7 +3,7 @@
 
 
 from django.test import TestCase
-from compass.dao.storage import RADStorageDao, get_term_and_week_from_filename
+from compass.dao.storage import RADStorageDao
 
 
 class TestStorage(TestCase):
