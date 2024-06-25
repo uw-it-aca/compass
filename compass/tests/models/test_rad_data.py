@@ -52,13 +52,27 @@ class RADDataTest(CompassTestCase):
         RADImport.objects.create(week=w1,
                                  import_status=RADImport.STARTED)
 
-        year, quarter, week = RADImport.get_next_week()
+        year, quarter, week = RADImport.get_next_import_week()
         self.assertEqual(year, 2021)
         self.assertEqual(quarter, 'summer')
         self.assertEqual(week, 1)
         RADImport.objects.create(week=w2,
                                  import_status=RADImport.STARTED)
-        year, quarter, week = RADImport.get_next_week()
+        year, quarter, week = RADImport.get_next_import_week()
         self.assertEqual(year, 2022)
         self.assertEqual(quarter, 'winter')
         self.assertEqual(week, 1)
+
+    def test_create_job(self):
+        rad_import = RADImport.create_job(year=2021,
+                                          quarter='spring',
+                                          week=10)
+        self.assertEqual(rad_import.week.year, 2021)
+        with self.assertRaises(ValueError):
+            RADImport.create_job(year=2021,
+                                 quarter='spring',
+                                 week=10)
+        RADImport.create_job(year=2021,
+                             quarter='spring',
+                             week=10,
+                             reload=True)

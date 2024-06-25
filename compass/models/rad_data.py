@@ -31,9 +31,9 @@ class RADImport(models.Model):
                 f"-compass-data.csv")
 
     @classmethod
-    def get_next_week(cls):
+    def get_next_import_week(cls):
         """
-        Get the next week id to process, assumes 10 weeks per quarter
+        Get the next week to process, assumes 10 weeks per quarter
         """
 
         last_week_imported = cls.objects.order_by('-week__key').first()
@@ -52,12 +52,26 @@ class RADImport(models.Model):
             if last_week_imported.week.week != 9 else 10
         return next_year, next_quarter, next_week
 
+    @staticmethod
+    def create_job(year, quarter, week, reload=False):
+        rad_week = RADWeek.get_or_create_week(year=year,
+                                              quarter=quarter,
+                                              week=week)
 
-class DataPoint(models.Model):
+        rad_import, created = (RADImport.objects.
+                               get_or_create(week=rad_week,
+                                             import_status=RADImport.STARTED))
+        if not created and not reload:
+            raise ValueError(f"RAD data already imported for"
+                             f" {year}-{quarter}-{week}")
+        return rad_import
+
+
+class RADDataPoint(models.Model):
     """
     Model to store RAD scores per student, week, course
     """
-    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    uwnetid = models.CharField(max_length=50)
     week = models.ForeignKey('RADWeek', on_delete=models.CASCADE)
     course = models.CharField(max_length=255)
     activity_score = models.FloatField()
@@ -85,10 +99,8 @@ class RADWeek(models.Model):
 
     @classmethod
     def get_or_create_week(cls, year, quarter, week):
-
         """
         Create week sorting key in format YYYYQWW
-
         """
         try:
             return cls.objects.get(year=year, quarter=quarter, week=week)
