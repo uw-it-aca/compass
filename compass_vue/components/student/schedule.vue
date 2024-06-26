@@ -57,51 +57,56 @@
                     </tr>
                   </thead>
                   <tbody class="mb-3" v-if="schedule.sections.length > 0">
-                    <tr
+                    <template
                       v-for="(section, index) in schedule.sections"
                       :key="index"
                     >
-                      <td class="ps-3">
-                        {{ section.curriculum_abbr }}
-                        {{ section.course_number }}
-                        {{ section.section_id }}
-                        <div class="fs-8 text-secondary">
-                          {{ section.course_title }}
-                        </div>
-                      </td>
-                      <td>{{ section.sln }}</td>
-                      <td>
-                        <div
-                          v-for="(meeting, index) in section.meetings"
-                          :key="index"
-                        >
-                          <span
-                            v-for="(value, day) in meeting.meeting_days"
-                            :key="day"
+                      <tr class="border-white">
+                        <td class="ps-3">
+                          {{ section.curriculum_abbr }}
+                          {{ section.course_number }}
+                          {{ section.section_id }}
+                          <div class="fs-8 text-secondary">
+                            {{ section.course_title }}
+                          </div>
+                        </td>
+                        <td>{{ section.sln }}</td>
+                        <td>
+                          <div
+                            v-for="(meeting, index) in section.meetings"
+                            :key="index"
                           >
-                            <span v-if="value">
-                              <span v-if="day == 'monday'">M </span>
-                              <span v-if="day == 'tuesday'">T </span>
-                              <span v-if="day == 'wednesday'">W </span>
-                              <span v-if="day == 'thursday'">Th </span>
-                              <span v-if="day == 'friday'">F </span>
+                            <span
+                              v-for="(value, day) in meeting.meeting_days"
+                              :key="day"
+                            >
+                              <span v-if="value">
+                                <span v-if="day == 'monday'">M </span>
+                                <span v-if="day == 'tuesday'">T </span>
+                                <span v-if="day == 'wednesday'">W </span>
+                                <span v-if="day == 'thursday'">Th </span>
+                                <span v-if="day == 'friday'">F </span>
+                              </span>
                             </span>
-                          </span>
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          v-for="(meeting, index) in section.meetings"
-                          :key="index"
-                        >
-                          <span v-if="!meeting.no_meeting">
-                            {{ translateMilitaryTime(meeting.start_time) }} -
-                            {{ translateMilitaryTime(meeting.end_time) }}
-                          </span>
-                        </div>
-                      </td>
-                      <td>{{ section.credits }}</td>
-                    </tr>
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            v-for="(meeting, index) in section.meetings"
+                            :key="index"
+                          >
+                            <span v-if="!meeting.no_meeting">
+                              {{ translateMilitaryTime(meeting.start_time) }} -
+                              {{ translateMilitaryTime(meeting.end_time) }}
+                            </span>
+                          </div>
+                        </td>
+                        <td>{{ section.credits }}</td>
+                      </tr>
+                      <tr>
+                        <td colspan="5" class="ps-3">asldkfjaslkdfjalksdfjalsdkfj</td>
+                      </tr>
+                    </template>
                   </tbody>
                   <tbody v-else class="mb-3">
                     <tr>
