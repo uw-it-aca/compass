@@ -123,7 +123,7 @@
               <KeyValue v-else>
                 <template #key>Hispanic</template>
                 <template #value>
-                  Not indicated
+                  Not Indicated
                 </template>
               </KeyValue>
             </li>
@@ -165,6 +165,7 @@
             </li>
           </ul>
 
+          <template v-if="person.student.sports.length > 0">
           <div
             v-if="mq.xlPlus"
             class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
@@ -189,6 +190,7 @@
               </KeyValue>
             </li>
           </ul>
+        </template>
         </div>
 
         <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
