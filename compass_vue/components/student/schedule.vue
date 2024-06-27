@@ -104,7 +104,9 @@
                         <td>{{ section.credits }}</td>
                       </tr>
                       <tr>
-                        <td colspan="5" class="ps-3">asldkfjaslkdfjalksdfjalsdkfj</td>
+                        <td colspan="5" class="p-3">
+                          <CourseAnalytics></CourseAnalytics>
+                        </td>
                       </tr>
                     </template>
                   </tbody>
@@ -131,9 +133,12 @@
 <script>
 import { translateMilitaryTime } from "@/utils/translations";
 import { getStudentSchedules } from "@/utils/data";
+import CourseAnalytics from "@/components/student/analytics/canvas-course.vue";
 
 export default {
-  components: {},
+  components: {
+    CourseAnalytics
+  },
   props: {
     person: {
       type: Object,
