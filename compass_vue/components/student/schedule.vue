@@ -61,7 +61,11 @@
                       v-for="(section, index) in schedule.sections"
                       :key="index"
                     >
-                      <tr class="border-white">
+                      <tr
+                        :class="[
+                          isQuizSection(section.credits) ? 'border-white' : '',
+                        ]"
+                      >
                         <td class="ps-3">
                           {{ section.curriculum_abbr }}
                           {{ section.course_number }}
@@ -103,8 +107,9 @@
                         </td>
                         <td>{{ section.credits }}</td>
                       </tr>
-                      <tr>
-                        <td colspan="5" class="p-3">
+                      <!-- MARK: only show course analytics for top-level (i.e. NOT quiz sections)-->
+                      <tr v-show="isQuizSection(section.credits)">
+                        <td colspan="5" class="p-3 pt-0">
                           <CourseAnalytics></CourseAnalytics>
                         </td>
                       </tr>
@@ -137,7 +142,7 @@ import CourseAnalytics from "@/components/student/analytics/canvas-course.vue";
 
 export default {
   components: {
-    CourseAnalytics
+    CourseAnalytics,
   },
   props: {
     person: {
@@ -177,6 +182,15 @@ export default {
         }
       }
       return creditTotal;
+    },
+    isQuizSection: function (credits) {
+      if (credits.includes("None")) {
+        return false;
+      } else if (credits.includes("0.0")) {
+        return false;
+      } else {
+        return true;
+      }
     },
   },
 };
