@@ -357,30 +357,16 @@
             </li>
             <li>
               <KeyValue variant="address">
-                <template #key>Permanent Address</template>
+                <template #key>Permanent Address (Parent)</template>
                 <template #value>
+                  <div>{{ person.student.parent_name }}</div>
                   <address>
-                    {{ person.student.perm_addr_line1 }}
-                    {{ person.student.perm_addr_line2 }},
+                    {{ person.student.perm_addr_line1 }},
+                    {{ person.student.perm_addr_line2 }}<br>
                     {{ person.student.perm_addr_city }},
                     {{ person.student.perm_addr_state }}
-                    {{ person.student.perm_addr_5digit_zip }}
+                    {{ person.student.perm_addr_5digit_zip }}<br>
                     {{ person.student.perm_addr_country }}
-                  </address>
-                </template>
-              </KeyValue>
-            </li>
-            <li>
-              <KeyValue variant="address">
-                <template #key>Parent Address</template>
-                <template #value>
-                  <address>
-                    {{ person.student.parent_addr_line1 }}
-                    {{ person.student.parent_addr_line2 }},
-                    {{ person.student.parent_addr_city }},
-                    {{ person.student.parent_addr_state }}
-                    {{ person.student.parent_addr_5digit_zip }},
-                    {{ person.student.parent_addr_country }}
                   </address>
                 </template>
               </KeyValue>
