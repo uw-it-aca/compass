@@ -78,13 +78,15 @@
             </li>
           </ul>
 
+
+
           <div
             v-if="mq.xlPlus"
             class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
           >
             Personal Information
           </div>
-          <ul class="list-unstyled m-0 small">
+          <ul class="list-unstyled m-0 mb-3 small">
             <li>
               <KeyValue>
                 <template #key>Gender</template>
@@ -125,7 +127,54 @@
                 <template #value> Not Indicated </template>
               </KeyValue>
             </li>
-            <li class="mt-3">
+          </ul>
+
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
+            Email
+          </div>
+          <ul class="list-unstyled mb-3 small">
+            <li>
+              <KeyValue>
+                <template #key>Student</template>
+                <template #value
+                  ><a :href="'mailto:' + person.student.student_email">{{
+                    person.student.student_email
+                  }}</a></template
+                >
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue>
+                <template #key>External</template>
+                <template #value>
+                  <a :href="'mailto:' + person.student.external_email">{{
+                    person.student.external_email
+                  }}</a>
+                </template>
+              </KeyValue>
+            </li>
+          </ul>
+
+        </div>
+
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
+          <hr class="text-muted" />
+        </div>
+      </div>
+
+      <div class="col-12 col-xl-3">
+        <div class="px-3">
+          <div
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
+            Benefits
+          </div>
+          <ul class="list-unstyled m-0 small">
+            <li>
               <KeyValue>
                 <template #key>Disability</template>
                 <template #value>
@@ -147,7 +196,10 @@
               <KeyValue v-if="person.student.veteran_benefit_code !== 0">
                 <template #key>Veteran Benefits</template>
                 <template #value>
-                  <span>{{ person.student.veteran_benefit_code }}, {{ person.student.veteran_benefit_desc }}</span>
+                  <span
+                    >{{ person.student.veteran_benefit_code }},
+                    {{ person.student.veteran_benefit_desc }}</span
+                  >
                 </template>
               </KeyValue>
               <KeyValue v-else>
@@ -169,41 +221,6 @@
             </li>
           </ul>
 
-          <template v-if="person.student.sports.length > 0">
-            <div
-              v-if="mq.xlPlus"
-              class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
-            >
-              Athletics
-            </div>
-            <ul class="list-unstyled m-0 small">
-              <li class="mb-3">
-                <KeyValue>
-                  <template #key>Sports</template>
-                  <template #value>
-                    <span
-                      v-for="(sport, index) in person.student.sports"
-                      :key="sport.code"
-                    >
-                      {{ sport.sport_code }}, {{ sport.sport_descrip }}
-                      <span v-if="index + 1 < person.student.sports.length"
-                        >,
-                      </span>
-                    </span>
-                  </template>
-                </KeyValue>
-              </li>
-            </ul>
-          </template>
-        </div>
-
-        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
-          <hr class="text-muted" />
-        </div>
-      </div>
-
-      <div class="col-12 col-xl-3">
-        <div class="px-3">
           <div
             v-if="mq.xlPlus"
             class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
@@ -254,12 +271,49 @@
             </li>
           </ul>
 
+          <template v-if="person.student.sports.length > 0">
+            <div
+              v-if="mq.xlPlus"
+              class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+            >
+              Athletics
+            </div>
+            <ul class="list-unstyled m-0 small">
+              <li class="mb-3">
+                <KeyValue>
+                  <template #key>Sports</template>
+                  <template #value>
+                    <span
+                      v-for="(sport, index) in person.student.sports"
+                      :key="sport.code"
+                    >
+                      {{ sport.sport_code }}, {{ sport.sport_descrip }}
+                      <span v-if="index + 1 < person.student.sports.length"
+                        >,
+                      </span>
+                    </span>
+                  </template>
+                </KeyValue>
+              </li>
+            </ul>
+          </template>
+
           <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
             <hr class="text-muted" />
           </div>
+        </div>
 
+        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
+          <hr class="text-muted" />
+        </div>
+      </div>
+
+      <div class="col-12 col-xl-3">
+        <div class="px-3">
           <div
-            v-if="mq.xlPlus" class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
+            v-if="mq.xlPlus"
+            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
+          >
             Emergency Contact
           </div>
 
@@ -301,69 +355,6 @@
           </ul>
 
           <div
-            v-if="mq.xlPlus" class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
-            Parent Contact
-          </div>
-          <ul class="list-unstyled m-0 small mb-3">
-            <li>
-              <KeyValue>
-                <template #key>Name</template>
-                <template #value>
-                  parent name...
-                </template>
-              </KeyValue>
-            </li>
-            <li>
-              <KeyValue>
-                <template #key>Phone</template>
-                <template #value>
-                  phone number...
-                </template>
-              </KeyValue>
-            </li>
-            </ul>
-
-        </div>
-
-
-
-
-        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
-          <hr class="text-muted" />
-        </div>
-      </div>
-
-      <div class="col-12 col-xl-3">
-        <div class="px-3">
-          <div
-            v-if="mq.xlPlus"
-            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
-          >
-            Email
-          </div>
-          <ul class="list-unstyled mb-3 small">
-            <li>
-              <KeyValue>
-                <template #key>Student</template>
-                <template #value
-                  ><a :href="'mailto:' + person.student.student_email">{{
-                    person.student.student_email
-                  }}</a></template
-                >
-              </KeyValue>
-            </li>
-            <li>
-              <KeyValue>
-                <template #key>External</template>
-                <template #value>
-                  <a :href="'mailto:' + person.student.external_email">{{
-                    person.student.external_email
-                  }}</a>
-                </template>
-              </KeyValue>
-            </li>
-          </ul>
-          <div
             v-if="mq.xlPlus"
             class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
           >
@@ -404,9 +395,9 @@
               <KeyValue variant="address">
                 <template #key>Parent Address</template>
                 <template #value>
-                  <address>
-                    parent address...
-                  </address>
+                  <div>{{ person.student.parent_name }}</div>
+                  <address>parent address...</address>
+                  <div>parent phone</div>
                 </template>
               </KeyValue>
             </li>
