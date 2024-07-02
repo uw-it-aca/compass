@@ -396,7 +396,7 @@
                 <template #key>Parent Address</template>
                 <template #value>
                   <div>{{ person.student.parent_name }}</div>
-                  <address>parent address...</address>
+                  <address class="mb-0">parent address...</address>
                   <div>parent phone</div>
                 </template>
               </KeyValue>
