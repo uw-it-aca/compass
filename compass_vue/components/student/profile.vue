@@ -276,7 +276,7 @@
             </li>
             <li>
               <span v-if="person.student.emergency_email.length > 25">
-                <KeyValue variant="address">
+                <KeyValue>
                   <template #key>Email</template>
                   <template #value>
                     {{ person.student.emergency_email }}
