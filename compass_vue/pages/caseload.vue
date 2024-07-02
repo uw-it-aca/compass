@@ -351,7 +351,6 @@ export default {
           this.persons = response.data;
         }
         this.isLoading = false;
-        console.log(this.persons);
       });
     },
     showPriorityRing: function (priorityValue) {
