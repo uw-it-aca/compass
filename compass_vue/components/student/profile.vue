@@ -371,7 +371,8 @@
                     {{ person.student.local_addr_city }},
                     {{ person.student.local_addr_state }}
                     {{ person.student.local_addr_5digit_zip }}<br />
-                    {{ person.student.local_addr_country }}
+                    {{ person.student.local_addr_country }}<br>
+                    {{ person.student.local_phone_number }}
                   </address>
                 </template>
               </KeyValue>
@@ -386,7 +387,8 @@
                     {{ person.student.perm_addr_city }},
                     {{ person.student.perm_addr_state }}
                     {{ person.student.perm_addr_5digit_zip }}<br />
-                    {{ person.student.perm_addr_country }}
+                    {{ person.student.perm_addr_country }}<br>
+                    perm phone number
                   </address>
                 </template>
               </KeyValue>
