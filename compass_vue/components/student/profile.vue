@@ -144,10 +144,16 @@
               </KeyValue>
             </li>
             <li>
-              <KeyValue>
-                <template #key>Veteran Benefit</template>
+              <KeyValue v-if="person.student.veteran_benefit_code !== 0">
+                <template #key>Veteran Benefits</template>
                 <template #value>
-                  <span>{{ person.student.veteran_benefit_desc }}</span>
+                  <span>{{ person.student.veteran_benefit_code }}, {{ person.student.veteran_benefit_desc }}</span>
+                </template>
+              </KeyValue>
+              <KeyValue v-else>
+                <template #key>Veteran Benefits</template>
+                <template #value>
+                  <span>No</span>
                 </template>
               </KeyValue>
             </li>
