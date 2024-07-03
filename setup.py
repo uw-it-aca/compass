@@ -22,7 +22,7 @@ setup(
     author="UW-IT T&LS",
     author_email="aca-it@uw.edu",
     include_package_data=True,
-    install_requires = [
+    install_requires=[
         'django~=4.2',
         'uw-memcached-clients~=1.0',
         'django-user-agents',
@@ -40,8 +40,7 @@ setup(
         'django-person-client',
         'python-dateutil~=2.8',
         'chardet~=5.0',
-        'lxml==4.9.4',
-        'xmlsec==1.3.13'
+        'lxml==5.2.2',
     ],
     license="Apache License, Version 2.0",
     description="A application for managing student advising information.",
