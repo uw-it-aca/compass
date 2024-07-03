@@ -275,7 +275,7 @@ export default {
           } catch (error) {
             try {
               return (
-                person.latest_degree.length === 0 &&
+                person.latest_degree === null &&
                 this.selectedDegree === "none"
               );
             } catch (error) {
