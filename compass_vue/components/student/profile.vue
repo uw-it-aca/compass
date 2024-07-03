@@ -146,7 +146,6 @@
               </KeyValue>
             </li>
           </ul>
-
         </div>
 
         <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
@@ -283,34 +282,40 @@
             Address
           </div>
           <ul class="list-unstyled mb-3 small">
-            <li>
+            <li class="mb-3">
               <KeyValue variant="address">
                 <template #key>Local Address</template>
                 <template #value>
-                  <address>
-                    {{ person.student.local_addr_line1 }},
-                    {{ person.student.local_addr_line2 }}<br />
-                    {{ person.student.local_addr_city }},
-                    {{ person.student.local_addr_state }}
-                    {{ person.student.local_addr_5digit_zip }}<br />
-                    {{ person.student.local_phone_number }}
+                  <address class="mb-0">
+                    <div>{{ person.student.local_addr_line1 }}</div>
+                    <div v-show="person.student.local_addr_line2 !== null">{{ person.student.local_addr_line2 }}</div>
+                    <div>
+                      {{ person.student.local_addr_city }}<span v-show="person.student.local_addr_state !== null">,</span>
+                      {{ person.student.local_addr_state }}
+                      {{ person.student.local_addr_5digit_zip }}
+                    </div>
                   </address>
+                  <div v-show="person.student.local_phone_number !== null">{{ person.student.local_phone_number }}</div>
                 </template>
               </KeyValue>
             </li>
-            <li>
+            <li class="mb-3">
               <KeyValue variant="address">
                 <template #key>Permanent Address</template>
                 <template #value>
-                  <address>
-                    {{ person.student.perm_addr_line1 }},
-                    {{ person.student.perm_addr_line2 }}<br />
-                    {{ person.student.perm_addr_city }},
-                    {{ person.student.perm_addr_state }}
-                    {{ person.student.perm_addr_5digit_zip }}<br />
-                    {{ person.student.perm_addr_country }}<br />
-                    {{ person.student.perm_phone_number }}
+                  <address class="mb-0">
+                    <div>{{ person.student.perm_addr_line1 }}</div>
+                    <div v-show="person.student.perm_addr_line2 !== null">{{ person.student.perm_addr_line2 }}</div>
+                    <div>
+                      {{ person.student.perm_addr_city }}<span v-show="person.student.perm_addr_state !== null">,</span>
+                      {{ person.student.perm_addr_state }}
+                      {{ person.student.perm_addr_5digit_zip }}
+                    </div>
+                    <div v-show="person.student.perm_addr_country !== null">
+                      {{ person.student.perm_addr_country }}
+                    </div>
                   </address>
+                  <div v-show="person.student.perm_phone_number !== null">{{ person.student.perm_phone_number }}</div>
                 </template>
               </KeyValue>
             </li>
@@ -320,14 +325,18 @@
                 <template #value>
                   <div>{{ person.student.parent_name }}</div>
                   <address class="mb-0">
-                    {{ person.student.parent_addr_line1 }}
-                    {{ person.student.parent_addr_line2 }},
-                    {{ person.student.parent_addr_city }},
-                    {{ person.student.parent_addr_state }}
-                    {{ person.student.parent_addr_5digit_zip }},
-                    {{ person.student.parent_addr_country }}
+                    <div>{{ person.student.parent_addr_line1 }}</div>
+                    <div v-show="person.student.parent_addr_line2 !== null">{{ person.student.parent_addr_line2 }}</div>
+                    <div>
+                      {{ person.student.parent_addr_city }}<span v-show="person.student.parent_addr_state !== null">,</span>
+                      {{ person.student.parent_addr_state }}
+                      {{ person.student.parent_addr_5digit_zip }}
+                    </div>
+                    <div v-show="person.student.parent_addr_country !== null">
+                      {{ person.student.parent_addr_country }}
+                    </div>
                   </address>
-                  <div>{{ person.student.parent_phone_number }}</div>
+                  <div v-show="person.student.parent_phone_number !== null">{{ person.student.parent_phone_number }}</div>
                 </template>
               </KeyValue>
             </li>
@@ -373,9 +382,7 @@
               </span>
             </li>
           </ul>
-
         </div>
-
       </div>
     </div>
   </div>
