@@ -51,10 +51,7 @@
 
       <div class="col-xl-3">
         <div class="flex-fill px-3">
-          <div
-            v-if="mq.xlPlus"
-            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
-          >
+          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
             Legal Name
           </div>
           <ul class="list-unstyled m-0 small mb-3">
@@ -78,12 +75,7 @@
             </li>
           </ul>
 
-
-
-          <div
-            v-if="mq.xlPlus"
-            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
-          >
+          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
             Personal Information
           </div>
           <ul class="list-unstyled m-0 mb-3 small">
@@ -129,10 +121,7 @@
             </li>
           </ul>
 
-          <div
-            v-if="mq.xlPlus"
-            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
-          >
+          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
             Email
           </div>
           <ul class="list-unstyled mb-3 small">
@@ -167,10 +156,7 @@
 
       <div class="col-12 col-xl-3">
         <div class="px-3">
-          <div
-            v-if="mq.xlPlus"
-            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
-          >
+          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
             Benefits
           </div>
           <ul class="list-unstyled m-0 small">
@@ -221,10 +207,7 @@
             </li>
           </ul>
 
-          <div
-            v-if="mq.xlPlus"
-            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
-          >
+          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
             Immigration
           </div>
           <ul class="list-unstyled m-0 mb-3 small">
@@ -249,14 +232,7 @@
             </li>
           </ul>
 
-          <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
-            <hr class="text-muted" />
-          </div>
-
-          <div
-            v-if="mq.xlPlus"
-            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
-          >
+          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
             Residency
           </div>
           <ul class="list-unstyled m-0 small">
@@ -272,10 +248,7 @@
           </ul>
 
           <template v-if="person.student.sports.length > 0">
-            <div
-              v-if="mq.xlPlus"
-              class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
-            >
+            <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
               Athletics
             </div>
             <ul class="list-unstyled m-0 small">
@@ -297,10 +270,6 @@
               </li>
             </ul>
           </template>
-
-          <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
-            <hr class="text-muted" />
-          </div>
         </div>
 
         <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
@@ -310,10 +279,54 @@
 
       <div class="col-12 col-xl-3">
         <div class="px-3">
-          <div
-            v-if="mq.xlPlus"
-            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
-          >
+          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
+            Address
+          </div>
+          <ul class="list-unstyled mb-3 small">
+            <li>
+              <KeyValue variant="address">
+                <template #key>Local Address</template>
+                <template #value>
+                  <address>
+                    {{ person.student.local_addr_line1 }},
+                    {{ person.student.local_addr_line2 }}<br />
+                    {{ person.student.local_addr_city }},
+                    {{ person.student.local_addr_state }}
+                    {{ person.student.local_addr_5digit_zip }}<br />
+                    {{ person.student.local_phone_number }}
+                  </address>
+                </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue variant="address">
+                <template #key>Permanent Address</template>
+                <template #value>
+                  <address>
+                    {{ person.student.perm_addr_line1 }},
+                    {{ person.student.perm_addr_line2 }}<br />
+                    {{ person.student.perm_addr_city }},
+                    {{ person.student.perm_addr_state }}
+                    {{ person.student.perm_addr_5digit_zip }}<br />
+                    {{ person.student.perm_addr_country }}<br />
+                    perm phone number
+                  </address>
+                </template>
+              </KeyValue>
+            </li>
+            <li>
+              <KeyValue variant="address">
+                <template #key>Parent Address</template>
+                <template #value>
+                  <div>{{ person.student.parent_name }}</div>
+                  <address class="mb-0">parent address...</address>
+                  <div>parent phone</div>
+                </template>
+              </KeyValue>
+            </li>
+          </ul>
+
+          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
             Emergency Contact
           </div>
 
@@ -354,61 +367,8 @@
             </li>
           </ul>
 
-          <div
-            v-if="mq.xlPlus"
-            class="text-uppercase text-dark-beige fs-8 fw-bold mb-2"
-          >
-            Address
-          </div>
-          <ul class="list-unstyled m-0 small">
-            <li>
-              <KeyValue variant="address">
-                <template #key>Local Address</template>
-                <template #value>
-                  <address>
-                    {{ person.student.local_addr_line1 }},
-                    {{ person.student.local_addr_line2 }}<br />
-                    {{ person.student.local_addr_city }},
-                    {{ person.student.local_addr_state }}
-                    {{ person.student.local_addr_5digit_zip }}<br />
-                    {{ person.student.local_addr_country }}<br>
-                    {{ person.student.local_phone_number }}
-                  </address>
-                </template>
-              </KeyValue>
-            </li>
-            <li>
-              <KeyValue variant="address">
-                <template #key>Permanent Address</template>
-                <template #value>
-                  <address>
-                    {{ person.student.perm_addr_line1 }},
-                    {{ person.student.perm_addr_line2 }}<br />
-                    {{ person.student.perm_addr_city }},
-                    {{ person.student.perm_addr_state }}
-                    {{ person.student.perm_addr_5digit_zip }}<br />
-                    {{ person.student.perm_addr_country }}<br>
-                    perm phone number
-                  </address>
-                </template>
-              </KeyValue>
-            </li>
-            <li>
-              <KeyValue variant="address">
-                <template #key>Parent Address</template>
-                <template #value>
-                  <div>{{ person.student.parent_name }}</div>
-                  <address class="mb-0">parent address...</address>
-                  <div>parent phone</div>
-                </template>
-              </KeyValue>
-            </li>
-          </ul>
         </div>
 
-        <div v-if="!mq.xlPlus" aria-hidden="true" class="mx-3">
-          <hr class="text-muted" />
-        </div>
       </div>
     </div>
   </div>
