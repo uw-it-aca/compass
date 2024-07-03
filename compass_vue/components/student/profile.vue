@@ -309,7 +309,7 @@
                     {{ person.student.perm_addr_state }}
                     {{ person.student.perm_addr_5digit_zip }}<br />
                     {{ person.student.perm_addr_country }}<br />
-                    perm phone number
+                    {{ person.student.perm_phone_number }}
                   </address>
                 </template>
               </KeyValue>
@@ -319,8 +319,15 @@
                 <template #key>Parent Address</template>
                 <template #value>
                   <div>{{ person.student.parent_name }}</div>
-                  <address class="mb-0">parent address...</address>
-                  <div>parent phone</div>
+                  <address class="mb-0">
+                    {{ person.student.parent_addr_line1 }}
+                    {{ person.student.parent_addr_line2 }},
+                    {{ person.student.parent_addr_city }},
+                    {{ person.student.parent_addr_state }}
+                    {{ person.student.parent_addr_5digit_zip }},
+                    {{ person.student.parent_addr_country }}
+                  </address>
+                  <div>{{ person.student.parent_phone_number }}</div>
                 </template>
               </KeyValue>
             </li>
