@@ -295,7 +295,7 @@
                       {{ person.student.local_addr_5digit_zip }}
                     </div>
                   </address>
-                  <div v-show="person.student.local_phone_number !== null">{{ person.student.local_phone_number }}</div>
+                  <div v-show="person.student.local_phone_number !== null">{{ formatPhoneNumber(person.student.local_phone_number) }}</div>
                 </template>
               </KeyValue>
             </li>
@@ -315,7 +315,7 @@
                       {{ person.student.perm_addr_country }}
                     </div>
                   </address>
-                  <div v-show="person.student.perm_phone_number !== null">{{ person.student.perm_phone_number }}</div>
+                  <div v-show="person.student.perm_phone_number !== null">{{ formatPhoneNumber(person.student.perm_phone_number) }}</div>
                 </template>
               </KeyValue>
             </li>
@@ -336,7 +336,7 @@
                       {{ person.student.parent_addr_country }}
                     </div>
                   </address>
-                  <div v-show="person.student.parent_phone_number !== null">{{ person.student.parent_phone_number }}</div>
+                  <div v-show="person.student.parent_phone_number !== null">{{ formatPhoneNumber(person.student.parent_phone_number) }}</div>
                 </template>
               </KeyValue>
             </li>
