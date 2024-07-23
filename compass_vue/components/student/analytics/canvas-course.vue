@@ -1,10 +1,16 @@
 <template>
-  <div class="p-3" style="background-color: #fafafa; border-radius: 15px">
-    <h5>Canvas Analytics</h5>
+  <div class="p-4" style="background-color: #fafafa; border-radius: 10px">
+    <div>
+      <h5>Canvas Analytics</h5>
+      <i class="bi bi-info-circle-fill me-0"></i>
+    </div>
     <div class="d-flex pt-3" style="height: 200px">
       <div class="d-flex justify-content-between w-25">
         <div class="pt-2">
-          <ul class="p-0" style="list-style-type: none; line-height: 40px">
+          <ul
+            class="p-0 fs-7 text-secondary"
+            style="list-style-type: none; line-height: 40px"
+          >
             <li>Grade</li>
             <li>Assignment</li>
             <li>Activty</li>
@@ -87,7 +93,7 @@ export default {
         },
         scales: {
           y: {
-            suggestedMax: 100,
+            max: 100,
           },
         },
       },
