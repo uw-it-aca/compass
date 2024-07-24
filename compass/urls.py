@@ -17,6 +17,7 @@ from compass.views.api.student import (
     StudentVisitsView,
     StudentEligibilityView,
     StudentView,
+    StudentRADDataView
 )
 from compass.views.api.eligibility import EligibilityView
 from compass.views.api.special_program import SpecialProgramView
@@ -109,6 +110,11 @@ urlpatterns += [
         r"^api/internal/student/(?P<systemkey>[\w]+)/special_program/$",
         SpecialProgramView.as_view(),
         name="special_program_view"
+    ),
+    re_path(
+        r"^api/internal/student/(?P<uwnetid>[\w]+)/rad_data/$",
+        StudentRADDataView.as_view(),
+        name="rad_data_view"
     ),
     re_path(
         r"^api/internal/eligibility/",

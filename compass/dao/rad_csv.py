@@ -19,10 +19,9 @@ def import_data_from_csv(week, csv_string):
     """
     data = read_csv(csv_string)
     for row in data:
-        # TODO: Get course ID from cmps csv when it is added
         RADDataPoint.objects.create(uwnetid=row['uw_netid'],
                                     week=week,
-                                    course="TEST",
+                                    course=row['course_code'],
                                     activity_score=row['activity'],
                                     assignment_score=row['assignments'],
                                     grade_score=row['grades'],

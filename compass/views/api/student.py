@@ -453,3 +453,20 @@ class StudentEligibilityView(BaseAPIView):
             return self.response_unauthorized()
         except OverrideNotPermitted as err:
             return self.response_unauthorized(err)
+
+
+class StudentRADDataView(BaseAPIView):
+    '''
+    API endpoint returning a list of RAD data for a student
+
+    /api/internal/student/[uwnetid]/rad_data/
+    '''
+    def get(self, request, uwnetid):
+        try:
+            access_group = self.get_access_group(request)
+        except AccessGroup.DoesNotExist:
+            return self.response_unauthorized()
+
+        if not valid_uwnetid(uwnetid):
+            return self.response_badrequest('Invalid uwnetid')
+        #TODO: Implement term based lookup of rad data for a student
