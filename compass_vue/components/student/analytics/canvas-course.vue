@@ -23,53 +23,47 @@
             style="list-style-type: none; line-height: 40px"
           >
             <!-- if score increased compared to last week, arrow up. if score decreased, arrow down. If score did not change, no icons. -->
-            <li>
-              <div class="d-flex justify-content-between">
-                Grade
-                <div>
-                  40%
-                  <i
-                    style="color: #c12c2c"
-                    class="bi bi-arrow-down-circle-fill ms-2 me-1"
-                  ></i>
-                  <i
-                    style="color: #289026"
-                    class="bi bi-arrow-up-circle-fill ms-2 me-1"
-                  ></i>
-                </div>
+            <li class="d-flex justify-content-between">
+              Grade
+              <div>
+                40%
+                <i
+                  style="color: #c12c2c"
+                  class="bi bi-arrow-down-circle-fill ms-2 me-1"
+                ></i>
+                <i
+                  style="color: #289026"
+                  class="bi bi-arrow-up-circle-fill ms-2 me-1"
+                ></i>
               </div>
             </li>
 
-            <li>
-              <div class="d-flex justify-content-between">
-                Assignment
-                <div>
-                  30%
-                  <i
-                    style="color: #c12c2c"
-                    class="bi bi-arrow-down-circle-fill ms-2 me-1"
-                  ></i>
-                  <i
-                    style="color: #289026"
-                    class="bi bi-arrow-up-circle-fill ms-2 me-1"
-                  ></i>
-                </div>
+            <li class="d-flex justify-content-between">
+              Assignment
+              <div>
+                30%
+                <i
+                  style="color: #c12c2c"
+                  class="bi bi-arrow-down-circle-fill ms-2 me-1"
+                ></i>
+                <i
+                  style="color: #289026"
+                  class="bi bi-arrow-up-circle-fill ms-2 me-1"
+                ></i>
               </div>
             </li>
-            <li>
-              <div class="d-flex justify-content-between">
-                Activity
-                <div>
-                  20%
-                  <i
-                    style="color: #c12c2c"
-                    class="bi bi-arrow-down-circle-fill ms-2 me-1"
-                  ></i>
-                  <i
-                    style="color: #289026"
-                    class="bi bi-arrow-up-circle-fill ms-2 me-1"
-                  ></i>
-                </div>
+            <li class="d-flex justify-content-between">
+              Activity
+              <div>
+                20%
+                <i
+                  style="color: #c12c2c"
+                  class="bi bi-arrow-down-circle-fill ms-2 me-1"
+                ></i>
+                <i
+                  style="color: #289026"
+                  class="bi bi-arrow-up-circle-fill ms-2 me-1"
+                ></i>
               </div>
             </li>
           </ul>
