@@ -69,8 +69,8 @@
                         <td class="d-flex ps-3">
                           <!-- Expend and collapse RAD data.
                          Auto expand all classes with a warning icon -->
-                          <i class="bi bi-chevron-up me-2 pt-2 h4"></i>
-                          <i class="bi bi-chevron-down me-2 pt-2 h4"></i>
+                          <i class="bi bi-chevron-up me-3 pt-2 h5"></i>
+
                           <div>
                             {{ section.curriculum_abbr }}
                             {{ section.course_number }}
