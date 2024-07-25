@@ -15,7 +15,7 @@
         <i class="bi bi-info-circle-fill ms-2"></i>
       </a>
     </div>
-    <div class="d-flex pt-3" style="height: 200px">
+    <div class="d-flex pt-3" style="height: 225px">
       <div class="d-flex w-25">
         <div class="pt-2 w-100">
           <ul
