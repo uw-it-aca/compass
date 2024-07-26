@@ -1,11 +1,12 @@
 # Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+import random
 from compass.tests import CompassTestCase
-from compass.models.rad_data import RADWeek, RADImport
+from compass.models.rad_data import RADWeek, RADImport, RADDataPoint
 
 
-class RADDataTest(CompassTestCase):
+class RADDataWeekTest(CompassTestCase):
     def test_create_week(self):
         week1 = RADWeek.get_or_create_week(year=2021,
                                            quarter='spring',
@@ -76,3 +77,59 @@ class RADDataTest(CompassTestCase):
                              quarter='spring',
                              week=10,
                              reload=True)
+
+
+class RADDataPointTest(CompassTestCase):
+
+    def setUp(self):
+        data_points = []
+        for week_id in range(10):
+            terms = ['spring', 'summer', 'autumn']
+            for term in terms:
+                week = RADWeek.get_or_create_week(year=2021,
+                                                  quarter=term,
+                                                  week=week_id)
+                data_points.append(
+                    RADDataPoint(
+                        uwnetid="javerage",
+                        course="CSE 142 A",
+                        week=week,
+                        activity_score=random.uniform(0, 5),
+                        assignment_score=random.uniform(0, 5),
+                        grade_score=random.uniform(0, 5),
+                        prediction_score=random.uniform(0, 5),
+                        signin_score=random.uniform(0, 5)
+                    )
+                )
+                data_points.append(
+                    RADDataPoint(
+                        uwnetid="javerage",
+                        course="BIO 120 C",
+                        week=week,
+                        activity_score=random.uniform(0, 5),
+                        assignment_score=random.uniform(0, 5),
+                        grade_score=random.uniform(0, 5),
+                        prediction_score=random.uniform(0, 5),
+                        signin_score=random.uniform(0, 5)
+                    )
+                )
+        RADDataPoint.objects.bulk_create(data_points)
+
+    def test_get_recent_week(self):
+        recent_week = RADWeek.get_most_recent_week()
+        self.assertEqual(recent_week.year, 2021)
+        self.assertEqual(recent_week.quarter, 'autumn')
+        self.assertEqual(recent_week.week, 9)
+
+    def test_previous_term(self):
+        self.assertEqual(RADWeek.get_previous_term({'year': 2021,
+                                                    'quarter': 'autumn'}),
+                         {'year': 2021, 'quarter': 'summer'})
+        self.assertEqual(RADWeek.get_previous_term({'year': 2021,
+                                                    'quarter': 'winter'}),
+                         {'year': 2020, 'quarter': 'autumn'})
+
+    def test_signins(self):
+        signins = RADDataPoint.get_signins_by_netid('javerage')
+        print(signins)
+        self.assertEqual(len(signins), 3)

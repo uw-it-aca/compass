@@ -16,6 +16,7 @@ from compass.models import (
     AccessGroup, Student, AppUser, Contact, ContactType, ContactMethod,
     ContactTopic, StudentAffiliation, Affiliation, Cohort, Visit,
     EligibilityType, StudentEligibility, SpecialProgram)
+from compass.models.rad_data import RADDataPoint
 from compass.serializers import (
     ContactReadSerializer, ContactWriteSerializer, StudentWriteSerializer,
     StudentAffiliationReadSerializer, VisitReadSerializer,
@@ -469,4 +470,12 @@ class StudentRADDataView(BaseAPIView):
 
         if not valid_uwnetid(uwnetid):
             return self.response_badrequest('Invalid uwnetid')
-        #TODO: Implement term based lookup of rad data for a student
+
+        # TODO: Figure out if we need to return all terms or pass in quarter
+        year = 2024
+        quarter = 'summer'
+        rad_data = RADDataPoint.get_data_by_year_quarter_netid(year,
+                                                               quarter,
+                                                               uwnetid)
+        response_json = [rad.json_data() for rad in rad_data]
+        return self.response_ok(response_json)

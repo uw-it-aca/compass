@@ -80,6 +80,60 @@ class RADDataPoint(models.Model):
     prediction_score = models.FloatField()
     signin_score = models.FloatField()
 
+    def json_data(self):
+        return {'course_id': self.course,
+                'activity_score': self.activity_score,
+                'assignment_score': self.assignment_score,
+                'grade_score': self.grade_score,
+                'prediction_score': self.prediction_score,
+                'signin_score': self.signin_score}
+
+    @classmethod
+    def get_data_by_year_quarter_netid(cls, year, quarter, netid):
+        """
+        Get all data points for a given year, quarter, and netid
+        """
+        try:
+            weeks = RADWeek.objects.filter(year=year, quarter=quarter)
+            return cls.objects.filter(week__in=weeks, uwnetid=netid)
+        except RADWeek.DoesNotExist:
+            return []
+
+    @classmethod
+    def get_signins_by_netid(cls, netid):
+        """
+        Return the last 3 quarters worth of sign in data for a student
+        """
+
+        # TODO limit this to one point per week
+        try:
+            current_week = RADWeek.get_most_recent_week()
+            prev_term = RADWeek.get_previous_term(
+                {"year": current_week.year,
+                 "quarter": current_week.quarter})
+            prev_prev_term = RADWeek.get_previous_term(prev_term)
+
+            terms = [
+                (current_week.year, current_week.quarter),
+                (prev_term['year'], prev_term['quarter']),
+                (prev_prev_term['year'], prev_prev_term['year'])
+            ]
+
+            signins_by_term = []
+            for term in terms:
+                term_data = cls.get_data_by_year_quarter_netid(
+                    term[0], term[1], netid)
+                if term_data:
+                    signins_by_term.append({'year': term[0],
+                                            'quarter': term[1],
+                                            'data': [
+                                                {week.week.week:
+                                                 week.signin_score}
+                                                for week in term_data]})
+            return signins_by_term
+        except RADWeek.DoesNotExist:
+            return []
+
 
 class RADWeek(models.Model):
     AUT = 'AUT'
@@ -121,3 +175,15 @@ class RADWeek(models.Model):
     def get_next_quarter(self):
         qtrs = ['winter', 'spring', 'summer', 'autumn']
         return qtrs[(qtrs.index(self.quarter) + 1) % len(qtrs)]
+
+    @staticmethod
+    def get_most_recent_week():
+        return RADWeek.objects.order_by('-key').first()
+
+    @staticmethod
+    def get_previous_term(term):
+        quarters = ['winter', 'spring', 'summer', 'autumn']
+        index = quarters.index(term['quarter'])
+        return {'year': term['year'] - 1, 'quarter': 'autumn'} if (
+            term['quarter'] == 'winter') \
+            else {'year': term['year'], 'quarter': quarters[index - 1]}
