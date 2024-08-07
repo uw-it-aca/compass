@@ -89,13 +89,14 @@ class RADDataPoint(models.Model):
                 'signin_score': self.signin_score}
 
     @classmethod
-    def get_data_by_year_quarter_netid(cls, year, quarter, netid):
+    def get_rad_data_for_course(cls, year, quarter, netid, course_id):
         """
-        Get all data points for a given year, quarter, and netid
+        Get course data points for a given year, quarter, course, and netid
         """
         try:
             weeks = RADWeek.objects.filter(year=year, quarter=quarter)
-            return cls.objects.filter(week__in=weeks, uwnetid=netid)
+            return cls.objects.filter(week__in=weeks, uwnetid=netid,
+                                      course=course_id)
         except RADWeek.DoesNotExist:
             return []
 
@@ -121,7 +122,7 @@ class RADDataPoint(models.Model):
 
             signins_by_term = []
             for term in terms:
-                term_data = cls.get_data_by_year_quarter_netid(
+                term_data = cls.get_rad_data_for_course(
                     term[0], term[1], netid)
                 if term_data:
                     signins_by_term.append({'year': term[0],

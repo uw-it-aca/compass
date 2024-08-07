@@ -456,13 +456,14 @@ class StudentEligibilityView(BaseAPIView):
             return self.response_unauthorized(err)
 
 
-class StudentRADDataView(BaseAPIView):
+class StudentCourseAnalyticsView(BaseAPIView):
     '''
-    API endpoint returning a list of RAD data for a student
+    API endpoint returning a list of RAD analytics data for a specific
+    stuent-course-term combination
 
-    /api/internal/student/[uwnetid]/rad_data/
+    /api/internal/student/[uwnetid]/[year]/[quarter]/[course_id]
     '''
-    def get(self, request, uwnetid):
+    def get(self, request, uwnetid, year, quarter, course_id):
         try:
             access_group = self.get_access_group(request)
         except AccessGroup.DoesNotExist:
@@ -471,11 +472,10 @@ class StudentRADDataView(BaseAPIView):
         if not valid_uwnetid(uwnetid):
             return self.response_badrequest('Invalid uwnetid')
 
-        # TODO: Figure out if we need to return all terms or pass in quarter
-        year = 2024
-        quarter = 'summer'
-        rad_data = RADDataPoint.get_data_by_year_quarter_netid(year,
-                                                               quarter,
-                                                               uwnetid)
+
+        rad_data = RADDataPoint.get_rad_data_for_course(year,
+                                                        quarter,
+                                                        uwnetid,
+                                                        course_id)
         response_json = [rad.json_data() for rad in rad_data]
         return self.response_ok(response_json)
