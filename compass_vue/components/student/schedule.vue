@@ -66,13 +66,25 @@
                           isQuizSection(section.credits) ? 'border-white' : '',
                         ]"
                       >
-                        <td class="ps-3">
-                          {{ section.curriculum_abbr }}
-                          {{ section.course_number }}
-                          {{ section.section_id }}
-                          <div class="fs-8 text-secondary">
-                            {{ section.course_title }}
+                        <td class="d-flex ps-3">
+                          <!-- Expend and collapse RAD data.
+                         Auto expand all classes with a warning icon -->
+                          <i class="bi bi-chevron-up me-3 pt-2 h5"></i>
+                          <i class="bi bi-chevron-down me-3 pt-2 h5"></i>
+
+                          <div>
+                            {{ section.curriculum_abbr }}
+                            {{ section.course_number }}
+                            {{ section.section_id }}
+                            <div class="fs-8 text-secondary">
+                              {{ section.course_title }}
+                            </div>
                           </div>
+                          <!-- If student is predicted to fail the course. -->
+                          <i
+                            class="bi bi-exclamation-triangle-fill ms-5"
+                            style="color: #c12c2c"
+                          ></i>
                         </td>
                         <td>{{ section.sln }}</td>
                         <td>
