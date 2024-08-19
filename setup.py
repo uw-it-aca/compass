@@ -30,6 +30,7 @@ setup(
         'Django-UserService~=3.2',
         'Django-SupportTools~=3.6',
         'Django-Persistent-Message~=1.3',
+        'django-storages[google]>=1.10',
         'UW-RestClients-Django-Utils~=2.3',
         'djangorestframework~=3.12',
         'UW-RestClients-SWS~=2.4',
