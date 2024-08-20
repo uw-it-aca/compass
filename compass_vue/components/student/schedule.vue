@@ -58,7 +58,7 @@
                   </thead>
                   <tbody class="mb-3" v-if="schedule.sections.length > 0">
                     <template
-                      v-for="(section, index) in schedule.sections"
+                      v-for="(section, sectionIndex) in schedule.sections"
                       :key="index"
                     >
                       <tr
@@ -67,11 +67,20 @@
                         ]"
                       >
                         <td class="d-flex ps-3">
-                          <!-- Expend and collapse RAD data.
-                         Auto expand all classes with a warning icon -->
-                          <i class="bi bi-chevron-up me-3 pt-2 h5"></i>
-                          <i class="bi bi-chevron-down me-3 pt-2 h5"></i>
-
+                          <!-- MARK: only show course analytics for top-level (i.e. NOT quiz sections) v-show="isQuizSection(section.credits)"-->
+                          <!-- Expend and collapse RAD data. Auto expand all classes with a warning icon -->
+                          <div v-show="isQuizSection(section.credits)">
+                            <i
+                              v-if="courseAnalyticsVisiblity(scheduleIndex, sectionIndex)"
+                              class="bi bi-chevron-up me-3 pt-2 h5"
+                              @click="hideCourseAnalytics($event, scheduleIndex, sectionIndex)"
+                            ></i>
+                            <i
+                              v-else
+                              class="bi bi-chevron-down me-3 pt-2 h5"
+                              @click="showCourseAnalytics($event, scheduleIndex, sectionIndex)"
+                            ></i>
+                          </div>
                           <div>
                             {{ section.curriculum_abbr }}
                             {{ section.course_number }}
@@ -119,8 +128,7 @@
                         </td>
                         <td>{{ section.credits }}</td>
                       </tr>
-                      <!-- MARK: only show course analytics for top-level (i.e. NOT quiz sections)-->
-                      <tr v-show="isQuizSection(section.credits)">
+                      <tr v-if="courseAnalyticsVisiblity(scheduleIndex, sectionIndex)">
                         <td colspan="5" class="p-3 pt-0">
                           <CourseAnalytics></CourseAnalytics>
                         </td>
@@ -171,12 +179,25 @@ export default {
   data() {
     return {
       schedules: {},
+      analyticsDisplay: {}
     };
   },
   created() {
     this.loadStudentSchedules();
   },
   methods: {
+    courseAnalyticsVisiblity: function (scheduleIndex, sectionIndex) {
+      return this.analyticsDisplay[scheduleIndex] && this.analyticsDisplay[scheduleIndex][sectionIndex];
+    },
+    showCourseAnalytics: function (target, scheduleIndex, sectionIndex) {
+      if (!this.analyticsDisplay[scheduleIndex]) {
+        this.analyticsDisplay[scheduleIndex] = {};
+      }
+      this.analyticsDisplay[scheduleIndex][sectionIndex] = true;
+    },
+    hideCourseAnalytics: function (target, scheduleIndex, sectionIndex) {
+      this.analyticsDisplay[scheduleIndex][sectionIndex] = false;
+    },
     loadStudentSchedules: function () {
       this.getStudentSchedules(this.person.uwregid).then((response) => {
         if (response.data) {
