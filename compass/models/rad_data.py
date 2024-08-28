@@ -53,17 +53,14 @@ class RADImport(models.Model):
         return next_year, next_quarter, next_week
 
     @staticmethod
-    def create_job(year, quarter, week, reload=False):
-        rad_week = RADWeek.get_or_create_week(year=year,
-                                              quarter=quarter,
-                                              week=week)
-
-        rad_import, created = (RADImport.objects.
-                               get_or_create(week=rad_week,
-                                             import_status=RADImport.STARTED))
+    def create_job(rad_week, reload=False):
+        rad_import, created = (RADImport.objects.get_or_create(week=rad_week))
         if not created and not reload:
             raise ValueError(f"RAD data already imported for"
-                             f" {year}-{quarter}-{week}")
+                             f" {rad_week}")
+        else:
+            rad_import.import_status = RADImport.STARTED
+            rad_import.save()
         return rad_import
 
 
