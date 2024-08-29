@@ -472,10 +472,11 @@ class StudentCourseAnalyticsView(BaseAPIView):
         if not valid_uwnetid(uwnetid):
             return self.response_badrequest('Invalid uwnetid')
 
-
         rad_data = RADDataPoint.get_rad_data_for_course(year,
                                                         quarter,
                                                         uwnetid,
                                                         course_id)
         response_json = [rad.json_data() for rad in rad_data]
+        if len(response_json) == 0:
+            return self.response_notfound()
         return self.response_ok(response_json)

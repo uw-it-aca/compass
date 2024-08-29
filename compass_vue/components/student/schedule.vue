@@ -130,7 +130,12 @@
                       </tr>
                       <tr v-if="courseAnalyticsVisiblity(scheduleIndex, sectionIndex)">
                         <td colspan="5" class="p-3 pt-0">
-                          <CourseAnalytics></CourseAnalytics>
+                          <CourseAnalytics
+                            :uwnetid="person.uwnetid"
+                            :year="schedule.year"
+                            :quarter="schedule.quarter"
+                            :course_id="`${section.curriculum_abbr} ${section.course_number} ${section.section_id}`"
+                          ></CourseAnalytics>
                         </td>
                       </tr>
                     </template>

@@ -112,10 +112,10 @@ urlpatterns += [
         name="special_program_view"
     ),
     re_path(
-        r"^api/internal/student/(?P<uwnetid>\w+)/rad_data/"
-        r"(?P<year>\w+)/(?P<quarter>\w+)/(?P<course_id>\w+)/$",
+        r"^api/internal/student/(?P<uwnetid>\w+)/course_analytics/"
+        r"(?P<year>\w+)/(?P<quarter>\w+)/(?P<course_id>[\w\s]+)/$",
         StudentCourseAnalyticsView.as_view(),
-        name="rad_course_view"
+        name="student_course_analytics_view"
     ),
     re_path(
         r"^api/internal/eligibility/",

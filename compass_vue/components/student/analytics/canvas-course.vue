@@ -16,6 +16,8 @@
       </a>
     </div>
     <div class="d-flex pt-3" style="height: 225px">
+      <div v-if="analyticsNotFound"><p>Analytics data not found</p></div>
+      <template v-else>
       <div class="d-flex w-25">
         <div class="pt-2 w-100">
           <ul
@@ -71,7 +73,7 @@
         <div class="vr mx-3"></div>
       </div>
       <div class="flex-fill">
-        <Line :data="chartData" :options="chartOptions" />
+        <Line v-if="dataReady" :data="chartData" :options="chartOptions" />
       </div>
       <div>
         <ul class="p-0 fs-8 text-secondary" style="list-style-type: none">
@@ -87,6 +89,7 @@
           </li>
         </ul>
       </div>
+      </template>
     </div>
   </div>
 </template>
@@ -105,6 +108,7 @@ import {
   Legend,
   scales,
 } from "chart.js";
+import { useAnalyticsStore} from "@/stores/analytics.js";
 
 ChartJS.register(
   CategoryScale,
@@ -118,9 +122,31 @@ ChartJS.register(
 );
 
 export default {
-  name: "App",
+  name: "CanvasAnalyticsChart",
   components: {
     Line,
+  },
+  setup() {
+    const storeAnalytics = useAnalyticsStore();
+    return { storeAnalytics };
+  },
+  props: {
+    uwnetid: {
+      type: String,
+      required: true,
+    },
+    year: {
+      type: Number,
+      required: true,
+    },
+    quarter: {
+      type: String,
+      required: true,
+    },
+    course_id: {
+      type: String,
+      required: true,
+    }
   },
   data() {
     return {
@@ -131,19 +157,19 @@ export default {
             label: "Grade",
             backgroundColor: "#4B2E83",
             borderColor: "#4B2E83",
-            data: [40, 39, 10, 40, 39, 80, 40],
+            data: [],
           },
           {
             label: "Assignment",
             backgroundColor: "#4C7286",
             borderColor: "#4C7286",
-            data: [30, 29, 6, 30, 49, 60, 30],
+            data: [],
           },
           {
             label: "Activity",
             backgroundColor: "#AB9765",
             borderColor: "#AB9765",
-            data: [22, 19, 63, 27, 19, 30, 20],
+            data: [],
           },
         ],
       },
@@ -166,7 +192,48 @@ export default {
           },
         },
       },
+      rawCourseAnalytics: undefined,
+      analyticsNotFound: false,
+      dataReady: false,
     };
   },
+  mounted() {
+    this.loadStudentCourseAnalytics();
+  },
+  watch: {
+    rawCourseAnalytics: function () {
+      this.setDataForLabel("Grade", this.getDataArrayForKey("grade_score"));
+      this.setDataForLabel("Assignment", this.getDataArrayForKey("assignment_score"));
+      this.setDataForLabel("Activity", this.getDataArrayForKey("activity_score"));
+      this.dataReady = true;
+    }
+  },
+  methods: {
+    setDataForLabel: function(label, data_array){
+      for (let dataset of this.chartData.datasets) {
+        if (dataset.label == label) {
+          dataset.data = data_array;
+        }
+      }
+    },
+    getDataArrayForKey(key){
+      let data_array = Array(10).fill(null);
+      for (let data of this.rawCourseAnalytics) {
+        // TODO: Alter multiplier if we change scaling at data generation
+        data_array[data.week_id - 1] = data[key] * 20;
+      }
+      return data_array;
+    },
+    loadStudentCourseAnalytics: function () {
+      this.storeAnalytics
+        .fetchStudentCourseAnalytics(this.uwnetid, this.year, this.quarter, this.course_id)
+        .then(() => {
+          this.rawCourseAnalytics =
+            this.storeAnalytics.courseAnalyticsData[this.uwnetid][this.year][this.quarter][this.course_id].data;
+        }).catch((e) => {
+          this.analyticsNotFound = true;
+        });
+    },
+  }
 };
 </script>

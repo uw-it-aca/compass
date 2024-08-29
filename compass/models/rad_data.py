@@ -83,7 +83,8 @@ class RADDataPoint(models.Model):
                 'assignment_score': self.assignment_score,
                 'grade_score': self.grade_score,
                 'prediction_score': self.prediction_score,
-                'signin_score': self.signin_score}
+                'signin_score': self.signin_score,
+                'week_id': self.week.week,}
 
     @classmethod
     def get_rad_data_for_course(cls, year, quarter, netid, course_id):
