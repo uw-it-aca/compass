@@ -28,12 +28,14 @@
             <li class="d-flex justify-content-between">
               Grade
               <div>
-                40%
+                {{currentGradeScore}}%
                 <i
+                  v-if="gradeScoreDecreased"
                   style="color: #c12c2c"
                   class="bi bi-arrow-down-circle-fill ms-2 me-1"
                 ></i>
                 <i
+                  v-else-if="gradeScoreIncreased"
                   style="color: #289026"
                   class="bi bi-arrow-up-circle-fill ms-2 me-1"
                 ></i>
@@ -43,12 +45,14 @@
             <li class="d-flex justify-content-between">
               Assignment
               <div>
-                30%
+                {{currentAssignmentScore}}%
                 <i
+                  v-if="assignmentScoreDecreased"
                   style="color: #c12c2c"
                   class="bi bi-arrow-down-circle-fill ms-2 me-1"
                 ></i>
                 <i
+                  v-else-if="assignmentScoreIncreased"
                   style="color: #289026"
                   class="bi bi-arrow-up-circle-fill ms-2 me-1"
                 ></i>
@@ -57,12 +61,14 @@
             <li class="d-flex justify-content-between">
               Activity
               <div>
-                20%
+                {{currentActivityScore}}%
                 <i
+                  v-if="activityScoreDecreased"
                   style="color: #c12c2c"
                   class="bi bi-arrow-down-circle-fill ms-2 me-1"
                 ></i>
                 <i
+                  v-else-if="gradeScoreIncreased"
                   style="color: #289026"
                   class="bi bi-arrow-up-circle-fill ms-2 me-1"
                 ></i>
@@ -208,7 +214,66 @@ export default {
       this.dataReady = true;
     }
   },
+  computed: {
+    currentGradeScore() {
+      return this.getLatestScore("grade_score");
+    },
+    currentAssignmentScore() {
+      return this.getLatestScore("assignment_score");
+    },
+    currentActivityScore() {
+      return this.getLatestScore("activity_score");
+    },
+    gradeScoreIncreased() {
+      return this.scoreIncreased("grade_score");
+    },
+    gradeScoreDecreased() {
+      return this.scoreDecreased("grade_score");
+    },
+    assignmentScoreIncreased() {
+      return this.scoreIncreased("assignment_score");
+    },
+    assignmentScoreDecreased() {
+      return this.scoreDecreased("assignment_score");
+    },
+    activityScoreIncreased() {
+      return this.scoreIncreased("activity_score");
+    },
+    activityScoreDecreased() {
+      return this.scoreDecreased("activity_score");
+    },
+
+  },
   methods: {
+    getLatestScore(key) {
+      try {
+        return this.rawCourseAnalytics[this.rawCourseAnalytics.length - 1][key] * 20;
+      } catch (e) {
+        return 0;
+      }
+    },
+    scoreIncreased(key) {
+      try{
+        if (this.rawCourseAnalytics.length < 2) {
+          return false;
+        }
+        return this.rawCourseAnalytics[this.rawCourseAnalytics.length - 1][key] >
+          this.rawCourseAnalytics[this.rawCourseAnalytics.length - 2][key];
+      } catch (e) {
+        return false;
+      }
+    },
+    scoreDecreased(key) {
+      try{
+        if (this.rawCourseAnalytics.length < 2) {
+          return false;
+        }
+        return this.rawCourseAnalytics[this.rawCourseAnalytics.length - 1][key] <
+          this.rawCourseAnalytics[this.rawCourseAnalytics.length - 2][key];
+      } catch (e) {
+        return false;
+      }
+    },
     setDataForLabel: function(label, data_array){
       for (let dataset of this.chartData.datasets) {
         if (dataset.label == label) {

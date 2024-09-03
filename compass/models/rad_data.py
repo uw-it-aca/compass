@@ -94,7 +94,7 @@ class RADDataPoint(models.Model):
         try:
             weeks = RADWeek.objects.filter(year=year, quarter=quarter)
             return cls.objects.filter(week__in=weeks, uwnetid=netid,
-                                      course=course_id)
+                                      course=course_id).order_by('week__week')
         except RADWeek.DoesNotExist:
             return []
 
