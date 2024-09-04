@@ -2,7 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 import csv
 from io import StringIO
-from compass.models.rad_data import RADDataPoint
+from compass.models.rad_data import (CourseAnalyticsScores,
+                                     StudentSigninAnalytics)
 
 
 def read_csv(csv_string):
@@ -18,12 +19,17 @@ def import_data_from_csv(week, csv_string):
     Import data from CSV string into RADImport model.
     """
     data = read_csv(csv_string)
+    processed_netids = []
     for row in data:
-        RADDataPoint.objects.create(uwnetid=row['uw_netid'],
+        if row['uw_netid'] not in processed_netids:
+            StudentSigninAnalytics.objects.create(uwnetid=row['uw_netid'],
+                                                  week=week,
+                                                  signin_score=row['sign_in'])
+            processed_netids.append(row['uw_netid'])
+        CourseAnalyticsScores.objects.create(uwnetid=row['uw_netid'],
                                     week=week,
                                     course=row['course_code'],
                                     activity_score=row['activity'],
                                     assignment_score=row['assignments'],
                                     grade_score=row['grades'],
-                                    prediction_score=row['pred'],
-                                    signin_score=row['sign_in'])
+                                    prediction_score=row['pred'])

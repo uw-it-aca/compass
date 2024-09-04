@@ -64,7 +64,7 @@ class RADImport(models.Model):
         return rad_import
 
 
-class RADDataPoint(models.Model):
+class CourseAnalyticsScores(models.Model):
     """
     Model to store RAD scores per student, week, course
     """
@@ -75,15 +75,15 @@ class RADDataPoint(models.Model):
     assignment_score = models.FloatField()
     grade_score = models.FloatField()
     prediction_score = models.FloatField()
-    signin_score = models.FloatField()
+
+    class Meta:
+        unique_together = ('uwnetid', 'week', 'course')
 
     def json_data(self):
-        return {'course_id': self.course,
-                'activity_score': self.activity_score,
+        return {'activity_score': self.activity_score,
                 'assignment_score': self.assignment_score,
                 'grade_score': self.grade_score,
                 'prediction_score': self.prediction_score,
-                'signin_score': self.signin_score,
                 'week_id': self.week.week,}
 
     @classmethod
@@ -94,7 +94,7 @@ class RADDataPoint(models.Model):
         try:
             weeks = RADWeek.objects.filter(year=year, quarter=quarter)
             return cls.objects.filter(week__in=weeks, uwnetid=netid,
-                                      course=course_id).order_by('week__week')
+                                      course=course_id).order_by("week__week")
         except RADWeek.DoesNotExist:
             return []
 
@@ -132,6 +132,31 @@ class RADDataPoint(models.Model):
             return signins_by_term
         except RADWeek.DoesNotExist:
             return []
+
+class StudentSigninAnalytics(models.Model):
+    """
+    Model to store weekly IdP signin data per student
+    """
+    uwnetid = models.CharField(max_length=50)
+    week = models.ForeignKey('RADWeek', on_delete=models.CASCADE)
+    signin_score = models.FloatField()
+
+    class Meta:
+        unique_together = ('uwnetid', 'week')
+
+    @classmethod
+    def get_signin_data_for_student(cls, uwnetid):
+        """
+        Get signin data for a given student
+        """
+        signins =  cls.objects.filter(uwnetid=uwnetid)
+        json_data = {}
+        for signin in signins:
+            year_data = json_data.setdefault(signin.week.year, {})
+            quarter_data = year_data.setdefault(signin.week.quarter, {})
+            quarter_data[signin.week.week] = signin.signin_score
+
+        return json_data
 
 
 class RADWeek(models.Model):

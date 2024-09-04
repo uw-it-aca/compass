@@ -4,7 +4,7 @@
 
 from django.core.management.base import BaseCommand
 from compass.dao.storage import RADStorageDao
-from compass.models.rad_data import RADWeek, RADImport, RADDataPoint
+from compass.models.rad_data import RADWeek, RADImport, CourseAnalyticsScores
 from django.core.exceptions import ObjectDoesNotExist
 from compass.dao.rad_csv import import_data_from_csv
 from compass.dao.person import get_person_by_uwnetid
@@ -56,6 +56,7 @@ class Command(BaseCommand):
             try:
                 rad_file = RADStorageDao().download_from_bucket(
                     rad_import.get_filename())
+                # TODO Fix this, needs week object not file
                 import_data_from_csv(rad_file, rad_import)
             except Exception as ex:
                 logger.exception(ex)
@@ -69,18 +70,23 @@ class Command(BaseCommand):
 
     def _load_all_data(self, reload):
         files = RADStorageDao().get_files_list()
+        print('GOT FILES')
         for file in files:
+            print(1)
             year, quarter, week_id = RADStorageDao().get_year_quarter_week_from_filename(
                 file)
             rad_week = RADWeek.get_or_create_week(year=year,
                                                   quarter=quarter,
                                                   week=week_id)
+            print(2)
             try:
                 rad_import = RADImport.create_job(rad_week,
                                                   reload=reload)
-            except ValueError:
+            except ValueError as ex:
+                logger.exception(ex)
                 continue
             try:
+                print('TRY')
                 rad_file = RADStorageDao().download_from_bucket(file)
                 import_data_from_csv(rad_week, rad_file)
             except Exception as ex:

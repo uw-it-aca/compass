@@ -4,7 +4,7 @@
 
 from django.test import TestCase
 from compass.dao.rad_csv import read_csv, import_data_from_csv
-from compass.models.rad_data import RADDataPoint, RADWeek
+from compass.models.rad_data import CourseAnalyticsScores, RADWeek
 
 
 class TestRadCsv(TestCase):
@@ -25,7 +25,7 @@ class TestRadCsv(TestCase):
                                               quarter='spring',
                                               week=6)
             import_data_from_csv(week, csv_string)
-            self.assertEqual(RADDataPoint.objects.count(), 2)
-            self.assertEqual(RADDataPoint.objects.first().week, week)
-            self.assertEqual(RADDataPoint.objects.first().assignment_score,
+            self.assertEqual(CourseAnalyticsScores.objects.count(), 2)
+            self.assertEqual(CourseAnalyticsScores.objects.first().week, week)
+            self.assertEqual(CourseAnalyticsScores.objects.first().assignment_score,
                              3.0)

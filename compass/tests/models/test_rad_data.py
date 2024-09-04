@@ -3,7 +3,7 @@
 
 import random
 from compass.tests import CompassTestCase
-from compass.models.rad_data import RADWeek, RADImport, RADDataPoint
+from compass.models.rad_data import RADWeek, RADImport, CourseAnalyticsScores
 
 
 class RADDataWeekTest(CompassTestCase):
@@ -79,7 +79,7 @@ class RADDataWeekTest(CompassTestCase):
                              reload=True)
 
 
-class RADDataPointTest(CompassTestCase):
+class CourseAnalyticsScoresTest(CompassTestCase):
 
     def setUp(self):
         data_points = []
@@ -90,7 +90,7 @@ class RADDataPointTest(CompassTestCase):
                                                   quarter=term,
                                                   week=week_id)
                 data_points.append(
-                    RADDataPoint(
+                    CourseAnalyticsScores(
                         uwnetid="javerage",
                         course="CSE 142 A",
                         week=week,
@@ -102,7 +102,7 @@ class RADDataPointTest(CompassTestCase):
                     )
                 )
                 data_points.append(
-                    RADDataPoint(
+                    CourseAnalyticsScores(
                         uwnetid="javerage",
                         course="BIO 120 C",
                         week=week,
@@ -113,7 +113,7 @@ class RADDataPointTest(CompassTestCase):
                         signin_score=random.uniform(0, 5)
                     )
                 )
-        RADDataPoint.objects.bulk_create(data_points)
+        CourseAnalyticsScores.objects.bulk_create(data_points)
 
     def test_get_recent_week(self):
         recent_week = RADWeek.get_most_recent_week()
@@ -130,6 +130,6 @@ class RADDataPointTest(CompassTestCase):
                          {'year': 2020, 'quarter': 'autumn'})
 
     def test_signins(self):
-        signins = RADDataPoint.get_signins_by_netid('javerage')
+        signins = CourseAnalyticsScores.get_signins_by_netid('javerage')
         print(signins)
         self.assertEqual(len(signins), 3)
