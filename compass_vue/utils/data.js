@@ -236,6 +236,11 @@ async function getStudentCourseAnalytics(uwnetid, year, quarter, course_id){
     "/course_analytics/" + year + "/" + quarter + "/" + course_id + "/");
 }
 
+async function getStudentSigninAnalytics(uwnetid){
+  return axios.get("/api/internal/student/" + uwnetid +
+    "/signin_analytics/");
+}
+
 export {
   getStudentDetail,
   saveStudent,
@@ -269,5 +274,6 @@ export {
   getAccessGroups,
   clearOverride,
   savePreferences,
-  getStudentCourseAnalytics
+  getStudentCourseAnalytics,
+  getStudentSigninAnalytics
 };

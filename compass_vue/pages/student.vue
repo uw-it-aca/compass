@@ -118,6 +118,7 @@
                     </div>
                     <div class="col-xl-9">
                       <StudentSchedule :person="person"></StudentSchedule>
+                      <SignInChart :uwnetid="person.uwnetid"></SignInChart>
                     </div>
                     <div class="col-xl-3">
                       <StudentHolds :person="person"></StudentHolds>
@@ -192,6 +193,7 @@ import StudentVisits from "@/components/student/visits.vue";
 import SearchStudent from "@/components/search-student.vue";
 import AffiliationAddEdit from "@/components/student/administrative/affiliation.vue";
 import SpecialPrograms from "@/components/student/administrative/special-programs.vue";
+import SignInChart from "@/components/student/analytics/signins.vue";
 
 import { Role } from "@/utils/roles";
 import { getStudentDetail, getAccessGroups } from "@/utils/data";
@@ -213,6 +215,7 @@ export default {
     SearchStudent,
     AffiliationAddEdit,
     SpecialPrograms,
+    SignInChart
   },
   created: function () {
     this.loadAccessGroups();

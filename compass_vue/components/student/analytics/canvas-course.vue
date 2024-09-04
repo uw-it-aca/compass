@@ -24,7 +24,6 @@
             class="p-0 fs-7 text-secondary"
             style="list-style-type: none; line-height: 40px"
           >
-            <!-- if score increased compared to last week, arrow up. if score decreased, arrow down. If score did not change, no icons. -->
             <li class="d-flex justify-content-between">
               Grade
               <div>
@@ -68,7 +67,7 @@
                   class="bi bi-arrow-down-circle-fill ms-2 me-1"
                 ></i>
                 <i
-                  v-else-if="gradeScoreIncreased"
+                  v-else-if="activityScoreIncreased"
                   style="color: #289026"
                   class="bi bi-arrow-up-circle-fill ms-2 me-1"
                 ></i>

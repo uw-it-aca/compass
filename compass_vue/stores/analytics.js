@@ -1,23 +1,31 @@
-
-
-
-
-
-
-
 import { defineStore } from "pinia";
-import { getStudentCourseAnalytics } from "@/utils/data";
+import {
+  getStudentCourseAnalytics,
+  getStudentSigninAnalytics
+} from "@/utils/data";
 
 export const useAnalyticsStore = defineStore({
   id: "analytics",
   state: () => {
     return {
       getStudentCourseAnalytics,
+      getStudentSigninAnalytics,
       courseAnalyticsData: {},
+      signinAnalyticsData: {},
     };
   },
   getters: {},
   actions: {
+    fetchStudentSigninAnalytics(uwnetid) {
+      if (!this.signinAnalyticsData[uwnetid]) {
+        this.signinAnalyticsData[uwnetid] = {
+          request: this.getStudentSigninAnalytics(uwnetid).then((response) => {
+            this.signinAnalyticsData[uwnetid].data = response.data;
+          }),
+        };
+      }
+      return this.signinAnalyticsData[uwnetid].request;
+    },
     fetchStudentCourseAnalytics(uwnetid, year, quarter, course_id) {
       const dataPath = this.courseAnalyticsData[uwnetid] = this.courseAnalyticsData[uwnetid] || {};
       const yearPath = dataPath[year] = dataPath[year] || {};

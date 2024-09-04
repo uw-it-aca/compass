@@ -1,7 +1,7 @@
 <template>
   <div class="p-4" style="background-color: #fafafa; border-radius: 10px">
     <div class="d-flex">
-      <h5>Canvas Analytics</h5>
+      <h5>Sign-In Data</h5>
       <a
         tabindex="0"
         role="button"
@@ -9,8 +9,8 @@
         data-bs-toggle="popover"
         data-bs-trigger="focus"
         data-bs-placement="top"
-        title="Canvas Analytics"
-        data-bs-content="Grade represents the student’s grade in Canvas relative to her classmates up to this point in the quarter. Assignment is indicative of how the student is doing relative to her classmates with regards to the status of assignments. "
+        title="Sign-In Data"
+        data-bs-content="Sign in data from UW IdP"
       >
         <i class="bi bi-info-circle-fill ms-2"></i>
       </a>
@@ -24,51 +24,16 @@
             class="p-0 fs-7 text-secondary"
             style="list-style-type: none; line-height: 40px"
           >
-            <!-- if score increased compared to last week, arrow up. if score decreased, arrow down. If score did not change, no icons. -->
+<!--            Loop over years of signin data we have-->
             <li class="d-flex justify-content-between">
-              Grade
+              Winter 2024
               <div>
-                {{currentGradeScore}}%
+                 64%
                 <i
-                  v-if="gradeScoreDecreased"
                   style="color: #c12c2c"
                   class="bi bi-arrow-down-circle-fill ms-2 me-1"
                 ></i>
                 <i
-                  v-else-if="gradeScoreIncreased"
-                  style="color: #289026"
-                  class="bi bi-arrow-up-circle-fill ms-2 me-1"
-                ></i>
-              </div>
-            </li>
-
-            <li class="d-flex justify-content-between">
-              Assignment
-              <div>
-                {{currentAssignmentScore}}%
-                <i
-                  v-if="assignmentScoreDecreased"
-                  style="color: #c12c2c"
-                  class="bi bi-arrow-down-circle-fill ms-2 me-1"
-                ></i>
-                <i
-                  v-else-if="assignmentScoreIncreased"
-                  style="color: #289026"
-                  class="bi bi-arrow-up-circle-fill ms-2 me-1"
-                ></i>
-              </div>
-            </li>
-            <li class="d-flex justify-content-between">
-              Activity
-              <div>
-                {{currentActivityScore}}%
-                <i
-                  v-if="activityScoreDecreased"
-                  style="color: #c12c2c"
-                  class="bi bi-arrow-down-circle-fill ms-2 me-1"
-                ></i>
-                <i
-                  v-else-if="activityScoreIncreased"
                   style="color: #289026"
                   class="bi bi-arrow-up-circle-fill ms-2 me-1"
                 ></i>
@@ -83,15 +48,9 @@
       </div>
       <div>
         <ul class="p-0 fs-8 text-secondary" style="list-style-type: none">
+<!--          Loop over quarters of data-->
           <li>
-            <i style="color: #4b2e83" class="bi bi-circle-fill me-2"></i>Grade
-          </li>
-          <li>
-            <i style="color: #4c7286" class="bi bi-circle-fill me-2"></i
-            >Assignment
-          </li>
-          <li>
-            <i style="color: #ab9765" class="bi bi-circle-fill me-2"></i>Activty
+            <i style="color: #4b2e83" class="bi bi-circle-fill me-2"></i>Winter 2024
           </li>
         </ul>
       </div>
@@ -128,7 +87,7 @@ ChartJS.register(
 );
 
 export default {
-  name: "CanvasAnalyticsChart",
+  name: "SignInChart",
   components: {
     Line,
   },
@@ -141,18 +100,6 @@ export default {
       type: String,
       required: true,
     },
-    year: {
-      type: Number,
-      required: true,
-    },
-    quarter: {
-      type: String,
-      required: true,
-    },
-    course_id: {
-      type: String,
-      required: true,
-    }
   },
   data() {
     return {
@@ -198,7 +145,7 @@ export default {
           },
         },
       },
-      rawCourseAnalytics: undefined,
+      rawSigninAnalytics: undefined,
       analyticsNotFound: false,
       dataReady: false,
     };
@@ -295,10 +242,10 @@ export default {
     },
     loadStudentCourseAnalytics: function () {
       this.storeAnalytics
-        .fetchStudentCourseAnalytics(this.uwnetid, this.year, this.quarter, this.course_id)
+        .fetchStudentSigninAnalytics(this.uwnetid)
         .then(() => {
-          this.rawCourseAnalytics =
-            this.storeAnalytics.courseAnalyticsData[this.uwnetid][this.year][this.quarter][this.course_id].data;
+          this.rawSigninAnalytics =
+            this.storeAnalytics.signinAnalyticsData[this.uwnetid].data;
         }).catch((e) => {
           this.analyticsNotFound = true;
         });
