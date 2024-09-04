@@ -80,10 +80,10 @@ class CourseAnalyticsScores(models.Model):
         unique_together = ('uwnetid', 'week', 'course')
 
     def json_data(self):
-        return {'activity_score': self.activity_score,
-                'assignment_score': self.assignment_score,
-                'grade_score': self.grade_score,
-                'prediction_score': self.prediction_score,
+        return {'activity_score': self.activity_score * 20,
+                'assignment_score': self.assignment_score * 20,
+                'grade_score': self.grade_score * 20,
+                'prediction_score': self.prediction_score * 20,
                 'week_id': self.week.week,}
 
     @classmethod
@@ -154,7 +154,7 @@ class StudentSigninAnalytics(models.Model):
         for signin in signins:
             year_data = json_data.setdefault(signin.week.year, {})
             quarter_data = year_data.setdefault(signin.week.quarter, {})
-            quarter_data[signin.week.week] = signin.signin_score
+            quarter_data[signin.week.week] = signin.signin_score * 20
 
         return json_data
 

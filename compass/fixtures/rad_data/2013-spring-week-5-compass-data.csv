@@ -1,4 +1,4 @@
 uw_netid,student_no,student_name_lowc,course_code,activity,assignments,grades,pred,sign_in,stem,incoming_freshman,premajor,eop,international,isso,engineering,informatics,campus_code,summer,class_code,sport_code
-javerage,1033334,James Average,TRAIN 100 A,.5,2.9,1.3,2.905289787567317,1,0,0,0,0,0,0,0,0,2,Full,4,
-javerage,1033334,James Average,TRAIN 101 A,1.9,2.2,2.3,2.905289787567317,1,0,0,0,0,0,0,0,0,2,Full,4,
-javerage,1033334,James Average,PHYS 121 AC,4.5,3.2,3,2.905289787567317,1,0,0,0,0,0,0,0,0,2,Full,4,
+javerage,1033334,James Average,TRAIN 100 A,.5,2.9,1.3,2.905289787567317,2,0,0,0,0,0,0,0,0,2,Full,4,
+javerage,1033334,James Average,TRAIN 101 A,1.9,2.2,2.3,2.905289787567317,2,0,0,0,0,0,0,0,0,2,Full,4,
+javerage,1033334,James Average,PHYS 121 AC,4.5,3.2,3,2.905289787567317,2,0,0,0,0,0,0,0,0,2,Full,4,

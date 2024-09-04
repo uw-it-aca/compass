@@ -15,81 +15,22 @@
         <i class="bi bi-info-circle-fill ms-2"></i>
       </a>
     </div>
-    <div class="d-flex pt-3" style="height: 225px">
-      <div v-if="analyticsNotFound"><p>Analytics data not found</p></div>
-      <template v-else>
-      <div class="d-flex w-25">
-        <div class="pt-2 w-100">
-          <ul
-            class="p-0 fs-7 text-secondary"
-            style="list-style-type: none; line-height: 40px"
-          >
-<!--            Loop over years of signin data we have-->
-            <li class="d-flex justify-content-between">
-              Winter 2024
-              <div>
-                 64%
-                <i
-                  style="color: #c12c2c"
-                  class="bi bi-arrow-down-circle-fill ms-2 me-1"
-                ></i>
-                <i
-                  style="color: #289026"
-                  class="bi bi-arrow-up-circle-fill ms-2 me-1"
-                ></i>
-              </div>
-            </li>
-          </ul>
-        </div>
-        <div class="vr mx-3"></div>
-      </div>
-      <div class="flex-fill">
-        <Line v-if="dataReady" :data="chartData" :options="chartOptions" />
-      </div>
-      <div>
-        <ul class="p-0 fs-8 text-secondary" style="list-style-type: none">
-<!--          Loop over quarters of data-->
-          <li>
-            <i style="color: #4b2e83" class="bi bi-circle-fill me-2"></i>Winter 2024
-          </li>
-        </ul>
-      </div>
-      </template>
-    </div>
   </div>
+  <analytics-chart
+    v-if="dataReady"
+    :data-series="formattedData"
+    :show-only-latest="true"></analytics-chart>
 </template>
 
 <script>
 import { Popover } from "bootstrap";
-import { Line } from "vue-chartjs";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  scales,
-} from "chart.js";
 import { useAnalyticsStore} from "@/stores/analytics.js";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  scales
-);
+import AnalyticsChart from "@/components/student/analytics/chart.vue";
 
 export default {
   name: "SignInChart",
   components: {
-    Line,
+    AnalyticsChart
   },
   setup() {
     const storeAnalytics = useAnalyticsStore();
@@ -103,142 +44,109 @@ export default {
   },
   data() {
     return {
-      chartData: {
-        labels: ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "W9", "W10"],
-        datasets: [
-          {
-            label: "Grade",
-            backgroundColor: "#4B2E83",
-            borderColor: "#4B2E83",
-            data: [],
-          },
-          {
-            label: "Assignment",
-            backgroundColor: "#4C7286",
-            borderColor: "#4C7286",
-            data: [],
-          },
-          {
-            label: "Activity",
-            backgroundColor: "#AB9765",
-            borderColor: "#AB9765",
-            data: [],
-          },
-        ],
-      },
-      chartOptions: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
-        scales: {
-          y: {
-            max: 100,
-          },
-          x: {
-            grid: {
-              display: false,
-            },
-          },
-        },
-      },
       rawSigninAnalytics: undefined,
       analyticsNotFound: false,
       dataReady: false,
+      currentQuarterColor: "#0732de",
+      previousQuarterColors: [
+        "#aeafb0",
+        "#a1beed",
+        "#dec799",
+        "#fc6f7d",
+        "#6ffc9c",
+        "#cb6ffc",
+        "#d7fc6f",
+        "#a7fcff",
+        "#17acff",
+      ],
+      latestYear: undefined,
+      latestQuarter: undefined,
+      formattedData: [],
     };
   },
   mounted() {
     this.loadStudentCourseAnalytics();
   },
   watch: {
-    rawCourseAnalytics: function () {
-      this.setDataForLabel("Grade", this.getDataArrayForKey("grade_score"));
-      this.setDataForLabel("Assignment", this.getDataArrayForKey("assignment_score"));
-      this.setDataForLabel("Activity", this.getDataArrayForKey("activity_score"));
+    rawSigninAnalytics: function () {
+      this.setLatest(this.rawSigninAnalytics);
+      this.formatData()
       this.dataReady = true;
     }
   },
-  computed: {
-    currentGradeScore() {
-      return this.getLatestScore("grade_score");
-    },
-    currentAssignmentScore() {
-      return this.getLatestScore("assignment_score");
-    },
-    currentActivityScore() {
-      return this.getLatestScore("activity_score");
-    },
-    gradeScoreIncreased() {
-      return this.scoreIncreased("grade_score");
-    },
-    gradeScoreDecreased() {
-      return this.scoreDecreased("grade_score");
-    },
-    assignmentScoreIncreased() {
-      return this.scoreIncreased("assignment_score");
-    },
-    assignmentScoreDecreased() {
-      return this.scoreDecreased("assignment_score");
-    },
-    activityScoreIncreased() {
-      return this.scoreIncreased("activity_score");
-    },
-    activityScoreDecreased() {
-      return this.scoreDecreased("activity_score");
-    },
 
-  },
   methods: {
-    getLatestScore(key) {
-      try {
-        return this.rawCourseAnalytics[this.rawCourseAnalytics.length - 1][key] * 20;
-      } catch (e) {
-        return 0;
+    formatData(){
+      let formatted_data = [],
+        signin_data = this.rawSigninAnalytics;
+      for (let year in signin_data) {
+        for (let quarter in signin_data[year]) {
+          let data_array = Array(10).fill(null);
+          for (let week_id in signin_data[year][quarter]) {
+            data_array[week_id - 1] = signin_data[year][quarter][week_id];
+          }
+          let is_latest = year == this.latestYear && quarter == this.latestQuarter,
+            color = this.getBackgroundColor(is_latest);
+          formatted_data.push({
+            year: year,
+            quarter: quarter,
+            label: `${this.capitalizeFirstLetter(quarter)} ${year}`,
+            data: data_array,
+            backgroundColor: color,
+            borderColor: color,
+            isLatest: is_latest,
+          });
+        }
+      }
+      formatted_data.sort((a, b) => {
+        if (a.year == b.year) {
+          return this.getQuarterIndex(b.quarter) - this.getQuarterIndex(a.quarter);
+        }
+        return b.year - a.year;
+      });
+      this.formattedData = formatted_data;
+    },
+    getBackgroundColor(is_latest){
+      if (is_latest) {
+        return this.currentQuarterColor;
+      } else {
+        if(this.previousQuarterColors.length === 0){
+          // In case we run out of colors start picking at random
+          return '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0');
+        }
+        let color = this.previousQuarterColors.pop();
+        return color
       }
     },
-    scoreIncreased(key) {
-      console.log(key)
-      try{
-        if (this.rawCourseAnalytics.length < 2) {
-          console.log('f1')
-          return false;
+    setLatest(signin_data){
+      let latest_year = 0,
+        latest_quarter = 0;
+      for (let year in signin_data) {
+        for (let quarter in signin_data[year]) {
+          if (year > latest_year) {
+            latest_year = year;
+            latest_quarter = this.getQuarterIndex(quarter);
+          } else if (year == latest_year) {
+            if (this.getQuarterIndex(quarter) > this.getQuarterIndex(latest_quarter)) {
+              latest_quarter = this.getQuarterIndex(quarter);
+            }
+          }
         }
+      }
+      this.latestYear = latest_year;
+      this.latestQuarter = this.getQuarterFromIndex(latest_quarter);
+    },
 
-        console.log(this.rawCourseAnalytics[this.rawCourseAnalytics.length - 1][key], this.rawCourseAnalytics[this.rawCourseAnalytics.length - 2][key])
-        return this.rawCourseAnalytics[this.rawCourseAnalytics.length - 1][key] >
-          this.rawCourseAnalytics[this.rawCourseAnalytics.length - 2][key];
-      } catch (e) {
-        return false;
-      }
+    capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
     },
-    scoreDecreased(key) {
-      try{
-        if (this.rawCourseAnalytics.length < 2) {
-          return false;
-        }
-        return this.rawCourseAnalytics[this.rawCourseAnalytics.length - 1][key] <
-          this.rawCourseAnalytics[this.rawCourseAnalytics.length - 2][key];
-      } catch (e) {
-        return false;
-      }
+    getQuarterIndex(quarter){
+      let quarters = ["autumn", "winter", "spring", "summer"];
+      return quarters.indexOf(quarter);
     },
-    setDataForLabel: function(label, data_array){
-      for (let dataset of this.chartData.datasets) {
-        if (dataset.label == label) {
-          dataset.data = data_array;
-        }
-      }
-    },
-    getDataArrayForKey(key){
-      let data_array = Array(10).fill(null);
-      for (let data of this.rawCourseAnalytics) {
-        // TODO: Alter multiplier if we change scaling at data generation
-        data_array[data.week_id - 1] = data[key] * 20;
-      }
-      return data_array;
+    getQuarterFromIndex(index){
+      let quarters = ["autumn", "winter", "spring", "summer"];
+      return quarters[index];
     },
     loadStudentCourseAnalytics: function () {
       this.storeAnalytics
@@ -247,8 +155,8 @@ export default {
           this.rawSigninAnalytics =
             this.storeAnalytics.signinAnalyticsData[this.uwnetid].data;
         }).catch((e) => {
-          this.analyticsNotFound = true;
-        });
+        this.analyticsNotFound = true;
+      });
     },
   }
 };
