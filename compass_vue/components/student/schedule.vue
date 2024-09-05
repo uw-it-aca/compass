@@ -89,8 +89,9 @@
                               {{ section.course_title }}
                             </div>
                           </div>
-                          <!-- If student is predicted to fail the course. -->
+
                           <i
+                            v-if="section.alert_status"
                             class="bi bi-exclamation-triangle-fill ms-5"
                             style="color: #c12c2c"
                           ></i>

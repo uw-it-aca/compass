@@ -128,8 +128,3 @@ class CourseAnalyticsScoresTest(CompassTestCase):
         self.assertEqual(RADWeek.get_previous_term({'year': 2021,
                                                     'quarter': 'winter'}),
                          {'year': 2020, 'quarter': 'autumn'})
-
-    def test_signins(self):
-        signins = CourseAnalyticsScores.get_signins_by_netid('javerage')
-        print(signins)
-        self.assertEqual(len(signins), 3)

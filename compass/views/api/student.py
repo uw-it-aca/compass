@@ -123,8 +123,9 @@ class StudentSchedulesView(BaseAPIView):
                     uwregid, term).json_data()
             except DataFailureException:
                 continue
-
-        return self.response_ok(schedules)
+        updated_schedule = CourseAnalyticsScores.add_alert_status_to_schedules(schedules,
+                                                                               uwregid)
+        return self.response_ok(updated_schedule)
 
 
 class StudentContactsView(BaseAPIView):

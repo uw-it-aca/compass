@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
+from compass.dao.person import get_person_by_uwregid
+from compass.dao.term import current_week
 
 
 class RADImport(models.Model):
@@ -86,6 +88,11 @@ class CourseAnalyticsScores(models.Model):
                 'prediction_score': self.prediction_score * 20,
                 'week_id': self.week.week,}
 
+    def is_alert_status(self):
+        return (self.activity_score * 20 < 60 or
+                self.assignment_score * 20 < 60 or
+                self.grade_score * 20 < 60)
+
     @classmethod
     def get_rad_data_for_course(cls, year, quarter, netid, course_id):
         """
@@ -99,39 +106,40 @@ class CourseAnalyticsScores(models.Model):
             return []
 
     @classmethod
-    def get_signins_by_netid(cls, netid):
-        """
-        Return the last 3 quarters worth of sign in data for a student
-        """
-
-        # TODO limit this to one point per week
+    def get_course_alert_status(cls, netid, year, quarter, week, course_id):
         try:
-            current_week = RADWeek.get_most_recent_week()
-            prev_term = RADWeek.get_previous_term(
-                {"year": current_week.year,
-                 "quarter": current_week.quarter})
-            prev_prev_term = RADWeek.get_previous_term(prev_term)
+            scores = cls.objects.get(uwnetid=netid,
+                                     week__year=year,
+                                     week__quarter=quarter,
+                                     week__week=week,
+                                     course=course_id)
+            return scores.is_alert_status()
+        except cls.DoesNotExist:
+            return False
 
-            terms = [
-                (current_week.year, current_week.quarter),
-                (prev_term['year'], prev_term['quarter']),
-                (prev_prev_term['year'], prev_prev_term['year'])
-            ]
+    @classmethod
+    def add_alert_status_to_schedules(cls, schedules, uwregid):
+        """
+        Add alert status to schedule
+        """
+        person = get_person_by_uwregid(uwregid)
+        netid = person.uwnetid
+        week = current_week()
 
-            signins_by_term = []
-            for term in terms:
-                term_data = cls.get_rad_data_for_course(
-                    term[0], term[1], netid)
-                if term_data:
-                    signins_by_term.append({'year': term[0],
-                                            'quarter': term[1],
-                                            'data': [
-                                                {week.week.week:
-                                                 week.signin_score}
-                                                for week in term_data]})
-            return signins_by_term
-        except RADWeek.DoesNotExist:
-            return []
+        for index in schedules.keys():
+            schedule = schedules[index]
+            for section in schedule['sections']:
+                course_id = (f"{section['curriculum_abbr']} "
+                             f"{section['course_number']} "
+                             f"{section['section_id']}")
+                alert_status = cls.get_course_alert_status(netid,
+                                                           schedule['year'],
+                                                           schedule['quarter'],
+                                                           week,
+                                                           course_id)
+                section['alert_status'] = alert_status
+        return schedules
+
 
 class StudentSigninAnalytics(models.Model):
     """
