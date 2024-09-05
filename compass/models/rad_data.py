@@ -3,7 +3,8 @@
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 from compass.dao.person import get_person_by_uwregid
-from compass.dao.term import current_week
+from compass.dao.term import current_week, current_term, week_of_term
+from compass.dao import current_datetime
 
 
 class RADImport(models.Model):
@@ -86,9 +87,10 @@ class CourseAnalyticsScores(models.Model):
                 'assignment_score': self.assignment_score * 20,
                 'grade_score': self.grade_score * 20,
                 'prediction_score': self.prediction_score * 20,
-                'week_id': self.week.week,}
+                'week_id': self.week.week}
 
     def is_alert_status(self):
+        print(self.activity_score * 20, self.assignment_score * 20, self.grade_score * 20)
         return (self.activity_score * 20 < 60 or
                 self.assignment_score * 20 < 60 or
                 self.grade_score * 20 < 60)
@@ -140,6 +142,33 @@ class CourseAnalyticsScores(models.Model):
                 section['alert_status'] = alert_status
         return schedules
 
+    @classmethod
+    def add_alert_class_to_caseload(cls, caseload):
+        """
+        Add alert status to caseload
+        """
+        term = current_term()
+        week = week_of_term(term, current_datetime().date())
+
+        for student in caseload:
+            course_analytics = cls.objects.filter(uwnetid=student['uwnetid'],
+                                                  week__year=term.year,
+                                                  week__quarter=term.quarter,
+                                                  week__week=week)
+            alert_count = 0
+            for course in course_analytics:
+                if course.is_alert_status():
+                    alert_count += 1
+            if alert_count == 0:
+                student['analytics_alert'] = 'success'
+            elif (alert_count/len(course_analytics)) <= 0.5:
+                student['analytics_alert'] = 'warning'
+            else:
+                student['analytics_alert'] = 'danger'
+
+        return caseload
+
+
 
 class StudentSigninAnalytics(models.Model):
     """
@@ -157,7 +186,7 @@ class StudentSigninAnalytics(models.Model):
         """
         Get signin data for a given student
         """
-        signins =  cls.objects.filter(uwnetid=uwnetid)
+        signins = cls.objects.filter(uwnetid=uwnetid)
         json_data = {}
         for signin in signins:
             year_data = json_data.setdefault(signin.week.year, {})
