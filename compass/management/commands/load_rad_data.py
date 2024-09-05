@@ -70,15 +70,12 @@ class Command(BaseCommand):
 
     def _load_all_data(self, reload):
         files = RADStorageDao().get_files_list()
-        print('GOT FILES')
         for file in files:
-            print(1)
-            year, quarter, week_id = RADStorageDao().get_year_quarter_week_from_filename(
-                file)
+            year, quarter, week_id = (
+                RADStorageDao().get_year_quarter_week_from_filename(file))
             rad_week = RADWeek.get_or_create_week(year=year,
                                                   quarter=quarter,
                                                   week=week_id)
-            print(2)
             try:
                 rad_import = RADImport.create_job(rad_week,
                                                   reload=reload)
@@ -86,9 +83,8 @@ class Command(BaseCommand):
                 logger.exception(ex)
                 continue
             try:
-                print('TRY')
                 rad_file = RADStorageDao().download_from_bucket(file)
-                import_data_from_csv(rad_week, rad_file)
+                import_data_from_csv(rad_week, rad_file, reload)
             except Exception as ex:
                 logger.exception(ex)
                 rad_import.import_status = RADImport.FAILURE
