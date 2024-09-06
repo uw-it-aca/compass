@@ -27,5 +27,6 @@ class TestRadCsv(TestCase):
             import_data_from_csv(week, csv_string)
             self.assertEqual(CourseAnalyticsScores.objects.count(), 2)
             self.assertEqual(CourseAnalyticsScores.objects.first().week, week)
-            self.assertEqual(CourseAnalyticsScores.objects.first().assignment_score,
+            self.assertEqual(CourseAnalyticsScores.objects.first()
+                             .assignment_score,
                              3.0)

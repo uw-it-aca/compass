@@ -90,7 +90,6 @@ class CourseAnalyticsScores(models.Model):
                 'week_id': self.week.week}
 
     def is_alert_status(self):
-        print(self.activity_score * 20, self.assignment_score * 20, self.grade_score * 20)
         return (self.activity_score * 20 < 60 or
                 self.assignment_score * 20 < 60 or
                 self.grade_score * 20 < 60)
@@ -167,7 +166,6 @@ class CourseAnalyticsScores(models.Model):
                 student['analytics_alert'] = 'danger'
 
         return caseload
-
 
 
 class StudentSigninAnalytics(models.Model):

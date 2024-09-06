@@ -29,10 +29,11 @@ def import_data_from_csv(week, csv_string, reload=False):
                                                   week=week,
                                                   signin_score=row['sign_in'])
             processed_netids.append(row['uw_netid'])
-        CourseAnalyticsScores.objects.create(uwnetid=row['uw_netid'],
-                                             week=week,
-                                             course=row['course_code'],
-                                             activity_score=row['activity'],
-                                             assignment_score=row['assignments'],
-                                             grade_score=row['grades'],
-                                             prediction_score=row['pred'])
+        (CourseAnalyticsScores.objects
+         .create(uwnetid=row['uw_netid'],
+                 week=week,
+                 course=row['course_code'],
+                 activity_score=row['activity'],
+                 assignment_score=row['assignments'],
+                 grade_score=row['grades'],
+                 prediction_score=row['pred']))

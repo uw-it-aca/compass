@@ -13,6 +13,7 @@ from logging import getLogger
 
 logger = getLogger(__name__)
 
+
 class Command(BaseCommand):
     help = "Loads RAD data into Compass DB, defaults to current week"
 

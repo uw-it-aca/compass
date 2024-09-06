@@ -123,8 +123,9 @@ class StudentSchedulesView(BaseAPIView):
                     uwregid, term).json_data()
             except DataFailureException:
                 continue
-        updated_schedule = CourseAnalyticsScores.add_alert_status_to_schedules(schedules,
-                                                                               uwregid)
+        updated_schedule = (CourseAnalyticsScores.
+                            add_alert_status_to_schedules(schedules,
+                                                          uwregid))
         return self.response_ok(updated_schedule)
 
 
@@ -482,6 +483,7 @@ class StudentCourseAnalyticsView(BaseAPIView):
         if len(response_json) == 0:
             return self.response_notfound()
         return self.response_ok(response_json)
+
 
 class StudentSigninAnalyticsView(BaseAPIView):
     '''
