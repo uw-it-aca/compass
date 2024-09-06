@@ -65,18 +65,15 @@ class RADDataWeekTest(CompassTestCase):
         self.assertEqual(week, 1)
 
     def test_create_job(self):
-        rad_import = RADImport.create_job(year=2021,
+        week = RADWeek.get_or_create_week(year=2021,
                                           quarter='spring',
                                           week=10)
+
+        rad_import = RADImport.create_job(week)
         self.assertEqual(rad_import.week.year, 2021)
         with self.assertRaises(ValueError):
-            RADImport.create_job(year=2021,
-                                 quarter='spring',
-                                 week=10)
-        RADImport.create_job(year=2021,
-                             quarter='spring',
-                             week=10,
-                             reload=True)
+            RADImport.create_job(week)
+        RADImport.create_job(week, reload=True)
 
 
 class CourseAnalyticsScoresTest(CompassTestCase):
@@ -98,7 +95,6 @@ class CourseAnalyticsScoresTest(CompassTestCase):
                         assignment_score=random.uniform(0, 5),
                         grade_score=random.uniform(0, 5),
                         prediction_score=random.uniform(0, 5),
-                        signin_score=random.uniform(0, 5)
                     )
                 )
                 data_points.append(
@@ -110,7 +106,6 @@ class CourseAnalyticsScoresTest(CompassTestCase):
                         assignment_score=random.uniform(0, 5),
                         grade_score=random.uniform(0, 5),
                         prediction_score=random.uniform(0, 5),
-                        signin_score=random.uniform(0, 5)
                     )
                 )
         CourseAnalyticsScores.objects.bulk_create(data_points)

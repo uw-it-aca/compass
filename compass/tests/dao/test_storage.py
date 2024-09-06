@@ -21,7 +21,7 @@ class TestStorage(TestCase):
     def test_files_list(self):
         dao = RADStorageDao()
         files = dao.get_files_list()
-        self.assertEqual(len(files), 3)
+        self.assertEqual(len(files), 10)
         self.assertIn("2023-spring-week-6-compass-data.csv", files)
         self.assertIn("2024-spring-week-5-compass-data.csv", files)
         self.assertIn("2024-spring-week-6-compass-data.csv", files)
@@ -36,9 +36,9 @@ class TestStorage(TestCase):
         dao = RADStorageDao()
         file = dao.download_from_bucket('2023-spring-week-6-compass-data.csv')
         self.assertIsNotNone(file)
-        contents = ("uw_netid,student_no,student_name_lowc,"
-                    "activity,assignments"
-                    ",grades,pred,sign_in,stem,incoming_freshman,premajor,"
-                    "eop,international,isso,engineering,informatics,"
-                    "campus_code,summer,class_code,sport_code\n")
-        self.assertEqual(file, contents)
+        contents = ("uw_netid,student_no,student_name_lowc,course_code,"
+                    "activity,assignments,grades,pred,sign_in,stem,"
+                    "incoming_freshman,premajor,eop,international,isso,"
+                    "engineering,informatics,campus_code,summer,class_code,"
+                    "sport_code")
+        self.assertEqual(file.strip(), contents.strip())
