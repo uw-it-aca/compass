@@ -1,6 +1,6 @@
 ARG DJANGO_CONTAINER_VERSION=2.0.3
 
-FROM us-docker.pkg.dev/uwit-mci-axdd/containers/django-container:${DJANGO_CONTAINER_VERSION} as app-prebundler-container
+FROM us-docker.pkg.dev/uwit-mci-axdd/containers/django-container:${DJANGO_CONTAINER_VERSION} AS app-prebundler-container
 
 USER root
 
@@ -33,13 +33,13 @@ ARG VUE_DEVTOOLS
 ENV VUE_DEVTOOLS=$VUE_DEVTOOLS
 RUN npm run build
 
-FROM app-prebundler-container as app-container
+FROM app-prebundler-container AS app-container
 
 COPY --chown=acait:acait --from=node-bundler /app/compass/static /app/compass/static
 
 RUN /app/bin/python manage.py collectstatic --noinput
 
-FROM us-docker.pkg.dev/uwit-mci-axdd/containers/django-test-container:${DJANGO_CONTAINER_VERSION} as app-test-container
+FROM us-docker.pkg.dev/uwit-mci-axdd/containers/django-test-container:${DJANGO_CONTAINER_VERSION} AS app-test-container
 
 USER root
 
