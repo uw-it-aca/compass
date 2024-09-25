@@ -126,7 +126,7 @@
                     v-for="(requested, index) in person.student.requested_majors"
                     :key="index"
                   >
-                  {{ requested.major_abbr_code }}, {{ requested.major_name }}
+                  {{ requested }}
                 </li>
                 </ul>
               </template>
@@ -142,7 +142,7 @@
                     v-for="(intended, index) in person.student.intended_majors"
                     :key="index"
                   >
-                  {{ intended.major_abbr_code }}, {{ intended.major_name }}
+                  {{ intended }}
                 </li>
                 </ul>
               </template>
