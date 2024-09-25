@@ -84,38 +84,67 @@
       >
         <div class="flex-fill">
           <p class="text-uppercase text-dark-beige fs-8 fw-bold">Majors</p>
-          <!-- changed the formate into keyvalue -->
+          <!-- majors -->
           <div>
             <KeyValue variant="address">
               <template #key>Current Majors</template>
               <template #value>
                 <ul class="list-unstyled">
-                  <p
+                  <li
                     v-for="(major, index) in person.student.majors"
                     :key="index"
                   >
                     {{ major.major_abbr_code }}, {{ major.major_name }}
-                  </p>
+                </li>
                 </ul>
               </template>
             </KeyValue>
           </div>
-          <!-- changed the formate into keyvalue -->
+          <!-- pending majors -->
           <div>
             <KeyValue variant="address">
-              <template #key> Intended Majors (upon admission)</template>
+              <template #key>Pending Majors</template>
               <template #value>
-                <ol>
-                  <li v-if="person.student.intended_major1_code">
-                    {{ person.student.intended_major1_code }}
-                  </li>
-                  <li v-if="person.student.intended_major2_code">
-                    {{ person.student.intended_major2_code }}
-                  </li>
-                  <li v-if="person.student.intended_major3_code">
-                    {{ person.student.intended_major3_code }}
-                  </li>
-                </ol>
+                <ul class="list-unstyled">
+                  <li
+                    v-for="(pending, index) in person.student.pending_majors"
+                    :key="index"
+                  >
+                  {{ pending.major_abbr_code }}, {{ pending.major_name }}
+                </li>
+                </ul>
+              </template>
+            </KeyValue>
+          </div>
+          <!-- requested majors -->
+          <div>
+            <KeyValue variant="address">
+              <template #key>Requested Majors</template>
+              <template #value>
+                <ul class="list-unstyled">
+                  <li
+                    v-for="(requested, index) in person.student.requested_majors"
+                    :key="index"
+                  >
+                  {{ requested.major_abbr_code }}, {{ requested.major_name }}
+                </li>
+                </ul>
+              </template>
+            </KeyValue>
+          </div>
+          <!-- intended majors -->
+          <div>
+            <KeyValue variant="address">
+              <template #key>Intended Majors</template>
+              <template #value>
+                <ul class="list-unstyled">
+                  <li
+                    v-for="(intended, index) in person.student.intended_majors"
+                    :key="index"
+                  >
+                  {{ intended.major_abbr_code }}, {{ intended.major_name }}
+                </li>
+                </ul>
               </template>
             </KeyValue>
           </div>
