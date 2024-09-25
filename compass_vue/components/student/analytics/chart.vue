@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex pt-3" style="height: 225px">
+  <div class="d-flex" style="height: 225px">
     <div class="d-flex w-25">
       <div class="pt-2 w-100">
         <ul
