@@ -231,6 +231,16 @@ async function savePreferences(preferences) {
   return axios.put("/api/internal/userprefs/", preferences);
 }
 
+async function getStudentCourseAnalytics(uwnetid, year, quarter, course_id){
+  return axios.get("/api/internal/student/" + uwnetid +
+    "/course_analytics/" + year + "/" + quarter + "/" + course_id + "/");
+}
+
+async function getStudentSigninAnalytics(uwnetid){
+  return axios.get("/api/internal/student/" + uwnetid +
+    "/signin_analytics/");
+}
+
 export {
   getStudentDetail,
   saveStudent,
@@ -263,5 +273,7 @@ export {
   getAdviserCheckIns,
   getAccessGroups,
   clearOverride,
-  savePreferences
+  savePreferences,
+  getStudentCourseAnalytics,
+  getStudentSigninAnalytics
 };

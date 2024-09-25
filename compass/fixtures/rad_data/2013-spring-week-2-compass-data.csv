@@ -1,0 +1,4 @@
+uw_netid,student_no,student_name_lowc,course_code,activity,assignments,grades,pred,sign_in,stem,incoming_freshman,premajor,eop,international,isso,engineering,informatics,campus_code,summer,class_code,sport_code
+javerage,1033334,James Average,TRAIN 100 A,2,1.9,4.4,2.905289787567317,1,0,0,0,0,0,0,0,0,2,Full,4,
+javerage,1033334,James Average,TRAIN 101 A,4,2.1,4.6,2.905289787567317,1,0,0,0,0,0,0,0,0,2,Full,4,
+javerage,1033334,James Average,PHYS 121 AC,2,2.8,4,2.905289787567317,1,0,0,0,0,0,0,0,0,2,Full,4,

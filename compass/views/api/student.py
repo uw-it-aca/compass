@@ -16,6 +16,8 @@ from compass.models import (
     AccessGroup, Student, AppUser, Contact, ContactType, ContactMethod,
     ContactTopic, StudentAffiliation, Affiliation, Cohort, Visit,
     EligibilityType, StudentEligibility, SpecialProgram)
+from compass.models.rad_data import (CourseAnalyticsScores,
+                                     StudentSigninAnalytics)
 from compass.serializers import (
     ContactReadSerializer, ContactWriteSerializer, StudentWriteSerializer,
     StudentAffiliationReadSerializer, VisitReadSerializer,
@@ -121,8 +123,10 @@ class StudentSchedulesView(BaseAPIView):
                     uwregid, term).json_data()
             except DataFailureException:
                 continue
-
-        return self.response_ok(schedules)
+        updated_schedule = (CourseAnalyticsScores.
+                            add_alert_status_to_schedules(schedules,
+                                                          uwregid))
+        return self.response_ok(updated_schedule)
 
 
 class StudentContactsView(BaseAPIView):
@@ -453,3 +457,52 @@ class StudentEligibilityView(BaseAPIView):
             return self.response_unauthorized()
         except OverrideNotPermitted as err:
             return self.response_unauthorized(err)
+
+
+class StudentCourseAnalyticsView(BaseAPIView):
+    '''
+    API endpoint returning a list of RAD analytics data for a specific
+    student-course-term combination
+
+    /api/internal/student/[uwnetid]/[year]/[quarter]/[course_id]
+    '''
+    def get(self, request, uwnetid, year, quarter, course_id):
+        try:
+            access_group = self.get_access_group(request)
+        except AccessGroup.DoesNotExist:
+            return self.response_unauthorized()
+
+        if not valid_uwnetid(uwnetid):
+            return self.response_badrequest('Invalid uwnetid')
+
+        rad_data = CourseAnalyticsScores.get_rad_data_for_course(year,
+                                                                 quarter,
+                                                                 uwnetid,
+                                                                 course_id)
+        response_json = [rad.json_data() for rad in rad_data]
+        if len(response_json) == 0:
+            return self.response_notfound()
+        return self.response_ok(response_json)
+
+
+class StudentSigninAnalyticsView(BaseAPIView):
+    '''
+    API endpoint returning a list of RAD analytics data for a specific
+    student
+
+    /api/internal/student/[uwnetid]/signins/
+    '''
+    def get(self, request, uwnetid):
+        try:
+            access_group = self.get_access_group(request)
+        except AccessGroup.DoesNotExist:
+            return self.response_unauthorized()
+
+        if not valid_uwnetid(uwnetid):
+            return self.response_badrequest('Invalid uwnetid')
+
+        signin_data = (StudentSigninAnalytics.
+                       get_signin_data_for_student(uwnetid))
+        if len(signin_data) == 0:
+            return self.response_notfound()
+        return self.response_ok(signin_data)

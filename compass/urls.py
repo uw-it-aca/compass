@@ -17,6 +17,8 @@ from compass.views.api.student import (
     StudentVisitsView,
     StudentEligibilityView,
     StudentView,
+    StudentCourseAnalyticsView,
+    StudentSigninAnalyticsView
 )
 from compass.views.api.eligibility import EligibilityView
 from compass.views.api.special_program import SpecialProgramView
@@ -109,6 +111,17 @@ urlpatterns += [
         r"^api/internal/student/(?P<systemkey>[\w]+)/special_program/$",
         SpecialProgramView.as_view(),
         name="special_program_view"
+    ),
+    re_path(
+        r"^api/internal/student/(?P<uwnetid>\w+)/signin_analytics/",
+        StudentSigninAnalyticsView.as_view(),
+        name="student_signin_analytics_view"
+    ),
+    re_path(
+        r"^api/internal/student/(?P<uwnetid>\w+)/course_analytics/"
+        r"(?P<year>\w+)/(?P<quarter>\w+)/(?P<course_id>[\w\s]+)/$",
+        StudentCourseAnalyticsView.as_view(),
+        name="student_course_analytics_view"
     ),
     re_path(
         r"^api/internal/eligibility/",

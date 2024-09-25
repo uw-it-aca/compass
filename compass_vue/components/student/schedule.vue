@@ -57,51 +57,89 @@
                     </tr>
                   </thead>
                   <tbody class="mb-3" v-if="schedule.sections.length > 0">
-                    <tr
-                      v-for="(section, index) in schedule.sections"
+                    <template
+                      v-for="(section, sectionIndex) in schedule.sections"
                       :key="index"
                     >
-                      <td class="ps-3">
-                        {{ section.curriculum_abbr }}
-                        {{ section.course_number }}
-                        {{ section.section_id }}
-                        <div class="fs-8 text-secondary">
-                          {{ section.course_title }}
-                        </div>
-                      </td>
-                      <td>{{ section.sln }}</td>
-                      <td>
-                        <div
-                          v-for="(meeting, index) in section.meetings"
-                          :key="index"
-                        >
-                          <span
-                            v-for="(value, day) in meeting.meeting_days"
-                            :key="day"
+                      <tr
+                        :class="[
+                          isQuizSection(section.credits) ? 'border-white' : '',
+                        ]"
+                      >
+                        <td class="d-flex ps-3">
+                          <!-- MARK: only show course analytics for top-level (i.e. NOT quiz sections) v-show="isQuizSection(section.credits)"-->
+                          <!-- Expend and collapse RAD data. Auto expand all classes with a warning icon -->
+                          <div v-show="isQuizSection(section.credits)">
+                            <i
+                              v-if="courseAnalyticsVisiblity(scheduleIndex, sectionIndex)"
+                              class="bi bi-chevron-up me-3 pt-2 h5"
+                              @click="hideCourseAnalytics($event, scheduleIndex, sectionIndex)"
+                            ></i>
+                            <i
+                              v-else
+                              class="bi bi-chevron-down me-3 pt-2 h5"
+                              @click="showCourseAnalytics($event, scheduleIndex, sectionIndex)"
+                            ></i>
+                          </div>
+                          <div>
+                            {{ section.curriculum_abbr }}
+                            {{ section.course_number }}
+                            {{ section.section_id }}
+                            <div class="fs-8 text-secondary">
+                              {{ section.course_title }}
+                            </div>
+                          </div>
+
+                          <i
+                            v-if="section.alert_status"
+                            class="bi bi-exclamation-triangle-fill ms-5"
+                            style="color: #c12c2c"
+                          ></i>
+                        </td>
+                        <td>{{ section.sln }}</td>
+                        <td>
+                          <div
+                            v-for="(meeting, index) in section.meetings"
+                            :key="index"
                           >
-                            <span v-if="value">
-                              <span v-if="day == 'monday'">M </span>
-                              <span v-if="day == 'tuesday'">T </span>
-                              <span v-if="day == 'wednesday'">W </span>
-                              <span v-if="day == 'thursday'">Th </span>
-                              <span v-if="day == 'friday'">F </span>
+                            <span
+                              v-for="(value, day) in meeting.meeting_days"
+                              :key="day"
+                            >
+                              <span v-if="value">
+                                <span v-if="day == 'monday'">M </span>
+                                <span v-if="day == 'tuesday'">T </span>
+                                <span v-if="day == 'wednesday'">W </span>
+                                <span v-if="day == 'thursday'">Th </span>
+                                <span v-if="day == 'friday'">F </span>
+                              </span>
                             </span>
-                          </span>
-                        </div>
-                      </td>
-                      <td>
-                        <div
-                          v-for="(meeting, index) in section.meetings"
-                          :key="index"
-                        >
-                          <span v-if="!meeting.no_meeting">
-                            {{ translateMilitaryTime(meeting.start_time) }} -
-                            {{ translateMilitaryTime(meeting.end_time) }}
-                          </span>
-                        </div>
-                      </td>
-                      <td>{{ section.credits }}</td>
-                    </tr>
+                          </div>
+                        </td>
+                        <td>
+                          <div
+                            v-for="(meeting, index) in section.meetings"
+                            :key="index"
+                          >
+                            <span v-if="!meeting.no_meeting">
+                              {{ translateMilitaryTime(meeting.start_time) }} -
+                              {{ translateMilitaryTime(meeting.end_time) }}
+                            </span>
+                          </div>
+                        </td>
+                        <td>{{ section.credits }}</td>
+                      </tr>
+                      <tr v-if="courseAnalyticsVisiblity(scheduleIndex, sectionIndex)">
+                        <td colspan="5" class="p-3 pt-0">
+                          <CourseAnalytics
+                            :uwnetid="person.uwnetid"
+                            :year="schedule.year"
+                            :quarter="schedule.quarter"
+                            :course_id="`${section.curriculum_abbr} ${section.course_number} ${section.section_id}`"
+                          ></CourseAnalytics>
+                        </td>
+                      </tr>
+                    </template>
                   </tbody>
                   <tbody v-else class="mb-3">
                     <tr>
@@ -126,9 +164,12 @@
 <script>
 import { translateMilitaryTime } from "@/utils/translations";
 import { getStudentSchedules } from "@/utils/data";
+import CourseAnalytics from "@/components/student/analytics/canvas-course.vue";
 
 export default {
-  components: {},
+  components: {
+    CourseAnalytics,
+  },
   props: {
     person: {
       type: Object,
@@ -144,12 +185,25 @@ export default {
   data() {
     return {
       schedules: {},
+      analyticsDisplay: {}
     };
   },
   created() {
     this.loadStudentSchedules();
   },
   methods: {
+    courseAnalyticsVisiblity: function (scheduleIndex, sectionIndex) {
+      return this.analyticsDisplay[scheduleIndex] && this.analyticsDisplay[scheduleIndex][sectionIndex];
+    },
+    showCourseAnalytics: function (target, scheduleIndex, sectionIndex) {
+      if (!this.analyticsDisplay[scheduleIndex]) {
+        this.analyticsDisplay[scheduleIndex] = {};
+      }
+      this.analyticsDisplay[scheduleIndex][sectionIndex] = true;
+    },
+    hideCourseAnalytics: function (target, scheduleIndex, sectionIndex) {
+      this.analyticsDisplay[scheduleIndex][sectionIndex] = false;
+    },
     loadStudentSchedules: function () {
       this.getStudentSchedules(this.person.uwregid).then((response) => {
         if (response.data) {
@@ -167,6 +221,15 @@ export default {
         }
       }
       return creditTotal;
+    },
+    isQuizSection: function (credits) {
+      if (credits.includes("None")) {
+        return false;
+      } else if (credits.includes("0.0")) {
+        return false;
+      } else {
+        return true;
+      }
     },
   },
 };

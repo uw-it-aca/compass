@@ -8,6 +8,7 @@ from compass.dao.person import (
     valid_uwnetid, get_students_by_system_keys, get_adviser_caseload,
     PersonNotFoundException, AdviserNotFoundException)
 from compass.models import Contact
+from compass.models.rad_data import CourseAnalyticsScores
 from compass.serializers import ContactReadSerializer
 
 
@@ -48,7 +49,9 @@ class AdviserCaseloadView(BaseAPIView):
 
         try:
             queryset = get_adviser_caseload(adviser_netid)
+            queryset = (CourseAnalyticsScores.
+                        add_alert_class_to_caseload(list(queryset)))
         except AdviserNotFoundException:
             queryset = []
 
-        return self.response_ok(list(queryset))
+        return self.response_ok(queryset)

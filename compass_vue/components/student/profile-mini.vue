@@ -5,7 +5,8 @@
         <img
           :data-url="person.photo_url"
           @error="$event.target.src = '/static/compass/img/placeholder.png'"
-          class="img-profile rounded-circle border bg-light border-white border-2"
+          class="img-profile rounded-circle border bg-light border-2"
+          :class="border_class"
         />
       </div>
     </div>
@@ -48,6 +49,16 @@ export default {
   components: {},
   data() {
     return {};
+  },
+  computed: {
+    border_class() {
+      const classes = {
+        danger: "border-danger",
+        warning: "border-warning",
+        normal: "border-success"
+      };
+      return classes[this.person.analytics_alert] || classes.normal;
+    },
   },
 };
 </script>

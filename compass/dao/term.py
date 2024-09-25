@@ -22,6 +22,12 @@ def week_of_term(term, current_date):
     return difference // 7 + 1
 
 
+def current_week():
+    curr_term = current_term()
+    current_dt = current_datetime()
+    return week_of_term(curr_term, current_dt.date())
+
+
 def term_context():
     curr_term = current_term()
     next_term = get_term_after(curr_term)
