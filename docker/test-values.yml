@@ -59,6 +59,10 @@ memcached:
   updateStrategy:
     type: RollingUpdate
 
+gcsCredentials:
+  mounted: true
+  secretName: gradepage.uw.edu-gcs-credentials
+
 certs:
   mounted: true
   certPath: /certs/compass.uw.edu-ic.cert
@@ -130,6 +134,11 @@ externalSecrets:
           property: person-db-database
         - name: storage-project-id
           property: storage-project-id
+    - name: test.compass.uw.edu-gcs-credentials
+      externalKey: compass/shared/gcs-credentials
+      data:
+        - name: credentials.json
+          property: credentials.json
     - name: test.compass.uw.edu-ic-certs
       externalKey: compass/prod/ic-certs
       data:
