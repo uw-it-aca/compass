@@ -39,9 +39,10 @@ class RADImport(models.Model):
         Get the next week to process, assumes 10 weeks per quarter
         """
 
-        last_week_imported = cls.objects.order_by('-week__key').first()
+        last_week_imported = (cls.objects.filter(import_status=cls.SUCCESS)
+                              .order_by('-week__key').first())
         if last_week_imported is None:
-            raise ObjectDoesNotExist("No previous imports found")
+            raise cls.DoesNotExist("No previous imports found")
         next_year = last_week_imported.week.year
         next_quarter = last_week_imported.week.quarter
         if last_week_imported.week.week == 10:
@@ -51,8 +52,8 @@ class RADImport(models.Model):
             else:
                 next_quarter = last_week_imported.week.get_next_quarter()
 
-        next_week = (last_week_imported.week.week + 1) % 10\
-            if last_week_imported.week.week != 9 else 10
+        next_week = 10 if last_week_imported.week.week == 9 else\
+            (last_week_imported.week.week + 1) % 10
         return next_year, next_quarter, next_week
 
     @staticmethod
@@ -210,6 +211,17 @@ class RADWeek(models.Model):
     week = models.IntegerField()
     key = models.IntegerField(unique=True)
 
+
+    @classmethod
+    def get_quarter_number(cls, sis_term):
+        qtr_map = {
+            'winter': "1",
+            'spring': "2",
+            'summer': "3",
+            'autumn': "4"
+        }
+        return qtr_map[sis_term]
+
     @classmethod
     def get_or_create_week(cls, year, quarter, week):
         """
@@ -218,14 +230,9 @@ class RADWeek(models.Model):
         try:
             return cls.objects.get(year=year, quarter=quarter, week=week)
         except cls.DoesNotExist:
-            qtr_map = {
-                'winter': "1",
-                'spring': "2",
-                'summer': "3",
-                'autumn': "4"
-            }
+
             padded_week = str(week).zfill(2)
-            key = int(str(year) + qtr_map[quarter] + padded_week)
+            key = int(f"{year}{cls.get_quarter_number(quarter)}{padded_week}")
             return cls.objects.create(year=year,
                                       quarter=quarter,
                                       week=week,
