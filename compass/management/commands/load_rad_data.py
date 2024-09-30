@@ -64,6 +64,8 @@ class Command(BaseCommand):
             rad_import = RADImport.create_job(rad_week,
                                               reload=reload)
         except ValueError:
+            logger.info(f"Import already exists for "
+                        f"{year}-{quarter}-week-{week_id}")
             return f'Import already exists for {year}-{quarter}-week-{week_id}'
         try:
             rad_file = RADStorageDao().download_from_bucket(
