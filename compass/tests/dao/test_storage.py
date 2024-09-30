@@ -9,13 +9,10 @@ from compass.dao.storage import RADStorageDao
 class TestStorage(TestCase):
     def test_get_term_and_week_from_filename(self):
         filename = "2023-spring-week-6-compass-data.csv"
-        term, week = RADStorageDao.get_term_and_week_from_filename(filename)
-        self.assertEqual(term, "2023-spring")
-        self.assertEqual(week, 6)
-
-        term, week = RADStorageDao.get_term_and_week_from_filename(
-            "compass_data/" + filename)
-        self.assertEqual(term, "2023-spring")
+        year, quarter, week = (
+            RADStorageDao.get_year_quarter_week_from_filename(filename))
+        self.assertEqual(year, 2023)
+        self.assertEqual(quarter, "spring")
         self.assertEqual(week, 6)
 
     def test_files_list(self):
@@ -31,6 +28,11 @@ class TestStorage(TestCase):
         latest_file = dao.get_latest_file()
         self.assertEqual(latest_file,
                          '2024-spring-week-6-compass-data.csv')
+
+    def test_get_specific_file(self):
+        dao = RADStorageDao()
+        file = dao.get_file_by_year_quarter_week(2023, 'spring', 6)
+        self.assertIsNotNone(file)
 
     def test_download(self):
         dao = RADStorageDao()

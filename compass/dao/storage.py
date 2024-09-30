@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 import logging
 from django.core.files.storage import default_storage
+from compass.models.rad_data import RADWeek
 
 
 class RADStorageDao():
@@ -43,12 +44,9 @@ class RADStorageDao():
         """
         files = []
         for filename in self.get_files_list():
-            sis_term_id, week_num = (
-                self.get_term_and_week_from_filename(filename))
-            year = sis_term_id.split("-")[0]
-            # TODO: Implement Week.sis_term_to_quarter_number
-            quarter_num = 0
-            # quarter_num = Week.sis_term_to_quarter_number(sis_term_id)
+            year, quarter, week_num = (
+                self.get_year_quarter_week_from_filename(filename))
+            quarter_num = RADWeek.get_quarter_number(quarter)
             data = {"year": year, "quarter_num": quarter_num,
                     "week_num": week_num, "gcs_file": filename}
             files.append(data)
@@ -71,26 +69,6 @@ class RADStorageDao():
             return content.decode('utf-8')
 
     @staticmethod
-    def get_term_and_week_from_filename(rad_file_name):
-        """
-        Extracts term and week from Compass RAD data file name
-
-        For example:
-
-        "compass_data/2021-spring-week-10-compass-data.csv"
-        -> "2021-spring", 10
-        """
-        try:
-            if rad_file_name.startswith("compass_data/"):
-                rad_file_name = rad_file_name.split("/")[1]
-            parts = rad_file_name.split("-")
-            term = f"{parts[0]}-{parts[1]}"
-            week = int(parts[3])
-        except IndexError:
-            raise ValueError(f"Unable to parse RAD file name: {rad_file_name}")
-        return term, week
-
-    @staticmethod
     def get_year_quarter_week_from_filename(rad_file_name):
         """
         Extracts term, week and year from Compass RAD data file name
@@ -104,7 +82,7 @@ class RADStorageDao():
             if rad_file_name.startswith("compass_data/"):
                 rad_file_name = rad_file_name.split("/")[1]
             parts = rad_file_name.split("-")
-            year = parts[0]
+            year = int(parts[0])
             quarter = parts[1]
             week = int(parts[3])
         except IndexError:

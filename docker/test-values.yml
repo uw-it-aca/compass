@@ -69,6 +69,14 @@ certs:
   keyPath: /certs/compass.uw.edu-ic.key
   secretName: test.compass.uw.edu-ic-certs
 
+cronjob:
+  enabled: true
+  jobs:
+    - name: load-rad-data
+      schedule: "0 4 * * 1"
+      command: ["/scripts/management_command.sh"]
+      args: ["load_rad_data"]
+
 environmentVariables:
   - name: ENV
     value: test

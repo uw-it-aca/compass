@@ -32,64 +32,66 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         if options['loadall']:
-            self._load_all_data(options['reload'])
+            file_status = self._load_all_data(options['reload'])
+            errors = [i for i in file_status if i is not None]
+            return "\n".join(errors)
         else:
             if options['week']:
                 year, quarter, _, week_id = options['week'].split('-')
-                if not year or not quarter or not week_id:
+                if not all([year, quarter, week_id]):
                     raise ValueError(f"Invalid week: {options['week']}")
-
             else:
                 try:
+                    # Has a previous import in DB, getting following week
                     year, quarter, week_id = RADImport.get_next_import_week()
-                except ObjectDoesNotExist:
-                    # Get most recent in bucket
+                except RADImport.DoesNotExist:
+                    # No previous import in DB, get most recent week in bucket
                     latest_file = RADStorageDao().get_latest_file()
-
                     year, quarter, week_id = (
                         RADStorageDao.get_year_quarter_week_from_filename(
                             latest_file)
                     )
-            rad_import = RADImport.create_job(year,
-                                              quarter,
-                                              week_id,
-                                              reload=options['reload'])
-            try:
-                rad_file = RADStorageDao().download_from_bucket(
-                    rad_import.get_filename())
-                # TODO Fix this, needs week object not file
-                import_data_from_csv(rad_file, rad_import)
-            except Exception as ex:
-                logger.exception(ex)
-                rad_import.import_status = RADImport.FAILURE
-                rad_import.save()
+            return self._load_week_by_year_quarter_week(year,
+                                                        quarter,
+                                                        week_id,
+                                                        options['reload'])
 
-            rad_import.import_status = RADImport.SUCCESS
-            rad_import.save()
-            logger.info(f"successfully imported RAD data for "
+    def _load_week_by_year_quarter_week(self, year, quarter, week_id, reload):
+        rad_week = RADWeek.get_or_create_week(year=year,
+                                              quarter=quarter,
+                                              week=week_id)
+        try:
+            rad_import = RADImport.create_job(rad_week,
+                                              reload=reload)
+        except ValueError:
+            logger.info(f"Import already exists for "
                         f"{year}-{quarter}-week-{week_id}")
+            return f'Import already exists for {year}-{quarter}-week-{week_id}'
+        try:
+            rad_file = RADStorageDao().download_from_bucket(
+                rad_import.get_filename())
+            import_data_from_csv(rad_week, rad_file, reload)
+        except Exception as ex:
+            logger.exception(ex)
+            rad_import.import_status = RADImport.FAILURE
+            rad_import.save()
+            return (f"Failed to import RAD data for"
+                    f" {year}-{quarter}-week-{week_id}")
+
+        rad_import.import_status = RADImport.SUCCESS
+        rad_import.save()
+        logger.info(f"successfully imported RAD data for "
+                    f"{year}-{quarter}-week-{week_id}")
 
     def _load_all_data(self, reload):
         files = RADStorageDao().get_files_list()
+        status = []
         for file in files:
             year, quarter, week_id = (
                 RADStorageDao().get_year_quarter_week_from_filename(file))
-            rad_week = RADWeek.get_or_create_week(year=year,
-                                                  quarter=quarter,
-                                                  week=week_id)
-            try:
-                rad_import = RADImport.create_job(rad_week,
-                                                  reload=reload)
-            except ValueError as ex:
-                logger.exception(ex)
-                continue
-            try:
-                rad_file = RADStorageDao().download_from_bucket(file)
-                import_data_from_csv(rad_week, rad_file, reload)
-            except Exception as ex:
-                logger.exception(ex)
-                rad_import.import_status = RADImport.FAILURE
-                rad_import.save()
 
-            rad_import.import_status = RADImport.SUCCESS
-            rad_import.save()
+            status.append(self._load_week_by_year_quarter_week(year,
+                                                               quarter,
+                                                               week_id,
+                                                               reload))
+        return status

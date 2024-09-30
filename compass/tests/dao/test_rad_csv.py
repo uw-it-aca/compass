@@ -9,7 +9,8 @@ from compass.models.rad_data import CourseAnalyticsScores, RADWeek
 
 class TestRadCsv(TestCase):
 
-    RAD_FILE = 'compass/fixtures/rad_data/2024-spring-week-6-compass-data.csv'
+    RAD_FILE = ('compass/fixtures/'
+                'compass_data/2024-spring-week-6-compass-data.csv')
 
     def test_read_csv(self):
         with open(self.RAD_FILE) as f:
