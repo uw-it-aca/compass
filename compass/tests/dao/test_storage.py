@@ -9,7 +9,8 @@ from compass.dao.storage import RADStorageDao
 class TestStorage(TestCase):
     def test_get_term_and_week_from_filename(self):
         filename = "2023-spring-week-6-compass-data.csv"
-        year, quarter, week = RADStorageDao.get_year_quarter_week_from_filename(filename)
+        year, quarter, week = (
+            RADStorageDao.get_year_quarter_week_from_filename(filename))
         self.assertEqual(year, 2023)
         self.assertEqual(quarter, "spring")
         self.assertEqual(week, 6)

@@ -68,7 +68,6 @@ class RADStorageDao():
             content = f.read()
             return content.decode('utf-8')
 
-
     @staticmethod
     def get_year_quarter_week_from_filename(rad_file_name):
         """

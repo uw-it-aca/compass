@@ -84,10 +84,12 @@ class RADDataWeekTest(CompassTestCase):
 
 class RADImportTest(CompassTestCase):
     RAD_WEEK = None
+
     def setUp(self):
         self.RAD_WEEK = RADWeek.get_or_create_week(year=2021,
                                                    quarter='spring',
                                                    week=10)
+
     def test_get_filename(self):
         rad_import = RADImport.objects.create(week=self.RAD_WEEK,
                                               import_status=RADImport.SUCCESS)
@@ -97,7 +99,6 @@ class RADImportTest(CompassTestCase):
     def test_next_import_week_first_import(self):
         with self.assertRaises(RADImport.DoesNotExist):
             RADImport.get_next_import_week()
-
 
     def test_next_import_week(self):
         start_week = RADWeek.get_or_create_week(year=2021,
@@ -109,6 +110,7 @@ class RADImportTest(CompassTestCase):
         self.assertEqual(next_year, 2021)
         self.assertEqual(next_quarter, 'spring')
         self.assertEqual(next_week, 2)
+
     def test_next_import_week_qtr_turn(self):
         RADImport.objects.create(week=self.RAD_WEEK,
                                  import_status=RADImport.SUCCESS)
@@ -117,13 +119,12 @@ class RADImportTest(CompassTestCase):
         self.assertEqual(next_quarter, 'summer')
         self.assertEqual(next_week, 1)
 
-
     def test_next_import_yr_turn(self):
         last_week_in_yr = RADWeek.get_or_create_week(year=2021,
                                                      quarter='autumn',
                                                      week=10)
         RADImport.objects.create(week=last_week_in_yr,
-                                    import_status=RADImport.SUCCESS)
+                                 import_status=RADImport.SUCCESS)
         next_year, next_quarter, next_week = RADImport.get_next_import_week()
         self.assertEqual(next_year, 2022)
         self.assertEqual(next_quarter, 'winter')
@@ -139,8 +140,6 @@ class RADImportTest(CompassTestCase):
         with self.assertRaises(ValueError):
             RADImport.create_job(week)
         RADImport.create_job(week, reload=True)
-
-
 
 
 class CourseAnalyticsScoresTest(CompassTestCase):
@@ -181,7 +180,7 @@ class CourseAnalyticsScoresTest(CompassTestCase):
         #         )
         # CourseAnalyticsScores.objects.bulk_create(data_points)
 
-    def test_json_data(self ):
+    def test_json_data(self):
         score = CourseAnalyticsScores.objects.create(
             uwnetid="javerage",
             course="CSE 142 A",
@@ -221,7 +220,6 @@ class CourseAnalyticsScoresTest(CompassTestCase):
             prediction_score=5
         )
         self.assertTrue(score_alert.is_alert_status())
-
 
     def test_get_rad_data_for_course(self):
         CourseAnalyticsScores.objects.create(

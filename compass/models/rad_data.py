@@ -211,7 +211,6 @@ class RADWeek(models.Model):
     week = models.IntegerField()
     key = models.IntegerField(unique=True)
 
-
     @classmethod
     def get_quarter_number(cls, sis_term):
         qtr_map = {
