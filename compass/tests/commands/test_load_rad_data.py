@@ -82,9 +82,15 @@ class TestLoadRadData(CompassTestCase):
                      loadall=True,
                      stdout=stdout)
         self.assertEqual(RADImport.objects.count(), 10)
-        err_str = ("Import already exists for 2024-spring-week-5\n"
-                   "Import already exists for 2024-spring-week-6\n")
-        self.assertEqual(stdout.getvalue(), err_str)
+        err_str = ("Import already exists for 2024-spring-week-6\n"
+                   "Import already exists for 2024-spring-week-5\n")
+
+        # order of errors is not guaranteed
+        has_both_errors = (("already exists for 2024-spring-week-6"
+                            in err_str)
+                           and ("already exists for 2024-spring-week-5"
+                                in err_str))
+        self.assertTrue(has_both_errors)
 
         stdout = StringIO()
         call_command('load_rad_data',

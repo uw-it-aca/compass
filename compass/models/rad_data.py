@@ -52,7 +52,7 @@ class RADImport(models.Model):
             else:
                 next_quarter = last_week_imported.week.get_next_quarter()
 
-        next_week = 10 if last_week_imported.week.week == 9 else\
+        next_week = 10 if last_week_imported.week.week == 9 else \
             (last_week_imported.week.week + 1) % 10
         return next_year, next_quarter, next_week
 
@@ -84,11 +84,24 @@ class CourseAnalyticsScores(models.Model):
         unique_together = ('uwnetid', 'week', 'course')
 
     def json_data(self):
-        return {'activity_score': self.activity_score * 20,
-                'assignment_score': self.assignment_score * 20,
-                'grade_score': self.grade_score * 20,
-                'prediction_score': self.prediction_score * 20,
-                'week_id': self.week.week}
+        return {'activity_score':
+                self.convert_score_range(self.activity_score),
+                'assignment_score':
+                    self.convert_score_range(self.assignment_score),
+                'grade_score':
+                    self.convert_score_range(self.grade_score),
+                'prediction_score':
+                    self.convert_score_range(self.prediction_score),
+                'week_id':
+                    self.week.week}
+
+    @staticmethod
+    def convert_score_range(old_value):
+        old_min, old_max = -5.0, 5.0
+        new_min, new_max = 0, 100
+        new_value = ((old_value - old_min) / (old_max - old_min)) * (
+            new_max - new_min) + new_min
+        return new_value
 
     def is_alert_status(self):
         return (self.activity_score * 20 < 60 or
