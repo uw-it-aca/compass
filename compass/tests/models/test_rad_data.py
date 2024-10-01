@@ -188,14 +188,20 @@ class CourseAnalyticsScoresTest(CompassTestCase):
             activity_score=4,
             assignment_score=5,
             grade_score=3,
-            prediction_score=5
+            prediction_score=-5
         )
         json_data = score.json_data()
-        self.assertEqual(json_data['activity_score'], 80)
+        self.assertEqual(json_data['activity_score'], 90.0)
         self.assertEqual(json_data['assignment_score'], 100)
-        self.assertEqual(json_data['grade_score'], 60)
-        self.assertEqual(json_data['prediction_score'], 100)
+        self.assertEqual(json_data['grade_score'], 80)
+        self.assertEqual(json_data['prediction_score'], 0)
         self.assertEqual(json_data['week_id'], 5)
+
+    def test_convert_score_range(self):
+        self.assertEqual(CourseAnalyticsScores.convert_score_range(-5), 0)
+        self.assertEqual(CourseAnalyticsScores.convert_score_range(-4.5), 5.0)
+        self.assertEqual(CourseAnalyticsScores.convert_score_range(0), 50)
+        self.assertEqual(CourseAnalyticsScores.convert_score_range(5), 100)
 
     def test_alert_status(self):
         score = CourseAnalyticsScores.objects.create(

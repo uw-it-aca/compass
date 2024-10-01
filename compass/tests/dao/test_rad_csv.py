@@ -3,7 +3,7 @@
 
 
 from django.test import TestCase
-from compass.dao.rad_csv import read_csv, import_data_from_csv
+from compass.dao.rad_csv import read_csv, import_data_from_csv, _parse_score
 from compass.models.rad_data import CourseAnalyticsScores, RADWeek
 
 
@@ -31,3 +31,9 @@ class TestRadCsv(TestCase):
             self.assertEqual(CourseAnalyticsScores.objects.first()
                              .assignment_score,
                              3.0)
+
+    def test_parse_score(self):
+        self.assertEqual(_parse_score('3.0'), 3.0)
+        self.assertEqual(_parse_score('3'), 3.0)
+        self.assertEqual(_parse_score(''), 0)
+        self.assertEqual(_parse_score(None), 0)
