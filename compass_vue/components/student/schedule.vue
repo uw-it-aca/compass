@@ -171,9 +171,9 @@
           </div>
         </STabsPanel>
       </template>
-      <template v-else>
-        <div class="text-secondary">No schedules found</div>
-      </template>
+      <div v-else class="p-3">
+        No schedules found.
+      </div>
     </STabsDisplay>
   </BCard>
 </template>

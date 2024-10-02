@@ -1,40 +1,44 @@
 <template>
-  <axdd-card>
-    <template #heading>
-      <axdd-card-heading :level="2"
-        >Instructional Center Visits</axdd-card-heading
+  <BCard
+    class="shadow-sm rounded-3"
+    header-class="p-3 d-flex align-items-center justify-content-between"
+    body-class="p-0"
+    header-bg-variant="transparent"
+    footer-bg-variant="transparent"
+  >
+    <template #header>
+      <div class="fs-6 fw-bold">Instructional Center Visits</div>
+    </template>
+
+    <div v-if="visits.length" class="d-flex ps-2">
+      <div class="vr text-muted" aria-hidden="true"></div>
+      <ul
+        class="list-unstyled mb-0 overflow-auto w-100 flex-fill"
+        style="margin-left: -11px; z-index: 1; max-height: 400px"
       >
-    </template>
-    <template #body>
-      <div v-if="visits.length" class="d-flex ps-2">
-        <div class="vr text-muted" aria-hidden="true"></div>
-        <ul
-          class="list-unstyled mb-0 overflow-auto w-100 flex-fill"
-          style="margin-left: -11px; z-index: 1; max-height: 400px"
-        >
-          <li v-for="(visit, index) in visits" :key="index" class="d-flex mb-3">
+        <li v-for="(visit, index) in visits" :key="index" class="d-flex mb-3">
+          <div>
+            <i
+              class="bi bi-calendar-check-fill text-gray fs-7 ms-1 me-3 bg-white"
+            ></i>
+          </div>
+          <div>
             <div>
-              <i
-                class="bi bi-calendar-check-fill text-gray fs-7 ms-1 me-3 bg-white"
-              ></i>
+              <strong>{{ visit.course_code }}</strong>
+              <small>({{ visitDuration(visit) }}min)</small>
             </div>
-            <div>
-              <div>
-                <strong>{{ visit.course_code }}</strong>
-                <small>({{ visitDuration(visit) }}min)</small>
-              </div>
-              <div class="text-muted small">
-                {{ visitDate(visit) }} {{ visitCheckin(visit) }} -
-                {{ visitCheckout(visit) }}
-              </div>
+            <div class="text-muted small">
+              {{ visitDate(visit) }} {{ visitCheckin(visit) }} -
+              {{ visitCheckout(visit) }}
             </div>
-          </li>
-        </ul>
-      </div>
-      <div v-else class="text-muted">No visits found</div>
-    </template>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div v-else class="p-3">No visits found</div>
+
     <template #footer>Total Visits: {{ visits.length }}</template>
-  </axdd-card>
+  </BCard>
 </template>
 
 <script>
@@ -45,8 +49,10 @@ import {
   getMinutesApart,
 } from "@/utils/dates.js";
 
+import { BCard } from "bootstrap-vue-next";
+
 export default {
-  components: {},
+  components: { BCard },
   props: {
     person: {
       type: Object,

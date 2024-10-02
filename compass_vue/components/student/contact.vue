@@ -36,7 +36,7 @@
                     >
                   </div>
                   <div class="text-secondary">
-                    <i class="bi bi-calendar-event text-gray me-1"></i>
+                    <i class="bi bi-calendar-event text-body-tertiary me-1"></i>
                     {{ getTimeFromNow(contact.checkin_date) }}
                   </div>
                 </div>

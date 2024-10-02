@@ -212,14 +212,14 @@
           <div class="text-end">
             <button
               type="button"
-              class="btn btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2 me-2"
+              class="btn btn-sm btn-outline-primary rounded-3 px-3 py-2 me-2"
               data-bs-dismiss="modal"
             >
               Close
             </button>
             <button
               type="button"
-              class="btn btn-sm btn-purple rounded-3 px-3 py-2"
+              class="btn btn-sm btn-primary rounded-3 px-3 py-2"
               @click="saveContact()"
             >
               Save contact
