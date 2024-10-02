@@ -82,7 +82,7 @@
                 :panel-id="'overview'"
                 :active-tab="true"
               >
-                Overviewasdfdsaf
+                Overview
               </STabsItem>
               <STabsItem :tabs-id="'example'" :panel-id="'contact-visit'">
                 Contacts &amp; Visits
@@ -105,7 +105,6 @@
               <STabsPanel :panel-id="'overview'" :active-panel="true">
                 <div class="row mt-4">
                   <div class="col-xl-12">
-                    asdafasdf
                     <StudentAcademics :person="person"></StudentAcademics>
                   </div>
                   <div class="col-xl-9">

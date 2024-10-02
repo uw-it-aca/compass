@@ -27,11 +27,11 @@
     </template>
     <template #navigation>
       <NavMenu :user-roles="userRoles" />
+      <QuarterWeek :term-data="termData" />
     </template>
     <template #aside>
-      <QuarterWeek :term-data="termData" />
       <NavMessage v-if="persMsg && persMsg.length > 0" :messages="persMsg" />
-      <SColorMode />ssss
+      <SColorMode />
     </template>
     <template #main>
       <slot name="title">
