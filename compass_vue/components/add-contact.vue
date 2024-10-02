@@ -6,8 +6,8 @@
     class="btn text-nowrap"
     :class="[
       buttonType === 'button'
-        ? 'btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2'
-        : 'btn btn-sm fs-9 btn-outline-gray text-dark rounded-3 px-2 py-1 ms-1',
+        ? 'btn-sm btn-outline-secondary rounded-3 px-3 py-2'
+        : 'btn btn-sm fs-9 btn-outline-danger rounded-3 px-2 py-1 ms-1',
     ]"
     @click="getFormData()"
   >
