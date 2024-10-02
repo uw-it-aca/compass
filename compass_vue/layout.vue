@@ -1,6 +1,6 @@
 <template>
   <!-- layout.vue: this is where you override the layout -->
-  <axdd-sidebar
+  <SSidebar
     :app-name="appName"
     :app-root-url="appRootUrl"
     :page-title="pageTitle"
@@ -8,7 +8,7 @@
     :sign-out-url="signOutUrl"
   >
     <template #profile>
-      <axdd-profile
+      <SProfile
         v-if="userName != userOverride"
         :user-netid="userName"
         :user-override="userOverride"
@@ -20,17 +20,19 @@
         >
           Clear
         </button>
-      </axdd-profile>
-      <axdd-profile v-else :user-netid="userName">
+      </SProfile>
+      <SProfile v-else :user-netid="userName">
         <a :href="signOutUrl" class="text-white">Sign out</a>
-      </axdd-profile>
+      </SProfile>
     </template>
     <template #navigation>
       <NavMenu :user-roles="userRoles" />
+      <QuarterWeek :term-data="termData" />
     </template>
     <template #aside>
-      <QuarterWeek :term-data="termData" />
+
       <NavMessage v-if="persMsg && persMsg.length > 0" :messages="persMsg" />
+        <SColorMode />
     </template>
     <template #main>
       <slot name="title">
@@ -39,7 +41,7 @@
       <slot name="content"></slot>
     </template>
     <template #footer></template>
-  </axdd-sidebar>
+  </SSidebar>
 </template>
 
 <script>
@@ -47,10 +49,14 @@ import QuarterWeek from "@/components/_common/quarter-week.vue";
 import NavMenu from "@/components/nav-menu.vue";
 import NavMessage from "@/components/nav-message.vue";
 import { clearOverride } from "@/utils/data";
+import { SColorMode, SSidebar, SProfile } from "solstice-vue";
 
 export default {
   name: "CompassApp",
   components: {
+    SColorMode,
+    SSidebar,
+    SProfile,
     NavMenu,
     NavMessage,
     QuarterWeek,
