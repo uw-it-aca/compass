@@ -1,16 +1,18 @@
 <template>
   <div class="row mb-4">
-    <h2 class="h6 m-0 fw-bold mb-4">Academic Summary</h2>
+    <h2 class="h6 m-0 fw-bold mb-4">Aaaademic Summmmmary</h2>
 
     <div
       class="col-xl-3 d-flex flex-column"
       :class="[mq.lgMinus ? 'mb-4' : '']"
     >
+
+
       <div
         class="bg-light-beige rounded-3 p-3 border-0 d-flex flex-column flex-fill m-0 small"
       >
         <div class="flex-fill">
-          <p class="text-uppercase text-dark-beige fs-8 fw-bold">Status</p>
+          <p class="text-uppercase text-dark-beige fs-8 fw-bold">Statusss</p>
           <ul class="list-unstyled">
             <li>
               <KeyValue
@@ -44,11 +46,13 @@
           </KeyValue>
         </div>
       </div>
+
     </div>
     <div
       class="col-xl-3 d-flex flex-column"
       :class="[mq.lgMinus ? 'mb-4' : '']"
     >
+
       <div
         v-if="person.student.degrees && person.student.degrees.length > 0"
         class="bg-light-beige rounded-3 p-3 border-0 d-flex flex-column flex-fill m-0 small"
@@ -78,6 +82,7 @@
           </div>
         </div>
       </div>
+
       <div
         v-if="person.student.degrees && person.student.degrees.length == 0"
         class="bg-light-beige rounded-3 p-3 border-0 d-flex flex-column flex-fill m-0 small"
@@ -150,6 +155,7 @@
           </div>
         </div>
       </div>
+
     </div>
     <div
       class="col-xl-3 d-flex flex-column"
@@ -205,6 +211,8 @@
 import KeyValue from "@/components/_common/key-value.vue";
 import AffiliationSummary from "@/components/student/affiliation-mini.vue";
 import { translateTrueFalse } from "@/utils/translations";
+import { BCard } from "bootstrap-vue-next";
+
 
 export default {
   inject: ["mq"],
@@ -217,6 +225,7 @@ export default {
   components: {
     KeyValue,
     AffiliationSummary,
+    BCard,
   },
   setup() {
     return {

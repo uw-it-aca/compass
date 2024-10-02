@@ -1,5 +1,10 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
+  <BCard class="shadow-sm rounded-3" header-class="p-3" header="Default">
+    <template #header> asdfasdf </template>
+    asdfasfsadf
+  </BCard>
+
   <axdd-card>
     <template #heading-action v-if="Object.keys(schedules).length">
       <axdd-card-heading :level="2">Schedule</axdd-card-heading>
@@ -71,14 +76,31 @@
                           <!-- Expend and collapse RAD data. Auto expand all classes with a warning icon -->
                           <div v-show="isQuizSection(section.credits)">
                             <i
-                              v-if="courseAnalyticsVisiblity(scheduleIndex, sectionIndex)"
+                              v-if="
+                                courseAnalyticsVisiblity(
+                                  scheduleIndex,
+                                  sectionIndex
+                                )
+                              "
                               class="bi bi-chevron-up me-3 pt-2 h5"
-                              @click="hideCourseAnalytics($event, scheduleIndex, sectionIndex)"
+                              @click="
+                                hideCourseAnalytics(
+                                  $event,
+                                  scheduleIndex,
+                                  sectionIndex
+                                )
+                              "
                             ></i>
                             <i
                               v-else
                               class="bi bi-chevron-down me-3 pt-2 h5"
-                              @click="showCourseAnalytics($event, scheduleIndex, sectionIndex)"
+                              @click="
+                                showCourseAnalytics(
+                                  $event,
+                                  scheduleIndex,
+                                  sectionIndex
+                                )
+                              "
                             ></i>
                           </div>
                           <div>
@@ -129,7 +151,11 @@
                         </td>
                         <td>{{ section.credits }}</td>
                       </tr>
-                      <tr v-if="courseAnalyticsVisiblity(scheduleIndex, sectionIndex)">
+                      <tr
+                        v-if="
+                          courseAnalyticsVisiblity(scheduleIndex, sectionIndex)
+                        "
+                      >
                         <td colspan="5" class="p-3 pt-0">
                           <CourseAnalytics
                             :uwnetid="person.uwnetid"
@@ -165,10 +191,12 @@
 import { translateMilitaryTime } from "@/utils/translations";
 import { getStudentSchedules } from "@/utils/data";
 import CourseAnalytics from "@/components/student/analytics/canvas-course.vue";
+import { BCard } from "bootstrap-vue-next";
 
 export default {
   components: {
     CourseAnalytics,
+    BCard,
   },
   props: {
     person: {
@@ -185,7 +213,7 @@ export default {
   data() {
     return {
       schedules: {},
-      analyticsDisplay: {}
+      analyticsDisplay: {},
     };
   },
   created() {
@@ -193,7 +221,10 @@ export default {
   },
   methods: {
     courseAnalyticsVisiblity: function (scheduleIndex, sectionIndex) {
-      return this.analyticsDisplay[scheduleIndex] && this.analyticsDisplay[scheduleIndex][sectionIndex];
+      return (
+        this.analyticsDisplay[scheduleIndex] &&
+        this.analyticsDisplay[scheduleIndex][sectionIndex]
+      );
     },
     showCourseAnalytics: function (target, scheduleIndex, sectionIndex) {
       if (!this.analyticsDisplay[scheduleIndex]) {

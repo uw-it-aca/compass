@@ -4,7 +4,7 @@ import VueGtag from "vue-gtag-next";
 import { Vue3Mq, MqResponsive } from "vue3-mq";
 
 // import solstice-vue
-import SolsticeVue from "solstice-vue";
+//import SolsticeVue from "solstice-vue";
 
 import App from "@/app.vue";
 import router from "@/router";
@@ -13,9 +13,14 @@ import router from "@/router";
 import "bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-// bootstrap (axdd) and solstice-vue
-import "@/css/custom.scss";
+// solstice-vue
+//import "@/css/custom.scss";
 import "solstice-vue/dist/style.css";
+import "solstice-vue/dist/solstice.scss";
+
+// bootstrap-vue-next css
+//import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-vue-next/dist/bootstrap-vue-next.css";
 
 const app = createApp(App);
 app.config.productionTip = false;
@@ -46,7 +51,7 @@ const pinia = createPinia();
 app.use(pinia);
 
 // solstice-vue
-app.use(SolsticeVue);
+//app.use(SolsticeVue);
 
 // vue-router
 app.use(router);

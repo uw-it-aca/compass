@@ -1,40 +1,40 @@
 <template>
-  <layout :page-title="pageTitle">
+  <Layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
       <div class="row my-4 small">
         <div class="col">
-          <div class="bg-light p-3 rounded-3">
+
+          <BCard class="bg-body-tertiary rounded-3" border-variant="0">
             <div class="row">
               <div class="col-xl-4 me-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
-                  <search-student></search-student>
+                  <SearchStudent />
                 </div>
               </div>
               <div class="col-xl-8">&nbsp;</div>
             </div>
-          </div>
+          </BCard>
+
         </div>
       </div>
 
       <div class="row my-4">
         <div class="col">
-          <axdd-card>
-            <template #heading-action>
-              <axdd-card-heading :level="2"
-                >Recent Check-Ins (3 days)</axdd-card-heading
-              >
-            </template>
-            <template #body>
-              <table-loading v-if="isLoading"></table-loading>
-              <table-display v-else :contacts="contacts"></table-display>
-            </template>
-          </axdd-card>
+          <BCard
+            class="shadow-sm rounded-3"
+            header-class="p-3"
+            header="Default"
+          >
+            <template #header> Recent Check-Ins (3 days) </template>
+            <CheckInTableLoading v-if="isLoading" />
+            <CheckInTableDisplay v-else :contacts="contacts" />
+          </BCard>
         </div>
       </div>
     </template>
-  </layout>
+  </Layout>
 </template>
 
 <script>
@@ -44,12 +44,15 @@ import CheckInTableDisplay from "@/components/checkin-table-display.vue";
 import Layout from "@/layout.vue";
 import { getAdviserCheckIns } from "@/utils/data";
 
+import { BCard } from "bootstrap-vue-next";
+
 export default {
   components: {
-    layout: Layout,
-    "search-student": SearchStudent,
-    "table-loading": CheckInTableLoading,
-    "table-display": CheckInTableDisplay,
+    BCard,
+    Layout,
+    SearchStudent,
+    CheckInTableLoading,
+    CheckInTableDisplay,
   },
   setup() {
     return {
