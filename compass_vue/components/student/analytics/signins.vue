@@ -5,18 +5,22 @@
     header-bg-variant="transparent"
   >
     <template #header
-      ><div class="fs-6 fw-bold">Sign-In Data</div>
-      <button
-        tabindex="0"
-        role="button"
-        class="btn btn-link m-0 p-0"
-        data-bs-toggle="popover"
-        data-bs-trigger="focus"
-        data-bs-placement="top"
-        title="Sign-In Data"
-        data-bs-content="Sign in data from UW IdP"
-      ></button
-    ></template>
+      ><div class="fs-6 fw-bold">
+        Sign-In Data
+        <button
+          tabindex="0"
+          role="button"
+          class="btn btn-link m-0 p-0"
+          data-bs-toggle="popover"
+          data-bs-trigger="focus"
+          data-bs-placement="top"
+          title="Sign-In Data"
+          data-bs-content="Sign in data from UW IdP"
+        >
+          <i class="bi bi-info-circle-fill"></i>
+        </button>
+      </div>
+    </template>
 
     <AnalyticsChart
       v-if="dataReady"
