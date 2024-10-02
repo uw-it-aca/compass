@@ -3,6 +3,7 @@
   <BCard
     class="shadow-sm rounded-3"
     header-class="p-3 d-flex align-items-center justify-content-between"
+    body-class="p-0"
     header-bg-variant="transparent"
   >
     <template #header>
@@ -46,13 +47,13 @@
               <col style="width: 13%" />
               <col style="width: 22%" />
               <col style="width: 10%" />
-              <thead class="table-light text-muted small">
+              <thead class="text-muted small">
                 <tr>
-                  <th class="ps-3">Course</th>
-                  <th>SLN</th>
-                  <th>Day</th>
-                  <th>Time</th>
-                  <th>Credits</th>
+                  <th class="ps-3 bg-body-tertiary">Course</th>
+                  <th class="bg-body-tertiary">SLN</th>
+                  <th class="bg-body-tertiary">Day</th>
+                  <th class="bg-body-tertiary">Time</th>
+                  <th class="bg-body-tertiary">Credits</th>
                 </tr>
               </thead>
               <tbody class="mb-3" v-if="schedule.sections.length > 0">
@@ -62,7 +63,7 @@
                 >
                   <tr
                     :class="[
-                      isQuizSection(section.credits) ? 'border-white' : '',
+                      isQuizSection(section.credits) ? '' : '',
                     ]"
                   >
                     <td class="d-flex ps-3">
@@ -175,7 +176,6 @@
       </template>
     </STabsDisplay>
   </BCard>
-
 </template>
 
 <script>

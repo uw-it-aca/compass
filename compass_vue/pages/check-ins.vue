@@ -25,7 +25,7 @@
           <BCard
             class="shadow-sm rounded-3"
             header-class="p-3"
-            header="Default"
+            body-class="p-0"
           >
             <template #header> Recent Check-Ins (3 days) </template>
             <CheckInTableLoading v-if="isLoading" />

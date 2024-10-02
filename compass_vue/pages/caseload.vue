@@ -169,9 +169,12 @@
           <BCard
             class="shadow-sm rounded-3"
             header-class="p-3"
-            header="Default"
+             header-bg-variant="transparent"
+            body-class="p-0"
           >
-            <template #header>Caseload</template>
+            <template #header>
+              <div class="fs-6 fw-bold">Caseload</div>
+            </template>
             <CaseloadTableLoading v-if="isLoading" />
             <CaseloadTableDisplay
               v-else

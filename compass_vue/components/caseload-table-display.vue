@@ -1,12 +1,12 @@
 <template>
   <div v-if="persons.length > 0" class="table-responsive m-n3">
     <table class="table m-0">
-      <thead class="table-light text-muted small">
+      <thead class="text-muted small">
         <tr>
-          <th scope="col" style="width: 34%" class="ps-3">Student</th>
-          <th scope="col">Class</th>
-          <th scope="col">Campus</th>
-          <th scope="col" style="width: 45%" class="text-nowrap">Status</th>
+          <th scope="col" style="width: 34%" class="bg-body-tertiary ps-3">Student</th>
+          <th scope="col" class="bg-body-tertiary">Class</th>
+          <th scope="col" class="bg-body-tertiary">Campus</th>
+          <th scope="col" style="width: 45%" class="text-nowrap bg-body-tertiary">Status</th>
         </tr>
       </thead>
       <tbody>
