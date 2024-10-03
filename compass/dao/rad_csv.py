@@ -37,7 +37,9 @@ def import_data_from_csv(week, csv_string, reload=False):
             student_signin_analytics.append(
                 StudentSigninAnalytics(uwnetid=row['uw_netid'],
                                        week=week,
-                                       signin_score=row['sign_in'])
+                                       signin_score=_parse_score(
+                                           row['sign_in'])
+                                       )
             )
             processed_netids.append(row['uw_netid'])
         # Catch dupes manually so we can use more performant bulk_create
