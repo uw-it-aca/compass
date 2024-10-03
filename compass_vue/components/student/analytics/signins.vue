@@ -1,8 +1,12 @@
 <template>
-  <axdd-card>
-    <template #heading>
-      <axdd-card-heading :level="2"
-        >Sign-In Data
+  <BCard
+    class="shadow-sm rounded- mt-4"
+    header-class="p-3 d-flex align-items-center justify-content-between"
+    header-bg-variant="transparent"
+  >
+    <template #header
+      ><div class="fs-6 fw-bold">
+        Sign-In Data
         <button
           tabindex="0"
           role="button"
@@ -13,32 +17,34 @@
           title="Sign-In Data"
           data-bs-content="Sign in data from UW IdP"
         >
-          <i class="bi bi-info-circle-fill"></i></button
-      ></axdd-card-heading>
+          <i class="bi bi-info-circle-fill"></i>
+        </button>
+      </div>
     </template>
-    <template #body>
-      <template v-if="analyticsNotFound">
-        <p>Sign-in data not found</p>
-      </template>
-      <template v-else>
-        <AnalyticsChart
-          v-if="dataReady"
-          :data-series="formattedData"
-          :show-only-latest="true"
-        ></AnalyticsChart>
-      </template>
+
+    <template v-if="analyticsNotFound">
+      <p>Sign-in data not found</p>
     </template>
-  </axdd-card>
+    <template v-else>
+      <AnalyticsChart
+        v-if="dataReady"
+        :data-series="formattedData"
+        :show-only-latest="true"
+      ></AnalyticsChart>
+    </template>
+  </BCard>
 </template>
 
 <script>
 import { Popover } from "bootstrap";
+import { BCard } from "bootstrap-vue-next";
 import { useAnalyticsStore } from "@/stores/analytics.js";
 import AnalyticsChart from "@/components/student/analytics/chart.vue";
 
 export default {
   name: "SignInChart",
   components: {
+    BCard,
     AnalyticsChart,
   },
   setup() {

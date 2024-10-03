@@ -1,5 +1,5 @@
 <template>
-  <layout :page-title="'Student Search'">
+  <Layout :page-title="'Student Search'">
     <template #title>
       <h1 class="visually-hidden">
         <template v-if="$route.params.id && person.display_name !== undefined">
@@ -11,7 +11,7 @@
     <template #content>
       <div v-show="!$route.params.id || isError" class="row my-4 small">
         <div class="col">
-          <div class="bg-light p-3 rounded-3">
+          <BCard class="bg-body-tertiary rounded-3" border-variant="0">
             <div class="row">
               <div class="col-xl-4 ms-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
@@ -22,7 +22,7 @@
               <div class="col-4"></div>
               <div class="col-4"></div>
             </div>
-          </div>
+          </BCard>
         </div>
       </div>
 
@@ -76,106 +76,97 @@
 
         <div class="row">
           <div class="col">
-            <axdd-tabs-list :tabs-id="'example'">
-              <template #items>
-                <axdd-tabs-item
-                  :tabs-id="'example'"
-                  :panel-id="'overview'"
-                  :active-tab="true"
-                >
-                  Overview
-                </axdd-tabs-item>
-                <axdd-tabs-item
-                  :tabs-id="'example'"
-                  :panel-id="'contact-visit'"
-                >
-                  Contacts &amp; Visits
-                </axdd-tabs-item>
-                <axdd-tabs-item
-                  :tabs-id="'example'"
-                  :panel-id="'academic-history'"
-                >
-                  Academic History
-                </axdd-tabs-item>
+            <STabsList :tabs-id="'example'">
+              <STabsItem
+                :tabs-id="'example'"
+                :panel-id="'overview'"
+                :active-tab="true"
+              >
+                Overview
+              </STabsItem>
+              <STabsItem :tabs-id="'example'" :panel-id="'contact-visit'">
+                Contacts &amp; Visits
+              </STabsItem>
+              <STabsItem :tabs-id="'example'" :panel-id="'academic-history'">
+                Academic History
+              </STabsItem>
 
-                <!-- MARK: only show administrative tab to managers -->
-                <axdd-tabs-item
-                  v-show="userRoles.includes(Role.Manager)"
-                  :tabs-id="'example'"
-                  :panel-id="'admin'"
-                >
-                  Administrative
-                </axdd-tabs-item>
-              </template>
-            </axdd-tabs-list>
+              <!-- MARK: only show administrative tab to managers -->
+              <STabsItem
+                v-show="userRoles.includes(Role.Manager)"
+                :tabs-id="'example'"
+                :panel-id="'admin'"
+              >
+                Administrative
+              </STabsItem>
+            </STabsList>
 
-            <axdd-tabs-display :tabs-id="'example'">
-              <template #panels>
-                <axdd-tabs-panel :panel-id="'overview'" :active-panel="true">
-                  <div class="row mt-4">
-                    <div class="col-xl-12">
-                      <StudentAcademics :person="person"></StudentAcademics>
-                    </div>
-                    <div class="col-xl-9">
-                      <StudentSchedule :person="person"></StudentSchedule>
-                      <SignInChart :uwnetid="person.uwnetid"></SignInChart>
-                    </div>
-                    <div class="col-xl-3">
-                      <StudentHolds :person="person"></StudentHolds>
-                      <StudentAdviser
-                        :advisers="person.student.advisers"
-                      ></StudentAdviser>
-                    </div>
+            <STabsDisplay :tabs-id="'example'">
+              <STabsPanel :panel-id="'overview'" :active-panel="true">
+                <div class="row mt-4">
+                  <div class="col-xl-12">
+                    <StudentAcademics :person="person"></StudentAcademics>
                   </div>
-                </axdd-tabs-panel>
-                <axdd-tabs-panel :panel-id="'contact-visit'">
-                  <div class="row mt-4">
-                    <div class="col-xl-9">
-                      <StudentContact :person="person"></StudentContact>
-                    </div>
-                    <div class="col-xl-3">
-                      <!-- MARK: only show visits to OMAD access group -->
-                      <StudentVisits
-                        v-show="inUserAccessGroup()"
-                        :person="person"
-                      ></StudentVisits>
-                    </div>
+                  <div class="col-xl-9">
+                    <StudentSchedule :person="person"></StudentSchedule>
+                    <SignInChart :uwnetid="person.uwnetid"></SignInChart>
                   </div>
-                </axdd-tabs-panel>
-                <axdd-tabs-panel :panel-id="'academic-history'">
-                  <div class="row mt-4">
-                    <div class="col-xl-9">
-                      <StudentTranscript :person="person"></StudentTranscript>
-                    </div>
-                    <div class="col-xl-3">
-                      <StudentTranscriptCredits
-                        :person="person"
-                      ></StudentTranscriptCredits>
-                    </div>
+                  <div class="col-xl-3">
+                    <StudentHolds :person="person"></StudentHolds>
+                    <StudentAdviser
+                      :advisers="person.student.advisers"
+                    ></StudentAdviser>
                   </div>
-                </axdd-tabs-panel>
+                </div>
+              </STabsPanel>
+              <STabsPanel :panel-id="'contact-visit'">
+                <div class="row mt-4">
+                  <div class="col-xl-9">
+                    <StudentContact :person="person"></StudentContact>
+                  </div>
+                  <div class="col-xl-3">
+                    <!-- MARK: only show visits to OMAD access group -->
+                    <StudentVisits
+                      v-show="inUserAccessGroup()"
+                      :person="person"
+                    ></StudentVisits>
+                  </div>
+                </div>
+              </STabsPanel>
+              <STabsPanel :panel-id="'academic-history'">
+                <div class="row mt-4">
+                  <div class="col-xl-9">
+                    <StudentTranscript :person="person"></StudentTranscript>
+                  </div>
+                  <div class="col-xl-3">
+                    <StudentTranscriptCredits
+                      :person="person"
+                    ></StudentTranscriptCredits>
+                  </div>
+                </div>
+              </STabsPanel>
 
-                <!-- MARK: only show administrative panel to managers -->
-                <axdd-tabs-panel
-                  v-show="userRoles.includes(Role.Manager)"
-                  :panel-id="'admin'"
-                >
-                  <div class="row mt-4">
-                    <div class="col-xl-9">
-                      <AffiliationAddEdit :person="person"></AffiliationAddEdit>
-                    </div>
-                    <div class="col-xl-3">
-                      <SpecialPrograms :person="person"></SpecialPrograms>
-                    </div>
+              <!-- MARK: only show administrative panel to managers -->
+              <STabsPanel
+                v-show="userRoles.includes(Role.Manager)"
+                :panel-id="'admin'"
+              >
+                <div class="row mt-4">
+                  <div class="col-xl-9">
+                    <AffiliationAddEdit :person="person"></AffiliationAddEdit>
                   </div>
-                </axdd-tabs-panel>
-              </template>
-            </axdd-tabs-display>
+                  <div class="col-xl-3">
+                    <SpecialPrograms :person="person"></SpecialPrograms>
+                    <StudentEligibility v-show="false" :person="person"></StudentEligibility>
+                  </div>
+                </div>
+              </STabsPanel>
+            </STabsDisplay>
           </div>
         </div>
       </div>
     </template>
-  </layout>
+  </Layout>
 </template>
 
 <script>
@@ -190,6 +181,7 @@ import StudentSchedule from "@/components/student/schedule.vue";
 import StudentHolds from "@/components/student/holds.vue";
 import StudentAdviser from "@/components/student/adviser.vue";
 import StudentVisits from "@/components/student/visits.vue";
+import StudentEligibility from "@/components/student/administrative/eligibility.vue";
 import SearchStudent from "@/components/search-student.vue";
 import AffiliationAddEdit from "@/components/student/administrative/affiliation.vue";
 import SpecialPrograms from "@/components/student/administrative/special-programs.vue";
@@ -198,10 +190,18 @@ import SignInChart from "@/components/student/analytics/signins.vue";
 import { Role } from "@/utils/roles";
 import { getStudentDetail, getAccessGroups } from "@/utils/data";
 
+import { STabsDisplay, STabsPanel, STabsList, STabsItem } from "solstice-vue";
+import { BCard } from "bootstrap-vue-next";
+
 export default {
   inject: ["mq"],
   components: {
-    layout: Layout,
+    Layout,
+    BCard,
+    STabsDisplay,
+    STabsPanel,
+    STabsList,
+    STabsItem,
     StudentProfile,
     StudentProfileLoading,
     StudentAcademics,
@@ -212,10 +212,11 @@ export default {
     StudentHolds,
     StudentAdviser,
     StudentVisits,
+    StudentEligibility,
     SearchStudent,
     AffiliationAddEdit,
     SpecialPrograms,
-    SignInChart
+    SignInChart,
   },
   created: function () {
     this.loadAccessGroups();

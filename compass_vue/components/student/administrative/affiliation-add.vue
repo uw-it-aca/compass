@@ -6,7 +6,7 @@
     class="btn text-nowrap"
     :class="[
       buttonType === 'button'
-        ? 'btn-sm btn-outline-gray text-dark rounded-3 px-3 py-2'
+        ? 'btn-sm btn-outline-secondary rounded-3 px-3 py-2'
         : 'small p-0 btn-sm btn-link',
     ]"
   >

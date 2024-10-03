@@ -3,7 +3,7 @@
     role="button"
     data-bs-toggle="modal"
     :data-bs-target="'#editAffiliationsModal' + this.studentAffiliation.id"
-    class="btn btn-sm fs-9 btn-outline-gray text-danger rounded-3 px-2 py-1"
+    class="btn btn-sm fs-9 btn-outline-danger rounded-3 px-2 py-1"
   >
     <slot>Edit Affiliation</slot>
   </a>

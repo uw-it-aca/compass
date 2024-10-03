@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-light rounded-3 border-0 px-0 py-4 m-0">
+  <BCard class="bg-body-tertiary rounded-3" border-variant="0">
     <div class="row">
       <div class="col-xl-3 d-flex flex-column">
         <div v-if="person.student.deceased_date" class="px-3 mt-n1">
@@ -13,17 +13,18 @@
         </div>
         <div class="flex-fill d-flex px-3 text-center">
           <div class="align-self-center flex-fill">
-            <div class="d-inline-block rounded-circle border border-4 mb-2">
+            <div class="d-inline-block rounded-circle border border-light-subtle border-4 mb-2">
               <img
                 :src="person.photo_url"
                 @error="
                   $event.target.src = '/static/compass/img/placeholder.png'
                 "
-                class="img-profile rounded-circle border bg-light border-white border-2"
+                class="img-profile rounded-circle border border-4"
+                :class="borderClass"
               />
             </div>
             <!-- moved preferred name to under the profile photo -->
-            <div class="h4 axdd-font-encode-sans mb-0">
+            <div class="h4 ff-encode-sans mb-0">
               <template v-if="person.display_name">
                 {{ person.display_name }}
               </template>
@@ -288,14 +289,21 @@
                 <template #value>
                   <address class="mb-0">
                     <div>{{ person.student.local_addr_line1 }}</div>
-                    <div v-show="person.student.local_addr_line2 !== null">{{ person.student.local_addr_line2 }}</div>
+                    <div v-show="person.student.local_addr_line2 !== null">
+                      {{ person.student.local_addr_line2 }}
+                    </div>
                     <div>
-                      {{ person.student.local_addr_city }}<span v-show="person.student.local_addr_state !== null">,</span>
+                      {{ person.student.local_addr_city
+                      }}<span v-show="person.student.local_addr_state !== null"
+                        >,</span
+                      >
                       {{ person.student.local_addr_state }}
                       {{ person.student.local_addr_5digit_zip }}
                     </div>
                   </address>
-                  <div v-show="person.student.local_phone_number !== null">{{ formatPhoneNumber(person.student.local_phone_number) }}</div>
+                  <div v-show="person.student.local_phone_number !== null">
+                    {{ formatPhoneNumber(person.student.local_phone_number) }}
+                  </div>
                 </template>
               </KeyValue>
             </li>
@@ -305,9 +313,14 @@
                 <template #value>
                   <address class="mb-0">
                     <div>{{ person.student.perm_addr_line1 }}</div>
-                    <div v-show="person.student.perm_addr_line2 !== null">{{ person.student.perm_addr_line2 }}</div>
+                    <div v-show="person.student.perm_addr_line2 !== null">
+                      {{ person.student.perm_addr_line2 }}
+                    </div>
                     <div>
-                      {{ person.student.perm_addr_city }}<span v-show="person.student.perm_addr_state !== null">,</span>
+                      {{ person.student.perm_addr_city
+                      }}<span v-show="person.student.perm_addr_state !== null"
+                        >,</span
+                      >
                       {{ person.student.perm_addr_state }}
                       {{ person.student.perm_addr_5digit_zip }}
                     </div>
@@ -315,7 +328,9 @@
                       {{ person.student.perm_addr_country }}
                     </div>
                   </address>
-                  <div v-show="person.student.perm_phone_number !== null">{{ formatPhoneNumber(person.student.perm_phone_number) }}</div>
+                  <div v-show="person.student.perm_phone_number !== null">
+                    {{ formatPhoneNumber(person.student.perm_phone_number) }}
+                  </div>
                 </template>
               </KeyValue>
             </li>
@@ -326,9 +341,14 @@
                   <div>{{ person.student.parent_name }}</div>
                   <address class="mb-0">
                     <div>{{ person.student.parent_addr_line1 }}</div>
-                    <div v-show="person.student.parent_addr_line2 !== null">{{ person.student.parent_addr_line2 }}</div>
+                    <div v-show="person.student.parent_addr_line2 !== null">
+                      {{ person.student.parent_addr_line2 }}
+                    </div>
                     <div>
-                      {{ person.student.parent_addr_city }}<span v-show="person.student.parent_addr_state !== null">,</span>
+                      {{ person.student.parent_addr_city
+                      }}<span v-show="person.student.parent_addr_state !== null"
+                        >,</span
+                      >
                       {{ person.student.parent_addr_state }}
                       {{ person.student.parent_addr_5digit_zip }}
                     </div>
@@ -336,7 +356,9 @@
                       {{ person.student.parent_addr_country }}
                     </div>
                   </address>
-                  <div v-show="person.student.parent_phone_number !== null">{{ formatPhoneNumber(person.student.parent_phone_number) }}</div>
+                  <div v-show="person.student.parent_phone_number !== null">
+                    {{ formatPhoneNumber(person.student.parent_phone_number) }}
+                  </div>
                 </template>
               </KeyValue>
             </li>
@@ -385,7 +407,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </BCard>
 </template>
 
 <script>
@@ -393,6 +415,7 @@ import KeyValue from "@/components/_common/key-value.vue";
 import { translateTrueFalse } from "@/utils/translations";
 import { formatDate } from "@/utils/dates";
 import { formatPhoneNumber } from "@/utils/formats";
+import { BCard } from "bootstrap-vue-next";
 
 export default {
   inject: ["mq"],
@@ -402,7 +425,7 @@ export default {
       required: true,
     },
   },
-  components: { KeyValue },
+  components: { KeyValue, BCard },
   setup() {
     return {
       translateTrueFalse,
@@ -412,6 +435,16 @@ export default {
   },
   data() {
     return {};
+  },
+  computed: {
+    borderClass() {
+      const classes = {
+        danger: "border-danger",
+        warning: "border-warning",
+        normal: "border-success"
+      };
+      return classes[this.person.analytics_alert] || classes.normal;
+    },
   },
 };
 </script>

@@ -1,66 +1,70 @@
 <template>
-  <axdd-card>
-    <template #heading>
-      <axdd-card-heading :level="2">Special Programs</axdd-card-heading>
+  <BCard
+    class="shadow-sm rounded-3"
+    header-class="p-3"
+    header-bg-variant="transparent"
+    footer-bg-variant="transparent"
+  >
+    <template #header>
+      <div class="fs-6 fw-bold">Special Programs</div>
     </template>
-    <template #body>
-      <ul class="list-unstyled">
-        <li>
-          Code: {{ person.student.special_program_code }} -
-          {{ person.student.special_program_desc }}
-        </li>
-      </ul>
-      <!-- MARK: if now affiliation date set -->
-      <div v-if="program_data.program_date">
-        <p>
-          This student affiliated on<br />
-          <span class="fw-bold">{{
-            formatDate(program_data.program_date, "MMMM D, YYYY")
-          }}</span>
+
+    <ul class="list-unstyled">
+      <li>
+        Code: {{ person.student.special_program_code }} -
+        {{ person.student.special_program_desc }}
+      </li>
+    </ul>
+    <!-- MARK: if now affiliation date set -->
+    <div v-if="program_data.program_date">
+      <p>
+        This student affiliated on<br />
+        <span class="fw-bold">{{
+          formatDate(program_data.program_date, "MMMM D, YYYY")
+        }}</span>
+      </p>
+      <div class="my-3 text-end">
+        <SpecialProgramEdit
+          :button-type="'button'"
+          :person="person"
+          :program_data="program_data"
+          @specialProgramUpdated="loadSpecialProgramData()"
+        >
+          <i class="bi bi-pencil me-2"></i>Edit
+        </SpecialProgramEdit>
+        <SpecialProgramDelete
+          :button-type="'button'"
+          :person="person"
+          :program_data="program_data"
+          @specialProgramUpdated="loadSpecialProgramData()"
+        >
+          <i class="bi bi-trash ms-e"></i>Delete
+        </SpecialProgramDelete>
+      </div>
+      <p class="small text-muted m-0" v-if="program_data.modified_by">
+        Last updated by:
+        <span class="text-muted">{{ program_data.modified_by.uwnetid }}</span>
+      </p>
+    </div>
+    <!-- MARK: set affiliation date -->
+    <div v-else>
+      <div class="mt-3">
+        <p class="text-muted">
+          No affiliation date has been set for this student.
         </p>
-        <div class="my-3  text-end">
-          <SpecialProgramEdit
+        <div class="text-end">
+          <SpecialProgramAdd
             :button-type="'button'"
             :person="person"
             :program_data="program_data"
             @specialProgramUpdated="loadSpecialProgramData()"
           >
-            <i class="bi bi-pencil me-2"></i>Edit
-          </SpecialProgramEdit>
-          <SpecialProgramDelete
-            :button-type="'button'"
-            :person="person"
-            :program_data="program_data"
-            @specialProgramUpdated="loadSpecialProgramData()"
-          >
-            <i class="bi bi-trash ms-e"></i>Delete
-          </SpecialProgramDelete>
-        </div>
-        <p class="small text-muted m-0" v-if="program_data.modified_by">
-          Last updated by:
-          <span class="text-muted">{{ program_data.modified_by.uwnetid }}</span>
-        </p>
-      </div>
-      <!-- MARK: set affiliation date -->
-      <div v-else>
-        <div class="mt-3">
-          <p class="text-muted">
-            No affiliation date has been set for this student.
-          </p>
-          <div class="text-end">
-            <SpecialProgramAdd
-              :button-type="'button'"
-              :person="person"
-              :program_data="program_data"
-              @specialProgramUpdated="loadSpecialProgramData()"
-            >
-              <i class="bi bi-calendar-plus-fill me-2"></i>Add affiliation date
-            </SpecialProgramAdd>
-          </div>
+            <i class="bi bi-calendar-plus-fill me-2"></i>Add affiliation date
+          </SpecialProgramAdd>
         </div>
       </div>
-    </template>
-  </axdd-card>
+    </div>
+  </BCard>
 </template>
 
 <script>
@@ -70,8 +74,11 @@ import SpecialProgramAdd from "@/components/student/administrative/special-progr
 import SpecialProgramEdit from "@/components/student/administrative/special-programs-edit.vue";
 import SpecialProgramDelete from "@/components/student/administrative/special-programs-delete.vue";
 
+import { BCard } from "bootstrap-vue-next";
+
 export default {
   components: {
+    BCard,
     SpecialProgramAdd,
     SpecialProgramEdit,
     SpecialProgramDelete,
