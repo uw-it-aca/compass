@@ -15,7 +15,12 @@
         <i class="bi bi-info-circle-fill ms-2"></i>
       </a>
     </div>
-    <analytics-chart v-if="dataReady" :data-series="formattedSeriesData" :show-only-latest="false"></analytics-chart>
+    <template v-if="analyticsNotFound">
+      <p>Course analytics not found</p>
+    </template>
+    <template v-else>
+      <analytics-chart v-if="dataReady" :data-series="formattedSeriesData" :show-only-latest="false"></analytics-chart>
+    </template>
   </div>
 </template>
 

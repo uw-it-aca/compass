@@ -17,11 +17,16 @@
       ></axdd-card-heading>
     </template>
     <template #body>
-      <AnalyticsChart
-        v-if="dataReady"
-        :data-series="formattedData"
-        :show-only-latest="true"
-      ></AnalyticsChart>
+      <template v-if="analyticsNotFound">
+        <p>Sign-in data not found</p>
+      </template>
+      <template v-else>
+        <AnalyticsChart
+          v-if="dataReady"
+          :data-series="formattedData"
+          :show-only-latest="true"
+        ></AnalyticsChart>
+      </template>
     </template>
   </axdd-card>
 </template>
