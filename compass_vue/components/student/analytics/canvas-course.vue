@@ -1,7 +1,9 @@
 <template>
   <div class="m-3 mt-0 p-3 bg-body-tertiary rounded-3">
     <div class="d-flex">
-      <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-3">Canvas Analytics</div>
+      <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-3">
+        Canvas Analytics
+      </div>
       <a
         tabindex="0"
         role="button"
@@ -15,12 +17,14 @@
         <i class="bi bi-info-circle-fill ms-2"></i>
       </a>
     </div>
-    <AnalyticsChart
-      v-if="dataReady"
-      :data-series="formattedSeriesData"
-      :show-only-latest="false"
-    ></AnalyticsChart>
-    <div v-else>No data ready</div>
+    <div v-if="analyticsNotFound">Course analytics not found.</div>
+    <template v-else>
+      <AnalyticsChart
+        v-if="dataReady"
+        :data-series="formattedSeriesData"
+        :show-only-latest="false"
+      ></AnalyticsChart>
+    </template>
   </div>
 </template>
 
