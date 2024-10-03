@@ -13,13 +13,14 @@
         </div>
         <div class="flex-fill d-flex px-3 text-center">
           <div class="align-self-center flex-fill">
-            <div class="d-inline-block rounded-circle border border-4 mb-2">
+            <div class="d-inline-block rounded-circle border border-light-subtle border-4 mb-2">
               <img
                 :src="person.photo_url"
                 @error="
                   $event.target.src = '/static/compass/img/placeholder.png'
                 "
-                class="img-profile rounded-circle border bg-light border-white border-2"
+                class="img-profile rounded-circle border border-4"
+                :class="borderClass"
               />
             </div>
             <!-- moved preferred name to under the profile photo -->
@@ -434,6 +435,16 @@ export default {
   },
   data() {
     return {};
+  },
+  computed: {
+    borderClass() {
+      const classes = {
+        danger: "border-danger",
+        warning: "border-warning",
+        normal: "border-success"
+      };
+      return classes[this.person.analytics_alert] || classes.normal;
+    },
   },
 };
 </script>
