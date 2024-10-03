@@ -5,7 +5,7 @@
     header-class="p-3"
     header-bg-variant="transparent"
   >
-    <template #header><div class="fs-6 fw-bold">Holds</div></template>
+    <template #header><div class="fs-6 fw-bold text-danger">Holds</div></template>
     <ul class="list-unstyled mb-0">
       <li
         v-for="(hold, index) in person.student.holds"
