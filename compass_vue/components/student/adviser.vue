@@ -1,7 +1,7 @@
 <template>
   <BCard
     class="shadow-sm rounded-3"
-    header-class="p-3 d-flex align-items-center justify-content-between"
+    header-class="p-3"
     header-bg-variant="transparent"
   >
     <template #header><div class="fs-6 fw-bold">Adviser</div></template>
