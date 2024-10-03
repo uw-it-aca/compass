@@ -1,41 +1,46 @@
 <template>
-  <axdd-card>
-    <template #heading>
-      <axdd-card-heading :level="2">Resource Eligibility</axdd-card-heading>
-    </template>
-    <template #body>
-      <div v-if="eligibilities.length">
-        <div v-for="(eligibility, index) in eligibilities" :key="index">
-          <div v-if="isAssignedEligibility(eligibility)">
-            <p class="small">
-              This student is eligible to use {{ eligibility.name }}
-              resources.
-            </p>
-          </div>
-          <div v-else>
-            <p class="small">
-              This student is currently not eligible to use
-              {{ eligibility.name }}
-              resources.
-              <span class="fw-bold">Would you like to grant access?</span>
-            </p>
-            <div class="text-end">
-              <button
-                type="button"
-                class="btn btn-sm btn-purple rounded-3 px-3 py-2"
-                @click="updateStudentEligibility(eligibility.id)"
-              >
-                <i class="bi bi-hand-thumbs-up me-1"></i>Approve
-              </button>
-            </div>
+  <BCard
+    class="shadow-sm rounded-3 mt-3"
+    header-class="p-3"
+    header-bg-variant="transparent"
+  >
+    <template #header
+      ><div class="fs-6 fw-bold">Instructional Center Eligibility</div></template
+    >
+
+    <div v-if="eligibilities.length">
+      <div v-for="(eligibility, index) in eligibilities" :key="index">
+        <div v-if="isAssignedEligibility(eligibility)">
+          <p class="small">
+            This student is eligible to use {{ eligibility.name }}
+            resources.
+          </p>
+        </div>
+        <div v-else>
+          <p class="small">
+            This student is currently not eligible to use
+            {{ eligibility.name }}
+            resources.
+            <span class="fw-bold">Would you like to grant access?</span>
+          </p>
+          <div class="text-end">
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-primary rounded-3 px-2 py-1"
+              @click="updateStudentEligibility(eligibility.id)"
+            >
+              <i class="bi bi-hand-thumbs-up me-1"></i>Approve
+            </button>
           </div>
         </div>
       </div>
-    </template>
-  </axdd-card>
+    </div>
+  </BCard>
 </template>
 
 <script>
+import { BCard } from "bootstrap-vue-next";
+
 import {
   getEligibilities,
   getStudentEligibility,
@@ -43,7 +48,7 @@ import {
 } from "@/utils/data";
 
 export default {
-  components: {},
+  components: { BCard },
   props: {
     person: {
       type: Object,

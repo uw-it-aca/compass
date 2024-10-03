@@ -157,6 +157,7 @@
                   </div>
                   <div class="col-xl-3">
                     <SpecialPrograms :person="person"></SpecialPrograms>
+                    <StudentEligibility v-show="false" :person="person"></StudentEligibility>
                   </div>
                 </div>
               </STabsPanel>
@@ -180,6 +181,7 @@ import StudentSchedule from "@/components/student/schedule.vue";
 import StudentHolds from "@/components/student/holds.vue";
 import StudentAdviser from "@/components/student/adviser.vue";
 import StudentVisits from "@/components/student/visits.vue";
+import StudentEligibility from "@/components/student/administrative/eligibility.vue";
 import SearchStudent from "@/components/search-student.vue";
 import AffiliationAddEdit from "@/components/student/administrative/affiliation.vue";
 import SpecialPrograms from "@/components/student/administrative/special-programs.vue";
@@ -210,6 +212,7 @@ export default {
     StudentHolds,
     StudentAdviser,
     StudentVisits,
+    StudentEligibility,
     SearchStudent,
     AffiliationAddEdit,
     SpecialPrograms,
