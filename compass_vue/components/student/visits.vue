@@ -1,8 +1,7 @@
 <template>
   <BCard
     class="shadow-sm rounded-3"
-    header-class="p-3 d-flex align-items-center justify-content-between"
-    body-class="p-0"
+    header-class="p-3"
     header-bg-variant="transparent"
     footer-bg-variant="transparent"
   >
@@ -19,7 +18,7 @@
         <li v-for="(visit, index) in visits" :key="index" class="d-flex mb-3">
           <div>
             <i
-              class="bi bi-calendar-check-fill text-gray fs-7 ms-1 me-3 bg-white"
+              class="bi bi-calendar-check-fill text-body-tertiary fs-7 ms-1 me-3"
             ></i>
           </div>
           <div>

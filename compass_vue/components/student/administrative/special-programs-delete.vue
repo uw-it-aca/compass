@@ -3,7 +3,7 @@
     role="button"
     data-bs-toggle="modal"
     :data-bs-target="'#deleteSpecialProgramModal'"
-    class="btn btn-sm fs-9 btn-outline-gray text-danger rounded-3 px-2 py-1 ms-1"
+    class="btn btn-sm fs-9 btn-outline-danger rounded-3 px-2 py-1 ms-1"
   >
     <slot>Delete Special Program Date</slot>
   </a>
