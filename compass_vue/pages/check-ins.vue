@@ -4,7 +4,6 @@
     <template #content>
       <div class="row my-4 small">
         <div class="col">
-
           <BCard class="bg-body-tertiary rounded-3" border-variant="0">
             <div class="row">
               <div class="col-xl-4 me-auto">
@@ -16,7 +15,6 @@
               <div class="col-xl-8">&nbsp;</div>
             </div>
           </BCard>
-
         </div>
       </div>
 
@@ -24,10 +22,13 @@
         <div class="col">
           <BCard
             class="shadow-sm rounded-3"
+            header-bg-variant="transparent"
             header-class="p-3"
             body-class="p-0"
           >
-            <template #header> Recent Check-Ins (3 days) </template>
+            <template #header>
+              <div class="fs-6 fw-bold">Recent Check-Ins (3 days)</div>
+            </template>
             <CheckInTableLoading v-if="isLoading" />
             <CheckInTableDisplay v-else :contacts="contacts" />
           </BCard>

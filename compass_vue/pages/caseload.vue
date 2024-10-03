@@ -4,7 +4,6 @@
     <template #content>
       <div class="row my-4 small">
         <div class="col">
-
           <!-- BCard (Panel) -->
           <BCard class="bg-body-tertiary rounded-3" border-variant="0">
             <div class="row">
@@ -159,7 +158,6 @@
               </div>
             </div>
           </BCard>
-
         </div>
       </div>
 
@@ -169,7 +167,7 @@
           <BCard
             class="shadow-sm rounded-3"
             header-class="p-3"
-             header-bg-variant="transparent"
+            header-bg-variant="transparent"
             body-class="p-0"
           >
             <template #header>

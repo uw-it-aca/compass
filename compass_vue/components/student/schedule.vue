@@ -40,7 +40,7 @@
           :panel-id="'panel' + scheduleIndex"
           :active-panel="scheduleIndex == 0"
         >
-          <div class="table-responsive m-n3">
+          <div class="table-responsive m-0">
             <table class="table m-0">
               <col style="width: 40%" />
               <col style="width: 15%" />
@@ -56,65 +56,51 @@
                   <th class="bg-body-tertiary">Credits</th>
                 </tr>
               </thead>
-              <tbody class="mb-3" v-if="schedule.sections.length > 0">
+              <tbody v-if="schedule.sections.length > 0">
                 <template
                   v-for="(section, sectionIndex) in schedule.sections"
-                  :key="index"
+                  :key="sectionIndex"
                 >
-                  <tr
-                    :class="[
-                      isQuizSection(section.credits) ? '' : '',
-                    ]"
-                  >
-                    <td class="d-flex ps-3">
+                  <tr>
+                    <td class="ps-3 border-0">
                       <!-- MARK: only show course analytics for top-level (i.e. NOT quiz sections) v-show="isQuizSection(section.credits)"-->
                       <!-- Expend and collapse RAD data. Auto expand all classes with a warning icon -->
-                      <div v-show="isQuizSection(section.credits)">
-                        <i
-                          v-if="
-                            courseAnalyticsVisiblity(
-                              scheduleIndex,
-                              sectionIndex
-                            )
-                          "
-                          class="bi bi-chevron-up me-3 pt-2 h5"
-                          @click="
-                            hideCourseAnalytics(
-                              $event,
-                              scheduleIndex,
-                              sectionIndex
-                            )
-                          "
-                        ></i>
-                        <i
-                          v-else
-                          class="bi bi-chevron-down me-3 pt-2 h5"
-                          @click="
-                            showCourseAnalytics(
-                              $event,
-                              scheduleIndex,
-                              sectionIndex
-                            )
-                          "
-                        ></i>
-                      </div>
-                      <div>
-                        {{ section.curriculum_abbr }}
-                        {{ section.course_number }}
-                        {{ section.section_id }}
-                        <div class="fs-8 text-secondary">
-                          {{ section.course_title }}
+                      <div class="d-flex">
+                        <div v-show="isLecture(section.credits)">
+                          <button
+                            class="btn btn-link chevron text-body"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            :data-bs-target="'#collapseExample' + sectionIndex"
+                            aria-expanded="false"
+                            :aria-controls="'collapseExample' + sectionIndex"
+                          >
+                            <i
+                              class="bi bi-chevron-right"
+                              aria-hidden="true"
+                            ></i>
+                          </button>
                         </div>
-                      </div>
+                        <div>
+                          {{ section.curriculum_abbr }}
+                          {{ section.course_number }}
+                          {{ section.section_id }}
+                          <div class="fs-8 text-secondary">
+                            {{ section.course_title }}
+                          </div>
+                        </div>
 
-                      <i
-                        v-if="section.alert_status"
-                        class="bi bi-exclamation-triangle-fill ms-5"
-                        style="color: #c12c2c"
-                      ></i>
+                        <i
+                          v-if="section.alert_status"
+                          class="bi bi-exclamation-triangle-fill ms-5"
+                          style="color: #c12c2c"
+                        ></i>
+                      </div>
                     </td>
-                    <td>{{ section.sln }}</td>
-                    <td>
+                    <td class="border-0">
+                      {{ section.sln }}
+                    </td>
+                    <td class="border-0">
                       <div
                         v-for="(meeting, index) in section.meetings"
                         :key="index"
@@ -133,7 +119,7 @@
                         </span>
                       </div>
                     </td>
-                    <td>
+                    <td class="border-0">
                       <div
                         v-for="(meeting, index) in section.meetings"
                         :key="index"
@@ -144,18 +130,24 @@
                         </span>
                       </div>
                     </td>
-                    <td>{{ section.credits }}</td>
+                    <td class="border-0">
+                      {{ section.credits }}
+                    </td>
                   </tr>
-                  <tr
-                    v-if="courseAnalyticsVisiblity(scheduleIndex, sectionIndex)"
-                  >
-                    <td colspan="5" class="p-3 pt-0">
-                      <CourseAnalytics
-                        :uwnetid="person.uwnetid"
-                        :year="schedule.year"
-                        :quarter="schedule.quarter"
-                        :course_id="`${section.curriculum_abbr} ${section.course_number} ${section.section_id}`"
-                      ></CourseAnalytics>
+                  <!-- MARK: show course analytics only for lecture courses -->
+                  <tr v-show="isLecture(section.credits)">
+                    <td colspan="5" class="p-0">
+                      <div
+                        class="collapse"
+                        :id="'collapseExample' + sectionIndex"
+                      >
+                        <CourseAnalytics
+                          :uwnetid="person.uwnetid"
+                          :year="schedule.year"
+                          :quarter="schedule.quarter"
+                          :course_id="`${section.curriculum_abbr} ${section.course_number} ${section.section_id}`"
+                        ></CourseAnalytics>
+                      </div>
                     </td>
                   </tr>
                 </template>
@@ -171,9 +163,7 @@
           </div>
         </STabsPanel>
       </template>
-      <div v-else class="p-3">
-        No schedules found.
-      </div>
+      <div v-else class="p-3">No schedules found.</div>
     </STabsDisplay>
   </BCard>
 </template>
@@ -249,7 +239,7 @@ export default {
       }
       return creditTotal;
     },
-    isQuizSection: function (credits) {
+    isLecture: function (credits) {
       if (credits.includes("None")) {
         return false;
       } else if (credits.includes("0.0")) {
@@ -261,3 +251,20 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.chevron .bi-chevron-right {
+  display: inline-block;
+  transition: transform 0.35s ease;
+  transform-origin: 0.5em 50%;
+  font-weight: bolder;
+}
+
+.chevron[aria-expanded="true"] .bi-chevron-right {
+  transform: rotate(90deg);
+}
+
+.bi-chevron-right::after {
+  font-weight: bolder !important;
+}
+</style>

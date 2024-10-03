@@ -1,7 +1,7 @@
 <template>
-  <div class="p-4" style="background-color: #fafafa; border-radius: 10px">
+  <div class="m-3 mt-0 p-3 bg-body-tertiary rounded-3">
     <div class="d-flex">
-      <h5>Canvas Analytics</h5>
+      <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-3">Canvas Analytics</div>
       <a
         tabindex="0"
         role="button"
@@ -15,19 +15,24 @@
         <i class="bi bi-info-circle-fill ms-2"></i>
       </a>
     </div>
-    <analytics-chart v-if="dataReady" :data-series="formattedSeriesData" :show-only-latest="false"></analytics-chart>
+    <AnalyticsChart
+      v-if="dataReady"
+      :data-series="formattedSeriesData"
+      :show-only-latest="false"
+    ></AnalyticsChart>
+    <div v-else>No data ready</div>
   </div>
 </template>
 
 <script>
 import { Popover } from "bootstrap";
-import { useAnalyticsStore} from "@/stores/analytics.js";
+import { useAnalyticsStore } from "@/stores/analytics.js";
 import AnalyticsChart from "@/components/student/analytics/chart.vue";
 
 export default {
   name: "CanvasAnalyticsChart",
   components: {
-    AnalyticsChart
+    AnalyticsChart,
   },
   setup() {
     const storeAnalytics = useAnalyticsStore();
@@ -49,7 +54,7 @@ export default {
     course_id: {
       type: String,
       required: true,
-    }
+    },
   },
   data() {
     return {
@@ -59,12 +64,21 @@ export default {
     };
   },
   mounted() {
+    // enable popovers everywhere
+    // https://getbootstrap.com/docs/5.1/components/popovers/#example-enable-popovers-everywhere
+    var popoverTriggerList = [].slice.call(
+      document.querySelectorAll('[data-bs-toggle="popover"]')
+    );
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+      return new Popover(popoverTriggerEl);
+    });
+
     this.loadStudentCourseAnalytics();
   },
   watch: {
     rawCourseAnalytics: function () {
       this.dataReady = true;
-    }
+    },
   },
   computed: {
     formattedSeriesData() {
@@ -86,12 +100,12 @@ export default {
           data: this.getDataArrayForKey("activity_score"),
           backgroundColor: "#AB9765",
           borderColor: "#AB9765",
-        }
-      ]
+        },
+      ];
     },
   },
   methods: {
-    getDataArrayForKey(key){
+    getDataArrayForKey(key) {
       let data_array = Array(10).fill(null);
       for (let data of this.rawCourseAnalytics) {
         data_array[data.week_id - 1] = data[key];
@@ -100,14 +114,22 @@ export default {
     },
     loadStudentCourseAnalytics: function () {
       this.storeAnalytics
-        .fetchStudentCourseAnalytics(this.uwnetid, this.year, this.quarter, this.course_id)
+        .fetchStudentCourseAnalytics(
+          this.uwnetid,
+          this.year,
+          this.quarter,
+          this.course_id
+        )
         .then(() => {
           this.rawCourseAnalytics =
-            this.storeAnalytics.courseAnalyticsData[this.uwnetid][this.year][this.quarter][this.course_id].data;
-        }).catch((e) => {
+            this.storeAnalytics.courseAnalyticsData[this.uwnetid][this.year][
+              this.quarter
+            ][this.course_id].data;
+        })
+        .catch((e) => {
           this.analyticsNotFound = true;
         });
     },
-  }
+  },
 };
 </script>

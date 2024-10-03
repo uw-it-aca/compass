@@ -3,15 +3,16 @@
     <div class="d-flex w-25">
       <div class="pt-2 w-100">
         <ul
-          class="p-0 fs-7 text-secondary"
-          style="list-style-type: none; line-height: 40px"
+          class="p-0 fs-7 text-body-secondary"
         >
-          <template v-for="(dataset, index) in dataSeries">
-            <li class="d-flex justify-content-between"
-                v-if="displayLatestValue(dataset)">
-              {{dataset.label}}
+          <template v-for="(dataset, index) in dataSeries" :key="index">
+            <li
+              class="d-flex justify-content-between"
+              v-if="displayLatestValue(dataset)"
+            >
+              {{ dataset.label }}
               <div>
-                {{getLatestScore(dataset.data)}}%
+                {{ getLatestScore(dataset.data) }}%
                 <i
                   v-if="latestScoreDecreased(dataset.data)"
                   style="color: #c12c2c"
@@ -33,9 +34,13 @@
       <Line v-if="showChart" :data="chartData" :options="chartOptions" />
     </div>
     <div>
-      <ul class="p-0 fs-8 text-secondary" style="list-style-type: none">
-        <li v-for="(dataset, index) in dataSeries">
-          <i :style="{color: dataset.backgroundColor}" class="bi bi-circle-fill me-2"></i>{{dataset.label}}
+      <ul class="p-0 fs-8 text-body-secondary" style="list-style-type: none">
+        <li v-for="(dataset, index) in dataSeries" :key="index">
+          <i
+            :style="{ color: dataset.backgroundColor }"
+            class="bi bi-circle-fill me-2"
+          ></i
+          >{{ dataset.label }}
         </li>
       </ul>
     </div>
@@ -83,7 +88,7 @@ export default {
       type: Boolean,
       default: false,
       required: false,
-    }
+    },
   },
   data() {
     return {
@@ -111,7 +116,7 @@ export default {
         },
       },
       rawCourseAnalytics: [],
-      showChart: false
+      showChart: false,
     };
   },
   mounted() {
@@ -120,7 +125,7 @@ export default {
   },
   methods: {
     displayLatestValue(dataset) {
-      if(this.showOnlyLatest){
+      if (this.showOnlyLatest) {
         return dataset.isLatest;
       }
       return true;
@@ -128,13 +133,13 @@ export default {
     getLatestScore(dataset) {
       let latest_value = null;
       for (let data of dataset) {
-        if(data !== null){
+        if (data !== null) {
           latest_value = data;
         }
       }
       return latest_value;
     },
-    getLatestScoreIndex(dataset){
+    getLatestScoreIndex(dataset) {
       let latest_idx;
       for (let i = dataset.length - 1; i >= 0; i--) {
         if (dataset[i] !== null) {
@@ -151,7 +156,6 @@ export default {
       } else {
         return dataset[latest_idx] > dataset[latest_idx - 1];
       }
-
     },
     latestScoreDecreased(dataset) {
       let latest_idx = this.getLatestScoreIndex(dataset);
@@ -161,6 +165,6 @@ export default {
         return dataset[latest_idx] < dataset[latest_idx - 1];
       }
     },
-  }
+  },
 };
 </script>
