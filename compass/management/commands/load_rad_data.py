@@ -70,7 +70,15 @@ class Command(BaseCommand):
         try:
             rad_file = RADStorageDao().download_from_bucket(
                 rad_import.get_filename())
-            import_data_from_csv(rad_week, rad_file, reload)
+
+            try:
+                pred_file = (RADStorageDao().
+                             get_pred_file_by_y_q_w(rad_week.year,
+                                                    rad_week.quarter,
+                                                    rad_week.week))
+            except FileNotFoundError:
+                pred_file = None
+            import_data_from_csv(rad_week, rad_file, pred_file, reload)
         except Exception as ex:
             logger.exception(ex)
             rad_import.import_status = RADImport.FAILURE

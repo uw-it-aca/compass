@@ -5,6 +5,7 @@
 from django.test import TestCase
 from compass.dao.rad_csv import read_csv, import_data_from_csv, _parse_score
 from compass.models.rad_data import CourseAnalyticsScores, RADWeek
+from compass.dao.storage import RADStorageDao
 
 
 class TestRadCsv(TestCase):
@@ -25,7 +26,11 @@ class TestRadCsv(TestCase):
             week = RADWeek.get_or_create_week(year=2024,
                                               quarter='spring',
                                               week=6)
-            import_data_from_csv(week, csv_string)
+            pred_file = (RADStorageDao().
+                         get_pred_file_by_y_q_w(week.year,
+                                                week.quarter,
+                                                week.week))
+            import_data_from_csv(week, csv_string, pred_file)
             self.assertEqual(CourseAnalyticsScores.objects.count(), 2)
             self.assertEqual(CourseAnalyticsScores.objects.first().week, week)
             self.assertEqual(CourseAnalyticsScores.objects.first()

@@ -78,7 +78,7 @@ class CourseAnalyticsScores(models.Model):
     activity_score = models.FloatField()
     assignment_score = models.FloatField()
     grade_score = models.FloatField()
-    prediction_score = models.FloatField()
+    prediction_score = models.FloatField(null=True)
 
     class Meta:
         unique_together = ('uwnetid', 'week', 'course')
@@ -91,7 +91,7 @@ class CourseAnalyticsScores(models.Model):
                 'grade_score':
                     self.convert_score_range(self.grade_score),
                 'prediction_score':
-                    self.convert_score_range(self.prediction_score),
+                    self.prediction_score,
                 'week_id':
                     self.week.week}
 
@@ -104,9 +104,10 @@ class CourseAnalyticsScores(models.Model):
         return new_value
 
     def is_alert_status(self):
-        return (self.activity_score * 20 < 60 or
-                self.assignment_score * 20 < 60 or
-                self.grade_score * 20 < 60)
+        if self.prediction_score is None:
+            return False
+        else:
+            return self.prediction_score == 1.0
 
     @classmethod
     def get_rad_data_for_course(cls, year, quarter, netid, course_id):
@@ -171,6 +172,7 @@ class CourseAnalyticsScores(models.Model):
             alert_count = 0
             for course in course_analytics:
                 if course.is_alert_status():
+
                     alert_count += 1
             if alert_count == 0:
                 student['analytics_alert'] = 'success'

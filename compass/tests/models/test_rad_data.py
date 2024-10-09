@@ -149,36 +149,6 @@ class CourseAnalyticsScoresTest(CompassTestCase):
         self.RAD_WEEK = RADWeek.get_or_create_week(year=2021,
                                                    quarter='spring',
                                                    week=5)
-        # data_points = []
-        # for week_id in range(10):
-        #     terms = ['spring', 'summer', 'autumn']
-        #     for term in terms:
-        #         week = RADWeek.get_or_create_week(year=2021,
-        #                                           quarter=term,
-        #                                           week=week_id)
-        #         data_points.append(
-        #             CourseAnalyticsScores(
-        #                 uwnetid="javerage",
-        #                 course="CSE 142 A",
-        #                 week=week,
-        #                 activity_score=random.uniform(0, 5),
-        #                 assignment_score=random.uniform(0, 5),
-        #                 grade_score=random.uniform(0, 5),
-        #                 prediction_score=random.uniform(0, 5),
-        #             )
-        #         )
-        #         data_points.append(
-        #             CourseAnalyticsScores(
-        #                 uwnetid="javerage",
-        #                 course="BIO 120 C",
-        #                 week=week,
-        #                 activity_score=random.uniform(0, 5),
-        #                 assignment_score=random.uniform(0, 5),
-        #                 grade_score=random.uniform(0, 5),
-        #                 prediction_score=random.uniform(0, 5),
-        #             )
-        #         )
-        # CourseAnalyticsScores.objects.bulk_create(data_points)
 
     def test_json_data(self):
         score = CourseAnalyticsScores.objects.create(
@@ -188,7 +158,7 @@ class CourseAnalyticsScoresTest(CompassTestCase):
             activity_score=4,
             assignment_score=5,
             grade_score=3,
-            prediction_score=-5
+            prediction_score=0
         )
         json_data = score.json_data()
         self.assertEqual(json_data['activity_score'], 90.0)
@@ -223,7 +193,7 @@ class CourseAnalyticsScoresTest(CompassTestCase):
             activity_score=4,
             assignment_score=5,
             grade_score=2,
-            prediction_score=5
+            prediction_score=1
         )
         self.assertTrue(score_alert.is_alert_status())
 
