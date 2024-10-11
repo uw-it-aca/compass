@@ -10,6 +10,9 @@ from compass.dao.person import (
 from compass.models import Contact
 from compass.models.rad_data import CourseAnalyticsScores
 from compass.serializers import ContactReadSerializer
+from logging import getLogger
+
+logger = getLogger(__name__)
 
 
 class AdviserCheckInsView(BaseAPIView):
@@ -24,17 +27,23 @@ class AdviserCheckInsView(BaseAPIView):
 
         contacts = Contact.objects.by_adviser(adviser_netid)
 
+        response_data = []
         if not len(contacts):
-            return self.response_ok([])
+            return self.response_ok(response_data)
 
         system_keys = [s['student__system_key'] for s in contacts]
         students = get_students_by_system_keys(system_keys)
 
         for contact in contacts:
             system_key = contact['student__system_key']
-            contact['student'] = students[system_key]
+            if system_key in students:
+                contact['student'] = students[system_key]
+                response_data.append(contact)
+            else:
+                logger.info(f'Unknown student ({system_key}) omitted from '
+                            f'check-in search!')
 
-        return self.response_ok(list(contacts))
+        return self.response_ok(response_data)
 
 
 class AdviserCaseloadView(BaseAPIView):
