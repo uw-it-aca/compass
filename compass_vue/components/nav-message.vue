@@ -1,6 +1,6 @@
 <template>
   <div class="text-light my-3">
-    <div class="text-light-gray bg-dark-purple rounded-3 p-3 small">
+    <div class="bg-white bg-opacity-10 text-white rounded-3 p-3 small">
       <div class="mb-2">
         <i class="bi bi-exclamation-triangle-fill me-2"></i>System Messages
       </div>
