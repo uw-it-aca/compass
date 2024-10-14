@@ -62,7 +62,7 @@
                   :key="sectionIndex"
                 >
                   <tr>
-                    <td class="ps-3 border-0">
+                    <td class="ps-3" :class="isLecture(section.credits) ? 'border-0' : ''">
                       <!-- MARK: only show course analytics for top-level (i.e. NOT quiz sections) v-show="isQuizSection(section.credits)"-->
                       <!-- Expend and collapse RAD data. Auto expand all classes with a warning icon -->
                       <div class="d-flex">
@@ -76,7 +76,7 @@
                             :aria-controls="'collapseExample' + sectionIndex"
                           >
                             <i
-                              class="bi bi-chevron-right"
+                              class="bi bi-chevron-down"
                               aria-hidden="true"
                             ></i>
                           </button>
@@ -97,10 +97,10 @@
                         ></i>
                       </div>
                     </td>
-                    <td class="border-0">
+                    <td :class="isLecture(section.credits) ? 'border-0' : ''">
                       {{ section.sln }}
                     </td>
-                    <td class="border-0">
+                    <td :class="isLecture(section.credits) ? 'border-0' : ''">
                       <div
                         v-for="(meeting, index) in section.meetings"
                         :key="index"
@@ -119,7 +119,7 @@
                         </span>
                       </div>
                     </td>
-                    <td class="border-0">
+                    <td :class="isLecture(section.credits) ? 'border-0' : ''">
                       <div
                         v-for="(meeting, index) in section.meetings"
                         :key="index"
@@ -130,12 +130,12 @@
                         </span>
                       </div>
                     </td>
-                    <td class="border-0">
+                    <td :class="isLecture(section.credits) ? 'border-0' : ''">
                       {{ section.credits }}
                     </td>
                   </tr>
                   <!-- MARK: show course analytics only for lecture courses -->
-                  <tr v-show="isLecture(section.credits)">
+                  <tr v-if="isLecture(section.credits)">
                     <td colspan="5" class="p-0">
                       <div
                         class="collapse"
@@ -253,18 +253,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.chevron .bi-chevron-right {
+.chevron .bi-chevron-down {
   display: inline-block;
   transition: transform 0.35s ease;
   transform-origin: 0.5em 50%;
   font-weight: bolder;
 }
 
-.chevron[aria-expanded="true"] .bi-chevron-right {
-  transform: rotate(90deg);
+.chevron[aria-expanded="true"] .bi-chevron-down {
+  transform: scaleY(-1);
 }
 
-.bi-chevron-right::after {
+.bi-chevron-down::after {
   font-weight: bolder !important;
 }
 </style>

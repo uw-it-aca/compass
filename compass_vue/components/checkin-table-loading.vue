@@ -1,7 +1,7 @@
 <template>
   <div class="table-responsive m-n3">
     <table class="table mb-0">
-      <thead class="text-muted small">
+      <thead class="small">
         <tr>
           <th class="ps-3 bg-body-tertiary" style="width: 33%" scope="col">Student</th>
           <th class="bg-body-tertiary" scope="col" style="width: 15%">Check-in Date</th>
