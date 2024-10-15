@@ -28,8 +28,6 @@
         <router-link :to="{ path: '/student/' + person.uwnetid }"
           >{{ person.uwnetid }}
         </router-link>
-
-        {{  person.analytics_alert }}
       </div>
     </div>
   </div>
