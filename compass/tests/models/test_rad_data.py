@@ -3,7 +3,8 @@
 
 import random
 from compass.tests import CompassTestCase
-from compass.models.rad_data import RADWeek, RADImport, CourseAnalyticsScores
+from compass.models.rad_data import (RADWeek, RADImport, CourseAnalyticsScores,
+                                     convert_score_range)
 
 
 class RADDataWeekTest(CompassTestCase):
@@ -198,10 +199,10 @@ class CourseAnalyticsScoresTest(CompassTestCase):
         self.assertEqual(json_data['week_id'], 5)
 
     def test_convert_score_range(self):
-        self.assertEqual(CourseAnalyticsScores.convert_score_range(-5), 0)
-        self.assertEqual(CourseAnalyticsScores.convert_score_range(-4.5), 5.0)
-        self.assertEqual(CourseAnalyticsScores.convert_score_range(0), 50)
-        self.assertEqual(CourseAnalyticsScores.convert_score_range(5), 100)
+        self.assertEqual(convert_score_range(-5), 0)
+        self.assertEqual(convert_score_range(-4.5), 5.0)
+        self.assertEqual(convert_score_range(0), 50)
+        self.assertEqual(convert_score_range(5), 100)
 
     def test_alert_status(self):
         score = CourseAnalyticsScores.objects.create(
