@@ -71,9 +71,9 @@
                             class="btn btn-link chevron text-body"
                             type="button"
                             data-bs-toggle="collapse"
-                            :data-bs-target="'#collapseExample' + sectionIndex"
+                            :data-bs-target="'#collapseDiv_' + scheduleIndex + '_' + sectionIndex"
                             aria-expanded="false"
-                            :aria-controls="'collapseExample' + sectionIndex"
+                            :aria-controls="'collapseDiv_' + scheduleIndex + '_' + sectionIndex"
                           >
                             <i
                               class="bi bi-chevron-down"
@@ -139,9 +139,11 @@
                     <td colspan="5" class="p-0">
                       <div
                         class="collapse"
-                        :id="'collapseExample' + sectionIndex"
+                        :id="'collapseDiv_' + scheduleIndex + '_' + sectionIndex"
+                        v-on="{'shown.bs.collapse': expandCourseAnalytics}"
                       >
                         <CourseAnalytics
+                          v-if="getAnalyticsVisibility('collapseDiv_' + scheduleIndex + '_' + sectionIndex)"
                           :uwnetid="person.uwnetid"
                           :year="schedule.year"
                           :quarter="schedule.quarter"
@@ -206,20 +208,11 @@ export default {
     this.loadStudentSchedules();
   },
   methods: {
-    courseAnalyticsVisiblity: function (scheduleIndex, sectionIndex) {
-      return (
-        this.analyticsDisplay[scheduleIndex] &&
-        this.analyticsDisplay[scheduleIndex][sectionIndex]
-      );
+    getAnalyticsVisibility: function (target) {
+      return this.analyticsDisplay[target] == true;
     },
-    showCourseAnalytics: function (target, scheduleIndex, sectionIndex) {
-      if (!this.analyticsDisplay[scheduleIndex]) {
-        this.analyticsDisplay[scheduleIndex] = {};
-      }
-      this.analyticsDisplay[scheduleIndex][sectionIndex] = true;
-    },
-    hideCourseAnalytics: function (target, scheduleIndex, sectionIndex) {
-      this.analyticsDisplay[scheduleIndex][sectionIndex] = false;
+    expandCourseAnalytics(event) {
+      this.analyticsDisplay[event.currentTarget.id] = true;
     },
     loadStudentSchedules: function () {
       this.getStudentSchedules(this.person.uwregid).then((response) => {
