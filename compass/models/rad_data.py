@@ -196,7 +196,7 @@ class StudentSigninAnalytics(models.Model):
             year_data = json_data.setdefault(signin.week.year, {})
             quarter_data = year_data.setdefault(signin.week.quarter, {})
             quarter_data[signin.week.week] = convert_score_range(
-                signin.signin_score * 20)
+                signin.signin_score)
 
         return json_data
 
