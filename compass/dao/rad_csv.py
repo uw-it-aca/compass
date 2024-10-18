@@ -20,7 +20,7 @@ def read_csv(csv_string):
     return list(reader)
 
 
-def import_data_from_csv(week, csv_string, reload=False):
+def import_data_from_csv(week, csv_string, pred_file, reload=False):
     """
     Import data from CSV string into RADImport model.
     """
@@ -29,6 +29,11 @@ def import_data_from_csv(week, csv_string, reload=False):
     processed_per_netid_courses = []
     course_analytics_scores = []
     student_signin_analytics = []
+    if pred_file is None:
+        pred_dict = {}
+    else:
+        pred_dict = _get_prediction_dict(pred_file)
+
     if reload:
         StudentSigninAnalytics.objects.filter(week=week).delete()
         CourseAnalyticsScores.objects.filter(week=week).delete()
@@ -45,6 +50,7 @@ def import_data_from_csv(week, csv_string, reload=False):
         # Catch dupes manually so we can use more performant bulk_create
         per_netid_course_str = f"{row['uw_netid']}_{row['course_code']}"
         if per_netid_course_str not in processed_per_netid_courses:
+            pred_score = pred_dict.get(per_netid_course_str, None)
             course_analytics_scores.append(
                 CourseAnalyticsScores(
                     uwnetid=row['uw_netid'],
@@ -53,7 +59,7 @@ def import_data_from_csv(week, csv_string, reload=False):
                     activity_score=_parse_score(row['activity']),
                     assignment_score=_parse_score(row['assignments']),
                     grade_score=_parse_score(row['grades']),
-                    prediction_score=_parse_score(row['pred'])))
+                    prediction_score=pred_score))
             processed_per_netid_courses.append(per_netid_course_str)
         else:
             logger.error(f"Duplicate analytics found for {row['uw_netid']}, "
@@ -61,6 +67,19 @@ def import_data_from_csv(week, csv_string, reload=False):
             continue
     StudentSigninAnalytics.objects.bulk_create(student_signin_analytics)
     CourseAnalyticsScores.objects.bulk_create(course_analytics_scores)
+
+
+def _get_prediction_dict(pred_file):
+    """
+    Get prediction data for a given term. grouped by user and course_id
+    """
+
+    prediction_data = read_csv(pred_file)
+    prediction_dict = {}
+    for row in prediction_data:
+        key = f"{row['uw_netid'].strip()}_{row['course_code'].strip()}"
+        prediction_dict[key] = row['pred']
+    return prediction_dict
 
 
 def _parse_score(field):

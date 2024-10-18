@@ -17,7 +17,7 @@ class RADStorageDao():
 
         filenames = []
         for filename in files:
-            if filename.endswith('csv'):
+            if filename.endswith('csv') and "pred-proba" not in filename:
                 filenames.append(filename)
 
         logging.debug(f"Found the following bucket files: "
@@ -36,6 +36,21 @@ class RADStorageDao():
         :type week: int
         """
         filename = f"{year}-{quarter}-week-{week}-compass-data.csv"
+        return self.download_from_bucket(filename)
+
+    def get_pred_file_by_y_q_w(self, year, quarter, week):
+        """
+        Returns the file name for the given year, quarter, and week.
+
+        :param year: Year to search for
+        :type year: int
+        :param quarter: Quarter to search for
+        :type quarter: str
+        :param week: Week to search for
+        :type week: int
+        """
+        # TODO change to per-week stats once analytics team automates that
+        filename = f"{year}-{quarter}-pred-proba.csv"
         return self.download_from_bucket(filename)
 
     def get_latest_file(self):
