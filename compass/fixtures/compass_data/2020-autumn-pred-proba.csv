@@ -1,4 +1,5 @@
-uw_netid,course_code,pred
-javerage,"TRAIN 100 A",1
-lisa,"TRAIN 100 A",1
-jbothell,"TRAIN 100 A",0
+,system_key,student_no,uw_netid,yrq,course_code,pred
+0, 1253388,2110381,javerage,20204,TRAIN 100 A,1.0
+1, 1353389,2110382,lisa,20204,TRAIN 100 A,0.0
+2, 1453387,2110381,jbothell,20204,TRAIN 100 A,0.0
+3, 1353389,2110382,lisa,20204,TRAIN 101 A,1.0

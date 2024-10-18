@@ -182,7 +182,7 @@ class CourseAnalyticsScoresTest(CompassTestCase):
             activity_score=4,
             assignment_score=5,
             grade_score=5,
-            prediction_score=5
+            prediction_score=0
         )
         self.assertFalse(score.is_alert_status())
         score.delete()
@@ -206,7 +206,7 @@ class CourseAnalyticsScoresTest(CompassTestCase):
             activity_score=4,
             assignment_score=5,
             grade_score=3,
-            prediction_score=5
+            prediction_score=0
         )
         data = CourseAnalyticsScores.get_rad_data_for_course(2021,
                                                              'spring',

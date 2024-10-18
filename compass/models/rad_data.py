@@ -96,7 +96,7 @@ class CourseAnalyticsScores(models.Model):
                     self.week.week}
 
     def is_alert_status(self):
-        return self.prediction_score < 0
+        return self.prediction_score is not None and self.prediction_score > 0
 
     @classmethod
     def get_rad_data_for_course(cls, year, quarter, netid, course_id):
