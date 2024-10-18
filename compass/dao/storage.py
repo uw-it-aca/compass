@@ -1,8 +1,11 @@
 # Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
-import logging
 from django.core.files.storage import default_storage
 from compass.models.rad_data import RADWeek
+from logging import getLogger
+
+
+logger = getLogger(__name__)
 
 
 class RADStorageDao():
@@ -20,8 +23,8 @@ class RADStorageDao():
             if filename.endswith('csv') and "pred-proba" not in filename:
                 filenames.append(filename)
 
-        logging.debug(f"Found the following bucket files: "
-                      f"{','.join(filenames)}")
+        logger.info(f"Found the following bucket files: "
+                    f"{','.join(filenames)}")
         return filenames
 
     def get_file_by_year_quarter_week(self, year, quarter, week):
@@ -51,6 +54,7 @@ class RADStorageDao():
         """
         # TODO change to per-week stats once analytics team automates that
         filename = f"{year}-{quarter}-pred-proba.csv"
+        logger.info(f"Attempting download of file: {filename}")
         return self.download_from_bucket(filename)
 
     def get_latest_file(self):
