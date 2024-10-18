@@ -24,7 +24,7 @@ class RADStorageDao():
                 filenames.append(filename)
 
         logger.info(f"Found the following bucket files: "
-                      f"{','.join(filenames)}")
+                    f"{','.join(filenames)}")
         return filenames
 
     def get_file_by_year_quarter_week(self, year, quarter, week):
