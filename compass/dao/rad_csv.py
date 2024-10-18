@@ -77,7 +77,7 @@ def _get_prediction_dict(pred_file):
     prediction_data = read_csv(pred_file)
     prediction_dict = {}
     for row in prediction_data:
-        key = f"{row['uw_netid']}_{row['course_code']}"
+        key = f"{row['uw_netid'].strip()}_{row['course_code'].strip()}"
         prediction_dict[key] = row['pred']
     return prediction_dict
 
