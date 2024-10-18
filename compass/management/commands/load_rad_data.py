@@ -57,6 +57,7 @@ class Command(BaseCommand):
                                                         options['reload'])
 
     def _load_week_by_year_quarter_week(self, year, quarter, week_id, reload):
+        logger.info(f"Loading RAD data for {year}-{quarter}-week-{week_id}")
         rad_week = RADWeek.get_or_create_week(year=year,
                                               quarter=quarter,
                                               week=week_id)
@@ -70,12 +71,13 @@ class Command(BaseCommand):
         try:
             rad_file = RADStorageDao().download_from_bucket(
                 rad_import.get_filename())
-
+            logger.info(f"Downloaded file {rad_import.get_filename()}")
             try:
                 pred_file = (RADStorageDao().
                              get_pred_file_by_y_q_w(rad_week.year,
                                                     rad_week.quarter,
                                                     rad_week.week))
+                logger.info(f"Downloaded prediction file")
             except FileNotFoundError:
                 pred_file = None
             import_data_from_csv(rad_week, rad_file, pred_file, reload)
