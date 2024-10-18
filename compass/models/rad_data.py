@@ -96,9 +96,7 @@ class CourseAnalyticsScores(models.Model):
                     self.week.week}
 
     def is_alert_status(self):
-        return (self.activity_score * 20 < 60 or
-                self.assignment_score * 20 < 60 or
-                self.grade_score * 20 < 60)
+        return self.prediction_score < 0
 
     @classmethod
     def get_rad_data_for_course(cls, year, quarter, netid, course_id):
