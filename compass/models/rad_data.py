@@ -85,29 +85,18 @@ class CourseAnalyticsScores(models.Model):
 
     def json_data(self):
         return {'activity_score':
-                self.convert_score_range(self.activity_score),
+                convert_score_range(self.activity_score),
                 'assignment_score':
-                    self.convert_score_range(self.assignment_score),
+                    convert_score_range(self.assignment_score),
                 'grade_score':
-                    self.convert_score_range(self.grade_score),
+                    convert_score_range(self.grade_score),
                 'prediction_score':
                     self.prediction_score,
                 'week_id':
                     self.week.week}
 
-    @staticmethod
-    def convert_score_range(old_value):
-        old_min, old_max = -5.0, 5.0
-        new_min, new_max = 0, 100
-        new_value = ((old_value - old_min) / (old_max - old_min)) * (
-            new_max - new_min) + new_min
-        return new_value
-
     def is_alert_status(self):
-        if self.prediction_score is None:
-            return False
-        else:
-            return self.prediction_score == 1.0
+        return self.prediction_score < 0
 
     @classmethod
     def get_rad_data_for_course(cls, year, quarter, netid, course_id):
@@ -205,7 +194,8 @@ class StudentSigninAnalytics(models.Model):
         for signin in signins:
             year_data = json_data.setdefault(signin.week.year, {})
             quarter_data = year_data.setdefault(signin.week.quarter, {})
-            quarter_data[signin.week.week] = signin.signin_score * 20
+            quarter_data[signin.week.week] = convert_score_range(
+                signin.signin_score)
 
         return json_data
 
@@ -267,3 +257,11 @@ class RADWeek(models.Model):
         return {'year': term['year'] - 1, 'quarter': 'autumn'} if (
             term['quarter'] == 'winter') \
             else {'year': term['year'], 'quarter': quarters[index - 1]}
+
+
+def convert_score_range(old_value):
+    old_min, old_max = -5.0, 5.0
+    new_min, new_max = 0, 100
+    new_value = ((old_value - old_min) / (old_max - old_min)) * (
+        new_max - new_min) + new_min
+    return round(new_value)

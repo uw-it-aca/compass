@@ -1,5 +1,4 @@
 <template>
-  <!-- layout.vue: this is where you override the layout -->
   <SSidebar
     :app-name="appName"
     :app-root-url="appRootUrl"
@@ -7,7 +6,42 @@
     :user-name="userName"
     :sign-out-url="signOutUrl"
   >
-    <template #profile>
+    <template #navigation>
+
+      <NavMenu :user-roles="userRoles" />
+
+      <QuarterWeek :term-data="termData" />
+
+      <h3
+        id="aat_navlink_header"
+        class="fs-8 text-white text-opacity-50 text-uppercase"
+        style="--bs-text-opacity: 0.5"
+      >
+        Advising Resources
+      </h3>
+      <ul aria-labelledby="aat_navlink_header" class="list-unstyled mb-5 small">
+        <li class="mb-2">
+          <BLink
+            href="https://sdb.admin.uw.edu/sisAdvising/securid/overview.aspx"
+            class="link-light link-underline link-underline-opacity-0 link-underline-opacity-100-hover"
+            title="View all cohorts"
+          >
+            Academic Records (EARS)
+          </BLink>
+        </li>
+        <li class="mb-2">
+          <BLink
+            href="https://retention.uw.edu"
+            class="link-light link-underline link-underline-opacity-0 link-underline-opacity-100-hover"
+            title="View all majors"
+          >
+            Retention Analytics (RAD)
+          </BLink>
+        </li>
+      </ul>
+    </template>
+    <template #aside>
+      <NavMessage v-if="persMsg && persMsg.length > 0" :messages="persMsg" />
       <SProfile
         v-if="userName != userOverride"
         :user-netid="userName"
@@ -24,14 +58,9 @@
       <SProfile v-else :user-netid="userName">
         <a :href="signOutUrl" class="text-white">Sign out</a>
       </SProfile>
-    </template>
-    <template #navigation>
-      <NavMenu :user-roles="userRoles" />
-      <QuarterWeek :term-data="termData" />
-    </template>
-    <template #aside>
-      <NavMessage v-if="persMsg && persMsg.length > 0" :messages="persMsg" />
-      <SColorMode />
+      <div class="text-end text-white">
+        <SColorMode></SColorMode>
+      </div>
     </template>
     <template #main>
       <slot name="title">
@@ -44,6 +73,7 @@
 </template>
 
 <script>
+import { BLink } from "bootstrap-vue-next";
 import { SColorMode, SSidebar, SProfile } from "solstice-vue";
 import QuarterWeek from "@/components/_common/quarter-week.vue";
 import NavMenu from "@/components/nav-menu.vue";
@@ -53,6 +83,7 @@ import { clearOverride } from "@/utils/data";
 export default {
   name: "CompassApp",
   components: {
+    BLink,
     NavMenu,
     NavMessage,
     QuarterWeek,

@@ -1,7 +1,7 @@
 // reports.vue
 
 <template>
-  <layout :page-title="pageTitle">
+  <Layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
       <div class="row my-4 small">
@@ -178,7 +178,7 @@
         </div>
       </div>
     </template>
-  </layout>
+  </Layout>
 </template>
 
 <script>
@@ -189,7 +189,7 @@ import { BCard } from "bootstrap-vue-next";
 
 export default {
   components: {
-    layout: Layout,
+    Layout,
     BCard,
   },
   props: {
