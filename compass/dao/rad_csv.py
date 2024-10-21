@@ -11,6 +11,8 @@ from compass.views.api.student import StudentSigninAnalyticsView
 
 logger = getLogger(__name__)
 
+BULK_CREATE_BUCKET_SIZE = 10000
+
 
 def read_csv(csv_string):
     """
@@ -25,10 +27,9 @@ def import_data_from_csv(week, csv_string, pred_file, reload=False):
     Import data from CSV string into RADImport model.
     """
     data = read_csv(csv_string)
-    processed_netids = []
-    processed_per_netid_courses = []
-    course_analytics_scores = []
-    student_signin_analytics = []
+    processed_netids = {}
+    processed_per_netid_courses = {}
+
     if pred_file is None:
         pred_dict = {}
     else:
@@ -37,6 +38,10 @@ def import_data_from_csv(week, csv_string, pred_file, reload=False):
     if reload:
         StudentSigninAnalytics.objects.filter(week=week).delete()
         CourseAnalyticsScores.objects.filter(week=week).delete()
+
+    course_analytics_scores = []
+    student_signin_analytics = []
+    i = 0
     for row in data:
         if row['uw_netid'] not in processed_netids:
             student_signin_analytics.append(
@@ -46,7 +51,7 @@ def import_data_from_csv(week, csv_string, pred_file, reload=False):
                                            row['sign_in'])
                                        )
             )
-            processed_netids.append(row['uw_netid'])
+            processed_netids[row['uw_netid']] = True
         # Catch dupes manually so we can use more performant bulk_create
         per_netid_course_str = f"{row['uw_netid']}_{row['course_code']}"
         if per_netid_course_str not in processed_per_netid_courses:
@@ -60,11 +65,20 @@ def import_data_from_csv(week, csv_string, pred_file, reload=False):
                     assignment_score=_parse_score(row['assignments']),
                     grade_score=_parse_score(row['grades']),
                     prediction_score=pred_score))
-            processed_per_netid_courses.append(per_netid_course_str)
+            processed_per_netid_courses[per_netid_course_str] = True
         else:
             logger.error(f"Duplicate analytics found for {row['uw_netid']}, "
                          f"{row['course_code']}")
             continue
+        i += 1
+        if i == BULK_CREATE_BUCKET_SIZE:
+            StudentSigninAnalytics.objects.bulk_create(
+                student_signin_analytics)
+            CourseAnalyticsScores.objects.bulk_create(
+                course_analytics_scores)
+            i = 0
+            student_signin_analytics = []
+            course_analytics_scores = []
     StudentSigninAnalytics.objects.bulk_create(student_signin_analytics)
     CourseAnalyticsScores.objects.bulk_create(course_analytics_scores)
 
