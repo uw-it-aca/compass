@@ -11,7 +11,7 @@ from compass.views.api.student import StudentSigninAnalyticsView
 
 logger = getLogger(__name__)
 
-BULK_CREATE_BUCKET_SIZE = 10000
+BULK_CREATE_BUCKET_SIZE = 1000
 
 
 def read_csv(csv_string):
