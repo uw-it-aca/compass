@@ -5,10 +5,10 @@ autoscaling:
 resources:
   limits:
     cpu: 250m
-    memory: 512Mi
+    memory: 1024Mi
   requests:
     cpu: 100m
-    memory: 128Mi
+    memory: 256Mi
 targetAverageUtilization: 100
 
 ingress:
