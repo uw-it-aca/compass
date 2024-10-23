@@ -248,13 +248,13 @@ export default {
 <style lang="scss" scoped>
 .chevron .bi-chevron-down {
   display: inline-block;
-  transition: transform 0.35s ease;
+  transition: transform 0.25s ease;
   transform-origin: 0.5em 50%;
   font-weight: bolder;
 }
 
 .chevron[aria-expanded="true"] .bi-chevron-down {
-  transform: scaleY(-1);
+  transform: rotate(-180deg);
 }
 
 .bi-chevron-down::after {

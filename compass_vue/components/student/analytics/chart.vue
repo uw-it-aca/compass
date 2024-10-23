@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex" style="height: 225px">
+  <div class="d-flex" >
     <div class="d-flex w-25">
       <div class="pt-2 w-100">
         <ul
@@ -15,14 +15,13 @@
                 {{ getLatestScore(dataset.data) }}%
                 <i
                   v-if="latestScoreDecreased(dataset.data)"
-                  style="color: #c12c2c"
-                  class="bi bi-arrow-down-circle-fill ms-2 me-1"
+                  class="bi bi-arrow-down-circle-fill text-danger ms-2 me-1"
                 ></i>
                 <i
                   v-else-if="latestScoreIncreased(dataset.data)"
-                  style="color: #289026"
-                  class="bi bi-arrow-up-circle-fill ms-2 me-1"
+                  class="bi bi-arrow-up-circle-fill text-success ms-2 me-1"
                 ></i>
+                <i v-else class="bi bi-circle opacity-0" aria-hidden="true"></i>
               </div>
             </li>
           </template>
