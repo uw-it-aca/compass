@@ -153,22 +153,30 @@ class CourseAnalyticsScores(models.Model):
         term = current_term()
         week = week_of_term(term, current_datetime().date())
 
+        # RAD data is only available after the first week
+        if week > 1:
+            # Show last week's RAD data
+            week = week - 1
         for student in caseload:
-            course_analytics = cls.objects.filter(uwnetid=student['uwnetid'],
-                                                  week__year=term.year,
-                                                  week__quarter=term.quarter,
-                                                  week__week=week)
             alert_count = 0
-            for course in course_analytics:
-                if course.is_alert_status():
+            if week > 1:
+                course_analytics = cls.objects.filter(
+                    uwnetid=student['uwnetid'],
+                    week__year=term.year,
+                    week__quarter=term.quarter,
+                    week__week=week
+                )
 
-                    alert_count += 1
+                for course in course_analytics:
+                    if course.is_alert_status():
+
+                        alert_count += 1
             if alert_count == 0:
                 student['analytics_alert'] = 'success'
-            elif (alert_count/len(course_analytics)) <= 0.5:
-                student['analytics_alert'] = 'warning'
-            else:
+            elif len(course_analytics) == alert_count:
                 student['analytics_alert'] = 'danger'
+            else:
+                student['analytics_alert'] = 'warning'
 
         return caseload
 

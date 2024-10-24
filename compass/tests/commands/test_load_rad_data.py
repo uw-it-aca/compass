@@ -81,7 +81,7 @@ class TestLoadRadData(CompassTestCase):
         call_command('load_rad_data',
                      loadall=True,
                      stdout=stdout)
-        self.assertEqual(RADImport.objects.count(), 10)
+        self.assertEqual(RADImport.objects.count(), 11)
         err_str = ("Import already exists for 2024-spring-week-6\n"
                    "Import already exists for 2024-spring-week-5\n")
 
@@ -97,9 +97,9 @@ class TestLoadRadData(CompassTestCase):
                      loadall=True,
                      reload=True,
                      stdout=stdout)
-        self.assertEqual(RADImport.objects.count(), 10)
+        self.assertEqual(RADImport.objects.count(), 11)
         self.assertEqual(stdout.getvalue(), "")
 
     def test_loadall(self):
         call_command('load_rad_data', loadall=True)
-        self.assertEqual(RADImport.objects.count(), 10)
+        self.assertEqual(RADImport.objects.count(), 11)
