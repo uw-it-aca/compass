@@ -18,7 +18,7 @@ class TestStorage(TestCase):
     def test_files_list(self):
         dao = RADStorageDao()
         files = dao.get_files_list()
-        self.assertEqual(len(files), 10)
+        self.assertEqual(len(files), 11)
         self.assertIn("2023-spring-week-6-compass-data.csv", files)
         self.assertIn("2024-spring-week-5-compass-data.csv", files)
         self.assertIn("2024-spring-week-6-compass-data.csv", files)
