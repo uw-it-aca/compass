@@ -165,7 +165,7 @@ class CourseAnalyticsScores(models.Model):
                     alert_count += 1
             if alert_count == 0:
                 student['analytics_alert'] = 'success'
-            elif (alert_count/len(course_analytics)) <= 0.5:
+            elif len(course_analytics) > 0:
                 student['analytics_alert'] = 'warning'
             else:
                 student['analytics_alert'] = 'danger'
