@@ -21,7 +21,7 @@
                   v-else-if="latestScoreIncreased(dataset.data)"
                   class="bi bi-arrow-up-circle-fill text-success ms-2 me-1"
                 ></i>
-                <i v-else class="bi bi-circle opacity-0" aria-hidden="true"></i>
+                <i v-else class="bi bi-circle  ms-2 me-1 opacity-0" aria-hidden="true"></i>
               </div>
             </li>
           </template>
