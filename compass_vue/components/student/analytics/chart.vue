@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { Popover } from "bootstrap";
+//import { Popover } from "bootstrap";
 import { Line } from "vue-chartjs";
 import {
   Chart as ChartJS,
@@ -75,6 +75,7 @@ ChartJS.register(
 export default {
   name: "AnalyticsChart",
   components: {
+    // eslint-disable-next-line vue/no-reserved-component-names
     Line,
   },
   setup() {},
