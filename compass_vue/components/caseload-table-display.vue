@@ -89,7 +89,7 @@
       </tbody>
     </table>
   </div>
-  <div v-else>There are no students found in <strong>{{ adviserNetId }}&rsquo;s</strong> caseload.</div>
+  <div v-else class="p-3">There are no students found in <strong>{{ adviserNetId }}&rsquo;s</strong> caseload.</div>
 </template>
 
 <script>

@@ -21,8 +21,8 @@
             {{ schedule.term.quarter }} {{ schedule.term.year }}
             <span
               v-if="schedule.sections.length > 0"
-              class="badge text-bg-purple ms-2 rounded-pill"
-              style="min-width: 25px"
+              class="badge text-body bg-primary-subtle ms-2 rounded-pill"
+              style="min-width: 25px; margin-bottom: 2px;"
               @click.stop
               >{{ getCreditTotal(schedule.sections) }}</span
             >
@@ -248,13 +248,13 @@ export default {
 <style lang="scss" scoped>
 .chevron .bi-chevron-down {
   display: inline-block;
-  transition: transform 0.35s ease;
+  transition: transform 0.25s ease;
   transform-origin: 0.5em 50%;
   font-weight: bolder;
 }
 
 .chevron[aria-expanded="true"] .bi-chevron-down {
-  transform: scaleY(-1);
+  transform: rotate(-180deg);
 }
 
 .bi-chevron-down::after {
