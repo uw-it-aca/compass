@@ -42,7 +42,11 @@ class AdviserCheckInsView(BaseAPIView):
             else:
                 logger.info(f'Unknown student ({system_key}) omitted from '
                             f'check-in search!')
-
+        try:
+            response_data = (CourseAnalyticsScores.
+                             add_alert_class_to_contacts(response_data))
+        except Exception:
+            logger.exception('Error adding analytics alert class to contacts')
         return self.response_ok(response_data)
 
 
@@ -58,8 +62,12 @@ class AdviserCaseloadView(BaseAPIView):
 
         try:
             queryset = get_adviser_caseload(adviser_netid)
-            queryset = (CourseAnalyticsScores.
-                        add_alert_class_to_caseload(list(queryset)))
+            try:
+                queryset = (CourseAnalyticsScores.
+                            add_alert_class_to_caseload(list(queryset)))
+            except Exception:
+                logger.exception('Error adding analytics '
+                                 'alert class to caseload')
         except AdviserNotFoundException:
             queryset = []
 
