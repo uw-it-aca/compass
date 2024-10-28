@@ -42,7 +42,7 @@
                 >
               </li>
               <li class="list-inline-item flex-fill w-25">
-                <div>Scholarship</div>
+                <div>Acad. Standing</div>
                 <span
                   class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1"
                   :class="
