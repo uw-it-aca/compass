@@ -52,7 +52,7 @@ class StudentView(BaseAPIView):
             }
             if valid_uwnetid(identifier):
                 person = get_person_by_uwnetid(identifier, **includes)
-            elif valid_studenqt_number(identifier):
+            elif valid_student_number(identifier):
                 person = get_person_by_student_number(identifier, **includes)
             else:
                 return self.response_badrequest('Invalid student identifier')
