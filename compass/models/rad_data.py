@@ -150,6 +150,26 @@ class CourseAnalyticsScores(models.Model):
         """
         Add alert status to caseload
         """
+        for student in caseload:
+            student['analytics_alert'] = cls.get_alert_class_for_student(
+                student['uwnetid'])
+        return caseload
+
+    @classmethod
+    def add_alert_class_to_contacts(cls, contacts):
+        alerts_by_netid = {}
+        for contact in contacts:
+            netid = contact['student']['uwnetid']
+            if netid in alerts_by_netid:
+                contact['student']['analytics_alert'] = alerts_by_netid[netid]
+            else:
+                alert_class = cls.get_alert_class_for_student(netid)
+                alerts_by_netid[netid] = alert_class
+                contact['student']['analytics_alert'] = alert_class
+        return contacts
+
+    @classmethod
+    def get_alert_class_for_student(cls, uwnetid):
         term = current_term()
         week = week_of_term(term, current_datetime().date())
 
@@ -157,11 +177,10 @@ class CourseAnalyticsScores(models.Model):
         if week > 1:
             # Show last week's RAD data
             week = week - 1
-        for student in caseload:
             alert_count = 0
             if week > 1:
                 course_analytics = cls.objects.filter(
-                    uwnetid=student['uwnetid'],
+                    uwnetid=uwnetid,
                     week__year=term.year,
                     week__quarter=term.quarter,
                     week__week=week
@@ -169,16 +188,14 @@ class CourseAnalyticsScores(models.Model):
 
                 for course in course_analytics:
                     if course.is_alert_status():
-
                         alert_count += 1
             if alert_count == 0:
-                student['analytics_alert'] = 'success'
+                alert_class = 'success'
             elif len(course_analytics) == alert_count:
-                student['analytics_alert'] = 'danger'
+                alert_class = 'danger'
             else:
-                student['analytics_alert'] = 'warning'
-
-        return caseload
+                alert_class = 'warning'
+            return alert_class
 
 
 class StudentSigninAnalytics(models.Model):

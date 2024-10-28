@@ -62,6 +62,9 @@ class StudentView(BaseAPIView):
             person_dict['photo_url'] = reverse('photo', kwargs={
                 'uwregid': person.uwregid,
                 'photo_key': photo_key})
+            analytics_alert = (CourseAnalyticsScores.
+                               get_alert_class_for_student(person.uwnetid))
+            person_dict['analytics_alert'] = analytics_alert
             return self.response_ok(person_dict)
         except PersonNotFoundException:
             return self.response_notfound()
