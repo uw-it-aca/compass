@@ -105,9 +105,6 @@ export default {
           },
         },
         scales: {
-          y: {
-            max: 100,
-          },
           x: {
             grid: {
               display: false,
