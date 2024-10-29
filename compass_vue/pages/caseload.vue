@@ -79,7 +79,7 @@
 
                   <div class="col">
                     <label for="scholarshipFilter" class="fw-bold lh-lg"
-                      >Scholarship:</label
+                      >Acad. Standing:</label
                     >
                     <select
                       id="scholarshipFilter"
@@ -234,8 +234,8 @@ export default {
       ],
       scholarshipOptions: [
         { id: 1, value: "Dean's List" },
-        { id: 4, value: "Warning" },
-        { id: 3, value: "Probation" },
+        { id: 4, value: "Acad. Alert" },
+        { id: 3, value: "Acad. Warning" },
         { id: 0, value: "None" },
       ],
       classOptions: [
