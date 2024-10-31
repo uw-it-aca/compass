@@ -1,12 +1,12 @@
 // reports.vue
 
 <template>
-  <layout :page-title="pageTitle">
+  <Layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
       <div class="row my-4 small">
         <div class="col">
-          <div class="bg-light p-3 rounded-3">
+          <BCard class="bg-body-tertiary rounded-3" border-variant="0">
             <div class="d-flex">
               <div class="me-3">
                 <label for="formFile" class="form-label fw-bold"
@@ -75,106 +75,122 @@
                 Process Batch
               </button>
             </div>
-          </div>
+          </BCard>
         </div>
       </div>
 
       <div class="row my-4">
         <div class="col">
-          <axdd-card>
-            <template #heading-action>
-              <axdd-card-heading :level="2"
-                >Students</axdd-card-heading
-              >
+          <BCard
+            class="shadow-sm rounded-3"
+            header-class="p-3"
+            header-bg-variant="transparent"
+            body-class="p-0"
+          >
+            <template #header>
+              <div class="fs-6 fw-bold">Students</div>
             </template>
-            <template #body>
-              <div
-                v-if="responseData.length !== 0"
-                class="table-responsive m-n3"
-              >
-                <table class="table m-0">
-                  <thead class="table-light text-muted small">
-                    <tr>
-                      <th scope="col" class="ps-3" style="width: 20%">Student Number</th>
-                      <th scope="col" style="width: 20%">First</th>
-                      <th scope="col">Last</th>
-                      <th scope="col">NetID</th>
-                      <th scope="col" style="width: 40%">Affiliation Status</th>
+            <div v-if="responseData.length !== 0" class="table-responsive m-n3">
+              <table class="table m-0">
+                <thead class="table-light text-muted small">
+                  <tr>
+                    <th scope="col" class="ps-3" style="width: 20%">
+                      Student Number
+                    </th>
+                    <th scope="col" style="width: 20%">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">NetID</th>
+                    <th scope="col" style="width: 40%">Affiliation Status</th>
+                  </tr>
+                </thead>
+                <tbody v-if="isLoading">
+                  <tr v-for="item in 15" :key="item">
+                    <td class="placeholder-glow ps-3">
+                      <div>
+                        <span class="placeholder bg-light-gray col-10"></span>
+                      </div>
+                    </td>
+                    <td class="placeholder-glow">
+                      <div>
+                        <span class="placeholder bg-light-gray col-10"></span>
+                      </div>
+                    </td>
+                    <td class="placeholder-glow">
+                      <div>
+                        <span class="placeholder bg-light-gray col-10"></span>
+                      </div>
+                    </td>
+                    <td class="placeholder-glow">
+                      <div>
+                        <span class="placeholder bg-light-gray col-10"></span>
+                      </div>
+                    </td>
+                    <td class="placeholder-glow">
+                      <div>
+                        <span class="placeholder bg-light-gray col-10"></span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+                <tbody v-else>
+                  <template
+                    v-for="(person, index) in responseData"
+                    :key="index"
+                  >
+                    <tr v-if="!person.error">
+                      <td scope="row" class="ps-3">
+                        <router-link
+                          :to="{ path: '/student/' + person.student_number }"
+                        >
+                          {{ person.student_number }}
+                        </router-link>
+                      </td>
+                      <td>{{ person.first_name }}</td>
+                      <td>{{ person.surname }}</td>
+                      <td>{{ person.uwnetid }}</td>
+                      <td>
+                        <span
+                          class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1 text-bg-success"
+                          >Completed</span
+                        >
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody v-if="isLoading">
-                    <tr v-for="item in 15" :key="item">
-                      <td class="placeholder-glow ps-3">
-                        <div>
-                          <span class="placeholder bg-light-gray col-10"></span>
-                        </div>
+                    <tr v-else>
+                      <td scope="row" class="ps-3">
+                        {{ person.student_number }}
                       </td>
-                      <td class="placeholder-glow">
-                        <div>
-                          <span class="placeholder bg-light-gray col-10"></span>
-                        </div>
+                      <td scope="row" colspan="3">
+                        {{ person.error }}
                       </td>
-                      <td class="placeholder-glow">
-                        <div>
-                          <span class="placeholder bg-light-gray col-10"></span>
-                        </div>
-                      </td>
-                      <td class="placeholder-glow">
-                        <div>
-                          <span class="placeholder bg-light-gray col-10"></span>
-                        </div>
-                      </td>
-                      <td class="placeholder-glow">
-                        <div>
-                          <span class="placeholder bg-light-gray col-10"></span>
-                        </div>
+                      <td>
+                        <span
+                          class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1 text-bg-danger"
+                          >Error</span
+                        >
                       </td>
                     </tr>
-                  </tbody>
-                  <tbody v-else>
-                    <template
-                      v-for="(person, index) in responseData"
-                      :key="index"
-                    >
-                      <tr v-if="!person.error">
-                        <td scope="row" class="ps-3">
-                          <router-link :to="{ path: '/student/' + person.student_number }">
-                            {{ person.student_number }}
-                          </router-link>
-                        </td>
-                        <td>{{ person.first_name }}</td>
-                        <td>{{ person.surname }}</td>
-                        <td>{{ person.uwnetid }}</td>
-                        <td><span class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1 text-bg-success">Completed</span></td>
-                      </tr>
-                      <tr v-else>
-                        <td scope="row" class="ps-3">{{ person.student_number }}</td>
-                        <td scope="row" colspan="3">
-                          {{ person.error }}
-                        </td>
-                        <td><span class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1 text-bg-danger">Error</span></td>
-                      </tr>
-                    </template>
-                  </tbody>
-                </table>
-              </div>
-              <div v-else>You have not uploaded any students.</div>
-            </template>
-          </axdd-card>
+                  </template>
+                </tbody>
+              </table>
+            </div>
+            <div v-else class="p-3">You have not uploaded any students.</div>
+          </BCard>
         </div>
       </div>
     </template>
-  </layout>
+  </Layout>
 </template>
 
 <script>
 import Layout from "@/layout.vue";
 import { getAffiliations, uploadStudentAffiliations } from "@/utils/data";
 import { getCohorts } from "@/utils/cohorts";
+import { BCard } from "bootstrap-vue-next";
 
 export default {
   components: {
-    layout: Layout,
+    Layout,
+    BCard,
   },
   props: {
     cohortCount: {
@@ -234,7 +250,6 @@ export default {
       return !is_invalid;
     },
     processUpload() {
-
       // immediately show loading placeholder
       this.isLoading = true;
 

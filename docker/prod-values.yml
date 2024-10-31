@@ -74,6 +74,17 @@ cronjob:
       schedule: "20 9 * * 0"
       command: ["/scripts/management_command.sh"]
       args: ["clearsessions"]
+    - name: load-rad-data
+      schedule: "0 4 * * 1"
+      command: [ "/scripts/management_command.sh" ]
+      args: [ "load_rad_data" ]
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1024Mi
+        requests:
+          cpu: 200m
+          memory: 512Mi
 
 environmentVariables:
   - name: ENV

@@ -28,11 +28,11 @@ class ContactAPITest(ApiTest):
                                         slug="contact")
         self.contact_type.save()
 
-    @override_settings(CURRENT_DATETIME_OVERRIDE='2023-05-10 12:00:01')
+    @override_settings(CURRENT_DATETIME_OVERRIDE='2013-05-10 12:00:01')
     def test_get_contacts(self):
-        d1 = datetime(2023, 5, 10, 2, 30, 30, 300, tzinfo=timezone.utc)
-        d2 = datetime(2023, 5, 7, 12, 1, 30, 300, tzinfo=timezone.utc)
-        d3 = datetime(2023, 5, 4, 9, 0, 00, 100, tzinfo=timezone.utc)
+        d1 = datetime(2013, 5, 10, 2, 30, 30, 300, tzinfo=timezone.utc)
+        d2 = datetime(2013, 5, 7, 12, 1, 30, 300, tzinfo=timezone.utc)
+        d3 = datetime(2013, 5, 4, 9, 0, 00, 100, tzinfo=timezone.utc)
 
         for date in [d1, d2, d3]:
             contact = Contact(app_user=self.app_user,

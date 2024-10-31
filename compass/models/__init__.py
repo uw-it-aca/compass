@@ -12,6 +12,7 @@ from compass.dao.group import is_group_member
 from compass.dao import current_datetime
 from compass.utils import weekdays_before
 from datetime import datetime, timezone
+import compass.models.rad_data
 
 
 class AppUserManager(models.Manager):

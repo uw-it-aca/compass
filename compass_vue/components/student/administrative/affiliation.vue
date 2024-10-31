@@ -1,34 +1,38 @@
 <template>
-  <axdd-card>
-    <template #heading-action>
-      <axdd-card-heading :level="2">Affiliations</axdd-card-heading>
-      <!-- need to change the button -->
+
+<BCard
+    class="shadow-sm rounded-3"
+    header-class="p-3 d-flex align-items-center justify-content-between"
+    header-bg-variant="transparent"
+    body-class="p-0"
+  >
+    <template #header>
+      <div class="fs-6 fw-bold">Affiliations</div>
       <AffiliationAdd
         :button-type="'button'"
         :person="person"
         :affiliations="affiliations"
         :studentAffiliations="studentAffiliations"
         @affiliationsUpdated="loadAffiliationData()"
-        ><i class="bi bi-people-fill text-dark me-2"></i>Add new
+        ><i class="bi bi-people-fill me-2"></i>Add new
         affiliation</AffiliationAdd
       >
     </template>
-    <template #body>
-      <div class="table-responsive m-n3">
+      <div class="table-responsive m-0">
         <table class="table m-0">
-          <thead class="table-light text-muted small">
+          <thead class="small">
             <tr>
-              <th class="ps-3">Affiliation</th>
-              <th>Cohort</th>
-              <th>Active</th>
-              <th>&nbsp;</th>
+              <th class="ps-3 bg-body-tertiary">Affiliation</th>
+              <th class="bg-body-tertiary">Cohort</th>
+              <th class="bg-body-tertiary">Active</th>
+              <th class="bg-body-tertiary">&nbsp;</th>
             </tr>
           </thead>
           <tbody v-if="studentAffiliations.length !== 0">
             <tr
               v-for="(aff, index) in studentAffiliations"
               :key="index"
-              class="border border-white"
+              class=""
             >
               <td scope="row" class="ps-3">{{ aff.affiliation.name }}</td>
               <td scope="row" class="ps-3">
@@ -66,8 +70,7 @@
           </tbody>
         </table>
       </div>
-    </template>
-  </axdd-card>
+    </BCard>
 </template>
 
 <script>
@@ -76,9 +79,11 @@ import AffiliationDelete from "@/components/student/administrative/affiliation-d
 import AffiliationEdit from "@/components/student/administrative/affiliation-edit.vue";
 import { useAffiliationStore } from "@/stores/affiliations";
 import { getStudentAffiliations } from "@/utils/data";
+import { BCard } from "bootstrap-vue-next";
 
 export default {
   components: {
+    BCard,
     AffiliationAdd,
     AffiliationEdit,
     AffiliationDelete,

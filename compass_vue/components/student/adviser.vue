@@ -1,87 +1,79 @@
 <template>
-  <axdd-card>
-    <template #heading>
-      <axdd-card-heading :level="2">Adviser</axdd-card-heading>
-    </template>
-    <template #body>
-      <div v-if="advisers">
-        <ul class="list-unstyled mb-0">
-          <!-- loop advisers and display OMAD adviser first -->
-          <template v-for="(adviser, index) in advisers" :key="adviser.id">
-            <li
-              v-if="
-                adviser.advising_program == 'OMAD Advising'
-              "
-              class="mb-3"
-            >
-              <div class="d-flex">
-                <i class="bi bi-person-square text-gray me-3"></i>
-                <div class="flex-fill">
-                  <strong>{{ adviser.employee.person.display_name }}</strong> ({{
-                    adviser.employee.person.uwnetid
-                  }})<br /><span class="small text-muted text-capitalize">{{
-                    adviser.employee.person.pronouns
-                  }}</span>
-                </div>
+  <BCard
+    class="shadow-sm rounded-3"
+    header-class="p-3"
+    header-bg-variant="transparent"
+  >
+    <template #header><div class="fs-6 fw-bold">Adviser</div></template>
+
+    <div v-if="advisers">
+      <ul class="list-unstyled mb-0">
+        <!-- loop advisers and display OMAD adviser first -->
+        <template v-for="adviser in advisers" :key="adviser.id">
+          <li v-if="adviser.advising_program == 'OMAD Advising'" class="mb-3">
+            <div class="d-flex">
+              <i class="bi bi-person-square text-body-tertiary me-3"></i>
+              <div class="flex-fill">
+                <strong>{{ adviser.employee.person.display_name }}</strong>
+                ({{ adviser.employee.person.uwnetid }})<br /><span
+                  class="small text-muted text-capitalize"
+                  >{{ adviser.employee.person.pronouns }}</span
+                >
               </div>
-              <div>
-                <i class="bi bi-envelope-fill text-gray me-3"></i>
-                <span>{{ adviser.advising_email }}</span>
+            </div>
+            <div>
+              <i class="bi bi-envelope-fill text-body-tertiary me-3"></i>
+              <span>{{ adviser.advising_email }}</span>
+            </div>
+            <div>
+              <i class="bi bi-telephone text-body-tertiary me-3"></i>
+              <span>{{ adviser.advising_phone_number }}</span>
+            </div>
+            <div>
+              <i class="bi bi-building text-body-tertiary me-3"></i>
+              <span>{{ adviser.advising_program }}</span>
+            </div>
+          </li>
+        </template>
+        <template v-for="adviser in advisers" :key="adviser.id">
+          <li v-if="adviser.advising_program != 'OMAD Advising'" class="mb-3">
+            <div class="d-flex">
+              <i class="bi bi-person-square text-body-tertiary me-3"></i>
+              <div class="flex-fill">
+                <strong>{{ adviser.employee.person.display_name }}</strong>
+                ({{ adviser.employee.person.uwnetid }})<br /><span
+                  class="small text-muted text-capitalize"
+                  >{{ adviser.employee.person.pronouns }}</span
+                >
               </div>
-              <div>
-                <i class="bi bi-telephone text-gray me-3"></i>
-                <span>{{
-                  adviser.advising_phone_number
-                }}</span>
-              </div>
-              <div>
-                <i class="bi bi-building text-gray me-3"></i>
-                <span>{{ adviser.advising_program }}</span>
-              </div>
-            </li>
-          </template>
-          <template v-for="(adviser, index) in advisers" :key="adviser.id">
-            <li
-              v-if="
-                adviser.advising_program != 'OMAD Advising'
-              "
-              class="mb-3"
-            >
-              <div class="d-flex">
-                <i class="bi bi-person-square text-gray me-3"></i>
-                <div class="flex-fill">
-                  <strong>{{ adviser.employee.person.display_name }}</strong> ({{
-                    adviser.employee.person.uwnetid
-                  }})<br /><span class="small text-muted text-capitalize">{{
-                    adviser.employee.person.pronouns
-                  }}</span>
-                </div>
-              </div>
-              <div>
-                <i class="bi bi-envelope-fill text-gray me-3"></i>
-                <span>{{ adviser.advising_email }}</span>
-              </div>
-              <div>
-                <i class="bi bi-telephone text-gray me-3"></i>
-                <span>{{
-                  adviser.advising_phone_number
-                }}</span>
-              </div>
-              <div>
-                <i class="bi bi-building text-gray me-3"></i>
-                <span>{{ adviser.advising_program }}</span>
-              </div>
-            </li>
-          </template>
-        </ul>
-      </div>
-      <div v-else>No adviser assigned to this student.</div>
-    </template>
-  </axdd-card>
+            </div>
+            <div>
+              <i class="bi bi-envelope-fill text-body-tertiary me-3"></i>
+              <span>{{ adviser.advising_email }}</span>
+            </div>
+            <div>
+              <i class="bi bi-telephone text-body-tertiary me-3"></i>
+              <span>{{ adviser.advising_phone_number }}</span>
+            </div>
+            <div>
+              <i class="bi bi-building text-body-tertiary me-3"></i>
+              <span>{{ adviser.advising_program }}</span>
+            </div>
+          </li>
+        </template>
+      </ul>
+    </div>
+    <div v-else>No adviser assigned to this student.</div>
+  </BCard>
 </template>
 
 <script>
+import { BCard } from "bootstrap-vue-next";
+
 export default {
+  components: {
+    BCard,
+  },
   props: {
     advisers: {
       type: Object,
@@ -94,6 +86,5 @@ export default {
       userRole: document.body.getAttribute("data-user-role"),
     };
   },
-  components: {},
 };
 </script>

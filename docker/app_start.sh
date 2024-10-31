@@ -13,5 +13,7 @@ then
 
   cd /app
   python manage.py initialize_db
+  python manage.py migrate
+  python manage.py load_rad_data --loadall --reload
 
 fi

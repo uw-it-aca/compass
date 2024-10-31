@@ -5,7 +5,7 @@ autoscaling:
 resources:
   limits:
     cpu: 250m
-    memory: 512Mi
+    memory: 768Mi
   requests:
     cpu: 100m
     memory: 128Mi
@@ -59,11 +59,30 @@ memcached:
   updateStrategy:
     type: RollingUpdate
 
+gcsCredentials:
+  mounted: true
+  secretName: test.compass.uw.edu-gcs-credentials
+
 certs:
   mounted: true
   certPath: /certs/compass.uw.edu-ic.cert
   keyPath: /certs/compass.uw.edu-ic.key
   secretName: test.compass.uw.edu-ic-certs
+
+cronjob:
+  enabled: true
+  jobs:
+    - name: load-rad-data
+      schedule: "0 4 * * 1"
+      command: ["/scripts/management_command.sh"]
+      args: ["load_rad_data"]
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1024Mi
+        requests:
+          cpu: 200m
+          memory: 512Mi
 
 environmentVariables:
   - name: ENV
@@ -106,6 +125,8 @@ externalSecrets:
           property: group-id-support
         - name: google-analytics-key
           property: google-analytics-key
+        - name: storage-bucket-name
+          property: storage-bucket-name
     - name: test.compass.uw.edu-sql-secrets
       externalKey: compass/shared/sql-secrets
       data:
@@ -126,6 +147,13 @@ externalSecrets:
           property: person-db-port
         - name: person-db-database
           property: person-db-database
+        - name: storage-project-id
+          property: storage-project-id
+    - name: test.compass.uw.edu-gcs-credentials
+      externalKey: compass/shared/gcs-credentials
+      data:
+        - name: credentials.json
+          property: credentials.json
     - name: test.compass.uw.edu-ic-certs
       externalKey: compass/prod/ic-certs
       data:
@@ -189,6 +217,14 @@ environmentVariablesSecrets:
     name: UW_PERSON_DB_NAME
     secretName: test.compass.uw.edu-shared-secrets
     secretKey: person-db-database
+  storageBucketName:
+    name: STORAGE_BUCKET_NAME
+    secretName: test.compass.uw.edu-secrets
+    secretKey: storage-bucket-name
+  storageProjectId:
+    name: STORAGE_PROJECT_ID
+    secretName: test.compass.uw.edu-shared-secrets
+    secretKey: storage-project-id
 
 daemon:
   enabled: true

@@ -8,6 +8,7 @@ from compass.dao.person import (
     valid_uwnetid, get_students_by_system_keys, get_adviser_caseload,
     PersonNotFoundException, AdviserNotFoundException)
 from compass.models import Contact
+from compass.models.rad_data import CourseAnalyticsScores
 from compass.serializers import ContactReadSerializer
 from logging import getLogger
 
@@ -41,7 +42,11 @@ class AdviserCheckInsView(BaseAPIView):
             else:
                 logger.info(f'Unknown student ({system_key}) omitted from '
                             f'check-in search!')
-
+        try:
+            response_data = (CourseAnalyticsScores.
+                             add_alert_class_to_contacts(response_data))
+        except Exception:
+            logger.exception('Error adding analytics alert class to contacts')
         return self.response_ok(response_data)
 
 
@@ -57,7 +62,13 @@ class AdviserCaseloadView(BaseAPIView):
 
         try:
             queryset = get_adviser_caseload(adviser_netid)
+            try:
+                queryset = (CourseAnalyticsScores.
+                            add_alert_class_to_caseload(list(queryset)))
+            except Exception:
+                logger.exception('Error adding analytics '
+                                 'alert class to caseload')
         except AdviserNotFoundException:
             queryset = []
 
-        return self.response_ok(list(queryset))
+        return self.response_ok(queryset)

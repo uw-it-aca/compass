@@ -1,15 +1,16 @@
 <template>
-  <layout :page-title="pageTitle">
+  <Layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
       <div class="row my-4 small">
         <div class="col">
-          <div class="bg-light p-3 rounded-3">
+          <!-- BCard (Panel) -->
+          <BCard class="bg-body-tertiary rounded-3" border-variant="0">
             <div class="row">
               <div class="col-xl-4 me-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
-                  <search-student></search-student>
+                  <SearchStudent />
                 </div>
               </div>
               <div class="col-xl-8">
@@ -78,7 +79,7 @@
 
                   <div class="col">
                     <label for="scholarshipFilter" class="fw-bold lh-lg"
-                      >Scholarship:</label
+                      >Acad. Standing:</label
                     >
                     <select
                       id="scholarshipFilter"
@@ -156,29 +157,33 @@
                 </div>
               </div>
             </div>
-          </div>
+          </BCard>
         </div>
       </div>
 
       <div class="row my-4">
         <div class="col">
-          <axdd-card>
-            <template #heading-action>
-              <axdd-card-heading :level="2">Caseload</axdd-card-heading>
+          <!-- BCard (Default/Header)-->
+          <BCard
+            class="shadow-sm rounded-3"
+            header-class="p-3"
+            header-bg-variant="transparent"
+            body-class="p-0"
+          >
+            <template #header>
+              <div class="fs-6 fw-bold">Caseload</div>
             </template>
-            <template #body>
-              <table-loading v-if="isLoading"></table-loading>
-              <table-display
-                v-else
-                :adviser-net-id="adviserNetId"
-                :persons="filteredPersons"
-              ></table-display>
-            </template>
-          </axdd-card>
+            <CaseloadTableLoading v-if="isLoading" />
+            <CaseloadTableDisplay
+              v-else
+              :adviser-net-id="adviserNetId"
+              :persons="filteredPersons"
+            />
+          </BCard>
         </div>
       </div>
     </template>
-  </layout>
+  </Layout>
 </template>
 
 <script>
@@ -188,12 +193,15 @@ import CaseloadTableLoading from "@/components/caseload-table-loading.vue";
 import Layout from "@/layout.vue";
 import { getAdviserCaseload, savePreferences } from "@/utils/data";
 
+import { BCard } from "bootstrap-vue-next";
+
 export default {
   components: {
-    layout: Layout,
-    "search-student": SearchStudent,
-    "table-display": CaseloadTableDisplay,
-    "table-loading": CaseloadTableLoading,
+    Layout,
+    BCard,
+    SearchStudent,
+    CaseloadTableDisplay,
+    CaseloadTableLoading,
   },
   setup() {
     return {
@@ -226,8 +234,8 @@ export default {
       ],
       scholarshipOptions: [
         { id: 1, value: "Dean's List" },
-        { id: 4, value: "Warning" },
-        { id: 3, value: "Probation" },
+        { id: 4, value: "Acad. Alert" },
+        { id: 3, value: "Acad. Warning" },
         { id: 0, value: "None" },
       ],
       classOptions: [
@@ -269,14 +277,12 @@ export default {
         filteredPersons = filteredPersons.filter((person) => {
           try {
             return (
-              person.latest_degree.degree_status_desc ===
-              this.selectedDegree
+              person.latest_degree.degree_status_desc === this.selectedDegree
             );
           } catch (error) {
             try {
               return (
-                person.latest_degree === null &&
-                this.selectedDegree === "none"
+                person.latest_degree === null && this.selectedDegree === "none"
               );
             } catch (error) {
               return false;
@@ -303,14 +309,12 @@ export default {
       }
       if (this.selectedRegistration !== undefined) {
         filteredPersons = filteredPersons.filter(
-          (person) =>
-            person.registered_in_quarter === this.selectedRegistration
+          (person) => person.registered_in_quarter === this.selectedRegistration
         );
       }
       if (this.selectedHolds !== undefined) {
         filteredPersons = filteredPersons.filter(
-          (person) =>
-            person.registration_hold_ind === this.selectedHolds
+          (person) => person.registration_hold_ind === this.selectedHolds
         );
       }
       return filteredPersons;

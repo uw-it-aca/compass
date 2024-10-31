@@ -1,4 +1,5 @@
 {
   "black-formatter.args": ["--line-length=79"],
-  "stylelint.validate": ["vue", "scss"]
+  "stylelint.validate": ["vue", "scss"],
+  "vue3snippets.enable-compile-vue-file-on-did-save-code": true
 }
