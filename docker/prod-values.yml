@@ -61,6 +61,10 @@ memcached:
   updateStrategy:
     type: RollingUpdate
 
+gcsCredentials:
+  mounted: true
+  secretName: test.compass.uw.edu-gcs-credentials
+
 certs:
   mounted: true
   certPath: /certs/compass.uw.edu-ic.cert
@@ -131,6 +135,8 @@ externalSecrets:
           property: group-id-support
         - name: google-analytics-key
           property: google-analytics-key
+        - name: storage-bucket-name
+          property: storage-bucket-name
     - name: compass.uw.edu-sql-secrets
       externalKey: compass/shared/sql-secrets
       data:
@@ -151,6 +157,13 @@ externalSecrets:
           property: person-db-port
         - name: person-db-database
           property: person-db-database
+        - name: storage-project-id
+          property: storage-project-id
+    - name: compass.uw.edu-gcs-credentials
+      externalKey: compass/shared/gcs-credentials
+      data:
+        - name: credentials.json
+          property: credentials.json
     - name: compass.uw.edu-ic-certs
       externalKey: compass/prod/ic-certs
       data:
@@ -209,6 +222,14 @@ environmentVariablesSecrets:
     name: UW_PERSON_DB_NAME
     secretName: compass.uw.edu-shared-secrets
     secretKey: person-db-database
+  storageBucketName:
+    name: STORAGE_BUCKET_NAME
+    secretName: compass.uw.edu-secrets
+    secretKey: storage-bucket-name
+  storageProjectId:
+    name: STORAGE_PROJECT_ID
+    secretName: compass.uw.edu-shared-secrets
+    secretKey: storage-project-id
 
 daemon:
   enabled: true
