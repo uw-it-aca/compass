@@ -63,7 +63,7 @@ memcached:
 
 gcsCredentials:
   mounted: true
-  secretName: test.compass.uw.edu-gcs-credentials
+  secretName: compass.uw.edu-gcs-credentials
 
 certs:
   mounted: true
