@@ -1,7 +1,7 @@
 # Copyright 2024 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 from django.db import models
-from django.core.exceptions import ObjectDoesNotExist
+from django.utils.translation import gettext_lazy as _
 from compass.dao.person import get_person_by_uwregid
 from compass.dao.term import current_week, current_term, week_of_term
 from compass.dao import current_datetime
@@ -66,6 +66,49 @@ class RADImport(models.Model):
             rad_import.import_status = RADImport.STARTED
             rad_import.save()
         return rad_import
+
+
+class StudentAlertStatus(models.Model):
+    class AlertStatus(models.TextChoices):
+        SUCCESS = 'SC', _("success")
+        WARNING = 'WR', _("warning")
+        DANGER = 'DN', _("danger")
+
+    alert_status = models.CharField(choices=AlertStatus.choices,
+                                    null=True,
+                                    max_length=2)
+    uwnetid = models.CharField(max_length=50)
+    week = models.ForeignKey('RADWeek', on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('uwnetid', 'week')
+        indexes = [
+            models.Index(fields=['uwnetid', 'week'])
+        ]
+
+    @classmethod
+    def get_alert_class_from_scores(cls, scores):
+        """
+        RAD Prediction score alert status for a student
+        Danger - Red -
+        """
+        filterd_scores = [score for score in scores if score is not None]
+        if not filterd_scores:
+            return None
+        if all(score > 0 for score in filterd_scores):
+            return cls.AlertStatus.DANGER
+        elif any(score > 0 for score in filterd_scores):
+            return cls.AlertStatus.WARNING
+        else:
+            return cls.AlertStatus.SUCCESS
+
+    @classmethod
+    def get_alert_class_by_week_uwnetid(cls, week, uwnetid):
+        """
+        Get alert class for a student
+        """
+        alert_status = cls.objects.get(week=week, uwnetid=uwnetid)
+        return alert_status.get_alert_status_display()
 
 
 class CourseAnalyticsScores(models.Model):
@@ -167,6 +210,17 @@ class CourseAnalyticsScores(models.Model):
                 alerts_by_netid[netid] = alert_class
                 contact['student']['analytics_alert'] = alert_class
         return contacts
+
+    @classmethod
+    def get_all_predections_for_week(cls, week):
+        scores = (cls.objects
+                  .filter(week=week)
+                  .values_list('uwnetid',
+                               'prediction_score'))
+        scores_by_uwnetid = {}
+        for uwnetid, prediction_score in scores:
+            scores_by_uwnetid.setdefault(uwnetid, []).append(prediction_score)
+        return scores_by_uwnetid
 
     @classmethod
     def get_alert_class_for_student(cls, uwnetid):

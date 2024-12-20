@@ -2,8 +2,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import random
+from django.db import IntegrityError
 from compass.tests import CompassTestCase
 from compass.models.rad_data import (RADWeek, RADImport, CourseAnalyticsScores,
+                                     StudentAlertStatus,
                                      convert_score_range)
 
 
@@ -213,3 +215,60 @@ class CourseAnalyticsScoresTest(CompassTestCase):
                                                              'javerage',
                                                              'CSE 142 A')
         self.assertEqual(len(data), 1)
+
+
+class StudentAlertStatusTest(CompassTestCase):
+    RAD_WEEK = None
+
+    def setUp(self):
+        self.RAD_WEEK = RADWeek.get_or_create_week(year=2021,
+                                                   quarter='spring',
+                                                   week=5)
+
+    def test_alert_status(self):
+        self.assertEqual(StudentAlertStatus.get_alert_class_from_scores([]),
+                         None)
+        self.assertEqual(StudentAlertStatus.get_alert_class_from_scores([0]),
+                         StudentAlertStatus.AlertStatus.SUCCESS)
+        self.assertEqual(StudentAlertStatus.get_alert_class_from_scores([1]),
+                         StudentAlertStatus.AlertStatus.DANGER)
+        self.assertEqual(StudentAlertStatus.get_alert_class_from_scores(
+            [0, 0, 1]),
+            StudentAlertStatus.AlertStatus.WARNING)
+        self.assertEqual(StudentAlertStatus.get_alert_class_from_scores(
+            [1, None, None]),
+            StudentAlertStatus.AlertStatus.DANGER)
+
+    def test_alert_class(self):
+        StudentAlertStatus.objects.create(
+            uwnetid="javerage",
+            week=self.RAD_WEEK,
+            alert_status=StudentAlertStatus.AlertStatus.SUCCESS
+        )
+        alert = StudentAlertStatus.objects.get(uwnetid="javerage")
+        self.assertEqual(alert.get_alert_status_display(), 'success')
+
+    def test_get_by_week_uwnetid(self):
+        StudentAlertStatus.objects.create(
+            uwnetid="javerage",
+            week=self.RAD_WEEK,
+            alert_status=StudentAlertStatus.AlertStatus.DANGER
+        )
+        alert_class = \
+            StudentAlertStatus.get_alert_class_by_week_uwnetid(self.RAD_WEEK,
+                                                               "javerage")
+        self.assertEqual(alert_class,
+                         "danger")
+
+    def test_constraints(self):
+        StudentAlertStatus.objects.create(
+            uwnetid="javerage",
+            week=self.RAD_WEEK,
+            alert_status=StudentAlertStatus.AlertStatus.SUCCESS
+        )
+        with self.assertRaises(IntegrityError):
+            StudentAlertStatus.objects.create(
+                uwnetid="javerage",
+                week=self.RAD_WEEK,
+                alert_status=StudentAlertStatus.AlertStatus.SUCCESS
+            )
