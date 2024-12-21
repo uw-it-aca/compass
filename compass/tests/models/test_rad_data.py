@@ -216,6 +216,50 @@ class CourseAnalyticsScoresTest(CompassTestCase):
                                                              'CSE 142 A')
         self.assertEqual(len(data), 1)
 
+    def test_get_all_pred_for_week(self):
+        CourseAnalyticsScores.objects.create(
+            uwnetid="javerage",
+            course="CSE 142 A",
+            week=self.RAD_WEEK,
+            activity_score=4,
+            assignment_score=5,
+            grade_score=3,
+            prediction_score=0
+        )
+        CourseAnalyticsScores.objects.create(
+            uwnetid="javerage",
+            course="CSE 142 B",
+            week=self.RAD_WEEK,
+            activity_score=4,
+            assignment_score=5,
+            grade_score=3,
+            prediction_score=1
+        ),
+        CourseAnalyticsScores.objects.create(
+            uwnetid="jbelowaverage",
+            course="CSE 144 B",
+            week=self.RAD_WEEK,
+            activity_score=4,
+            assignment_score=5,
+            grade_score=3,
+            prediction_score=1
+        )
+        CourseAnalyticsScores.objects.create(
+            uwnetid="jbelowaverage",
+            course="CSE 145 B",
+            week=self.RAD_WEEK,
+            activity_score=4,
+            assignment_score=5,
+            grade_score=3,
+            prediction_score=1
+        )
+
+        data = CourseAnalyticsScores.get_all_predections_for_week(
+            self.RAD_WEEK)
+        self.assertEqual(len(data), 2)
+        self.assertEqual(data['javerage'], [0, 1])
+        self.assertEqual(data['jbelowaverage'], [1, 1])
+
 
 class StudentAlertStatusTest(CompassTestCase):
     RAD_WEEK = None
