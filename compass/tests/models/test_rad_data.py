@@ -286,7 +286,6 @@ class StudentAlertStatusTest(CompassTestCase):
     def test_alert_class(self):
         StudentAlertStatus.objects.create(
             uwnetid="javerage",
-            week=self.RAD_WEEK,
             alert_status=StudentAlertStatus.AlertStatus.SUCCESS
         )
         alert = StudentAlertStatus.objects.get(uwnetid="javerage")
@@ -295,24 +294,20 @@ class StudentAlertStatusTest(CompassTestCase):
     def test_get_by_week_uwnetid(self):
         StudentAlertStatus.objects.create(
             uwnetid="javerage",
-            week=self.RAD_WEEK,
             alert_status=StudentAlertStatus.AlertStatus.DANGER
         )
         alert_class = \
-            StudentAlertStatus.get_alert_class_by_week_uwnetid(self.RAD_WEEK,
-                                                               "javerage")
+            StudentAlertStatus.get_alert_class_by_uwnetid("javerage")
         self.assertEqual(alert_class,
                          "danger")
 
     def test_constraints(self):
         StudentAlertStatus.objects.create(
             uwnetid="javerage",
-            week=self.RAD_WEEK,
             alert_status=StudentAlertStatus.AlertStatus.SUCCESS
         )
         with self.assertRaises(IntegrityError):
             StudentAlertStatus.objects.create(
                 uwnetid="javerage",
-                week=self.RAD_WEEK,
                 alert_status=StudentAlertStatus.AlertStatus.SUCCESS
             )

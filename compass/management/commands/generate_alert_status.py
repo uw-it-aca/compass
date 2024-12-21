@@ -29,7 +29,6 @@ class Command(BaseCommand):
         for uwnetid in score_data:
             alert_objects.append(StudentAlertStatus(
                 uwnetid=uwnetid,
-                week=current_week,
                 alert_status=StudentAlertStatus.get_alert_class_from_scores(
                     score_data[uwnetid])
             ))

@@ -32,6 +32,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if options['loadall']:
             file_status = self._load_all_data(options['reload'])
+            call_command('generate_alert_status')
             errors = [i for i in file_status if i is not None]
             return "\n".join(errors)
         else:
@@ -50,10 +51,13 @@ class Command(BaseCommand):
                         RADStorageDao.get_year_quarter_week_from_filename(
                             latest_file)
                     )
-            self._load_week_by_year_quarter_week(year,
-                                                 quarter,
-                                                 week_id,
-                                                 options['reload'])
+            response = self._load_week_by_year_quarter_week(year,
+                                                            quarter,
+                                                            week_id,
+                                                            options['reload'])
+            if response is not None:
+                return response
+
             # Prebuild alert status for users
             call_command('generate_alert_status')
 

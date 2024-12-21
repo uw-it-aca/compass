@@ -77,13 +77,11 @@ class StudentAlertStatus(models.Model):
     alert_status = models.CharField(choices=AlertStatus.choices,
                                     null=True,
                                     max_length=2)
-    uwnetid = models.CharField(max_length=50)
-    week = models.ForeignKey('RADWeek', on_delete=models.CASCADE)
+    uwnetid = models.CharField(max_length=50, unique=True)
 
     class Meta:
-        unique_together = ('uwnetid', 'week')
         indexes = [
-            models.Index(fields=['uwnetid', 'week'])
+            models.Index(fields=['uwnetid'])
         ]
 
     @classmethod
@@ -103,12 +101,38 @@ class StudentAlertStatus(models.Model):
             return cls.AlertStatus.SUCCESS
 
     @classmethod
-    def get_alert_class_by_week_uwnetid(cls, week, uwnetid):
+    def get_alert_class_by_uwnetid(cls, uwnetid):
         """
         Get alert class for a student
         """
-        alert_status = cls.objects.get(week=week, uwnetid=uwnetid)
+        try:
+            alert_status = cls.objects.get(uwnetid=uwnetid)
+        except cls.DoesNotExist:
+            return None
         return alert_status.get_alert_status_display()
+
+    @classmethod
+    def add_alert_class_to_caseload(cls, caseload):
+        """
+        Add alert status to caseload
+        """
+        for student in caseload:
+            student['analytics_alert'] = cls.get_alert_class_by_uwnetid(
+                student['uwnetid'])
+        return caseload
+
+    @classmethod
+    def add_alert_class_to_contacts(cls, contacts):
+        alerts_by_netid = {}
+        for contact in contacts:
+            netid = contact['student']['uwnetid']
+            if netid in alerts_by_netid:
+                contact['student']['analytics_alert'] = alerts_by_netid[netid]
+            else:
+                alert_class = cls.get_alert_class_by_uwnetid(netid)
+                alerts_by_netid[netid] = alert_class
+                contact['student']['analytics_alert'] = alert_class
+        return contacts
 
 
 class CourseAnalyticsScores(models.Model):
@@ -187,29 +211,6 @@ class CourseAnalyticsScores(models.Model):
                                                            course_id)
                 section['alert_status'] = alert_status
         return schedules
-
-    @classmethod
-    def add_alert_class_to_caseload(cls, caseload):
-        """
-        Add alert status to caseload
-        """
-        for student in caseload:
-            student['analytics_alert'] = cls.get_alert_class_for_student(
-                student['uwnetid'])
-        return caseload
-
-    @classmethod
-    def add_alert_class_to_contacts(cls, contacts):
-        alerts_by_netid = {}
-        for contact in contacts:
-            netid = contact['student']['uwnetid']
-            if netid in alerts_by_netid:
-                contact['student']['analytics_alert'] = alerts_by_netid[netid]
-            else:
-                alert_class = cls.get_alert_class_for_student(netid)
-                alerts_by_netid[netid] = alert_class
-                contact['student']['analytics_alert'] = alert_class
-        return contacts
 
     @classmethod
     def get_all_predections_for_week(cls, week):
