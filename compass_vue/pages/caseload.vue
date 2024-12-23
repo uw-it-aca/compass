@@ -372,7 +372,48 @@ export default {
       navigator.clipboard.writeText(email_list.join("; "));
     },
     downloadCSV: function() {
-
+      let csv_string = "",
+        hiddenElement = document.createElement('a'),
+        header = [
+          "Student Name",
+          "Student Number",
+          "UW NetID",
+          "Email",
+          "Class",
+          "Campus",
+          "Alert Status",
+          "Degree Status",
+          "Academic Standing",
+          "Registered",
+          "Holds",
+        ],
+      timestamp = Math.round(Date.now()/1000);
+      csv_string += header.join(",") + "\n";
+      this.filteredPersons.forEach((person) => {
+        let alert_status = {
+          danger: "Red",
+          warning: "Yellow",
+          success: "Green"
+        }[person.analytics_alert] || "";
+        let row = [
+          person.person__display_name,
+          person.student_number,
+          person.person__uwnetid,
+          person.person__uwnetid + "@uw.edu",
+          person.class_desc,
+          person.campus_desc,
+          alert_status,
+          person.latest_degree ? person.latest_degree.degree_status_desc : undefined,
+          person.latest_transcript ? person.latest_transcript.scholarship_desc : undefined,
+          person.registered_in_quarter,
+          person.registration_hold_ind,
+        ]
+        csv_string += row.join(",") + "\n";
+      });
+      hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv_string);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = 'caseload' + timestamp + '.csv';
+      hiddenElement.click();
     },
     capitalizeFirstLetter: function (string) {
       string = string.toLowerCase();
