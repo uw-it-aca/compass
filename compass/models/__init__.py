@@ -480,7 +480,7 @@ class UserPreference(models.Model):
     """
     ALLOWED_PREFERENCES = {"caseload_filters": ["class", "campus", "degree",
                                                 "scholarship", "registered",
-                                                "holds"]
+                                                "holds", "alert"]
                            }
 
     app_user = models.ForeignKey("AppUser", on_delete=models.CASCADE)
