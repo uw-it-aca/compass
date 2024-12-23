@@ -155,6 +155,24 @@
                     <i class="bi bi-star me-2"></i>Set filters as default
                   </button>
                 </div>
+                <div>
+                  <button
+                    type="button"
+                    class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
+                    @click="copyEmailList"
+                  >
+                    <i class="bi bi-envelope-at-fill me-2"></i>
+                    Copy student E-Mail addresses
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
+                    @click="downloadCSV"
+                  >
+                    <i class="bi bi-filetype-csv me-2"></i>
+                    Download student data
+                  </button>
+                </div>
               </div>
             </div>
           </BCard>
@@ -345,6 +363,17 @@ export default {
     },
   },
   methods: {
+    copyEmailList: function() {
+      let email_list = [];
+      this.filteredPersons.forEach((person) => {
+        email_list.push(person.uwnetid + "@uw.edu");
+      });
+      // copy to clipboard
+      navigator.clipboard.writeText(email_list.join("; "));
+    },
+    downloadCSV: function() {
+
+    },
     capitalizeFirstLetter: function (string) {
       string = string.toLowerCase();
       return string.charAt(0).toUpperCase() + string.slice(1);
