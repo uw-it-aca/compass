@@ -60,7 +60,8 @@ class StudentView(BaseAPIView):
             person_dict = person.to_dict()
             # handle case where student data not in PDS
             if "student" not in person_dict:
-                logger.error("Student data not found for identifier: %s", identifier)
+                logger.error("Student data not found for identifier: %s",
+                             identifier)
                 return self.response_notfound()
             photo_key = PhotoDAO().generate_photo_key()
             person_dict['photo_url'] = reverse('photo', kwargs={
