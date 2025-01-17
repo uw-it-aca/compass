@@ -1,5 +1,6 @@
-# Copyright 2024 UW-IT, University of Washington
+# Copyright 2025 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
+
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
 from compass.dao.person import get_person_by_uwregid
