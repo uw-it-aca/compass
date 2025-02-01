@@ -32,8 +32,8 @@
           </div>
           <div class="modal-body">
             <div class="mb-3">
-              <lable class="form-label small fw-bold"
-                >Specify date below.</lable
+              <label class="form-label small fw-bold"
+                >Specify date below.</label
               >
               <input
                 type="date"

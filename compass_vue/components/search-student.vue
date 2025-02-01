@@ -6,6 +6,7 @@
       placeholder="Student number or netid..."
       aria-label="Recipient's username"
       v-model="searchValue"
+      @keyup.enter.exact="searchByStudent"
     />
     <button
       :disabled="searchValue.length == 0"
@@ -45,16 +46,18 @@ export default {
   },
   methods: {
     searchByStudent: function () {
-      this.getStudentDetail(this.searchValue)
-        .then(() => {
-          console.log(this.searchValue);
-          this.studentExists = true;
-          //this.$router.push("/student/" + this.searchValue);
-          window.location.href = "/student/" + this.searchValue;
-        })
-        .catch(() => {
-          this.studentExists = false;
-        });
+      if (this.searchValue !== "") {
+        this.getStudentDetail(this.searchValue)
+          .then(() => {
+            console.log(this.searchValue);
+            this.studentExists = true;
+            //this.$router.push("/student/" + this.searchValue);
+            window.location.href = "/student/" + this.searchValue;
+          })
+          .catch(() => {
+            this.studentExists = false;
+          });
+      }
     },
   },
 };
