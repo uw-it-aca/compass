@@ -34,7 +34,7 @@
                 Warning: Consider carefully before deleting an affiliation as
                 there is no way to undo this action.
               </div>
-              <lable class="form-label small fw-bold">Admin Note</lable>
+              <label class="form-label small fw-bold">Admin Note</label>
               <textarea
                 :class="
                   formErrors.notes ? 'is-invalid form-control' : 'form-control'
