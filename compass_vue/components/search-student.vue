@@ -1,26 +1,27 @@
 <template>
-  <div class="input-group">
-    <input
-      type="text"
-      :maxlength="maxLength"
-      class="form-control form-control-sm"
-      placeholder="Student number or UW netid..."
-      aria-label="Student number or UW netid"
-      v-model="searchValue"
-      @keyup.enter.exact="searchByStudent"
-    />
-    <button
-      :disabled="searchValue.length == 0"
-      class="btn btn-sm btn-outline-dark-beige"
-      type="button"
-      @click="searchByStudent"
-    >
-      Search
-    </button>
-  </div>
-  <div v-if="searchError || error" class="text-danger mt-2">
-    {{ searchError || "Student not found" }}
-  </div>
+  <form @submit.prevent="searchByStudent">
+    <div class="input-group">
+      <input
+        type="text"
+        :maxlength="maxLength"
+        class="form-control form-control-sm"
+        placeholder="Student number or UW netid..."
+        aria-label="Student number or UW netid"
+        v-model="searchValue"
+
+      />
+      <button
+        :disabled="searchValue.length == 0"
+        class="btn btn-sm btn-outline-dark-beige"
+        type="submit"
+      >
+        Search
+      </button>
+    </div>
+    <div v-if="searchError || error" class="text-danger mt-2">
+      {{ searchError || "Student not found" }}
+    </div>
+  </form>
 </template>
 
 <script>
@@ -48,10 +49,11 @@ export default {
   },
   methods: {
     validQuery: function (val) {
-      return (
-        val.length < 2 ||
+      return val.length < 2 ||
         val.length > this.maxLength ||
-        !(/^[a-z0-9\-\_\.]+$/).test(val)) ? false : true;
+        !/^[a-z0-9\-\_\.]+$/.test(val)
+        ? false
+        : true;
     },
     searchByStudent: function () {
       this.searchError = null;
