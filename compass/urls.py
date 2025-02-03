@@ -17,6 +17,7 @@ from compass.views.api.student import (
     StudentVisitsView,
     StudentEligibilityView,
     StudentView,
+    StudentSearchView,
     StudentCourseAnalyticsView,
     StudentSigninAnalyticsView
 )
@@ -70,6 +71,7 @@ urlpatterns += [
         TemplateView.as_view(template_name="unauthorized-user.html"),
         name="unauthorized_user",
     ),
+    re_path(r"^api/internal/search$", StudentSearchView.as_view()),
     re_path(
         r"^api/internal/student/(?P<identifier>[-@:\w]+)/$",
         StudentView.as_view(),

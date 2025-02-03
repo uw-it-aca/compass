@@ -2,9 +2,10 @@
   <div class="input-group">
     <input
       type="text"
+      :maxlength="maxLength"
       class="form-control form-control-sm"
-      placeholder="Student number or netid..."
-      aria-label="Recipient's username"
+      placeholder="Student number or UW netid..."
+      aria-label="Student number or UW netid"
       v-model="searchValue"
       @keyup.enter.exact="searchByStudent"
     />
@@ -17,13 +18,13 @@
       Search
     </button>
   </div>
-  <div v-if="!studentExists || error" class="text-danger mt-2">
-    No student found
+  <div v-if="searchError || error" class="text-danger mt-2">
+    {{ searchError || "Student not found" }}
   </div>
 </template>
 
 <script>
-import { getStudentDetail } from "@/utils/data";
+import { getStudentBySearch } from "@/utils/data";
 
 export default {
   props: {
@@ -35,28 +36,39 @@ export default {
   },
   setup() {
     return {
-      getStudentDetail,
+      getStudentBySearch,
     };
   },
   data() {
     return {
-      studentExists: true,
       searchValue: "",
+      maxLength: 32,
+      searchError: null,
     };
   },
   methods: {
+    validQuery: function (val) {
+      return (
+        val.length < 2 ||
+        val.length > this.maxLength ||
+        !(/^[a-z0-9\-\_\.]+$/).test(val)) ? false : true;
+    },
     searchByStudent: function () {
-      if (this.searchValue !== "") {
-        this.getStudentDetail(this.searchValue)
-          .then(() => {
-            console.log(this.searchValue);
-            this.studentExists = true;
-            //this.$router.push("/student/" + this.searchValue);
+      this.searchError = null;
+      this.searchValue = this.searchValue.trim().toLowerCase();
+      if (this.validQuery(this.searchValue)) {
+        this.getStudentBySearch(this.searchValue)
+          .then((response) => {
+            return response.data;
+          })
+          .then((data) => {
             window.location.href = "/student/" + this.searchValue;
           })
-          .catch(() => {
-            this.studentExists = false;
+          .catch((error) => {
+            this.searchError = error.response.data;
           });
+      } else {
+        this.searchError = "Invalid student identifier";
       }
     },
   },
