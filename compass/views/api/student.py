@@ -117,7 +117,7 @@ class StudentSearchView(BaseAPIView):
     /api/internal/search?query=[student_number|uwnetid]
     '''
     def get(self, request):
-        identifier = request.GET.get('query')
+        identifier = request.GET.get('query', '').strip().lower()
         if identifier is None or not len(identifier):
             return self.response_badrequest('Missing student identifier')
 
