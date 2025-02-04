@@ -46,7 +46,6 @@
               <td v-else><i class="py-0 bi bi-x-circle"></i></td>
               <td class="text-end">
                 <AffiliationEdit
-                  :button-type="'button'"
                   :person="person"
                   :affiliations="affiliations"
                   :studentAffiliation="aff"
@@ -55,7 +54,6 @@
                   <i class="py-0 bi bi-pencil me-2"></i>Edit</AffiliationEdit
                 >
                 <AffiliationDelete
-                  :button-type="'button'"
                   :person="person"
                   :studentAffiliation="aff"
                   :studentAffiliations="studentAffiliations"
@@ -66,7 +64,11 @@
             </tr>
           </tbody>
           <tbody v-else>
-            <td class="ps-3" colspan="4">no affiliations for this student</td>
+            <tr>
+              <td class="ps-3" colspan="4">
+                No affiliations for this student
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
