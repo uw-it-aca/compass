@@ -64,7 +64,7 @@ export default {
             return response.data;
           })
           .then((data) => {
-            window.location.href = "/student/" + this.searchValue;
+            this.$router.push("/student/" + this.searchValue);
           })
           .catch((error) => {
             this.searchError = error.response.data;
