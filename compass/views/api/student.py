@@ -59,10 +59,10 @@ class StudentView(BaseAPIView):
 
             person_dict = person.to_dict()
             # handle case where student data not in PDS
-            if "student" not in person_dict:
-                logger.error("Student data not found for identifier: %s",
-                             identifier)
-                return self.response_notfound()
+            if 'student' not in person_dict:
+                logger.error(
+                    f'Student data not found for identifier: "{identifier}"')
+                return self.response_notfound('Student not found')
             photo_key = PhotoDAO().generate_photo_key()
             person_dict['photo_url'] = reverse('photo', kwargs={
                 'uwregid': person.uwregid,
@@ -72,7 +72,7 @@ class StudentView(BaseAPIView):
             person_dict['analytics_alert'] = analytics_alert
             return self.response_ok(person_dict)
         except PersonNotFoundException:
-            return self.response_notfound()
+            return self.response_notfound('Student not found')
 
     def post(self, request, identifier=None):
         try:
@@ -108,6 +108,38 @@ class StudentView(BaseAPIView):
             return self.response_unauthorized()
         except OverrideNotPermitted as err:
             return self.response_unauthorized(err)
+
+
+class StudentSearchView(BaseAPIView):
+    '''
+    API endpoint returning student search results
+
+    /api/internal/search?query=[student_number|uwnetid]
+    '''
+    def get(self, request):
+        identifier = request.GET.get('query', '').strip().lower()
+        if identifier is None or not len(identifier):
+            return self.response_badrequest('Missing student identifier')
+
+        try:
+            includes = {'include_student': True}
+            if valid_uwnetid(identifier):
+                person = get_person_by_uwnetid(identifier, **includes)
+            elif valid_student_number(identifier):
+                person = get_person_by_student_number(identifier, **includes)
+            else:
+                return self.response_badrequest('Invalid student identifier')
+        except PersonNotFoundException:
+            return self.response_notfound('Student not found')
+
+        person_dict = person.to_dict()
+        # handle case where student data not in PDS
+        if 'student' not in person_dict:
+            logger.error(
+                f'Student data not found for identifier: "{identifier}"')
+            return self.response_notfound('Not a student')
+
+        return self.response_ok(person_dict)
 
 
 class StudentSchedulesView(BaseAPIView):
@@ -148,8 +180,7 @@ class StudentContactsView(BaseAPIView):
             return self.response_badrequest('Invalid systemkey')
 
         queryset = Contact.objects.filter(
-            student__system_key__contains=systemkey.lstrip("0"))\
-            .order_by('-checkin_date')
+            student__system_key__contains=systemkey).order_by('-checkin_date')
         serializer = ContactReadSerializer(queryset, many=True)
         return self.response_ok(serializer.data)
 
