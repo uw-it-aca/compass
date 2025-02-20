@@ -18,24 +18,28 @@ const routes = [
   },
   {
     path: "/checkins/:id?",
+    name: "checkins",
     component: CheckIn,
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/caseload/:id?",
+    name: "caseload",
     component: Caseload,
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/student/:id?",
+    name: "student",
     component: Student,
     pathToRegexpOptions: { strict: true },
     props: true,
   },
   {
     path: "/reports",
+    name: "reports",
     component: Reports,
     meta: { authorize: [Role.Manager] },
     pathToRegexpOptions: { strict: true },
@@ -43,6 +47,7 @@ const routes = [
   },
   {
     path: "/affiliations",
+    name: "affiliations",
     component: Affiliations,
     meta: { authorize: [Role.Manager] },
     pathToRegexpOptions: { strict: true },
