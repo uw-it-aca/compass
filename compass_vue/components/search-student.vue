@@ -64,7 +64,9 @@ export default {
             return response.data;
           })
           .then((data) => {
-            this.$router.push("/student/" + this.searchValue);
+            this.$router.push({
+              name: "student", params: { id: this.searchValue }
+            });
           })
           .catch((error) => {
             this.searchError = error.response.data;
