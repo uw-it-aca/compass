@@ -79,8 +79,8 @@ export default {
       let _this = this;
       // setup() exposed properties can be accessed on `this`
       this.getAdviserCheckIns(netid).then((response) => {
-        if (response.data) {
-          _this.contacts = response.data;
+        if (response) {
+          _this.contacts = response;
           _this.isLoading = false;
         }
       });

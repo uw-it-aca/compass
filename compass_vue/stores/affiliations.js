@@ -15,7 +15,7 @@ export const useAffiliationStore = defineStore({
       if (!state.affiliationsLoaded) {
         state.affiliations = {
           request: this.getAffiliations().then((response) => {
-            state.affiliations.data = response.data;
+            state.affiliations.data = response;
           }),
         };
       }

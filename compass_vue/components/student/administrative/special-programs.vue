@@ -109,7 +109,7 @@ export default {
     loadSpecialProgramData() {
       this.getStudentSpecialProgram(this.person.student.system_key)
         .then((response) => {
-          this.program_data = response.data;
+          this.program_data = response;
         })
         .catch((error) => {
           if (error.response.status === 404) {
@@ -119,7 +119,7 @@ export default {
               "Cannot get special program metadata for " +
                 this.person.student.system_key +
                 ": " +
-                error.response.data
+                error.response
             );
           }
         });

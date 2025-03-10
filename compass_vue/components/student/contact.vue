@@ -249,8 +249,8 @@ export default {
     loadStudentContacts: function () {
       this.getStudentContacts(this.person.student.system_key).then(
         (response) => {
-          if (response.data) {
-            this.contacts = response.data;
+          if (response) {
+            this.contacts = response;
           }
         }
       );

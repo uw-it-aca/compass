@@ -19,7 +19,7 @@ export const useContactStore = defineStore({
       if (!Object.prototype.hasOwnProperty.call(this._contactTopics, 'request')) {
         this._contactTopics.request = getStudentContactTopics().then(
           (response) => {
-            this._contactTopics.data = response.data;
+            this._contactTopics.data = response;
           });
       }
       return this._contactTopics.data;
@@ -28,7 +28,7 @@ export const useContactStore = defineStore({
       if (!Object.prototype.hasOwnProperty.call(this._contactTypes, 'request')) {
         this._contactTypes.request = getStudentContactTypes().then(
           (response) => {
-            this._contactTypes.data = response.data;
+            this._contactTypes.data = response;
           });
       }
       return this._contactTypes.data;
@@ -37,7 +37,7 @@ export const useContactStore = defineStore({
       if (!Object.prototype.hasOwnProperty.call(this._contactMethods, 'request')) {
         this._contactMethods.request = getStudentContactMethods().then(
           (response) => {
-            this._contactMethods.data = response.data;
+            this._contactMethods.data = response;
           });
       }
       return this._contactMethods.data;

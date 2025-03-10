@@ -231,8 +231,8 @@ export default {
     },
     loadAffiliations() {
       this.getAffiliations().then((response) => {
-        if (response.data) {
-          this.affiliations = response.data;
+        if (response) {
+          this.affiliations = response;
         }
       });
     },
@@ -271,7 +271,7 @@ export default {
         this.cohortName
       )
         .then((response) => {
-          this.responseData = response.data;
+          this.responseData = response;
           // MARK: give time for the loading spinner to appear
           setTimeout(() => {
             this.isLoading = false;
@@ -279,7 +279,7 @@ export default {
         })
         .catch((error) => {
           this.isLoading = false;
-          alert(error.response.data);
+          alert(error.response);
         });
     },
   },

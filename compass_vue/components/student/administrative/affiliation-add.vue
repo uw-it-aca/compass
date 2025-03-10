@@ -217,7 +217,7 @@ export default {
             notes: this.notes,
           })
             .then(() => {
-              this.updateStudentAffiliations(response.data);
+              this.updateStudentAffiliations(response);
               this.$emit("affiliationsUpdated");
               this.hideModal();
             })

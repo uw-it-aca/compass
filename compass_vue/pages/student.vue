@@ -266,8 +266,8 @@ export default {
       // setup() exposed properties can be accessed on `this`
       this.getStudentDetail(studentNetID)
         .then((response) => {
-          if (response.data) {
-            this.person = response.data;
+          if (response) {
+            this.person = response;
             this.isLoading = false;
             this.isError = false;
 
@@ -284,8 +284,8 @@ export default {
     loadAccessGroups: function () {
       // setup() exposed properties can be accessed on `this`
       this.getAccessGroups().then((response) => {
-        if (response.data) {
-          this.accessGroups = response.data;
+        if (response) {
+          this.accessGroups = response;
         }
       });
     },

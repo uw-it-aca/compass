@@ -63,8 +63,8 @@ export default {
     loadStudentAffiliations: function () {
       this.getStudentAffiliations(this.person.student.system_key).then(
         (response) => {
-          if (response.data) {
-            this.affiliations = response.data;
+          if (response) {
+            this.affiliations = response;
           }
         }
       );

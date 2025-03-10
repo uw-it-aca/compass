@@ -216,8 +216,8 @@ export default {
     },
     loadStudentSchedules: function () {
       this.getStudentSchedules(this.person.uwregid).then((response) => {
-        if (response.data) {
-          this.schedules = response.data;
+        if (response) {
+          this.schedules = response;
         }
       });
     },

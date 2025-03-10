@@ -76,16 +76,16 @@ export default {
     loadStudentEligibilities() {
       this.getStudentEligibility(this.person.student.system_key).then(
         (response) => {
-          if (response.data) {
-            this.student_eligibilities = response.data;
+          if (response) {
+            this.student_eligibilities = response;
           }
         }
       );
     },
     loadEligibilities() {
       this.getEligibilities().then((response) => {
-        if (response.data) {
-          this.eligibilities = response.data;
+        if (response) {
+          this.eligibilities = response;
         }
       });
     },

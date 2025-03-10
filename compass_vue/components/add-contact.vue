@@ -423,9 +423,9 @@ export default {
     },
     getContact(contactId) {
       this.getStudentContact(contactId).then((response) => {
-        if (response.data) {
+        if (response) {
           // we need to map the contact type and topic ids to the data object
-          let newContact = response.data;
+          let newContact = response;
           // convert date to local and format for datetime-local input
           newContact.checkin_date = new Date(newContact.checkin_date)
             .toLocaleString("sv-SE", {

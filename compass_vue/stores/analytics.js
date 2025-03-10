@@ -20,7 +20,7 @@ export const useAnalyticsStore = defineStore({
       if (!this.signinAnalyticsData[uwnetid]) {
         this.signinAnalyticsData[uwnetid] = {
           request: this.getStudentSigninAnalytics(uwnetid).then((response) => {
-            this.signinAnalyticsData[uwnetid].data = response.data;
+            this.signinAnalyticsData[uwnetid].data = response;
           }),
         };
       }
@@ -34,7 +34,7 @@ export const useAnalyticsStore = defineStore({
       if (!quarterPath[course_id]) {
         quarterPath[course_id] = {
           request: this.getStudentCourseAnalytics(uwnetid, year, quarter, course_id).then((response) => {
-            quarterPath[course_id].data = response.data;
+            quarterPath[course_id].data = response;
           }),
         };
       }

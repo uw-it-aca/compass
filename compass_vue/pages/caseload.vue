@@ -351,8 +351,8 @@ export default {
     },
     loadAdviserCaseload: function (netid) {
       this.getAdviserCaseload(netid).then((response) => {
-        if (response.data) {
-          this.persons = response.data;
+        if (response) {
+          this.persons = response;
         }
         this.isLoading = false;
       });

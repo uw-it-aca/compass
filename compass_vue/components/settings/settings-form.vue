@@ -119,8 +119,8 @@ export default {
     loadSettings() {
       this.getSettings(this.accessGroup.id, this.settingType)
         .then((response) => {
-          if (response.data) {
-            this.settings = response.data;
+          if (response) {
+            this.settings = response;
           }
         })
         .catch((error) => {
@@ -132,7 +132,7 @@ export default {
     submitSettingsForm() {
       this.saveSettings(this.accessGroup.id, this.settingType, this.settings)
         .then((response) => {
-          if (response.data) {
+          if (response) {
             // show and update successful message for 3 seconds
             this.updateSuccessful = true;
             setTimeout(() => (this.updateSuccessful = false), 3000);

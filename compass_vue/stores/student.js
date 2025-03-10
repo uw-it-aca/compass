@@ -15,7 +15,7 @@ export const useStudentStore = defineStore({
       if (!Object.prototype.hasOwnProperty.call(this.studentData, uwregid)) {
         this.studentData[uwregid] = {
           request: this.getStudentTranscripts(uwregid).then((response) => {
-            this.studentData[uwregid].data = response.data;
+            this.studentData[uwregid].data = response;
           }),
         };
       }
