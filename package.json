@@ -8,7 +8,7 @@
     "watch": "vite build --watch --mode development",
     "test": "vitest --environment jsdom",
     "coverage": "vitest run --coverage",
-    "eslint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --ignore-path .gitignore",
+    "eslint": "eslint 'compass_vue/**/*.{js,vue}'",
     "stylelint": "stylelint '**/*.{vue,scss}'"
   },
   "repository": {
