@@ -1,6 +1,5 @@
 <template>
-
-<BCard
+  <BCard
     class="shadow-sm rounded-3"
     header-class="p-3 d-flex align-items-center justify-content-between"
     header-bg-variant="transparent"
@@ -18,59 +17,53 @@
         affiliation</AffiliationAdd
       >
     </template>
-      <div class="table-responsive m-0">
-        <table class="table m-0">
-          <thead class="small">
-            <tr>
-              <th class="ps-3 bg-body-tertiary">Affiliation</th>
-              <th class="bg-body-tertiary">Cohort</th>
-              <th class="bg-body-tertiary">Active</th>
-              <th class="bg-body-tertiary">&nbsp;</th>
-            </tr>
-          </thead>
-          <tbody v-if="studentAffiliations.length !== 0">
-            <tr
-              v-for="(aff, index) in studentAffiliations"
-              :key="index"
-              class=""
-            >
-              <td scope="row" class="ps-3">{{ aff.affiliation.name }}</td>
-              <td scope="row" class="ps-3">
-                <div v-for="(cohort, index) in aff.cohorts" :key="index">
-                  {{ cohort.start_year }} - {{ cohort.end_year }}
-                </div>
-              </td>
-              <td v-if="aff.actively_advised">
-                <i class="py-0 bi bi-check-lg"></i>
-              </td>
-              <td v-else><i class="py-0 bi bi-x-circle"></i></td>
-              <td class="text-end">
-                <AffiliationEdit
-                  :button-type="'button'"
-                  :person="person"
-                  :affiliations="affiliations"
-                  :studentAffiliation="aff"
-                  :studentAffiliations="studentAffiliations"
-                >
-                  <i class="py-0 bi bi-pencil me-2"></i>Edit</AffiliationEdit
-                >
-                <AffiliationDelete
-                  :button-type="'button'"
-                  :person="person"
-                  :studentAffiliation="aff"
-                  :studentAffiliations="studentAffiliations"
-                >
-                  <i class="bi bi-trash me-2"></i>Delete
-                </AffiliationDelete>
-              </td>
-            </tr>
-          </tbody>
-          <tbody v-else>
-            <td class="ps-3" colspan="4">no affiliations for this student</td>
-          </tbody>
-        </table>
-      </div>
-    </BCard>
+    <div class="table-responsive m-0">
+      <table class="table m-0">
+        <thead class="small">
+          <tr>
+            <th class="ps-3 bg-body-tertiary">Affiliation</th>
+            <th class="bg-body-tertiary">Cohort</th>
+            <th class="bg-body-tertiary">Active</th>
+            <th class="bg-body-tertiary">&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody v-if="studentAffiliations.length !== 0">
+          <tr v-for="(aff, index) in studentAffiliations" :key="index" class="">
+            <td scope="row" class="ps-3">{{ aff.affiliation.name }}</td>
+            <td scope="row" class="ps-3">
+              <div v-for="(cohort, index) in aff.cohorts" :key="index">
+                {{ cohort.start_year }} - {{ cohort.end_year }}
+              </div>
+            </td>
+            <td v-if="aff.actively_advised">
+              <i class="py-0 bi bi-check-lg"></i>
+            </td>
+            <td v-else><i class="py-0 bi bi-x-circle"></i></td>
+            <td class="text-end">
+              <AffiliationEdit
+                :person="person"
+                :affiliations="affiliations"
+                :studentAffiliation="aff"
+                :studentAffiliations="studentAffiliations"
+              >
+                <i class="py-0 bi bi-pencil me-2"></i>Edit</AffiliationEdit
+              >
+              <AffiliationDelete
+                :person="person"
+                :studentAffiliation="aff"
+                :studentAffiliations="studentAffiliations"
+              >
+                <i class="bi bi-trash me-2"></i>Delete
+              </AffiliationDelete>
+            </td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <td class="ps-3" colspan="4">no affiliations for this student</td>
+        </tbody>
+      </table>
+    </div>
+  </BCard>
 </template>
 
 <script>

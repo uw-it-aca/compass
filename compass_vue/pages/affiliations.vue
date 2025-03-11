@@ -1,5 +1,3 @@
-// reports.vue
-
 <template>
   <Layout :page-title="pageTitle">
     <!-- page content -->
@@ -13,9 +11,9 @@
                   >Upload students</label
                 >
                 <input
+                  id="formFile"
                   class="form-control form-control-sm"
                   type="file"
-                  id="formFile"
                   @change="addFile"
                 />
               </div>
@@ -69,8 +67,8 @@
               <button
                 type="button"
                 class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
-                @click="processUpload"
                 :disabled="isLoading"
+                @click="processUpload"
               >
                 Process Batch
               </button>
@@ -188,6 +186,7 @@ import { getCohorts } from "@/utils/cohorts";
 import { BCard } from "bootstrap-vue-next";
 
 export default {
+  name: "PagesAffiliations",
   components: {
     Layout,
     BCard,
@@ -279,7 +278,7 @@ export default {
         })
         .catch((error) => {
           this.isLoading = false;
-          alert(error.response);
+          alert(error);
         });
     },
   },

@@ -4,7 +4,7 @@ import { useTokenStore } from "@/stores/token";
 async function customFetch(url, options = {}) {
   const tokenStore = useTokenStore();
 
-  // Default headers
+  // Set default headers
   const defaultHeaders = {
     "Access-Control-Allow-Origin": "*",
     "X-CSRFToken": tokenStore.csrfToken,
@@ -20,22 +20,23 @@ async function customFetch(url, options = {}) {
   try {
     const response = await fetch(url, options);
 
-    if (response.ok) {
-      const jsonResponse = await response.json();
-      return jsonResponse;
-    } else {
-      if (response.status === 403) {
-        // Expired session
-        return alert(
-          "Your session has expired. Refresh the page to start a new session."
-        );
-      }
-
-      const errorResponse = await response.json();
-      errorResponse.status = response.status;
-      throw errorResponse;
+    // Handle expired session (403 status)
+    if (response.status === 403) {
+      alert(
+        "Your session has expired. Refresh the page to start a new session."
+      );
+      return;
     }
+
+    // Check if response is ok (status 2xx)
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Parse and return JSON response
+    return response.json();
   } catch (error) {
+    console.error("Fetch error:", error);
     throw error;
   }
 }

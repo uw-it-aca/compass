@@ -25,7 +25,6 @@
       </p>
       <div class="my-3 text-end">
         <SpecialProgramEdit
-          :button-type="'button'"
           :person="person"
           :program_data="program_data"
           @specialProgramUpdated="loadSpecialProgramData()"
@@ -33,7 +32,6 @@
           <i class="bi bi-pencil me-2"></i>Edit
         </SpecialProgramEdit>
         <SpecialProgramDelete
-          :button-type="'button'"
           :person="person"
           :program_data="program_data"
           @specialProgramUpdated="loadSpecialProgramData()"
@@ -54,7 +52,6 @@
         </p>
         <div class="text-end">
           <SpecialProgramAdd
-            :button-type="'button'"
             :person="person"
             :program_data="program_data"
             @specialProgramUpdated="loadSpecialProgramData()"
