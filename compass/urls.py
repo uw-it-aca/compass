@@ -1,4 +1,4 @@
-# Copyright 2024 UW-IT, University of Washington
+# Copyright 2025 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
@@ -17,6 +17,7 @@ from compass.views.api.student import (
     StudentVisitsView,
     StudentEligibilityView,
     StudentView,
+    StudentSearchView,
     StudentCourseAnalyticsView,
     StudentSigninAnalyticsView
 )
@@ -70,6 +71,7 @@ urlpatterns += [
         TemplateView.as_view(template_name="unauthorized-user.html"),
         name="unauthorized_user",
     ),
+    re_path(r"^api/internal/search$", StudentSearchView.as_view()),
     re_path(
         r"^api/internal/student/(?P<identifier>[-@:\w]+)/$",
         StudentView.as_view(),
@@ -85,6 +87,7 @@ urlpatterns += [
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/contacts/$",
         StudentContactsView.as_view(),
+        name="student_contacts_view",
     ),
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/affiliations/$",

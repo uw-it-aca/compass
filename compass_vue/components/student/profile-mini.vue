@@ -22,10 +22,10 @@
         </div>
       </div>
       <div class="text-secondary small">
-        <router-link :to="{ path: '/student/' + person.student_number }"
+        <router-link :to="{ name: 'student', params: { id: person.student_number }}"
           >{{ person.student_number }} </router-link
         >,
-        <router-link :to="{ path: '/student/' + person.uwnetid }"
+        <router-link :to="{ name: 'student', params: { id: person.uwnetid }}"
           >{{ person.uwnetid }}
         </router-link>
       </div>

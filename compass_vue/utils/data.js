@@ -31,6 +31,12 @@ function _handleError(error) {
   }
 }
 
+async function getStudentBySearch(query) {
+  return axios
+    .get("/api/internal/search?query=" + query)
+    .catch(_handleError);
+}
+
 async function getStudentDetail(uwnetid) {
   return axios
     .get("/api/internal/student/" + uwnetid + "/")
@@ -97,6 +103,7 @@ async function getStudentSchedules(uwregid) {
 async function getStudentTranscripts(uwregid) {
   return axios.get("/api/internal/student/" + uwregid + "/transcripts/");
 }
+
 async function saveStudentContact(systemkey, contact) {
   let postUrl = "/api/internal/contact/";
   if (contact.id !== undefined) {
@@ -242,6 +249,7 @@ async function getStudentSigninAnalytics(uwnetid){
 }
 
 export {
+  getStudentBySearch,
   getStudentDetail,
   saveStudent,
   getEligibilities,
