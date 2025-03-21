@@ -7,13 +7,13 @@
           <!-- BCard (Panel) -->
           <BCard class="bg-body-tertiary rounded-3" border-variant="0">
             <div class="row">
-              <div class="col-xl-4 me-auto">
+              <div class="col-xl-3 me-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
                   <SearchStudent />
                 </div>
               </div>
-              <div class="col-xl-8">
+              <div class="col-xl-9">
                 <div
                   class="row gy-2 gx-3 align-items-center justify-content-end"
                 >
@@ -135,26 +135,26 @@
                       </option>
                     </select>
                   </div>
-                </div>
-                <div class="col">
-                  <label for="holdsFilter" class="fw-bold lh-lg"
-                  >Predicted Alert Status:</label
-                  >
-                  <select
-                    id="holdsFilter"
-                    v-model="selectedAlert"
-                    class="form-select form-select-sm"
-                  >
-                    <option selected :value="undefined">All</option>
-                    <option
-                      v-for="(option, index) in alertOptions"
-                      v-bind:value="option.id"
-                      :key="index"
+                  <div class="col">
+                    <label for="holdsFilter" class="fw-bold lh-lg"
+                    >Alert Status:</label
                     >
-                      {{ option.value }}
-                    </option>
-                  </select>
-              </div>
+                    <select
+                      id="holdsFilter"
+                      v-model="selectedAlert"
+                      class="form-select form-select-sm"
+                    >
+                      <option selected :value="undefined">All</option>
+                      <option
+                        v-for="(option, index) in alertOptions"
+                        v-bind:value="option.id"
+                        :key="index"
+                      >
+                        {{ option.value }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
                 <div class="text-end mt-3">
                   <button
                     v-if="!unsavedPreferences"
