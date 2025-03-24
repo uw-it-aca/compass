@@ -2,8 +2,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import random
+from django.db import IntegrityError
 from compass.tests import CompassTestCase
 from compass.models.rad_data import (RADWeek, RADImport, CourseAnalyticsScores,
+                                     StudentAlertStatus,
                                      convert_score_range)
 
 
@@ -213,3 +215,99 @@ class CourseAnalyticsScoresTest(CompassTestCase):
                                                              'javerage',
                                                              'CSE 142 A')
         self.assertEqual(len(data), 1)
+
+    def test_get_all_pred_for_week(self):
+        CourseAnalyticsScores.objects.create(
+            uwnetid="javerage",
+            course="CSE 142 A",
+            week=self.RAD_WEEK,
+            activity_score=4,
+            assignment_score=5,
+            grade_score=3,
+            prediction_score=0
+        )
+        CourseAnalyticsScores.objects.create(
+            uwnetid="javerage",
+            course="CSE 142 B",
+            week=self.RAD_WEEK,
+            activity_score=4,
+            assignment_score=5,
+            grade_score=3,
+            prediction_score=1
+        ),
+        CourseAnalyticsScores.objects.create(
+            uwnetid="jbelowaverage",
+            course="CSE 144 B",
+            week=self.RAD_WEEK,
+            activity_score=4,
+            assignment_score=5,
+            grade_score=3,
+            prediction_score=1
+        )
+        CourseAnalyticsScores.objects.create(
+            uwnetid="jbelowaverage",
+            course="CSE 145 B",
+            week=self.RAD_WEEK,
+            activity_score=4,
+            assignment_score=5,
+            grade_score=3,
+            prediction_score=1
+        )
+
+        data = CourseAnalyticsScores.get_all_predections_for_week(
+            self.RAD_WEEK)
+        self.assertEqual(len(data), 2)
+        self.assertEqual(data['javerage'], [0, 1])
+        self.assertEqual(data['jbelowaverage'], [1, 1])
+
+
+class StudentAlertStatusTest(CompassTestCase):
+    RAD_WEEK = None
+
+    def setUp(self):
+        self.RAD_WEEK = RADWeek.get_or_create_week(year=2021,
+                                                   quarter='spring',
+                                                   week=5)
+
+    def test_alert_status(self):
+        self.assertEqual(StudentAlertStatus.get_alert_class_from_scores([]),
+                         None)
+        self.assertEqual(StudentAlertStatus.get_alert_class_from_scores([0]),
+                         StudentAlertStatus.AlertStatus.SUCCESS)
+        self.assertEqual(StudentAlertStatus.get_alert_class_from_scores([1]),
+                         StudentAlertStatus.AlertStatus.DANGER)
+        self.assertEqual(StudentAlertStatus.get_alert_class_from_scores(
+            [0, 0, 1]),
+            StudentAlertStatus.AlertStatus.WARNING)
+        self.assertEqual(StudentAlertStatus.get_alert_class_from_scores(
+            [1, None, None]),
+            StudentAlertStatus.AlertStatus.DANGER)
+
+    def test_alert_class(self):
+        StudentAlertStatus.objects.create(
+            uwnetid="javerage",
+            alert_status=StudentAlertStatus.AlertStatus.SUCCESS
+        )
+        alert = StudentAlertStatus.objects.get(uwnetid="javerage")
+        self.assertEqual(alert.get_alert_status_display(), 'success')
+
+    def test_get_by_week_uwnetid(self):
+        StudentAlertStatus.objects.create(
+            uwnetid="javerage",
+            alert_status=StudentAlertStatus.AlertStatus.DANGER
+        )
+        alert_class = \
+            StudentAlertStatus.get_alert_class_by_uwnetid("javerage")
+        self.assertEqual(alert_class,
+                         "danger")
+
+    def test_constraints(self):
+        StudentAlertStatus.objects.create(
+            uwnetid="javerage",
+            alert_status=StudentAlertStatus.AlertStatus.SUCCESS
+        )
+        with self.assertRaises(IntegrityError):
+            StudentAlertStatus.objects.create(
+                uwnetid="javerage",
+                alert_status=StudentAlertStatus.AlertStatus.SUCCESS
+            )
