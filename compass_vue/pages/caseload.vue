@@ -137,7 +137,7 @@
                   </div>
                   <div class="col">
                     <label for="holdsFilter" class="fw-bold lh-lg"
-                    >Alert Status:</label
+                      >Alert Status:</label
                     >
                     <select
                       id="holdsFilter"
@@ -174,24 +174,7 @@
                     <i class="bi bi-star me-2"></i>Set filters as default
                   </button>
                 </div>
-                <div>
-                  <button
-                    type="button"
-                    class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
-                    @click="copyEmailList"
-                  >
-                    <i class="bi bi-envelope-at-fill me-2"></i>
-                    Copy student E-Mail addresses
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
-                    @click="downloadCSV"
-                  >
-                    <i class="bi bi-filetype-csv me-2"></i>
-                    Download student data
-                  </button>
-                </div>
+
               </div>
             </div>
           </BCard>
@@ -208,7 +191,28 @@
             body-class="p-0"
           >
             <template #header>
-              <div class="fs-6 fw-bold">Caseload</div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="fs-6 fw-bold">Caseload</div>
+
+                <BDropdown
+                  size="sm"
+                  variant="link"
+                  class="bg-secondary-hover link-primary link-underline link-underline-opacity-0 rounded"
+                  no-caret
+                >
+                  <template #button-content
+                    ><i class="bi bi-download"></i
+                  ></template>
+                  <BDropdownItemButton @click="copyEmailList"
+                    ><i class="bi bi-envelope-at-fill me-2 text-dark"></i>Copy student
+                    email</BDropdownItemButton
+                  >
+                  <BDropdownItemButton @click="downloadCSV"
+                    ><i class="bi bi-filetype-csv me-2 text-dark"></i>Download student
+                    data</BDropdownItemButton
+                  >
+                </BDropdown>
+              </div>
             </template>
             <CaseloadTableLoading v-if="isLoading" />
             <CaseloadTableDisplay
@@ -230,12 +234,22 @@ import CaseloadTableLoading from "@/components/caseload-table-loading.vue";
 import Layout from "@/layout.vue";
 import { getAdviserCaseload, savePreferences } from "@/utils/data";
 
-import { BCard } from "bootstrap-vue-next";
+import {
+  BCard,
+  BButton,
+  BDropdown,
+  BDropdownItem,
+  BDropdownItemButton,
+} from "bootstrap-vue-next";
 
 export default {
   components: {
     Layout,
     BCard,
+    BButton,
+    BDropdown,
+    BDropdownItem,
+    BDropdownItemButton,
     SearchStudent,
     CaseloadTableDisplay,
     CaseloadTableLoading,
@@ -394,7 +408,7 @@ export default {
     },
   },
   methods: {
-    copyEmailList: function() {
+    copyEmailList: function () {
       let email_list = [];
       this.filteredPersons.forEach((person) => {
         email_list.push(person.uwnetid + "@uw.edu");
@@ -402,9 +416,9 @@ export default {
       // copy to clipboard
       navigator.clipboard.writeText(email_list.join("; "));
     },
-    downloadCSV: function() {
+    downloadCSV: function () {
       let csv_string = "",
-        hiddenElement = document.createElement('a'),
+        hiddenElement = document.createElement("a"),
         header = [
           "Student Name",
           "Student Number",
@@ -418,14 +432,15 @@ export default {
           "Registered",
           "Holds",
         ],
-      timestamp = Math.round(Date.now()/1000);
+        timestamp = Math.round(Date.now() / 1000);
       csv_string += header.join(",") + "\n";
       this.filteredPersons.forEach((person) => {
-        let alert_status = {
-          danger: "Red",
-          warning: "Yellow",
-          success: "Green"
-        }[person.analytics_alert] || "";
+        let alert_status =
+          {
+            danger: "Red",
+            warning: "Yellow",
+            success: "Green",
+          }[person.analytics_alert] || "";
         let row = [
           person.person__display_name,
           person.student_number,
@@ -434,16 +449,21 @@ export default {
           person.class_desc,
           person.campus_desc,
           alert_status,
-          person.latest_degree ? person.latest_degree.degree_status_desc : undefined,
-          person.latest_transcript ? person.latest_transcript.scholarship_desc : undefined,
+          person.latest_degree
+            ? person.latest_degree.degree_status_desc
+            : undefined,
+          person.latest_transcript
+            ? person.latest_transcript.scholarship_desc
+            : undefined,
           person.registered_in_quarter,
           person.registration_hold_ind,
-        ]
+        ];
         csv_string += row.join(",") + "\n";
       });
-      hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv_string);
-      hiddenElement.target = '_blank';
-      hiddenElement.download = 'caseload' + timestamp + '.csv';
+      hiddenElement.href =
+        "data:text/csv;charset=utf-8," + encodeURI(csv_string);
+      hiddenElement.target = "_blank";
+      hiddenElement.download = "caseload" + timestamp + ".csv";
       hiddenElement.click();
     },
     capitalizeFirstLetter: function (string) {
@@ -469,7 +489,7 @@ export default {
       }
     },
     saveFilterPreferences: function () {
-      console.log('save', this.selectedAlert);
+      console.log("save", this.selectedAlert);
       savePreferences({
         caseload_filters: {
           class: this.selectedClass,
