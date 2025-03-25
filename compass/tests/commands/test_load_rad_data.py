@@ -1,4 +1,4 @@
-# Copyright 2024 UW-IT, University of Washington
+# Copyright 2025 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
@@ -28,9 +28,9 @@ class TestLoadRadData(CompassTestCase):
         self.assertEqual(rad_import.week, week)
         self.assertEqual(rad_import.import_status, RADImport.SUCCESS)
 
-        self.assertEqual(CourseAnalyticsScores.objects.count(), 2)
+        self.assertEqual(CourseAnalyticsScores.objects.count(), 4)
         scores = CourseAnalyticsScores.objects.all()
-        self.assertEqual(scores[0].course, 'CSE 162 A')
+        self.assertEqual(scores[0].course, 'TRAIN 100 A')
 
     def test_load_specific_week(self):
         call_command('load_rad_data', week='2024-spring-week-5')
@@ -56,7 +56,7 @@ class TestLoadRadData(CompassTestCase):
         week = RADWeek.objects.last()
         self.assertEqual(week.week, 6)
         scores = CourseAnalyticsScores.objects.all()
-        self.assertEqual(len(scores), 4)
+        self.assertEqual(len(scores), 6)
 
     def test_reload(self):
         call_command('load_rad_data', week='2024-spring-week-5')

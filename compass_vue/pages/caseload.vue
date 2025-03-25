@@ -7,13 +7,13 @@
           <!-- BCard (Panel) -->
           <BCard class="bg-body-tertiary rounded-3" border-variant="0">
             <div class="row">
-              <div class="col-xl-4 me-auto">
+              <div class="col-xl-3 me-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
                   <SearchStudent />
                 </div>
               </div>
-              <div class="col-xl-8">
+              <div class="col-xl-9">
                 <div
                   class="row gy-2 gx-3 align-items-center justify-content-end"
                 >
@@ -135,6 +135,25 @@
                       </option>
                     </select>
                   </div>
+                  <div class="col">
+                    <label for="holdsFilter" class="fw-bold lh-lg"
+                    >Alert Status:</label
+                    >
+                    <select
+                      id="holdsFilter"
+                      v-model="selectedAlert"
+                      class="form-select form-select-sm"
+                    >
+                      <option selected :value="undefined">All</option>
+                      <option
+                        v-for="(option, index) in alertOptions"
+                        v-bind:value="option.id"
+                        :key="index"
+                      >
+                        {{ option.value }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
                 <div class="text-end mt-3">
                   <button
@@ -243,6 +262,7 @@ export default {
       selectedCampus: undefined,
       selectedRegistration: undefined,
       selectedHolds: undefined,
+      selectedAlert: undefined,
       degreeOptions: [
         { id: "ADMINISTRATIVE HOLD", value: "Hold" },
         { id: "INCOMPLETE", value: "Incomplete" },
@@ -274,6 +294,11 @@ export default {
       holdsOptions: [
         { id: true, value: "Yes" },
         { id: false, value: "No" },
+      ],
+      alertOptions: [
+        { id: "danger", value: "Red" },
+        { id: "warning", value: "Yellow" },
+        { id: "success", value: "Green" },
       ],
       saveCount: 0,
     };
@@ -335,6 +360,11 @@ export default {
           (person) => person.registration_hold_ind === this.selectedHolds
         );
       }
+      if (this.selectedAlert !== undefined) {
+        filteredPersons = filteredPersons.filter(
+          (person) => person.analytics_alert === this.selectedAlert
+        );
+      }
       return filteredPersons;
     },
     unsavedPreferences: function () {
@@ -358,7 +388,8 @@ export default {
         this.selectedHolds !==
           (caseload_filter_prefs.holds !== undefined
             ? this.getBooleanFromString(caseload_filter_prefs.holds)
-            : undefined)
+            : undefined) ||
+        this.selectedAlert !== (caseload_filter_prefs.alert || undefined)
       );
     },
   },
@@ -438,6 +469,7 @@ export default {
       }
     },
     saveFilterPreferences: function () {
+      console.log('save', this.selectedAlert);
       savePreferences({
         caseload_filters: {
           class: this.selectedClass,
@@ -446,6 +478,7 @@ export default {
           scholarship: this.selectedScholarship,
           registered: this.selectedRegistration,
           holds: this.selectedHolds,
+          alert: this.selectedAlert,
         },
       });
       // Update window.userPreferences
@@ -466,6 +499,7 @@ export default {
             : this.selectedHolds
             ? "True"
             : "False",
+        alert: this.selectedAlert,
       };
       // Counter to trigger re-compute on unsavedPreferences
       this.saveCount++;
@@ -483,6 +517,7 @@ export default {
         this.selectedHolds = this.getBooleanFromString(
           user_prefs.caseload_filters.holds
         );
+        this.selectedAlert = user_prefs.caseload_filters.alert;
       }
     },
     getBooleanFromString: function (string) {

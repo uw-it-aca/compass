@@ -1,3 +1,5 @@
 uw_netid,student_no,student_name_lowc,course_code,activity,assignments,grades,pred,sign_in,stem,incoming_freshman,premajor,eop,international,isso,engineering,informatics,campus_code,summer,class_code,sport_code
-javerage,8123456,"Student,James Average",CSE 162 A,2,3,4,1.905289787567317,5,0,0,0,0,0,0,0,0,2,Full,4,
-jinter,8654321,"Student,James Average"BIO 122 A,1,2,3,1.905289787567317,1,0,0,0,0,0,0,0,0,2,Full,4,
+javerage,8123456,"Student,James Average",TRAIN 100 A,2,3,4,1.905289787567317,5,0,0,0,0,0,0,0,0,2,Full,4,
+lisa,8654321,"Student,James Average",TRAIN 100 A,1,2,3,1.905289787567317,1,0,0,0,0,0,0,0,0,2,Full,4,
+lisa,8654321,"Student,James Average",TRAIN 101 A,1,2,3,1.905289787567317,1,0,0,0,0,0,0,0,0,2,Full,4,
+jbothell,8654321,"Student,James Average",TRAIN 100 A,1,2,3,1.905289787567317,1,0,0,0,0,0,0,0,0,2,Full,4,

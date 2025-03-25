@@ -1,6 +1,6 @@
 # Compass
 
-[![Build Status](https://github.com/uw-it-aca/compass/workflows/Build%2C%20Test%20and%20Deploy/badge.svg?branch=main)](https://github.com/uw-it-aca/compass/actions)
+[![Build Status](https://github.com/uw-it-aca/compass/workflows/Build%2C%20Test%20and%20Deploy/badge.svg)](https://github.com/uw-it-aca/compass/actions)
 [![Coverage Status](https://coveralls.io/repos/github/uw-it-aca/compass/badge.svg?branch=main)](https://coveralls.io/github/uw-it-aca/compass?branch=main)
 
 An application for managing student advising information.

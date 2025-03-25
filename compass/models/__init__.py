@@ -1,4 +1,4 @@
-# Copyright 2024 UW-IT, University of Washington
+# Copyright 2025 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
@@ -480,7 +480,7 @@ class UserPreference(models.Model):
     """
     ALLOWED_PREFERENCES = {"caseload_filters": ["class", "campus", "degree",
                                                 "scholarship", "registered",
-                                                "holds"]
+                                                "holds", "alert"]
                            }
 
     app_user = models.ForeignKey("AppUser", on_delete=models.CASCADE)
