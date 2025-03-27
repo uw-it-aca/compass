@@ -236,9 +236,7 @@ import { getAdviserCaseload, savePreferences } from "@/utils/data";
 
 import {
   BCard,
-  BButton,
   BDropdown,
-  BDropdownItem,
   BDropdownItemButton,
 } from "bootstrap-vue-next";
 
@@ -246,9 +244,7 @@ export default {
   components: {
     Layout,
     BCard,
-    BButton,
     BDropdown,
-    BDropdownItem,
     BDropdownItemButton,
     SearchStudent,
     CaseloadTableDisplay,
