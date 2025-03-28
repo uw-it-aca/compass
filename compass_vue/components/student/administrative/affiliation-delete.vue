@@ -30,7 +30,7 @@
           </div>
           <div class="modal-body">
             <div class="mb-3">
-              <div class="mb-3 text-secondary">
+              <div class="mb-3 text-light-emphasis">
                 Warning: Consider carefully before deleting an affiliation as
                 there is no way to undo this action.
               </div>
