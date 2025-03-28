@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-      <div class="text-secondary small">
+      <div class="text-light-emphasis small">
         <router-link :to="{ name: 'student', params: { id: person.student_number }}"
           >{{ person.student_number }} </router-link
         >,
