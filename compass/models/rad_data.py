@@ -40,7 +40,7 @@ class RADImport(models.Model):
         Get the next week to process, assumes 10 weeks per quarter
         """
 
-        last_week_imported = (cls.objects.filter(import_status=cls.SUCCESS)
+        last_week_imported = (cls.objects.all()
                               .order_by('-week__key').first())
         if last_week_imported is None:
             raise cls.DoesNotExist("No previous imports found")
@@ -153,7 +153,7 @@ class CourseAnalyticsScores(models.Model):
 
     def json_data(self):
         return {'activity_score':
-                convert_score_range(self.activity_score),
+                    convert_score_range(self.activity_score),
                 'assignment_score':
                     convert_score_range(self.assignment_score),
                 'grade_score':
