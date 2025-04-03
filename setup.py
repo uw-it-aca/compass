@@ -40,7 +40,8 @@ setup(
         'urllib3~=1.25',
         'django-person-client',
         'python-dateutil~=2.8',
-        'chardet~=5.0'
+        'chardet~=5.0',
+        'xmlsec==1.3.14',
     ],
     license="Apache License, Version 2.0",
     description="A application for managing student advising information.",
