@@ -11,67 +11,65 @@
         :button-type="'button'"
         :person="person"
         :affiliations="affiliations"
-        :studentAffiliations="studentAffiliations"
-        @affiliationsUpdated="loadAffiliationData()"
+        :student-ffiliations="studentAffiliations"
+        @affiliations-updated="loadAffiliationData()"
         ><i class="bi bi-people-fill me-2"></i>Add new
         affiliation</AffiliationAdd
       >
     </template>
-      <div class="table-responsive m-0">
-        <table class="table m-0">
-          <thead class="small">
-            <tr>
-              <th class="ps-3 bg-body-tertiary">Affiliation</th>
-              <th class="bg-body-tertiary">Cohort</th>
-              <th class="bg-body-tertiary">Active</th>
-              <th class="bg-body-tertiary">&nbsp;</th>
-            </tr>
-          </thead>
-          <tbody v-if="studentAffiliations.length !== 0">
-            <tr
-              v-for="(aff, index) in studentAffiliations"
-              :key="index"
-              class=""
-            >
-              <td scope="row" class="ps-3">{{ aff.affiliation.name }}</td>
-              <td scope="row" class="ps-3">
-                <div v-for="(cohort, index) in aff.cohorts" :key="index">
-                  {{ cohort.start_year }} - {{ cohort.end_year }}
-                </div>
-              </td>
-              <td v-if="aff.actively_advised">
-                <i class="py-0 bi bi-check-lg"></i>
-              </td>
-              <td v-else><i class="py-0 bi bi-x-circle"></i></td>
-              <td class="text-end">
-                <AffiliationEdit
-                  :person="person"
-                  :affiliations="affiliations"
-                  :studentAffiliation="aff"
-                  :studentAffiliations="studentAffiliations"
-                >
-                  <i class="py-0 bi bi-pencil me-2"></i>Edit</AffiliationEdit
-                >
-                <AffiliationDelete
-                  :person="person"
-                  :studentAffiliation="aff"
-                  :studentAffiliations="studentAffiliations"
-                >
-                  <i class="bi bi-trash me-2"></i>Delete
-                </AffiliationDelete>
-              </td>
-            </tr>
-          </tbody>
-          <tbody v-else>
-            <tr>
-              <td class="ps-3" colspan="4">
-                No affiliations for this student
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </BCard>
+    <div class="table-responsive m-0">
+      <table class="table m-0">
+        <thead class="small">
+          <tr>
+            <th class="ps-3 bg-body-tertiary">Affiliation</th>
+            <th class="bg-body-tertiary">Cohort</th>
+            <th class="bg-body-tertiary">Active</th>
+            <th class="bg-body-tertiary">&nbsp;</th>
+          </tr>
+        </thead>
+        <tbody v-if="studentAffiliations.length !== 0">
+          <tr
+            v-for="(aff, index1) in studentAffiliations"
+            :key="index1"
+            class=""
+          >
+            <td scope="row" class="ps-3">{{ aff.affiliation.name }}</td>
+            <td scope="row" class="ps-3">
+              <div v-for="(cohort, index2) in aff.cohorts" :key="index2">
+                {{ cohort.start_year }} - {{ cohort.end_year }}
+              </div>
+            </td>
+            <td v-if="aff.actively_advised">
+              <i class="py-0 bi bi-check-lg"></i>
+            </td>
+            <td v-else><i class="py-0 bi bi-x-circle"></i></td>
+            <td class="text-end">
+              <AffiliationEdit
+                :person="person"
+                :affiliations="affiliations"
+                :student-affiliation="aff"
+                :student-affiliations="studentAffiliations"
+              >
+                <i class="py-0 bi bi-pencil me-2"></i>Edit</AffiliationEdit
+              >
+              <AffiliationDelete
+                :person="person"
+                :student-affiliation="aff"
+                :student-affiliations="studentAffiliations"
+              >
+                <i class="bi bi-trash me-2"></i>Delete
+              </AffiliationDelete>
+            </td>
+          </tr>
+        </tbody>
+        <tbody v-else>
+          <tr>
+            <td class="ps-3" colspan="4">No affiliations for this student</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </BCard>
 </template>
 
 <script>
