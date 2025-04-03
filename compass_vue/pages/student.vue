@@ -55,7 +55,7 @@
             </div>
             <div
               v-if="!person.student.directory_release_ind"
-              class="fw-normal text-secondary small"
+              class="fw-normal text-light-emphasis small"
             >
               This student has opted out and blocked the release of their
               directory information. No information may be released about this

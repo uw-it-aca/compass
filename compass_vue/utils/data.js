@@ -44,6 +44,12 @@ async function customFetch(url, options = {}) {
 }
   */
 
+async function getStudentBySearch(query) {
+  return axios
+    .get("/api/internal/search?query=" + query)
+    .catch(_handleError);
+}
+
 async function getStudentDetail(uwnetid) {
   const url = "/api/internal/student/" + uwnetid + "/";
   return useCustomFetch(url);
@@ -344,6 +350,7 @@ async function getStudentSigninAnalytics(uwnetid) {
 }
 
 export {
+  getStudentBySearch,
   getStudentDetail,
   saveStudent,
   getEligibilities,

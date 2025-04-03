@@ -1,4 +1,4 @@
-# Copyright 2024 UW-IT, University of Washington
+# Copyright 2025 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
@@ -17,7 +17,7 @@ class TestRadCsv(TestCase):
         with open(self.RAD_FILE) as f:
             csv_string = f.read()
             data = read_csv(csv_string)
-            self.assertEqual(len(data), 2)
+            self.assertEqual(len(data), 4)
             self.assertIn('uw_netid', data[0].keys())
 
     def test_import_from_csv(self):
@@ -31,7 +31,7 @@ class TestRadCsv(TestCase):
                                                 week.quarter,
                                                 week.week))
             import_data_from_csv(week, csv_string, pred_file)
-            self.assertEqual(CourseAnalyticsScores.objects.count(), 2)
+            self.assertEqual(CourseAnalyticsScores.objects.count(), 4)
             self.assertEqual(CourseAnalyticsScores.objects.first().week, week)
             self.assertEqual(CourseAnalyticsScores.objects.first()
                              .assignment_score,

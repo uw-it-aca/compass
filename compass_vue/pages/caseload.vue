@@ -7,13 +7,13 @@
           <!-- BCard (Panel) -->
           <BCard class="bg-body-tertiary rounded-3" border-variant="0">
             <div class="row">
-              <div class="col-xl-4 me-auto">
+              <div class="col-xl-3 me-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
                   <SearchStudent />
                 </div>
               </div>
-              <div class="col-xl-8">
+              <div class="col-xl-9">
                 <div
                   class="row gy-2 gx-3 align-items-center justify-content-end"
                 >
@@ -135,6 +135,25 @@
                       </option>
                     </select>
                   </div>
+                  <div class="col">
+                    <label for="holdsFilter" class="fw-bold lh-lg"
+                      >Alert Status:</label
+                    >
+                    <select
+                      id="holdsFilter"
+                      v-model="selectedAlert"
+                      class="form-select form-select-sm"
+                    >
+                      <option selected :value="undefined">All</option>
+                      <option
+                        v-for="(option, index) in alertOptions"
+                        v-bind:value="option.id"
+                        :key="index"
+                      >
+                        {{ option.value }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
                 <div class="text-end mt-3">
                   <button
@@ -155,6 +174,7 @@
                     <i class="bi bi-star me-2"></i>Set filters as default
                   </button>
                 </div>
+
               </div>
             </div>
           </BCard>
@@ -171,7 +191,28 @@
             body-class="p-0"
           >
             <template #header>
-              <div class="fs-6 fw-bold">Caseload</div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="fs-6 fw-bold">Caseload</div>
+
+                <BDropdown
+                  size="sm"
+                  variant="link"
+                  class="bg-secondary-hover link-primary link-underline link-underline-opacity-0 rounded"
+                  no-caret
+                >
+                  <template #button-content
+                    ><i class="bi bi-download"></i
+                  ></template>
+                  <BDropdownItemButton @click="copyEmailList"
+                    ><i class="bi bi-envelope-at-fill me-2 text-dark"></i>Copy student
+                    email</BDropdownItemButton
+                  >
+                  <BDropdownItemButton @click="downloadCSV"
+                    ><i class="bi bi-filetype-csv me-2 text-dark"></i>Download student
+                    data</BDropdownItemButton
+                  >
+                </BDropdown>
+              </div>
             </template>
             <CaseloadTableLoading v-if="isLoading" />
             <CaseloadTableDisplay
@@ -193,12 +234,18 @@ import CaseloadTableLoading from "@/components/caseload-table-loading.vue";
 import Layout from "@/layout.vue";
 import { getAdviserCaseload, savePreferences } from "@/utils/data";
 
-import { BCard } from "bootstrap-vue-next";
+import {
+  BCard,
+  BDropdown,
+  BDropdownItemButton,
+} from "bootstrap-vue-next";
 
 export default {
   components: {
     Layout,
     BCard,
+    BDropdown,
+    BDropdownItemButton,
     SearchStudent,
     CaseloadTableDisplay,
     CaseloadTableLoading,
@@ -225,6 +272,7 @@ export default {
       selectedCampus: undefined,
       selectedRegistration: undefined,
       selectedHolds: undefined,
+      selectedAlert: undefined,
       degreeOptions: [
         { id: "ADMINISTRATIVE HOLD", value: "Hold" },
         { id: "INCOMPLETE", value: "Incomplete" },
@@ -256,6 +304,11 @@ export default {
       holdsOptions: [
         { id: true, value: "Yes" },
         { id: false, value: "No" },
+      ],
+      alertOptions: [
+        { id: "danger", value: "Red" },
+        { id: "warning", value: "Yellow" },
+        { id: "success", value: "Green" },
       ],
       saveCount: 0,
     };
@@ -317,6 +370,11 @@ export default {
           (person) => person.registration_hold_ind === this.selectedHolds
         );
       }
+      if (this.selectedAlert !== undefined) {
+        filteredPersons = filteredPersons.filter(
+          (person) => person.analytics_alert === this.selectedAlert
+        );
+      }
       return filteredPersons;
     },
     unsavedPreferences: function () {
@@ -340,11 +398,70 @@ export default {
         this.selectedHolds !==
           (caseload_filter_prefs.holds !== undefined
             ? this.getBooleanFromString(caseload_filter_prefs.holds)
-            : undefined)
+            : undefined) ||
+        this.selectedAlert !== (caseload_filter_prefs.alert || undefined)
       );
     },
   },
   methods: {
+    copyEmailList: function () {
+      let email_list = [];
+      this.filteredPersons.forEach((person) => {
+        email_list.push(person.uwnetid + "@uw.edu");
+      });
+      // copy to clipboard
+      navigator.clipboard.writeText(email_list.join("; "));
+    },
+    downloadCSV: function () {
+      let csv_string = "",
+        hiddenElement = document.createElement("a"),
+        header = [
+          "Student Name",
+          "Student Number",
+          "UW NetID",
+          "Email",
+          "Class",
+          "Campus",
+          "Alert Status",
+          "Degree Status",
+          "Academic Standing",
+          "Registered",
+          "Holds",
+        ],
+        timestamp = Math.round(Date.now() / 1000);
+      csv_string += header.join(",") + "\n";
+      this.filteredPersons.forEach((person) => {
+        let alert_status =
+          {
+            danger: "Red",
+            warning: "Yellow",
+            success: "Green",
+          }[person.analytics_alert] || "";
+        let row = [
+          person.person__display_name,
+          person.student_number,
+          person.person__uwnetid,
+          person.person__uwnetid + "@uw.edu",
+          person.class_desc,
+          person.campus_desc,
+          alert_status,
+          person.latest_degree
+            ? person.latest_degree.degree_status_desc
+            : undefined,
+          person.latest_transcript
+            ? person.latest_transcript.scholarship_desc
+            : undefined,
+          person.registered_in_quarter,
+          person.registration_hold_ind,
+        ];
+        csv_string += row.join(",") + "\n";
+      });
+      hiddenElement.href =
+        "data:text/csv;charset=utf-8," + encodeURI(csv_string);
+      hiddenElement.target = "_blank";
+      hiddenElement.download = "caseload" + timestamp + ".csv";
+      hiddenElement.click();
+    },
     capitalizeFirstLetter: function (string) {
       string = string.toLowerCase();
       return string.charAt(0).toUpperCase() + string.slice(1);
@@ -368,6 +485,7 @@ export default {
       }
     },
     saveFilterPreferences: function () {
+      console.log("save", this.selectedAlert);
       savePreferences({
         caseload_filters: {
           class: this.selectedClass,
@@ -376,6 +494,7 @@ export default {
           scholarship: this.selectedScholarship,
           registered: this.selectedRegistration,
           holds: this.selectedHolds,
+          alert: this.selectedAlert,
         },
       });
       // Update window.userPreferences
@@ -396,6 +515,7 @@ export default {
             : this.selectedHolds
             ? "True"
             : "False",
+        alert: this.selectedAlert,
       };
       // Counter to trigger re-compute on unsavedPreferences
       this.saveCount++;
@@ -413,6 +533,7 @@ export default {
         this.selectedHolds = this.getBooleanFromString(
           user_prefs.caseload_filters.holds
         );
+        this.selectedAlert = user_prefs.caseload_filters.alert;
       }
     },
     getBooleanFromString: function (string) {

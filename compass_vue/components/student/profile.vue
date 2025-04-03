@@ -31,7 +31,7 @@
               <template v-else>{{ person.full_name }}</template>
             </div>
             <!-- moved pronouns to under the preferred name -->
-            <div class="text-secondary text-capitalize mb-2">
+            <div class="text-light-emphasis text-capitalize mb-2">
               <template v-if="person.pronouns">
                 {{ person.pronouns }}
               </template>
