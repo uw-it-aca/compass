@@ -1,41 +1,54 @@
+import { ref } from "vue";
 import { useTokenStore } from "@/stores/token";
 
-export async function useCustomFetch(url, options = {}) {
+export function useCustomFetch(url, options = {}) {
+  const data = ref(null);
+  const error = ref(null);
+  const loading = ref(false);
   const tokenStore = useTokenStore();
 
-  // Set default headers
-  const defaultHeaders = {
-    "Access-Control-Allow-Origin": "*",
-    "X-CSRFToken": tokenStore.csrfToken,
-    "X-Requested-With": "XMLHttpRequest",
-  };
+  async function fetchData() {
+    loading.value = true;
+    error.value = null;
 
-  // Merge default headers with any provided in options
-  options.headers = {
-    ...defaultHeaders,
-    ...options.headers,
-  };
+    // Set default headers
+    const defaultHeaders = {
+      "Access-Control-Allow-Origin": "*",
+      "X-CSRFToken": tokenStore.csrfToken,
+      "X-Requested-With": "XMLHttpRequest",
+    };
 
-  try {
-    const response = await fetch(url, options);
+    // Merge headers with options
+    const fetchOptions = {
+      ...options,
+      headers: {
+        ...defaultHeaders,
+        ...options.headers,
+      },
+    };
 
-    // Handle expired session (403 status)
-    if (response.status === 403) {
-      alert(
-        "Your session has expired. Refresh the page to start a new session."
-      );
-      return;
+    try {
+      const response = await fetch(url, fetchOptions);
+
+      if (response.status === 403) {
+        alert(
+          "Your session has expired. Refresh the page to start a new session."
+        );
+        return;
+      }
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      data.value = await response.json();
+    } catch (err) {
+      error.value = err.message || "An unknown error occurred.";
+      console.error("Fetch error:", err);
+    } finally {
+      loading.value = false;
     }
-
-    // Check if response is ok (status 2xx)
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    // Parse and return JSON response
-    return response.json();
-  } catch (error) {
-    console.error("Fetch error:", error);
-    throw error;
   }
+
+  return { data, error, loading, fetchData };
 }
