@@ -102,9 +102,7 @@
       <div v-else class="p-3">no transcript for this term</div>
     </BCard>
   </template>
-  <div v-else class="p-3">
-    no academic history available for this student.
-  </div>
+  <div v-else class="p-3">no academic history available for this student.</div>
 </template>
 
 <script>
@@ -112,21 +110,22 @@ import { useStudentStore } from "@/stores/student";
 import { BCard } from "bootstrap-vue-next";
 
 export default {
+  name: "StudentTranscript",
+  components: { BCard },
   props: {
     person: {
       type: Object,
       required: true,
     },
   },
-  components: { BCard },
+  setup() {
+    const storeStudent = useStudentStore();
+    return { storeStudent };
+  },
   data() {
     return {
       transcripts: {},
     };
-  },
-  setup() {
-    const storeStudent = useStudentStore();
-    return { storeStudent };
   },
   created() {
     this.loadStudentTranscripts();

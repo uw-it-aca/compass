@@ -1,7 +1,6 @@
 import { useTokenStore } from "@/stores/token";
 
 export async function useCustomFetch(url, options = {}) {
-
   const tokenStore = useTokenStore();
 
   // Set default headers

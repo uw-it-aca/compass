@@ -51,6 +51,7 @@ import {
 import { BCard } from "bootstrap-vue-next";
 
 export default {
+  name: "StudentVisits",
   components: { BCard },
   props: {
     person: {

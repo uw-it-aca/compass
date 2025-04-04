@@ -186,7 +186,7 @@ import { getCohorts } from "@/utils/cohorts";
 import { BCard } from "bootstrap-vue-next";
 
 export default {
-  name: "PagesAffiliations",
+  name: "AffiliationsPage",
   components: {
     Layout,
     BCard,

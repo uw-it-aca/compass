@@ -2,7 +2,7 @@
 export default {
   extends: [
     "stylelint-config-standard-scss",
-    "stylelint-config-standard-vue/scss",
+    "stylelint-config-recommended-vue/scss",
   ],
   customSyntax: "postcss-html",
   overrides: [

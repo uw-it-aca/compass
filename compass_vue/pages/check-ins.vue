@@ -69,11 +69,16 @@ export default {
       adviserNetId: this.$route.params.id
         ? this.$route.params.id
         : document.body.getAttribute("data-user-override")
-        ? document.body.getAttribute("data-user-override")
-        : document.body.getAttribute("data-user-netid"),
+          ? document.body.getAttribute("data-user-override")
+          : document.body.getAttribute("data-user-netid"),
     };
   },
   computed: {},
+  mounted() {
+    setTimeout(() => {
+      this.loadAdviserCheckInsList(this.adviserNetId);
+    }, 2000);
+  },
   methods: {
     loadAdviserCheckInsList: function (netid) {
       let _this = this;
@@ -85,11 +90,6 @@ export default {
         }
       });
     },
-  },
-  mounted() {
-    setTimeout(() => {
-      this.loadAdviserCheckInsList(this.adviserNetId);
-    }, 2000);
   },
 };
 </script>

@@ -1,7 +1,7 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import VueGtag from "vue-gtag-next";
-import { Vue3Mq, MqResponsive } from "vue3-mq";
+import { Vue3Mq } from "vue3-mq";
 
 import App from "@/app.vue";
 import router from "@/router";
@@ -41,7 +41,6 @@ app.use(VueGtag, {
 app.use(Vue3Mq, {
   preset: "bootstrap5",
 });
-app.component("mq-responsive", MqResponsive);
 
 // pinia (vuex) state management
 const pinia = createPinia();

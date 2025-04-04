@@ -47,15 +47,15 @@ export default {
     BCard,
     AnalyticsChart,
   },
-  setup() {
-    const storeAnalytics = useAnalyticsStore();
-    return { storeAnalytics };
-  },
   props: {
     uwnetid: {
       type: String,
       required: true,
     },
+  },
+  setup() {
+    const storeAnalytics = useAnalyticsStore();
+    return { storeAnalytics };
   },
   data() {
     return {
@@ -79,6 +79,13 @@ export default {
       formattedData: [],
     };
   },
+  watch: {
+    rawSigninAnalytics: function () {
+      this.setLatest(this.rawSigninAnalytics);
+      this.formatData();
+      this.dataReady = true;
+    },
+  },
   mounted() {
     // enable popovers everywhere
     // https://getbootstrap.com/docs/5.1/components/popovers/#example-enable-popovers-everywhere
@@ -91,14 +98,6 @@ export default {
 
     this.loadStudentCourseAnalytics();
   },
-  watch: {
-    rawSigninAnalytics: function () {
-      this.setLatest(this.rawSigninAnalytics);
-      this.formatData();
-      this.dataReady = true;
-    },
-  },
-
   methods: {
     formatData() {
       let formatted_data = [],

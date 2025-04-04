@@ -157,7 +157,10 @@
                   </div>
                   <div class="col-xl-3">
                     <SpecialPrograms :person="person"></SpecialPrograms>
-                    <StudentEligibility v-show="false" :person="person"></StudentEligibility>
+                    <StudentEligibility
+                      v-show="false"
+                      :person="person"
+                    ></StudentEligibility>
                   </div>
                 </div>
               </STabsPanel>
@@ -194,7 +197,7 @@ import { STabsDisplay, STabsPanel, STabsList, STabsItem } from "solstice-vue";
 import { BCard } from "bootstrap-vue-next";
 
 export default {
-  inject: ["mq"],
+  name: "StudentPage",
   components: {
     Layout,
     BCard,
@@ -218,15 +221,8 @@ export default {
     SpecialPrograms,
     SignInChart,
   },
-  created: function () {
-    this.loadAccessGroups();
-    if (this.$route.params.id) {
-      this.isLoading = true;
-      //setTimeout(() => {
-      this.loadStudent(this.$route.params.id);
-      //}, 3000);
-    }
-  },
+  inject: ["mq"],
+
   // composition api
   setup() {
     return {
@@ -234,6 +230,7 @@ export default {
       getAccessGroups,
     };
   },
+
   data() {
     return {
       person: {},
@@ -244,6 +241,15 @@ export default {
       userAccessGroup: document.body.getAttribute("data-user-access-group"),
       Role: Role,
     };
+  },
+  created: function () {
+    this.loadAccessGroups();
+    if (this.$route.params.id) {
+      this.isLoading = true;
+      //setTimeout(() => {
+      this.loadStudent(this.$route.params.id);
+      //}, 3000);
+    }
   },
   //  computed: {
   //    studentAddress: function () {
