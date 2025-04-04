@@ -9,9 +9,9 @@
   </a>
 
   <div
+    :id="'editSpecialProgramModal'"
     ref="specialProgramModal"
     class="modal fade text-start"
-    :id="'editSpecialProgramModal'"
     tabindex="-1"
     aria-labelledby="editSpecialProgramModalLabel"
     aria-hidden="true"
@@ -36,20 +36,20 @@
                 >Specify date below.</label
               >
               <input
-                type="date"
                 id="affiliation_date"
+                type="date"
                 :value="program_date"
+                class="form-control form-control-sm"
                 @input="
                   program_date = new Date($event.target.valueAsDate)
                     .toISOString()
                     .slice(0, 10)
                 "
-                class="form-control form-control-sm"
               />
             </div>
-            <div v-if="this.errorResponse" class="text-danger">
-              Problem Changing Date: {{ this.errorResponse.statusText }} ({{
-                this.errorResponse.data
+            <div v-if="errorResponse" class="text-danger">
+              Problem Changing Date: {{ errorResponse.statusText }} ({{
+                errorResponse.data
               }})
             </div>
           </div>
@@ -84,17 +84,17 @@ import {
 } from "@/utils/data";
 
 export default {
-  emits: ["specialProgramUpdated"],
   props: {
     person: {
       type: Object,
       required: true,
     },
-    program_data: {
+    programData: {
       type: Object,
       required: true,
     },
   },
+  emits: ["specialProgramUpdated"],
   setup() {
     return {
       saveStudentSpecialProgram,
@@ -129,7 +129,10 @@ export default {
       program_data_copy.program_date = this.program_date;
 
       event.preventDefault();
-      this.updateStudentSpecialProgram(this.person.student.system_key, program_data_copy)
+      this.updateStudentSpecialProgram(
+        this.person.student.system_key,
+        program_data_copy
+      )
         .then(() => {
           this.program_data.program_date = this.program_date;
           this.$emit("specialProgramUpdated");

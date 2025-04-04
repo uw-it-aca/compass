@@ -27,19 +27,19 @@
         <SpecialProgramEdit
           :person="person"
           :program_data="program_data"
-          @specialProgramUpdated="loadSpecialProgramData()"
+          @special-program-updated="loadSpecialProgramData()"
         >
           <i class="bi bi-pencil me-2"></i>Edit
         </SpecialProgramEdit>
         <SpecialProgramDelete
           :person="person"
           :program_data="program_data"
-          @specialProgramUpdated="loadSpecialProgramData()"
+          @special-program-updated="loadSpecialProgramData()"
         >
           <i class="bi bi-trash ms-e"></i>Delete
         </SpecialProgramDelete>
       </div>
-      <p class="small text-muted m-0" v-if="program_data.modified_by">
+      <p v-if="program_data.modified_by" class="small text-muted m-0">
         Last updated by:
         <span class="text-muted">{{ program_data.modified_by.uwnetid }}</span>
       </p>
@@ -54,7 +54,7 @@
           <SpecialProgramAdd
             :person="person"
             :program_data="program_data"
-            @specialProgramUpdated="loadSpecialProgramData()"
+            @special-program-updated="loadSpecialProgramData()"
           >
             <i class="bi bi-calendar-plus-fill me-2"></i>Add affiliation date
           </SpecialProgramAdd>

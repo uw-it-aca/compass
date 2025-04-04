@@ -3,10 +3,18 @@
     <table class="table mb-0">
       <thead class="text-muted small">
         <tr>
-          <th scope="col" style="width: 33%" class="ps-3 bg-body-tertiary">Student</th>
+          <th scope="col" style="width: 33%" class="ps-3 bg-body-tertiary">
+            Student
+          </th>
           <th scope="col" style="width: 15%" class="bg-body-tertiary">Class</th>
           <th scope="col" class="bg-body-tertiary">Campus</th>
-          <th scope="col" style="width: 33%" class="bg-body-tertiary text-nowrap">Status</th>
+          <th
+            scope="col"
+            style="width: 33%"
+            class="bg-body-tertiary text-nowrap"
+          >
+            Status
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -25,10 +33,14 @@
             </div>
           </td>
           <td class="placeholder-glow">
-            <div><span class="placeholder bg-body-secondary col-12"></span></div>
+            <div>
+              <span class="placeholder bg-body-secondary col-12"></span>
+            </div>
           </td>
           <td class="placeholder-glow">
-            <div><span class="placeholder bg-body-secondary col-10"></span></div>
+            <div>
+              <span class="placeholder bg-body-secondary col-10"></span>
+            </div>
           </td>
           <td class="placeholder-glow">
             <div>

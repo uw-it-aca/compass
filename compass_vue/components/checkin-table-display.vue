@@ -3,7 +3,9 @@
     <table class="table m-0">
       <thead class="text-muted small">
         <tr>
-          <th class="bg-body-secondary ps-3" style="width: 25%" scope="col">Student</th>
+          <th class="bg-body-secondary ps-3" style="width: 25%" scope="col">
+            Student
+          </th>
           <th scope="col" style="width: 15%">Check-in Date</th>
           <th scope="col" style="width: 15%">Source</th>
           <th scope="col" style="width: 15%">Contact Type</th>

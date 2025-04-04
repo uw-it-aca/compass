@@ -2,16 +2,16 @@
   <a
     role="button"
     data-bs-toggle="modal"
-    :data-bs-target="'#deleteAffiliationsModal' + this.studentAffiliation.id"
+    :data-bs-target="'#deleteAffiliationsModal' + studentAffiliation.id"
     class="btn btn-sm fs-9 btn-outline-danger rounded-3 px-2 py-1 ms-1"
   >
     <slot>Delete Affiliation</slot>
   </a>
 
   <div
+    :id="'deleteAffiliationsModal' + studentAffiliation.id"
     ref="affiliationsModal"
     class="modal fade text-start"
-    :id="'deleteAffiliationsModal' + this.studentAffiliation.id"
     tabindex="-1"
     aria-labelledby="deleteAffiliationsModalLabel{{ this.studentAffiliation.id }}"
     aria-hidden="true"
@@ -36,11 +36,11 @@
               </div>
               <label class="form-label small fw-bold">Admin Note</label>
               <textarea
+                v-model.trim="notes"
                 :class="
                   formErrors.notes ? 'is-invalid form-control' : 'form-control'
                 "
                 rows="3"
-                v-model.trim="notes"
                 required
               ></textarea>
             </div>
@@ -73,7 +73,6 @@ import { Modal } from "bootstrap";
 import { deleteStudentAffiliation, saveStudentContact } from "@/utils/data";
 
 export default {
-  emits: ["affiliationsUpdated"],
   props: {
     person: {
       type: Object,
@@ -88,10 +87,11 @@ export default {
       required: true,
     },
   },
+  emits: ["affiliationsUpdated"],
   setup() {
     return {
       deleteStudentAffiliation,
-      saveStudentContact
+      saveStudentContact,
     };
   },
   data() {
@@ -102,13 +102,13 @@ export default {
       errorResponse: "",
     };
   },
-  created() {},
-  mounted() {},
   computed: {
     invalidForm() {
       return !(this.notes.length > 0);
     },
   },
+  created() {},
+  mounted() {},
   methods: {
     deleteAffiliation() {
       event.preventDefault();
@@ -157,6 +157,7 @@ export default {
         if (this.studentAffiliation.id == item.id) deleteIndex = index;
       });
 
+      // eslint-disable-next-line vue/no-mutating-props
       this.studentAffiliations.splice(deleteIndex, 1);
     },
     hideModal() {

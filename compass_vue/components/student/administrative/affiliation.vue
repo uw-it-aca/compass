@@ -81,6 +81,7 @@ import { getStudentAffiliations } from "@/utils/data";
 import { BCard } from "bootstrap-vue-next";
 
 export default {
+  name: "StudentAffiliation",
   components: {
     BCard,
     AffiliationAdd,
