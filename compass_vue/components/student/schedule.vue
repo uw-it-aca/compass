@@ -42,18 +42,27 @@
         >
           <div class="table-responsive m-0">
             <table class="table m-0">
-              <col style="width: 40%" />
-              <col style="width: 15%" />
-              <col style="width: 13%" />
-              <col style="width: 22%" />
-              <col style="width: 10%" />
               <thead class="text-muted small">
                 <tr>
-                  <th class="ps-3 bg-body-tertiary">Course</th>
-                  <th class="bg-body-tertiary">SLN</th>
-                  <th class="bg-body-tertiary">Day</th>
-                  <th class="bg-body-tertiary">Time</th>
-                  <th class="bg-body-tertiary">Credits</th>
+                  <th
+                    class="ps-3 bg-body-tertiary"
+                    scope="col"
+                    style="width: 40%"
+                  >
+                    Course
+                  </th>
+                  <th class="bg-body-tertiary" scope="col" style="width: 15%">
+                    SLN
+                  </th>
+                  <th class="bg-body-tertiary" scope="col" style="width: 13%">
+                    Day
+                  </th>
+                  <th class="bg-body-tertiary" scope="col" style="width: 22%">
+                    Time
+                  </th>
+                  <th class="bg-body-tertiary" scope="col" style="width: 10%">
+                    Credits
+                  </th>
                 </tr>
               </thead>
               <tbody v-if="schedule.sections.length > 0">
