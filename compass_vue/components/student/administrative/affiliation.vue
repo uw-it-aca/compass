@@ -11,7 +11,7 @@
         :button-type="'button'"
         :person="person"
         :affiliations="affiliations"
-        :student-ffiliations="studentAffiliations"
+        :student-affiliations="studentAffiliations"
         @affiliations-updated="loadAffiliationData()"
         ><i class="bi bi-people-fill me-2"></i>Add new
         affiliation</AffiliationAdd

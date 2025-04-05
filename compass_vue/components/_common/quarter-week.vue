@@ -42,7 +42,7 @@ export default {
     termData: {
       type: Object,
       default(rawProps) {
-        return { message: "hello" };
+        return {};
       },
     },
   },
