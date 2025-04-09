@@ -55,9 +55,10 @@ export default {
       const classes = {
         danger: "border-danger",
         warning: "border-warning",
-        normal: "border-success"
+        normal: "border-success",
+        missing: "border-dark"
       };
-      return classes[this.person.analytics_alert] || classes.normal;
+      return classes[this.person.analytics_alert] || classes.missing;
     },
   },
 };
