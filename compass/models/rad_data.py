@@ -152,16 +152,18 @@ class CourseAnalyticsScores(models.Model):
         unique_together = ('uwnetid', 'week', 'course')
 
     def json_data(self):
-        return {'activity_score':
-                    convert_score_range(self.activity_score),
-                'assignment_score':
-                    convert_score_range(self.assignment_score),
-                'grade_score':
-                    convert_score_range(self.grade_score),
-                'prediction_score':
-                    self.prediction_score,
-                'week_id':
-                    self.week.week}
+        return {
+            'activity_score':
+                convert_score_range(self.activity_score),
+            'assignment_score':
+                convert_score_range(self.assignment_score),
+            'grade_score':
+                convert_score_range(self.grade_score),
+            'prediction_score':
+                self.prediction_score,
+            'week_id':
+                self.week.week
+        }
 
     def is_alert_status(self):
         return self.prediction_score is not None and self.prediction_score > 0
