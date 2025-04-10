@@ -64,7 +64,7 @@ class TestPerson(CompassTestCase):
         self.assertEqual(person.student.student_number, '1033334')
         self.assertEqual(len(person.student.holds.all()), 2)
         self.assertEqual(len(person.student.transfers.all()), 1)
-        self.assertEqual(len(person.student.transcripts.all()), 2)
+        self.assertEqual(len(person.student.transcripts.all()), 3)
         self.assertEqual(len(person.student.degrees.all()), 1)
 
     def test_get_person_by_uwregid(self):
@@ -81,7 +81,7 @@ class TestPerson(CompassTestCase):
         self.assertEqual(person.student.student_number, '1033334')
         self.assertEqual(len(person.student.holds.all()), 2)
         self.assertEqual(len(person.student.transfers.all()), 1)
-        self.assertEqual(len(person.student.transcripts.all()), 2)
+        self.assertEqual(len(person.student.transcripts.all()), 3)
         self.assertEqual(len(person.student.degrees.all()), 1)
 
     def test_get_person_by_student_number(self):
@@ -119,7 +119,7 @@ class TestPerson(CompassTestCase):
 
         transcripts = get_transcripts_by_uwregid(
             '9136CCB8F66711D5BE060004AC494FFE')
-        self.assertEqual(len(transcripts), 2)
+        self.assertEqual(len(transcripts), 3)
 
         # default transcript sorting
         t1 = transcripts[0]
