@@ -71,10 +71,15 @@ urlpatterns += [
         TemplateView.as_view(template_name="unauthorized-user.html"),
         name="unauthorized_user",
     ),
-    re_path(r"^api/internal/search$", StudentSearchView.as_view()),
+    re_path(
+        r"^api/internal/search$",
+        StudentSearchView.as_view(),
+        name="student_search_view",
+    ),
     re_path(
         r"^api/internal/student/(?P<identifier>[-@:\w]+)/$",
         StudentView.as_view(),
+        name="student_view",
     ),
     re_path(
         r"^api/internal/student/(?P<uwregid>[a-fA-F0-9]{32})/schedules/$",
