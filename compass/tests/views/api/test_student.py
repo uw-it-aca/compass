@@ -72,6 +72,21 @@ class StudentContactAPITest(ApiTest):
         self.assertEqual(response.status_code, 400)
 
 
+class StudentAffiliationsAPITest(ApiTest):
+    def setUp(self):
+        super().setUp()
+        ag = AccessGroup.objects.create(
+            name="OMAD", access_group_id="u_astra_group1-manager")
+
+    def test_get_affiliations(self):
+        response = self.get_response("student_affiliations_view",
+                                     "jadviser",
+                                     None,
+                                     kwargs={"systemkey": "532353230"})
+
+        self.assertEqual(response.status_code, 401)
+
+
 @fdao_pws_override
 @fdao_sws_override
 class StudentTranscriptsAPITest(ApiTest):
@@ -85,5 +100,20 @@ class StudentTranscriptsAPITest(ApiTest):
 
         response = self.get_response(
             "student_transcripts_view", "jadvisor", None,
+            kwargs={"uwregid": "7776CCB8F66711D5BE060004AC494AAA"})
+        self.assertEqual(response.status_code, 404)
+
+
+class StudentSchedulesAPITest(ApiTest):
+    def test_get_schedules(self):
+        response = self.get_response(
+            "student_schedules_view", "jadvisor", None,
+            kwargs={"uwregid": "9136CCB8F66711D5BE060004AC494FFE"})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 2)
+
+        response = self.get_response(
+            "student_schedules_view", "jadvisor", None,
             kwargs={"uwregid": "7776CCB8F66711D5BE060004AC494AAA"})
         self.assertEqual(response.status_code, 404)

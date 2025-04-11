@@ -84,6 +84,7 @@ urlpatterns += [
     re_path(
         r"^api/internal/student/(?P<uwregid>[a-fA-F0-9]{32})/schedules/$",
         StudentSchedulesView.as_view(),
+        name="student_schedules_view",
     ),
     re_path(
         r"^api/internal/student/(?P<uwregid>[a-fA-F0-9]{32})/transcripts/$",
@@ -98,6 +99,7 @@ urlpatterns += [
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/affiliations/$",
         StudentAffiliationsView.as_view(),
+        name="student_affiliations_view",
     ),
     re_path(
         r"^api/internal/student/affiliations/(?P<affiliation_id>[\w]+)/import/$",  # noqa
@@ -111,10 +113,12 @@ urlpatterns += [
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/visits/$",
         StudentVisitsView.as_view(),
+        name="student_visits_view",
     ),
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/eligibility/$",
         StudentEligibilityView.as_view(),
+        name="student_eligibility_view",
     ),
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/special_program/$",

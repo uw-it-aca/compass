@@ -159,9 +159,12 @@ class StudentSchedulesView(BaseAPIView):
                     uwregid, term).json_data()
             except DataFailureException:
                 continue
-        updated_schedule = (CourseAnalyticsScores.
-                            add_alert_status_to_schedules(schedules,
-                                                          uwregid))
+        try:
+            updated_schedule = (
+                CourseAnalyticsScores.add_alert_status_to_schedules(schedules,
+                                                                    uwregid))
+        except PersonNotFoundException:
+            return self.response_notfound('Student not found')
         return self.response_ok(updated_schedule)
 
 
