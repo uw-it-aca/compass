@@ -68,7 +68,7 @@ class StudentContactAPITest(ApiTest):
         response = self.get_response("student_contacts_view",
                                      "javerage",
                                      None,
-                                     kwargs={"systemkey": "000000068"})
+                                     kwargs={"systemkey": "001111119"})
         self.assertEqual(response.status_code, 404)
 
 
@@ -81,7 +81,7 @@ class StudentTranscriptsAPITest(ApiTest):
             kwargs={"uwregid": "9136CCB8F66711D5BE060004AC494FFE"})
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(transcripts.data), 3)
+        self.assertEqual(len(response.data), 3)
 
         response = self.get_response(
             "student_transcripts_view", "jadvisor", None,
