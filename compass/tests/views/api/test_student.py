@@ -4,11 +4,13 @@
 
 from compass.tests import ApiTest
 from compass.models import AccessGroup, Contact, ContactType, Student
+from uw_pws.util import fdao_pws_override
+from uw_sws.util import fdao_sws_override
 
 
 class StudentContactAPITest(ApiTest):
     def setUp(self):
-        super(StudentContactAPITest, self).setUp()
+        super().setUp()
         ag = AccessGroup.objects.create(name="OMAD",
                                         access_group_id="u_astra_group1")
 
@@ -28,3 +30,14 @@ class StudentContactAPITest(ApiTest):
 
         # Ensure greedy matching not occuring per CMPS-187
         self.assertEqual(len(contacts.data), 1)
+
+
+@fdao_pws_override
+@fdao_sws_override
+class StudentTranscriptsAPITest(ApiTest):
+    def test_get_transcripts(self):
+        transcripts = self.get_response(
+            "student_transcripts_view", "jadvisor", None,
+            kwargs={"uwregid": "9136CCB8F66711D5BE060004AC494FFE"})
+
+        self.assertEqual(len(transcripts.data), 3)

@@ -83,6 +83,7 @@ urlpatterns += [
     re_path(
         r"^api/internal/student/(?P<uwregid>[a-fA-F0-9]{32})/transcripts/$",
         StudentTranscriptsView.as_view(),
+        name="student_transcripts_view",
     ),
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/contacts/$",

@@ -2,9 +2,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from uw_sws.term import get_term_by_date, get_term_after
+from uw_sws.term import (
+    get_term_by_date, get_term_after, get_term_by_year_and_quarter)
 from compass.dao import current_datetime
 import datetime
+
+TERMS = {1: "Winter", 2: "Spring", 3: "Summer", 4: "Autumn"}
 
 
 def current_term():
