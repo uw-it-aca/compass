@@ -68,8 +68,8 @@ class StudentContactAPITest(ApiTest):
         response = self.get_response("student_contacts_view",
                                      "javerage",
                                      None,
-                                     kwargs={"systemkey": "001111119"})
-        self.assertEqual(response.status_code, 404)
+                                     kwargs={"systemkey": "0011111"})
+        self.assertEqual(response.status_code, 400)
 
 
 @fdao_pws_override
