@@ -80,7 +80,9 @@ if os.getenv("ENV") == "localdev":
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
     MEDIA_ROOT = os.getenv("MEDIA_ROOT", "/app/compass/fixtures/compass_data")
 else:
-    VITE_MANIFEST_PATH = os.path.join(os.sep, 'static', '.vite', 'manifest.json')
+    VITE_MANIFEST_PATH = os.path.join(
+        os.sep, "static", ".vite", "manifest.json"
+    )
     RESTCLIENTS_DAO_CACHE_CLASS = "compass.cache.CompassRestclientCache"
     COMPASS_ADMIN_GROUP = os.getenv("ADMIN_GROUP", "")
     COMPASS_SUPPORT_GROUP = os.getenv("SUPPORT_GROUP", "")
