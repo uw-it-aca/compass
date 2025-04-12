@@ -1,8 +1,7 @@
 import { defineStore } from "pinia";
 import { getStudentTranscripts } from "@/utils/data";
 
-export const useStudentStore = defineStore({
-  id: "student",
+export const useStudentStore = defineStore("student", {
   state: () => {
     return {
       getStudentTranscripts,

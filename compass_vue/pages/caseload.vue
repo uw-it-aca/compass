@@ -463,7 +463,19 @@ export default {
       string = string.toLowerCase();
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
+    /*
     loadAdviserCaseload: function (netid) {
+      this.getAdviserCaseload(netid).then((response) => {
+        if (response.data) {
+          this.persons = response.data;
+        }
+        this.isLoading = false;
+      });
+    },
+    */
+
+    loadAdviserCaseload: function (netid) {
+      this.isLoading = true;
       this.getAdviserCaseload(netid).then((response) => {
         if (response) {
           this.persons = response;
@@ -471,6 +483,17 @@ export default {
         this.isLoading = false;
       });
     },
+
+    /*
+    loadAdviserCaseload: async function (netid) {
+      this.isLoading = true;
+      const response = await this.getAdviserCaseload(netid);
+      if (response.data) {
+        this.persons = response.data;
+      }
+      this.isLoading = false;
+    },
+    */
     showPriorityRing: function (priorityValue) {
       // mocked display
       if (priorityValue === "-3.4") {

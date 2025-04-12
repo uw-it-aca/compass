@@ -4,8 +4,7 @@ import {
   getStudentSigninAnalytics,
 } from "@/utils/data";
 
-export const useAnalyticsStore = defineStore({
-  id: "analytics",
+export const useAnalyticsStore = defineStore("analytics", {
   state: () => {
     return {
       getStudentCourseAnalytics,

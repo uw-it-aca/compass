@@ -1,8 +1,7 @@
 import { defineStore } from "pinia";
 import { getAffiliations } from "@/utils/data";
 
-export const useAffiliationStore = defineStore({
-  id: "affiliation",
+export const useAffiliationStore = defineStore("affiliation", {
   state: () => {
     return {
       getAffiliations,

@@ -5,8 +5,7 @@ import {
   getStudentContactMethods,
 } from "@/utils/data";
 
-export const useContactStore = defineStore({
-  id: "contact",
+export const useContactStore = defineStore("contact", {
   state: () => {
     return {
       _contactTopics: {},

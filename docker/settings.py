@@ -46,7 +46,7 @@ DATA_ROOT = os.path.join(BASE_DIR, "compass/data")
 if os.getenv("ENV") == "localdev":
     DEBUG = True
     VITE_MANIFEST_PATH = os.path.join(
-        BASE_DIR, "app_name", "static", ".vite", "manifest.json"
+        BASE_DIR, "compass", "static", ".vite", "manifest.json"
     )
     RESTCLIENTS_DAO_CACHE_CLASS = None
     CURRENT_DATETIME_OVERRIDE = "2020-10-15 00:00:00"
