@@ -109,14 +109,14 @@ export default {
           this.programData = response;
         })
         .catch((error) => {
-          if (error.response.status === 404) {
+          if (error.response === 404) {
             this.programData = { program_date: null };
           } else {
             console.log(
               "Cannot get special program metadata for " +
                 this.person.student.system_key +
                 ": " +
-                error.response
+                error
             );
           }
         });
