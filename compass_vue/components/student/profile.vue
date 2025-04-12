@@ -445,8 +445,9 @@ export default {
         danger: "border-danger",
         warning: "border-warning",
         normal: "border-success",
+        missing: "border-light",
       };
-      return classes[this.person.analytics_alert] || classes.normal;
+      return classes[this.person.analytics_alert] || classes.missing;
     },
   },
 };
