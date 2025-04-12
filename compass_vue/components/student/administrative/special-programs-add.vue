@@ -107,8 +107,8 @@ export default {
       updatePermissionDenied: false,
       errorResponse: null,
       formErrors: null,
-      program_date: this.program_data.program_date
-        ? new Date(this.program_data.program_date).toISOString().slice(0, 10)
+      program_date: this.programData.program_date
+        ? new Date(this.programData.program_date).toISOString().slice(0, 10)
         : this.getToday().format("YYYY-MM-DD"),
     };
   },
@@ -124,17 +124,17 @@ export default {
   },
   methods: {
     editSpecialProgram() {
-      let program_data_copy = JSON.parse(JSON.stringify(this.program_data));
+      let programDataCopy = JSON.parse(JSON.stringify(this.programData));
 
-      program_data_copy.program_date = this.program_date;
+      programDataCopy.program_date = this.program_date;
 
       event.preventDefault();
       this.saveStudentSpecialProgram(
         this.person.student.system_key,
-        program_data_copy
+        programDataCopy
       )
         .then(() => {
-          this.program_data.program_date = this.program_date;
+          programData.program_date = this.program_date;
           this.$emit("specialProgramUpdated");
           this.hideModal();
         })

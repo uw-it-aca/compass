@@ -16,32 +16,32 @@
       </li>
     </ul>
     <!-- MARK: if now affiliation date set -->
-    <div v-if="program_data.program_date">
+    <div v-if="programData.program_date">
       <p>
         This student affiliated on<br />
         <span class="fw-bold">{{
-          formatDate(program_data.program_date, "MMMM D, YYYY")
+          formatDate(programData.program_date, "MMMM D, YYYY")
         }}</span>
       </p>
       <div class="my-3 text-end">
         <SpecialProgramEdit
           :person="person"
-          :program_data="program_data"
+          :program-data="programData"
           @special-program-updated="loadSpecialProgramData()"
         >
           <i class="bi bi-pencil me-2"></i>Edit
         </SpecialProgramEdit>
         <SpecialProgramDelete
           :person="person"
-          :program_data="program_data"
+          :program-data="programData"
           @special-program-updated="loadSpecialProgramData()"
         >
           <i class="bi bi-trash ms-e"></i>Delete
         </SpecialProgramDelete>
       </div>
-      <p v-if="program_data.modified_by" class="small text-muted m-0">
+      <p v-if="programData.modified_by" class="small text-muted m-0">
         Last updated by:
-        <span class="text-muted">{{ program_data.modified_by.uwnetid }}</span>
+        <span class="text-muted">{{ programData.modified_by.uwnetid }}</span>
       </p>
     </div>
     <!-- MARK: set affiliation date -->
@@ -53,7 +53,7 @@
         <div class="text-end">
           <SpecialProgramAdd
             :person="person"
-            :program_data="program_data"
+            :program-data="programData"
             @special-program-updated="loadSpecialProgramData()"
           >
             <i class="bi bi-calendar-plus-fill me-2"></i>Add affiliation date
@@ -96,7 +96,7 @@ export default {
     return {
       userNetid: document.body.getAttribute("data-user-netid"),
       userRole: document.body.getAttribute("data-user-role"),
-      program_data: { program_date: null },
+      programData: { program_date: null },
     };
   },
   created() {
@@ -106,11 +106,11 @@ export default {
     loadSpecialProgramData() {
       this.getStudentSpecialProgram(this.person.student.system_key)
         .then((response) => {
-          this.program_data = response;
+          this.programData = response;
         })
         .catch((error) => {
           if (error.response.status === 404) {
-            this.program_data = { program_date: null };
+            this.programData = { program_date: null };
           } else {
             console.log(
               "Cannot get special program metadata for " +
