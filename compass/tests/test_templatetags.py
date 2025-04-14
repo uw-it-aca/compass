@@ -1,7 +1,6 @@
 # Copyright 2025 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-
 import re
 from django.test import TestCase
 from compass.templatetags.vite import vite_styles, vite_scripts
