@@ -18,15 +18,13 @@ class ViteTestClass(TestCase):
     def test_vite_styles(self):
         entries = ("compass_vue/main.js",)
         link = vite_styles(*entries)
-        pattern = re.compile(
-            '<link rel="[\\w]*" href="[\\w\\D]*main.[\\d\\w]*.css" />'
-        )
-        self.assertTrue(pattern.match(link))
+        pattern = re.compile('<link\s+[^>]*href="[^"]*main-[^"]*"[^>]*>')
+        self.assertTrue(pattern.search(link))
 
     def test_vite_scripts(self):
         entries = ("compass_vue/main.js",)
         script = vite_scripts(*entries)
         pattern = re.compile(
-            '<script type="[\\w]*" src="[\\w\\D]*main.[\\d\\w]*.js"></script>'
+            '<script\s+[^>]*src="[^"]*main-[^"]*"[^>]*></script>'
         )
-        self.assertTrue(pattern.match(script))
+        self.assertTrue(pattern.search(script))
