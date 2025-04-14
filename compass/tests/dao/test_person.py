@@ -6,10 +6,12 @@ from django.urls import reverse
 from compass.tests import CompassTestCase
 from compass.dao.person import *
 from uw_pws.util import fdao_pws_override
+from uw_sws.util import fdao_sws_override
 import mock
 
 
 @fdao_pws_override
+@fdao_sws_override
 class TestPerson(CompassTestCase):
     def test_is_overridable(self):
         err_msg = is_overridable_uwnetid("javerage")
@@ -124,8 +126,16 @@ class TestPerson(CompassTestCase):
         # default transcript sorting
         t1 = transcripts[0]
         t2 = transcripts[1]
-        self.assertLess(int(f'{t2.tran_term.year}{t2.tran_term.quarter}'),
-                        int(f'{t1.tran_term.year}{t1.tran_term.quarter}'))
+        t3 = transcripts[2]
+        self.assertLess(
+            int(f'{t2["tran_term"]["year"]}{t2["tran_term"]["quarter"]}'),
+            int(f'{t1["tran_term"]["year"]}{t1["tran_term"]["quarter"]}'))
+        self.assertLess(
+            int(f'{t3["tran_term"]["year"]}{t3["tran_term"]["quarter"]}'),
+            int(f'{t2["tran_term"]["year"]}{t2["tran_term"]["quarter"]}'))
+
+        # class schedule
+        self.assertEqual(len(t3['class_schedule']['sections']), 3)
 
     @mock.patch.object(PhotoDAO, 'generate_photo_key')
     def test_get_students_by_system_keys(self, mock_photo_key):
