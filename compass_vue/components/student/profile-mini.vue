@@ -55,7 +55,7 @@ export default {
       const classes = {
         danger: "border-danger",
         warning: "border-warning",
-        normal: "border-success",
+        success: "border-success",
         missing: "border-dark"
       };
       return classes[this.person.analytics_alert] || classes.missing;
