@@ -30,7 +30,7 @@
             />
             <button
               @click="toggleSettingVisibility(setting)"
-              class="btn btn-outline-secondary"
+              class="btn btn-secondary"
               type="button"
               :disabled="!setting.editable"
             >
@@ -51,7 +51,7 @@
         />
         <button
           @click="addSetting"
-          class="btn btn-outline-secondary"
+          class="btn btn-secondary"
           type="button"
           id="button-addon2"
         >

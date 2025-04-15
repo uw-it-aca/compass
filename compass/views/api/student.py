@@ -25,15 +25,11 @@ from compass.serializers import (
     SpecialProgramSerializer)
 from compass.exceptions import OverrideNotPermitted, InvalidCSV
 from restclients_core.exceptions import DataFailureException
-from uw_sws.term import (
-    get_current_term, get_next_term, get_term_after,
-    get_term_by_year_and_quarter)
+from uw_sws.term import get_current_term, get_next_term, get_term_after
 from uw_sws.registration import get_schedule_by_regid_and_term
 from logging import getLogger
 
 logger = getLogger(__name__)
-
-TERMS = {1: "Winter", 2: "Spring", 3: "Summer", 4: "Autumn"}
 
 
 class StudentView(BaseAPIView):
@@ -163,9 +159,12 @@ class StudentSchedulesView(BaseAPIView):
                     uwregid, term).json_data()
             except DataFailureException:
                 continue
-        updated_schedule = (CourseAnalyticsScores.
-                            add_alert_status_to_schedules(schedules,
-                                                          uwregid))
+        try:
+            updated_schedule = (
+                CourseAnalyticsScores.add_alert_status_to_schedules(schedules,
+                                                                    uwregid))
+        except PersonNotFoundException:
+            return self.response_notfound('Student not found')
         return self.response_ok(updated_schedule)
 
 
@@ -411,27 +410,9 @@ class StudentTranscriptsView(BaseAPIView):
     '''
     def get(self, request, uwregid):
         try:
-            transcripts = get_transcripts_by_uwregid(uwregid)
+            transcript_data = get_transcripts_by_uwregid(uwregid)
         except PersonNotFoundException as ex:
             return self.response_notfound("Unknown student")
-
-        transcript_data = []
-        for transcript in transcripts:
-            transcript_dict = transcript.to_dict()
-            try:
-                term = get_term_by_year_and_quarter(
-                    transcript.tran_term.year,
-                    TERMS[transcript.tran_term.quarter])
-
-                class_schedule = get_schedule_by_regid_and_term(
-                    uwregid, term)
-                transcript_dict['class_schedule'] = class_schedule.json_data()
-            except DataFailureException as ex:
-                logger.info(
-                    f'Error fetching class schedule for {uwregid}: {ex}')
-                transcript_dict['class_schedule'] = None
-            transcript_data.append(transcript_dict)
-
         return self.response_ok(transcript_data)
 
 

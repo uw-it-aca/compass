@@ -3,7 +3,7 @@
     role="button"
     data-bs-toggle="modal"
     :data-bs-target="'#editSpecialProgramModal'"
-    class="btn text-nowrap btn-sm btn-outline-secondary rounded-3 px-3 py-2"
+    class="btn text-nowrap btn-sm btn-secondary rounded-3 px-3 py-2"
   >
     <slot>Add Program Date</slot>
   </a>

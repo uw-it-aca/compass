@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from django.db import models
-from django.core.exceptions import ObjectDoesNotExist
+from django.utils.translation import gettext_lazy as _
 from compass.dao.person import get_person_by_uwregid
 from compass.dao.term import current_week, current_term, week_of_term
 from compass.dao import current_datetime
@@ -40,7 +40,7 @@ class RADImport(models.Model):
         Get the next week to process, assumes 10 weeks per quarter
         """
 
-        last_week_imported = (cls.objects.filter(import_status=cls.SUCCESS)
+        last_week_imported = (cls.objects.all()
                               .order_by('-week__key').first())
         if last_week_imported is None:
             raise cls.DoesNotExist("No previous imports found")
@@ -69,6 +69,73 @@ class RADImport(models.Model):
         return rad_import
 
 
+class StudentAlertStatus(models.Model):
+    class AlertStatus(models.TextChoices):
+        SUCCESS = 'SC', _("success")
+        WARNING = 'WR', _("warning")
+        DANGER = 'DN', _("danger")
+
+    alert_status = models.CharField(choices=AlertStatus.choices,
+                                    null=True,
+                                    max_length=2)
+    uwnetid = models.CharField(max_length=50, unique=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['uwnetid'])
+        ]
+
+    @classmethod
+    def get_alert_class_from_scores(cls, scores):
+        """
+        RAD Prediction score alert status for a student
+        Danger - Red -
+        """
+        filterd_scores = [score for score in scores if score is not None]
+        if not filterd_scores:
+            return None
+        if all(score > 0 for score in filterd_scores):
+            return cls.AlertStatus.DANGER
+        elif any(score > 0 for score in filterd_scores):
+            return cls.AlertStatus.WARNING
+        else:
+            return cls.AlertStatus.SUCCESS
+
+    @classmethod
+    def get_alert_class_by_uwnetid(cls, uwnetid):
+        """
+        Get alert class for a student
+        """
+        try:
+            alert_status = cls.objects.get(uwnetid=uwnetid)
+        except cls.DoesNotExist:
+            return None
+        return alert_status.get_alert_status_display()
+
+    @classmethod
+    def add_alert_class_to_caseload(cls, caseload):
+        """
+        Add alert status to caseload
+        """
+        for student in caseload:
+            student['analytics_alert'] = cls.get_alert_class_by_uwnetid(
+                student['uwnetid'])
+        return caseload
+
+    @classmethod
+    def add_alert_class_to_contacts(cls, contacts):
+        alerts_by_netid = {}
+        for contact in contacts:
+            netid = contact['student']['uwnetid']
+            if netid in alerts_by_netid:
+                contact['student']['analytics_alert'] = alerts_by_netid[netid]
+            else:
+                alert_class = cls.get_alert_class_by_uwnetid(netid)
+                alerts_by_netid[netid] = alert_class
+                contact['student']['analytics_alert'] = alert_class
+        return contacts
+
+
 class CourseAnalyticsScores(models.Model):
     """
     Model to store RAD scores per student, week, course
@@ -85,16 +152,18 @@ class CourseAnalyticsScores(models.Model):
         unique_together = ('uwnetid', 'week', 'course')
 
     def json_data(self):
-        return {'activity_score':
+        return {
+            'activity_score':
                 convert_score_range(self.activity_score),
-                'assignment_score':
-                    convert_score_range(self.assignment_score),
-                'grade_score':
-                    convert_score_range(self.grade_score),
-                'prediction_score':
-                    self.prediction_score,
-                'week_id':
-                    self.week.week}
+            'assignment_score':
+                convert_score_range(self.assignment_score),
+            'grade_score':
+                convert_score_range(self.grade_score),
+            'prediction_score':
+                self.prediction_score,
+            'week_id':
+                self.week.week
+        }
 
     def is_alert_status(self):
         return self.prediction_score is not None and self.prediction_score > 0
@@ -147,27 +216,15 @@ class CourseAnalyticsScores(models.Model):
         return schedules
 
     @classmethod
-    def add_alert_class_to_caseload(cls, caseload):
-        """
-        Add alert status to caseload
-        """
-        for student in caseload:
-            student['analytics_alert'] = cls.get_alert_class_for_student(
-                student['uwnetid'])
-        return caseload
-
-    @classmethod
-    def add_alert_class_to_contacts(cls, contacts):
-        alerts_by_netid = {}
-        for contact in contacts:
-            netid = contact['student']['uwnetid']
-            if netid in alerts_by_netid:
-                contact['student']['analytics_alert'] = alerts_by_netid[netid]
-            else:
-                alert_class = cls.get_alert_class_for_student(netid)
-                alerts_by_netid[netid] = alert_class
-                contact['student']['analytics_alert'] = alert_class
-        return contacts
+    def get_all_predections_for_week(cls, week):
+        scores = (cls.objects
+                  .filter(week=week)
+                  .values_list('uwnetid',
+                               'prediction_score'))
+        scores_by_uwnetid = {}
+        for uwnetid, prediction_score in scores:
+            scores_by_uwnetid.setdefault(uwnetid, []).append(prediction_score)
+        return scores_by_uwnetid
 
     @classmethod
     def get_alert_class_for_student(cls, uwnetid):

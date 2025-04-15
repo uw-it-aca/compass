@@ -85,7 +85,7 @@
                           {{ section.curriculum_abbr }}
                           {{ section.course_number }}
                           {{ section.section_id }}
-                          <div class="fs-8 text-secondary">
+                          <div class="fs-8 text-light-emphasis">
                             {{ section.course_title }}
                           </div>
                         </div>
@@ -156,7 +156,7 @@
               </tbody>
               <tbody v-else class="mb-3">
                 <tr>
-                  <td colspan="5" class="ps-3 text-secondary">
+                  <td colspan="5" class="ps-3 text-light-emphasis">
                     No registrations found
                   </td>
                 </tr>

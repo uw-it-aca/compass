@@ -110,6 +110,9 @@ export default {
               display: false,
             },
           },
+          y: {
+            beginAtZero: true
+          }
         },
       },
       rawCourseAnalytics: [],

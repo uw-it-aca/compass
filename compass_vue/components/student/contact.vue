@@ -31,11 +31,11 @@
                 <div class="small d-flex justify-content-between mb-4">
                   <div>
                     <strong>{{ contact.app_user.display_name }}</strong>
-                    <span class="text-secondary ms-1"
+                    <span class="text-light-emphasis ms-1"
                       >({{ contact.app_user.uwnetid }})</span
                     >
                   </div>
-                  <div class="text-secondary">
+                  <div class="text-light-emphasis">
                     <i class="bi bi-calendar-event text-body-tertiary me-1"></i>
                     {{ getTimeFromNow(contact.checkin_date) }}
                   </div>
@@ -117,7 +117,7 @@
                 </div>
 
                 <div class="mt-4 small d-flex justify-content-between">
-                  <div class="text-secondary">
+                  <div class="text-light-emphasis">
                     {{
                       formatUTCToLocalDateAndTimeZone(
                         contact.checkin_date,
