@@ -45,22 +45,14 @@
               <td colspan="4" class="ps-3">
                 <div class="d-flex justify-content-between">
                   <ul class="list-unstyled w-50 m-0">
-                    <li>QTR ATTEMPTED: {{ transcript.qtr_graded_attmp }}</li>
-                    <li>QTR EARNED: xx</li>
-                    <li>QTR GRADE POINTS: {{ transcript.qtr_grade_points }}</li>
-                    <li>
-                      QTR GPA (calculated):
-                      <strong>{{
-                        (
-                          transcript.qtr_grade_points /
-                          transcript.qtr_graded_attmp
-                        ).toFixed(2)
-                      }}</strong>
-                    </li>
-                    <li>QTR GRADED AT: xx</li>
+                    <li>QTR ATTEMPTED: {{ transcript.total_attempted }}</li>
+                    <li>QTR EARNED: {{ transcript.total_earned }}</li>
+                    <li>QTR GRADE POINTS: {{ transcript.grade_points }}</li>
+                    <li>QTR GPA: <strong>{{ transcript.gpa }}</strong></li>
+                    <li>QTR GRADED ATTEMPTED: {{ transcript.graded_attempted }}</li>
                   </ul>
 
-                  <ul class="list-unstyled w-50 m-0">
+                  <ul class="visually-hidden list-unstyled w-50 m-0" >
                     <li>CUM ATTEMPTED: xx</li>
                     <li>UW EARNED: xx</li>
                     <li>TTL EARNED: xx</li>
