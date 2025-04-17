@@ -11,9 +11,14 @@ from uw_person_client.models import (
 from uw_person_client.exceptions import (
     PersonNotFoundException, AdviserNotFoundException)
 from uw_pws import PWS, InvalidNetID, DataFailureException
+from uw_sws.registration import get_schedule_by_regid_and_term
 from compass.dao.photo import PhotoDAO
+from compass.dao.term import get_term_by_year_and_quarter, TERMS
+from logging import getLogger
 import re
 
+
+logger = getLogger(__name__)
 system_key_re = re.compile(r'^\d{9}$')
 
 
@@ -71,12 +76,29 @@ def get_person_by_student_number(student_number, **kwargs):
 
 
 def get_transcripts_by_uwregid(uwregid):
+    transcript_data = []
     person = get_person_by_uwregid(
         uwregid, include_student=True, include_student_transcripts=True)
 
-    if person.student is not None and person.student.transcripts is not None:
-        return person.student.transcripts.all()
-    return []
+    if not person.student or not person.student.transcripts:
+        return transcript_data
+
+    for transcript in person.student.transcripts.all():
+        transcript_dict = transcript.to_dict()
+        try:
+            term = get_term_by_year_and_quarter(
+                transcript.tran_term.year, TERMS[transcript.tran_term.quarter])
+
+            class_schedule = get_schedule_by_regid_and_term(
+                uwregid, term, transcriptable_course='all')
+            transcript_dict['class_schedule'] = class_schedule.json_data()
+        except DataFailureException as ex:
+            logger.info(ex)
+            transcript_dict['class_schedule'] = None
+
+        transcript_data.append(transcript_dict)
+
+    return transcript_data
 
 
 def get_appuser_by_uwnetid(uwnetid):

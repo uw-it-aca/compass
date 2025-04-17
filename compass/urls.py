@@ -71,18 +71,25 @@ urlpatterns += [
         TemplateView.as_view(template_name="unauthorized-user.html"),
         name="unauthorized_user",
     ),
-    re_path(r"^api/internal/search$", StudentSearchView.as_view()),
+    re_path(
+        r"^api/internal/search$",
+        StudentSearchView.as_view(),
+        name="student_search_view",
+    ),
     re_path(
         r"^api/internal/student/(?P<identifier>[-@:\w]+)/$",
         StudentView.as_view(),
+        name="student_view",
     ),
     re_path(
         r"^api/internal/student/(?P<uwregid>[a-fA-F0-9]{32})/schedules/$",
         StudentSchedulesView.as_view(),
+        name="student_schedules_view",
     ),
     re_path(
         r"^api/internal/student/(?P<uwregid>[a-fA-F0-9]{32})/transcripts/$",
         StudentTranscriptsView.as_view(),
+        name="student_transcripts_view",
     ),
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/contacts/$",
@@ -92,6 +99,7 @@ urlpatterns += [
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/affiliations/$",
         StudentAffiliationsView.as_view(),
+        name="student_affiliations_view",
     ),
     re_path(
         r"^api/internal/student/affiliations/(?P<affiliation_id>[\w]+)/import/$",  # noqa
@@ -105,10 +113,12 @@ urlpatterns += [
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/visits/$",
         StudentVisitsView.as_view(),
+        name="student_visits_view",
     ),
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/eligibility/$",
         StudentEligibilityView.as_view(),
+        name="student_eligibility_view",
     ),
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/special_program/$",

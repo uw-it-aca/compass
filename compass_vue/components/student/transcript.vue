@@ -45,22 +45,14 @@
               <td colspan="4" class="ps-3">
                 <div class="d-flex justify-content-between">
                   <ul class="list-unstyled w-50 m-0">
-                    <li>QTR ATTEMPTED: {{ transcript.qtr_graded_attmp }}</li>
-                    <li>QTR EARNED: xx</li>
-                    <li>QTR GRADE POINTS: {{ transcript.qtr_grade_points }}</li>
-                    <li>
-                      QTR GPA (calculated):
-                      <strong>{{
-                        (
-                          transcript.qtr_grade_points /
-                          transcript.qtr_graded_attmp
-                        ).toFixed(2)
-                      }}</strong>
-                    </li>
-                    <li>QTR GRADED AT: xx</li>
+                    <li>Total Attempted Credits: {{ transcript.total_attempted }}</li>
+                    <li>Graded Attempted Credits: {{ transcript.graded_attempted }}</li>
+                    <li>Total Earned Credits: {{ transcript.total_earned }}</li>
+                    <li>Grade Points: {{ transcript.grade_points }}</li>
+                    <li>GPA: <strong>{{ transcript.gpa }}</strong></li>
                   </ul>
 
-                  <ul class="list-unstyled w-50 m-0">
+                  <ul class="visually-hidden list-unstyled w-50 m-0" >
                     <li>CUM ATTEMPTED: xx</li>
                     <li>UW EARNED: xx</li>
                     <li>TTL EARNED: xx</li>
@@ -83,14 +75,20 @@
                     <li>Veteran Benefit: {{ transcript.veteran_benefit }}</li>
                   </ul>
                 </div>
-                <div v-if="transcript.scholarship_type == 3">
-                  SCHOLARSHIP STATUS: PROBATION
+                <div v-if="transcript.scholarship_type == 1">
+                  Academic Standing: Dean's List
+                </div>
+                <div v-else-if="transcript.scholarship_type == 3">
+                  Academic Standing: Warning
                 </div>
                 <div v-else-if="transcript.scholarship_type == 4">
-                  SCHOLARSHIP STATUS: WARNING
+                  Academic Standing: Alert
                 </div>
-                <div v-else-if="transcript.scholarship_type == 1">
-                  SCHOLARSHIP STATUS: DEAN'S LIST
+                <div v-else-if="transcript.scholarship_type == 5">
+                  Academic Standing: Drop
+                </div>
+                <div v-else-if="transcript.scholarship_type == 6">
+                  Academic Standing: Reinstate
                 </div>
 
                 <div>{{ transcript.qtr_comment }}</div>

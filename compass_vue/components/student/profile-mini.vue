@@ -60,8 +60,13 @@ export default {
       const classes = {
         danger: "border-danger",
         warning: "border-warning",
+<<<<<<< HEAD
         normal: "border-success",
         missing: "border-light",
+=======
+        success: "border-success",
+        missing: "border-dark"
+>>>>>>> develop
       };
       return classes[this.person.analytics_alert] || classes.missing;
     },
