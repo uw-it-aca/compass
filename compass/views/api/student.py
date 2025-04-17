@@ -126,7 +126,7 @@ class StudentSearchView(BaseAPIView):
             else:
                 return self.response_badrequest('Invalid student identifier')
         except PersonNotFoundException:
-            return self.response_notfound('Student not found')
+            return self.response_notfound('Student not found. Please check again in 5 minutes while we try to add them.')
 
         person_dict = person.to_dict()
         # handle case where student data not in PDS

@@ -19,7 +19,7 @@
       </button>
     </div>
     <div v-if="searchError || error" class="text-danger mt-2">
-      {{ searchError || "Student not found" }}
+      {{ searchError || "Student not found. Please check again in 5 minutes while we try to add them." }}
     </div>
   </form>
 </template>
