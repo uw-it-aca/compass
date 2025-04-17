@@ -45,14 +45,21 @@
               <td colspan="4" class="ps-3">
                 <div class="d-flex justify-content-between">
                   <ul class="list-unstyled w-50 m-0">
-                    <li>Total Attempted Credits: {{ transcript.total_attempted }}</li>
-                    <li>Graded Attempted Credits: {{ transcript.graded_attempted }}</li>
+                    <li>
+                      Total Attempted Credits: {{ transcript.total_attempted }}
+                    </li>
+                    <li>
+                      Graded Attempted Credits:
+                      {{ transcript.graded_attempted }}
+                    </li>
                     <li>Total Earned Credits: {{ transcript.total_earned }}</li>
                     <li>Grade Points: {{ transcript.grade_points }}</li>
-                    <li>GPA: <strong>{{ transcript.gpa }}</strong></li>
+                    <li>
+                      GPA: <strong>{{ transcript.gpa }}</strong>
+                    </li>
                   </ul>
 
-                  <ul class="visually-hidden list-unstyled w-50 m-0" >
+                  <ul class="visually-hidden list-unstyled w-50 m-0">
                     <li>CUM ATTEMPTED: xx</li>
                     <li>UW EARNED: xx</li>
                     <li>TTL EARNED: xx</li>
