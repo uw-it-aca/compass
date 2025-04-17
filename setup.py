@@ -38,7 +38,7 @@ setup(
         'UW-RestClients-PWS~=2.1',
         'UW-Django-SAML2~=1.8',
         'urllib3~=1.25',
-        'django-person-client',
+        'django-person-client>=1.0.10',
         'python-dateutil~=2.8',
         'chardet~=5.0',
         'xmlsec==1.3.14',
