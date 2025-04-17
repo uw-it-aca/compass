@@ -76,13 +76,13 @@
                   </ul>
                 </div>
                 <div v-if="transcript.scholarship_type == 3">
-                  SCHOLARSHIP STATUS: PROBATION
+                  Scholarship Status: Probation
                 </div>
                 <div v-else-if="transcript.scholarship_type == 4">
-                  SCHOLARSHIP STATUS: WARNING
+                  Scholarship Status: Warning
                 </div>
                 <div v-else-if="transcript.scholarship_type == 1">
-                  SCHOLARSHIP STATUS: DEAN'S LIST
+                  Scholarship Status: Dean's List
                 </div>
 
                 <div>{{ transcript.qtr_comment }}</div>
