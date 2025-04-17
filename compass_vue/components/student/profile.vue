@@ -13,14 +13,16 @@
         </div>
         <div class="flex-fill d-flex px-3 text-center">
           <div class="align-self-center flex-fill">
-            <div class="d-inline-block rounded-circle border border-light-subtle border-4 mb-2">
+            <div
+              class="d-inline-block rounded-circle border border-light-subtle border-4 mb-2"
+            >
               <img
                 :src="person.photo_url"
+                class="img-profile rounded-circle border border-4"
+                :class="borderClass"
                 @error="
                   $event.target.src = '/static/compass/img/placeholder.png'
                 "
-                class="img-profile rounded-circle border border-4"
-                :class="borderClass"
               />
             </div>
             <!-- moved preferred name to under the profile photo -->
@@ -418,6 +420,8 @@ import { formatPhoneNumber } from "@/utils/formats";
 import { BCard } from "bootstrap-vue-next";
 
 export default {
+  name: "StudentProfile",
+  components: { KeyValue, BCard },
   inject: ["mq"],
   props: {
     person: {
@@ -425,7 +429,6 @@ export default {
       required: true,
     },
   },
-  components: { KeyValue, BCard },
   setup() {
     return {
       translateTrueFalse,
@@ -441,8 +444,8 @@ export default {
       const classes = {
         danger: "border-danger",
         warning: "border-warning",
-        success: "border-success",
-        missing: "border-dark"
+        normal: "border-success",
+        missing: "border-light",
       };
       return classes[this.person.analytics_alert] || classes.missing;
     },

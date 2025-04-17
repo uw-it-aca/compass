@@ -7,9 +7,9 @@
 
     <div>
       <KeyValue
-        variant="address"
         v-for="(degree, index) in person.student.degrees"
         :key="index"
+        variant="address"
       >
         <template #key
           ><span class="text-wrap">
@@ -17,7 +17,7 @@
           </span></template
         >
         <template #value>
-          <p class="small" v-if="degree.degree_term">
+          <p v-if="degree.degree_term" class="small">
             {{ degree.degree_term.quarter_name }}
             {{ degree.degree_term.year }}
             ({{ degree.degree_status_desc }})

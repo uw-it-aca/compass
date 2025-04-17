@@ -1,251 +1,308 @@
 import "regenerator-runtime/runtime";
-import axios from "axios";
-import { useTokenStore } from "@/stores/token";
-
-// request interceptor
-axios.interceptors.request.use(
-  function (config) {
-    const tokenStore = useTokenStore();
-
-    config.headers["Content-Type"] = "application/json;charset=UTF-8";
-    config.headers["Access-Control-Allow-Origin"] = "*";
-    config.headers["X-CSRFToken"] = tokenStore.csrfToken;
-    config.headers["X-Requested-With"] = "XMLHttpRequest";
-    return config;
-  },
-  function (error) {
-    return Promise.reject(error);
-  }
-);
-
-// methods
-function _handleError(error) {
-  if (error.response) {
-    if (error.response.status === 403) {
-      // Expired Session
-      return alert(
-        "Your session has expired. Refresh the page to start a new session."
-      );
-    }
-    throw error;
-  }
-}
+import { useCustomFetch } from "@/composables/customFetch";
 
 async function getStudentBySearch(query) {
-  return axios
-    .get("/api/internal/search?query=" + query)
-    .catch(_handleError);
+  const url = "/api/internal/search?query=" + query;
+  return useCustomFetch(url);
 }
 
 async function getStudentDetail(uwnetid) {
-  return axios
-    .get("/api/internal/student/" + uwnetid + "/")
-    .catch(_handleError);
+  const url = "/api/internal/student/" + uwnetid + "/";
+  return useCustomFetch(url);
 }
 
 async function saveStudent(systemkey, uwnetid, programs) {
-  return axios
-    .post("/api/internal/student/" + uwnetid + "/", {
+  const url = "/api/internal/student/" + uwnetid + "/";
+  return useCustomFetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify({
       system_key: systemkey,
       programs: programs,
-    })
-    .catch(_handleError);
+    }),
+  });
 }
 
 async function getEligibilities() {
-  return axios.get("/api/internal/eligibility/");
+  const url = "/api/internal/eligibility/";
+  return useCustomFetch(url);
 }
 
 async function getStudentEligibility(systemkey) {
-  return axios.get("/api/internal/student/" + systemkey + "/eligibility/");
+  const url = "/api/internal/student/" + systemkey + "/eligibility/";
+  return useCustomFetch(url);
 }
 
 async function setStudentEligibility(systemkey, eligibility_type_id) {
-  return axios
-    .post("/api/internal/student/" + systemkey + "/eligibility/", {
+  const url = "/api/internal/student/" + systemkey + "/eligibility/";
+  return useCustomFetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify({
       system_key: systemkey,
       eligibility_type_id: eligibility_type_id,
-    })
-    .catch(_handleError);
+    }),
+  });
 }
 
 async function getAffiliations() {
-  return axios.get("/api/internal/accessgroup/affiliations/");
+  const url = "/api/internal/accessgroup/affiliations/";
+  return useCustomFetch(url);
 }
 
 async function getSettings(accessGroupPk, settingType) {
-  return axios.get(
+  const url =
     "/api/internal/accessgroup/" +
-      accessGroupPk +
-      "/settings/" +
-      settingType +
-      "/"
-  );
+    accessGroupPk +
+    "/settings/" +
+    settingType +
+    "/";
+  return useCustomFetch(url);
 }
 
 async function saveSettings(accessGroupPk, settingType, settingValues) {
-  return axios
-    .post(
-      "/api/internal/accessgroup/" +
-        accessGroupPk +
-        "/settings/" +
-        settingType +
-        "/",
-      { setting_type: settingType, setting_values: settingValues }
-    )
-    .catch(_handleError);
+  const url =
+    "/api/internal/accessgroup/" +
+    accessGroupPk +
+    "/settings/" +
+    settingType +
+    "/";
+  return useCustomFetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify({
+      setting_type: settingType,
+      setting_values: settingValues,
+    }),
+  });
 }
 
 async function getStudentSchedules(uwregid) {
-  return axios.get("/api/internal/student/" + uwregid + "/schedules/");
+  const url = "/api/internal/student/" + uwregid + "/schedules/";
+  return useCustomFetch(url);
 }
 
 async function getStudentTranscripts(uwregid) {
-  return axios.get("/api/internal/student/" + uwregid + "/transcripts/");
+  const url = "/api/internal/student/" + uwregid + "/transcripts/";
+  return useCustomFetch(url);
 }
 
 async function saveStudentContact(systemkey, contact) {
-  let postUrl = "/api/internal/contact/";
+  let url = "/api/internal/contact/";
   if (contact.id !== undefined) {
-    postUrl += contact.id + "/";
+    url += contact.id + "/";
   }
-  return axios
-    .post(postUrl, { contact: contact, system_key: systemkey })
-    .catch(_handleError);
+  return useCustomFetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify({
+      contact: contact,
+      system_key: systemkey,
+    }),
+  });
 }
 
 async function updateStudentContact(contact) {
-  let putUrl = "/api/internal/contact/" + contact.id + "/";
-  return axios.put(putUrl, { contact: contact }).catch(_handleError);
+  const url = "/api/internal/contact/" + contact.id + "/";
+  return useCustomFetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify({
+      contact: contact,
+    }),
+  });
 }
 
 async function saveStudentAffiliation(systemkey, affiliation) {
-  let postUrl = "/api/internal/student/" + systemkey + "/affiliations/";
+  let url = "/api/internal/student/" + systemkey + "/affiliations/";
   if (affiliation.studentAffiliationId !== null) {
-    postUrl += affiliation.studentAffiliationId + "/";
+    url += affiliation.studentAffiliationId + "/";
   }
-  return axios.post(postUrl, { affiliation: affiliation }).catch(_handleError);
+  return useCustomFetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify({
+      affiliation: affiliation,
+    }),
+  });
 }
 
 async function uploadStudentAffiliations(affiliation_id, file, cohort) {
-    var postUrl = "/api/internal/student/affiliations/" + affiliation_id + "/import/",
-        formData = new FormData();
+  const url =
+    "/api/internal/student/affiliations/" + affiliation_id + "/import/";
+  let formData = new FormData();
+  formData.append("file", file);
+  formData.append("cohort", cohort);
 
-    formData.append("file", file);
-    formData.append("cohort", cohort);
-
-    return axios.post(postUrl, formData, {
-        headers: {
-            "Content-Type": "multipart/form-data"
-        }
-    }).catch(_handleError);
+  // Do not send a Content-Type header
+  return useCustomFetch(url, {
+    method: "POST",
+    body: formData,
+  });
 }
 
 async function deleteStudentAffiliation(systemkey, affiliation_id) {
-  return axios
-    .delete(
-      "/api/internal/student/" +
-        systemkey +
-        "/affiliations/" +
-        affiliation_id +
-        "/"
-    )
-    .catch(_handleError);
+  const url =
+    "/api/internal/student/" +
+    systemkey +
+    "/affiliations/" +
+    affiliation_id +
+    "/";
+  return useCustomFetch(url, {
+    method: "DELETE",
+  });
 }
 
 async function getStudentContacts(systemkey) {
-  return axios.get("/api/internal/student/" + systemkey + "/contacts/");
+  const url = "/api/internal/student/" + systemkey + "/contacts/";
+  return useCustomFetch(url);
 }
 
 async function getStudentContact(contactId) {
-  return axios.get("/api/internal/contact/" + contactId + "/");
+  const url = "/api/internal/contact/" + contactId + "/";
+  return useCustomFetch(url);
 }
 
 async function getStudentContactTopics() {
-  return axios.get("/api/internal/contact/topics/");
+  const url = "/api/internal/contact/topics/";
+  return useCustomFetch(url);
 }
 
 async function getStudentContactTypes() {
-  return axios.get("/api/internal/contact/types/");
+  const url = "/api/internal/contact/types/";
+  return useCustomFetch(url);
 }
 
 async function getStudentContactMethods() {
-  return axios.get("/api/internal/contact/methods/");
+  const url = "/api/internal/contact/methods/";
+  return useCustomFetch(url);
 }
 
 async function deleteStudentContact(contactId) {
-  return axios.delete("/api/internal/contact/" + contactId + "/");
+  const url = "/api/internal/contact/" + contactId + "/";
+  return useCustomFetch(url, {
+    method: "DELETE",
+  });
 }
 
 async function getStudentAffiliations(systemkey, affiliation_id) {
-  return axios.get(
+  const url =
     "/api/internal/student/" +
-      systemkey +
-      "/affiliations/" +
-      (affiliation_id !== undefined ? affiliation_id : "")
-  );
+    systemkey +
+    "/affiliations/" +
+    (affiliation_id !== undefined ? affiliation_id : "");
+  return useCustomFetch(url);
 }
 
 async function getStudentVisits(systemkey) {
-  return axios.get("/api/internal/student/" + systemkey + "/visits/");
+  const url = "/api/internal/student/" + systemkey + "/visits/";
+  return useCustomFetch(url);
 }
 
 async function getStudentSpecialProgram(systemkey) {
-  let getUrl = "/api/internal/student/" + systemkey + "/special_program/";
-
-  return axios.get(getUrl);
+  const url = "/api/internal/student/" + systemkey + "/special_program/";
+  return useCustomFetch(url);
 }
 
 async function saveStudentSpecialProgram(systemkey, data) {
-  let postUrl = "/api/internal/student/" + systemkey + "/special_program/";
-
-  return axios.post(postUrl, { special_program: data }).catch(_handleError);
+  const url = "/api/internal/student/" + systemkey + "/special_program/";
+  return useCustomFetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify({
+      special_program: data,
+    }),
+  });
 }
 
 async function updateStudentSpecialProgram(systemkey, data) {
-  let putUrl = "/api/internal/student/" + systemkey + "/special_program/";
-
-  return axios.put(putUrl, { special_program: data }).catch(_handleError);
+  const url = "/api/internal/student/" + systemkey + "/special_program/";
+  return useCustomFetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify({
+      special_program: data,
+    }),
+  });
 }
 
 async function deleteStudentSpecialProgram(systemkey) {
-  let deleteUrl = "/api/internal/student/" + systemkey + "/special_program/";
-
-  return axios.delete(deleteUrl);
+  const url = "/api/internal/student/" + systemkey + "/special_program/";
+  return useCustomFetch(url, {
+    method: "DELETE",
+  });
 }
 
 async function getAdviserCaseload(adviserNetId) {
-  return axios
-    .get("/api/internal/adviser/" + adviserNetId + "/caseload/")
-    .catch(_handleError);
+  const url = "/api/internal/adviser/" + adviserNetId + "/caseload/";
+  return useCustomFetch(url);
 }
 
 async function getAdviserCheckIns(adviserNetId) {
-  return axios
-    .get("/api/internal/adviser/" + adviserNetId + "/checkins/")
-    .catch(_handleError);
+  const url = "/api/internal/adviser/" + adviserNetId + "/checkins/";
+  return useCustomFetch(url);
 }
 
 async function getAccessGroups() {
-  return axios.get("/api/internal/accessgroup/").catch(_handleError);
+  const url = "/api/internal/accessgroup/";
+  return useCustomFetch(url);
 }
 
 async function clearOverride() {
-  return axios.post("/api/internal/support/", { clear_override: true });
+  const url = "/api/internal/support/";
+  return useCustomFetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify({ clear_override: true }),
+  });
 }
 
 async function savePreferences(preferences) {
-  return axios.put("/api/internal/userprefs/", preferences);
+  const url = "/api/internal/userprefs/";
+  return useCustomFetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify(preferences),
+  });
 }
 
-async function getStudentCourseAnalytics(uwnetid, year, quarter, course_id){
-  return axios.get("/api/internal/student/" + uwnetid +
-    "/course_analytics/" + year + "/" + quarter + "/" + course_id + "/");
+async function getStudentCourseAnalytics(uwnetid, year, quarter, course_id) {
+  const url =
+    "/api/internal/student/" +
+    uwnetid +
+    "/course_analytics/" +
+    year +
+    "/" +
+    quarter +
+    "/" +
+    course_id +
+    "/";
+  return useCustomFetch(url);
 }
 
-async function getStudentSigninAnalytics(uwnetid){
-  return axios.get("/api/internal/student/" + uwnetid +
-    "/signin_analytics/");
+async function getStudentSigninAnalytics(uwnetid) {
+  const url = "/api/internal/student/" + uwnetid + "/signin_analytics/";
+  return useCustomFetch(url);
 }
 
 export {
@@ -283,5 +340,5 @@ export {
   clearOverride,
   savePreferences,
   getStudentCourseAnalytics,
-  getStudentSigninAnalytics
+  getStudentSigninAnalytics,
 };

@@ -33,8 +33,8 @@ function nonLocalTimeZone(local_date) {
   return dayjs.tz.guess() == LOCAL_TIMEZONE
     ? ""
     : Math.abs(local_date.utcOffset()) == 420
-    ? " PDT"
-    : " PST";
+      ? " PDT"
+      : " PST";
 }
 
 function utcDate(date) {

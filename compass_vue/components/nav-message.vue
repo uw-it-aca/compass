@@ -5,12 +5,9 @@
         <i class="bi bi-exclamation-triangle-fill me-2"></i>System Messages
       </div>
       <ul class="list-unstyled m-0">
-        <li
-          v-for="(msg, index) in messages"
-          :key="index"
-          v-html="msg"
-          class="mt-2"
-        ></li>
+        <li v-for="(msg, index) in messages" :key="index" class="mt-2">
+          {{ msg }}
+        </li>
       </ul>
     </div>
   </div>

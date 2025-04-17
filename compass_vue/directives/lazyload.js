@@ -20,10 +20,10 @@
  *   </script>
  */
 export default {
-  mounted: el => {
+  mounted: (el) => {
     function loadImage() {
       const imageElement = Array.from(el.children).find(
-        el => el.nodeName === "IMG"
+        (el) => el.nodeName === "IMG"
       );
       if (imageElement) {
         imageElement.src = imageElement.dataset.url;
@@ -31,7 +31,7 @@ export default {
     }
 
     function handleIntersect(entries, observer) {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           loadImage();
           observer.unobserve(el);
@@ -42,7 +42,7 @@ export default {
     function createObserver() {
       const options = {
         root: null,
-        threshold: "0"
+        threshold: "0",
       };
       const observer = new IntersectionObserver(handleIntersect, options);
       observer.observe(el);
@@ -53,5 +53,5 @@ export default {
     } else {
       loadImage();
     }
-  }
+  },
 };

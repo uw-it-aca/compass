@@ -43,19 +43,20 @@ import MajorSummary from "@/components/student/summary/MajorSummary.vue";
 import { translateTrueFalse } from "@/utils/translations";
 
 export default {
-  inject: ["mq"],
-  props: {
-    person: {
-      type: Object,
-      required: true,
-    },
-  },
+  name: "StudentAcademics",
   components: {
     AffiliationSummary,
     StatusSummary,
     CreditSummary,
     DegreeSummary,
     MajorSummary,
+  },
+  inject: ["mq"],
+  props: {
+    person: {
+      type: Object,
+      required: true,
+    },
   },
   setup() {
     return {

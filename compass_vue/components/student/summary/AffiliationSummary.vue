@@ -3,7 +3,9 @@
     class="bg-body-tertiary rounded-3 d-flex flex-fill small"
     border-variant="0"
   >
-    <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-3">Affiliations</div>
+    <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-3">
+      Affiliations
+    </div>
 
     <KeyValue>
       <template #key> Special Programs </template>
@@ -22,8 +24,8 @@
         <li v-for="(a, index) in affiliations" :key="index" class="mb-1">
           <strong>{{ a.affiliation.name }}</strong
           ><span
-            v-for="(c, index) in a.cohorts"
-            :key="index"
+            v-for="(c, index2) in a.cohorts"
+            :key="index2"
             class="ms-2 text-nowrap"
             >{{ c.start_year }}-{{ c.end_year }}</span
           >
@@ -63,8 +65,8 @@ export default {
     loadStudentAffiliations: function () {
       this.getStudentAffiliations(this.person.student.system_key).then(
         (response) => {
-          if (response.data) {
-            this.affiliations = response.data;
+          if (response) {
+            this.affiliations = response;
           }
         }
       );

@@ -1,8 +1,7 @@
 import { defineStore } from "pinia";
 import { getAffiliations } from "@/utils/data";
 
-export const useAffiliationStore = defineStore({
-  id: "affiliation",
+export const useAffiliationStore = defineStore("affiliation", {
   state: () => {
     return {
       getAffiliations,
@@ -15,7 +14,7 @@ export const useAffiliationStore = defineStore({
       if (!state.affiliationsLoaded) {
         state.affiliations = {
           request: this.getAffiliations().then((response) => {
-            state.affiliations.data = response.data;
+            state.affiliations.data = response;
           }),
         };
       }

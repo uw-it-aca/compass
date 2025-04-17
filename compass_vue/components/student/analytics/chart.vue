@@ -1,14 +1,12 @@
 <template>
-  <div class="d-flex" >
+  <div class="d-flex">
     <div class="d-flex w-25">
       <div class="pt-2 w-100">
-        <ul
-          class="p-0 fs-7 text-body-secondary"
-        >
+        <ul class="p-0 fs-7 text-body-secondary">
           <template v-for="(dataset, index) in dataSeries" :key="index">
             <li
-              class="d-flex justify-content-between"
               v-if="displayLatestValue(dataset)"
+              class="d-flex justify-content-between"
             >
               {{ dataset.label }}
               <div>
@@ -21,7 +19,11 @@
                   v-else-if="latestScoreIncreased(dataset.data)"
                   class="bi bi-arrow-up-circle-fill text-success ms-2 me-1"
                 ></i>
-                <i v-else class="bi bi-circle  ms-2 me-1 opacity-0" aria-hidden="true"></i>
+                <i
+                  v-else
+                  class="bi bi-circle ms-2 me-1 opacity-0"
+                  aria-hidden="true"
+                ></i>
               </div>
             </li>
           </template>
@@ -78,7 +80,6 @@ export default {
     // eslint-disable-next-line vue/no-reserved-component-names
     Line,
   },
-  setup() {},
   props: {
     dataSeries: {
       type: Array,
@@ -90,6 +91,7 @@ export default {
       required: false,
     },
   },
+  setup() {},
   data() {
     return {
       chartData: {
@@ -111,8 +113,8 @@ export default {
             },
           },
           y: {
-            beginAtZero: true
-          }
+            beginAtZero: true,
+          },
         },
       },
       rawCourseAnalytics: [],

@@ -3,10 +3,18 @@
     <table class="table m-0">
       <thead class="text-muted small">
         <tr>
-          <th scope="col" style="width: 34%" class="bg-body-tertiary ps-3">Student</th>
+          <th scope="col" style="width: 34%" class="bg-body-tertiary ps-3">
+            Student
+          </th>
           <th scope="col" class="bg-body-tertiary">Class</th>
           <th scope="col" class="bg-body-tertiary">Campus</th>
-          <th scope="col" style="width: 45%" class="text-nowrap bg-body-tertiary">Status</th>
+          <th
+            scope="col"
+            style="width: 45%"
+            class="text-nowrap bg-body-tertiary"
+          >
+            Status
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -89,7 +97,10 @@
       </tbody>
     </table>
   </div>
-  <div v-else class="p-3">There are no students found in <strong>{{ adviserNetId }}&rsquo;s</strong> caseload.</div>
+  <div v-else class="p-3">
+    There are no students found in
+    <strong>{{ adviserNetId }}&rsquo;s</strong> caseload.
+  </div>
 </template>
 
 <script>

@@ -80,12 +80,12 @@
 import { BCard } from "bootstrap-vue-next";
 
 export default {
+  components: { BCard },
   props: {
     person: {
       type: Object,
       required: true,
     },
   },
-  components: { BCard },
 };
 </script>
