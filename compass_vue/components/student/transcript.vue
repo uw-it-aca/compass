@@ -75,14 +75,20 @@
                     <li>Veteran Benefit: {{ transcript.veteran_benefit }}</li>
                   </ul>
                 </div>
-                <div v-if="transcript.scholarship_type == 3">
-                  Scholarship Status: Probation
+                <div v-if="transcript.scholarship_type == 1">
+                  Academic Standing: Dean's List
+                </div>
+                <div v-else-if="transcript.scholarship_type == 3">
+                  Academic Standing: Warning
                 </div>
                 <div v-else-if="transcript.scholarship_type == 4">
-                  Scholarship Status: Warning
+                  Academic Standing: Alert
                 </div>
-                <div v-else-if="transcript.scholarship_type == 1">
-                  Scholarship Status: Dean's List
+                <div v-else-if="transcript.scholarship_type == 5">
+                  Academic Standing: Drop
+                </div>
+                <div v-else-if="transcript.scholarship_type == 6">
+                  Academic Standing: Reinstate
                 </div>
 
                 <div>{{ transcript.qtr_comment }}</div>
