@@ -6,13 +6,12 @@
         <div class="col">
           <BCard class="bg-body-tertiary rounded-3" border-variant="0">
             <div class="row">
-              <div class="col-xl-4 me-auto">
+              <div class="col-3 me-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
                   <SearchStudent />
                 </div>
               </div>
-              <div class="col-xl-8">&nbsp;</div>
             </div>
           </BCard>
         </div>
