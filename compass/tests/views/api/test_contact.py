@@ -36,7 +36,7 @@ class ContactAPITest(ApiTest):
                              HTTP_AUTHORIZATION=token_str)
 
         response = self.post_response('contact_omad',
-                                      test_request)
+                                      body=test_request)
         self.assertEqual(response.status_code, 201)
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION="BAD TOKEN")
@@ -128,14 +128,14 @@ class ContactAPITest(ApiTest):
 
         # create without padding
         self.post_response('contact_omad',
-                           test_nopad)
+                           body=test_nopad)
         call_command('process_omad_contacts')
         contacts = Contact.objects.all()
         self.assertEqual(contacts[0].student.system_key, "001234567")
 
         # create with padding
         self.post_response('contact_omad',
-                           test_pad)
+                           body=test_pad)
         call_command('process_omad_contacts')
         contacts = Contact.objects.all()
         self.assertEqual(contacts[1].student.system_key, "001234567")
@@ -163,9 +163,9 @@ class ContactAPITest(ApiTest):
                              HTTP_AUTHORIZATION=token_str)
 
         self.post_response('contact_omad',
-                           test_noid)
+                           body=test_noid)
         self.post_response('contact_omad',
-                           test_id)
+                           body=test_id)
         call_command('process_omad_contacts')
         contacts = Contact.objects.all()
         self.assertEqual(len(contacts), 2)
@@ -187,12 +187,14 @@ class ContactAPITest(ApiTest):
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
         self.post_response('contact_omad',
-                           test_id)
+                           body=test_id)
         call_command('process_omad_contacts')
         contacts = Contact.objects.all()
 
         c_id = contacts[0].id
-        self.delete_response('contact_edit_view', 'javerage', contactid=c_id)
+        self.delete_response('contact_edit_view',
+                             'javerage',
+                             kwargs={'contactid': c_id})
 
         contacts = Contact.objects.all()
         self.assertEqual(len(contacts), 0)
@@ -212,7 +214,7 @@ class ContactAPITest(ApiTest):
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
         resp = self.post_response('contact_omad',
-                                  test_checkin)
+                                  body=test_checkin)
         call_command('process_omad_contacts')
 
         contact = Contact.objects.get(id=1)
@@ -252,7 +254,7 @@ class ContactAPITest(ApiTest):
         r = self.put_response('contact_edit_view',
                               "jbothell",
                               put_body,
-                              contactid=1)
+                              kwargs={'contactid': 1})
         self.assertEqual(r.status_code, 200)
         contact = Contact.objects.get(id=1)
         self.assertEqual(contact.notes, "test note")
@@ -261,7 +263,7 @@ class ContactAPITest(ApiTest):
         r = self.put_response('contact_edit_view',
                               "javerage",
                               put_body,
-                              contactid=1)
+                              kwargs={'contactid': 1})
         self.assertEqual(r.status_code, 200)
 
     @patch('compass.dao.group.is_member_of_group', return_value=True)
@@ -279,8 +281,8 @@ class ContactAPITest(ApiTest):
             "system_key": "002365572"
         }
         r = self.post_response('contact_create_view',
-                               post_body,
-                               netid="javerage")
+                               'javerage',
+                               post_body)
         contacts = Contact.objects.all()
         self.assertEqual(len(contacts), 1)
         self.assertEqual(r.status_code, 201)

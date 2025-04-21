@@ -75,22 +75,9 @@
                     <li>Veteran Benefit: {{ transcript.veteran_benefit }}</li>
                   </ul>
                 </div>
-                <div v-if="transcript.scholarship_type == 1">
-                  Academic Standing: Dean's List
+                <div v-if="academicStanding(transcript.scholarship_type)">
+                  Academic Standing: {{ academicStanding(transcript.scholarship_type) }}
                 </div>
-                <div v-else-if="transcript.scholarship_type == 3">
-                  Academic Standing: Warning
-                </div>
-                <div v-else-if="transcript.scholarship_type == 4">
-                  Academic Standing: Alert
-                </div>
-                <div v-else-if="transcript.scholarship_type == 5">
-                  Academic Standing: Drop
-                </div>
-                <div v-else-if="transcript.scholarship_type == 6">
-                  Academic Standing: Reinstate
-                </div>
-
                 <div>{{ transcript.qtr_comment }}</div>
               </td>
             </tr>
@@ -130,6 +117,15 @@ export default {
     this.loadStudentTranscripts();
   },
   methods: {
+    academicStanding: function (scholarship_type) {
+        return scholarship_type == 1 ? "Dean's List"
+            : scholarship_type == 3 ? "Warning"
+            : scholarship_type == 4 ? "Alert"
+            : scholarship_type == 5 ? "Drop"
+            : scholarship_type == 6 ? "Reinstate"
+            : null;
+
+    },
     loadStudentTranscripts: function () {
       this.storeStudent
         .fetchStudentTranscripts(this.person.uwregid)
