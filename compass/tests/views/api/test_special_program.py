@@ -40,7 +40,7 @@ class SpecialProgramAPITest(ApiTest):
         }
 
         response = self.post_response(
-            'special_program_view', data, 'jadviser', kwargs=self.url_kwargs2)
+            'special_program_view', 'jadviser', data, kwargs=self.url_kwargs2)
 
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data.get('program_date'), '2024-01-01')
@@ -67,7 +67,7 @@ class SpecialProgramAPITest(ApiTest):
         }
 
         response = self.post_response(
-            'special_program_view', data, 'jadviser', kwargs=self.url_kwargs1)
+            'special_program_view', 'jadviser', data, kwargs=self.url_kwargs1)
 
         self.assertEqual(response.status_code, 400)
 
@@ -80,13 +80,13 @@ class SpecialProgramAPITest(ApiTest):
         }
 
         response = self.put_response(
-            'special_program_view', 'jadviser', data, **self.url_kwargs1)
+            'special_program_view', 'jadviser', data, kwargs=self.url_kwargs1)
 
         self.assertEqual(response.status_code, 200)
 
     @patch('compass.dao.group.is_member_of_group', return_value=True)
     def test_delete(self, mock_is_member):
         response = self.delete_response(
-            'special_program_view', 'jadviser', **self.url_kwargs1)
+            'special_program_view', 'jadviser', kwargs=self.url_kwargs1)
 
         self.assertEqual(response.status_code, 200)

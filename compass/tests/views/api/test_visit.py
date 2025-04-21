@@ -37,7 +37,7 @@ class ViewAPITest(ApiTest):
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
 
-        response = self.post_response('visit_omad', test_request)
+        response = self.post_response('visit_omad', body=test_request)
         self.assertEqual(response.status_code, 201)
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION="BAD TOKEN")

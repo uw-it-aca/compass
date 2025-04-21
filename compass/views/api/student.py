@@ -79,8 +79,7 @@ class StudentView(BaseAPIView):
             data = request.data
             system_key = data.get("system_key")
             if not valid_system_key(system_key):
-                return Response('Invalid systemkey',
-                                status=status.HTTP_400_BAD_REQUEST)
+                return self.response_badrequest('Invalid systemkey')
 
             student_record = {}
             student_record['system_key'] = system_key
@@ -457,7 +456,7 @@ class StudentEligibilityView(BaseAPIView):
                 return self.response_badrequest("Invalid TypeID")
 
             # update existing student record if one exists
-            student = Student.objects.get(system_key=system_key)
+            student = Student.objects.get(system_key=systemkey)
             eligibility_type = EligibilityType.objects.get(
                 id=eligibility_type_id, access_group=access_group)
             s_e, _ = StudentEligibility.objects.get_or_create(
