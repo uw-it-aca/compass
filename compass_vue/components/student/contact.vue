@@ -10,7 +10,7 @@
       <AddEditContact
         :button-type="'button'"
         :person="person"
-        @contactUpdated="loadStudentContacts()"
+        @contact-updated="loadStudentContacts()"
         ><i class="bi bi-calendar-plus me-2"></i>Record new
         contact</AddEditContact
       >
@@ -106,10 +106,7 @@
                     {{ contact.notes }}
                   </p>
                 </div>
-                <div
-                  v-if="contact.actions"
-                  class="border-top pt-3"
-                >
+                <div v-if="contact.actions" class="border-top pt-3">
                   <span class="small visually-hidden">Actions</span>
                   <p class="small text-break">
                     {{ contact.actions }}
@@ -148,9 +145,8 @@
                       :button-type="'link'"
                       :person="person"
                       :contact-id="contact.id"
-                      @contactUpdated="loadStudentContacts()"
-                      ><i class="bi bi-pencil me-2"></i
-                      >Edit</AddEditContact
+                      @contact-updated="loadStudentContacts()"
+                      ><i class="bi bi-pencil me-2"></i>Edit</AddEditContact
                     >
                   </template>
                   <!-- MARK: if not, user is overriding. show edit button for override user. -->
@@ -160,9 +156,8 @@
                       :button-type="'link'"
                       :person="person"
                       :contact-id="contact.id"
-                      @contactUpdated="loadStudentContacts()"
-                      ><i class="bi bi-pencil me-2"></i
-                      >Edit</AddEditContact
+                      @contact-updated="loadStudentContacts()"
+                      ><i class="bi bi-pencil me-2"></i>Edit</AddEditContact
                     >
                   </template>
                 </template>
@@ -178,18 +173,16 @@
                     :button-type="'link'"
                     :person="person"
                     :contact-id="contact.id"
-                    @contactUpdated="loadStudentContacts()"
+                    @contact-updated="loadStudentContacts()"
                   >
-                    <i class="bi bi-pencil me-2"></i
-                    >Edit
+                    <i class="bi bi-pencil me-2"></i>Edit
                   </ManagerEditContact>
                   <DeleteContact
                     :button-type="'link'"
                     :person="person"
                     :contact-id="contact.id"
-                    @contactDeleted="removeContact(contact.id)"
-                    ><i class="bi bi-trash me-2"></i
-                    >Delete
+                    @contact-deleted="removeContact(contact.id)"
+                    ><i class="bi bi-trash me-2"></i>Delete
                   </DeleteContact>
                 </template>
               </td>
@@ -213,6 +206,7 @@ import { getStudentContacts } from "@/utils/data";
 import { BCard } from "bootstrap-vue-next";
 
 export default {
+  name: "StudentContact",
   components: {
     BCard,
     AddEditContact,
@@ -249,8 +243,8 @@ export default {
     loadStudentContacts: function () {
       this.getStudentContacts(this.person.student.system_key).then(
         (response) => {
-          if (response.data) {
-            this.contacts = response.data;
+          if (response) {
+            this.contacts = response;
           }
         }
       );

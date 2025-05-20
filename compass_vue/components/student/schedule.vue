@@ -22,7 +22,7 @@
             <span
               v-if="schedule.sections.length > 0"
               class="badge text-body bg-primary-subtle ms-2 rounded-pill"
-              style="min-width: 25px; margin-bottom: 2px;"
+              style="min-width: 25px; margin-bottom: 2px"
               @click.stop
               >{{ getCreditTotal(schedule.sections) }}</span
             >
@@ -42,18 +42,27 @@
         >
           <div class="table-responsive m-0">
             <table class="table m-0">
-              <col style="width: 40%" />
-              <col style="width: 15%" />
-              <col style="width: 13%" />
-              <col style="width: 22%" />
-              <col style="width: 10%" />
               <thead class="text-muted small">
                 <tr>
-                  <th class="ps-3 bg-body-tertiary">Course</th>
-                  <th class="bg-body-tertiary">SLN</th>
-                  <th class="bg-body-tertiary">Day</th>
-                  <th class="bg-body-tertiary">Time</th>
-                  <th class="bg-body-tertiary">Credits</th>
+                  <th
+                    class="ps-3 bg-body-tertiary"
+                    scope="col"
+                    style="width: 40%"
+                  >
+                    Course
+                  </th>
+                  <th class="bg-body-tertiary" scope="col" style="width: 15%">
+                    SLN
+                  </th>
+                  <th class="bg-body-tertiary" scope="col" style="width: 13%">
+                    Day
+                  </th>
+                  <th class="bg-body-tertiary" scope="col" style="width: 22%">
+                    Time
+                  </th>
+                  <th class="bg-body-tertiary" scope="col" style="width: 10%">
+                    Credits
+                  </th>
                 </tr>
               </thead>
               <tbody v-if="schedule.sections.length > 0">
@@ -62,7 +71,10 @@
                   :key="sectionIndex"
                 >
                   <tr>
-                    <td class="ps-3" :class="isLecture(section.credits) ? 'border-0' : ''">
+                    <td
+                      class="ps-3"
+                      :class="isLecture(section.credits) ? 'border-0' : ''"
+                    >
                       <!-- MARK: only show course analytics for top-level (i.e. NOT quiz sections) v-show="isQuizSection(section.credits)"-->
                       <!-- Expend and collapse RAD data. Auto expand all classes with a warning icon -->
                       <div class="d-flex">
@@ -71,9 +83,19 @@
                             class="btn btn-link chevron text-body"
                             type="button"
                             data-bs-toggle="collapse"
-                            :data-bs-target="'#collapseDiv_' + scheduleIndex + '_' + sectionIndex"
+                            :data-bs-target="
+                              '#collapseDiv_' +
+                              scheduleIndex +
+                              '_' +
+                              sectionIndex
+                            "
                             aria-expanded="false"
-                            :aria-controls="'collapseDiv_' + scheduleIndex + '_' + sectionIndex"
+                            :aria-controls="
+                              'collapseDiv_' +
+                              scheduleIndex +
+                              '_' +
+                              sectionIndex
+                            "
                           >
                             <i
                               class="bi bi-chevron-down"
@@ -138,12 +160,21 @@
                   <tr v-if="isLecture(section.credits)">
                     <td colspan="5" class="p-0">
                       <div
+                        :id="
+                          'collapseDiv_' + scheduleIndex + '_' + sectionIndex
+                        "
                         class="collapse"
-                        :id="'collapseDiv_' + scheduleIndex + '_' + sectionIndex"
-                        v-on="{'shown.bs.collapse': expandCourseAnalytics}"
+                        v-on="{ 'shown.bs.collapse': expandCourseAnalytics }"
                       >
                         <CourseAnalytics
-                          v-if="getAnalyticsVisibility('collapseDiv_' + scheduleIndex + '_' + sectionIndex)"
+                          v-if="
+                            getAnalyticsVisibility(
+                              'collapseDiv_' +
+                                scheduleIndex +
+                                '_' +
+                                sectionIndex
+                            )
+                          "
                           :uwnetid="person.uwnetid"
                           :year="schedule.year"
                           :quarter="schedule.quarter"
@@ -216,8 +247,8 @@ export default {
     },
     loadStudentSchedules: function () {
       this.getStudentSchedules(this.person.uwregid).then((response) => {
-        if (response.data) {
-          this.schedules = response.data;
+        if (response) {
+          this.schedules = response;
         }
       });
     },

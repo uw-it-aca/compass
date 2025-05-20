@@ -15,10 +15,11 @@ register = template.Library()
 def vite_manifest(entries_names):
 
     # path to the manifest.json (relative if localdev, /static if not)
+    # updated to support Vite 5+ (.vite/manifest.json output)
     manifest_filepath = getattr(
         settings,
         "VITE_MANIFEST_PATH",
-        os.path.join(os.sep, "static", "manifest.json"),
+        os.path.join(os.sep, "static", ".vite", "manifest.json"),
     )
 
     with open(manifest_filepath) as fp:

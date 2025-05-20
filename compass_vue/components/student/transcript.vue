@@ -45,14 +45,21 @@
               <td colspan="4" class="ps-3">
                 <div class="d-flex justify-content-between">
                   <ul class="list-unstyled w-50 m-0">
-                    <li>Total Attempted Credits: {{ transcript.total_attempted }}</li>
-                    <li>Graded Attempted Credits: {{ transcript.graded_attempted }}</li>
+                    <li>
+                      Total Attempted Credits: {{ transcript.total_attempted }}
+                    </li>
+                    <li>
+                      Graded Attempted Credits:
+                      {{ transcript.graded_attempted }}
+                    </li>
                     <li>Total Earned Credits: {{ transcript.total_earned }}</li>
                     <li>Grade Points: {{ transcript.grade_points }}</li>
-                    <li>GPA: <strong>{{ transcript.gpa }}</strong></li>
+                    <li>
+                      GPA: <strong>{{ transcript.gpa }}</strong>
+                    </li>
                   </ul>
 
-                  <ul class="visually-hidden list-unstyled w-50 m-0" >
+                  <ul class="visually-hidden list-unstyled w-50 m-0">
                     <li>CUM ATTEMPTED: xx</li>
                     <li>UW EARNED: xx</li>
                     <li>TTL EARNED: xx</li>
@@ -87,9 +94,7 @@
       <div v-else class="p-3">no transcript for this term</div>
     </BCard>
   </template>
-  <div v-else class="p-3">
-    no academic history available for this student.
-  </div>
+  <div v-else class="p-3">no academic history available for this student.</div>
 </template>
 
 <script>
@@ -97,21 +102,22 @@ import { useStudentStore } from "@/stores/student";
 import { BCard } from "bootstrap-vue-next";
 
 export default {
+  name: "StudentTranscript",
+  components: { BCard },
   props: {
     person: {
       type: Object,
       required: true,
     },
   },
-  components: { BCard },
+  setup() {
+    const storeStudent = useStudentStore();
+    return { storeStudent };
+  },
   data() {
     return {
       transcripts: {},
     };
-  },
-  setup() {
-    const storeStudent = useStudentStore();
-    return { storeStudent };
   },
   created() {
     this.loadStudentTranscripts();

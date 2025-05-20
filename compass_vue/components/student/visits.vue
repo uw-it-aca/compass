@@ -51,6 +51,7 @@ import {
 import { BCard } from "bootstrap-vue-next";
 
 export default {
+  name: "StudentVisits",
   components: { BCard },
   props: {
     person: {
@@ -74,8 +75,8 @@ export default {
   methods: {
     loadStudentVisits: function () {
       this.getStudentVisits(this.person.student.system_key).then((response) => {
-        if (response.data) {
-          this.visits = response.data;
+        if (response) {
+          this.visits = response;
         }
       });
     },

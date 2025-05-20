@@ -7,7 +7,6 @@
     :sign-out-url="signOutUrl"
   >
     <template #navigation>
-
       <NavMenu :user-roles="userRoles" />
 
       <QuarterWeek :term-data="termData" />
@@ -15,7 +14,6 @@
       <h3
         id="aat_navlink_header"
         class="fs-8 text-white text-opacity-50 text-uppercase"
-        style="--bs-text-opacity: 0.5"
       >
         Advising Resources
       </h3>

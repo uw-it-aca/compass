@@ -9,9 +9,9 @@
   </a>
 
   <div
+    :id="'editSpecialProgramModal'"
     ref="specialProgramModal"
     class="modal fade text-start"
-    :id="'editSpecialProgramModal'"
     tabindex="-1"
     aria-labelledby="editSpecialProgramModalLabel"
     aria-hidden="true"
@@ -36,21 +36,19 @@
                 >Specify date below.</label
               >
               <input
-                type="date"
                 id="affiliation_date"
+                type="date"
+                class="form-control form-control-sm"
                 :value="program_date"
                 @input="
                   program_date = new Date($event.target.valueAsDate)
                     .toISOString()
                     .slice(0, 10)
                 "
-                class="form-control form-control-sm"
               />
             </div>
-            <div v-if="this.errorResponse" class="text-danger">
-              Problem Changing Date: {{ this.errorResponse.statusText }} ({{
-                this.errorResponse.data
-              }})
+            <div v-if="errorResponse" class="text-danger">
+              Problem Changing Date: {{ errorResponse }}
             </div>
           </div>
 
@@ -84,17 +82,17 @@ import {
 } from "@/utils/data";
 
 export default {
-  emits: ["specialProgramUpdated"],
   props: {
     person: {
       type: Object,
       required: true,
     },
-    program_data: {
+    programData: {
       type: Object,
       required: true,
     },
   },
+  emits: ["specialProgramUpdated"],
   setup() {
     return {
       saveStudentSpecialProgram,
@@ -107,8 +105,8 @@ export default {
       updatePermissionDenied: false,
       errorResponse: null,
       formErrors: null,
-      program_date: this.program_data.program_date
-        ? new Date(this.program_data.program_date).toISOString().slice(0, 10)
+      program_date: this.programData.program_date
+        ? new Date(this.programData.program_date).toISOString().slice(0, 10)
         : this.getToday().format("YYYY-MM-DD"),
     };
   },
@@ -124,19 +122,22 @@ export default {
   },
   methods: {
     editSpecialProgram() {
-      let program_data_copy = JSON.parse(JSON.stringify(this.program_data));
+      let programDataCopy = JSON.parse(JSON.stringify(this.programData));
 
-      program_data_copy.program_date = this.program_date;
+      programDataCopy.program_date = this.program_date;
 
       event.preventDefault();
-      this.saveStudentSpecialProgram(this.person.student.system_key, program_data_copy)
+      this.saveStudentSpecialProgram(
+        this.person.student.system_key,
+        programDataCopy
+      )
         .then(() => {
-          this.program_data.program_date = this.program_date;
+          programData.program_date = this.program_date;
           this.$emit("specialProgramUpdated");
           this.hideModal();
         })
         .catch((error) => {
-          this.errorResponse = error.response;
+          this.errorResponse = error;
         });
     },
     hideModal() {

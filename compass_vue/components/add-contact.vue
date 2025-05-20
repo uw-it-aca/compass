@@ -16,9 +16,9 @@
 
   <!-- add/edit contact modal -->
   <div
+    :id="'contactModal' + contactId"
     ref="contactModal"
     class="modal fade text-start"
-    :id="'contactModal' + contactId"
     tabindex="-1"
     aria-labelledby="contactModalLabel"
     aria-hidden="true"
@@ -27,7 +27,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title h6 m-0 fw-bold" id="contactModalLabel">
+          <h5 id="contactModalLabel" class="modal-title h6 m-0 fw-bold">
             Record a contact
           </h5>
           <button
@@ -41,9 +41,9 @@
           <div class="row">
             <div class="col">
               <div
+                v-show="updatePermissionDenied"
                 class="alert alert-danger py-2 small"
                 role="alert"
-                v-show="updatePermissionDenied"
               >
                 {{ errorResponsePermission }}
               </div>
@@ -54,13 +54,13 @@
               <label for="checkin_date" class="form-label small fw-bold me-2"
                 >Checkin Date</label
               >
-              <span class="text-danger" v-if="formErrors.checkin_date">
+              <span v-if="formErrors.checkin_date" class="text-danger">
                 required
               </span>
               <input
-                type="datetime-local"
                 id="checkin_date"
                 v-model="contact.checkin_date"
+                type="datetime-local"
                 :class="
                   formErrors.checkin_date
                     ? 'is-invalid form-control form-control-sm'
@@ -73,13 +73,13 @@
               <label class="form-label small fw-bold me-2">
                 Contact types
               </label>
-              <span class="text-danger" v-if="formErrors.contact_type">
+              <span v-if="formErrors.contact_type" class="text-danger">
                 required
               </span>
               <!-- MARK: disable editing contact_type if either qq/appointment (1,2) for Advisers -->
               <select
-                aria-label="Contact type"
                 v-model="contact.contact_type"
+                aria-label="Contact type"
                 :class="
                   formErrors.time ? 'is-invalid form-select' : 'form-select'
                 "
@@ -125,12 +125,12 @@
               <label class="form-label small fw-bold me-2"
                 >Contact method:</label
               >
-              <span class="text-danger" v-if="formErrors.contact_method">
+              <span v-if="formErrors.contact_method" class="text-danger">
                 required
               </span>
               <select
-                aria-label="Contact method"
                 v-model="contact.contact_method"
+                aria-label="Contact method"
                 :class="
                   formErrors.time ? 'is-invalid form-select' : 'form-select'
                 "
@@ -153,7 +153,7 @@
           <div class="mb-3">
             <label class="form-label small fw-bold me-2">Topics Covered</label>
             <span class="small text-muted">(choose all that apply)</span>
-            <span class="text-danger" v-if="formErrors.contact_topics">
+            <span v-if="formErrors.contact_topics" class="text-danger">
               required
             </span>
             <ul class="list-inline">
@@ -163,12 +163,12 @@
                   class="list-inline-item mb-1 me-1"
                 >
                   <input
-                    type="checkbox"
+                    :id="'#contactModal' + contactId + 'Topic' + topic.id"
                     v-model="contact.contact_topics"
+                    type="checkbox"
                     class="btn-check"
                     :class="formErrors.contact_topics ? 'is-invalid' : ''"
                     :value="topic.id"
-                    :id="'#contactModal' + contactId + 'Topic' + topic.id"
                     autocomplete="off"
                   />
                   <label
@@ -184,14 +184,14 @@
             <label for="notesTextarea" class="form-label small fw-bold me-2"
               >Notes</label
             >
-            <span class="text-danger" v-if="formErrors.notes"> required </span>
+            <span v-if="formErrors.notes" class="text-danger"> required </span>
             <textarea
+              id="notesTextarea"
+              v-model="contact.notes"
+              rows="3"
               :class="
                 formErrors.notes ? 'is-invalid form-control' : 'form-control'
               "
-              id="notesTextarea"
-              rows="3"
-              v-model="contact.notes"
             ></textarea>
           </div>
           <div class="mb-3">
@@ -201,10 +201,10 @@
               >Actions and Recommmendations</label
             >
             <textarea
-              class="form-control"
               id="actionsAndRecomendationsTextarea"
-              rows="3"
               v-model="contact.actions"
+              rows="3"
+              class="form-control"
             ></textarea>
           </div>
         </div>
@@ -225,7 +225,7 @@
               Save contact
             </button>
             <p>
-              <span class="text-danger" v-if="errorResponse">{{
+              <span v-if="errorResponse" class="text-danger">{{
                 errorResponse
               }}</span>
             </p>
@@ -248,7 +248,6 @@ import { Modal } from "bootstrap";
 import { Role } from "@/utils/roles";
 
 export default {
-  emits: ["contactUpdated"],
   props: {
     buttonType: {
       type: String,
@@ -263,6 +262,7 @@ export default {
       default: null,
     },
   },
+  emits: ["contactUpdated"],
   setup() {
     const storeContact = useContactStore();
     return {
@@ -295,13 +295,6 @@ export default {
       return this.storeContact.contactMethods;
     },
   },
-  mounted() {
-    this.$refs.contactModal.addEventListener(
-      "shown.bs.modal",
-      this.clearFormErrors
-    );
-    this.$refs.contactModal.addEventListener("hidden.bs.modal", this.resetForm);
-  },
   watch: {
     contact: {
       handler: function () {
@@ -313,6 +306,13 @@ export default {
       },
       deep: true,
     },
+  },
+  mounted() {
+    this.$refs.contactModal.addEventListener(
+      "shown.bs.modal",
+      this.clearFormErrors
+    );
+    this.$refs.contactModal.addEventListener("hidden.bs.modal", this.resetForm);
   },
   methods: {
     getFormData() {
@@ -335,12 +335,12 @@ export default {
             contactModal.hide();
           })
           .catch((error) => {
-            if (error.response.status == 401) {
+            if (error.startsWith("401")) {
               this.updatePermissionDenied = true;
-              this.errorResponsePermission = error.response.data;
+              this.errorResponsePermission = error;
               setTimeout(() => (this.updatePermissionDenied = false), 3000);
             } else {
-              this.errorResponse = error.response.data;
+              this.errorResponse = error;
             }
           });
       } else {
@@ -350,12 +350,12 @@ export default {
             contactModal.hide();
           })
           .catch((error) => {
-            if (error.response.status == 401) {
+            if (error.startsWith("401")) {
               this.updatePermissionDenied = true;
-              this.errorResponsePermission = error.response.data;
+              this.errorResponsePermission = error;
               setTimeout(() => (this.updatePermissionDenied = false), 3000);
             } else {
-              this.errorResponse = error.response.data;
+              this.errorResponse = error;
             }
           });
       }
@@ -423,9 +423,9 @@ export default {
     },
     getContact(contactId) {
       this.getStudentContact(contactId).then((response) => {
-        if (response.data) {
+        if (response) {
           // we need to map the contact type and topic ids to the data object
-          let newContact = response.data;
+          let newContact = response;
           // convert date to local and format for datetime-local input
           newContact.checkin_date = new Date(newContact.checkin_date)
             .toLocaleString("sv-SE", {

@@ -2,16 +2,16 @@
   <a
     role="button"
     data-bs-toggle="modal"
-    :data-bs-target="'#editAffiliationsModal' + this.studentAffiliation.id"
+    :data-bs-target="'#editAffiliationsModal' + studentAffiliation.id"
     class="btn btn-sm fs-9 btn-outline-danger rounded-3 px-2 py-1"
   >
     <slot>Edit Affiliation</slot>
   </a>
 
   <div
+    :id="'editAffiliationsModal' + studentAffiliation.id"
     ref="affiliationsModal"
     class="modal fade text-start"
-    :id="'editAffiliationsModal' + this.studentAffiliation.id"
     tabindex="-1"
     aria-labelledby="editAffiliationsModalLabel{{ this.studentAffiliation.id }}"
     aria-hidden="true"
@@ -31,11 +31,11 @@
           <div class="modal-body">
             <div class="col mb-3">
               <label class="form-label small fw-bold me-2">Affiliation</label>
-              <select class="form-select" required v-model="affiliationId">
+              <select v-model="affiliationId" class="form-select" required>
                 <option
-                  v-for="(a, index) in this.affiliations"
+                  v-for="(a, index) in affiliations"
                   :key="index"
-                  v-bind:value="a.id"
+                  :value="a.id"
                   :disabled="isCurrentAffiliation(a)"
                 >
                   {{ a.name }}
@@ -47,10 +47,10 @@
               <div class="form-label small fw-bold me-2">Status</div>
               <div class="form-check form-switch">
                 <input
-                  class="form-check-input"
-                  type="checkbox"
                   id="activeSwitch"
                   v-model="isActive"
+                  class="form-check-input"
+                  type="checkbox"
                 />
                 <label class="form-check-label" for="activeSwitch"
                   >Set user as active</label
@@ -64,16 +64,16 @@
                 <div class="cohort-list overflow-auto">
                   <ul class="list-group">
                     <li
-                      class="list-group-item"
                       v-for="(cohort, index) in allCohorts"
                       :key="index"
+                      class="list-group-item"
                       :value="index"
                     >
                       <label
                         ><input
+                          v-model="cohorts"
                           class="form-check-input me-1"
                           type="checkbox"
-                          v-model="cohorts"
                           :value="cohort"
                         />
                         {{ cohort.start_year }}-{{ cohort.end_year }}</label
@@ -87,11 +87,11 @@
             <div class="mb-3">
               <label class="form-label small fw-bold me-2">Admin Note</label>
               <textarea
+                v-model.trim="notes"
                 :class="
                   formErrors.notes ? 'is-invalid form-control' : 'form-control'
                 "
                 rows="3"
-                v-model.trim="notes"
                 required
               ></textarea>
             </div>
@@ -129,7 +129,6 @@ import {
 } from "@/utils/data";
 
 export default {
-  emits: ["affiliationsUpdated"],
   props: {
     person: {
       type: Object,
@@ -148,6 +147,7 @@ export default {
       required: true,
     },
   },
+  emits: ["affiliationsUpdated"],
   setup() {
     return {
       clearOverride,
@@ -167,6 +167,11 @@ export default {
       errorResponse: "",
     };
   },
+  computed: {
+    invalidForm() {
+      return !(this.cohorts.length > 0 && this.notes.length > 0);
+    },
+  },
   created() {},
   mounted() {
     this.$refs.affiliationsModal.addEventListener(
@@ -178,11 +183,7 @@ export default {
       this.resetForm
     );
   },
-  computed: {
-    invalidForm() {
-      return !(this.cohorts.length > 0 && this.notes.length > 0);
-    },
-  },
+
   methods: {
     isCurrentAffiliation(affiliation) {
       let is_current = false;
@@ -222,22 +223,22 @@ export default {
               this.hideModal();
             })
             .catch((error) => {
-              if (error.response.status == 401) {
+              if (error.startsWith("401")) {
                 this.updatePermissionDenied = true;
-                this.errorResponse = error.response.data;
+                this.errorResponse = error;
                 setTimeout(() => (this.updatePermissionDenied = false), 3000);
               } else {
-                this.formErrors.notes = error.response.data;
+                this.formErrors.notes = error;
               }
             });
         })
         .catch((error) => {
-          if (error.response.status == 401) {
+          if (error.startsWith("401")) {
             this.updatePermissionDenied = true;
-            this.errorResponse = error.response.data;
+            this.errorResponse = error;
             setTimeout(() => (this.updatePermissionDenied = false), 3000);
           } else {
-            this.formErrors.affiliation = error.response.data;
+            this.formErrors.affiliation = error;
           }
         });
     },
