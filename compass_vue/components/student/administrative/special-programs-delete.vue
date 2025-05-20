@@ -38,7 +38,7 @@
               </div>
             </div>
             <div v-if="errorResponse" class="text-danger">
-              Problem Deleting Date: {{ errorResponse.statusText }}
+              Problem Deleting Date: {{ errorResponse }}
             </div>
           </div>
 
@@ -109,7 +109,7 @@ export default {
           this.hideModal();
         })
         .catch((error) => {
-          this.errorResponse = error.response;
+          this.errorResponse = error;
         });
     },
     hideModal() {

@@ -48,9 +48,7 @@
               />
             </div>
             <div v-if="errorResponse" class="text-danger">
-              Problem Changing Date: {{ errorResponse.statusText }} ({{
-                errorResponse.data
-              }})
+              Problem Changing Date: {{ errorResponse }}
             </div>
           </div>
 
@@ -139,7 +137,7 @@ export default {
           this.hideModal();
         })
         .catch((error) => {
-          this.errorResponse = error.response;
+          this.errorResponse = error;
         });
     },
     hideModal() {

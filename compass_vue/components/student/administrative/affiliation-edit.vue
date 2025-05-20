@@ -223,22 +223,22 @@ export default {
               this.hideModal();
             })
             .catch((error) => {
-              if (error.response.status == 401) {
+              if (error.startsWith("401")) {
                 this.updatePermissionDenied = true;
-                this.errorResponse = error.response.data;
+                this.errorResponse = error;
                 setTimeout(() => (this.updatePermissionDenied = false), 3000);
               } else {
-                this.formErrors.notes = error.response.data;
+                this.formErrors.notes = error;
               }
             });
         })
         .catch((error) => {
-          if (error.response.status == 401) {
+          if (error.startsWith("401")) {
             this.updatePermissionDenied = true;
-            this.errorResponse = error.response.data;
+            this.errorResponse = error;
             setTimeout(() => (this.updatePermissionDenied = false), 3000);
           } else {
-            this.formErrors.affiliation = error.response.data;
+            this.formErrors.affiliation = error;
           }
         });
     },
