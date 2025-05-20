@@ -335,12 +335,12 @@ export default {
             contactModal.hide();
           })
           .catch((error) => {
-            if (error.response.status == 401) {
+            if (error.startsWith("401")) {
               this.updatePermissionDenied = true;
-              this.errorResponsePermission = error.response.data;
+              this.errorResponsePermission = error;
               setTimeout(() => (this.updatePermissionDenied = false), 3000);
             } else {
-              this.errorResponse = error.response.data;
+              this.errorResponse = error;
             }
           });
       } else {
@@ -350,12 +350,12 @@ export default {
             contactModal.hide();
           })
           .catch((error) => {
-            if (error.response.status == 401) {
+            if (error.startsWith("401")) {
               this.updatePermissionDenied = true;
-              this.errorResponsePermission = error.response.data;
+              this.errorResponsePermission = error;
               setTimeout(() => (this.updatePermissionDenied = false), 3000);
             } else {
-              this.errorResponse = error.response.data;
+              this.errorResponse = error;
             }
           });
       }

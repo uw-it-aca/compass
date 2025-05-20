@@ -60,16 +60,13 @@ export default {
       if (this.validQuery(this.searchValue)) {
         this.getStudentBySearch(this.searchValue)
           .then((response) => {
-            return response.data;
-          })
-          .then((data) => {
             this.$router.push({
               name: "student",
               params: { id: this.searchValue },
             });
           })
           .catch((error) => {
-            this.searchError = error.response.data;
+            this.searchError = error;
           });
       } else {
         this.searchError = "Invalid student identifier";
