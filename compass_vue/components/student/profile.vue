@@ -24,6 +24,9 @@
                   $event.target.src = '/static/compass/img/placeholder.png'
                 "
               />
+
+              {{ borderClass }}
+              {{ person.analytics_alert }}
             </div>
             <!-- moved preferred name to under the profile photo -->
             <div class="h4 ff-encode-sans mb-0">
