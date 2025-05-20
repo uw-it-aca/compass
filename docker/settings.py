@@ -2,6 +2,7 @@ from .base_settings import *
 from google.oauth2 import service_account
 
 INSTALLED_APPS += [
+    "compass.apps.CompassFilesConfig",
     "compass.apps.CompassConfig",
     "uw_person_client",
     "django_user_agents",
@@ -13,6 +14,8 @@ INSTALLED_APPS += [
     "rest_framework",
     "rest_framework.authtoken",
 ]
+
+INSTALLED_APPS.remove("django.contrib.staticfiles")
 
 MIDDLEWARE += [
     "userservice.user.UserServiceMiddleware",
