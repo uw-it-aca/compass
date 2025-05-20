@@ -12,7 +12,7 @@
           @error="$event.target.src = '/static/compass/img/placeholder.png'"
         />
         {{ borderClass }}
-        {{ this.person.analytics_alert }}
+        {{ person.analytics_alert }}
       </div>
     </div>
     <div class="flex-fill">

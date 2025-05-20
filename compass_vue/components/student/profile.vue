@@ -26,7 +26,7 @@
               />
 
               {{ borderClass }}
-        {{ this.person.analytics_alert }}
+              {{ person.analytics_alert }}
             </div>
             <!-- moved preferred name to under the profile photo -->
             <div class="h4 ff-encode-sans mb-0">
