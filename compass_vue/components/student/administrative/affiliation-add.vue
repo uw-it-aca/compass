@@ -157,7 +157,7 @@ export default {
       allCohorts: getCohorts(5),
       formErrors: {},
       updatePermissionDenied: false,
-      errorResponse: "",
+      errorResponse: null,
     };
   },
   computed: {
@@ -211,22 +211,22 @@ export default {
               this.hideModal();
             })
             .catch((error) => {
-              if (error.startsWith("401")) {
+              if (error.data.status === 401) {
                 this.updatePermissionDenied = true;
-                this.errorResponse = error;
+                this.errorResponse = error.data;
                 setTimeout(() => (this.updatePermissionDenied = false), 3000);
               } else {
-                this.formErrors.notes = error;
+                this.formErrors.notes = error.data.message;
               }
             });
         })
         .catch((error) => {
-          if (error.startsWith("401")) {
+          if (error.data.status === 401) {
             this.updatePermissionDenied = true;
-            this.errorResponse = error;
+            this.errorResponse = error.data;
             setTimeout(() => (this.updatePermissionDenied = false), 3000);
           } else {
-            this.formErrors.affiliation = error;
+            this.formErrors.affiliation = error.data.message;
           }
         });
     },
