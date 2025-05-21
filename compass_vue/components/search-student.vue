@@ -18,7 +18,7 @@
       </button>
     </div>
     <div v-if="searchError || error" class="text-danger mt-2">
-      {{ searchError || "Student not found" }}
+      {{ searchError ? searchError.message : error.message }}
     </div>
   </form>
 </template>
@@ -29,9 +29,8 @@ import { getStudentBySearch } from "@/utils/data";
 export default {
   props: {
     error: {
-      type: Boolean,
+      type: Object,
       required: false,
-      default: false,
     },
   },
   setup() {
@@ -66,10 +65,10 @@ export default {
             });
           })
           .catch((error) => {
-            this.searchError = error;
+            this.searchError = error.data;
           });
       } else {
-        this.searchError = "Invalid student identifier";
+        this.searchError = {message: "Invalid student identifier"};
       }
     },
   },

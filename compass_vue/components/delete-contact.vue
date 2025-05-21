@@ -57,7 +57,7 @@ export default {
           vue.$emit("contactDeleted");
         })
         .catch((error) => {
-          alert(error.message);
+          alert(error.data.message);
         });
     },
   },

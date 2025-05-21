@@ -9,14 +9,14 @@
       </h1>
     </template>
     <template #content>
-      <div v-show="!$route.params.id || isError" class="row my-4 small">
+      <div v-show="!$route.params.id || errorResponse" class="row my-4 small">
         <div class="col">
           <BCard class="bg-body-tertiary rounded-3" border-variant="0">
             <div class="row">
               <div class="col-xl-4 ms-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
-                  <SearchStudent :error="isError"></SearchStudent>
+                  <SearchStudent :error="errorResponse"></SearchStudent>
                 </div>
               </div>
               <div class="col-4"></div>
@@ -235,7 +235,7 @@ export default {
     return {
       person: {},
       isLoading: false,
-      isError: false,
+      errorResponse: null,
       accessGroups: [],
       userRoles: document.body.getAttribute("data-user-role").split(","),
       userAccessGroup: document.body.getAttribute("data-user-access-group"),
@@ -274,17 +274,17 @@ export default {
         .then((response) => {
           if (response) {
             this.person = response;
-            this.isLoading = false;
-            this.isError = false;
+            this.errorResponse = null;
 
             // programatically update page title with student name
             document.title = this.person.display_name + " - Compass";
           }
         })
         .catch((error) => {
+          this.errorResponse = error.data;
+        })
+        .finally(() => {
           this.isLoading = false;
-          this.isError = true;
-          console.log("error occured: " + error);
         });
     },
     loadAccessGroups: function () {

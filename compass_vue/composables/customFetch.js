@@ -36,7 +36,12 @@ export async function useCustomFetch(url, options = {}) {
         return;
       } else {
         return response.text().then(text => {
-          throw new Error(response.status + " " + text);
+          const error = new Error("Error")
+          error.data = {
+            status: response.status,
+            message: text,
+          };
+          throw error;
         });
       }
     }

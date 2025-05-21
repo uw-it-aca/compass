@@ -307,6 +307,7 @@ export default {
         { id: "success", value: "Green" },
       ],
       saveCount: 0,
+      errorResponse: null,
     };
   },
 
@@ -471,6 +472,7 @@ export default {
         }
       })
       .catch((error) => {
+        this.errorResponse = error.data;
       })
       .finally(() => {
         this.isLoading = false;
