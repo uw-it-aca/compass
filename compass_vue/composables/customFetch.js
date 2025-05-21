@@ -47,6 +47,7 @@ export async function useCustomFetch(url, options = {}) {
     }
   } catch (error) {
     console.error("Fetch error:", error);
+    error.data = {status: null, message: error.message};
     throw error;
   }
 }
