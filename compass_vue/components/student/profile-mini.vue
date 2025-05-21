@@ -11,8 +11,6 @@
           :class="borderClass"
           @error="$event.target.src = '/static/compass/img/placeholder.png'"
         />
-        {{ borderClass }}
-        {{ person.analytics_alert }}
       </div>
     </div>
     <div class="flex-fill">
@@ -62,7 +60,7 @@ export default {
       const classes = {
         danger: "border-danger",
         warning: "border-warning",
-        normal: "border-success",
+        success: "border-success",
         missing: "border-light",
       };
       return classes[this.person.analytics_alert] || classes.missing;
