@@ -307,7 +307,8 @@ class BaseAccessGroupContent(models.Model):
     def save(self, *args, **kwargs):
         created = not self.pk
         if created:
-            self.slug = slugify(self.name)
+            self.slug = slugify(
+                f"{self.access_group.access_group_id} {self.name}")
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -355,7 +356,7 @@ class ContactType(BaseAccessGroupContent):
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
+    name = models.CharField(max_length=50)
     slug = models.SlugField(unique=True, max_length=50)
     active = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
@@ -369,7 +370,7 @@ class ContactMethod(BaseAccessGroupContent):
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
+    name = models.CharField(max_length=50)
     slug = models.SlugField(unique=True, max_length=50)
     active = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
@@ -385,7 +386,7 @@ class ContactTopic(BaseAccessGroupContent):
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
+    name = models.CharField(max_length=50)
     slug = models.SlugField(unique=True, max_length=50)
     active = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
