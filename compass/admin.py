@@ -66,15 +66,21 @@ class SessionAdminModel(SAMLAdminModel):
     readonly_fields = ['_session_data']
 
 
+class AdminWithAGDisplayModel(SAMLAdminModel):
+    list_display = ['name', 'access_group_name']
+    def access_group_name(self, obj):
+        return obj.access_group.name
+
+
 admin_site = SAMLAdminSite(name='SAMLAdmin')
 admin_site.register(AppUser, SAMLAdminModel)
 admin_site.register(Student, SAMLAdminModel)
 admin_site.register(AccessGroup, SAMLAdminModel)
-admin_site.register(Affiliation, SAMLAdminModel)
-admin_site.register(EligibilityType, SAMLAdminModel)
-admin_site.register(ContactType, SAMLAdminModel)
-admin_site.register(ContactMethod, SAMLAdminModel)
-admin_site.register(ContactTopic, SAMLAdminModel)
+admin_site.register(Affiliation, AdminWithAGDisplayModel)
+admin_site.register(EligibilityType, AdminWithAGDisplayModel)
+admin_site.register(ContactType, AdminWithAGDisplayModel)
+admin_site.register(ContactMethod, AdminWithAGDisplayModel)
+admin_site.register(ContactTopic, AdminWithAGDisplayModel)
 admin_site.register(Contact, SAMLAdminModel)
 admin_site.register(OMADContactQueue, SAMLAdminModel)
 admin_site.register(TokenProxy, SAMLAdminModel)
