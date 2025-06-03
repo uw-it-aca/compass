@@ -13,7 +13,7 @@ An application for managing student advising information.
 
 ## Development Stack
 
-- Django (4.2)
+- Django (5.2)
 - Vue (3.2)
 - Vite (2.9)
 - Vitest (0.10.2)
