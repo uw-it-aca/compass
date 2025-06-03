@@ -5,20 +5,20 @@ export const useStudentStore = defineStore("student", {
   state: () => {
     return {
       getStudentTranscripts,
-      studentData: {},
+      transcripts: {},
     };
   },
   getters: {},
   actions: {
     fetchStudentTranscripts(uwregid) {
-      if (!Object.prototype.hasOwnProperty.call(this.studentData, uwregid)) {
-        this.studentData[uwregid] = {
+      if (!Object.prototype.hasOwnProperty.call(this.transcripts, uwregid)) {
+        this.transcripts[uwregid] = {
           request: this.getStudentTranscripts(uwregid).then((response) => {
-            this.studentData[uwregid].data = response;
+            this.transcripts[uwregid].data = response;
           }),
         };
       }
-      return this.studentData[uwregid].request;
+      return this.transcripts[uwregid].request;
     },
   },
 });

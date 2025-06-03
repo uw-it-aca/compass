@@ -13,36 +13,41 @@
       <li>
         <div class="d-flex justify-content-between">
           <span>UW Credits Attempted:</span>
-          <span>xxx</span>
+          <span v-if="latestTranscript">
+            {{ latestTranscript.cmp_cum_total_attempted }}
+          </span>
         </div>
       </li>
       <li>
         <div class="d-flex justify-content-between">
-          <span> UW Graded Attempted:</span>
-          <span>{{ person.student.total_grade_attempted }}</span>
+          <span>UW Graded Attempted:</span>
+          <span v-if="latestTranscript">
+            {{ latestTranscript.cmp_cum_graded_attempted }}
+          </span>
         </div>
       </li>
       <li>
         <div class="d-flex justify-content-between">
           <span>UW Graded Earned:</span>
-          <span>xxx</span>
+          <span v-if="latestTranscript">
+            {{ latestTranscript.cmp_cum_uw_earned }}
+          </span>
         </div>
       </li>
       <li>
         <div class="d-flex justify-content-between">
-          <span>UW Graded Points:</span>
-          <span>{{ person.student.total_grade_points }}</span>
+          <span>UW Grade Points:</span>
+          <span v-if="latestTranscript">
+            {{ latestTranscript.cmp_cum_grade_points }}
+          </span>
         </div>
       </li>
       <li>
         <div class="d-flex justify-content-between">
           <span>UW GPA:</span>
-          <span class="fw-bold">{{
-            (
-              person.student.total_grade_points /
-              person.student.total_grade_attempted
-            ).toFixed(2)
-          }}</span>
+          <span v-if="latestTranscript" class="fw-bold">
+            {{ latestTranscript.cmp_cum_gpa }}
+          </span>
         </div>
       </li>
     </ul>
@@ -77,14 +82,39 @@
 </template>
 
 <script>
+import { useStudentStore } from "@/stores/student";
 import { BCard } from "bootstrap-vue-next";
 
 export default {
+  name: "StudentTranscriptCredits",
   components: { BCard },
   props: {
     person: {
       type: Object,
       required: true,
+    },
+  },
+  setup() {
+    const storeStudent = useStudentStore();
+    return { storeStudent };
+  },
+  data() {
+    return {
+      latestTranscript: null,
+    };
+  },
+  mounted() {
+    this.loadLatestTranscript();
+  },
+  methods: {
+    loadLatestTranscript: function () {
+      let uwregid = this.person.uwregid;
+      this.storeStudent.fetchStudentTranscripts(uwregid)
+        .then(() => {
+          if (this.storeStudent.transcripts[uwregid].data.length) {
+            this.latestTranscript = this.storeStudent.transcripts[uwregid].data[0];
+          }
+        });
     },
   },
 };

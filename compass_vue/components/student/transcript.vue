@@ -1,5 +1,5 @@
 <template>
-  <template v-if="transcripts.length !== 0">
+  <template v-if="transcripts.length">
     <BCard
       v-for="(transcript, transIndex) in transcripts"
       :key="transIndex"
@@ -46,26 +46,51 @@
                 <div class="d-flex justify-content-between">
                   <ul class="list-unstyled w-50 m-0">
                     <li>
-                      Total Attempted Credits: {{ transcript.total_attempted }}
+                      Total Attempted Credits:
+                      {{ transcript.cmp_qtr_total_attempted }}
                     </li>
                     <li>
                       Graded Attempted Credits:
-                      {{ transcript.graded_attempted }}
+                      {{ transcript.cmp_qtr_graded_attempted }}
                     </li>
-                    <li>Total Earned Credits: {{ transcript.total_earned }}</li>
-                    <li>Grade Points: {{ transcript.grade_points }}</li>
                     <li>
-                      GPA: <strong>{{ transcript.gpa }}</strong>
+                      Total Earned Credits:
+                      {{ transcript.cmp_qtr_total_earned }}
+                    </li>
+                    <li>
+                      Grade Points:
+                      {{ transcript.cmp_qtr_grade_points }}
+                    </li>
+                    <li>
+                      GPA: <strong>{{ transcript.cmp_qtr_gpa }}</strong>
                     </li>
                   </ul>
 
-                  <ul class="visually-hidden list-unstyled w-50 m-0">
-                    <li>CUM ATTEMPTED: xx</li>
-                    <li>UW EARNED: xx</li>
-                    <li>TTL EARNED: xx</li>
-                    <li>CUM GRADED AT: xx</li>
-                    <li>CUM GRADE PTS: xx</li>
-                    <li>CUM GPA: xx</li>
+                  <ul class="list-unstyled w-50 m-0">
+                    <li>
+                      Cumulative Attempted Credits:
+                      {{ transcript.cmp_cum_total_attempted }}
+                    </li>
+                    <li>
+                      Cumulative UW Earned Credits:
+                      {{ transcript.cmp_cum_uw_earned }}
+                    </li>
+                    <li>
+                      Cumulative Total Earned Credits:
+                      {{ transcript.cmp_cum_total_earned }}
+                    </li>
+                    <li>
+                      Cumulative Graded Attempted Credits:
+                      {{ transcript.cmp_cum_graded_attempted }}
+                    </li>
+                    <li>
+                      Cumulative Grade Points:
+                      {{ transcript.cmp_cum_grade_points }}
+                    </li>
+                    <li>
+                      Cumulative GPA:
+                      <strong>{{ transcript.cmp_cum_gpa }}</strong>
+                    </li>
                   </ul>
 
                   <ul class="d-none list-unstyled">
@@ -116,7 +141,7 @@ export default {
   },
   data() {
     return {
-      transcripts: {},
+      transcripts: [],
     };
   },
   created() {
@@ -133,11 +158,10 @@ export default {
 
     },
     loadStudentTranscripts: function () {
-      this.storeStudent
-        .fetchStudentTranscripts(this.person.uwregid)
+      let uwregid = this.person.uwregid;
+      this.storeStudent.fetchStudentTranscripts(uwregid)
         .then(() => {
-          this.transcripts =
-            this.storeStudent.studentData[this.person.uwregid].data;
+          this.transcripts = this.storeStudent.transcripts[uwregid].data;
         });
     },
   },

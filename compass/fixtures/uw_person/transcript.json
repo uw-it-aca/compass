@@ -36,7 +36,20 @@
             "add_to_cum": 1,
             "veteran": 0,
             "veteran_benefit": 0,
-            "yearly_honor_type": 0
+            "yearly_honor_type": 0,
+            "cmp_cum_gpa": "3.40",
+            "cmp_cum_grade_points": 2.8,
+            "cmp_cum_graded_attempted": 2.0,
+            "cmp_cum_total_attempted": 3.0,
+            "cmp_cum_total_earned": 8.0,
+            "cmp_cum_uw_earned": 3.0,
+            "cmp_qtr_deductible_credits": 0,
+            "cmp_qtr_gpa": "3.40",
+            "cmp_qtr_grade_points": 2.8,
+            "cmp_qtr_graded_attempted": 2.0,
+            "cmp_qtr_nongraded_earned": 1.0,
+            "cmp_qtr_total_attempted": 3.0,
+            "cmp_qtr_total_earned": 3.0
         }
     }
 ]
