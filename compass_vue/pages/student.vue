@@ -64,7 +64,7 @@
             </div>
             <div>
               <a
-                href="https://registrar.washington.edu/staffandfaculty/ferpa/"
+                href="https://registrar.washington.edu/staff-faculty/ferpa/"
                 class="small"
                 target="_blank"
               >
