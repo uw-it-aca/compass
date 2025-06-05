@@ -14,7 +14,7 @@
         <div class="d-flex justify-content-between">
           <span>UW Credits Attempted:</span>
           <span v-if="latestTranscript">
-            {{ latestTranscript.cmp_cum_total_attempted }}
+            {{ latestTranscript.cmp_cum_total_attempted.toFixed(1) }}
           </span>
         </div>
       </li>
@@ -22,7 +22,7 @@
         <div class="d-flex justify-content-between">
           <span>UW Graded Attempted:</span>
           <span v-if="latestTranscript">
-            {{ latestTranscript.cmp_cum_graded_attempted }}
+            {{ latestTranscript.cmp_cum_graded_attempted.toFixed(1) }}
           </span>
         </div>
       </li>
@@ -30,7 +30,7 @@
         <div class="d-flex justify-content-between">
           <span>UW Graded Earned:</span>
           <span v-if="latestTranscript">
-            {{ latestTranscript.cmp_cum_uw_earned }}
+            {{ latestTranscript.cmp_cum_uw_earned.toFixed(1) }}
           </span>
         </div>
       </li>

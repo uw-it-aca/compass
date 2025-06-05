@@ -47,15 +47,15 @@
                   <ul class="list-unstyled w-50 m-0">
                     <li>
                       Total Attempted Credits:
-                      {{ transcript.cmp_qtr_total_attempted }}
+                      {{ transcript.cmp_qtr_total_attempted.toFixed(1) }}
                     </li>
                     <li>
                       Graded Attempted Credits:
-                      {{ transcript.cmp_qtr_graded_attempted }}
+                      {{ transcript.cmp_qtr_graded_attempted.toFixed(1) }}
                     </li>
                     <li>
                       Total Earned Credits:
-                      {{ transcript.cmp_qtr_total_earned }}
+                      {{ transcript.cmp_qtr_total_earned.toFixed(1) }}
                     </li>
                     <li>
                       Grade Points:
@@ -69,19 +69,19 @@
                   <ul class="list-unstyled w-50 m-0">
                     <li>
                       Cumulative Attempted Credits:
-                      {{ transcript.cmp_cum_total_attempted }}
+                      {{ transcript.cmp_cum_total_attempted.toFixed(1) }}
                     </li>
                     <li>
                       Cumulative UW Earned Credits:
-                      {{ transcript.cmp_cum_uw_earned }}
+                      {{ transcript.cmp_cum_uw_earned.toFixed(1) }}
                     </li>
                     <li>
                       Cumulative Total Earned Credits:
-                      {{ transcript.cmp_cum_total_earned }}
+                      {{ transcript.cmp_cum_total_earned.toFixed(1) }}
                     </li>
                     <li>
                       Cumulative Graded Attempted Credits:
-                      {{ transcript.cmp_cum_graded_attempted }}
+                      {{ transcript.cmp_cum_graded_attempted.toFixed(1) }}
                     </li>
                     <li>
                       Cumulative Grade Points:
