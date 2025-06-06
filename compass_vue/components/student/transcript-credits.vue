@@ -73,7 +73,7 @@
       <li><hr /></li>
       <li>
         <div class="d-flex justify-content-between">
-          <span>Total Credits Earned</span>
+          <span>Credits Earned</span>
           <span>{{ person.student.total_credits }}</span>
         </div>
       </li>
