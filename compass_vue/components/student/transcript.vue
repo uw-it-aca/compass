@@ -55,7 +55,7 @@
                     </li>
                     <li>
                       Graded Earned:
-                      {{ transcript.cmp_cum_uw_earned.toFixed(1) }}
+                      {{ transcript.cmp_qtr_total_earned.toFixed(1) }}
                     </li>
                     <li>
                       Grade Points:
