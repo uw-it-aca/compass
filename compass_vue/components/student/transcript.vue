@@ -55,7 +55,7 @@
                     </li>
                     <li>
                       Graded Earned:
-                      {{ transcript.cmp_qtr_total_earned.toFixed(1) }}
+                      {{ transcript.cmp_qtr_graded_earned.toFixed(1) }}
                     </li>
                     <li>
                       Grade Points:
@@ -76,8 +76,12 @@
                       {{ transcript.cmp_cum_graded_attempted.toFixed(1) }}
                     </li>
                     <li>
-                      Cumulative Graded Earned:
+                      Cumulative UW Earned:
                       {{ transcript.cmp_cum_uw_earned.toFixed(1) }}
+                    </li>
+                    <li>
+                      Cumulative Total Earned:
+                      {{ transcript.cmp_cum_total_earned.toFixed(1) }}
                     </li>
                     <li>
                       Cumulative Grade Points:

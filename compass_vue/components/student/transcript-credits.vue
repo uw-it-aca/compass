@@ -30,7 +30,7 @@
         <div class="d-flex justify-content-between">
           <span>UW Graded Earned:</span>
           <span v-if="latestTranscript">
-            {{ latestTranscript.cmp_cum_uw_earned.toFixed(1) }}
+            {{ latestTranscript.cmp_cum_graded_earned.toFixed(1) }}
           </span>
         </div>
       </li>
