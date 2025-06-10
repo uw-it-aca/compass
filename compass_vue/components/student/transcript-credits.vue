@@ -14,24 +14,27 @@
         <div class="d-flex justify-content-between">
           <span>UW Credits Attempted:</span>
           <span v-if="latestTranscript">
-            {{ latestTranscript.cmp_cum_total_attempted.toFixed(1) }}
+            {{ formatCredits(latestTranscript.cmp_cum_total_attempted) }}
           </span>
+          <span v-else>0.0</span>
         </div>
       </li>
       <li>
         <div class="d-flex justify-content-between">
           <span>UW Graded Attempted:</span>
           <span v-if="latestTranscript">
-            {{ latestTranscript.cmp_cum_graded_attempted.toFixed(1) }}
+            {{ formatCredits(latestTranscript.cmp_cum_graded_attempted) }}
           </span>
+          <span v-else>0.0</span>
         </div>
       </li>
       <li>
         <div class="d-flex justify-content-between">
           <span>UW Graded Earned:</span>
           <span v-if="latestTranscript">
-            {{ latestTranscript.cmp_cum_graded_earned.toFixed(1) }}
+            {{ formatCredits(latestTranscript.cmp_cum_graded_earned) }}
           </span>
+          <span v-else>0.0</span>
         </div>
       </li>
       <li>
@@ -40,6 +43,7 @@
           <span v-if="latestTranscript">
             {{ latestTranscript.cmp_cum_grade_points }}
           </span>
+          <span v-else>0.0</span>
         </div>
       </li>
       <li>
@@ -48,6 +52,7 @@
           <span v-if="latestTranscript" class="fw-bold">
             {{ latestTranscript.cmp_cum_gpa }}
           </span>
+          <span v-else class="fw-bold">0.00</span>
         </div>
       </li>
     </ul>
@@ -107,6 +112,9 @@ export default {
     this.loadLatestTranscript();
   },
   methods: {
+    formatCredits: function (credits) {
+      return credits !== null ? credits.toFixed(1) : "0.0";
+    },
     loadLatestTranscript: function () {
       let uwregid = this.person.uwregid;
       this.storeStudent.fetchStudentTranscripts(uwregid)
