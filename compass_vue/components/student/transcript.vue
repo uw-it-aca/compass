@@ -1,5 +1,8 @@
 <template>
-  <template v-if="transcripts.length">
+  <div v-if="isLoading">
+    <span>Loading...</span>
+  </div>
+  <template v-else-if="transcripts.length">
     <BCard
       v-for="(transcript, transIndex) in transcripts"
       :key="transIndex"
@@ -47,15 +50,15 @@
                   <ul class="list-unstyled w-50 m-0">
                     <li>
                       Credits Attempted:
-                      {{ transcript.cmp_qtr_total_attempted.toFixed(1) }}
+                      {{ formatCredits(transcript.cmp_qtr_total_attempted) }}
                     </li>
                     <li>
                       Graded Attempted:
-                      {{ transcript.cmp_qtr_graded_attempted.toFixed(1) }}
+                      {{ formatCredits(transcript.cmp_qtr_graded_attempted) }}
                     </li>
                     <li>
                       Graded Earned:
-                      {{ transcript.cmp_qtr_graded_earned.toFixed(1) }}
+                      {{ formatCredits(transcript.cmp_qtr_graded_earned) }}
                     </li>
                     <li>
                       Grade Points:
@@ -69,19 +72,19 @@
                   <ul class="list-unstyled w-50 m-0">
                     <li>
                       Cumulative Credits Attempted:
-                      {{ transcript.cmp_cum_total_attempted.toFixed(1) }}
+                      {{ formatCredits(transcript.cmp_cum_total_attempted) }}
                     </li>
                     <li>
                       Cumulative Graded Attempted:
-                      {{ transcript.cmp_cum_graded_attempted.toFixed(1) }}
+                      {{ formatCredits(transcript.cmp_cum_graded_attempted) }}
                     </li>
                     <li>
                       Cumulative UW Earned:
-                      {{ transcript.cmp_cum_uw_earned.toFixed(1) }}
+                      {{ formatCredits(transcript.cmp_cum_uw_earned) }}
                     </li>
                     <li>
                       Cumulative Total Earned:
-                      {{ transcript.cmp_cum_total_earned.toFixed(1) }}
+                      {{ formatCredits(transcript.cmp_cum_total_earned) }}
                     </li>
                     <li>
                       Cumulative Grade Points:
@@ -142,12 +145,16 @@ export default {
   data() {
     return {
       transcripts: [],
+      isLoading: false,
     };
   },
   created() {
     this.loadStudentTranscripts();
   },
   methods: {
+    formatCredits: function (credits) {
+      return credits !== null ? credits.toFixed(1) : "0.0";
+    },
     academicStanding: function (scholarship_type) {
         return scholarship_type == 1 ? "Dean's List"
             : scholarship_type == 3 ? "Warning"
@@ -159,10 +166,15 @@ export default {
     },
     loadStudentTranscripts: function () {
       let uwregid = this.person.uwregid;
+      this.isLoading = true;
       this.storeStudent.fetchStudentTranscripts(uwregid)
         .then(() => {
           this.transcripts = this.storeStudent.transcripts[uwregid].data;
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
+
     },
   },
 };
