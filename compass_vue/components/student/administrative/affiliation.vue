@@ -114,13 +114,17 @@ export default {
       this.getStudentAffiliations(this.person.student.system_key).then(
         (response) => {
           if (response) {
-            this.studentAffiliations = response;
+            this.studentAffiliations = response.sort((a, b) =>
+              a.affiliation.name.localeCompare(b.affiliation.name)
+            );
           }
         }
       );
 
       this.storeAffiliations.fetchAffiliations.then(() => {
-        this.affiliations = this.storeAffiliations.affiliations.data;
+        this.affiliations = this.storeAffiliations.affiliations.data.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
       });
     },
   },
