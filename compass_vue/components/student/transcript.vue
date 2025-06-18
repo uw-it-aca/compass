@@ -110,9 +110,9 @@
                     <li>Veteran Benefit: {{ transcript.veteran_benefit }}</li>
                   </ul>
                 </div>
-                <div v-if="storeStudent.academicStanding(transcript.scholarship_type)">
+                <div v-if="formatScholarshipDesc(transcript.scholarship_desc)">
                   Academic Standing:
-                  {{ storeStudent.academicStanding(transcript.scholarship_type) }}
+                  {{ formatScholarshipDesc(transcript.scholarship_desc) }}
                 </div>
                 <div>{{ transcript.qtr_comment }}</div>
               </td>
@@ -155,6 +155,15 @@ export default {
   methods: {
     formatCredits: function (credits) {
       return credits !== null ? credits.toFixed(1) : "0.0";
+    },
+    formatScholarshipDesc: function (scholarship_desc) {
+      if (!scholarship_desc || scholarship_desc === "NONE") {
+        return "";
+      }
+      return scholarship_desc.replace(
+        /[^\/\s]+/g,
+        text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+      );
     },
     loadStudentTranscripts: function () {
       let uwregid = this.person.uwregid;
