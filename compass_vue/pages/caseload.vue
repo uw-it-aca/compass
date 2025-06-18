@@ -129,18 +129,18 @@
                       <option
                         v-for="(option, index) in holdsOptions"
                         :key="index"
+                        :value="option.id"
                       >
                         {{ option.value }}
-                        :value="option.id"
                       </option>
                     </select>
                   </div>
                   <div class="col">
-                    <label for="holdsFilter" class="fw-bold lh-lg"
+                    <label for="alertsFilter" class="fw-bold lh-lg"
                       >Alert Status:</label
                     >
                     <select
-                      id="holdsFilter"
+                      id="alertsFilter"
                       v-model="selectedAlert"
                       class="form-select form-select-sm"
                     >
