@@ -52,6 +52,8 @@ database:
 
 repo: compass
 instance: test
+namespace:
+  enabled: true
 
 memcached:
   enabled: true

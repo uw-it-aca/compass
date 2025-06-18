@@ -38,10 +38,7 @@ export default {
   components: {
     AnalyticsChart,
   },
-  setup() {
-    const storeAnalytics = useAnalyticsStore();
-    return { storeAnalytics };
-  },
+
   props: {
     uwnetid: {
       type: String,
@@ -55,10 +52,14 @@ export default {
       type: String,
       required: true,
     },
-    course_id: {
+    courseId: {
       type: String,
       required: true,
     },
+  },
+  setup() {
+    const storeAnalytics = useAnalyticsStore();
+    return { storeAnalytics };
   },
   data() {
     return {
@@ -66,23 +67,6 @@ export default {
       analyticsNotFound: false,
       dataReady: false,
     };
-  },
-  mounted() {
-    // enable popovers everywhere
-    // https://getbootstrap.com/docs/5.1/components/popovers/#example-enable-popovers-everywhere
-    var popoverTriggerList = [].slice.call(
-      document.querySelectorAll('[data-bs-toggle="popover"]')
-    );
-    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-      return new Popover(popoverTriggerEl);
-    });
-
-    this.loadStudentCourseAnalytics();
-  },
-  watch: {
-    rawCourseAnalytics: function () {
-      this.dataReady = true;
-    },
   },
   computed: {
     formattedSeriesData() {
@@ -107,6 +91,23 @@ export default {
         },
       ];
     },
+  },
+  watch: {
+    rawCourseAnalytics: function () {
+      this.dataReady = true;
+    },
+  },
+  mounted() {
+    // enable popovers everywhere
+    // https://getbootstrap.com/docs/5.1/components/popovers/#example-enable-popovers-everywhere
+    var popoverTriggerList = [].slice.call(
+      document.querySelectorAll('[data-bs-toggle="popover"]')
+    );
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+      return new Popover(popoverTriggerEl);
+    });
+
+    this.loadStudentCourseAnalytics();
   },
   methods: {
     getDataArrayForKey(key) {

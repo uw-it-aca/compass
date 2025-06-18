@@ -47,6 +47,7 @@
 <script>
 export default {
   name: "MyPagination",
+  // eslint-disable-next-line vue/require-prop-types
   props: ["props"],
 };
 </script>

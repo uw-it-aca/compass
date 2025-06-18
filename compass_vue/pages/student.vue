@@ -9,14 +9,14 @@
       </h1>
     </template>
     <template #content>
-      <div v-show="!$route.params.id || isError" class="row my-4 small">
+      <div v-show="!$route.params.id || errorResponse" class="row my-4 small">
         <div class="col">
           <BCard class="bg-body-tertiary rounded-3" border-variant="0">
             <div class="row">
               <div class="col-xl-4 ms-auto">
                 <div class="fw-bold lh-lg">Search all Students:</div>
                 <div>
-                  <SearchStudent :error="isError"></SearchStudent>
+                  <SearchStudent :error="errorResponse"></SearchStudent>
                 </div>
               </div>
               <div class="col-4"></div>
@@ -64,7 +64,7 @@
             </div>
             <div>
               <a
-                href="https://registrar.washington.edu/staffandfaculty/ferpa/"
+                href="https://registrar.washington.edu/staff-faculty/ferpa/"
                 class="small"
                 target="_blank"
               >
@@ -157,7 +157,10 @@
                   </div>
                   <div class="col-xl-3">
                     <SpecialPrograms :person="person"></SpecialPrograms>
-                    <StudentEligibility v-show="false" :person="person"></StudentEligibility>
+                    <StudentEligibility
+                      v-show="false"
+                      :person="person"
+                    ></StudentEligibility>
                   </div>
                 </div>
               </STabsPanel>
@@ -194,7 +197,7 @@ import { STabsDisplay, STabsPanel, STabsList, STabsItem } from "solstice-vue";
 import { BCard } from "bootstrap-vue-next";
 
 export default {
-  inject: ["mq"],
+  name: "StudentPage",
   components: {
     Layout,
     BCard,
@@ -218,6 +221,27 @@ export default {
     SpecialPrograms,
     SignInChart,
   },
+  inject: ["mq"],
+
+  // composition api
+  setup() {
+    return {
+      getStudentDetail,
+      getAccessGroups,
+    };
+  },
+
+  data() {
+    return {
+      person: {},
+      isLoading: false,
+      errorResponse: null,
+      accessGroups: [],
+      userRoles: document.body.getAttribute("data-user-role").split(","),
+      userAccessGroup: document.body.getAttribute("data-user-access-group"),
+      Role: Role,
+    };
+  },
   created: function () {
     this.loadAccessGroups();
     if (this.$route.params.id) {
@@ -226,24 +250,6 @@ export default {
       this.loadStudent(this.$route.params.id);
       //}, 3000);
     }
-  },
-  // composition api
-  setup() {
-    return {
-      getStudentDetail,
-      getAccessGroups,
-    };
-  },
-  data() {
-    return {
-      person: {},
-      isLoading: false,
-      isError: false,
-      accessGroups: [],
-      userRoles: document.body.getAttribute("data-user-role").split(","),
-      userAccessGroup: document.body.getAttribute("data-user-access-group"),
-      Role: Role,
-    };
   },
   //  computed: {
   //    studentAddress: function () {
@@ -266,26 +272,26 @@ export default {
       // setup() exposed properties can be accessed on `this`
       this.getStudentDetail(studentNetID)
         .then((response) => {
-          if (response.data) {
-            this.person = response.data;
-            this.isLoading = false;
-            this.isError = false;
+          if (response) {
+            this.person = response;
+            this.errorResponse = null;
 
             // programatically update page title with student name
             document.title = this.person.display_name + " - Compass";
           }
         })
         .catch((error) => {
+          this.errorResponse = error.data;
+        })
+        .finally(() => {
           this.isLoading = false;
-          this.isError = true;
-          console.log("error occured: " + error);
         });
     },
     loadAccessGroups: function () {
       // setup() exposed properties can be accessed on `this`
       this.getAccessGroups().then((response) => {
-        if (response.data) {
-          this.accessGroups = response.data;
+        if (response) {
+          this.accessGroups = response;
         }
       });
     },

@@ -15,9 +15,9 @@
 
   <!-- contact modal -->
   <div
+    :id="'addAffiliationsModal'"
     ref="addAffiliationsModal"
     class="modal fade text-start"
-    :id="'addAffiliationsModal'"
     tabindex="-1"
     aria-labelledby="affiliationsModalLabelAdd"
     aria-hidden="true"
@@ -41,11 +41,11 @@
                 <label class="form-label small fw-bold me-2">
                   Affiliation
                 </label>
-                <select class="form-select" required v-model="affiliationId">
+                <select v-model="affiliationId" class="form-select" required>
                   <option
-                    v-for="(a, index) in this.affiliations"
-                    v-bind:value="a.id"
+                    v-for="(a, index) in affiliations"
                     :key="index"
+                    :value="a.id"
                     :disabled="isCurrentAffiliation(a)"
                   >
                     {{ a.name }}
@@ -64,16 +64,16 @@
               <div class="cohort-list overflow-auto">
                 <ul class="list-group">
                   <li
-                    class="list-group-item"
                     v-for="(cohort, index) in allCohorts"
-                    :value="index"
                     :key="index"
+                    :value="index"
+                    class="list-group-item"
                   >
                     <label
                       ><input
+                        v-model="cohorts"
                         class="form-check-input me-1"
                         type="checkbox"
-                        v-model="cohorts"
                         :value="cohort"
                       />
                       {{ cohort.start_year }}-{{ cohort.end_year }}</label
@@ -81,26 +81,15 @@
                   </li>
                 </ul>
               </div>
-
-              <!--              <select
-                class="form-select"
-                multiple
-                required
-                v-model="cohorts"
-              >
-              <option
-               v-for="cohort in allCohorts" :value="cohort">{{ cohort.start_year }}-{{ cohort.end_year }}</option>
-              </select>
--->
             </div>
             <div class="mb-3">
               <label class="form-label small fw-bold me-2">Admin Note</label>
               <textarea
+                v-model.trim="notes"
                 :class="
                   formErrors.notes ? 'is-invalid form-control' : 'form-control'
                 "
                 rows="3"
-                v-model.trim="notes"
                 required
               ></textarea>
             </div>
@@ -133,7 +122,6 @@ import { getCohorts } from "@/utils/cohorts";
 import { saveStudentAffiliation, saveStudentContact } from "@/utils/data";
 
 export default {
-  emits: ["affiliationsUpdated"],
   props: {
     buttonType: {
       type: String,
@@ -152,6 +140,7 @@ export default {
       required: true,
     },
   },
+  emits: ["affiliationsUpdated", "push"],
   setup() {
     return {
       saveStudentAffiliation,
@@ -168,8 +157,13 @@ export default {
       allCohorts: getCohorts(5),
       formErrors: {},
       updatePermissionDenied: false,
-      errorResponse: "",
+      errorResponse: null,
     };
+  },
+  computed: {
+    invalidForm() {
+      return !(this.cohorts.length > 0 && this.notes.length > 0);
+    },
   },
   created() {},
   mounted() {
@@ -181,11 +175,6 @@ export default {
       "hidden.bs.modal",
       this.resetForm
     );
-  },
-  computed: {
-    invalidForm() {
-      return !(this.cohorts.length > 0 && this.notes.length > 0);
-    },
   },
   methods: {
     isCurrentAffiliation(affiliation) {
@@ -217,27 +206,27 @@ export default {
             notes: this.notes,
           })
             .then(() => {
-              this.updateStudentAffiliations(response.data);
+              this.updateStudentAffiliations(response);
               this.$emit("affiliationsUpdated");
               this.hideModal();
             })
             .catch((error) => {
-              if (error.response.status == 401) {
+              if (error.data.status === 401) {
                 this.updatePermissionDenied = true;
-                this.errorResponse = error.response.data;
+                this.errorResponse = error.data;
                 setTimeout(() => (this.updatePermissionDenied = false), 3000);
               } else {
-                this.formErrors.notes = error.response.data;
+                this.formErrors.notes = error.data.message;
               }
             });
         })
         .catch((error) => {
-          if (error.response.status == 401) {
+          if (error.data.status === 401) {
             this.updatePermissionDenied = true;
-            this.errorResponse = error.response.data;
+            this.errorResponse = error.data;
             setTimeout(() => (this.updatePermissionDenied = false), 3000);
           } else {
-            this.formErrors.affiliation = error.response.data;
+            this.formErrors.affiliation = error.data.message;
           }
         });
     },

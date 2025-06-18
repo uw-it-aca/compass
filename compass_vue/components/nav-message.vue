@@ -8,9 +8,9 @@
         <li
           v-for="(msg, index) in messages"
           :key="index"
-          v-html="msg"
           class="mt-2"
-        ></li>
+          v-html="msg">
+        </li>
       </ul>
     </div>
   </div>

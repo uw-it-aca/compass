@@ -104,11 +104,13 @@ urlpatterns += [
     re_path(
         r"^api/internal/student/affiliations/(?P<affiliation_id>[\w]+)/import/$",  # noqa
         StudentAffiliationsImportView.as_view(),
+        name="student_affiliations_import_view",
     ),
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)"
         r"/affiliations/(?P<affiliation_id>[\w]+)/$",
         StudentAffiliationsView.as_view(),
+        name="student_affiliation_view",
     ),
     re_path(
         r"^api/internal/student/(?P<systemkey>[\w]+)/visits/$",
@@ -147,10 +149,13 @@ urlpatterns += [
         SettingsView.as_view(),
     ),
     re_path((r"^api/internal/accessgroup/affiliations/$"),
-            AffiliationsView.as_view()),
+            AffiliationsView.as_view(),
+            name="access_group_affiliations"
+    ),
     re_path(r"^api/internal/accessgroup/$",
             AccessGroupView.as_view(),
-            name="access_group_view"),
+            name="access_group_view"
+    ),
     re_path(r"^api/internal/contact/topics/$", ContactTopicsView.as_view()),
     re_path(r"^api/internal/contact/types/$", ContactTypesView.as_view()),
     re_path(r"^api/internal/contact/methods/$", ContactMethodsView.as_view()),
@@ -164,11 +169,12 @@ urlpatterns += [
     re_path(
         r"^api/internal/adviser/(?P<adviser_netid>[\w]+)/checkins/$",
         AdviserCheckInsView.as_view(),
-        name="adviser_checkins"
+        name="adviser_checkins",
     ),
     re_path(
         r"^api/internal/adviser/(?P<adviser_netid>[\w]+)/caseload/$",
         AdviserCaseloadView.as_view(),
+        name="adviser_caseload",
     ),
     re_path(
         r"^api/internal/photo/(?P<uwregid>[a-fA-F0-9]{32})/"

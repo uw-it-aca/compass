@@ -8,6 +8,34 @@ from datetime import datetime, timezone
 import json
 
 
+class AdviserCheckInsAPITest(ApiTest):
+    def test_get(self):
+        response = self.get_response("adviser_checkins",
+                                     "jadviser",
+                                     kwargs={"adviser_netid": "jadviser"})
+        self.assertEqual(response.status_code, 200, "OK")
+        self.assertEqual(response.data, [])
+
+        response = self.get_response("adviser_checkins",
+                                     "jadviser",
+                                     kwargs={"adviser_netid": "1a1a1a1"})
+        self.assertEqual(response.status_code, 400, "Invalid uwnetid")
+
+
+class AdviserCaseloadAPITest(ApiTest):
+    def test_get(self):
+        response = self.get_response("adviser_caseload",
+                                     "jadviser",
+                                     kwargs={"adviser_netid": "jadviser"})
+        self.assertEqual(response.status_code, 200, "OK")
+        self.assertEqual(len(response.data), 3)
+
+        response = self.get_response("adviser_caseload",
+                                     "jadviser",
+                                     kwargs={"adviser_netid": "111111"})
+        self.assertEqual(response.status_code, 400, "Invalid uwnetid")
+
+
 class ContactAPITest(ApiTest):
     ag = None
     app_user = None

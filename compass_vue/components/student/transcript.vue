@@ -1,5 +1,8 @@
 <template>
-  <template v-if="transcripts.length !== 0">
+  <div v-if="isLoading">
+    <span>Loading...</span>
+  </div>
+  <template v-else-if="transcripts.length">
     <BCard
       v-for="(transcript, transIndex) in transcripts"
       :key="transIndex"
@@ -45,28 +48,52 @@
               <td colspan="4" class="ps-3">
                 <div class="d-flex justify-content-between">
                   <ul class="list-unstyled w-50 m-0">
-                    <li>QTR ATTEMPTED: {{ transcript.qtr_graded_attmp }}</li>
-                    <li>QTR EARNED: xx</li>
-                    <li>QTR GRADE POINTS: {{ transcript.qtr_grade_points }}</li>
                     <li>
-                      QTR GPA (calculated):
-                      <strong>{{
-                        (
-                          transcript.qtr_grade_points /
-                          transcript.qtr_graded_attmp
-                        ).toFixed(2)
-                      }}</strong>
+                      Credits Attempted:
+                      {{ formatCredits(transcript.cmp_qtr_total_attempted) }}
                     </li>
-                    <li>QTR GRADED AT: xx</li>
+                    <li>
+                      Graded Attempted:
+                      {{ formatCredits(transcript.cmp_qtr_graded_attempted) }}
+                    </li>
+                    <li>
+                      Graded Earned:
+                      {{ formatCredits(transcript.cmp_qtr_graded_earned) }}
+                    </li>
+                    <li>
+                      Grade Points:
+                      {{ formatCredits(transcript.cmp_qtr_grade_points) }}
+                    </li>
+                    <li>
+                      GPA: <strong>{{ transcript.cmp_qtr_gpa }}</strong>
+                    </li>
                   </ul>
 
                   <ul class="list-unstyled w-50 m-0">
-                    <li>CUM ATTEMPTED: xx</li>
-                    <li>UW EARNED: xx</li>
-                    <li>TTL EARNED: xx</li>
-                    <li>CUM GRADED AT: xx</li>
-                    <li>CUM GRADE PTS: xx</li>
-                    <li>CUM GPA: xx</li>
+                    <li>
+                      Cumulative Credits Attempted:
+                      {{ formatCredits(transcript.cmp_cum_total_attempted) }}
+                    </li>
+                    <li>
+                      Cumulative Graded Attempted:
+                      {{ formatCredits(transcript.cmp_cum_graded_attempted) }}
+                    </li>
+                    <li>
+                      Cumulative UW Earned:
+                      {{ formatCredits(transcript.cmp_cum_uw_earned) }}
+                    </li>
+                    <li>
+                      Cumulative Total Earned:
+                      {{ formatCredits(transcript.cmp_cum_total_earned) }}
+                    </li>
+                    <li>
+                      Cumulative Grade Points:
+                      {{ formatCredits(transcript.cmp_cum_grade_points) }}
+                    </li>
+                    <li>
+                      Cumulative GPA:
+                      <strong>{{ transcript.cmp_cum_gpa }}</strong>
+                    </li>
                   </ul>
 
                   <ul class="d-none list-unstyled">
@@ -83,28 +110,20 @@
                     <li>Veteran Benefit: {{ transcript.veteran_benefit }}</li>
                   </ul>
                 </div>
-                <div v-if="transcript.scholarship_type == 3">
-                  SCHOLARSHIP STATUS: PROBATION
+                <div v-if="formatScholarshipDesc(transcript.scholarship_desc)">
+                  Academic Standing:
+                  {{ formatScholarshipDesc(transcript.scholarship_desc) }}
                 </div>
-                <div v-else-if="transcript.scholarship_type == 4">
-                  SCHOLARSHIP STATUS: WARNING
-                </div>
-                <div v-else-if="transcript.scholarship_type == 1">
-                  SCHOLARSHIP STATUS: DEAN'S LIST
-                </div>
-
                 <div>{{ transcript.qtr_comment }}</div>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-      <div v-else class="p-3">no transcript for this term</div>
+      <div v-else class="p-3">No transcript for this term.</div>
     </BCard>
   </template>
-  <div v-else class="p-3">
-    no academic history available for this student.
-  </div>
+  <div v-else class="p-3">No academic history available for this student.</div>
 </template>
 
 <script>
@@ -112,32 +131,49 @@ import { useStudentStore } from "@/stores/student";
 import { BCard } from "bootstrap-vue-next";
 
 export default {
+  name: "StudentTranscript",
+  components: { BCard },
   props: {
     person: {
       type: Object,
       required: true,
     },
   },
-  components: { BCard },
-  data() {
-    return {
-      transcripts: {},
-    };
-  },
   setup() {
     const storeStudent = useStudentStore();
     return { storeStudent };
+  },
+  data() {
+    return {
+      transcripts: [],
+      isLoading: false,
+    };
   },
   created() {
     this.loadStudentTranscripts();
   },
   methods: {
+    formatCredits: function (credits) {
+      return credits !== null ? credits.toFixed(1) : "0.0";
+    },
+    formatScholarshipDesc: function (scholarship_desc) {
+      if (!scholarship_desc || scholarship_desc === "NONE") {
+        return "";
+      }
+      return scholarship_desc.replace(
+        /[^\/\s]+/g,
+        text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+      );
+    },
     loadStudentTranscripts: function () {
-      this.storeStudent
-        .fetchStudentTranscripts(this.person.uwregid)
+      let uwregid = this.person.uwregid;
+      this.isLoading = true;
+      this.storeStudent.fetchStudentTranscripts(uwregid)
         .then(() => {
-          this.transcripts =
-            this.storeStudent.studentData[this.person.uwregid].data;
+          this.transcripts = this.storeStudent.transcripts[uwregid].data;
+        })
+        .finally(() => {
+          this.isLoading = false;
         });
     },
   },

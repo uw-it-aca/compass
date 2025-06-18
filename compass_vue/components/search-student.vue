@@ -2,13 +2,12 @@
   <form @submit.prevent="searchByStudent">
     <div class="input-group">
       <input
+        v-model="searchValue"
         type="text"
         :maxlength="maxLength"
         class="form-control form-control-sm"
         placeholder="Student number or UW netid..."
         aria-label="Student number or UW netid"
-        v-model="searchValue"
-
       />
       <button
         :disabled="searchValue.length == 0"
@@ -19,7 +18,7 @@
       </button>
     </div>
     <div v-if="searchError || error" class="text-danger mt-2">
-      {{ searchError || "Student not found" }}
+      {{ searchError ? searchError.message : error.message }}
     </div>
   </form>
 </template>
@@ -30,9 +29,8 @@ import { getStudentBySearch } from "@/utils/data";
 export default {
   props: {
     error: {
-      type: Boolean,
+      type: Object,
       required: false,
-      default: false,
     },
   },
   setup() {
@@ -61,18 +59,16 @@ export default {
       if (this.validQuery(this.searchValue)) {
         this.getStudentBySearch(this.searchValue)
           .then((response) => {
-            return response.data;
-          })
-          .then((data) => {
             this.$router.push({
-              name: "student", params: { id: this.searchValue }
+              name: "student",
+              params: { id: this.searchValue },
             });
           })
           .catch((error) => {
-            this.searchError = error.response.data;
+            this.searchError = error.data;
           });
       } else {
-        this.searchError = "Invalid student identifier";
+        this.searchError = {message: "Invalid student identifier"};
       }
     },
   },

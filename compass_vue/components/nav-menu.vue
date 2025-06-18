@@ -8,10 +8,7 @@
           exact-active-class="bg-white bg-opacity-10"
         >
           <span
-            ><i
-              class="bi bi-calendar-check me-3 text-white"
-              style="--bs-text-opacity: 0.5"
-            ></i
+            ><i class="bi bi-calendar-check me-3 text-white text-opacity-50"></i
             >Check-Ins</span
           >
         </BLink>
@@ -22,7 +19,10 @@
           class="d-flex justify-content-between nav-link rounded-3 text-light bg-white-hover bg-opacity-10-hover"
           exact-active-class="bg-white bg-opacity-10"
         >
-          <span><i class="bi bi-people-fill me-3 text-white" style="--bs-text-opacity: 0.5"></i>Caseload</span></BLink
+          <span
+            ><i class="bi bi-people-fill me-3 text-white text-opacity-50"></i
+            >Caseload</span
+          ></BLink
         >
       </li>
 
@@ -31,7 +31,10 @@
           :to="'/affiliations'"
           class="d-flex justify-content-between nav-link rounded-3 text-light bg-white-hover bg-opacity-10-hover"
           exact-active-class="bg-white bg-opacity-10"
-          ><span><i class="bi bi-cart4 me-3 text-white" style="--bs-text-opacity: 0.5"></i>Batch Affiliations</span></BLink
+          ><span
+            ><i class="bi bi-cart4 me-3 text-white text-opacity-50"></i>Batch
+            Affiliations</span
+          ></BLink
         >
       </li>
       <li v-if="false" aria-hidden="true" class="nav-item mt-1 mb-2">
@@ -53,13 +56,13 @@ import { Role } from "@/utils/roles";
 import { BLink } from "bootstrap-vue-next";
 
 export default {
+  components: { BLink },
   props: {
     userRoles: {
       type: Array,
       required: true,
     },
   },
-  components: { BLink },
   data() {
     return {
       Role: Role,

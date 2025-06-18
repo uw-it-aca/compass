@@ -54,6 +54,8 @@ database:
 
 repo: compass
 instance: prod
+namespace:
+  enabled: true
 
 memcached:
   enabled: true

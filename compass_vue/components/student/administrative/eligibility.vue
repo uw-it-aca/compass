@@ -5,7 +5,9 @@
     header-bg-variant="transparent"
   >
     <template #header
-      ><div class="fs-6 fw-bold">Instructional Center Eligibility</div></template
+      ><div class="fs-6 fw-bold">
+        Instructional Center Eligibility
+      </div></template
     >
 
     <div v-if="eligibilities.length">
@@ -48,6 +50,7 @@ import {
 } from "@/utils/data";
 
 export default {
+  name: "StudentEligibility",
   components: { BCard },
   props: {
     person: {
@@ -76,16 +79,16 @@ export default {
     loadStudentEligibilities() {
       this.getStudentEligibility(this.person.student.system_key).then(
         (response) => {
-          if (response.data) {
-            this.student_eligibilities = response.data;
+          if (response) {
+            this.student_eligibilities = response;
           }
         }
       );
     },
     loadEligibilities() {
       this.getEligibilities().then((response) => {
-        if (response.data) {
-          this.eligibilities = response.data;
+        if (response) {
+          this.eligibilities = response;
         }
       });
     },

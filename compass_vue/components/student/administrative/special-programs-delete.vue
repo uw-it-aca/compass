@@ -9,9 +9,9 @@
   </a>
 
   <div
+    :id="'deleteSpecialProgramModal'"
     ref="specialProgramModal"
     class="modal fade text-start"
-    :id="'deleteSpecialProgramModal'"
     tabindex="-1"
     aria-labelledby="deleteSpecialProgramModalLabel"
     aria-hidden="true"
@@ -37,8 +37,8 @@
                 Code's Date value as there is no way to undo this action.
               </div>
             </div>
-            <div v-if="this.errorResponse" class="text-danger">
-              Problem Deleting Date: {{ this.errorResponse.statusText }}
+            <div v-if="errorResponse" class="text-danger">
+              Problem Deleting Date: {{ errorResponse.message }}
             </div>
           </div>
 
@@ -68,17 +68,17 @@ import { Modal } from "bootstrap";
 import { deleteStudentSpecialProgram } from "@/utils/data";
 
 export default {
-  emits: ["specialProgramUpdated"],
   props: {
     person: {
       type: Object,
       required: true,
     },
-    program_data: {
+    programData: {
       type: Object,
       required: true,
     },
   },
+  emits: ["specialProgramUpdated"],
   setup() {
     return {
       deleteStudentSpecialProgram,
@@ -109,7 +109,7 @@ export default {
           this.hideModal();
         })
         .catch((error) => {
-          this.errorResponse = error.response;
+          this.errorResponse = error.data;
         });
     },
     hideModal() {

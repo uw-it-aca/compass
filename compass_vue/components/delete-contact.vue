@@ -15,7 +15,6 @@ import { deleteStudentContact } from "@/utils/data";
 
 export default {
   inject: ["mq"],
-  emits: ["contactDeleted"],
   props: {
     buttonType: {
       type: String,
@@ -30,6 +29,7 @@ export default {
       default: null,
     },
   },
+  emits: ["contactDeleted"],
   setup() {
     return {
       deleteStudentContact,
@@ -38,8 +38,6 @@ export default {
   data() {
     return {};
   },
-  created() {},
-  mounted() {},
   watch: {
     contact: {
       handler: function () {
@@ -49,6 +47,8 @@ export default {
       deep: true,
     },
   },
+  created() {},
+  mounted() {},
   methods: {
     deleteContact() {
       let vue = this;
@@ -57,7 +57,7 @@ export default {
           vue.$emit("contactDeleted");
         })
         .catch((error) => {
-          alert(error.message);
+          alert(error.data.message);
         });
     },
   },

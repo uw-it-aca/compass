@@ -11,6 +11,7 @@
 import Layout from "@/layout.vue";
 
 export default {
+  name: "ReportsPage",
   components: {
     layout: Layout,
   },

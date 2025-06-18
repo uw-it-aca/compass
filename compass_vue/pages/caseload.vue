@@ -29,8 +29,8 @@
                       <option selected :value="undefined">All</option>
                       <option
                         v-for="(option, index) in classOptions"
-                        v-bind:value="option.id"
                         :key="index"
+                        :value="option.id"
                       >
                         {{ option.value }}
                       </option>
@@ -49,8 +49,8 @@
                       <option selected :value="undefined">All</option>
                       <option
                         v-for="(option, index) in campusOptions"
-                        v-bind:value="option.id"
                         :key="index"
+                        :value="option.id"
                       >
                         {{ option.value }}
                       </option>
@@ -69,8 +69,8 @@
                       <option selected :value="undefined">All</option>
                       <option
                         v-for="(option, index) in degreeOptions"
-                        v-bind:value="option.id"
                         :key="index"
+                        :value="option.id"
                       >
                         {{ option.value }}
                       </option>
@@ -89,8 +89,8 @@
                       <option selected :value="undefined">All</option>
                       <option
                         v-for="(option, index) in scholarshipOptions"
-                        v-bind:value="option.id"
                         :key="index"
+                        :value="option.id"
                       >
                         {{ option.value }}
                       </option>
@@ -109,8 +109,8 @@
                       <option selected :value="undefined">All</option>
                       <option
                         v-for="(option, index) in registrationOptions"
-                        v-bind:value="option.id"
                         :key="index"
+                        :value="option.id"
                       >
                         {{ option.value }}
                       </option>
@@ -128,27 +128,27 @@
                       <option selected :value="undefined">All</option>
                       <option
                         v-for="(option, index) in holdsOptions"
-                        v-bind:value="option.id"
                         :key="index"
+                        :value="option.id"
                       >
                         {{ option.value }}
                       </option>
                     </select>
                   </div>
                   <div class="col">
-                    <label for="holdsFilter" class="fw-bold lh-lg"
+                    <label for="alertsFilter" class="fw-bold lh-lg"
                       >Alert Status:</label
                     >
                     <select
-                      id="holdsFilter"
+                      id="alertsFilter"
                       v-model="selectedAlert"
                       class="form-select form-select-sm"
                     >
                       <option selected :value="undefined">All</option>
                       <option
                         v-for="(option, index) in alertOptions"
-                        v-bind:value="option.id"
                         :key="index"
+                        :value="option.id"
                       >
                         {{ option.value }}
                       </option>
@@ -174,7 +174,6 @@
                     <i class="bi bi-star me-2"></i>Set filters as default
                   </button>
                 </div>
-
               </div>
             </div>
           </BCard>
@@ -204,12 +203,12 @@
                     ><i class="bi bi-download"></i
                   ></template>
                   <BDropdownItemButton @click="copyEmailList"
-                    ><i class="bi bi-envelope-at-fill me-2 text-dark"></i>Copy student
-                    email</BDropdownItemButton
+                    ><i class="bi bi-envelope-at-fill me-2 text-dark"></i>Copy
+                    student email</BDropdownItemButton
                   >
                   <BDropdownItemButton @click="downloadCSV"
-                    ><i class="bi bi-filetype-csv me-2 text-dark"></i>Download student
-                    data</BDropdownItemButton
+                    ><i class="bi bi-filetype-csv me-2 text-dark"></i>Download
+                    student data</BDropdownItemButton
                   >
                 </BDropdown>
               </div>
@@ -234,13 +233,10 @@ import CaseloadTableLoading from "@/components/caseload-table-loading.vue";
 import Layout from "@/layout.vue";
 import { getAdviserCaseload, savePreferences } from "@/utils/data";
 
-import {
-  BCard,
-  BDropdown,
-  BDropdownItemButton,
-} from "bootstrap-vue-next";
+import { BCard, BDropdown, BDropdownItemButton } from "bootstrap-vue-next";
 
 export default {
+  name: "CaseloadPage",
   components: {
     Layout,
     BCard,
@@ -264,8 +260,8 @@ export default {
       adviserNetId: this.$route.params.id
         ? this.$route.params.id
         : document.body.getAttribute("data-user-override")
-        ? document.body.getAttribute("data-user-override")
-        : document.body.getAttribute("data-user-netid"),
+          ? document.body.getAttribute("data-user-override")
+          : document.body.getAttribute("data-user-netid"),
       selectedClass: undefined,
       selectedDegree: undefined,
       selectedScholarship: undefined,
@@ -311,13 +307,10 @@ export default {
         { id: "success", value: "Green" },
       ],
       saveCount: 0,
+      errorResponse: null,
     };
   },
-  created: function () {
-    // setup() exposed properties can be accessed on `this`
-    this.loadAdviserCaseload(this.adviserNetId);
-    this.loadFilterPreferences();
-  },
+
   computed: {
     filteredPersons: function () {
       let filteredPersons = this.persons;
@@ -403,6 +396,11 @@ export default {
       );
     },
   },
+  created: function () {
+    // setup() exposed properties can be accessed on `this`
+    this.loadAdviserCaseload(this.adviserNetId);
+    this.loadFilterPreferences();
+  },
   methods: {
     copyEmailList: function () {
       let email_list = [];
@@ -467,10 +465,16 @@ export default {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
     loadAdviserCaseload: function (netid) {
+      this.isLoading = true;
       this.getAdviserCaseload(netid).then((response) => {
-        if (response.data) {
-          this.persons = response.data;
+        if (response) {
+          this.persons = response;
         }
+      })
+      .catch((error) => {
+        this.errorResponse = error.data;
+      })
+      .finally(() => {
         this.isLoading = false;
       });
     },
@@ -507,14 +511,14 @@ export default {
           this.selectedRegistration === undefined
             ? undefined
             : this.selectedRegistration
-            ? "True"
-            : "False",
+              ? "True"
+              : "False",
         holds:
           this.selectedHolds === undefined
             ? undefined
             : this.selectedHolds
-            ? "True"
-            : "False",
+              ? "True"
+              : "False",
         alert: this.selectedAlert,
       };
       // Counter to trigger re-compute on unsavedPreferences
