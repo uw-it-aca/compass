@@ -41,7 +41,7 @@
         <div class="d-flex justify-content-between">
           <span>UW Grade Points:</span>
           <span v-if="latestTranscript">
-            {{ latestTranscript.cmp_cum_grade_points }}
+            {{ formatCredits(latestTranscript.cmp_cum_grade_points) }}
           </span>
           <span v-else>0.0</span>
         </div>
