@@ -62,7 +62,7 @@
                     </li>
                     <li>
                       Grade Points:
-                      {{ transcript.cmp_qtr_grade_points }}
+                      {{ formatCredits(transcript.cmp_qtr_grade_points) }}
                     </li>
                     <li>
                       GPA: <strong>{{ transcript.cmp_qtr_gpa }}</strong>
@@ -88,7 +88,7 @@
                     </li>
                     <li>
                       Cumulative Grade Points:
-                      {{ transcript.cmp_cum_grade_points }}
+                      {{ formatCredits(transcript.cmp_cum_grade_points) }}
                     </li>
                     <li>
                       Cumulative GPA:
@@ -110,8 +110,9 @@
                     <li>Veteran Benefit: {{ transcript.veteran_benefit }}</li>
                   </ul>
                 </div>
-                <div v-if="academicStanding(transcript.scholarship_type)">
-                  Academic Standing: {{ academicStanding(transcript.scholarship_type) }}
+                <div v-if="storeStudent.academicStanding(transcript.scholarship_type)">
+                  Academic Standing:
+                  {{ storeStudent.academicStanding(transcript.scholarship_type) }}
                 </div>
                 <div>{{ transcript.qtr_comment }}</div>
               </td>
@@ -119,10 +120,10 @@
           </tbody>
         </table>
       </div>
-      <div v-else class="p-3">no transcript for this term</div>
+      <div v-else class="p-3">No transcript for this term.</div>
     </BCard>
   </template>
-  <div v-else class="p-3">no academic history available for this student.</div>
+  <div v-else class="p-3">No academic history available for this student.</div>
 </template>
 
 <script>
@@ -155,15 +156,6 @@ export default {
     formatCredits: function (credits) {
       return credits !== null ? credits.toFixed(1) : "0.0";
     },
-    academicStanding: function (scholarship_type) {
-        return scholarship_type == 1 ? "Dean's List"
-            : scholarship_type == 3 ? "Warning"
-            : scholarship_type == 4 ? "Alert"
-            : scholarship_type == 5 ? "Drop"
-            : scholarship_type == 6 ? "Reinstate"
-            : null;
-
-    },
     loadStudentTranscripts: function () {
       let uwregid = this.person.uwregid;
       this.isLoading = true;
@@ -174,7 +166,6 @@ export default {
         .finally(() => {
           this.isLoading = false;
         });
-
     },
   },
 };
