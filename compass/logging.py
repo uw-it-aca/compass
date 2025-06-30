@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from logging import Filter
-from threading import local
+from asgiref.local import Local
 
-_local = local()
+_local = Local()
 
 
 class UserFilter(Filter):
