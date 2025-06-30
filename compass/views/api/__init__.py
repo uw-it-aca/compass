@@ -17,6 +17,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from userservice.user import UserService
+from logging import getLogger
+
+logger = getLogger(__name__)
 
 
 @method_decorator(xhr_login_required, name='dispatch')
@@ -76,9 +79,11 @@ class BaseAPIView(GenericAPIView):
         return Response(content, status=status.HTTP_202_ACCEPTED)
 
     def response_badrequest(self, content="Missing parameters"):
+        logger.info(content)
         return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
     def response_unauthorized(self, content="Not authorized"):
+        logger.info(content)
         return Response(content, status=status.HTTP_401_UNAUTHORIZED)
 
     def response_notfound(self, content="Not found"):

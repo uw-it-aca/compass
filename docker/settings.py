@@ -19,6 +19,7 @@ INSTALLED_APPS.remove("django.contrib.staticfiles")
 
 MIDDLEWARE += [
     "userservice.user.UserServiceMiddleware",
+    "compass.logging.UserLoggingMiddleware",
     "django_user_agents.middleware.UserAgentMiddleware",
 ]
 
@@ -146,7 +147,9 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "filters": {
-        "add_user": {"()": "compass.logging.UserFilter"},
+        "add_user": {
+            "()": "compass.logging.UserFilter",
+        },
         "stdout_stream": {
             "()": "django.utils.log.CallbackFilter",
             "callback": lambda record: record.levelno < logging.WARNING,
@@ -196,8 +199,8 @@ LOGGING = {
             "propagate": False,
         },
         "django.request": {
-            "handlers": ["stderr"],
-            "level": "ERROR",
+            "handlers": ["stdout", "stderr"],
+            "level": "INFO",
             "propagate": True,
         },
         "compass": {
