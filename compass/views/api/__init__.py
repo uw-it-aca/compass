@@ -79,11 +79,12 @@ class BaseAPIView(GenericAPIView):
         return Response(content, status=status.HTTP_202_ACCEPTED)
 
     def response_badrequest(self, content="Missing parameters"):
-        logger.info(content)
         return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
     def response_unauthorized(self, content="Not authorized"):
-        logger.info(content)
+        # content may be an Exception object
+        if isinstance(content, BaseException):
+            content = str(content)
         return Response(content, status=status.HTTP_401_UNAUTHORIZED)
 
     def response_notfound(self, content="Not found"):
