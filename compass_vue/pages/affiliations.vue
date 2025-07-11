@@ -280,8 +280,8 @@ export default {
         })
         .catch((error) => {
           this.isLoading = false;
-          this.errorResponse = error;
-          alert(error.status + " " + error.message);
+          this.errorResponse = error.data;
+          alert(error.data.status + " " + error.data.message);
         });
     },
   },
