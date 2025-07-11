@@ -302,8 +302,8 @@ class StudentAffiliationsImportView(BaseAPIView):
     '''
     def post(self, request, *args, **kwargs):
         try:
-            access_group = self.get_access_group(request, require_manager=True)
             self.valid_user_override()
+            access_group = self.get_access_group(request, require_manager=True)
         except AccessGroup.DoesNotExist:
             return self.response_unauthorized()
         except OverrideNotPermitted as err:
