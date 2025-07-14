@@ -19,6 +19,7 @@ INSTALLED_APPS.remove("django.contrib.staticfiles")
 
 MIDDLEWARE += [
     "userservice.user.UserServiceMiddleware",
+    "compass.logging.UserLoggingMiddleware",
     "django_user_agents.middleware.UserAgentMiddleware",
 ]
 
@@ -146,7 +147,9 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "filters": {
-        "add_user": {"()": "compass.logging.UserFilter"},
+        "add_user": {
+            "()": "compass.logging.UserFilter",
+        },
         "stdout_stream": {
             "()": "django.utils.log.CallbackFilter",
             "callback": lambda record: record.levelno < logging.WARNING,
@@ -158,12 +161,12 @@ LOGGING = {
     },
     "formatters": {
         "compass": {
-            "format": "%(levelname)-4s %(asctime)s %(user)s %(actas)s %(message)s [%(name)s]",
-            "datefmt": "[%Y-%m-%d %H:%M:%S]",
+            "format": "%(levelname)-4s %(user)s %(actas)s %(asctime)s %(message)s [%(name)s]",
+            "datefmt": "[%d/%b/%Y:%H:%M:%S %z]",
         },
         "restclients_timing": {
-            "format": "%(levelname)-4s restclients_timing %(module)s %(asctime)s %(message)s [%(name)s]",
-            "datefmt": "[%Y-%m-%d %H:%M:%S]",
+            "format": "%(levelname)-4s restclients_timing %(asctime)s %(module)s %(message)s [%(name)s]",
+            "datefmt": "[%d/%b/%Y:%H:%M:%S %z]",
         },
     },
     "handlers": {

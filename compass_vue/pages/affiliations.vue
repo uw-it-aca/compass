@@ -213,6 +213,7 @@ export default {
       affiliationId: null,
       cohortName: null,
       responseData: [],
+      errorResponse: null,
     };
   },
   created: function () {
@@ -251,6 +252,7 @@ export default {
     processUpload() {
       // immediately show loading placeholder
       this.isLoading = true;
+      this.errorResponse = null;
 
       if (!this.validateForm()) {
         this.isLoading = false;
@@ -278,7 +280,8 @@ export default {
         })
         .catch((error) => {
           this.isLoading = false;
-          alert(error);
+          this.errorResponse = error.data;
+          alert(error.data.status + " " + error.data.message);
         });
     },
   },
