@@ -226,34 +226,6 @@ class CourseAnalyticsScores(models.Model):
             scores_by_uwnetid.setdefault(uwnetid, []).append(prediction_score)
         return scores_by_uwnetid
 
-    @classmethod
-    def get_alert_class_for_student(cls, uwnetid):
-        term = current_term()
-        week = week_of_term(term, current_datetime().date())
-
-        # RAD data is only available after the first week
-        if week > 1:
-            # Show last week's RAD data
-            week = week - 1
-            alert_count = 0
-            if week > 1:
-                course_analytics = cls.objects.filter(
-                    uwnetid=uwnetid,
-                    week__year=term.year,
-                    week__quarter=term.quarter,
-                    week__week=week
-                )
-
-                for course in course_analytics:
-                    if course.is_alert_status():
-                        alert_count += 1
-            if alert_count == 0:
-                alert_class = 'success'
-            elif len(course_analytics) == alert_count:
-                alert_class = 'danger'
-            else:
-                alert_class = 'warning'
-            return alert_class
 
 
 class StudentSigninAnalytics(models.Model):
