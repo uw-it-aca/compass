@@ -227,7 +227,6 @@ class CourseAnalyticsScores(models.Model):
         return scores_by_uwnetid
 
 
-
 class StudentSigninAnalytics(models.Model):
     """
     Model to store weekly IdP signin data per student
