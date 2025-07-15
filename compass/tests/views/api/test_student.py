@@ -4,6 +4,7 @@
 
 from compass.tests import ApiTest
 from compass.models import AccessGroup, Contact, ContactType, Student
+from compass.models.rad_data import StudentAlertStatus
 from uw_pws.util import fdao_pws_override
 from uw_sws.util import fdao_sws_override
 from mock import patch
@@ -16,6 +17,9 @@ class StudentAPITest(ApiTest):
         self.ag = AccessGroup(name="Test Group",
                               access_group_id="u_astra_group1")
         self.ag.save()
+        StudentAlertStatus.objects.create(
+            alert_status=StudentAlertStatus.AlertStatus.SUCCESS,
+            uwnetid="javerage")
 
     def test_get(self):
         response = self.get_response("student_view",
