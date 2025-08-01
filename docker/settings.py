@@ -103,7 +103,15 @@ else:
         }
     }
     CSRF_TRUSTED_ORIGINS = ["https://" + os.getenv("CLUSTER_CNAME")]
-    DEFAULT_FILE_STORAGE = "storages.backends.gcloud.GoogleCloudStorage"
+
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+        },
+        "staticfiles": {
+            "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        },
+    }
     GS_PROJECT_ID = os.getenv("STORAGE_PROJECT_ID", "")
     GS_BUCKET_NAME = os.getenv("STORAGE_BUCKET_NAME", "")
     GS_LOCATION = os.getenv("STORAGE_LOCATION", "compass_data")
