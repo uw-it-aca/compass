@@ -178,7 +178,7 @@
                           :uwnetid="person.uwnetid"
                           :year="schedule.year"
                           :quarter="schedule.quarter"
-                          :course_id="`${section.curriculum_abbr} ${section.course_number} ${section.section_id}`"
+                          :courseId="`${section.curriculum_abbr} ${section.course_number} ${section.section_id}`"
                         ></CourseAnalytics>
                       </div>
                     </td>
