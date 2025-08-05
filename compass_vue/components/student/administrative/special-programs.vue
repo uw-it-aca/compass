@@ -27,14 +27,14 @@
         <SpecialProgramEdit
           :person="person"
           :program-data="programData"
-          @special-program-updated="loadSpecialProgramData()"
+          @specialProgramUpdated="loadSpecialProgramData()"
         >
           <i class="bi bi-pencil me-2"></i>Edit
         </SpecialProgramEdit>
         <SpecialProgramDelete
           :person="person"
           :program-data="programData"
-          @special-program-updated="loadSpecialProgramData()"
+          @specialProgramUpdated="loadSpecialProgramData()"
         >
           <i class="bi bi-trash ms-e"></i>Delete
         </SpecialProgramDelete>

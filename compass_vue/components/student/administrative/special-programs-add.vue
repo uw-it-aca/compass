@@ -122,7 +122,8 @@ export default {
   },
   methods: {
     editSpecialProgram() {
-      let programDataCopy = JSON.parse(JSON.stringify(this.programData));
+      let programDataCopy = JSON.parse(JSON.stringify(this.programData)),
+        vue = this;
 
       programDataCopy.program_date = this.program_date;
 
@@ -132,12 +133,12 @@ export default {
         programDataCopy
       )
         .then(() => {
-          programData.program_date = this.program_date;
-          this.$emit("specialProgramUpdated");
-          this.hideModal();
+          vue.programData.program_date = this.program_date;
+          vue.$emit("specialProgramUpdated");
+          vue.hideModal();
         })
         .catch((error) => {
-          this.errorResponse = error.data;
+          vue.errorResponse = error.data;
         });
     },
     hideModal() {
