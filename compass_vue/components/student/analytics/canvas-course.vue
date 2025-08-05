@@ -123,13 +123,13 @@ export default {
           this.uwnetid,
           this.year,
           this.quarter,
-          this.course_id
+          this.courseId
         )
         .then(() => {
           this.rawCourseAnalytics =
             this.storeAnalytics.courseAnalyticsData[this.uwnetid][this.year][
               this.quarter
-            ][this.course_id].data;
+            ][this.courseId].data;
         })
         .catch((e) => {
           this.analyticsNotFound = true;
