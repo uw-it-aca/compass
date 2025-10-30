@@ -254,8 +254,9 @@ async function getAdviserCaseload(adviserNetId) {
   return useCustomFetch(url);
 }
 
-async function getAdviserCheckIns(adviserNetId) {
-  const url = "/api/internal/adviser/" + adviserNetId + "/checkins/";
+async function getAdviserCheckIns(adviserNetId, intervalDays) {
+  const url = ("/api/internal/adviser/" + adviserNetId +
+    "/checkins?days=" + intervalDays);
   return useCustomFetch(url);
 }
 

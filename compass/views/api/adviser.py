@@ -25,7 +25,14 @@ class AdviserCheckInsView(BaseAPIView):
         if not valid_uwnetid(adviser_netid):
             return self.response_badrequest('Invalid uwnetid')
 
-        contacts = Contact.objects.by_adviser(adviser_netid)
+        try:
+            days = abs(int(request.GET.get('days', '3').strip()))
+            if not (3 <= days <= 90):
+                raise ValueError()
+        except ValueError:
+            days = 3
+
+        contacts = Contact.objects.by_adviser(adviser_netid, from_days=days)
 
         response_data = []
         if not len(contacts):

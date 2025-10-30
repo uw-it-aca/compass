@@ -27,7 +27,24 @@
             body-class="p-0"
           >
             <template #header>
-              <div class="fs-6 fw-bold">Recent Check-Ins (3 days)</div>
+              <div class="fs-6 fw-bold">
+                Recent Check-Ins ({{ selectedInterval }} days)
+              </div>
+              <BDropdown
+                size="sm"
+                variant="outline-primary"
+                text="Check-In History"
+                class=""
+                toggle-class="rounded-2"
+              >
+                <BDropdownItemButton
+                  v-for="(interval, index) in checkInIntervals"
+                  :key="index"
+                  :value="interval"
+                  @click.prevent="checkInIntervalSelected(interval)"
+                  >{{ interval }}&nbsp;days
+                </BDropdownItemButton>
+              </BDropdown>
             </template>
             <CheckInTableLoading v-if="isLoading" />
             <CheckInTableDisplay v-else :contacts="contacts" />
@@ -45,11 +62,13 @@ import CheckInTableDisplay from "@/components/checkin-table-display.vue";
 import Layout from "@/layout.vue";
 import { getAdviserCheckIns } from "@/utils/data";
 
-import { BCard } from "bootstrap-vue-next";
+import { BCard, BDropdown, BDropdownItemButton } from "bootstrap-vue-next";
 
 export default {
   components: {
     BCard,
+    BDropdown,
+    BDropdownItemButton,
     Layout,
     SearchStudent,
     CheckInTableLoading,
@@ -64,6 +83,8 @@ export default {
     return {
       pageTitle: "Check-Ins",
       isLoading: true,
+      checkInIntervals: ["3", "7", "14", "30", "60", "90"],
+      selectedInterval: "3",
       contacts: [],
       today: "",
       adviserNetId: this.$route.params.id
@@ -71,24 +92,36 @@ export default {
         : document.body.getAttribute("data-user-override")
           ? document.body.getAttribute("data-user-override")
           : document.body.getAttribute("data-user-netid"),
+      errorResponse: null,
     };
   },
   computed: {},
   mounted() {
     setTimeout(() => {
-      this.loadAdviserCheckInsList(this.adviserNetId);
+      this.loadAdviserCheckInsList();
     }, 2000);
   },
   methods: {
-    loadAdviserCheckInsList: function (netid) {
-      let _this = this;
-      // setup() exposed properties can be accessed on `this`
-      this.getAdviserCheckIns(netid).then((response) => {
-        if (response) {
-          _this.contacts = response;
-          _this.isLoading = false;
-        }
-      });
+    checkInIntervalSelected: function (interval) {
+      if (this.selectedInterval !== interval) {
+        this.selectedInterval = interval;
+        this.loadAdviserCheckInsList();
+      }
+    },
+    loadAdviserCheckInsList: function () {
+      this.errorResponse = null;
+      this.isLoading = true;
+      this.getAdviserCheckIns(this.adviserNetId, this.selectedInterval)
+        .then((data) => {
+          this.errorResponse = null;
+          this.contacts = data;
+        })
+        .catch((error) => {
+          this.errorResponse = error.data;
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
   },
 };
