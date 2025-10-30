@@ -1,7 +1,7 @@
 # Copyright 2025 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-
+from django.conf import settings
 from django.db import models, transaction
 from django.db.models.functions import Cast
 from django.db.utils import IntegrityError
@@ -236,7 +236,7 @@ class ContactManager(models.Manager):
         if not from_days:
             from_days = 3
 
-        if from_days < 30:
+        if from_days < getattr(settings, 'WEEKDAYS_EXCLUSION_THRESHOLD', 30):
             # Exclude weekends
             start_date = weekdays_before(current_datetime(), from_days)
         else:
