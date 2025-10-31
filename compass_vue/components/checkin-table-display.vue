@@ -44,12 +44,12 @@
     </table>
   </div>
   <div v-else class="p-3">
-    <span v-if="adviser.uwnetid === userNetId">
-      You have not met with any students within the selected time period.
-    </span>
-    <span v-else>
+    <span v-if="adviser && adviser.uwnetid !== userNetId">
       {{ adviser.display_name }} has not met with any students within the
       selected time period.
+    </span>
+    <span v-else>
+      You have not met with any students within the selected time period.
     </span>
   </div>
 </template>
@@ -70,10 +70,12 @@ export default {
     adviser: {
       type: Object,
       required: false,
+      default: null,
     },
     error: {
       type: Object,
       required: false,
+      default: null,
     },
   },
   computed: {
