@@ -1,5 +1,10 @@
 <template>
-  <div v-if="contacts.length > 0" class="table-responsive m-n3">
+  <div v-if="error">
+    Compass encountered an error searching for Check-Ins:
+
+    <p>{{ error.status }} {{ error.message }}</p>
+  </div>
+  <div v-else-if="contacts.length > 0" class="table-responsive m-n3">
     <table class="table m-0">
       <thead class="text-muted small">
         <tr>
@@ -38,7 +43,15 @@
       </tbody>
     </table>
   </div>
-  <div v-else class="p-3">You have not met with any students recently.</div>
+  <div v-else class="p-3">
+    <span v-if="adviser.uwnetid === userNetId">
+      You have not met with any students within the selected time period.
+    </span>
+    <span v-else>
+      {{ adviser.display_name }} has not met with any students within the
+      selected time period.
+    </span>
+  </div>
 </template>
 
 <script>
@@ -53,6 +66,20 @@ export default {
     contacts: {
       type: Object,
       required: true,
+    },
+    adviser: {
+      type: Object,
+      required: false,
+    },
+    error: {
+      type: Object,
+      required: false,
+    },
+  },
+  computed: {
+    userNetId() {
+      return document.body.getAttribute("data-user-override") ||
+        document.body.getAttribute("data-user-netid");
     },
   },
   setup() {

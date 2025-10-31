@@ -28,7 +28,11 @@
           >
             <template #header>
               <div class="fs-6 fw-bold">
-                Recent Check-Ins ({{ selectedInterval }} days)
+                Recent Check-Ins
+                <span v-if="!isLoading && !errorResponse">
+                  for {{ adviser.display_name }}
+                </span>
+                ({{ selectedInterval }} days)
               </div>
               <BDropdown
                 size="sm"
@@ -47,7 +51,11 @@
               </BDropdown>
             </template>
             <CheckInTableLoading v-if="isLoading" />
-            <CheckInTableDisplay v-else :contacts="contacts" />
+            <CheckInTableDisplay v-else
+              :contacts="contacts"
+              :adviser="adviser"
+              :error="errorResponse"
+            />
           </BCard>
         </div>
       </div>
@@ -86,6 +94,7 @@ export default {
       checkInIntervals: ["3", "7", "14", "30", "60", "90"],
       selectedInterval: "3",
       contacts: [],
+      adviser:  null,
       today: "",
       adviserNetId: this.$route.params.id
         ? this.$route.params.id
@@ -95,7 +104,6 @@ export default {
       errorResponse: null,
     };
   },
-  computed: {},
   mounted() {
     setTimeout(() => {
       this.loadAdviserCheckInsList();
@@ -114,7 +122,8 @@ export default {
       this.getAdviserCheckIns(this.adviserNetId, this.selectedInterval)
         .then((data) => {
           this.errorResponse = null;
-          this.contacts = data;
+          this.adviser = data.adviser;
+          this.contacts = data.contacts;
         })
         .catch((error) => {
           this.errorResponse = error.data;

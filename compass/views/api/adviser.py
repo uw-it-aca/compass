@@ -6,7 +6,7 @@ from django.urls import reverse
 from compass.views.api import BaseAPIView
 from compass.dao.person import (
     valid_uwnetid, get_students_by_system_keys, get_adviser_caseload,
-    PersonNotFoundException, AdviserNotFoundException)
+    get_appuser_by_uwnetid, PersonNotFoundException, AdviserNotFoundException)
 from compass.models import Contact
 from compass.models.rad_data import CourseAnalyticsScores, StudentAlertStatus
 from compass.serializers import ContactReadSerializer
@@ -22,8 +22,14 @@ class AdviserCheckInsView(BaseAPIView):
     """
 
     def get(self, request, adviser_netid):
-        if not valid_uwnetid(adviser_netid):
-            return self.response_badrequest('Invalid uwnetid')
+        adviser_netid = adviser_netid.lower().strip()
+        try:
+            if not valid_uwnetid(adviser_netid):
+                raise PersonNotFoundException()
+            adviser = get_appuser_by_uwnetid(adviser_netid)
+        except PersonNotFoundException:
+            return self.response_badrequest(
+                f'Invalid uwnetid: {adviser_netid}')
 
         try:
             days = abs(int(request.GET.get('days', '3').strip()))
@@ -32,9 +38,16 @@ class AdviserCheckInsView(BaseAPIView):
         except ValueError:
             days = 3
 
+        response_data = {
+            'adviser': {
+                'uwnetid': adviser.uwnetid,
+                'display_name': adviser.display_name,
+            },
+            'contacts': [],
+        }
+
         contacts = Contact.objects.by_adviser(adviser_netid, from_days=days)
 
-        response_data = []
         if not len(contacts):
             return self.response_ok(response_data)
 
@@ -45,13 +58,14 @@ class AdviserCheckInsView(BaseAPIView):
             system_key = contact['student__system_key']
             if system_key in students:
                 contact['student'] = students[system_key]
-                response_data.append(contact)
+                response_data['contacts'].append(contact)
             else:
                 logger.info(f'Unknown student ({system_key}) omitted from '
                             f'check-in search!')
         try:
-            response_data = (StudentAlertStatus.
-                             add_alert_class_to_contacts(response_data))
+            alert_contacts = StudentAlertStatus.add_alert_class_to_contacts(
+                response_data['contacts'])
+            response_data['contacts'] = alert_contacts
         except Exception:
             logger.exception('Error adding analytics alert class to contacts')
         return self.response_ok(response_data)
