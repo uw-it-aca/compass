@@ -18,18 +18,21 @@ class AdviserCheckInsAPITest(ApiTest):
                                      get_args={"days": "3"})
         self.assertEqual(response.status_code, 200, "OK")
         self.assertEqual(response.data, {
-            'adviser': {
-                'uwnetid': 'jadviser', 'display_name': 'Jay Adviser'
-            },
+            'adviser': {'uwnetid': 'jadviser', 'display_name': 'Jay Adviser'},
             'contacts': []
         })
 
-    def test_invalid_netid(self):
         response = self.get_response("adviser_checkins",
                                      "jadviser",
                                      kwargs={"adviser_netid": "1a1a1a1"},
                                      get_args={"days": "3"})
-        self.assertEqual(response.status_code, 400, "Invalid uwnetid: 1a1a1a1")
+        self.assertEqual(response.status_code, 400, "Invalid uwnetid")
+
+        response = self.get_response("adviser_checkins",
+                                     "jadviser",
+                                     kwargs={"adviser_netid": "jadviser2"},
+                                     get_args={"days": "3"})
+        self.assertEqual(response.status_code, 404, "Not found uwnetid")
 
     @patch('compass.views.api.adviser.Contact')
     def test_days_param(self, mock_contact_cls):
