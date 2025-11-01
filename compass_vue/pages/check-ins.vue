@@ -27,28 +27,32 @@
             body-class="p-0"
           >
             <template #header>
-              <div class="fs-6 fw-bold">
-                Recent Check-Ins
-                <span v-if="!isLoading && !errorResponse">
-                  for {{ adviser.display_name }}
-                </span>
-                ({{ selectedInterval }} days)
+              <div class="d-flex justify-content-between align-items-end">
+                <div class="fs-6 fw-bold">
+                  Recent Check-Ins
+                  <span v-if="!isLoading && !errorResponse">
+                    for {{ adviser.display_name }}
+                  </span>
+                  ({{ selectedInterval }} days)
+                </div>
+                <div class="text-end">
+                  <BDropdown
+                    size="sm"
+                    class="d-inline-block"
+                    text="Select Check-In History"
+                    variant="outline-primary"
+                    toggle-class="rounded-2"
+                  >
+                    <BDropdownItemButton
+                      v-for="(interval, index) in checkInIntervals"
+                      :key="index"
+                      :value="interval"
+                      @click.prevent="checkInIntervalSelected(interval)"
+                      >{{ interval }}&nbsp;days
+                    </BDropdownItemButton>
+                  </BDropdown>
+                </div>
               </div>
-              <BDropdown
-                size="sm"
-                variant="outline-primary"
-                text="Check-In History"
-                class=""
-                toggle-class="rounded-2"
-              >
-                <BDropdownItemButton
-                  v-for="(interval, index) in checkInIntervals"
-                  :key="index"
-                  :value="interval"
-                  @click.prevent="checkInIntervalSelected(interval)"
-                  >{{ interval }}&nbsp;days
-                </BDropdownItemButton>
-              </BDropdown>
             </template>
             <CheckInTableLoading v-if="isLoading" />
             <CheckInTableDisplay v-else

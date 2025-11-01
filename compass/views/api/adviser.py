@@ -23,13 +23,14 @@ class AdviserCheckInsView(BaseAPIView):
 
     def get(self, request, adviser_netid):
         adviser_netid = adviser_netid.lower().strip()
+        if not valid_uwnetid(adviser_netid):
+            return self.response_badrequest(
+                f'Not a valid UW NetID: {adviser_netid}')
         try:
-            if not valid_uwnetid(adviser_netid):
-                raise PersonNotFoundException()
             adviser = get_appuser_by_uwnetid(adviser_netid)
         except PersonNotFoundException:
-            return self.response_badrequest(
-                f'Invalid uwnetid: {adviser_netid}')
+            return self.response_notfound(
+                f'Adviser not found: {adviser_netid}')
 
         try:
             days = abs(int(request.GET.get('days', '3').strip()))

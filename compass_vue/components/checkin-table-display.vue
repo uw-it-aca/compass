@@ -1,8 +1,7 @@
 <template>
-  <div v-if="error">
+  <div v-if="error" class="p-3">
     Compass encountered an error searching for Check-Ins:
-
-    <p>{{ error.status }} {{ error.message }}</p>
+    <p><strong>{{ error.message }}</strong></p>
   </div>
   <div v-else-if="contacts.length > 0" class="table-responsive m-n3">
     <table class="table m-0">
