@@ -33,7 +33,7 @@
                   <BDropdown
                     size="sm"
                     class="d-inline-block"
-                    text="Select Check-In History"
+                    :text="dropdownLabel"
                     variant="outline-primary"
                     toggle-class="rounded-2"
                   >
@@ -103,6 +103,9 @@ export default {
     };
   },
   computed: {
+    dropdownLabel() {
+      return "Check-In History (" + this.selectedInterval + " days)";
+    },
     checkinHeaderText() {
       let numContacts = this.contacts.length,
         txt = "Recent Check-Ins";
