@@ -28,13 +28,7 @@
           >
             <template #header>
               <div class="d-flex justify-content-between align-items-end">
-                <div class="fs-6 fw-bold">
-                  Recent Check-Ins
-                  <span v-if="!isLoading && !errorResponse">
-                    for {{ adviser.display_name }}
-                  </span>
-                  ({{ selectedInterval }} days)
-                </div>
+                <div class="fs-6 fw-bold">{{ checkinHeaderText }}</div>
                 <div class="text-end">
                   <BDropdown
                     size="sm"
@@ -107,6 +101,24 @@ export default {
           : document.body.getAttribute("data-user-netid"),
       errorResponse: null,
     };
+  },
+  computed: {
+    checkinHeaderText() {
+      let numContacts = this.contacts.length,
+        txt = "Recent Check-Ins";
+
+      if (!this.errorResponse && !this.isLoading) {
+        if (this.contacts.length === 0) {
+          txt = "There are no Check-Ins"
+        } else if (this.contacts.length === 1) {
+          txt = "There is one Check-In";
+        } else if (this.contacts.length > 1) {
+          txt = "There are " + this.contacts.length + " Check-Ins";
+        }
+        txt += " for " + this.adviser.display_name;
+      }
+      return txt += " (" + this.selectedInterval + " days)";
+    },
   },
   mounted() {
     setTimeout(() => {

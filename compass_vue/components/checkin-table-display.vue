@@ -42,15 +42,7 @@
       </tbody>
     </table>
   </div>
-  <div v-else class="p-3">
-    <span v-if="adviser && adviser.uwnetid !== userNetId">
-      {{ adviser.display_name }} has not met with any students within the
-      selected time period.
-    </span>
-    <span v-else>
-      You have not met with any students within the selected time period.
-    </span>
-  </div>
+  <div v-else class="p-3">{{ zeroCheckinsText }}</div>
 </template>
 
 <script>
@@ -78,9 +70,20 @@ export default {
     },
   },
   computed: {
-    userNetId() {
-      return document.body.getAttribute("data-user-override") ||
-        document.body.getAttribute("data-user-netid");
+    zeroCheckinsText() {
+      let userNetId = document.body.getAttribute("data-user-override") ||
+        document.body.getAttribute("data-user-netid"),
+      txt = "";
+
+      if (this.adviser) {
+        if (this.adviser.uwnetid === userNetId) {
+          txt = "You have";
+        } else {
+          txt = this.adviser.display_name + " has";
+        }
+        return txt += (
+            " not met with any students within the selected time period.");
+      }
     },
   },
   setup() {
