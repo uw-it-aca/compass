@@ -79,7 +79,7 @@
 
                   <div class="col">
                     <label for="scholarshipFilter" class="fw-bold lh-lg"
-                      >Acad. Standing:</label
+                      >Acad.&nbsp;Standing:</label
                     >
                     <select
                       id="scholarshipFilter"
@@ -137,7 +137,7 @@
                   </div>
                   <div class="col">
                     <label for="alertsFilter" class="fw-bold lh-lg"
-                      >Alert Status:</label
+                      >Alert&nbsp;Status:</label
                     >
                     <select
                       id="alertsFilter"
@@ -173,6 +173,13 @@
                   >
                     <i class="bi bi-star me-2"></i>Set filters as default
                   </button>
+                  &nbsp;
+                  <button
+                    type="button"
+                    class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
+                    @click.prevent="clearFilters"
+                  >Clear filters
+                  </button>
                 </div>
               </div>
             </div>
@@ -191,7 +198,7 @@
           >
             <template #header>
               <div class="d-flex justify-content-between align-items-center">
-                <div class="fs-6 fw-bold">Caseload</div>
+                <div class="fs-6 fw-bold">{{ caseloadHeaderText }}</div>
 
                 <BDropdown
                   size="sm"
@@ -216,8 +223,10 @@
             <CaseloadTableLoading v-if="isLoading" />
             <CaseloadTableDisplay
               v-else
-              :adviser-net-id="adviserNetId"
               :persons="filteredPersons"
+              :caseloadTotal="persons.length"
+              :adviser="adviser"
+              :error="errorResponse"
             />
           </BCard>
         </div>
@@ -256,6 +265,7 @@ export default {
       pageTitle: "Caseload",
       isLoading: true,
       // data
+      adviser: null,
       persons: [],
       adviserNetId: this.$route.params.id
         ? this.$route.params.id
@@ -277,10 +287,10 @@ export default {
         { id: "none", value: "None" },
       ],
       scholarshipOptions: [
-        { id: 1, value: "Dean's List" },
-        { id: 4, value: "Acad. Alert" },
-        { id: 3, value: "Acad. Warning" },
-        { id: 0, value: "None" },
+        { id: "1", value: "Dean's List" },
+        { id: "3", value: "Acad. Warning" },
+        { id: "4", value: "Acad. Alert" },
+        { id: "0", value: "None" },
       ],
       classOptions: [
         { id: "Freshman", value: "Freshman" },
@@ -290,8 +300,8 @@ export default {
       ],
       campusOptions: [
         { id: "Seattle", value: "Seattle" },
-        { id: "Tacoma", value: "Tacoma" },
         { id: "Bothell", value: "Bothell" },
+        { id: "Tacoma", value: "Tacoma" },
       ],
       registrationOptions: [
         { id: true, value: "Yes" },
@@ -310,8 +320,26 @@ export default {
       errorResponse: null,
     };
   },
-
   computed: {
+    caseloadHeaderText() {
+      let txt = "Caseload";
+      if (!this.errorResponse && !this.isLoading) {
+        txt += " for " + this.adviser.display_name;
+        if (this.persons.length === 0) {
+            txt += " (No students)";
+        } else if (this.persons.length === 1) {
+            txt += " (One student)";
+        } else {
+            txt += " (";
+            if (this.filteredPersons.length > 0 &&
+              this.filteredPersons.length < this.persons.length) {
+              txt += "Viewing " + this.filteredPersons.length + " of ";
+            }
+            txt += this.persons.length + " students)";
+        }
+      }
+      return txt;
+    },
     filteredPersons: function () {
       let filteredPersons = this.persons;
       if (this.selectedClass) {
@@ -370,7 +398,7 @@ export default {
       }
       return filteredPersons;
     },
-    unsavedPreferences: function () {
+    unsavedPreferences() {
       // Reference saveCount to trigger re-compute on save
       this.saveCount;
 
@@ -378,12 +406,12 @@ export default {
       if ("caseload_filters" in window.userPreferences) {
         caseload_filter_prefs = window.userPreferences.caseload_filters;
       }
-      return (
+      let result = (
         this.selectedClass !== (caseload_filter_prefs.class || undefined) ||
         this.selectedCampus !== (caseload_filter_prefs.campus || undefined) ||
         this.selectedDegree !== (caseload_filter_prefs.degree || undefined) ||
-        this.selectedScholarship !==
-          (caseload_filter_prefs.scholarship || undefined) ||
+        (this.selectedScholarship !== undefined ||
+          this.selectedScholarship !== caseload_filter_prefs.scholarship) ||
         this.selectedRegistration !==
           (caseload_filter_prefs.registered !== undefined
             ? this.getBooleanFromString(caseload_filter_prefs.registered)
@@ -394,10 +422,11 @@ export default {
             : undefined) ||
         this.selectedAlert !== (caseload_filter_prefs.alert || undefined)
       );
+      // console.log("unsavedPreferences: " + result);
+      return result;
     },
   },
   created: function () {
-    // setup() exposed properties can be accessed on `this`
     this.loadAdviserCaseload(this.adviserNetId);
     this.loadFilterPreferences();
   },
@@ -465,18 +494,19 @@ export default {
       return string.charAt(0).toUpperCase() + string.slice(1);
     },
     loadAdviserCaseload: function (netid) {
+      this.errorResponse = null;
       this.isLoading = true;
-      this.getAdviserCaseload(netid).then((response) => {
-        if (response) {
-          this.persons = response;
-        }
-      })
-      .catch((error) => {
-        this.errorResponse = error.data;
-      })
-      .finally(() => {
-        this.isLoading = false;
-      });
+      this.getAdviserCaseload(netid)
+        .then((data) => {
+          this.adviser = data.adviser;
+          this.persons = data.caseload;
+        })
+        .catch((error) => {
+          this.errorResponse = error.data;
+        })
+        .finally(() => {
+          this.isLoading = false;
+        });
     },
     showPriorityRing: function (priorityValue) {
       // mocked display
@@ -539,6 +569,16 @@ export default {
         );
         this.selectedAlert = user_prefs.caseload_filters.alert;
       }
+    },
+    clearFilters: function () {
+      this.selectedClass = undefined;
+      this.selectedDegree = undefined;
+      this.selectedScholarship = undefined;
+      this.selectedCampus = undefined;
+      this.selectedRegistration = undefined;
+      this.selectedHolds =  undefined;
+      this.selectedAlert = undefined;
+      this.saveFilterPreferences();
     },
     getBooleanFromString: function (string) {
       if (string === "True") {

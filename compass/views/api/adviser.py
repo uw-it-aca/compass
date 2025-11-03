@@ -79,8 +79,23 @@ class AdviserCaseloadView(BaseAPIView):
     """
 
     def get(self, request, adviser_netid):
+        adviser_netid = adviser_netid.lower().strip()
         if not valid_uwnetid(adviser_netid):
-            return self.response_badrequest('Invalid uwnetid')
+            return self.response_badrequest(
+                f'Not a valid UW NetID: {adviser_netid}')
+        try:
+            adviser = get_appuser_by_uwnetid(adviser_netid)
+        except PersonNotFoundException:
+            return self.response_notfound(
+                f'Adviser not found: {adviser_netid}')
+
+        response_data = {
+            'adviser': {
+                'uwnetid': adviser.uwnetid,
+                'display_name': adviser.display_name,
+            },
+            'caseload': [],
+        }
 
         try:
             queryset = get_adviser_caseload(adviser_netid)
@@ -88,9 +103,10 @@ class AdviserCaseloadView(BaseAPIView):
                 queryset = (StudentAlertStatus.
                             add_alert_class_to_caseload(list(queryset)))
             except Exception:
-                logger.exception('Error adding analytics '
-                                 'alert class to caseload')
+                logger.exception(
+                    'Error adding analytics alert class to caseload')
         except AdviserNotFoundException:
             queryset = []
 
-        return self.response_ok(queryset)
+        response_data['caseload'] = queryset
+        return self.response_ok(response_data)
