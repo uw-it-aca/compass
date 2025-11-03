@@ -576,7 +576,7 @@ export default {
       this.selectedScholarship = undefined;
       this.selectedCampus = undefined;
       this.selectedRegistration = undefined;
-      this.selectedHolds =  undefined;
+      this.selectedHolds = undefined;
       this.selectedAlert = undefined;
       this.saveFilterPreferences();
     },
