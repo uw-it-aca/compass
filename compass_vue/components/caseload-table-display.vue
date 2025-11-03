@@ -1,5 +1,9 @@
 <template>
-  <div v-if="persons.length > 0" class="table-responsive m-n3">
+  <div v-if="error" class="p-3">
+    Compass encountered an error while building the Caseload:
+    <p><strong>{{ error.message }}</strong></p>
+  </div>
+  <div v-else-if="persons.length > 0" class="table-responsive m-n3">
     <table class="table m-0">
       <thead class="text-muted small">
         <tr>
@@ -50,7 +54,7 @@
                 >
               </li>
               <li class="list-inline-item flex-fill w-25">
-                <div>Acad. Standing</div>
+                <div>Acad.&nbsp;Stdg</div>
                 <span
                   class="small badge rounded-pill border-0 px-2 py-1 mb-0 me-1"
                   :class="
@@ -97,10 +101,7 @@
       </tbody>
     </table>
   </div>
-  <div v-else class="p-3">
-    There are no students found in
-    <strong>{{ adviserNetId }}&rsquo;s</strong> caseload.
-  </div>
+  <div v-else class="p-3">{{ zeroCaseloadText }}</div>
 </template>
 
 <script>
@@ -112,13 +113,23 @@ export default {
     "profile-mini": ProfileMini,
   },
   props: {
-    adviserNetId: {
-      type: String,
+    persons: {
+      type: Array,
       required: true,
     },
-    persons: {
-      type: Object,
+    caseloadTotal: {
+      type: Number,
       required: true,
+    },
+    adviser: {
+      type: Object,
+      required: false,
+      default: null,
+    },
+    error: {
+      type: Object,
+      required: false,
+      default: null,
     },
   },
   setup() {
@@ -126,8 +137,24 @@ export default {
       translateTrueFalse,
     };
   },
-  data() {
-    return {};
+  computed: {
+    zeroCaseloadText() {
+      let userNetId = document.body.getAttribute("data-user-override") ||
+        document.body.getAttribute("data-user-netid");
+
+      if (this.caseloadTotal > 0) {
+        return "Filter selections do not match any students.";
+      }
+
+      if (this.adviser) {
+        if (this.adviser.uwnetid === userNetId) {
+          return "You have no students assigned to your caseload.";
+        } else {
+          return this.adviser.display_name +
+            " has no students assigned to their caseload.";
+        }
+      }
+    },
   },
   methods: {
     getScholarshipData: function (person) {

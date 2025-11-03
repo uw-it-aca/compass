@@ -78,12 +78,19 @@ class AdviserCaseloadAPITest(ApiTest):
                                      "jadviser",
                                      kwargs={"adviser_netid": "jadviser"})
         self.assertEqual(response.status_code, 200, "OK")
-        self.assertEqual(len(response.data), 3)
+        self.assertEqual(response.data['adviser'], {
+            'uwnetid': 'jadviser', 'display_name': 'Jay Adviser'})
+        self.assertEqual(len(response.data['caseload']), 3)
 
         response = self.get_response("adviser_caseload",
                                      "jadviser",
-                                     kwargs={"adviser_netid": "111111"})
+                                     kwargs={"adviser_netid": "1a1a1a1"})
         self.assertEqual(response.status_code, 400, "Invalid uwnetid")
+
+        response = self.get_response("adviser_caseload",
+                                     "jadviser",
+                                     kwargs={"adviser_netid": "jadviser2"})
+        self.assertEqual(response.status_code, 404, "Not found uwnetid")
 
 
 class ContactAPITest(ApiTest):
