@@ -49,7 +49,8 @@
               </div>
             </template>
             <CheckInTableLoading v-if="isLoading" />
-            <CheckInTableDisplay v-else
+            <CheckInTableDisplay
+              v-else
               :contacts="contacts"
               :adviser="adviser"
               :error="errorResponse"
@@ -107,15 +108,13 @@ export default {
       return "Check-In History (" + this.selectedInterval + " days)";
     },
     checkinHeaderText() {
-      let numContacts = this.contacts.length,
-        txt = "Recent Check-Ins";
-
+      let txt = "Recent Check-Ins";
       if (!this.errorResponse && !this.isLoading) {
         if (this.contacts.length === 0) {
           txt = "There are no Check-Ins"
         } else if (this.contacts.length === 1) {
           txt = "There is one Check-In";
-        } else if (this.contacts.length > 1) {
+        } else {
           txt = "There are " + this.contacts.length + " Check-Ins";
         }
         txt += " for " + this.adviser.display_name;
@@ -126,7 +125,7 @@ export default {
   mounted() {
     setTimeout(() => {
       this.loadAdviserCheckInsList();
-    }, 2000);
+    }, 500);
   },
   methods: {
     checkInIntervalSelected: function (interval) {
@@ -140,7 +139,6 @@ export default {
       this.isLoading = true;
       this.getAdviserCheckIns(this.adviserNetId, this.selectedInterval)
         .then((data) => {
-          this.errorResponse = null;
           this.adviser = data.adviser;
           this.contacts = data.contacts;
         })

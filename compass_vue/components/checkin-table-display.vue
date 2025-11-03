@@ -1,6 +1,6 @@
 <template>
   <div v-if="error" class="p-3">
-    Compass encountered an error searching for Check-Ins:
+    Compass encountered an error while searching for Check-Ins:
     <p><strong>{{ error.message }}</strong></p>
   </div>
   <div v-else-if="contacts.length > 0" class="table-responsive m-n3">
@@ -55,7 +55,7 @@ export default {
   },
   props: {
     contacts: {
-      type: Object,
+      type: Array,
       required: true,
     },
     adviser: {
@@ -68,6 +68,11 @@ export default {
       required: false,
       default: null,
     },
+  },
+  setup() {
+    return {
+      formatDate,
+    };
   },
   computed: {
     zeroCheckinsText() {
@@ -85,14 +90,6 @@ export default {
             " not met with any students within the selected time period.");
       }
     },
-  },
-  setup() {
-    return {
-      formatDate,
-    };
-  },
-  data() {
-    return {};
   },
 };
 </script>
