@@ -253,7 +253,7 @@ class ContactManager(models.Manager):
                 'source',
                 'trans_id',
                 checkin_date_str=Cast('checkin_date', models.TextField())
-            ).order_by('checkin_date')
+            ).order_by('-checkin_date')
 
 
 class Contact(models.Model):
