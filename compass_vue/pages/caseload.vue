@@ -410,7 +410,7 @@ export default {
         this.selectedClass !== (caseload_filter_prefs.class || undefined) ||
         this.selectedCampus !== (caseload_filter_prefs.campus || undefined) ||
         this.selectedDegree !== (caseload_filter_prefs.degree || undefined) ||
-        (this.selectedScholarship !== undefined ||
+        (this.selectedScholarship !== undefined &&
           this.selectedScholarship !== caseload_filter_prefs.scholarship) ||
         this.selectedRegistration !==
           (caseload_filter_prefs.registered !== undefined
