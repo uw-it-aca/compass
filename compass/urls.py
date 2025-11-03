@@ -167,7 +167,7 @@ urlpatterns += [
             name="contact_create_view"),
     re_path(r"^api/internal/contact/$",  ContactView.as_view()),
     re_path(
-        r"^api/internal/adviser/(?P<adviser_netid>[\w]+)/checkins/$",
+        r"^api/internal/adviser/(?P<adviser_netid>[\w]+)/checkins$",
         AdviserCheckInsView.as_view(),
         name="adviser_checkins",
     ),

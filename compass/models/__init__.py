@@ -1,7 +1,7 @@
 # Copyright 2025 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-
+from django.conf import settings
 from django.db import models, transaction
 from django.db.models.functions import Cast
 from django.db.utils import IntegrityError
@@ -11,7 +11,7 @@ from compass.dao.person import get_appuser_by_uwnetid, PersonNotFoundException
 from compass.dao.group import is_group_member
 from compass.dao import current_datetime
 from compass.utils import weekdays_before
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import compass.models.rad_data
 
 
@@ -233,12 +233,18 @@ class ContactManager(models.Manager):
         # Only return contacts from the checkin system, not manual contacts
         kwargs = {'app_user__uwnetid': adviser_uwnetid, 'source': 'Checkin'}
 
-        if from_days is not None and from_days > 0:
-            start_date = weekdays_before(current_datetime(), from_days)
+        if not from_days:
+            from_days = 3
 
-            # Reset the start_date to midnight and add TZ
-            kwargs['checkin_date__gte'] = start_date.replace(
-                hour=0, minute=0, second=0, tzinfo=timezone.utc)
+        if from_days < getattr(settings, 'WEEKDAYS_EXCLUSION_THRESHOLD', 30):
+            # Exclude weekends
+            start_date = weekdays_before(current_datetime(), from_days)
+        else:
+            start_date = current_datetime() - timedelta(days=from_days)
+
+        # Reset the start_date to midnight and add TZ
+        kwargs['checkin_date__gte'] = start_date.replace(
+            hour=0, minute=0, second=0, tzinfo=timezone.utc)
 
         return super().get_queryset().filter(**kwargs).values(
                 'student__system_key',
