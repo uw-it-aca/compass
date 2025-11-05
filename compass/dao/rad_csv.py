@@ -17,10 +17,11 @@ BULK_CREATE_BUCKET_SIZE = 1000
 
 def read_csv(csv_string):
     """
-    Read CSV string and return list of dictionaries.
+    Yield each row from a CSV string as a dictionary.
     """
     reader = csv.DictReader(StringIO(csv_string))
-    return list(reader)
+    for row in reader:
+        yield row
 
 
 def import_data_from_csv(week, csv_string, pred_file, reload=False):
