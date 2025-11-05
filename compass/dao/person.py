@@ -208,6 +208,8 @@ def get_adviser_caseload(uwnetid):
             'person__uwregid',
             'person__pronouns',
             'person__display_name',
+            'person__surname',
+            'person__first_name',
             'latest_transcript',
             'latest_degree'
         ).annotate(
