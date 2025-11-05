@@ -17,8 +17,9 @@ class TestRadCsv(TestCase):
         with open(self.RAD_FILE) as f:
             csv_string = f.read()
             data = read_csv(csv_string)
-            self.assertEqual(len(data), 4)
-            self.assertIn('uw_netid', data[0].keys())
+            data_list = list(data)
+            self.assertEqual(len(data_list), 4)
+            self.assertIn('uw_netid', data_list[0].keys())
 
     def test_import_from_csv(self):
         with open(self.RAD_FILE) as f:
