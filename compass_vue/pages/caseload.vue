@@ -399,10 +399,11 @@ export default {
       }
 
       // Sort the remaining list
+      const alertOrderMap = new Map(this.alertOrder.map((a, i) => [a, i]));
       filteredPersons.sort((a, b) => {
         if (a.analytics_alert !== b.analytics_alert) {
-          return this.alertOrder.indexOf(a.analytics_alert || "") -
-            this.alertOrder.indexOf(b.analytics_alert || "");
+          return alertOrderMap.get(a.analytics_alert || "") -
+            alertOrderMap.get(b.analytics_alert || "");
         }
         let surnameCmp = a.person__surname.localeCompare(b.person__surname);
         return (surnameCmp !== 0)
