@@ -165,8 +165,8 @@ export default {
         };
       } catch (err) {
         return {
-          scholarship_type: undefined,
-          scholarship_desc: undefined,
+          scholarship_type: "NONE",
+          scholarship_desc: 0,
         };
       }
     },

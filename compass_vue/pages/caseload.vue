@@ -288,10 +288,10 @@ export default {
         { id: "none", value: "None" },
       ],
       scholarshipOptions: [
-        { id: "1", value: "Dean's List" },
-        { id: "3", value: "Acad. Warning" },
-        { id: "4", value: "Acad. Alert" },
-        { id: "0", value: "None" },
+        { id: 1, value: "Dean's List" },
+        { id: 3, value: "Acad. Warning" },
+        { id: 4, value: "Acad. Alert" },
+        { id: 0, value: "None" },
       ],
       classOptions: [
         { id: "Freshman", value: "Freshman" },
