@@ -272,6 +272,7 @@ export default {
         : document.body.getAttribute("data-user-override")
           ? document.body.getAttribute("data-user-override")
           : document.body.getAttribute("data-user-netid"),
+      alertOrder: ["danger", "warning", "success", ""],
       selectedClass: undefined,
       selectedDegree: undefined,
       selectedScholarship: undefined,
@@ -340,7 +341,7 @@ export default {
       }
       return txt;
     },
-    filteredPersons: function () {
+    filteredPersons() {
       let filteredPersons = this.persons;
       if (this.selectedClass) {
         filteredPersons = filteredPersons.filter((person) => {
@@ -396,6 +397,19 @@ export default {
           (person) => person.analytics_alert === this.selectedAlert
         );
       }
+
+      // Sort the remaining list
+      const alertOrderMap = new Map(this.alertOrder.map((a, i) => [a, i]));
+      filteredPersons.sort((a, b) => {
+        if (a.analytics_alert !== b.analytics_alert) {
+          return alertOrderMap.get(a.analytics_alert || "") -
+            alertOrderMap.get(b.analytics_alert || "");
+        }
+        let surnameCmp = a.person__surname.localeCompare(b.person__surname);
+        return (surnameCmp !== 0)
+          ? surnameCmp
+          : a.person__first_name.localeCompare(b.person__first_name);
+      });
       return filteredPersons;
     },
     unsavedPreferences() {
