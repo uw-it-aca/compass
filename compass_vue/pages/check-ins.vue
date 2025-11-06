@@ -68,7 +68,7 @@ import CheckInTableLoading from "@/components/checkin-table-loading.vue";
 import CheckInTableDisplay from "@/components/checkin-table-display.vue";
 import Layout from "@/layout.vue";
 import { getAdviserCheckIns } from "@/utils/data";
-
+import { formatAdviserName } from "@/utils/formats";
 import { BCard, BDropdown, BDropdownItemButton } from "bootstrap-vue-next";
 
 export default {
@@ -84,6 +84,7 @@ export default {
   setup() {
     return {
       getAdviserCheckIns,
+      formatAdviserName,
     };
   },
   data() {
@@ -117,7 +118,7 @@ export default {
         } else {
           txt = "There are " + this.contacts.length + " Check-Ins";
         }
-        txt += " for " + this.adviser.display_name;
+        txt += " for " + this.formatAdviserName(this.adviser);
       }
       return txt += " (" + this.selectedInterval + " days)";
     },

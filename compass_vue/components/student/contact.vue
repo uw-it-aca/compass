@@ -30,7 +30,7 @@
               <td class="ps-3 align-bottom">
                 <div class="small d-flex justify-content-between mb-4">
                   <div>
-                    <strong>{{ contact.app_user.display_name }}</strong>
+                    <strong>{{ formatAdviserName(contact.app_user) }}</strong>
                     <span class="text-light-emphasis ms-1"
                       >({{ contact.app_user.uwnetid }})</span
                     >
@@ -202,7 +202,7 @@ import DeleteContact from "@/components/delete-contact.vue";
 import { Role } from "@/utils/roles";
 import { formatUTCToLocalDateAndTimeZone, getTimeFromNow } from "@/utils/dates";
 import { getStudentContacts } from "@/utils/data";
-
+import { formatAdviserName } from "@/utils/formats";
 import { BCard } from "bootstrap-vue-next";
 
 export default {
@@ -222,6 +222,7 @@ export default {
   setup() {
     return {
       formatUTCToLocalDateAndTimeZone,
+      formatAdviserName,
       getTimeFromNow,
       getStudentContacts,
     };

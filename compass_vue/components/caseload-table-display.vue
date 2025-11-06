@@ -107,6 +107,7 @@
 <script>
 import ProfileMini from "@/components/student/profile-mini.vue";
 import { translateTrueFalse } from "@/utils/translations";
+import { formatAdviserName } from "@/utils/formats";
 
 export default {
   components: {
@@ -135,6 +136,7 @@ export default {
   setup() {
     return {
       translateTrueFalse,
+      formatAdviserName,
     };
   },
   computed: {
@@ -150,7 +152,7 @@ export default {
         if (this.adviser.uwnetid === userNetId) {
           return "You have no students assigned to your caseload.";
         } else {
-          return this.adviser.display_name +
+          return this.formatAdviserName(this.adviser) +
             " has no students assigned to their caseload.";
         }
       }
