@@ -1,10 +1,69 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+{% extends 'supporttools/base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% block content %}
+  <style>
+    table {
+      border-collapse: collapse;
+      table-layout: fixed;
+      width: 100%;
+    }
+    th, td {
+      text-align: left;
+      padding: 8px;
+    }
+    tr:nth-child(even) {background-color: #f2f2f2;}
+    details {
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      padding: 0.5em 0.5em 0;
+    }
+
+    summary {
+      font-weight: bold;
+      margin: -0.5em -0.5em 0;
+      padding: 0.5em;
+    }
+
+    details[open] {
+      padding: 0.5em;
+    }
+
+    details[open] summary {
+      border-bottom: 1px solid #aaa;
+      margin-bottom: 0.5em;
+    }
+  </style>
+  <h1>Retention Analytics Data Admin</h1>
+  <table>
+    <colgroup>
+      <col style="width: auto">
+      <col style="width: auto">
+      <col style="width: auto">
+      <col style="width: auto">
+      <col style="width: auto">
+      <col style="width: auto">
+    </colgroup>
+    <tr>
+      <th>Year</th>
+      <th>Quarter</th>
+      <th>Week</th>
+      <th>Import Date</th>
+      <th>Last Processed </th>
+      <th>Status</th>
+      <th>Reload</th>
+  </tr>
+    {% for import in imports %}
+      <tr>
+        <td>{{ import.week.year }}</td>
+        <td>{{ import.week.quarter }}</td>
+        <td>{{ import.week.week }}</td>
+        <td>{{ import.created_date }}</td>
+        <td>{{ import.processed_date }}</td>
+        <td>{{ import.status }}</td>
+        <td><a href="{% url 'retention_admin_reload' import.id %}">Reload</a></td>
+
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock content %}

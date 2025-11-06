@@ -8,6 +8,8 @@ from django.conf import settings
 from django.views.generic import TemplateView
 from compass.views.pages import LandingView
 from compass.views.admin.contact import OMADContactAdminView
+from compass.views.admin.retention import (RetentionAdminView,
+                                           RetentionReloadView)
 from compass.views.api.student import (
     StudentContactsView,
     StudentSchedulesView,
@@ -186,6 +188,16 @@ urlpatterns += [
         r"^api/internal/support/omad_contact/$",
         OMADContactAdminView.as_view(),
         name="omad_contact_admin",
+    ),
+    re_path(
+        r"^api/internal/support/retention_admin/reload/(?P<import_id>[\w]+)/$",
+        RetentionAdminView.as_view(),
+        name="retention_admin_reload",
+    ),
+    re_path(
+        r"^api/internal/support/retention_admin/$",
+        RetentionAdminView.as_view(),
+        name="retention_admin",
     ),
     re_path(
         r"^api/internal/support/$",
