@@ -40,7 +40,7 @@ class RADImport(models.Model):
         Get the next week to process, assumes 10 weeks per quarter
         """
 
-        last_week_imported = (cls.objects.all()
+        last_week_imported = (cls.objects.filter(import_status=cls.SUCCESS)
                               .order_by('-week__key').first())
         if last_week_imported is None:
             raise cls.DoesNotExist("No previous imports found")
