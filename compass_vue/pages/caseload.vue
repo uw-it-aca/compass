@@ -241,7 +241,7 @@ import CaseloadTableDisplay from "@/components/caseload-table-display.vue";
 import CaseloadTableLoading from "@/components/caseload-table-loading.vue";
 import Layout from "@/layout.vue";
 import { getAdviserCaseload, savePreferences } from "@/utils/data";
-
+import { formatAdviserName } from "@/utils/formats";
 import { BCard, BDropdown, BDropdownItemButton } from "bootstrap-vue-next";
 
 export default {
@@ -258,6 +258,7 @@ export default {
   setup() {
     return {
       getAdviserCaseload,
+      formatAdviserName,
     };
   },
   data() {
@@ -325,7 +326,7 @@ export default {
     caseloadHeaderText() {
       let txt = "Caseload";
       if (!this.errorResponse && !this.isLoading) {
-        txt += " for " + this.adviser.display_name;
+        txt += " for " + this.formatAdviserName(this.adviser);
         if (this.persons.length === 0) {
             txt += " (No students)";
         } else if (this.persons.length === 1) {

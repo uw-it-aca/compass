@@ -8,4 +8,10 @@ function formatPhoneNumber(phoneNumber) {
   return null;
 }
 
-export { formatPhoneNumber };
+function formatAdviserName(person) {
+  return (person.preferred_first_name && person.preferred_surname)
+    ? person.preferred_first_name + " " + person.preferred_surname
+    : person.display_name;
+}
+
+export { formatPhoneNumber, formatAdviserName };

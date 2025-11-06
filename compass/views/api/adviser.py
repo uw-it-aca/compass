@@ -40,10 +40,7 @@ class AdviserCheckInsView(BaseAPIView):
             days = 3
 
         response_data = {
-            'adviser': {
-                'uwnetid': adviser.uwnetid,
-                'display_name': adviser.display_name,
-            },
+            'adviser': adviser.to_dict(),
             'contacts': [],
         }
 
@@ -90,10 +87,7 @@ class AdviserCaseloadView(BaseAPIView):
                 f'Adviser not found: {adviser_netid}')
 
         response_data = {
-            'adviser': {
-                'uwnetid': adviser.uwnetid,
-                'display_name': adviser.display_name,
-            },
+            'adviser': adviser.to_dict(),
             'caseload': [],
         }
 

@@ -48,6 +48,7 @@
 <script>
 import ProfileMini from "@/components/student/profile-mini.vue";
 import { formatDate } from "@/utils/dates";
+import { formatAdviserName } from "@/utils/formats";
 
 export default {
   components: {
@@ -72,6 +73,7 @@ export default {
   setup() {
     return {
       formatDate,
+      formatAdviserName,
     };
   },
   computed: {
@@ -84,7 +86,7 @@ export default {
         if (this.adviser.uwnetid === userNetId) {
           txt = "You have";
         } else {
-          txt = this.adviser.display_name + " has";
+          txt = this.formatAdviserName(this.adviser) + " has";
         }
         return txt += (
             " not met with any students within the selected time period.");
