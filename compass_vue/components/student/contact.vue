@@ -29,12 +29,13 @@
             <tr v-for="contact in contacts" :key="contact.id">
               <td class="ps-3 align-bottom">
                 <div class="small d-flex justify-content-between mb-4">
-                  <div>
+                  <div v-if="contact.app_user.uwnetid">
                     <strong>{{ formatAdviserName(contact.app_user) }}</strong>
                     <span class="text-light-emphasis ms-1"
                       >({{ contact.app_user.uwnetid }})</span
                     >
                   </div>
+                  <div v-else><strong>Unknown</strong></div>
                   <div class="text-light-emphasis">
                     <i class="bi bi-calendar-event text-body-tertiary me-1"></i>
                     {{ getTimeFromNow(contact.checkin_date) }}
