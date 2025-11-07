@@ -94,8 +94,7 @@
                     <span class="small text-muted visually-hidden">Parent</span>
                     <div class="text-danger fs-8">
                       <i class="bi bi-exclamation-octagon-fill me-1"></i>Parent
-                      contacts should not be discussed this contact with their
-                      student.
+                      contacts should not be discussed with their student.
                     </div>
                   </div>
                 </template>
