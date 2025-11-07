@@ -23,8 +23,8 @@
           </div>
           <div>
             <div>
-              <strong>{{ visit.course_code }}</strong>
-              <small>({{ visitDuration(visit) }}min)</small>
+              <strong>{{ visit.course_code }}</strong>&nbsp;
+              <small>({{ visitDuration(visit) }} min)</small>
             </div>
             <div class="text-muted small">
               {{ visitDate(visit) }} {{ visitCheckin(visit) }} -
