@@ -315,14 +315,12 @@
                 <template #value>
                   <address class="mb-0">
                     <div>{{ person.student.perm_addr_line1 }}</div>
-                    <div v-show="person.student.perm_addr_line2 != ''">
+                    <div v-show="person.student.perm_addr_line2 !== ''">
                       {{ person.student.perm_addr_line2 }}
                     </div>
                     <div>
-                      {{ person.student.perm_addr_city
-                      }}<span v-show="person.student.perm_addr_state ! ''"
-                        >,</span
-                      >
+                      {{ person.student.perm_addr_city }}
+                      <span v-show="person.student.perm_addr_state !== ''">,</span>
                       {{ person.student.perm_addr_state }}
                       {{ person.student.perm_addr_5digit_zip }}
                     </div>
