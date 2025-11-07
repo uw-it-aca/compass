@@ -291,19 +291,19 @@
                 <template #value>
                   <address class="mb-0">
                     <div>{{ person.student.local_addr_line1 }}</div>
-                    <div v-show="person.student.local_addr_line2 !== null">
+                    <div v-show="person.student.local_addr_line2 !== ''">
                       {{ person.student.local_addr_line2 }}
                     </div>
                     <div>
                       {{ person.student.local_addr_city
-                      }}<span v-show="person.student.local_addr_state !== null"
+                      }}<span v-show="person.student.local_addr_state !== ''"
                         >,</span
                       >
                       {{ person.student.local_addr_state }}
                       {{ person.student.local_addr_5digit_zip }}
                     </div>
                   </address>
-                  <div v-show="person.student.local_phone_number !== null">
+                  <div v-show="person.student.local_phone_number !== ''">
                     {{ formatPhoneNumber(person.student.local_phone_number) }}
                   </div>
                 </template>
@@ -315,22 +315,22 @@
                 <template #value>
                   <address class="mb-0">
                     <div>{{ person.student.perm_addr_line1 }}</div>
-                    <div v-show="person.student.perm_addr_line2 !== null">
+                    <div v-show="person.student.perm_addr_line2 != ''">
                       {{ person.student.perm_addr_line2 }}
                     </div>
                     <div>
                       {{ person.student.perm_addr_city
-                      }}<span v-show="person.student.perm_addr_state !== null"
+                      }}<span v-show="person.student.perm_addr_state ! ''"
                         >,</span
                       >
                       {{ person.student.perm_addr_state }}
                       {{ person.student.perm_addr_5digit_zip }}
                     </div>
-                    <div v-show="person.student.perm_addr_country !== null">
+                    <div v-show="person.student.perm_addr_country !== ''">
                       {{ person.student.perm_addr_country }}
                     </div>
                   </address>
-                  <div v-show="person.student.perm_phone_number !== null">
+                  <div v-show="person.student.perm_phone_number !== ''">
                     {{ formatPhoneNumber(person.student.perm_phone_number) }}
                   </div>
                 </template>
@@ -338,27 +338,27 @@
             </li>
             <li>
               <KeyValue variant="address">
-                <template #key>Parent Address</template>
+                <template #key>Family Address</template>
                 <template #value>
                   <div>{{ person.student.parent_name }}</div>
                   <address class="mb-0">
                     <div>{{ person.student.parent_addr_line1 }}</div>
-                    <div v-show="person.student.parent_addr_line2 !== null">
+                    <div v-show="person.student.parent_addr_line2 !== ''">
                       {{ person.student.parent_addr_line2 }}
                     </div>
                     <div>
                       {{ person.student.parent_addr_city
-                      }}<span v-show="person.student.parent_addr_state !== null"
+                      }}<span v-show="person.student.parent_addr_state !== ''"
                         >,</span
                       >
                       {{ person.student.parent_addr_state }}
                       {{ person.student.parent_addr_5digit_zip }}
                     </div>
-                    <div v-show="person.student.parent_addr_country !== null">
+                    <div v-show="person.student.parent_addr_country !== ''">
                       {{ person.student.parent_addr_country }}
                     </div>
                   </address>
-                  <div v-show="person.student.parent_phone_number !== null">
+                  <div v-show="person.student.parent_phone_number !== ''">
                     {{ formatPhoneNumber(person.student.parent_phone_number) }}
                   </div>
                 </template>
