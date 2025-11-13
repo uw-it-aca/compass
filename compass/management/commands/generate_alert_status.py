@@ -30,6 +30,7 @@ class Command(BaseCommand):
             alert_objects.append(StudentAlertStatus(
                 uwnetid=uwnetid,
                 alert_status=StudentAlertStatus.get_alert_class_from_scores(
-                    score_data[uwnetid])
+                    score_data[uwnetid]),
+                source_week=current_week
             ))
         StudentAlertStatus.objects.bulk_create(alert_objects)

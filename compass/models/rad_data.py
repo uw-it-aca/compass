@@ -4,8 +4,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from compass.dao.person import get_person_by_uwregid
-from compass.dao.term import current_week, current_term, week_of_term
-from compass.dao import current_datetime
+from compass.dao.term import current_week
 
 
 class RADImport(models.Model):
@@ -79,6 +78,8 @@ class StudentAlertStatus(models.Model):
                                     null=True,
                                     max_length=2)
     uwnetid = models.CharField(max_length=50, unique=True)
+    source_week = models.ForeignKey('RADWeek', on_delete=models.CASCADE,
+                                    null=True)
 
     class Meta:
         indexes = [

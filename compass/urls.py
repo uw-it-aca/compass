@@ -7,9 +7,10 @@ from compass.admin import admin_site
 from django.conf import settings
 from django.views.generic import TemplateView
 from compass.views.pages import LandingView
-from compass.views.admin.contact import OMADContactAdminView
-from compass.views.admin.retention import (RetentionAdminView,
-                                           RetentionReloadView)
+from compass.views.support.contact import OMADContactAdminView
+from compass.views.support.retention import (RetentionAdminView,
+                                             RetentionManageView,
+                                             RetentionReloadAlertsView)
 from compass.views.api.student import (
     StudentContactsView,
     StudentSchedulesView,
@@ -195,9 +196,14 @@ urlpatterns += [
         name="photo",
     ),
     re_path(
-        r"^api/internal/support/retention_admin/reload/(?P<import_id>[\w]+)/$",
-        RetentionAdminView.as_view(),
-        name="retention_admin_reload",
+        r"^api/internal/support/retention_admin/manage/(?P<import_id>[\w]+)/$",
+        RetentionManageView.as_view(),
+        name="retention_admin_manage",
+    ),
+    re_path(
+        r"^api/internal/support/retention_admin/reload_alerts/$",
+        RetentionReloadAlertsView.as_view(),
+        name="retention_alert_reload",
     ),
     re_path(
         r"^api/internal/support/$",
