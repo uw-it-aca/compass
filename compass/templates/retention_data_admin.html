@@ -2,68 +2,73 @@
 {% load static %}
 
 {% block content %}
-  <style>
-    table {
-      border-collapse: collapse;
-      table-layout: fixed;
-      width: 100%;
-    }
-    th, td {
-      text-align: left;
-      padding: 8px;
-    }
-    tr:nth-child(even) {background-color: #f2f2f2;}
-    details {
-      border: 1px solid #aaa;
-      border-radius: 4px;
-      padding: 0.5em 0.5em 0;
-    }
-
-    summary {
-      font-weight: bold;
-      margin: -0.5em -0.5em 0;
-      padding: 0.5em;
-    }
-
-    details[open] {
-      padding: 0.5em;
-    }
-
-    details[open] summary {
-      border-bottom: 1px solid #aaa;
-      margin-bottom: 0.5em;
-    }
-  </style>
   <h1>Retention Analytics Data Admin</h1>
-  <table>
-    <colgroup>
-      <col style="width: auto">
-      <col style="width: auto">
-      <col style="width: auto">
-      <col style="width: auto">
-      <col style="width: auto">
-      <col style="width: auto">
-    </colgroup>
-    <tr>
-      <th>Year</th>
-      <th>Quarter</th>
-      <th>Week</th>
-      <th>Import Date</th>
-      <th>Last Processed </th>
-      <th>Status</th>
-      <th>Reload</th>
-  </tr>
+  <h2>Canvas Analytics Data</h2>
+  <table id="canvas_analytics_table" class="table">
+    <thead>
+      <tr>
+        <th hidden>key</th>
+        <th>Year</th>
+        <th>Quarter</th>
+        <th>Week</th>
+        <th>Import Date</th>
+        <th>Last Processed </th>
+        <th>Status</th>
+        <th>Students With Scores</th>
+        <th>Canvas Scores Imported</th>
+        <th>Signin Scores Imported</th>
+        <th>Reload</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
     {% for import in imports %}
       <tr>
+        <td hidden>{{ import.week.key }}</td>
         <td>{{ import.week.year }}</td>
         <td>{{ import.week.quarter }}</td>
         <td>{{ import.week.week }}</td>
         <td>{{ import.created_date }}</td>
         <td>{{ import.processed_date }}</td>
-        <td>{{ import.status }}</td>
-        <td><a href="{% url 'retention_admin_reload' import.id %}">Reload</a></td>
-
+        <td>{{ import.get_import_status_display }}</td>
+        <td>{{ import.student_count }}</td>
+        <td>{{ import.total_scores }}</td>
+        <td>{{ import.signin_scores }}</td>
+        <td><button class="reload-btn" value="{{ import.id }}">Reload</button></td>
+        <td><button class="delete-btn" value="{{ import.id }}">Delete</button></td>
       </tr>
     {% endfor %}
+    </tbody>
   </table>
+  <h2>Student Alert Data</h2>
+  <p><strong>Source Week: </strong> {{ alert_data.source_week.year }}-{{ alert_data.source_week.quarter }}-week-{{ alert_data.source_week.week }}</p>
+  <button id="reload_alerts_btn">Calculate alerts from most recently imported week</button>
+  {% if alert_data %}
+  <table id="prediction_table" class="table">
+    <thead>
+    <tr>
+      <th>Students With Alert</th>
+      <th>Total Success</th>
+      <th>Total Warning</th>
+      <th>Total Failure</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>{{ alert_data.total_alerts }}</td>
+      <td>{{ alert_data.total_success }}</td>
+      <td>{{ alert_data.total_warning }}</td>
+      <td>{{ alert_data.total_danger }}</td>
+    </tr>
+    </tbody>
+  </table>
+  {% else %}
+    <p>No prediction data loaded.</p>
+  {% endif %}
+
+  <script src="{% static 'compass/js/vendor/jquery-3.7.1.min.js' %}"></script>
+  <link href="https://cdn.datatables.net/v/bs5/dt-2.3.4/datatables.min.css" rel="stylesheet" integrity="sha384-i0jVPhw/X00l5EPvMOBv0lcGYXlSQGOqNYpMK/406rxta9oBump0IZJIHzvtf3+H" crossorigin="anonymous">
+
+  <script src="https://cdn.datatables.net/v/bs5/dt-2.3.4/datatables.min.js" integrity="sha384-jVoHjtunWKmr2zpSki5PSXfFYRsTQQm1uk4wpf45zuYxast668XkB2fJL8PjloNc" crossorigin="anonymous"></script>
+  <script src="{% static 'compass/js/retention_data_admin.js' %}"></script>
 {% endblock content %}

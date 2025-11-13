@@ -2,13 +2,15 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
+from uw_saml.decorators import group_required
 from compass.models import OMADContactQueue
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(group_required(settings.COMPASS_SUPPORT_GROUP),
+                  name='dispatch')
 class OMADContactAdminView(TemplateView):
     template_name = 'omad_contact_admin.html'
 
