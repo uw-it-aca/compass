@@ -69,6 +69,16 @@ urlpatterns += [
         template_name="robots.txt", content_type="text/plain")),
     re_path(r"^admin", admin_site.urls),
     re_path(
+        r"^support/omad_contact/$",
+        OMADContactAdminView.as_view(),
+        name="omad_contact_admin",
+    ),
+    re_path(
+        r"^support/retention_admin/$",
+        RetentionAdminView.as_view(),
+        name="retention_admin",
+    ),
+    re_path(
         r"^unauthorized-user$",
         TemplateView.as_view(template_name="unauthorized-user.html"),
         name="unauthorized_user",
@@ -185,19 +195,9 @@ urlpatterns += [
         name="photo",
     ),
     re_path(
-        r"^api/internal/support/omad_contact/$",
-        OMADContactAdminView.as_view(),
-        name="omad_contact_admin",
-    ),
-    re_path(
         r"^api/internal/support/retention_admin/reload/(?P<import_id>[\w]+)/$",
         RetentionAdminView.as_view(),
         name="retention_admin_reload",
-    ),
-    re_path(
-        r"^api/internal/support/retention_admin/$",
-        RetentionAdminView.as_view(),
-        name="retention_admin",
     ),
     re_path(
         r"^api/internal/support/$",
