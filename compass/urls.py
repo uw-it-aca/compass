@@ -10,7 +10,8 @@ from compass.views.pages import LandingView
 from compass.views.support.contact import OMADContactAdminView
 from compass.views.support.retention import (RetentionAdminView,
                                              RetentionManageView,
-                                             RetentionReloadAlertsView)
+                                             RetentionReloadAlertsView,
+                                             RetentionLoadFromFile)
 from compass.views.api.student import (
     StudentContactsView,
     StudentSchedulesView,
@@ -204,6 +205,11 @@ urlpatterns += [
         r"^api/internal/support/retention_admin/reload_alerts/$",
         RetentionReloadAlertsView.as_view(),
         name="retention_alert_reload",
+    ),
+    re_path(
+        r"^api/internal/support/retention_admin/file/(?P<week_string>[\w-]+)/$",
+        RetentionLoadFromFile.as_view(),
+        name="retention_reload_file",
     ),
     re_path(
         r"^api/internal/support/$",

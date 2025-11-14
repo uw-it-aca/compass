@@ -42,7 +42,7 @@ Compass.AdminSupport = (function($){
       window.location.reload();
     });
   }
-  function reload_alerts(import_id) {
+  function reload_alerts() {
     var url = '/api/internal/support/retention_admin/reload_alerts/';
     var csrf = get_csrf_token();
     $.ajax({url: url,
@@ -52,40 +52,69 @@ Compass.AdminSupport = (function($){
       window.location.reload();
     });
   }
+  function load_file(week_string) {
+    var url = '/api/internal/support/retention_admin/file/' + week_string + '/';
+    var csrf = get_csrf_token();
+    $.ajax({url: url,
+      method: 'PUT',
+      headers : {'X-CSRFToken': csrf}
+    }).done(function (result) {
+      window.location.reload();
+    });
+  }
+
   return {
     get_csrf_token: get_csrf_token,
     reload_retention_import: reload_retention_import,
     delete_retention_import: delete_retention_import,
-    reload_alerts: reload_alerts
+    reload_alerts: reload_alerts,
+    load_file: load_file,
   };
 }(jQuery));
 
 (function ($) {
-    "use strict";
-    $(document).ready(function () {
-        $('.reload-btn').on('click', function(){
-          var import_id = $(this).val();
-          Compass.AdminSupport.reload_retention_import(import_id);
-        });
-        $('.delete-btn').on('click', function(){
-          var import_id = $(this).val();
-          Compass.AdminSupport.delete_retention_import(import_id);
-        });
-        $('#reload_alerts_btn').on('click', function(){
-          Compass.AdminSupport.reload_alerts();
-        });
-        $('#canvas_analytics_table').DataTable({
-          autoWidth: true,
-          pageLength: 10,
-          searching: false,
-          lengthChange: false,
-          columnDefs: [
-            {
-              targets: '_all',
-              orderable: false
-            }
-          ],
-          order: [[0, 'desc']],
-        });
+  "use strict";
+  $(document).ready(function () {
+    $('.reload-btn').on('click', function(){
+      var import_id = $(this).val();
+      Compass.AdminSupport.reload_retention_import(import_id);
     });
+    $('.delete-btn').on('click', function(){
+      var import_id = $(this).val();
+      Compass.AdminSupport.delete_retention_import(import_id);
+    });
+    $('#reload_alerts_btn').on('click', function(){
+      Compass.AdminSupport.reload_alerts();
+    });
+    $('.reload-file-btn').on('click', function(){
+      var week_string = $(this).val();
+      Compass.AdminSupport.load_file(week_string);
+    });
+    $('#canvas_analytics_table').DataTable({
+      autoWidth: true,
+      pageLength: 10,
+      searching: false,
+      lengthChange: false,
+      columnDefs: [
+        {
+          targets: '_all',
+          orderable: false
+        }
+      ],
+      order: [[0, 'desc']],
+    });
+    $('#canvas_analytics_files_table').DataTable({
+      autoWidth: true,
+      pageLength: 10,
+      searching: false,
+      lengthChange: false,
+      columnDefs: [
+        {
+          targets: '_all',
+          orderable: false
+        }
+      ],
+      order: [[0, 'desc']],
+    });
+  });
 }(jQuery));
