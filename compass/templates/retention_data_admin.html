@@ -3,11 +3,17 @@
 
 {% block content %}
   <h1>Retention Analytics Data Admin</h1>
-  <h2>Canvas Analytics Data</h2>
-  <table id="canvas_analytics_table" class="table">
+  <h2>Canvas Analytics Data </h2>
+  <p>Compass jobs that fetch data from the Canvas Analytics GCS Bucket</p>
+  <p>Runs weekly at 20:00 Sunday PST (04:00 Monday UTC), imports most recent week in bucket if it has not been imported already</p>
+  <p><strong>Reload:</strong> Removes the selected week's data from Compass and attempts to re-import from Canvas Analytics</p>
+  <p><strong>Delete:</strong> Removes the selected week's data from Compass, if most recent week deleted, alert status will need to be re-calculated</p>
+  <p><em>Both of these actions have user facing impacts, if 'good' data is removed and not replaced users will be missing data</em></p>
+  <table id="canvas_analytics_table" class="table nowrap">
     <thead>
       <tr>
         <th hidden>key</th>
+        <th>Import ID</th>
         <th>Year</th>
         <th>Quarter</th>
         <th>Week</th>
@@ -25,6 +31,7 @@
     {% for import in imports %}
       <tr>
         <td hidden>{{ import.week.key }}</td>
+        <td>{{ import.id }}</td>
         <td>{{ import.week.year }}</td>
         <td>{{ import.week.quarter }}</td>
         <td>{{ import.week.week }}</td>
@@ -40,10 +47,19 @@
     {% endfor %}
     </tbody>
   </table>
-  <h2>Student Alert Data</h2>
-  <p><strong>Source Week: </strong> {{ alert_data.source_week.year }}-{{ alert_data.source_week.quarter }}-week-{{ alert_data.source_week.week }}</p>
-  <button id="reload_alerts_btn">Calculate alerts from most recently imported week</button>
-  {% if alert_data %}
+  <h2>Student Alert Status</h2>
+  <p>Calculates student alert status (colored rings) from per-course predictions, uses the most recently imported week</p>
+  <p>This is automatically run when data is loaded/reloaded and always builds alerts from the most recent analytics data in Compass</p>
+  <p><strong>Current alerts generated from week: </strong>
+    {% if alert_data.source_week %}
+    {{ alert_data.source_week.year }}-{{ alert_data.source_week.quarter }}-week-{{ alert_data.source_week.week }}
+    {% else %}
+    No alerts calculated yet
+    {% endif %}
+  </p>
+  <button id="reload_alerts_btn">Calculate alerts from {{ alert_data.current_week.year }}-{{ alert_data.current_week.quarter }}-week-{{ alert_data.current_week.week }}</button>
+  <p><em>Manually running this should rarely be needed, only if the current week was deleted or a transient error prevented automatic alert generation</em></p>
+  {% if alert_data.source_week %}
   <table id="prediction_table" class="table">
     <thead>
     <tr>
@@ -64,6 +80,35 @@
   </table>
   {% else %}
     <p>No prediction data loaded.</p>
+  {% endif %}
+  <h2>Canvas Analytics Files</h2>
+    <p>List of files in Canvas Analytics GCS bucket, Compas imports data from these files</p>
+    <p>Generated weekly by Canvas Analytics project at 06:00 Sunday PST (14:00 Sunday UTC)</p>
+    <p><strong>Associated Import ID:</strong>The Compass Import ID (see table at top) for the file, "Not Imported" if data not in Compass</p>
+    <p><strong>Reload:</strong>  Will attempt to load or reload the specified data file in Compass, useful if Compass hasn't attempted an import for that week</p>
+    {% if file_data %}
+    <table id="canvas_analytics_files_table" class="table nowrap">
+      <thead>
+        <tr>
+          <th hidden>Key</th>
+          <th>File Name</th>
+          <th>Associated Import ID</th>
+          <th>Reload</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for file in file_data %}
+        <tr>
+          <td hidden>{{ file.week_key }}</td>
+          <td>{{ file.filename }}</td>
+          <td>{{ file.import_id }}</td>
+          <td><button class="reload-file-btn" value="{{ file.week_string }}">Reload</button></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>Cannot load files list from GCS bucket.</p>
   {% endif %}
 
   <script src="{% static 'compass/js/vendor/jquery-3.7.1.min.js' %}"></script>

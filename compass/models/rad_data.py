@@ -282,6 +282,11 @@ class RADWeek(models.Model):
         return qtr_map[sis_term]
 
     @classmethod
+    def build_week_key(cls, year, quarter, week):
+        padded_week = str(week).zfill(2)
+        return int(f"{year}{cls.get_quarter_number(quarter)}{padded_week}")
+
+    @classmethod
     def get_or_create_week(cls, year, quarter, week):
         """
         Create week sorting key in format YYYYQWW
@@ -289,9 +294,7 @@ class RADWeek(models.Model):
         try:
             return cls.objects.get(year=year, quarter=quarter, week=week)
         except cls.DoesNotExist:
-
-            padded_week = str(week).zfill(2)
-            key = int(f"{year}{cls.get_quarter_number(quarter)}{padded_week}")
+            key = cls.build_week_key(year, quarter, week)
             return cls.objects.create(year=year,
                                       quarter=quarter,
                                       week=week,
