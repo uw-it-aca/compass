@@ -173,6 +173,11 @@ externalSecrets:
       data:
         - name: uw-idp-cert
           property: cert
+    - name: test.compass.uw.edu-azure-storage-secrets
+      externalKey: compass/shared/azure-storage
+      data:
+        - name: blob-url
+          property: blob-url
 
 environmentVariablesSecrets:
   djangoSecret:
@@ -227,6 +232,10 @@ environmentVariablesSecrets:
     name: STORAGE_PROJECT_ID
     secretName: test.compass.uw.edu-shared-secrets
     secretKey: storage-project-id
+  azureStorageBlobUrl:
+    name: AZURE_BLOB_STORAGE_URL
+    secretName: test.compass.uw.edu-azure-storage-secrets
+    secretKey: blob-url
 
 daemon:
   enabled: true
