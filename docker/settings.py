@@ -229,3 +229,5 @@ LOGGING = {
         },
     },
 }
+
+AZURE_BLOB_STORAGE_URL = os.getenv("AZURE_BLOB_STORAGE_URL", default=None)
