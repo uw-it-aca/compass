@@ -19,8 +19,8 @@ class PhotoDAO():
             string.ascii_uppercase + string.digits) for _ in range(16))
 
         data = {'image_size': image_size}
-        expires = getattr(settings, 'IDCARD_TOKEN_EXPIRES', 60 * 5)
-        cache.set(self.cache_key(photo_key), data, timeout=expires)
+        cache.set(self.cache_key(photo_key), data,
+                  timeout=settings.IDCARD_TOKEN_EXPIRES)
         return photo_key
 
     def get_photo(self, uwregid, photo_key):

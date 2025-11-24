@@ -135,7 +135,7 @@ PERSISTENT_MESSAGE_AUTH_MODULE = (
 ALLOW_USER_OVERRIDE_FOR_WRITE = os.getenv("ENV", "localdev") != "prod"
 
 # IDCard photo config
-IDCARD_TOKEN_EXPIRES = 60 * 5
+IDCARD_TOKEN_EXPIRES = 28800  # 8 hours
 
 # PDS config, default values are for localdev
 DATABASES["uw_person"] = {

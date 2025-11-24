@@ -14,7 +14,7 @@
             <div class="d-flex">
               <i class="bi bi-person-square text-body-tertiary me-3"></i>
               <div class="flex-fill">
-                <strong>{{ adviser.employee.person.display_name }}</strong>
+                <strong>{{ formatAdviserName(adviser.employee.person) }}</strong>
                 ({{ adviser.employee.person.uwnetid }})<br /><span
                   class="small text-muted text-capitalize"
                   >{{ adviser.employee.person.pronouns }}</span
@@ -40,7 +40,7 @@
             <div class="d-flex">
               <i class="bi bi-person-square text-body-tertiary me-3"></i>
               <div class="flex-fill">
-                <strong>{{ adviser.employee.person.display_name }}</strong>
+                <strong>{{ formatAdviserName(adviser.employee.person) }}</strong>
                 ({{ adviser.employee.person.uwnetid }})<br /><span
                   class="small text-muted text-capitalize"
                   >{{ adviser.employee.person.pronouns }}</span
@@ -68,6 +68,7 @@
 </template>
 
 <script>
+import { formatAdviserName } from "@/utils/formats";
 import { BCard } from "bootstrap-vue-next";
 
 export default {
@@ -80,6 +81,11 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  setup() {
+    return {
+      formatAdviserName,
+    };
   },
   data() {
     return {

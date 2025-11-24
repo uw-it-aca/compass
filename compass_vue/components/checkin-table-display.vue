@@ -1,5 +1,9 @@
 <template>
-  <div v-if="contacts.length > 0" class="table-responsive m-n3">
+  <div v-if="error" class="p-3">
+    Compass encountered an error while searching for Check-Ins:
+    <p><strong>{{ error.message }}</strong></p>
+  </div>
+  <div v-else-if="contacts.length > 0" class="table-responsive m-n3">
     <table class="table m-0">
       <thead class="text-muted small">
         <tr>
@@ -38,12 +42,13 @@
       </tbody>
     </table>
   </div>
-  <div v-else class="p-3">You have not met with any students recently.</div>
+  <div v-else class="p-3">{{ zeroCheckinsText }}</div>
 </template>
 
 <script>
 import ProfileMini from "@/components/student/profile-mini.vue";
 import { formatDate } from "@/utils/dates";
+import { formatAdviserName } from "@/utils/formats";
 
 export default {
   components: {
@@ -51,17 +56,42 @@ export default {
   },
   props: {
     contacts: {
-      type: Object,
+      type: Array,
       required: true,
+    },
+    adviser: {
+      type: Object,
+      required: false,
+      default: null,
+    },
+    error: {
+      type: Object,
+      required: false,
+      default: null,
     },
   },
   setup() {
     return {
       formatDate,
+      formatAdviserName,
     };
   },
-  data() {
-    return {};
+  computed: {
+    zeroCheckinsText() {
+      let userNetId = document.body.getAttribute("data-user-override") ||
+        document.body.getAttribute("data-user-netid"),
+      txt = "";
+
+      if (this.adviser) {
+        if (this.adviser.uwnetid === userNetId) {
+          txt = "You have";
+        } else {
+          txt = this.formatAdviserName(this.adviser) + " has";
+        }
+        return txt += (
+            " not met with any students within the selected time period.");
+      }
+    },
   },
 };
 </script>

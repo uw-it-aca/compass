@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from django.test import override_settings
+from unittest.mock import patch
 from compass.tests import ApiTest
 from compass.models import AccessGroup, Contact, AppUser, Student, ContactType
 from datetime import datetime, timezone
@@ -9,17 +10,77 @@ import json
 
 
 class AdviserCheckInsAPITest(ApiTest):
+
     def test_get(self):
         response = self.get_response("adviser_checkins",
                                      "jadviser",
-                                     kwargs={"adviser_netid": "jadviser"})
+                                     kwargs={"adviser_netid": "jadviser"},
+                                     get_args={"days": "3"})
         self.assertEqual(response.status_code, 200, "OK")
-        self.assertEqual(response.data, [])
+        self.assertEqual(response.data, {
+            "adviser": {
+                "id": 4, "uwnetid": "jadviser",
+                "uwregid": "5136CCB9F66711D5BE060004AC494FF0",
+                "pronouns": "He/him/his", "full_name": "Jay Adviser",
+                "display_name": "Jay Adviser", "first_name": "Jay",
+                "surname": "Adviser", "preferred_first_name": None,
+                "preferred_middle_name": None, "preferred_surname": None,
+                "whitepages_publish": False, "is_active_student": False,
+                "is_active_employee": True, "last_changed": None,
+                "system_key": None, "prior_uwnetids": ["jadviser1"],
+                "prior_uwregids": [],
+            },
+            "contacts": []
+        })
 
         response = self.get_response("adviser_checkins",
                                      "jadviser",
-                                     kwargs={"adviser_netid": "1a1a1a1"})
+                                     kwargs={"adviser_netid": "1a1a1a1"},
+                                     get_args={"days": "3"})
         self.assertEqual(response.status_code, 400, "Invalid uwnetid")
+
+        response = self.get_response("adviser_checkins",
+                                     "jadviser",
+                                     kwargs={"adviser_netid": "jadviser2"},
+                                     get_args={"days": "3"})
+        self.assertEqual(response.status_code, 404, "Not found uwnetid")
+
+    @patch("compass.views.api.adviser.Contact")
+    def test_days_param(self, mock_contact_cls):
+        response = self.get_response("adviser_checkins",
+                                     "jadviser",
+                                     kwargs={"adviser_netid": "jadviser"},
+                                     get_args={"days": "14"})
+        mock_contact_cls.objects.by_adviser.assert_called_with(
+            "jadviser", from_days=14)
+
+        response = self.get_response("adviser_checkins",
+                                     "jadviser",
+                                     kwargs={"adviser_netid": "jadviser"},
+                                     get_args={"days": ""})
+        mock_contact_cls.objects.by_adviser.assert_called_with(
+            "jadviser", from_days=3)
+
+        response = self.get_response("adviser_checkins",
+                                     "jadviser",
+                                     kwargs={"adviser_netid": "jadviser"},
+                                     get_args={"days": "seven"})
+        mock_contact_cls.objects.by_adviser.assert_called_with(
+            "jadviser", from_days=3)
+
+        response = self.get_response("adviser_checkins",
+                                     "jadviser",
+                                     kwargs={"adviser_netid": "jadviser"},
+                                     get_args={"days": "2"})
+        mock_contact_cls.objects.by_adviser.assert_called_with(
+            "jadviser", from_days=3)
+
+        response = self.get_response("adviser_checkins",
+                                     "jadviser",
+                                     kwargs={"adviser_netid": "jadviser"},
+                                     get_args={"days": "92"})
+        mock_contact_cls.objects.by_adviser.assert_called_with(
+            "jadviser", from_days=3)
 
 
 class AdviserCaseloadAPITest(ApiTest):
@@ -28,12 +89,29 @@ class AdviserCaseloadAPITest(ApiTest):
                                      "jadviser",
                                      kwargs={"adviser_netid": "jadviser"})
         self.assertEqual(response.status_code, 200, "OK")
-        self.assertEqual(len(response.data), 3)
+        self.assertEqual(response.data["adviser"], {
+            "id": 4, "uwnetid": "jadviser",
+            "uwregid": "5136CCB9F66711D5BE060004AC494FF0",
+            "pronouns": "He/him/his", "full_name": "Jay Adviser",
+            "display_name": "Jay Adviser", "first_name": "Jay",
+            "surname": "Adviser", "preferred_first_name": None,
+            "preferred_middle_name": None, "preferred_surname": None,
+            "whitepages_publish": False, "is_active_student": False,
+            "is_active_employee": True, "last_changed": None,
+            "system_key": None, "prior_uwnetids": ["jadviser1"],
+            "prior_uwregids": []
+        })
+        self.assertEqual(len(response.data["caseload"]), 3)
 
         response = self.get_response("adviser_caseload",
                                      "jadviser",
-                                     kwargs={"adviser_netid": "111111"})
+                                     kwargs={"adviser_netid": "1a1a1a1"})
         self.assertEqual(response.status_code, 400, "Invalid uwnetid")
+
+        response = self.get_response("adviser_caseload",
+                                     "jadviser",
+                                     kwargs={"adviser_netid": "jadviser2"})
+        self.assertEqual(response.status_code, 404, "Not found uwnetid")
 
 
 class ContactAPITest(ApiTest):
@@ -56,7 +134,7 @@ class ContactAPITest(ApiTest):
                                         slug="contact")
         self.contact_type.save()
 
-    @override_settings(CURRENT_DATETIME_OVERRIDE='2013-05-10 12:00:01')
+    @override_settings(CURRENT_DATETIME_OVERRIDE="2013-05-10 12:00:01")
     def test_get_contacts(self):
         d1 = datetime(2013, 5, 10, 2, 30, 30, 300, tzinfo=timezone.utc)
         d2 = datetime(2013, 5, 7, 12, 1, 30, 300, tzinfo=timezone.utc)
