@@ -67,7 +67,7 @@ import SearchStudent from "@/components/search-student.vue";
 import CheckInTableLoading from "@/components/checkin-table-loading.vue";
 import CheckInTableDisplay from "@/components/checkin-table-display.vue";
 import Layout from "@/layout.vue";
-import { getAdviserCheckIns } from "@/utils/data";
+import { getAdviserCheckIns, savePreferences } from "@/utils/data";
 import { formatAdviserName } from "@/utils/formats";
 import { BCard, BDropdown, BDropdownItemButton } from "bootstrap-vue-next";
 
@@ -84,6 +84,7 @@ export default {
   setup() {
     return {
       getAdviserCheckIns,
+      savePreferences,
       formatAdviserName,
     };
   },
@@ -124,6 +125,7 @@ export default {
     },
   },
   mounted() {
+    this.loadFilterPreferences();
     setTimeout(() => {
       this.loadAdviserCheckInsList();
     }, 500);
@@ -133,7 +135,29 @@ export default {
       if (this.selectedInterval !== interval) {
         this.selectedInterval = interval;
         this.loadAdviserCheckInsList();
+        this.saveFilterPreferences();
       }
+    },
+    loadFilterPreferences: function () {
+      let user_prefs = window.userPreferences;
+      if (user_prefs.checkin_filters) {
+        this.selectedInterval = user_prefs.checkin_filters.interval;
+      }
+    },
+    saveFilterPreferences: function () {
+      this.savePreferences({
+          checkin_filters: {
+            interval: this.selectedInterval,
+          },
+        })
+        .then((data) => {
+          window.userPreferences.checkin_filters = {
+            interval: this.selectedInterval,
+          };
+        })
+        .catch((error) => {
+          console.log("Error saving checkin preferences: " + error.data);
+        });
     },
     loadAdviserCheckInsList: function () {
       this.errorResponse = null;
