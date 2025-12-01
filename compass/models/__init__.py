@@ -484,10 +484,12 @@ class UserPreference(models.Model):
     """
     User preferences for the app, allowed preferences are defied per component
     """
-    ALLOWED_PREFERENCES = {"caseload_filters": ["class", "campus", "degree",
-                                                "scholarship", "registered",
-                                                "holds", "alert"]
-                           }
+    ALLOWED_PREFERENCES = {
+        "caseload_filters": [
+            "class", "campus", "degree", "scholarship", "registered", "holds",
+            "alert"],
+        "checkin_filters": ["interval"],
+    }
 
     app_user = models.ForeignKey("AppUser", on_delete=models.CASCADE)
     key = models.CharField(max_length=50)
