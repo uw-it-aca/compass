@@ -140,7 +140,7 @@ export default {
     },
     loadFilterPreferences: function () {
       let user_prefs = window.userPreferences;
-      if (user_prefs.checkin_filters) {
+      if (user_prefs && user_prefs.checkin_filters) {
         this.selectedInterval = user_prefs.checkin_filters.interval;
       }
     },
