@@ -3,6 +3,7 @@
 
 from django.core.files.storage import default_storage
 from compass.models.rad_data import RADWeek
+from compass.dao.azure_storage import AzureStorageDAO
 from logging import getLogger
 
 
@@ -53,7 +54,7 @@ class RADStorageDao():
         :param week: Week to search for
         :type week: int
         """
-        # TODO change to per-week stats once analytics team automates that
+        dao = AzureStorageDAO()
         filename = f"{year}-{quarter}-pred-proba.csv"
         logger.info(f"Attempting download of file: {filename}")
         return self.download_from_bucket(filename)

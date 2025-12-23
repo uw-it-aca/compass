@@ -24,6 +24,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'azure-storage-blob~=12.27',
+        'dateparser~=1.2',
         'django~=5.2',
         'django-user-agents',
         'django-simple-history==3.1.1',
