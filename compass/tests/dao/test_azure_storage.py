@@ -31,20 +31,9 @@ class TestAzureStorage(TestCase):
         return sample_filenames
 
     def mock_get_blob(self, blob_name):
-        sample_contents = """
-        ,system_key,student_no,uw_netid,yrq,course_code,pred
-        0,0000001,1000001,javerage  ,20252,MATH 123 A,0.0
-        1,0000002,1000002,jsmith    ,20252,BIOL 101 A,1.0
-        2,0000003,1000003,adoe      ,20252,CHEM 105 A,0.0
-        3,0000004,1000004,mbrown    ,20252,PHYS 121 A,1.0
-        4,0000005,1000005,ljohnson  ,20252,ENGL 201 A,0.0
-        5,0000006,1000006,kwilson   ,20252,HIST 110 A,1.0
-        6,0000007,1000007,dperez    ,20252,PSYC 101 A,0.0
-        7,0000008,1000008,sgarcia   ,20252,SOC 200 A,0.0
-        8,0000009,1000009,tmiller   ,20252,ECON 101 A,1.0
-        9,0000010,1000010,jbishop  ,20252,PHIL 101 A,1.0
-        """
-        return sample_contents
+        with open('compass/fixtures/sample_azure_pred_file.csv') as f:
+            sample_contents = f.read()
+            return sample_contents
 
     @patch.multiple(AzureStorageDAO,
                     __init__=mock_init,
@@ -66,9 +55,9 @@ class TestAzureStorage(TestCase):
         self.assertIn('system_key,student_no,'
                       'uw_netid,yrq,course_code,pred',
                       file_contents)
-        self.assertIn('0000001,1000001,javerage  ,'
-                      '20252,MATH 123 A,0.0',
+        self.assertIn('0,0000001,8123456,javerage  ,'
+                      '20252,TRAIN 100 A,0.0',
                       file_contents)
-        self.assertIn('0000010,1000010,jbishop  ,'
+        self.assertIn('9,0000010,1000010,jbishop   ,'
                       '20252,PHIL 101 A,1.0',
                       file_contents)

@@ -207,7 +207,8 @@ urlpatterns += [
         name="retention_alert_reload",
     ),
     re_path(
-        r"^api/internal/support/retention_admin/file/(?P<week_string>[\w-]+)/$",
+        r"^api/internal/support/retention_admin/"
+        r"file/(?P<week_string>[\w-]+)/$",
         RetentionLoadFromFile.as_view(),
         name="retention_reload_file",
     ),

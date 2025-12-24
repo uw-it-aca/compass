@@ -3,11 +3,19 @@
 
 
 from io import StringIO
+from unittest.mock import patch
 from django.core.management import call_command
 from compass.tests import CompassTestCase
 from compass.models.rad_data import RADWeek, RADImport, CourseAnalyticsScores
 
 
+def mock_get_pred_file(self):
+    with open('compass/fixtures/sample_azure_pred_file.csv') as f:
+        sample_contents = f.read()
+        return sample_contents
+
+
+@patch('compass.dao.storage.RADStorageDao.get_pred_file', mock_get_pred_file)
 class TestLoadRadData(CompassTestCase):
 
     def setUp(self):
@@ -31,6 +39,9 @@ class TestLoadRadData(CompassTestCase):
         self.assertEqual(CourseAnalyticsScores.objects.count(), 4)
         scores = CourseAnalyticsScores.objects.all()
         self.assertEqual(scores[0].course, 'TRAIN 100 A')
+        self.assertEqual(scores[0].prediction_score, 0.0)
+        self.assertEqual(scores[2].prediction_score, 1.0)
+        self.assertEqual(scores[3].prediction_score, None)
 
     def test_load_specific_week(self):
         call_command('load_rad_data', week='2024-spring-week-5')

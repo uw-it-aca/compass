@@ -43,21 +43,14 @@ class RADStorageDao():
         filename = f"{year}-{quarter}-week-{week}-compass-data.csv"
         return self.download_from_bucket(filename)
 
-    def get_pred_file_by_y_q_w(self, year, quarter, week):
+    def get_pred_file(self):
         """
-        Returns the file name for the given year, quarter, and week.
-
-        :param year: Year to search for
-        :type year: int
-        :param quarter: Quarter to search for
-        :type quarter: str
-        :param week: Week to search for
-        :type week: int
+        Returns the latest prediction file available in the bucket.
         """
         dao = AzureStorageDAO()
-        filename = f"{year}-{quarter}-pred-proba.csv"
+        filename = dao.get_most_recent_filename()
         logger.info(f"Attempting download of file: {filename}")
-        return self.download_from_bucket(filename)
+        return dao.get_latest_file()
 
     def get_latest_file(self):
         """

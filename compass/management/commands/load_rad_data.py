@@ -78,10 +78,7 @@ class Command(BaseCommand):
                 rad_import.get_filename())
             logger.info(f"Downloaded file {rad_import.get_filename()}")
             try:
-                pred_file = (RADStorageDao().
-                             get_pred_file_by_y_q_w(rad_week.year,
-                                                    rad_week.quarter,
-                                                    rad_week.week))
+                pred_file = RADStorageDao().get_pred_file()
                 logger.info(f"Downloaded prediction file")
             except FileNotFoundError:
                 pred_file = None
