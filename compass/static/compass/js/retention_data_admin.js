@@ -23,7 +23,7 @@ Compass.AdminSupport = (function($){
   function reload_retention_import(import_id) {
     var url = '/api/internal/support/retention_admin/manage/' + import_id + '/';
     var csrf = get_csrf_token();
-    var foo = 0;
+
 
     $.ajax({url: url,
       method: 'PUT',
