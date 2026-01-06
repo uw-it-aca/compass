@@ -80,17 +80,6 @@ cronjob:
       schedule: "20 9 * * 0"
       command: ["/scripts/management_command.sh"]
       args: ["clearsessions"]
-    - name: load-rad-data
-      schedule: "0 4 * * 1"
-      command: [ "/scripts/management_command.sh" ]
-      args: [ "load_rad_data" ]
-      resources:
-        limits:
-          cpu: 500m
-          memory: 1024Mi
-        requests:
-          cpu: 200m
-          memory: 512Mi
 
 environmentVariables:
   - name: ENV
@@ -178,6 +167,22 @@ externalSecrets:
       data:
         - name: uw-idp-cert
           property: cert
+    - name: compass.uw.edu-azure-storage-secrets
+      externalKey: compass/shared/azure-storage
+      data:
+        - name: blob-url
+          property: blob-url
+        - name: proxy-target-host
+          property: target-host
+    - name: shared-proxy-secrets
+      externalKey: shared/proxies/uw_ssh_tunnel
+      data:
+        - name: proxy-id-key
+          property: key
+        - name: proxy-id
+          property: username
+        - name: proxy-hostname
+          property: hostname
 
 environmentVariablesSecrets:
   djangoSecret:
@@ -232,6 +237,10 @@ environmentVariablesSecrets:
     name: STORAGE_PROJECT_ID
     secretName: compass.uw.edu-shared-secrets
     secretKey: storage-project-id
+  azureStorageBlobUrl:
+    name: AZURE_BLOB_STORAGE_URL
+    secretName: compass.uw.edu-azure-storage-secrets
+    secretKey: blob-url
 
 daemon:
   enabled: true
@@ -247,3 +256,46 @@ daemon:
         requests:
           cpu: 25m
           memory: 64Mi
+    - name: load-rad-data
+      replicaCount: 1
+      command: ["/scripts/management_daemon.sh"]
+      args: ["--cron", "0 4 * * 1", "load_rad_data"]
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1024Mi
+        requests:
+          cpu: 200m
+          memory: 512Mi
+      sidecarContainers:
+        forwarder:
+          image: "us-docker.pkg.dev/uwit-mci-axdd/containers/uw-ssh-client:89695b2"
+          environmentVariables:
+            - name: PROXY_ID_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: shared-proxy-secrets
+                  key: proxy-id-key
+            - name: PROXY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: shared-proxy-secrets
+                  key: proxy-id
+            - name: PROXY_HOSTNAME
+              valueFrom:
+                secretKeyRef:
+                  name: shared-proxy-secrets
+                  key: proxy-hostname
+            - name: TARGET_HOSTNAME
+              valueFrom:
+                secretKeyRef:
+                  name: compass.uw.edu-azure-storage-secrets
+                  key: proxy-target-host
+            - name: TARGET_PORT
+              value: "443"
+            - name: LOCAL_PORT
+              value: "443"
+          command:
+            - "sh"
+            - "-c"
+            - 'mkdir -m 0700 ~/.ssh && echo "${PROXY_ID_KEY}" > ~/.ssh/id_ecdsa && chmod 400 ~/.ssh/id_ecdsa && ssh ${PROXY_ID}@${PROXY_HOSTNAME} -o StrictHostKeyChecking=no -N -L 127.0.0.1:${LOCAL_PORT}:${TARGET_HOSTNAME}:${TARGET_PORT}'

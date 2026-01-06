@@ -1,4 +1,4 @@
-# Copyright 2025 UW-IT, University of Washington
+# Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
@@ -17,8 +17,9 @@ class TestRadCsv(TestCase):
         with open(self.RAD_FILE) as f:
             csv_string = f.read()
             data = read_csv(csv_string)
-            self.assertEqual(len(data), 4)
-            self.assertIn('uw_netid', data[0].keys())
+            data_list = list(data)
+            self.assertEqual(len(data_list), 4)
+            self.assertIn('uw_netid', data_list[0].keys())
 
     def test_import_from_csv(self):
         with open(self.RAD_FILE) as f:
@@ -26,16 +27,15 @@ class TestRadCsv(TestCase):
             week = RADWeek.get_or_create_week(year=2024,
                                               quarter='spring',
                                               week=6)
-            pred_file = (RADStorageDao().
-                         get_pred_file_by_y_q_w(week.year,
-                                                week.quarter,
-                                                week.week))
-            import_data_from_csv(week, csv_string, pred_file)
-            self.assertEqual(CourseAnalyticsScores.objects.count(), 4)
-            self.assertEqual(CourseAnalyticsScores.objects.first().week, week)
-            self.assertEqual(CourseAnalyticsScores.objects.first()
-                             .assignment_score,
-                             3.0)
+            with open('compass/fixtures/sample_azure_pred_file.csv') as f:
+                pred_file = f.read()
+                import_data_from_csv(week, csv_string, pred_file)
+                self.assertEqual(CourseAnalyticsScores.objects.count(), 4)
+                self.assertEqual(CourseAnalyticsScores.objects.first().week,
+                                 week)
+                self.assertEqual(CourseAnalyticsScores.objects.first()
+                                 .assignment_score,
+                                 3.0)
 
     def test_parse_score(self):
         self.assertEqual(_parse_score('3.0'), 3.0)

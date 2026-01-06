@@ -1,11 +1,10 @@
-# Copyright 2025 UW-IT, University of Washington
+# Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from compass.dao.person import get_person_by_uwregid
-from compass.dao.term import current_week, current_term, week_of_term
-from compass.dao import current_datetime
+from compass.dao.term import current_week
 
 
 class RADImport(models.Model):
@@ -40,7 +39,7 @@ class RADImport(models.Model):
         Get the next week to process, assumes 10 weeks per quarter
         """
 
-        last_week_imported = (cls.objects.all()
+        last_week_imported = (cls.objects.filter(import_status=cls.SUCCESS)
                               .order_by('-week__key').first())
         if last_week_imported is None:
             raise cls.DoesNotExist("No previous imports found")
@@ -79,6 +78,8 @@ class StudentAlertStatus(models.Model):
                                     null=True,
                                     max_length=2)
     uwnetid = models.CharField(max_length=50, unique=True)
+    source_week = models.ForeignKey('RADWeek', on_delete=models.CASCADE,
+                                    null=True)
 
     class Meta:
         indexes = [
@@ -281,6 +282,11 @@ class RADWeek(models.Model):
         return qtr_map[sis_term]
 
     @classmethod
+    def build_week_key(cls, year, quarter, week):
+        padded_week = str(week).zfill(2)
+        return int(f"{year}{cls.get_quarter_number(quarter)}{padded_week}")
+
+    @classmethod
     def get_or_create_week(cls, year, quarter, week):
         """
         Create week sorting key in format YYYYQWW
@@ -288,9 +294,7 @@ class RADWeek(models.Model):
         try:
             return cls.objects.get(year=year, quarter=quarter, week=week)
         except cls.DoesNotExist:
-
-            padded_week = str(week).zfill(2)
-            key = int(f"{year}{cls.get_quarter_number(quarter)}{padded_week}")
+            key = cls.build_week_key(year, quarter, week)
             return cls.objects.create(year=year,
                                       quarter=quarter,
                                       week=week,
