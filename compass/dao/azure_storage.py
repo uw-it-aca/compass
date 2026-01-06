@@ -71,8 +71,7 @@ class AzureStorageDAO:
         """
         Return latest Compass predictions file in bucket
         """
-        files = self.list_blob_names()
-        filename = self.get_most_recent_filename(files)
-        if filename is None:
+        filename = self.get_most_recent_filename()
+        if filename is not None:
             return self.get_blob(filename)
         raise FileNotFoundError("No valid prediction files found in storage.")
