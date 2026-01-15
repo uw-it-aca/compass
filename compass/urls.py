@@ -42,6 +42,7 @@ from compass.views.api.photo import PhotoView
 from compass.views.api.affiliation import AffiliationsView
 from compass.views.api.support import SupportView
 from compass.views.api.user_prefs import UserPreferenceView
+from compass.views.api.analytics import PredictionAnalytics
 
 # start with an empty url array
 urlpatterns = []
@@ -230,6 +231,11 @@ urlpatterns += [
         r"^api/v1/visit/omad",
         VisitOMADView.as_view(),
         name="visit_omad"
+    ),
+    re_path(
+        r"^api/v1/analytics/predictions/$",
+        PredictionAnalytics.as_view(),
+        name="prediction_analytics_view"
     ),
     # vue-router paths
     re_path(

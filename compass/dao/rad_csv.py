@@ -98,5 +98,27 @@ def _get_prediction_dict(pred_file):
     return prediction_dict
 
 
+def validate_prediction_csv(pred_file):
+    """
+    Validate prediction CSV file structure.
+    """
+    required_fields = {'uw_netid', 'course_code', 'pred'}
+    prediction_data = read_csv(pred_file)
+
+    # Check if the file is empty
+    if not any(True for _ in prediction_data):
+        raise ValueError("Prediction CSV is empty")
+
+    # Reset iterator and validate fields in the first row
+    for row in read_csv(pred_file):
+        missing = required_fields - row.keys()
+        if missing:
+            raise ValueError(f"Missing fields in prediction CSV:"
+                             f" {', '.join(missing)}")
+        break
+
+    return True
+
+
 def _parse_score(field):
     return 0 if not field else float(field)
