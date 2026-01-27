@@ -94,7 +94,7 @@ def _get_prediction_dict(pred_file):
     prediction_dict = {}
     for row in prediction_data:
         key = f"{row['uw_netid'].strip()}_{row['course_code'].strip()}"
-        prediction_dict[key] = row['pred']
+        prediction_dict[key] = 1.0 if row['pred'] == "True" else 0.0
     return prediction_dict
 
 

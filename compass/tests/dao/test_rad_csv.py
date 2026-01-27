@@ -11,7 +11,7 @@ from compass.dao.storage import RADStorageDao
 
 class TestRadCsv(TestCase):
 
-    RAD_FILE = ('compass/fixtures/'
+    RAD_FILE = ('compass/fixtures/storage/'
                 'compass_data/2024-spring-week-6-compass-data.csv')
 
     def test_read_csv(self):
@@ -28,15 +28,14 @@ class TestRadCsv(TestCase):
             week = RADWeek.get_or_create_week(year=2024,
                                               quarter='spring',
                                               week=6)
-            with open('compass/fixtures/sample_azure_pred_file.csv') as f:
-                pred_file = f.read()
-                import_data_from_csv(week, csv_string, pred_file)
-                self.assertEqual(CourseAnalyticsScores.objects.count(), 4)
-                self.assertEqual(CourseAnalyticsScores.objects.first().week,
-                                 week)
-                self.assertEqual(CourseAnalyticsScores.objects.first()
-                                 .assignment_score,
-                                 3.0)
+            pred_file = RADStorageDao().get_latest_pred_file()
+            import_data_from_csv(week, csv_string, pred_file)
+            self.assertEqual(CourseAnalyticsScores.objects.count(), 4)
+            self.assertEqual(CourseAnalyticsScores.objects.first().week,
+                             week)
+            self.assertEqual(CourseAnalyticsScores.objects.first()
+                             .assignment_score,
+                             3.0)
 
     def test_parse_score(self):
         self.assertEqual(_parse_score('3.0'), 3.0)

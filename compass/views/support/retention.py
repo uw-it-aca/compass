@@ -58,7 +58,7 @@ class RetentionAdminView(TemplateView):
         try:
             file_data = []
             storage = RADStorageDao()
-            file_list = storage.get_files_list()
+            file_list = storage.get_analytics_file_list()
             for file in file_list:
                 year, quarter, week = (
                     storage.get_year_quarter_week_from_filename(file))

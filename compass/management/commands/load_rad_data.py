@@ -46,7 +46,7 @@ class Command(BaseCommand):
                     year, quarter, week_id = RADImport.get_next_import_week()
                 except RADImport.DoesNotExist:
                     # No previous import in DB, get most recent week in bucket
-                    latest_file = RADStorageDao().get_latest_file()
+                    latest_file = RADStorageDao().get_latest_analytics_file()
                     year, quarter, week_id = (
                         RADStorageDao.get_year_quarter_week_from_filename(
                             latest_file)
@@ -74,11 +74,13 @@ class Command(BaseCommand):
                         f"{year}-{quarter}-week-{week_id}")
             return f'Import already exists for {year}-{quarter}-week-{week_id}'
         try:
+            rad_filename = rad_import.get_filename()
             rad_file = RADStorageDao().download_from_bucket(
-                rad_import.get_filename())
+                f"compass_data/{rad_filename}"
+            )
             logger.info(f"Downloaded file {rad_import.get_filename()}")
             try:
-                pred_file = RADStorageDao().get_pred_file()
+                pred_file = RADStorageDao().get_latest_pred_file()
                 logger.info(f"Downloaded prediction file")
             except FileNotFoundError:
                 pred_file = None
@@ -96,7 +98,7 @@ class Command(BaseCommand):
                     f"{year}-{quarter}-week-{week_id}")
 
     def _load_all_data(self, reload):
-        files = RADStorageDao().get_files_list()
+        files = RADStorageDao().get_analytics_file_list()
         status = []
         for file in files:
             year, quarter, week_id = (

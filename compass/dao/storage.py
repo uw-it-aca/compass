@@ -1,6 +1,7 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+import datetime
 from django.core.files.storage import default_storage
 from compass.models.rad_data import RADWeek
 from logging import getLogger
@@ -10,14 +11,14 @@ logger = getLogger(__name__)
 
 
 class RADStorageDao():
-    def get_files_list(self, path=''):
+    def get_analytics_file_list(self):
         """
-        Returns list of file names at the given path.
+        Returns list canvas-analytics compass data files in the bucket.
 
         :param path: Path to list files at
         :type path: str
         """
-        dirs, files = default_storage.listdir(path)
+        dirs, files = default_storage.listdir("compass_data/")
 
         filenames = []
         for filename in files:
@@ -39,22 +40,56 @@ class RADStorageDao():
         :param week: Week to search for
         :type week: int
         """
-        filename = f"{year}-{quarter}-week-{week}-compass-data.csv"
+        filename = (f"compass_data/"
+                    f"{year}-{quarter}-week-{week}-compass-data.csv")
         return self.download_from_bucket(filename)
 
-    def get_pred_file(self):
+    def write_pred_file(self, content, override_datetime=None):
+        """
+        Writes prediction file content to the bucket.
+        File name set to current timestamp yyyy-mm-dd-HHMMSS_predictions.csv
+
+        :param content: Content to upload
+        :type content: str
+        :param override_datetime: Optional datetime to use for timestamp
+        :type override_datetime: datetime.datetime
+        """
+        now = override_datetime or datetime.datetime.now()
+        timestamp = now.strftime("%Y-%m-%d-%H%M%S")
+        filename = f"prediction_data/{timestamp}_predictions.csv"
+        with default_storage.open(filename, mode='wb') as f:
+            f.write(content.encode('utf-8'))
+
+    def get_latest_pred_file(self):
         """
         Returns the latest prediction file available in the bucket.
         """
-        # TODO: Implement new pred file fetch
+        dirs, file_list = default_storage.listdir("prediction_data/")
+        files = []
+        for filename in file_list:
+            try:
+                timestamp_str = filename.split("_predictions.csv")[0]
+                timestamp = datetime.datetime.strptime(
+                    timestamp_str, "%Y-%m-%d-%H%M%S")
+                data = {"timestamp": timestamp, "gcs_file": filename}
+                files.append(data)
+            except ValueError:
+                logger.warning(
+                    f"Unable to parse prediction file name: {filename}")
+        files.sort(
+               key=lambda i: i['timestamp'],
+               reverse=True)
+        if files:
+            url_key = f"prediction_data/{files[0]['gcs_file']}"
+            return self.download_from_bucket(url_key)
         return None
 
-    def get_latest_file(self):
+    def get_latest_analytics_file(self):
         """
         Return latest Compass RAD file in bucket
         """
         files = []
-        for filename in self.get_files_list():
+        for filename in self.get_analytics_file_list():
             year, quarter, week_num = (
                 self.get_year_quarter_week_from_filename(filename))
             quarter_num = RADWeek.get_quarter_number(quarter)
@@ -75,6 +110,7 @@ class RADStorageDao():
         :param url_key: Path of the content to upload
         :type url_key: str
         """
+        logger.info(f"Downloading {url_key}")
         with default_storage.open(url_key, mode='rb') as f:
             content = f.read()
             return content.decode('utf-8')

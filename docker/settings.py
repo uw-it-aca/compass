@@ -82,7 +82,7 @@ if os.getenv("ENV") == "localdev":
         "isMemberOf": [TEST_ACCESS_GROUP, "u_astra_group1-manager"],
     }
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
-    MEDIA_ROOT = os.getenv("MEDIA_ROOT", "/app/compass/fixtures/compass_data")
+    MEDIA_ROOT = os.getenv("MEDIA_ROOT", "/app/compass/fixtures/storage")
 else:
     VITE_MANIFEST_PATH = os.path.join(
         os.sep, "static", ".vite", "manifest.json"
@@ -114,7 +114,7 @@ else:
     }
     GS_PROJECT_ID = os.getenv("STORAGE_PROJECT_ID", "")
     GS_BUCKET_NAME = os.getenv("STORAGE_BUCKET_NAME", "")
-    GS_LOCATION = os.getenv("STORAGE_LOCATION", "compass_data")
+    GS_LOCATION = os.getenv("STORAGE_LOCATION", "")
     GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
         "/gcs/credentials.json"
     )
