@@ -230,7 +230,7 @@ LOGGING = {
     },
 }
 
-AZURE_BLOB_STORAGE_URL = os.getenv("AZURE_BLOB_STORAGE_URL", default=None)
+
 # DRF Token Authentication User Mapping
 OMAD_CONTACT_TOKEN_USER = "omad-compass-api"
 PRED_ANALYTICS_TOKEN_USER = "era-predictions-api"

@@ -3,7 +3,6 @@
 
 from django.core.files.storage import default_storage
 from compass.models.rad_data import RADWeek
-from compass.dao.azure_storage import AzureStorageDAO
 from logging import getLogger
 
 
@@ -47,10 +46,8 @@ class RADStorageDao():
         """
         Returns the latest prediction file available in the bucket.
         """
-        dao = AzureStorageDAO()
-        filename = dao.get_most_recent_filename()
-        logger.info(f"Attempting download of file: {filename}")
-        return dao.get_latest_file()
+        # TODO: Implement new pred file fetch
+        return None
 
     def get_latest_file(self):
         """
