@@ -14,13 +14,17 @@ from rest_framework.authtoken.models import Token
 
 class AnalyticsAPITest(ApiTest):
     API_TOKEN = None
+    WRONG_API_TOKEN = None
 
     def setUp(self):
         super(AnalyticsAPITest, self).setUp()
         AccessGroup(name="OMAD", access_group_id="u_astra_group1").save()
-        user = User.objects.create_user(username='testuser', password='12345')
-        token = Token.objects.create(user=user)
-        self.API_TOKEN = token.key
+        user = User.objects.create_user(username='era-predictions-api',
+                                        password='12345')
+        self.API_TOKEN = Token.objects.create(user=user).key
+        other_user = User.objects.create_user(username='foo',
+                                              password='12345')
+        self.WRONG_API_TOKEN = Token.objects.create(user=other_user).key
 
     def test_api_auth(self):
         test_request = """
@@ -28,7 +32,7 @@ class AnalyticsAPITest(ApiTest):
         0,0000001,8123456,javerage  ,20252,TRAIN 100 A,False
         """
         test_request = "\n".join([line.strip() for line in test_request.strip()
-                                  .split("\n")])
+                                 .split("\n")])
 
         token_str = "Token %s" % self.API_TOKEN
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
@@ -42,4 +46,11 @@ class AnalyticsAPITest(ApiTest):
 
         response = self.post_response('prediction_analytics_view',
                                       test_request)
+        self.assertEqual(response.status_code, 401)
+        wrong_token_str = "Token %s" % self.WRONG_API_TOKEN
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=wrong_token_str)
+
+        response = self.post_response('prediction_analytics_view',
+                                      body=test_request)
         self.assertEqual(response.status_code, 401)

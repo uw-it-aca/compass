@@ -4,6 +4,7 @@
 from compass.views.api import TokenAPIView
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 from rest_framework.response import Response
 from rest_framework import status
 from compass.dao.rad_csv import validate_prediction_csv
@@ -19,6 +20,9 @@ class PredictionAnalytics(TokenAPIView):
         0,0000001,8123456,javerage  ,20252,TRAIN 100 A,False
         1,0000002,1000002,jsmith    ,20252,BIOL 101 A,True
         """
+        if settings.PRED_ANALYTICS_TOKEN_USER != request.user.username:
+            return Response("Unauthorized",
+                            status=status.HTTP_401_UNAUTHORIZED)
         # validate payload
         body = request.body.decode('utf-8')
         try:
