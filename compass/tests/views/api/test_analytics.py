@@ -25,6 +25,11 @@ class AnalyticsAPITest(ApiTest):
                                               password='12345')
         self.WRONG_API_TOKEN = Token.objects.create(user=other_user).key
 
+    @override_settings(STORAGES={
+        'default': {
+            'BACKEND': 'django.core.files.storage.memory.InMemoryStorage',
+        }
+    })
     def test_api_auth(self):
         test_request = """
         ,system_key,student_no,uw_netid,yrq,course_code,pred
