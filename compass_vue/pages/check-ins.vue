@@ -2,7 +2,7 @@
   <Layout :page-title="pageTitle">
     <!-- page content -->
     <template #content>
-      <div class="row my-4 small">
+      <div class="row small my-4">
         <div class="col">
           <BCard class="bg-body-tertiary rounded-3" border-variant="0">
             <div class="row">
@@ -21,7 +21,7 @@
       <div class="row my-4">
         <div class="col">
           <BCard
-            class="shadow-sm rounded-3"
+            class="rounded-3 shadow-sm"
             header-bg-variant="transparent"
             header-class="p-3"
             body-class="p-0"
@@ -63,125 +63,125 @@
 </template>
 
 <script>
-import SearchStudent from "@/components/search-student.vue";
-import CheckInTableLoading from "@/components/checkin-table-loading.vue";
-import CheckInTableDisplay from "@/components/checkin-table-display.vue";
-import Layout from "@/layout.vue";
-import { getAdviserCheckIns, savePreferences } from "@/utils/data";
-import { formatAdviserName } from "@/utils/formats";
-import { BCard, BDropdown, BDropdownItemButton } from "bootstrap-vue-next";
+  import SearchStudent from "@/components/search-student.vue";
+  import CheckInTableLoading from "@/components/checkin-table-loading.vue";
+  import CheckInTableDisplay from "@/components/checkin-table-display.vue";
+  import Layout from "@/layout.vue";
+  import { getAdviserCheckIns, savePreferences } from "@/utils/data";
+  import { formatAdviserName } from "@/utils/formats";
+  import { BCard, BDropdown, BDropdownItemButton } from "bootstrap-vue-next";
 
-export default {
-  components: {
-    BCard,
-    BDropdown,
-    BDropdownItemButton,
-    Layout,
-    SearchStudent,
-    CheckInTableLoading,
-    CheckInTableDisplay,
-  },
-  setup() {
-    return {
-      getAdviserCheckIns,
-      savePreferences,
-      formatAdviserName,
-    };
-  },
-  data() {
-    return {
-      pageTitle: "Check-Ins",
-      isLoading: true,
-      checkInIntervals: ["3", "7", "14", "30", "60", "90"],
-      selectedInterval: "3",
-      contacts: [],
-      adviser:  null,
-      today: "",
-      adviserNetId: this.$route.params.id
-        ? this.$route.params.id
-        : document.body.getAttribute("data-user-override")
-          ? document.body.getAttribute("data-user-override")
-          : document.body.getAttribute("data-user-netid"),
-      errorResponse: null,
-    };
-  },
-  computed: {
-    dropdownLabel() {
-      return "Check-In History (" + this.selectedInterval + " days)";
+  export default {
+    components: {
+      BCard,
+      BDropdown,
+      BDropdownItemButton,
+      Layout,
+      SearchStudent,
+      CheckInTableLoading,
+      CheckInTableDisplay,
     },
-    checkinHeaderText() {
-      let txt = "Recent Check-Ins";
-      if (!this.errorResponse && !this.isLoading) {
-        if (this.contacts.length === 0) {
-          txt = "There are no Check-Ins"
-        } else if (this.contacts.length === 1) {
-          txt = "There is one Check-In";
-        } else {
-          txt = "There are " + this.contacts.length + " Check-Ins";
+    setup() {
+      return {
+        getAdviserCheckIns,
+        savePreferences,
+        formatAdviserName,
+      };
+    },
+    data() {
+      return {
+        pageTitle: "Check-Ins",
+        isLoading: true,
+        checkInIntervals: ["3", "7", "14", "30", "60", "90"],
+        selectedInterval: "3",
+        contacts: [],
+        adviser: null,
+        today: "",
+        adviserNetId: this.$route.params.id
+          ? this.$route.params.id
+          : document.body.getAttribute("data-user-override")
+            ? document.body.getAttribute("data-user-override")
+            : document.body.getAttribute("data-user-netid"),
+        errorResponse: null,
+      };
+    },
+    computed: {
+      dropdownLabel() {
+        return "Check-In History (" + this.selectedInterval + " days)";
+      },
+      checkinHeaderText() {
+        let txt = "Recent Check-Ins";
+        if (!this.errorResponse && !this.isLoading) {
+          if (this.contacts.length === 0) {
+            txt = "There are no Check-Ins";
+          } else if (this.contacts.length === 1) {
+            txt = "There is one Check-In";
+          } else {
+            txt = "There are " + this.contacts.length + " Check-Ins";
+          }
+          txt += " for " + this.formatAdviserName(this.adviser);
         }
-        txt += " for " + this.formatAdviserName(this.adviser);
-      }
-      return txt += " (" + this.selectedInterval + " days)";
+        return (txt += " (" + this.selectedInterval + " days)");
+      },
     },
-  },
-  mounted() {
-    this.loadFilterPreferences();
-    setTimeout(() => {
-      this.loadAdviserCheckInsList();
-    }, 500);
-  },
-  methods: {
-    checkInIntervalSelected: function (interval) {
-      if (this.selectedInterval !== interval) {
-        this.selectedInterval = interval;
+    mounted() {
+      this.loadFilterPreferences();
+      setTimeout(() => {
         this.loadAdviserCheckInsList();
-        this.saveFilterPreferences();
-      }
+      }, 500);
     },
-    loadFilterPreferences: function () {
-      let user_prefs = window.userPreferences;
-      if (user_prefs && user_prefs.checkin_filters) {
-        this.selectedInterval = user_prefs.checkin_filters.interval;
-      }
-    },
-    saveFilterPreferences: function () {
-      this.savePreferences({
+    methods: {
+      checkInIntervalSelected: function (interval) {
+        if (this.selectedInterval !== interval) {
+          this.selectedInterval = interval;
+          this.loadAdviserCheckInsList();
+          this.saveFilterPreferences();
+        }
+      },
+      loadFilterPreferences: function () {
+        let user_prefs = window.userPreferences;
+        if (user_prefs && user_prefs.checkin_filters) {
+          this.selectedInterval = user_prefs.checkin_filters.interval;
+        }
+      },
+      saveFilterPreferences: function () {
+        this.savePreferences({
           checkin_filters: {
             interval: this.selectedInterval,
           },
         })
-        .then((data) => {
-          window.userPreferences.checkin_filters = {
-            interval: this.selectedInterval,
-          };
-        })
-        .catch((error) => {
-          console.log("Error saving checkin preferences: " + error.data);
-        });
+          .then((data) => {
+            window.userPreferences.checkin_filters = {
+              interval: this.selectedInterval,
+            };
+          })
+          .catch((error) => {
+            console.log("Error saving checkin preferences: " + error.data);
+          });
+      },
+      loadAdviserCheckInsList: function () {
+        this.errorResponse = null;
+        this.isLoading = true;
+        this.getAdviserCheckIns(this.adviserNetId, this.selectedInterval)
+          .then((data) => {
+            this.adviser = data.adviser;
+            this.contacts = data.contacts;
+          })
+          .catch((error) => {
+            this.errorResponse = error.data;
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
+      },
     },
-    loadAdviserCheckInsList: function () {
-      this.errorResponse = null;
-      this.isLoading = true;
-      this.getAdviserCheckIns(this.adviserNetId, this.selectedInterval)
-        .then((data) => {
-          this.adviser = data.adviser;
-          this.contacts = data.contacts;
-        })
-        .catch((error) => {
-          this.errorResponse = error.data;
-        })
-        .finally(() => {
-          this.isLoading = false;
-        });
-    },
-  },
-};
+  };
 </script>
 
 <style lang="scss">
-.table {
-  tbody tr:last-of-type {
-    border-color: transparent !important;
+  .table {
+    tbody tr:last-of-type {
+      border-color: transparent !important;
+    }
   }
-}
 </style>
