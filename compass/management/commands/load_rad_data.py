@@ -21,7 +21,10 @@ class Command(BaseCommand):
                             type=str,
                             default=None,
                             help="week to load, eg. '2021-spring-week-10'")
-
+        parser.add_argument('--pred_filename',
+                            type=str,
+                            default=None,
+                            help="specific prediction filename to use")
         parser.add_argument('--reload',
                             action='store_true',
                             help="reload existing data for week")
@@ -51,17 +54,20 @@ class Command(BaseCommand):
                         RADStorageDao.get_year_quarter_week_from_filename(
                             latest_file)
                     )
+            pred_filename = options.get('pred_filename')
             response = self._load_week_by_year_quarter_week(year,
                                                             quarter,
                                                             week_id,
-                                                            options['reload'])
+                                                            options['reload'],
+                                                            pred_filename)
             if response is not None:
                 return response
 
             # Prebuild alert status for users
             call_command('generate_alert_status')
 
-    def _load_week_by_year_quarter_week(self, year, quarter, week_id, reload):
+    def _load_week_by_year_quarter_week(self, year, quarter, week_id, reload,
+                                        pred_filename=None):
         logger.info(f"Loading RAD data for {year}-{quarter}-week-{week_id}")
         rad_week = RADWeek.get_or_create_week(year=year,
                                               quarter=quarter,
@@ -80,8 +86,23 @@ class Command(BaseCommand):
             )
             logger.info(f"Downloaded file {rad_import.get_filename()}")
             try:
-                pred_file = RADStorageDao().get_latest_pred_file()
-                logger.info(f"Downloaded prediction file")
+                rad_store = RADStorageDao()
+                if pred_filename:
+                    rad_import.prediction_filename = pred_filename
+                    pred_file = rad_store.download_from_bucket(
+                        f"prediction_data/{pred_filename}")
+                    logger.info(f"Downloaded specified prediction file "
+                                f"{pred_filename}")
+                elif reload:
+                    pred_file = rad_store.download_from_bucket(
+                        f"prediction_data/{rad_import.prediction_filename}")
+                    logger.info(f"Re-downloaded prediction file "
+                                f"{rad_import.prediction_filename}")
+                else:
+                    (rad_import.prediction_filename,
+                     pred_file) = rad_store.get_latest_pred_file()
+                    logger.info(f"Downloaded prediction file "
+                                f"{rad_import.prediction_filename}")
             except FileNotFoundError:
                 pred_file = None
             import_data_from_csv(rad_week, rad_file, pred_file, reload)

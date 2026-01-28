@@ -78,11 +78,11 @@ class AnalyticsAPITest(ApiTest):
         token_str = "Token %s" % self.API_TOKEN
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
-
-        self.assertIsNone(rad_storage.get_latest_pred_file())
+        filename, latest_file = rad_storage.get_latest_pred_file()
+        self.assertIsNone(latest_file)
         response = self.post_response('prediction_analytics_view',
                                       body=test_request)
         self.assertEqual(response.status_code, 201)
-        latest_file = rad_storage.get_latest_pred_file()
+        filename, latest_file = rad_storage.get_latest_pred_file()
         self.assertIsNotNone(latest_file)
         self.assertEqual(latest_file.strip(), test_request.strip())

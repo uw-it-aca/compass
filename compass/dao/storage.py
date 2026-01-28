@@ -81,11 +81,12 @@ class RADStorageDao():
                    key=lambda i: i['timestamp'],
                    reverse=True)
             if files:
-                url_key = f"prediction_data/{files[0]['gcs_file']}"
-                return self.download_from_bucket(url_key)
+                filename = files[0]['gcs_file']
+                url_key = f"prediction_data/{filename}"
+                return filename, self.download_from_bucket(url_key)
         except FileNotFoundError:
             logger.warning("No prediction files found in bucket")
-            return None
+            return None, None
 
     def get_latest_analytics_file(self):
         """

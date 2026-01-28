@@ -64,7 +64,7 @@ class TestStorage(TestCase):
 
     def test_get_latest_prediction(self):
         dao = RADStorageDao()
-        content = dao.get_latest_pred_file()
+        filename, content = dao.get_latest_pred_file()
         self.assertIsNotNone(content)
         with open('compass/fixtures/storage/prediction_data'
                   '/2025-05-01-121033_predictions.csv') as f:
