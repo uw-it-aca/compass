@@ -64,25 +64,28 @@ class RADStorageDao():
         """
         Returns the latest prediction file available in the bucket.
         """
-        dirs, file_list = default_storage.listdir("prediction_data/")
-        files = []
-        for filename in file_list:
-            try:
-                timestamp_str = filename.split("_predictions.csv")[0]
-                timestamp = datetime.datetime.strptime(
-                    timestamp_str, "%Y-%m-%d-%H%M%S")
-                data = {"timestamp": timestamp, "gcs_file": filename}
-                files.append(data)
-            except ValueError:
-                logger.warning(
-                    f"Unable to parse prediction file name: {filename}")
-        files.sort(
-               key=lambda i: i['timestamp'],
-               reverse=True)
-        if files:
-            url_key = f"prediction_data/{files[0]['gcs_file']}"
-            return self.download_from_bucket(url_key)
-        return None
+        try:
+            dirs, file_list = default_storage.listdir("prediction_data/")
+            files = []
+            for filename in file_list:
+                try:
+                    timestamp_str = filename.split("_predictions.csv")[0]
+                    timestamp = datetime.datetime.strptime(
+                        timestamp_str, "%Y-%m-%d-%H%M%S")
+                    data = {"timestamp": timestamp, "gcs_file": filename}
+                    files.append(data)
+                except ValueError:
+                    logger.warning(
+                        f"Unable to parse prediction file name: {filename}")
+            files.sort(
+                   key=lambda i: i['timestamp'],
+                   reverse=True)
+            if files:
+                url_key = f"prediction_data/{files[0]['gcs_file']}"
+                return self.download_from_bucket(url_key)
+        except FileNotFoundError:
+            logger.warning("No prediction files found in bucket")
+            return None
 
     def get_latest_analytics_file(self):
         """

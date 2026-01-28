@@ -8,6 +8,7 @@ from django.conf import settings
 from rest_framework.response import Response
 from rest_framework import status
 from compass.dao.rad_csv import validate_prediction_csv
+from compass.dao.storage import RADStorageDao
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -29,16 +30,5 @@ class PredictionAnalytics(TokenAPIView):
             validate_prediction_csv(body)
         except ValueError as e:
             return Response(repr(e), status=status.HTTP_400_BAD_REQUEST)
-
+        RADStorageDao().write_pred_file(body)
         return Response(status=status.HTTP_201_CREATED)
-
-        #
-        # try:
-        #     validate_contact_post_data(contact_dict)
-        # except AccessGroup.DoesNotExist as e:
-        #     return Response(repr(e), status=status.HTTP_501_NOT_IMPLEMENTED)
-        # except ValueError as e:
-        #     return Response(repr(e), status=status.HTTP_400_BAD_REQUEST)
-        # except PersonNotFoundException as e:
-        #     return Response("Person record for adviser not found",
-        #                     status=status.HTTP_400_BAD_REQUEST)

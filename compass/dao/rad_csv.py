@@ -109,13 +109,12 @@ def validate_prediction_csv(pred_file):
     if not any(True for _ in prediction_data):
         raise ValueError("Prediction CSV is empty")
 
-    # Reset iterator and validate fields in the first row
+    # Reset iterator and validate fields are set
     for row in read_csv(pred_file):
         missing = required_fields - row.keys()
         if missing:
             raise ValueError(f"Missing fields in prediction CSV:"
                              f" {', '.join(missing)}")
-        break
 
     return True
 
