@@ -202,7 +202,7 @@
 
                 <BDropdown
                   size="sm"
-                  variant="link"
+                  variant="quiet-primary"
                   class="bg-secondary-hover link-primary link-underline link-underline-opacity-0 rounded"
                   no-caret
                   aria-label="Download options"
