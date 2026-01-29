@@ -19,6 +19,7 @@
               <img
                 :src="person.photo_url"
                 class="img-profile rounded-circle border border-4"
+                :alt="person.full_name + ' profile picture'"
                 :class="borderClass"
                 @error="
                   $event.target.src = '/static/compass/img/placeholder.png'
