@@ -205,6 +205,7 @@
                   variant="link"
                   class="bg-secondary-hover link-primary link-underline link-underline-opacity-0 rounded"
                   no-caret
+                  aria-label="Download options"
                 >
                   <template #button-content
                     ><i class="bi bi-download"></i
