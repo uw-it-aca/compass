@@ -58,7 +58,7 @@ class RetentionAdminView(TemplateView):
         try:
             file_data = []
             storage = RADStorageDao()
-            file_list = storage.get_files_list()
+            file_list = storage.get_analytics_file_list()
             for file in file_list:
                 year, quarter, week = (
                     storage.get_year_quarter_week_from_filename(file))
@@ -79,8 +79,17 @@ class RetentionAdminView(TemplateView):
                                   'import_id': import_id})
         except Exception:
             file_data = None
+        try:
+            prediction_files = []
+            storage = RADStorageDao()
+            pred_file_list = storage.get_pred_file_list()
+            for file in pred_file_list:
+                prediction_files.append({'filename': file})
+        except Exception:
+            prediction_files = None
 
         context['file_data'] = file_data
+        context['prediction_files'] = prediction_files
         context['imports'] = imports
         context['alert_data'] = alert_data
         return context

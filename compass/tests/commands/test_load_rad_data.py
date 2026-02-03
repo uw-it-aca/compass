@@ -9,13 +9,6 @@ from compass.tests import CompassTestCase
 from compass.models.rad_data import RADWeek, RADImport, CourseAnalyticsScores
 
 
-def mock_get_pred_file(self):
-    with open('compass/fixtures/sample_azure_pred_file.csv') as f:
-        sample_contents = f.read()
-        return sample_contents
-
-
-@patch('compass.dao.storage.RADStorageDao.get_pred_file', mock_get_pred_file)
 class TestLoadRadData(CompassTestCase):
 
     def setUp(self):
