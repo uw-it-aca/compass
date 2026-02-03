@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <BCard
-    class="shadow-sm rounded-3"
+    class="rounded-3 shadow-sm"
     header-class="p-3 d-flex align-items-center justify-content-between"
     body-class="p-0"
     header-bg-variant="transparent"
@@ -21,7 +21,7 @@
             {{ schedule.term.quarter }} {{ schedule.term.year }}
             <span
               v-if="schedule.sections.length > 0"
-              class="badge text-body bg-primary-subtle ms-2 rounded-pill"
+              class="badge text-body bg-primary-subtle rounded-pill ms-2"
               style="min-width: 25px; margin-bottom: 2px"
               @click.stop
               >{{ getCreditTotal(schedule.sections) }}</span
@@ -41,11 +41,11 @@
           :active-panel="scheduleIndex == 0"
         >
           <div class="table-responsive m-0">
-            <table class="table m-0">
+            <table class="m-0 table">
               <thead class="text-muted small">
                 <tr>
                   <th
-                    class="ps-3 bg-body-tertiary"
+                    class="bg-body-tertiary ps-3"
                     scope="col"
                     style="width: 40%"
                   >
@@ -90,6 +90,7 @@
                               sectionIndex
                             "
                             aria-expanded="false"
+                            aria-label="Toggle Canvas analytics"
                             :aria-controls="
                               'collapseDiv_' +
                               scheduleIndex +
@@ -172,7 +173,7 @@
                               'collapseDiv_' +
                                 scheduleIndex +
                                 '_' +
-                                sectionIndex
+                                sectionIndex,
                             )
                           "
                           :uwnetid="person.uwnetid"
@@ -187,7 +188,7 @@
               </tbody>
               <tbody v-else class="mb-3">
                 <tr>
-                  <td colspan="5" class="ps-3 text-light-emphasis">
+                  <td colspan="5" class="text-light-emphasis ps-3">
                     No registrations found
                   </td>
                 </tr>
@@ -202,93 +203,93 @@
 </template>
 
 <script>
-import { translateMilitaryTime } from "@/utils/translations";
-import { getStudentSchedules } from "@/utils/data";
-import CourseAnalytics from "@/components/student/analytics/canvas-course.vue";
-import { BCard } from "bootstrap-vue-next";
-import { STabsDisplay, STabsPanel, STabsList, STabsItem } from "solstice-vue";
+  import { translateMilitaryTime } from "@/utils/translations";
+  import { getStudentSchedules } from "@/utils/data";
+  import CourseAnalytics from "@/components/student/analytics/canvas-course.vue";
+  import { BCard } from "bootstrap-vue-next";
+  import { STabsDisplay, STabsPanel, STabsList, STabsItem } from "solstice-vue";
 
-export default {
-  components: {
-    CourseAnalytics,
-    BCard,
-    STabsDisplay,
-    STabsPanel,
-    STabsList,
-    STabsItem,
-  },
-  props: {
-    person: {
-      type: Object,
-      required: true,
+  export default {
+    components: {
+      CourseAnalytics,
+      BCard,
+      STabsDisplay,
+      STabsPanel,
+      STabsList,
+      STabsItem,
     },
-  },
-  setup() {
-    return {
-      translateMilitaryTime,
-      getStudentSchedules,
-    };
-  },
-  data() {
-    return {
-      schedules: {},
-      analyticsDisplay: {},
-    };
-  },
-  created() {
-    this.loadStudentSchedules();
-  },
-  methods: {
-    getAnalyticsVisibility: function (target) {
-      return this.analyticsDisplay[target] == true;
+    props: {
+      person: {
+        type: Object,
+        required: true,
+      },
     },
-    expandCourseAnalytics(event) {
-      this.analyticsDisplay[event.currentTarget.id] = true;
+    setup() {
+      return {
+        translateMilitaryTime,
+        getStudentSchedules,
+      };
     },
-    loadStudentSchedules: function () {
-      this.getStudentSchedules(this.person.uwregid).then((response) => {
-        if (response) {
-          this.schedules = response;
+    data() {
+      return {
+        schedules: {},
+        analyticsDisplay: {},
+      };
+    },
+    created() {
+      this.loadStudentSchedules();
+    },
+    methods: {
+      getAnalyticsVisibility: function (target) {
+        return this.analyticsDisplay[target] == true;
+      },
+      expandCourseAnalytics(event) {
+        this.analyticsDisplay[event.currentTarget.id] = true;
+      },
+      loadStudentSchedules: function () {
+        this.getStudentSchedules(this.person.uwregid).then((response) => {
+          if (response) {
+            this.schedules = response;
+          }
+        });
+      },
+      getCreditTotal: function (sections) {
+        // get all section credits and sum the total
+        let creditTotal = 0;
+        for (let i = 0; i < sections.length; i++) {
+          // parseInt to exclude non-interger credits (i.e. None, NC, etc.)
+          if (parseInt(sections[i].credits)) {
+            creditTotal += parseInt(sections[i].credits);
+          }
         }
-      });
-    },
-    getCreditTotal: function (sections) {
-      // get all section credits and sum the total
-      let creditTotal = 0;
-      for (let i = 0; i < sections.length; i++) {
-        // parseInt to exclude non-interger credits (i.e. None, NC, etc.)
-        if (parseInt(sections[i].credits)) {
-          creditTotal += parseInt(sections[i].credits);
+        return creditTotal;
+      },
+      isLecture: function (credits) {
+        if (credits.includes("None")) {
+          return false;
+        } else if (credits.includes("0.0")) {
+          return false;
+        } else {
+          return true;
         }
-      }
-      return creditTotal;
+      },
     },
-    isLecture: function (credits) {
-      if (credits.includes("None")) {
-        return false;
-      } else if (credits.includes("0.0")) {
-        return false;
-      } else {
-        return true;
-      }
-    },
-  },
-};
+  };
 </script>
 
 <style lang="scss" scoped>
-.chevron .bi-chevron-down {
-  display: inline-block;
-  transition: transform 0.25s ease;
-  transform-origin: 0.5em 50%;
-  font-weight: bolder;
-}
+  .chevron .bi-chevron-down {
+    display: inline-block;
+    transition: transform 0.25s ease;
+    transform-origin: 0.5em 50%;
+    font-weight: bolder;
+  }
 
-.chevron[aria-expanded="true"] .bi-chevron-down {
-  transform: rotate(-180deg);
-}
+  .chevron[aria-expanded="true"] .bi-chevron-down {
+    transform: rotate(-180deg);
+  }
 
-.bi-chevron-down::after {
-  font-weight: bolder !important;
-}
+  .bi-chevron-down::after {
+    font-weight: bolder !important;
+  }
 </style>

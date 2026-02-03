@@ -160,7 +160,7 @@
                     v-if="!unsavedPreferences"
                     disabled
                     type="button"
-                    class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
+                    class="btn btn-sm fs-7 btn-outline-primary rounded"
                     @click="saveFilterPreferences"
                   >
                     <i class="bi bi-star-fill me-2"></i>Using saved filters
@@ -168,7 +168,7 @@
                   <button
                     v-else
                     type="button"
-                    class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
+                    class="btn btn-sm fs-7 btn-outline-primary rounded"
                     @click="saveFilterPreferences"
                   >
                     <i class="bi bi-star me-2"></i>Set filters as default
@@ -176,7 +176,7 @@
                   &nbsp;
                   <button
                     type="button"
-                    class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
+                    class="btn btn-sm fs-7 btn-outline-primary rounded"
                     @click.prevent="clearFilters"
                   >
                     Clear filters

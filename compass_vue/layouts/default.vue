@@ -11,10 +11,7 @@
 
       <QuarterWeek :term-data="termData" />
 
-      <h3
-        id="aat_navlink_header"
-        class="fs-8 text-opacity-50 text-uppercase text-white"
-      >
+      <h3 id="aat_navlink_header" class="fs-7 text-uppercase text-white">
         Advising Resources
       </h3>
       <ul aria-labelledby="aat_navlink_header" class="list-unstyled small mb-5">
@@ -40,24 +37,32 @@
     </template>
     <template #aside>
       <NavMessage v-if="persMsg && persMsg.length > 0" :messages="persMsg" />
-      <SProfile
-        v-if="userName != userOverride"
-        :user-netid="userName"
-        :user-override="userOverride"
-      >
-        <button
-          class="btn btn-link btn-sm text-danger m-0 border-0 p-0"
-          value="Clear override"
-          @click="clearUserOverride()"
+
+      <div class="d-flex justify-content-between">
+        <!-- user comp here -->
+        <SUser
+          :user-netid="userName"
+          :user-override="userOverride !== userName ? userOverride : null"
         >
-          Clear
-        </button>
-      </SProfile>
-      <SProfile v-else :user-netid="userName">
-        <a :href="signOutUrl" class="text-white">Sign out</a>
-      </SProfile>
-      <div class="text-end text-white">
-        <SColorMode></SColorMode>
+          <template v-if="userOverride !== userName">
+            Welcome back, {{ userOverride }}!
+          </template>
+          <template v-else> Welcome back, {{ userName }}! </template>
+          <template #action>
+            <a
+              v-if="userOverride !== userName"
+              role="button"
+              class="link-quiet-danger"
+              @click="clearUserOverride()"
+              ><i class="bi bi-x-circle me-2"></i>Clear override</a
+            >
+
+            <a v-else :href="signoutUrl" class="link-quiet-danger"
+              ><i class="bi bi-box-arrow-left me-2"></i>Sign out</a
+            >
+          </template>
+        </SUser>
+        <SColorMode color-class="text-white" class="ms-2" />
       </div>
     </template>
     <template #main>
@@ -72,7 +77,7 @@
 
 <script>
   import { BLink } from "bootstrap-vue-next";
-  import { SColorMode, SSidebar, SProfile } from "solstice-vue";
+  import { SColorMode, SSidebar, SProfile, SUser } from "solstice-vue";
   import QuarterWeek from "@/components/_common/quarter-week.vue";
   import NavMenu from "@/components/nav-menu.vue";
   import NavMessage from "@/components/nav-message.vue";
@@ -88,6 +93,7 @@
       SSidebar,
       SColorMode,
       SProfile,
+      SUser,
     },
     props: {
       pageTitle: {

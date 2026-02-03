@@ -66,7 +66,7 @@
             <div class="text-end">
               <button
                 type="button"
-                class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
+                class="btn btn-sm fs-7 btn-outline-primary rounded"
                 :disabled="isLoading"
                 @click="processUpload"
               >

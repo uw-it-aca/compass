@@ -2,19 +2,19 @@
   <BCard class="bg-body-tertiary rounded-3" border-variant="0">
     <div class="row">
       <div class="col-xl-3 d-flex flex-column">
-        <div v-if="person.student.deceased_date" class="px-3 mt-n1">
+        <div v-if="person.student.deceased_date" class="mt-n1 px-3">
           <span
             class="badge rounded-pill text-bg-danger fw-light text-uppercase"
             >Deceased</span
           >
-          <span class="ms-2 small text-muted"
+          <span class="small text-muted ms-2"
             >{{ formatDate(person.student.deceased_date, "LL") }}
           </span>
         </div>
         <div class="flex-fill d-flex px-3 text-center">
           <div class="align-self-center flex-fill">
             <div
-              class="d-inline-block rounded-circle border border-light-subtle border-4 mb-2"
+              class="d-inline-block rounded-circle border-light-subtle mb-2 border border-4"
             >
               <img
                 :src="person.photo_url"
@@ -39,7 +39,7 @@
                 {{ person.pronouns }}
               </template>
             </div>
-            <div class="mt-3 small">
+            <div class="small mt-3">
               {{ person.student.student_number }}, {{ person.uwnetid }}<br />
               <span v-if="person.student.local_phone_number">
                 {{ formatPhoneNumber(person.student.local_phone_number) }}
@@ -55,10 +55,10 @@
 
       <div class="col-xl-3">
         <div class="flex-fill px-3">
-          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
+          <div class="text-uppercase text-body-secondary fs-8 fw-bold mb-2">
             Legal Name
           </div>
-          <ul class="list-unstyled m-0 small mb-3">
+          <ul class="list-unstyled small m-0 mb-3">
             <li>
               <KeyValue>
                 <template #key>Full Name </template>
@@ -79,10 +79,10 @@
             </li>
           </ul>
 
-          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
+          <div class="text-uppercase text-body-secondary fs-8 fw-bold mb-2">
             Personal Information
           </div>
-          <ul class="list-unstyled m-0 mb-3 small">
+          <ul class="list-unstyled small m-0 mb-3">
             <li>
               <KeyValue>
                 <template #key>Gender</template>
@@ -125,11 +125,11 @@
             </li>
           </ul>
 
-          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
+          <div class="text-uppercase text-body-secondary fs-8 fw-bold mb-2">
             Email
           </div>
-          <ul class="list-unstyled mb-3 small">
-            <li>
+          <ul class="list-unstyled small mb-3">
+            <li class="mb-1">
               <KeyValue>
                 <template #key>Student</template>
                 <template #value
@@ -157,12 +157,12 @@
         </div>
       </div>
 
-      <div class="col-12 col-xl-3">
+      <div class="col-xl-3 col-12">
         <div class="px-3">
-          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
+          <div class="text-uppercase text-body-secondary fs-8 fw-bold mb-2">
             Benefits
           </div>
-          <ul class="list-unstyled m-0 small">
+          <ul class="list-unstyled small m-0">
             <li>
               <KeyValue>
                 <template #key>Disability</template>
@@ -210,10 +210,10 @@
             </li>
           </ul>
 
-          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
+          <div class="text-uppercase text-body-secondary fs-8 fw-bold mb-2">
             Immigration
           </div>
-          <ul class="list-unstyled m-0 mb-3 small">
+          <ul class="list-unstyled small m-0 mb-3">
             <li>
               <KeyValue>
                 <template #key>Citizenship</template>
@@ -235,10 +235,10 @@
             </li>
           </ul>
 
-          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
+          <div class="text-uppercase text-body-secondary fs-8 fw-bold mb-2">
             Residency
           </div>
-          <ul class="list-unstyled m-0 small">
+          <ul class="list-unstyled small m-0">
             <li class="mb-3">
               <KeyValue>
                 <template #key>Status</template>
@@ -251,10 +251,10 @@
           </ul>
 
           <template v-if="person.student.sports.length > 0">
-            <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
+            <div class="text-uppercase text-body-secondary fs-8 fw-bold mb-2">
               Athletics
             </div>
-            <ul class="list-unstyled m-0 small">
+            <ul class="list-unstyled small m-0">
               <li class="mb-3">
                 <KeyValue>
                   <template #key>Sports</template>
@@ -280,12 +280,12 @@
         </div>
       </div>
 
-      <div class="col-12 col-xl-3">
+      <div class="col-xl-3 col-12">
         <div class="px-3">
-          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
+          <div class="text-uppercase text-body-secondary fs-8 fw-bold mb-2">
             Address
           </div>
-          <ul class="list-unstyled mb-3 small">
+          <ul class="list-unstyled small mb-3">
             <li class="mb-3">
               <KeyValue variant="address">
                 <template #key>Local Address</template>
@@ -321,7 +321,9 @@
                     </div>
                     <div>
                       {{ person.student.perm_addr_city }}
-                      <span v-show="person.student.perm_addr_state !== ''">,</span>
+                      <span v-show="person.student.perm_addr_state !== ''"
+                        >,</span
+                      >
                       {{ person.student.perm_addr_state }}
                       {{ person.student.perm_addr_5digit_zip }}
                     </div>
@@ -365,11 +367,11 @@
             </li>
           </ul>
 
-          <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-2">
+          <div class="text-uppercase text-body-secondary fs-8 fw-bold mb-2">
             Emergency Contact
           </div>
 
-          <ul class="list-unstyled m-0 small mb-3">
+          <ul class="list-unstyled small m-0 mb-3">
             <li>
               <KeyValue>
                 <template #key>Name</template>
@@ -412,51 +414,51 @@
 </template>
 
 <script>
-import KeyValue from "@/components/_common/key-value.vue";
-import { translateTrueFalse } from "@/utils/translations";
-import { formatDate } from "@/utils/dates";
-import { formatPhoneNumber } from "@/utils/formats";
-import { BCard } from "bootstrap-vue-next";
+  import KeyValue from "@/components/_common/key-value.vue";
+  import { translateTrueFalse } from "@/utils/translations";
+  import { formatDate } from "@/utils/dates";
+  import { formatPhoneNumber } from "@/utils/formats";
+  import { BCard } from "bootstrap-vue-next";
 
-export default {
-  name: "StudentProfile",
-  components: { KeyValue, BCard },
-  inject: ["mq"],
-  props: {
-    person: {
-      type: Object,
-      required: true,
+  export default {
+    name: "StudentProfile",
+    components: { KeyValue, BCard },
+    inject: ["mq"],
+    props: {
+      person: {
+        type: Object,
+        required: true,
+      },
     },
-  },
-  setup() {
-    return {
-      translateTrueFalse,
-      formatDate,
-      formatPhoneNumber,
-    };
-  },
-  data() {
-    return {};
-  },
-  computed: {
-    borderClass() {
-      const classes = {
-        danger: "border-danger",
-        warning: "border-warning",
-        success: "border-success",
-        missing: "border-light",
+    setup() {
+      return {
+        translateTrueFalse,
+        formatDate,
+        formatPhoneNumber,
       };
-      return classes[this.person.analytics_alert] || classes.missing;
     },
-  },
-};
+    data() {
+      return {};
+    },
+    computed: {
+      borderClass() {
+        const classes = {
+          danger: "border-danger",
+          warning: "border-warning",
+          success: "border-success",
+          missing: "border-light",
+        };
+        return classes[this.person.analytics_alert] || classes.missing;
+      },
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
-.img-profile {
-  height: 120px;
-  width: 120px;
-  object-fit: cover;
-  object-position: top;
-}
+  .img-profile {
+    height: 120px;
+    width: 120px;
+    object-fit: cover;
+    object-position: top;
+  }
 </style>
