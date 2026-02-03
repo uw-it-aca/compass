@@ -14,9 +14,6 @@ class RADStorageDao():
     def get_analytics_file_list(self):
         """
         Returns list canvas-analytics compass data files in the bucket.
-
-        :param path: Path to list files at
-        :type path: str
         """
         dirs, files = default_storage.listdir("compass_data/")
 
@@ -32,9 +29,6 @@ class RADStorageDao():
     def get_pred_file_list(self):
         """
         Returns list of prediction files in the bucket.
-
-        :param path: Path to list files at
-        :type path: str
         """
         dirs, files = default_storage.listdir("prediction_data/")
 

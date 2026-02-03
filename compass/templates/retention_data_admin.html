@@ -43,7 +43,7 @@
         <td>{{ import.total_scores }}</td>
         <td>{{ import.signin_scores }}</td>
         <td>{{ import.prediction_filename }}</td>
-        {% if import.prediction_filename != None %}
+        {% if import.prediction_filename %}
         <td><button class="reload-btn" value="{{ import.id }}">Reload</button></td>
         {% else %}
         <td>Cannot reload legacy weeks</td>
