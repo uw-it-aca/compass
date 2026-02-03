@@ -87,15 +87,39 @@ def import_data_from_csv(week, csv_string, pred_file, reload=False):
 
 def _get_prediction_dict(pred_file):
     """
-    Get prediction data for a given term. grouped by user and course_id
+    Get prediction data for a given term, grouped by user and course_id.
     """
-
-    prediction_data = read_csv(pred_file)
     prediction_dict = {}
-    for row in prediction_data:
+    for row in read_csv(pred_file):
         key = f"{row['uw_netid'].strip()}_{row['course_code'].strip()}"
-        prediction_dict[key] = row['pred']
+        pred_value = row['pred'].strip()
+        if pred_value in {"True", "False"}:
+            prediction_dict[key] = 1.0 if pred_value == "True" else 0.0
+        else:
+            raise ValueError(f"Invalid prediction value '{pred_value}'"
+                             f" for key '{key}'")
     return prediction_dict
+
+
+def validate_prediction_csv(pred_file):
+    """
+    Validate prediction CSV file structure.
+    """
+    required_fields = {'uw_netid', 'course_code', 'pred'}
+    prediction_data = read_csv(pred_file)
+
+    # Check if the file is empty
+    if not any(True for _ in prediction_data):
+        raise ValueError("Prediction CSV is empty")
+
+    # Reset iterator and validate fields are set
+    for row in read_csv(pred_file):
+        missing = required_fields - row.keys()
+        if missing:
+            raise ValueError(f"Missing fields in prediction CSV:"
+                             f" {', '.join(missing)}")
+
+    return True
 
 
 def _parse_score(field):

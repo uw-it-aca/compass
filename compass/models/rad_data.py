@@ -25,6 +25,9 @@ class RADImport(models.Model):
                                 on_delete=models.CASCADE)
     import_status = models.CharField(max_length=255,
                                      choices=JOB_STATUS_CHOICES)
+    prediction_filename = models.CharField(max_length=255,
+                                           null=True,
+                                           blank=True)
 
     def get_filename(self):
         """
