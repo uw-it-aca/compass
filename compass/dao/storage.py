@@ -29,6 +29,24 @@ class RADStorageDao():
                     f"{','.join(filenames)}")
         return filenames
 
+    def get_pred_file_list(self):
+        """
+        Returns list of prediction files in the bucket.
+
+        :param path: Path to list files at
+        :type path: str
+        """
+        dirs, files = default_storage.listdir("prediction_data/")
+
+        filenames = []
+        for filename in files:
+            if filename.endswith('_predictions.csv'):
+                filenames.append(filename)
+
+        logger.info(f"Found the following prediction files: "
+                    f"{','.join(filenames)}")
+        return filenames
+
     def get_file_by_year_quarter_week(self, year, quarter, week):
         """
         Returns the file name for the given year, quarter, and week.

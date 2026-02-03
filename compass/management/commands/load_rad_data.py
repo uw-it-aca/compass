@@ -94,8 +94,15 @@ class Command(BaseCommand):
                     logger.info(f"Downloaded specified prediction file "
                                 f"{pred_filename}")
                 elif reload:
-                    pred_file = rad_store.download_from_bucket(
-                        f"prediction_data/{rad_import.prediction_filename}")
+                    if rad_import.prediction_filename:
+                        pred_file = rad_store.download_from_bucket(
+                            f"prediction_data/"
+                            f"{rad_import.prediction_filename}"
+                        )
+                    else:
+                        pred_filename, pred_file = (
+                            rad_store.get_latest_pred_file())
+                        rad_import.prediction_filename = pred_filename
                     logger.info(f"Re-downloaded prediction file "
                                 f"{rad_import.prediction_filename}")
                 else:
