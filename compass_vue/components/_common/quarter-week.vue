@@ -3,7 +3,7 @@
     v-if="termData.currYear"
     class="bg-white bg-opacity-10 rounded-3 mb-5 p-3"
   >
-    <div class="small text-white mb-1 text-opacity-50">
+    <div class="small text-white mb-1">
       <i class="bi bi-calendar-week me-2"></i>
       <span v-if="termData.isBreak">
         <span v-if="termData.breakYear !== termData.currYear">
@@ -28,7 +28,7 @@
         {{ getWeeksApart(termData.firstDay, termData.lastDay) }}
       </span>
     </div>
-    <div class="small mt-3 text-white text-opacity-50">
+    <div class="small mt-3 text-white">
       {{ formatDate(termData.todayDate, "dddd, LL") }}
     </div>
   </div>

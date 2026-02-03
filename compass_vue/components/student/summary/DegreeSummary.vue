@@ -3,7 +3,7 @@
     class="bg-body-tertiary rounded-3 d-flex flex-fill small"
     border-variant="0"
   >
-    <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-3">Degrees</div>
+    <div class="text-uppercase text-body-secondary fs-8 fw-bold mb-3">Degrees</div>
 
     <div>
       <KeyValue

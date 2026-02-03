@@ -1,7 +1,7 @@
 <template>
   <div class="m-3 mt-0 p-3 bg-body-tertiary rounded-3">
     <div class="d-flex">
-      <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-3">
+      <div class="text-uppercase text-body-secondary fs-8 fw-bold mb-3">
         Canvas Analytics
       </div>
       <a

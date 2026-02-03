@@ -172,7 +172,7 @@
                     autocomplete="off"
                   />
                   <label
-                    class="btn btn-sm btn-outline-dark-beige fs-9 rounded-pill"
+                    class="btn btn-sm btn-outline-primary fs-9 rounded-pill"
                     :for="'#contactModal' + contactId + 'Topic' + topic.id"
                     >{{ topic.name }}</label
                   >

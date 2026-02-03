@@ -9,7 +9,7 @@
       </h1>
     </template>
     <template #content>
-      <div v-show="!$route.params.id || errorResponse" class="row my-4 small">
+      <div v-show="!$route.params.id || errorResponse" class="row small my-4">
         <div class="col">
           <BCard class="bg-body-tertiary rounded-3" border-variant="0">
             <div class="row">
@@ -45,7 +45,7 @@
             <div>
               Student Authorizes Release of Directory Information:
               <span
-                class="small badge rounded-pill text-bg-secondary border-0 px-2 py-1 mb-0 me-1"
+                class="small badge rounded-pill text-bg-secondary me-1 mb-0 border-0 px-2 py-1"
               >
                 <template v-if="person.student.directory_release_ind"
                   >Yes</template
@@ -173,142 +173,142 @@
 </template>
 
 <script>
-import Layout from "@/layout.vue";
-import StudentProfile from "@/components/student/profile.vue";
-import StudentProfileLoading from "@/components/student/profile-loading.vue";
-import StudentAcademics from "@/components/student/academics.vue";
-import StudentTranscript from "@/components/student/transcript.vue";
-import StudentTranscriptCredits from "@/components/student/transcript-credits.vue";
-import StudentContact from "@/components/student/contact.vue";
-import StudentSchedule from "@/components/student/schedule.vue";
-import StudentHolds from "@/components/student/holds.vue";
-import StudentAdviser from "@/components/student/adviser.vue";
-import StudentVisits from "@/components/student/visits.vue";
-import StudentEligibility from "@/components/student/administrative/eligibility.vue";
-import SearchStudent from "@/components/search-student.vue";
-import AffiliationAddEdit from "@/components/student/administrative/affiliation.vue";
-import SpecialPrograms from "@/components/student/administrative/special-programs.vue";
-import SignInChart from "@/components/student/analytics/signins.vue";
+  import Layout from "@/layouts/default.vue";
+  import StudentProfile from "@/components/student/profile.vue";
+  import StudentProfileLoading from "@/components/student/profile-loading.vue";
+  import StudentAcademics from "@/components/student/academics.vue";
+  import StudentTranscript from "@/components/student/transcript.vue";
+  import StudentTranscriptCredits from "@/components/student/transcript-credits.vue";
+  import StudentContact from "@/components/student/contact.vue";
+  import StudentSchedule from "@/components/student/schedule.vue";
+  import StudentHolds from "@/components/student/holds.vue";
+  import StudentAdviser from "@/components/student/adviser.vue";
+  import StudentVisits from "@/components/student/visits.vue";
+  import StudentEligibility from "@/components/student/administrative/eligibility.vue";
+  import SearchStudent from "@/components/search-student.vue";
+  import AffiliationAddEdit from "@/components/student/administrative/affiliation.vue";
+  import SpecialPrograms from "@/components/student/administrative/special-programs.vue";
+  import SignInChart from "@/components/student/analytics/signins.vue";
 
-import { Role } from "@/utils/roles";
-import { getStudentDetail, getAccessGroups } from "@/utils/data";
+  import { Role } from "@/utils/roles";
+  import { getStudentDetail, getAccessGroups } from "@/utils/data";
 
-import { STabsDisplay, STabsPanel, STabsList, STabsItem } from "solstice-vue";
-import { BCard } from "bootstrap-vue-next";
+  import { STabsDisplay, STabsPanel, STabsList, STabsItem } from "solstice-vue";
+  import { BCard } from "bootstrap-vue-next";
 
-export default {
-  name: "StudentPage",
-  components: {
-    Layout,
-    BCard,
-    STabsDisplay,
-    STabsPanel,
-    STabsList,
-    STabsItem,
-    StudentProfile,
-    StudentProfileLoading,
-    StudentAcademics,
-    StudentTranscript,
-    StudentTranscriptCredits,
-    StudentContact,
-    StudentSchedule,
-    StudentHolds,
-    StudentAdviser,
-    StudentVisits,
-    StudentEligibility,
-    SearchStudent,
-    AffiliationAddEdit,
-    SpecialPrograms,
-    SignInChart,
-  },
-  inject: ["mq"],
+  export default {
+    name: "StudentPage",
+    components: {
+      Layout,
+      BCard,
+      STabsDisplay,
+      STabsPanel,
+      STabsList,
+      STabsItem,
+      StudentProfile,
+      StudentProfileLoading,
+      StudentAcademics,
+      StudentTranscript,
+      StudentTranscriptCredits,
+      StudentContact,
+      StudentSchedule,
+      StudentHolds,
+      StudentAdviser,
+      StudentVisits,
+      StudentEligibility,
+      SearchStudent,
+      AffiliationAddEdit,
+      SpecialPrograms,
+      SignInChart,
+    },
+    inject: ["mq"],
 
-  // composition api
-  setup() {
-    return {
-      getStudentDetail,
-      getAccessGroups,
-    };
-  },
+    // composition api
+    setup() {
+      return {
+        getStudentDetail,
+        getAccessGroups,
+      };
+    },
 
-  data() {
-    return {
-      person: {},
-      isLoading: false,
-      errorResponse: null,
-      accessGroups: [],
-      userRoles: document.body.getAttribute("data-user-role").split(","),
-      userAccessGroup: document.body.getAttribute("data-user-access-group"),
-      Role: Role,
-    };
-  },
-  created: function () {
-    this.loadAccessGroups();
-    if (this.$route.params.id) {
-      this.isLoading = true;
-      //setTimeout(() => {
-      this.loadStudent(this.$route.params.id);
-      //}, 3000);
-    }
-  },
-  //  computed: {
-  //    studentAddress: function () {
-  //      let addr = "";
-  //      if (this.student.perm_addr_line1)
-  //        addr += this.student.perm_addr_line1 + " ";
-  //      if (this.student.perm_addr_line2)
-  //        addr += this.student.perm_addr_line2 + " ";
-  //      if (this.student.perm_addr_city) addr += this.student.perm_addr_city;
-  //      if (this.student.perm_addr_state)
-  //        addr += ", " + this.student.perm_addr_state;
-  //      if (this.student.perm_addr_line1)
-  //        addr += " " + this.student.perm_addr_postal_code;
-  //      if (addr) return addr;
-  //      else return "N/A";
-  //    },
-  //  },
-  methods: {
-    loadStudent: function (studentNetID) {
-      // setup() exposed properties can be accessed on `this`
-      this.getStudentDetail(studentNetID)
-        .then((response) => {
+    data() {
+      return {
+        person: {},
+        isLoading: false,
+        errorResponse: null,
+        accessGroups: [],
+        userRoles: document.body.getAttribute("data-user-role").split(","),
+        userAccessGroup: document.body.getAttribute("data-user-access-group"),
+        Role: Role,
+      };
+    },
+    created: function () {
+      this.loadAccessGroups();
+      if (this.$route.params.id) {
+        this.isLoading = true;
+        //setTimeout(() => {
+        this.loadStudent(this.$route.params.id);
+        //}, 3000);
+      }
+    },
+    //  computed: {
+    //    studentAddress: function () {
+    //      let addr = "";
+    //      if (this.student.perm_addr_line1)
+    //        addr += this.student.perm_addr_line1 + " ";
+    //      if (this.student.perm_addr_line2)
+    //        addr += this.student.perm_addr_line2 + " ";
+    //      if (this.student.perm_addr_city) addr += this.student.perm_addr_city;
+    //      if (this.student.perm_addr_state)
+    //        addr += ", " + this.student.perm_addr_state;
+    //      if (this.student.perm_addr_line1)
+    //        addr += " " + this.student.perm_addr_postal_code;
+    //      if (addr) return addr;
+    //      else return "N/A";
+    //    },
+    //  },
+    methods: {
+      loadStudent: function (studentNetID) {
+        // setup() exposed properties can be accessed on `this`
+        this.getStudentDetail(studentNetID)
+          .then((response) => {
+            if (response) {
+              this.person = response;
+              this.errorResponse = null;
+
+              // programatically update page title with student name
+              document.title = this.person.display_name + " - Compass";
+            }
+          })
+          .catch((error) => {
+            this.errorResponse = error.data;
+          })
+          .finally(() => {
+            this.isLoading = false;
+          });
+      },
+      loadAccessGroups: function () {
+        // setup() exposed properties can be accessed on `this`
+        this.getAccessGroups().then((response) => {
           if (response) {
-            this.person = response;
-            this.errorResponse = null;
-
-            // programatically update page title with student name
-            document.title = this.person.display_name + " - Compass";
+            this.accessGroups = response;
           }
-        })
-        .catch((error) => {
-          this.errorResponse = error.data;
-        })
-        .finally(() => {
-          this.isLoading = false;
         });
+      },
+      inUserAccessGroup: function () {
+        // check to see if userAccessGroup is in accessGroups
+        return this.accessGroups.some(
+          (group) => group.access_group_id === this.userAccessGroup,
+        );
+      },
     },
-    loadAccessGroups: function () {
-      // setup() exposed properties can be accessed on `this`
-      this.getAccessGroups().then((response) => {
-        if (response) {
-          this.accessGroups = response;
-        }
-      });
-    },
-    inUserAccessGroup: function () {
-      // check to see if userAccessGroup is in accessGroups
-      return this.accessGroups.some(
-        (group) => group.access_group_id === this.userAccessGroup
-      );
-    },
-  },
-};
+  };
 </script>
 
 <style lang="scss">
-.table {
-  tbody tr:last-of-type {
-    border-color: transparent !important;
+  .table {
+    tbody tr:last-of-type {
+      border-color: transparent !important;
+    }
   }
-}
 </style>

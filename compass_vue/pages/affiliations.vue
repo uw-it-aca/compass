@@ -66,7 +66,7 @@
             <div class="text-end">
               <button
                 type="button"
-                class="btn btn-sm fs-7 btn-outline-dark-beige rounded"
+                class="btn btn-sm fs-7 btn-outline-primary rounded"
                 :disabled="isLoading"
                 @click="processUpload"
               >
@@ -180,7 +180,7 @@
 </template>
 
 <script>
-import Layout from "@/layout.vue";
+import Layout from "@/layouts/default.vue";
 import { getAffiliations, uploadStudentAffiliations } from "@/utils/data";
 import { getCohorts } from "@/utils/cohorts";
 import { BCard } from "bootstrap-vue-next";

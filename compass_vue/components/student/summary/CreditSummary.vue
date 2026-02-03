@@ -4,7 +4,7 @@
     border-variant="0"
     body-class="d-flex flex-column"
   >
-    <div class="text-uppercase text-dark-beige fs-8 fw-bold mb-3">Credits</div>
+    <div class="text-uppercase text-body-secondary fs-8 fw-bold mb-3">Credits</div>
     <div class="flex-fill">
       <ul class="list-unstyled">
         <li>
