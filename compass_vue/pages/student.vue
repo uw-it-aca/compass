@@ -173,7 +173,7 @@
 </template>
 
 <script>
-import Layout from "@/layout.vue";
+import Layout from "@/layouts/default.vue";
 import StudentProfile from "@/components/student/profile.vue";
 import StudentProfileLoading from "@/components/student/profile-loading.vue";
 import StudentAcademics from "@/components/student/academics.vue";

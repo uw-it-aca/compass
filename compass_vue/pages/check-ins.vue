@@ -66,7 +66,7 @@
   import SearchStudent from "@/components/search-student.vue";
   import CheckInTableLoading from "@/components/checkin-table-loading.vue";
   import CheckInTableDisplay from "@/components/checkin-table-display.vue";
-  import Layout from "@/layout.vue";
+  import Layout from "@/layouts/default.vue";
   import { getAdviserCheckIns, savePreferences } from "@/utils/data";
   import { formatAdviserName } from "@/utils/formats";
   import { BCard, BDropdown, BDropdownItemButton } from "bootstrap-vue-next";

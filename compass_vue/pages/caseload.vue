@@ -241,7 +241,7 @@
   import SearchStudent from "@/components/search-student.vue";
   import CaseloadTableDisplay from "@/components/caseload-table-display.vue";
   import CaseloadTableLoading from "@/components/caseload-table-loading.vue";
-  import Layout from "@/layout.vue";
+  import Layout from "@/layouts/default.vue";
   import { getAdviserCaseload, savePreferences } from "@/utils/data";
   import { formatAdviserName } from "@/utils/formats";
   import { BCard, BDropdown, BDropdownItemButton } from "bootstrap-vue-next";

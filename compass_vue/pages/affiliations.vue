@@ -180,7 +180,7 @@
 </template>
 
 <script>
-import Layout from "@/layout.vue";
+import Layout from "@/layouts/default.vue";
 import { getAffiliations, uploadStudentAffiliations } from "@/utils/data";
 import { getCohorts } from "@/utils/cohorts";
 import { BCard } from "bootstrap-vue-next";
