@@ -65,5 +65,3 @@ Run ESLint for JS linting
 Run Stylelint for CSS linting
 
          $ npm run stylelint
-
-## Development (using Virtualenv)
