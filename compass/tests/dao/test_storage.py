@@ -56,11 +56,28 @@ class TestStorage(TestCase):
     def test_upload_prediction(self):
         test_datetime = datetime.datetime(2024, 5, 1, 12, 10, 32)
         dao = RADStorageDao()
-        content = "uw_netid,prediction\njdoe,True\nasmith,False"
-        dao.write_pred_file(content, override_datetime=test_datetime)
+        sample_json = {
+            "body": [
+                {
+                    "": "0",
+                    "system_key": "12345",
+                    "student_no": "54321",
+                    "uw_netid": "netid123",
+                    "yrq": "20261",
+                    "course_code": "MATH 101 A",
+                    "pred": "False"
+                },
+            ]
+        }
+        dao.write_pred_file(sample_json, override_datetime=test_datetime)
         downloaded_content = dao.download_from_bucket(
             'prediction_data/2024-05-01-121032_predictions.csv')
-        self.assertEqual(downloaded_content, content)
+        expected_rows = [
+            "uw_netid,course_code,pred",
+            "netid123,MATH 101 A,False"
+        ]
+        expected_csv = "\r\n".join(expected_rows) + "\r\n"
+        self.assertEqual(downloaded_content, expected_csv)
 
     def test_get_latest_prediction(self):
         dao = RADStorageDao()

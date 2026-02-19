@@ -9,6 +9,7 @@ from compass.tests import ApiTest
 from compass.models import AccessGroup
 from compass.dao.storage import RADStorageDao
 from rest_framework.authtoken.models import Token
+import json
 
 
 class AnalyticsAPITest(ApiTest):
@@ -31,12 +32,20 @@ class AnalyticsAPITest(ApiTest):
         }
     })
     def test_api_auth(self):
-        test_request = """
-        ,system_key,student_no,uw_netid,yrq,course_code,pred
-        0,0000001,8123456,javerage  ,20252,TRAIN 100 A,False
-        """
-        test_request = "\n".join([line.strip() for line in test_request.strip()
-                                 .split("\n")])
+        sample_json = {
+            "body": [
+                {
+                    "": "0",
+                    "system_key": "12345",
+                    "student_no": "54321",
+                    "uw_netid": "netid123",
+                    "yrq": "20261",
+                    "course_code": "MATH 101 A",
+                    "pred": "False"
+                },
+            ]
+        }
+        test_request = json.dumps(sample_json)
 
         token_str = "Token %s" % self.API_TOKEN
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
@@ -66,14 +75,38 @@ class AnalyticsAPITest(ApiTest):
     })
     def test_upload(self):
         rad_storage = RADStorageDao()
-        test_request = """
-        ,system_key,student_no,uw_netid,yrq,course_code,pred
-        0,0000001,8123456,javerage  ,20252,TRAIN 100 A,False
-        1,0000002,1000002,jsmith    ,20252,BIOL 101 A,True
-        2,0000003,8654321,lisa      ,20252,TRAIN 100 A,False
-        """
-        test_request = "\n".join([line.strip() for line in test_request.strip()
-                                 .split("\n")])
+        sample_json = {
+            "body": [
+                {
+                    "": "0",
+                    "system_key": "12345",
+                    "student_no": "54321",
+                    "uw_netid": "netid123",
+                    "yrq": "20261",
+                    "course_code": "MATH 101 A",
+                    "pred": "False"
+                },
+                {
+                    "": "1",
+                    "system_key": "12346",
+                    "student_no": "54322",
+                    "uw_netid": "netid456",
+                    "yrq": "20261",
+                    "course_code": "MATH 101 A",
+                    "pred": "True"
+                },
+                {
+                    "": "2",
+                    "system_key": "12347",
+                    "student_no": "54323",
+                    "uw_netid": "netid789",
+                    "yrq": "20261",
+                    "course_code": "MATH 101 A",
+                    "pred": "False"
+                }
+            ]
+        }
+        test_request = json.dumps(sample_json)
 
         token_str = "Token %s" % self.API_TOKEN
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
@@ -85,4 +118,12 @@ class AnalyticsAPITest(ApiTest):
         self.assertEqual(response.status_code, 201)
         filename, latest_file = rad_storage.get_latest_pred_file()
         self.assertIsNotNone(latest_file)
-        self.assertEqual(latest_file.strip(), test_request.strip())
+        expected_rows = [
+            "uw_netid,course_code,pred",
+            "netid123,MATH 101 A,False",
+            "netid456,MATH 101 A,True",
+            "netid789,MATH 101 A,False"
+        ]
+        latest_file_rows = [line.strip() for line in
+                            latest_file.strip().split("\n")]
+        self.assertEqual(latest_file_rows, expected_rows)

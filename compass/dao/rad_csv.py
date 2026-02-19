@@ -101,25 +101,38 @@ def _get_prediction_dict(pred_file):
     return prediction_dict
 
 
-def validate_prediction_csv(pred_file):
+def validate_prediction_json(pred_json):
     """
-    Validate prediction CSV file structure.
+    Validate prediction JSON structure.
     """
     required_fields = {'uw_netid', 'course_code', 'pred'}
-    prediction_data = read_csv(pred_file)
-
-    # Check if the file is empty
-    if not any(True for _ in prediction_data):
-        raise ValueError("Prediction CSV is empty")
-
-    # Reset iterator and validate fields are set
-    for row in read_csv(pred_file):
+    rows = pred_json.get('body', [])
+    if not rows:
+        raise ValueError("Prediction JSON body is empty")
+    for row in rows:
         missing = required_fields - row.keys()
         if missing:
-            raise ValueError(f"Missing fields in prediction CSV:"
+            raise ValueError(f"Missing fields in prediction JSON:"
                              f" {', '.join(missing)}")
 
-    return True
+
+def get_pred_csv_from_json(pred_json):
+    """
+    Convert prediction JSON to CSV string.
+    """
+    output = StringIO()
+    writer = csv.DictWriter(output,
+                            fieldnames=['uw_netid',
+                                        'course_code',
+                                        'pred'])
+    writer.writeheader()
+    for row in pred_json.get('body', []):
+        writer.writerow({
+            'uw_netid': row['uw_netid'],
+            'course_code': row['course_code'],
+            'pred': row['pred']
+        })
+    return output.getvalue()
 
 
 def _parse_score(field):
