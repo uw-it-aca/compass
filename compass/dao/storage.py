@@ -4,6 +4,7 @@
 import datetime
 from django.core.files.storage import default_storage
 from compass.models.rad_data import RADWeek
+from compass.dao.rad_csv import get_pred_csv_from_json
 from logging import getLogger
 
 
@@ -62,15 +63,16 @@ class RADStorageDao():
         File name set to current timestamp yyyy-mm-dd-HHMMSS_predictions.csv
 
         :param content: Content to upload
-        :type content: str
+        :type content: dict
         :param override_datetime: Optional datetime to use for timestamp
         :type override_datetime: datetime.datetime
         """
         now = override_datetime or datetime.datetime.now()
         timestamp = now.strftime("%Y-%m-%d-%H%M%S")
         filename = f"prediction_data/{timestamp}_predictions.csv"
+        csv_content = get_pred_csv_from_json(content)
         with default_storage.open(filename, mode='wb') as f:
-            f.write(content.encode('utf-8'))
+            f.write(csv_content.encode('utf-8'))
 
     def get_latest_pred_file(self):
         """

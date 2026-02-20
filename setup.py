@@ -34,7 +34,7 @@ setup(
         'django-storages[google]>=1.10',
         'djangorestframework~=3.12',
         'django-person-client~=1.1',
-        'uw-restclients-sws~=2.4',
+        'uw-restclients-sws~=2.4.0',
         'uw-restclients-gws~=2.3',
         'uw-restclients-pws~=2.1',
         'uw-restclients-django-utils~=2.3',

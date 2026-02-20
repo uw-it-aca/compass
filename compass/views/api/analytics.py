@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from rest_framework.response import Response
 from rest_framework import status
-from compass.dao.rad_csv import validate_prediction_csv
+from compass.dao.rad_csv import validate_prediction_json
 from compass.dao.storage import RADStorageDao
 
 
@@ -15,20 +15,29 @@ from compass.dao.storage import RADStorageDao
 class PredictionAnalytics(TokenAPIView):
     def post(self, request, *args, **kwargs):
         """
-        Endpoint to accept prediction analytics CSV
+        Endpoint to accept prediction analytics JSON
         Sample payload:
-        ,system_key,student_no,uw_netid,yrq,course_code,pred
-        0,0000001,8123456,javerage  ,20252,TRAIN 100 A,False
-        1,0000002,1000002,jsmith    ,20252,BIOL 101 A,True
+        {
+            "body": [
+                {
+                    "": "0",
+                    "system_key": "12345",
+                    "student_no": "54321",
+                    "uw_netid": "netid123",
+                    "yrq": "20261",
+                    "course_code": "MATH 101 A",
+                    "pred": "False"
+                },
+
+            ]
+        }
         """
         if settings.PRED_ANALYTICS_TOKEN_USER != request.user.username:
             return Response("Unauthorized",
                             status=status.HTTP_401_UNAUTHORIZED)
-        # validate payload
-        body = request.body.decode('utf-8')
         try:
-            validate_prediction_csv(body)
+            validate_prediction_json(request.data)
         except ValueError as e:
             return Response(repr(e), status=status.HTTP_400_BAD_REQUEST)
-        RADStorageDao().write_pred_file(body)
+        RADStorageDao().write_pred_file(request.data)
         return Response(status=status.HTTP_201_CREATED)

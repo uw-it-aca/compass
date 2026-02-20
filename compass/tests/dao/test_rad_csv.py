@@ -4,7 +4,9 @@
 
 from django.test import TestCase
 from compass.dao.rad_csv import (read_csv, import_data_from_csv,
-                                 _parse_score, validate_prediction_csv)
+                                 _parse_score,
+                                 get_pred_csv_from_json,
+                                 validate_prediction_json)
 from compass.models.rad_data import CourseAnalyticsScores, RADWeek
 from compass.dao.storage import RADStorageDao
 
@@ -43,30 +45,91 @@ class TestRadCsv(TestCase):
         self.assertEqual(_parse_score(''), 0)
         self.assertEqual(_parse_score(None), 0)
 
-    def test_validate_prediction_csv(self):
-        sample_csv = """
-        ,system_key,student_no,uw_netid,yrq,course_code,pred
-        0,0000001,8123456,javerage  ,20252,TRAIN 100 A,False
-        1,0000002,1000002,jsmith    ,20252,BIOL 101 A,True
-        2,0000003,8654321,lisa      ,20252,TRAIN 100 A,False
-        """
-        sample_csv = "\n".join([line.strip() for line in sample_csv.strip()
-                               .split("\n")])
-        self.assertTrue(validate_prediction_csv(sample_csv))
+    def test_get_pred_csv_from_json(self):
+        sample_json = {
+            "body": [
+                {
+                    "": "0",
+                    "system_key": "12345",
+                    "student_no": "54321",
+                    "uw_netid": "netid123",
+                    "yrq": "20261",
+                    "course_code": "MATH 101 A",
+                    "pred": "False"
+                },
+                {
+                    "": "1",
+                    "system_key": "12346",
+                    "student_no": "54322",
+                    "uw_netid": "netid456",
+                    "yrq": "20261",
+                    "course_code": "MATH 101 A",
+                    "pred": "True"
+                },
+                {
+                    "": "2",
+                    "system_key": "12347",
+                    "student_no": "54323",
+                    "uw_netid": "netid789",
+                    "yrq": "20261",
+                    "course_code": "MATH 101 A",
+                    "pred": "False"
+                }
+            ]
+        }
+        csv_output = get_pred_csv_from_json(sample_json)
+        expected_rows = [
+            "uw_netid,course_code,pred",
+            "netid123,MATH 101 A,False",
+            "netid456,MATH 101 A,True",
+            "netid789,MATH 101 A,False"
+        ]
+        expected_csv = "\r\n".join(expected_rows) + "\r\n"
 
-        no_rows = """
-        ,system_key,student_no,uw_netid,yrq,course_code,pred
-        """
-        no_rows = "\n".join([line.strip() for line in no_rows.strip()
-                            .split("\n")])
-        with self.assertRaises(ValueError):
-            validate_prediction_csv(no_rows)
+        self.assertEqual(csv_output, expected_csv)
 
-        missing_field = """
-        ,system_key,student_no,uw_netid,yrq,course_code
-        0,0000001,8123456,javerage  ,20252,TRAIN 100 A
-        """
-        missing_field = "\n".join([line.strip() for line in missing_field
-                                  .strip().split("\n")])
+    def test_validate_prediction_json(self):
+        valid_json = {
+            "body": [
+                {
+                    "": "0",
+                    "system_key": "12345",
+                    "student_no": "54321",
+                    "uw_netid": "netid123",
+                    "yrq": "20261",
+                    "course_code": "MATH 101 A",
+                    "pred": "False"
+                }
+            ]
+        }
+        try:
+            validate_prediction_json(valid_json)
+        except ValueError:
+            self.fail("validate_prediction_json raised ValueError "
+                      "unexpectedly!")
+
+        missing_field_json = {
+            "body": [
+                {
+                    "": "0",
+                    "system_key": "12345",
+                    "student_no": "54321",
+                    # Missing uw_netid
+                    "yrq": "20261",
+                    "course_code": "MATH 101 A",
+                    "pred": "False"
+                }
+            ]
+        }
         with self.assertRaises(ValueError):
-            validate_prediction_csv(missing_field)
+            validate_prediction_json(missing_field_json)
+
+        empty_body_json = {
+            "body": []
+        }
+        with self.assertRaises(ValueError):
+            validate_prediction_json(empty_body_json)
+
+        no_body_json = {}
+        with self.assertRaises(ValueError):
+            validate_prediction_json(no_body_json)
