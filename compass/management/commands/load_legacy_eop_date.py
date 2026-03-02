@@ -6,11 +6,10 @@ from django.core.management.base import BaseCommand
 from uw_person_client import UWPersonClient
 from uw_person_client.exceptions import PersonNotFoundException
 from compass.models import AccessGroup, Student, SpecialProgram
-from datetime import datetime, date
-from pytz import timezone
+from datetime import datetime, date, timezone
+from uw_sws.dao import SWS_TIMEZONE
 import string
 import argparse
-import pytz
 import sys
 import csv
 import re
@@ -67,10 +66,9 @@ class Command(BaseCommand):
                     a.EOP_Date and len(a.EOP_Date)) else None
 
                 if (a.date_modified and len(a.date_modified) > 1):
-                    naive_date = datetime.fromisoformat(a.date_modified)
-                    pacific = pytz.timezone('US/Pacific')
-                    date = pacific.localize(naive_date)
-                    modified_date = date.astimezone(pytz.utc)
+                    modified_date = datetime.fromisoformat(
+                        a.date_modified).replace(
+                            tzinfo=SWS_TIMEZONE).astimezone(timezone.utc)
                 else:
                     modified_date = None
 

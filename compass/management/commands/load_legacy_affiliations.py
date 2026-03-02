@@ -8,10 +8,8 @@ from uw_person_client.exceptions import PersonNotFoundException
 from compass.models import (
     AccessGroup, Student, StudentAffiliation, Affiliation, Cohort)
 from datetime import datetime
-from pytz import timezone
 import string
 import argparse
-import pytz
 import sys
 import csv
 import re

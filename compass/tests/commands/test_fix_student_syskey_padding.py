@@ -7,8 +7,7 @@ from compass.tests import CompassTestCase
 from compass.models import Contact, Student, StudentAffiliation, \
     Visit, StudentEligibility, Affiliation, Cohort, AccessGroup, AppUser, \
     ContactType, ContactMethod, EligibilityType
-from datetime import datetime
-import pytz
+from datetime import datetime, timezone
 
 
 class TestFixSyskey(CompassTestCase):
@@ -76,7 +75,7 @@ class TestFixSyskey(CompassTestCase):
                     student=self.student_pad,
                     contact_type=self.ctype,
                     contact_method=self.cmeth,
-                    checkin_date=datetime.now(pytz.utc)
+                    checkin_date=datetime.now(timezone.utc)
                     )
         self.contact_pad.save()
         self.contact_pad.access_group.set([self.ag])
@@ -86,7 +85,7 @@ class TestFixSyskey(CompassTestCase):
                     student=self.student_nopad,
                     contact_type=self.ctype,
                     contact_method=self.cmeth,
-                    checkin_date=datetime.now(pytz.utc)
+                    checkin_date=datetime.now(timezone.utc)
                     )
         self.contact_nopad.save()
         self.contact_nopad.access_group.set([self.ag])
@@ -95,7 +94,7 @@ class TestFixSyskey(CompassTestCase):
                     student=self.student_onlypad,
                     contact_type=self.ctype,
                     contact_method=self.cmeth,
-                    checkin_date=datetime.now(pytz.utc)
+                    checkin_date=datetime.now(timezone.utc)
                     )
         self.contact_onlypad.save()
         self.contact_onlypad.access_group.set([self.ag])
@@ -122,23 +121,23 @@ class TestFixSyskey(CompassTestCase):
             .create(student=self.student_pad,
                     access_group=self.ag,
                     course_code="asdf",
-                    checkin_date=datetime.now(pytz.utc),
-                    checkout_date=datetime.now(pytz.utc))
+                    checkin_date=datetime.now(timezone.utc),
+                    checkout_date=datetime.now(timezone.utc))
         self.visit_pad.save()
 
         self.visit_nopad = Visit.objects \
             .create(student=self.student_nopad,
                     access_group=self.ag,
                     course_code="asdf",
-                    checkin_date=datetime.now(pytz.utc),
-                    checkout_date=datetime.now(pytz.utc))
+                    checkin_date=datetime.now(timezone.utc),
+                    checkout_date=datetime.now(timezone.utc))
         self.visit_nopad.save()
         self.visit_onlypad = Visit.objects \
             .create(student=self.student_onlypad,
                     access_group=self.ag,
                     course_code="asdf",
-                    checkin_date=datetime.now(pytz.utc),
-                    checkout_date=datetime.now(pytz.utc))
+                    checkin_date=datetime.now(timezone.utc),
+                    checkout_date=datetime.now(timezone.utc))
         self.visit_onlypad.save()
 
         self.elig_pad = StudentEligibility.objects \
