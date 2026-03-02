@@ -35,7 +35,7 @@ export default {
   components: { BCard, KeyValue },
   props: {
     person: {
-type: Object,:q
+      type: Object,
       required: true,
     },
   },
