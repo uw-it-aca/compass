@@ -366,47 +366,6 @@
               </KeyValue>
             </li>
           </ul>
-
-          <div class="text-uppercase text-body-secondary fs-8 fw-bold mb-2">
-            Emergency Contact
-          </div>
-
-          <ul class="list-unstyled small m-0 mb-3">
-            <li>
-              <KeyValue>
-                <template #key>Name</template>
-                <template #value>
-                  {{ person.student.emergency_name }}
-                </template>
-              </KeyValue>
-            </li>
-            <li>
-              <KeyValue>
-                <template #key>Phone</template>
-                <template #value>
-                  {{ formatPhoneNumber(person.student.emergency_phone) }}
-                </template>
-              </KeyValue>
-            </li>
-            <li>
-              <span v-if="person.student.emergency_email.length > 25">
-                <KeyValue>
-                  <template #key>Email</template>
-                  <template #value>
-                    {{ person.student.emergency_email }}
-                  </template>
-                </KeyValue>
-              </span>
-              <span v-else>
-                <KeyValue>
-                  <template #key>Email</template>
-                  <template #value>
-                    {{ person.student.emergency_email }}
-                  </template>
-                </KeyValue>
-              </span>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
