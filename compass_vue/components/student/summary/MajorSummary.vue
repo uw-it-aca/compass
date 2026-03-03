@@ -6,7 +6,7 @@
     <div class="text-uppercase text-body-secondary fs-8 fw-bold mb-3">Majors</div>
 
     <!-- current majors -->
-    <div v-if="person.student.majors.length > 0">
+    <div>
       <KeyValue variant="address">
         <template #key>Current Majors</template>
         <template #value>
@@ -19,7 +19,7 @@
       </KeyValue>
     </div>
     <!-- pending majors -->
-    <div v-else>
+    <div>
       <KeyValue variant="address">
         <template #key>Pending Majors</template>
         <template #value>
