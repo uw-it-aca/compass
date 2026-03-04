@@ -488,11 +488,11 @@
               warning: "Yellow",
               success: "Green",
             }[person.analytics_alert] || "";
-          const majors = [
+          const majors_str = [
             person.major_1__major_full_name,
             person.major_2__major_full_name,
             person.major_3__major_full_name,
-          ];
+          ].filter(Boolean).join("; ");
           let row = [
             person.person__display_name,
             person.student_number,
@@ -508,7 +508,7 @@
             person.latest_transcript
               ? person.latest_transcript.scholarship_desc
               : undefined,
-            majors.filter(Boolean).map(major => `\"${major}\"`).join("; "),
+            `\"${majors_str}\"`,
             person.registered_in_quarter,
             person.hold
               ? person.hold.hold_type + " " + person.hold.hold_type_desc
