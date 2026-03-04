@@ -36,7 +36,7 @@ affinity:
 readiness:
   enabled: true
 securityPolicy:
-  enabled: false
+  enabled: true
 
 externalService:
   enabled: true
