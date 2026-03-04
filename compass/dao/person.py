@@ -216,9 +216,9 @@ def get_adviser_caseload(uwnetid):
             'person__display_name',
             'person__surname',
             'person__first_name',
-            'major_1__major_name',
-            'major_2__major_name',
-            'major_3__major_name',
+            'major_1__major_full_name',
+            'major_2__major_full_name',
+            'major_3__major_full_name',
             'latest_transcript',
             'latest_degree',
             'hold'
