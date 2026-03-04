@@ -467,15 +467,17 @@
           header = [
             "Student Name",
             "Student Number",
-            "UW NetID",
+            "UWNetID",
             "Email",
             "Class",
             "Campus",
+            "Special Program",
             "Alert Status",
             "Degree Status",
             "Academic Standing",
+            "Majors",
             "Registered",
-            "Holds",
+            "Registration Hold",
           ],
           timestamp = Math.round(Date.now() / 1000);
         csv_string += header.join(",") + "\n";
@@ -486,6 +488,11 @@
               warning: "Yellow",
               success: "Green",
             }[person.analytics_alert] || "";
+          const majors = [
+            person.major_1__major_name,
+            person.major_2__major_name,
+            person.major_3__major_name,
+          ];
           let row = [
             person.person__display_name,
             person.student_number,
@@ -493,6 +500,7 @@
             person.person__uwnetid + "@uw.edu",
             person.class_desc,
             person.campus_desc,
+            person.special_program_desc,
             alert_status,
             person.latest_degree
               ? person.latest_degree.degree_status_desc
@@ -500,8 +508,11 @@
             person.latest_transcript
               ? person.latest_transcript.scholarship_desc
               : undefined,
+            majors.filter(Boolean).join("; "),
             person.registered_in_quarter,
-            person.registration_hold_ind,
+            person.hold
+              ? person.hold.hold_type + " " + person.hold.hold_type_desc
+              : undefined,
           ];
           csv_string += row.join(",") + "\n";
         });
