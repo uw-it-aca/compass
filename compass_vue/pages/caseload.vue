@@ -243,7 +243,7 @@
   import CaseloadTableLoading from "@/components/caseload-table-loading.vue";
   import Layout from "@/layouts/default.vue";
   import { getAdviserCaseload, savePreferences } from "@/utils/data";
-  import { formatAdviserName } from "@/utils/formats";
+  import { formatAdviserName, formatTitleCase } from "@/utils/formats";
   import { BCard, BDropdown, BDropdownItemButton } from "bootstrap-vue-next";
 
   export default {
@@ -261,6 +261,7 @@
       return {
         getAdviserCaseload,
         formatAdviserName,
+        formatTitleCase,
       };
     },
     data() {
@@ -503,17 +504,17 @@
             person.special_program_desc,
             alert_status,
             person.latest_degree
-              ? person.latest_degree.degree_status_desc
+              ? this.formatTitleCase(person.latest_degree.degree_status_desc)
               : "",
             person.latest_transcript
-              ? (person.latest_transcript.scholarship_desc === "NONE")
-                ? ""
-                : person.latest_transcript.scholarship_desc
+              ? (person.latest_transcript.scholarship_desc !== "NONE")
+                ? this.formatTitleCase(person.latest_transcript.scholarship_desc)
+                : ""
               : "",
             `\"${majors_str}\"`,
-            (person.registered_in_quarter === "TRUE") ? "Yes" : "No",
+            person.registered_in_quarter ? "Yes" : "No",
             person.hold
-              ? person.hold.hold_type + " " + person.hold.hold_type_desc
+              ? person.hold.hold_type + " " + this.formatTitleCase(person.hold.hold_type_desc)
               : "",
           ];
           csv_string += row.join(",") + "\n";

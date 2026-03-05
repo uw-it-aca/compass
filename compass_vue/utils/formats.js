@@ -14,4 +14,11 @@ function formatAdviserName(person) {
     : person.display_name;
 }
 
-export { formatPhoneNumber, formatAdviserName };
+function formatTitleCase(str) {
+  return str.replace(
+    /\w\S*/g,
+    text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+  );
+}
+
+export { formatPhoneNumber, formatAdviserName, formatTitleCase };
