@@ -504,15 +504,17 @@
             alert_status,
             person.latest_degree
               ? person.latest_degree.degree_status_desc
-              : undefined,
+              : "",
             person.latest_transcript
-              ? person.latest_transcript.scholarship_desc
-              : undefined,
+              ? (person.latest_transcript.scholarship_desc === "NONE")
+                ? ""
+                : person.latest_transcript.scholarship_desc
+              : "",
             `\"${majors_str}\"`,
-            person.registered_in_quarter,
+            (person.registered_in_quarter === "TRUE") ? "Yes" : "No",
             person.hold
               ? person.hold.hold_type + " " + person.hold.hold_type_desc
-              : undefined,
+              : "",
           ];
           csv_string += row.join(",") + "\n";
         });
