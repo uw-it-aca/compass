@@ -26,7 +26,7 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
     nginx.ingress.kubernetes.io/client-body-buffer-size: "16K"
-    nginx.ingress.kubernetes.io/proxy-body-size: "2M"
+    nginx.ingress.kubernetes.io/proxy-body-size: "20M"
     nginx.ingress.kubernetes.io/limit-rps: "10"
 
 lifecycle:
