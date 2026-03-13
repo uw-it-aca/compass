@@ -1,4 +1,4 @@
-# Copyright 2025 UW-IT, University of Washington
+# Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 from django.db.models import CharField, OuterRef, Subquery, Value, F
@@ -7,7 +7,7 @@ from django.contrib.postgres.aggregates import ArrayAgg
 from django.conf import settings
 from django.core.cache import cache
 from uw_person_client.models import (
-    Person, Adviser, Student, Transcript, Degree)
+    Person, Adviser, Student, Transcript, Degree, StudentHold)
 from uw_person_client.exceptions import (
     PersonNotFoundException, AdviserNotFoundException)
 from uw_pws import PWS, InvalidNetID, DataFailureException
@@ -193,6 +193,12 @@ def get_adviser_caseload(uwnetid):
                 student=OuterRef('pk')).values(json=JSONObject(
                     degree_status_desc='degree_status_desc')
                 ).order_by('-degree_index')[:1])
+        ).annotate(hold=Subquery(
+            StudentHold.objects.filter(
+                student=OuterRef('pk')).values(json=JSONObject(
+                    hold_type='hold_type',
+                    hold_type_desc='hold_type_desc')
+                ).order_by('seq')[:1])
         ).filter(advisers__in=[adviser]).values(
             'student_number',
             'class_desc',
@@ -210,8 +216,12 @@ def get_adviser_caseload(uwnetid):
             'person__display_name',
             'person__surname',
             'person__first_name',
+            'major_1__major_full_name',
+            'major_2__major_full_name',
+            'major_3__major_full_name',
             'latest_transcript',
-            'latest_degree'
+            'latest_degree',
+            'hold'
         ).annotate(
             uwnetid=F('person__uwnetid'),
             uwregid=F('person__uwregid'),

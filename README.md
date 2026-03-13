@@ -7,7 +7,7 @@ An application for managing student advising information.
 
 ## System Requirements
 
-- Python (3.10+)
+- Python (3.12)
 - Docker
 - Node
 
@@ -65,5 +65,3 @@ Run ESLint for JS linting
 Run Stylelint for CSS linting
 
          $ npm run stylelint
-
-## Development (using Virtualenv)

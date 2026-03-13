@@ -1,4 +1,4 @@
-# Copyright 2025 UW-IT, University of Washington
+# Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 import csv
@@ -17,10 +17,11 @@ BULK_CREATE_BUCKET_SIZE = 1000
 
 def read_csv(csv_string):
     """
-    Read CSV string and return list of dictionaries.
+    Yield each row from a CSV string as a dictionary.
     """
     reader = csv.DictReader(StringIO(csv_string))
-    return list(reader)
+    for row in reader:
+        yield row
 
 
 def import_data_from_csv(week, csv_string, pred_file, reload=False):
@@ -86,15 +87,52 @@ def import_data_from_csv(week, csv_string, pred_file, reload=False):
 
 def _get_prediction_dict(pred_file):
     """
-    Get prediction data for a given term. grouped by user and course_id
+    Get prediction data for a given term, grouped by user and course_id.
     """
-
-    prediction_data = read_csv(pred_file)
     prediction_dict = {}
-    for row in prediction_data:
+    for row in read_csv(pred_file):
         key = f"{row['uw_netid'].strip()}_{row['course_code'].strip()}"
-        prediction_dict[key] = row['pred']
+        pred_value = row['pred'].strip()
+        if pred_value in {"True", "False"}:
+            prediction_dict[key] = 1.0 if pred_value == "True" else 0.0
+        else:
+            raise ValueError(f"Invalid prediction value '{pred_value}'"
+                             f" for key '{key}'")
     return prediction_dict
+
+
+def validate_prediction_json(pred_json):
+    """
+    Validate prediction JSON structure.
+    """
+    required_fields = {'uw_netid', 'course_code', 'pred'}
+    rows = pred_json.get('body', [])
+    if not rows:
+        raise ValueError("Prediction JSON body is empty")
+    for row in rows:
+        missing = required_fields - row.keys()
+        if missing:
+            raise ValueError(f"Missing fields in prediction JSON:"
+                             f" {', '.join(missing)}")
+
+
+def get_pred_csv_from_json(pred_json):
+    """
+    Convert prediction JSON to CSV string.
+    """
+    output = StringIO()
+    writer = csv.DictWriter(output,
+                            fieldnames=['uw_netid',
+                                        'course_code',
+                                        'pred'])
+    writer.writeheader()
+    for row in pred_json.get('body', []):
+        writer.writerow({
+            'uw_netid': row['uw_netid'],
+            'course_code': row['course_code'],
+            'pred': row['pred']
+        })
+    return output.getvalue()
 
 
 def _parse_score(field):

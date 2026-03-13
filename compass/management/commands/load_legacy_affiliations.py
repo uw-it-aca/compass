@@ -1,4 +1,4 @@
-# Copyright 2025 UW-IT, University of Washington
+# Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
@@ -8,10 +8,8 @@ from uw_person_client.exceptions import PersonNotFoundException
 from compass.models import (
     AccessGroup, Student, StudentAffiliation, Affiliation, Cohort)
 from datetime import datetime
-from pytz import timezone
 import string
 import argparse
-import pytz
 import sys
 import csv
 import re

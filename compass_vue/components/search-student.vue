@@ -11,7 +11,7 @@
       />
       <button
         :disabled="searchValue.length == 0"
-        class="btn btn-sm btn-outline-dark-beige"
+        class="btn btn-sm btn-outline-primary"
         type="submit"
       >
         Search

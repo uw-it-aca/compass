@@ -26,7 +26,7 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
     nginx.ingress.kubernetes.io/client-body-buffer-size: "16K"
-    nginx.ingress.kubernetes.io/proxy-body-size: "2M"
+    nginx.ingress.kubernetes.io/proxy-body-size: "20M"
     nginx.ingress.kubernetes.io/limit-rps: "10"
 
 lifecycle:
@@ -80,17 +80,6 @@ cronjob:
       schedule: "20 9 * * 0"
       command: ["/scripts/management_command.sh"]
       args: ["clearsessions"]
-    - name: load-rad-data
-      schedule: "0 4 * * 1"
-      command: [ "/scripts/management_command.sh" ]
-      args: [ "load_rad_data" ]
-      resources:
-        limits:
-          cpu: 500m
-          memory: 1024Mi
-        requests:
-          cpu: 200m
-          memory: 512Mi
 
 environmentVariables:
   - name: ENV
@@ -247,3 +236,14 @@ daemon:
         requests:
           cpu: 25m
           memory: 64Mi
+    - name: load-rad-data
+      replicaCount: 1
+      command: ["/scripts/management_daemon.sh"]
+      args: ["--cron", "0 4 * * 1", "load_rad_data"]
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1024Mi
+        requests:
+          cpu: 200m
+          memory: 512Mi

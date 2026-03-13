@@ -1,4 +1,4 @@
-# Copyright 2025 UW-IT, University of Washington
+# Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
@@ -10,9 +10,9 @@ from uw_pws import PWS
 from compass.models import (
     Contact, AppUser, AccessGroup, Student,
     ContactType, ContactMethod, ContactTopic)
-from datetime import datetime
+from datetime import datetime, timezone
+from uw_sws.dao import SWS_TIMEZONE
 import argparse
-import pytz
 import sys
 import csv
 import re
@@ -156,14 +156,13 @@ class Command(BaseCommand):
         return student
 
     def _get_checkin_date(self, apt):
-        pacific = pytz.timezone('US/Pacific')
         naive_date = datetime.strptime(apt.Date, '%Y-%m-%d %H:%M:%S.%f')
-        date = pacific.localize(naive_date)
+        date = naive_date.replace(tzinfo=SWS_TIMEZONE)
         time = datetime.strptime(apt.Time_In, '%H:%M:%S')
         return date.replace(
             hour=time.hour,
             minute=time.minute,
-            second=time.second).astimezone(pytz.utc)
+            second=time.second).astimezone(timezone.utc)
 
     def _get_trans_id(self, apt):
         try:

@@ -7,6 +7,7 @@
       >
         <img
           :data-url="person.photo_url"
+          :alt="person.display_name + ' profile picture'"
           class="img-profile rounded-circle border border-3"
           :class="borderClass"
           @error="$event.target.src = '/static/compass/img/placeholder.png'"

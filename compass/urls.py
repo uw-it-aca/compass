@@ -1,4 +1,4 @@
-# Copyright 2025 UW-IT, University of Washington
+# Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
@@ -7,7 +7,11 @@ from compass.admin import admin_site
 from django.conf import settings
 from django.views.generic import TemplateView
 from compass.views.pages import LandingView
-from compass.views.admin.contact import OMADContactAdminView
+from compass.views.support.contact import OMADContactAdminView
+from compass.views.support.retention import (RetentionAdminView,
+                                             RetentionManageView,
+                                             RetentionReloadAlertsView,
+                                             RetentionLoadFromFile)
 from compass.views.api.student import (
     StudentContactsView,
     StudentSchedulesView,
@@ -38,6 +42,7 @@ from compass.views.api.photo import PhotoView
 from compass.views.api.affiliation import AffiliationsView
 from compass.views.api.support import SupportView
 from compass.views.api.user_prefs import UserPreferenceView
+from compass.views.api.analytics import PredictionAnalytics
 
 # start with an empty url array
 urlpatterns = []
@@ -66,6 +71,16 @@ urlpatterns += [
     re_path(r"^robots\.txt$", TemplateView.as_view(
         template_name="robots.txt", content_type="text/plain")),
     re_path(r"^admin", admin_site.urls),
+    re_path(
+        r"^support/omad_contact/$",
+        OMADContactAdminView.as_view(),
+        name="omad_contact_admin",
+    ),
+    re_path(
+        r"^support/retention_admin/$",
+        RetentionAdminView.as_view(),
+        name="retention_admin",
+    ),
     re_path(
         r"^unauthorized-user$",
         TemplateView.as_view(template_name="unauthorized-user.html"),
@@ -183,9 +198,20 @@ urlpatterns += [
         name="photo",
     ),
     re_path(
-        r"^api/internal/support/omad_contact/$",
-        OMADContactAdminView.as_view(),
-        name="omad_contact_admin",
+        r"^api/internal/support/retention_admin/manage/(?P<import_id>[\w]+)/$",
+        RetentionManageView.as_view(),
+        name="retention_admin_manage",
+    ),
+    re_path(
+        r"^api/internal/support/retention_admin/reload_alerts/$",
+        RetentionReloadAlertsView.as_view(),
+        name="retention_alert_reload",
+    ),
+    re_path(
+        r"^api/internal/support/retention_admin/"
+        r"file/(?P<week_string>[\w-]+)/$",
+        RetentionLoadFromFile.as_view(),
+        name="retention_reload_file",
     ),
     re_path(
         r"^api/internal/support/$",
@@ -205,6 +231,11 @@ urlpatterns += [
         r"^api/v1/visit/omad",
         VisitOMADView.as_view(),
         name="visit_omad"
+    ),
+    re_path(
+        r"^api/v1/analytics/predictions/$",
+        PredictionAnalytics.as_view(),
+        name="prediction_analytics_view"
     ),
     # vue-router paths
     re_path(

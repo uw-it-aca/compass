@@ -26,6 +26,7 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
     nginx.ingress.kubernetes.io/client-body-buffer-size: "16K"
+    nginx.ingress.kubernetes.io/proxy-body-size: "20M"
 
 lifecycle:
   enabled: true
@@ -70,21 +71,6 @@ certs:
   certPath: /certs/compass.uw.edu-ic.cert
   keyPath: /certs/compass.uw.edu-ic.key
   secretName: test.compass.uw.edu-ic-certs
-
-cronjob:
-  enabled: true
-  jobs:
-    - name: load-rad-data
-      schedule: "0 4 * * 1"
-      command: ["/scripts/management_command.sh"]
-      args: ["load_rad_data"]
-      resources:
-        limits:
-          cpu: 500m
-          memory: 1024Mi
-        requests:
-          cpu: 200m
-          memory: 512Mi
 
 environmentVariables:
   - name: ENV
@@ -242,3 +228,14 @@ daemon:
         requests:
           cpu: 25m
           memory: 64Mi
+    - name: load-rad-data
+      replicaCount: 1
+      command: ["/scripts/management_daemon.sh"]
+      args: ["--cron", "0 4 * * 1", "load_rad_data"]
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1024Mi
+        requests:
+          cpu: 200m
+          memory: 512Mi

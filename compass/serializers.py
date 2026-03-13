@@ -1,4 +1,4 @@
-# Copyright 2025 UW-IT, University of Washington
+# Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
@@ -20,7 +20,7 @@ from compass.models import (
     SpecialProgram,
 )
 from rest_framework import serializers
-import pytz
+from datetime import timezone
 
 
 class AppUserSerializer(serializers.ModelSerializer):
@@ -167,8 +167,8 @@ class ContactReadSerializer(serializers.ModelSerializer):
     contact_type = ContactTypeSerializer(many=False, read_only=False)
     contact_method = ContactMethodSerializer(many=False, read_only=False)
     contact_topics = ContactTopicSerializer(many=True, read_only=False)
-    created_date = serializers.DateTimeField(default_timezone=pytz.utc)
-    checkin_date = serializers.DateTimeField(default_timezone=pytz.utc)
+    created_date = serializers.DateTimeField(default_timezone=timezone.utc)
+    checkin_date = serializers.DateTimeField(default_timezone=timezone.utc)
     access_group = AccessGroupSerializer(many=True, read_only=False)
     source = serializers.CharField(
         max_length=None,
@@ -298,8 +298,8 @@ class VisitTypeSerializer(serializers.ModelSerializer):
 
 class VisitReadSerializer(serializers.ModelSerializer):
     visit_type = VisitTypeSerializer(many=False, read_only=False)
-    checkin_date = serializers.DateTimeField(default_timezone=pytz.utc)
-    checkout_date = serializers.DateTimeField(default_timezone=pytz.utc)
+    checkin_date = serializers.DateTimeField(default_timezone=timezone.utc)
+    checkout_date = serializers.DateTimeField(default_timezone=timezone.utc)
 
     class Meta:
         model = Visit

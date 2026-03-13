@@ -1,4 +1,4 @@
-# Copyright 2025 UW-IT, University of Washington
+# Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
@@ -15,6 +15,7 @@ from django.utils.text import slugify
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import PermissionDenied
+from django.conf import settings
 from rest_framework.response import Response
 from rest_framework import status
 from userservice.user import UserService
@@ -239,6 +240,10 @@ class ContactOMADView(TokenAPIView):
     content_negotiation_class = JSONClientContentNegotiation
 
     def post(self, request):
+        if request.user.username != settings.OMAD_CONTACT_TOKEN_USER:
+            return Response("Unauthorized",
+                            status=status.HTTP_401_UNAUTHORIZED)
+
         contact_dict = request.data
         queued_contact = OMADContactQueue.objects.create(
             json=json.dumps(contact_dict)

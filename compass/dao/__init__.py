@@ -1,11 +1,10 @@
-# Copyright 2025 UW-IT, University of Washington
+# Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
 from django.conf import settings
-from datetime import datetime
+from datetime import datetime, timezone
 from uw_sws.dao import sws_now, SWS_TIMEZONE
-import pytz
 
 
 def current_datetime():
@@ -17,4 +16,5 @@ def current_datetime():
 
 
 def current_datetime_utc():
-    return SWS_TIMEZONE.localize(current_datetime()).astimezone(pytz.utc)
+    return current_datetime().replace(
+        tzinfo=SWS_TIMEZONE).astimezone(timezone.utc)

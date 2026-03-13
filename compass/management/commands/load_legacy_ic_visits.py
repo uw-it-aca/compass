@@ -1,4 +1,4 @@
-# Copyright 2025 UW-IT, University of Washington
+# Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
 
@@ -9,7 +9,7 @@ from compass.models import (
     Student, AccessGroup, Visit, VisitType,
     StudentEligibility, EligibilityType)
 from datetime import datetime
-import pytz
+from uw_sws.dao import SWS_TIMEZONE
 import sys
 import csv
 import re
@@ -132,14 +132,13 @@ class Command(BaseCommand):
         return student
 
     def _get_checkin_date(self, apt):
-        pacific = pytz.timezone('US/Pacific')
         naive_date = datetime.strptime(apt.Date, '%Y-%m-%d %H:%M:%S.%f')
-        date = pacific.localize(naive_date)
+        date = naive_date.replace(tzinfo=SWS_TIMEZONE)
         time = datetime.strptime(apt.Time_In, '%H:%M:%S')
         return date.replace(
             hour=time.hour,
             minute=time.minute,
-            second=time.second).astimezone(pytz.utc)
+            second=time.second).astimezone(timezone.utc)
 
     def _get_checkout_date(self, apt):
         pacific = timezone('US/Pacific')
@@ -149,7 +148,7 @@ class Command(BaseCommand):
         return date.replace(
             hour=time.hour,
             minute=time.minute,
-            second=time.second).astimezone(pytz.utc)
+            second=time.second).astimezone(timezone.utc)
 
     def _get_course_code(self, apt):
         return apt.Event_Type or "None"
