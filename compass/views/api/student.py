@@ -3,8 +3,11 @@
 
 
 from django.urls import reverse
+from django.conf import settings
+from rest_framework.response import Response
+from rest_framework import status
 from userservice.user import UserService
-from compass.views.api import BaseAPIView
+from compass.views.api import BaseAPIView, TokenAPIView
 from compass.dao.photo import PhotoDAO
 from compass.dao.person import (
     valid_uwnetid, valid_uwregid, valid_student_number, valid_system_key,
@@ -477,6 +480,46 @@ class StudentEligibilityView(BaseAPIView):
             return self.response_unauthorized()
         except OverrideNotPermitted as err:
             return self.response_unauthorized(err)
+
+
+class ICEligibilityView(TokenAPIView):
+    '''
+    API endpoint for student Instructional Center eligibility
+
+    /api/v1/visit/eligibility/[systemkey]/
+
+    '''
+
+    def get(self, request, systemkey):
+        if settings.COMPASS_VISITS_TOKEN_USER != request.user.username:
+            return Response("Unauthorized",
+                            status=status.HTTP_401_UNAUTHORIZED)
+
+        if not valid_system_key(systemkey):
+            return Response("Invalid systemkey",
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        e_type_slug = getattr(settings,
+                              "COMPASS_VISITS_ELIGIBILITY_SLUG", None)
+        if not e_type_slug or not str(e_type_slug).strip():
+            logger.error("settings.COMPASS_VISITS_ELIGIBILITY_SLUG is not "
+                         "configured")
+            return Response("Eligibility type configuration is missing",
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        try:
+            e_type = EligibilityType.objects.get(slug=e_type_slug)
+        except EligibilityType.DoesNotExist:
+            logger.error("Cannot find EligibilityType with slug '%s' OR "
+                         "settings.COMPASS_VISITS_ELIGIBILITY_SLUG is not "
+                         "configured correctly",
+                         e_type_slug)
+            return Response("Eligibility type configuration is invalid",
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        student_is_eligible = StudentEligibility.objects.filter(
+            student__system_key=systemkey, eligibility=e_type).exists()
+        return Response({"eligible": student_is_eligible},
+                        status=status.HTTP_200_OK)
 
 
 class StudentCourseAnalyticsView(BaseAPIView):

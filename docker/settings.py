@@ -234,3 +234,8 @@ LOGGING = {
 # DRF Token Authentication User Mapping
 OMAD_CONTACT_TOKEN_USER = "omad-compass-api"
 PRED_ANALYTICS_TOKEN_USER = "era-predictions-api"
+COMPASS_VISITS_TOKEN_USER = "compass-visits-api"
+
+# Configure which eligibility type slug (configured in the DB)
+# controls compass-visits eligibility for the Instructional Center.
+COMPASS_VISITS_ELIGIBILITY_SLUG = "instructional-center"
