@@ -500,7 +500,12 @@ class ICEligibilityView(TokenAPIView):
                             status=status.HTTP_400_BAD_REQUEST)
 
         e_type_slug = getattr(settings,
-                              "COMPASS_VISITS_ELIGIBILITY_SLUG")
+                              "COMPASS_VISITS_ELIGIBILITY_SLUG", None)
+        if not e_type_slug or not str(e_type_slug).strip():
+            logger.error("settings.COMPASS_VISITS_ELIGIBILITY_SLUG is not "
+                         "configured")
+            return Response("Eligibility type configuration is missing",
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         e_type = EligibilityType.objects.filter(
             slug=e_type_slug).first()
         if e_type is None:
