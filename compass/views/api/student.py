@@ -513,8 +513,8 @@ class ICEligibilityView(TokenAPIView):
                          "settings.COMPASS_VISITS_ELIGIBILITY_SLUG is not "
                          "configured correctly",
                          e_type_slug)
-            return Response("Eligibility type not found",
-                            status=status.HTTP_404_NOT_FOUND)
+            return Response("Eligibility type configuration is invalid",
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         student_is_eligible = StudentEligibility.objects.filter(
             student__system_key=systemkey, eligibility=e_type).exists()
