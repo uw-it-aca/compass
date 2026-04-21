@@ -47,6 +47,16 @@
           ><i class="bi bi-bar-chart-line-fill me-2"></i>Reports</BLink
         >
       </li>
+      <li v-show="userRoles.includes(Role.Manager)" class="nav-item mb-1">
+        <BLink
+          :to="'/ic-dashboard'"
+          class="d-flex justify-content-between nav-link rounded-3 text-light bg-white-hover bg-opacity-10-hover"
+          exact-active-class="bg-white bg-opacity-10"
+          ><span
+            ><i class="bi bi-speedometer2 me-3 text-white text-opacity-50"></i>IC Dashboard</span
+          ></BLink
+        >
+        </li>
     </ul>
   </div>
 </template>

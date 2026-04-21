@@ -29,13 +29,13 @@
     "writing_service": "Writing Service 3",
     "course": "Course 3",
     "check_in_date": "2024-01-03T00:00:00",
-    "check_out_date": "2024-01-03T01:00:00",
+    "check_out_date": null,
     "is_verified": true
   },
   {
     "id": 4,
     "student_netid": "lisa",
-    "program_area": "Program Area 4",
+    "program_area": "Program Area 3",
     "tutoring_option": "Tutoring Option 4",
     "writing_service": "Writing Service 4",
     "course": "Course 4",
@@ -46,7 +46,7 @@
   {
     "id": 5,
     "student_netid": "jbothell",
-    "program_area": "Program Area 5",
+    "program_area": "Program Area 3",
     "tutoring_option": "Tutoring Option 5",
     "writing_service": "Writing Service 5",
     "course": "Course 5",

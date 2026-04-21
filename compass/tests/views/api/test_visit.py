@@ -12,11 +12,11 @@ from compass.models import AccessGroup, VisitType
 from rest_framework.authtoken.models import Token
 
 
-class ViewAPITest(ApiTest):
+class VisitAPITest(ApiTest):
     API_TOKEN = None
 
     def setUp(self):
-        super(ViewAPITest, self).setUp()
+        super(VisitAPITest, self).setUp()
         user = User.objects.create_user(username='testuser', password='12345')
         ag = AccessGroup(name="OMAD", access_group_id="u_astra_group1")
         ag.save()
@@ -134,3 +134,15 @@ class ViewAPITest(ApiTest):
                 'checkout_date': mock_date, 'visit_type': mock_visit_type})
 
         self.assertEqual(response.status_code, 201)
+
+    def test_get_active_ic_visits(self):
+        response = self.get_response('active_ic_visit_list', 'jadviser')
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('pending_verification', response.data)
+        self.assertIn('by_programarea', response.data)
+        self.assertEqual(len(response.data['pending_verification']), 2)
+        self.assertEqual(len(response.data['by_programarea']), 2)
+        self.assertEqual(
+            len(response.data['by_programarea']['Program Area 2']), 1)
+        self.assertEqual(
+            len(response.data['by_programarea']['Program Area 3']), 2)

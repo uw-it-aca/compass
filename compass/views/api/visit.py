@@ -6,6 +6,7 @@ from compass.views.api import BaseAPIView, TokenAPIView
 from compass.models import Visit, Student, AccessGroup, VisitType
 from compass.serializers import VisitReadSerializer, VisitTypeSerializer
 from compass.dao.person import get_appuser_by_uwnetid
+from compass.dao.compass_visits import get_admin_visit_list
 from rest_framework.response import Response
 from rest_framework import status
 from dateutil import parser
@@ -117,3 +118,15 @@ class VisitOMADView(TokenAPIView):
         logger.info(f"IC Visit {visit.visit_type} added for "
                     f"student {student.system_key}")
         return Response(status=status.HTTP_201_CREATED)
+
+
+class ActiveICVisitListView(BaseAPIView):
+    '''
+    API endpoint for active IC visits
+    (pending verification or not checked out)
+
+    /api/internal/ic/active_visits/
+    '''
+    def get(self, request):
+        visits = get_admin_visit_list()
+        return self.response_ok(visits)

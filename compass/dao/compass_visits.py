@@ -23,13 +23,25 @@ def get_admin_visit_list():
     """
     Returns a list of all visits for admin users.
     """
-    visits = []
+    visit_resp = {
+        'pending_verification': [],
+        'by_programarea': {},
+    }
     try:
         visits = CompassVisits().get_visit_admin_list()
+        for visit in visits:
+            if not visit.is_verified:
+                visit_resp['pending_verification'].append(visit.json_data())
+            else:
+                if visit.program_area not in visit_resp['by_programarea']:
+                    visit_resp['by_programarea'][visit.program_area] = []
+                visit_resp['by_programarea'][visit.program_area].append(
+                    visit.json_data())
+
     except DataFailureException as ex:
-        # If there are no visits, return an empty list
-        visits = []
-    return visits
+        # If there are no visits, return an empty response
+        pass
+    return visit_resp
 
 
 def get_visit_options():

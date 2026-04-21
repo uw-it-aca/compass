@@ -306,6 +306,11 @@ async function getStudentSigninAnalytics(uwnetid) {
   return useCustomFetch(url);
 }
 
+async function getActiveICVisits() {
+  const url = "/api/internal/ic/active_visits/";
+  return useCustomFetch(url);
+}
+
 export {
   getStudentBySearch,
   getStudentDetail,
@@ -342,4 +347,5 @@ export {
   savePreferences,
   getStudentCourseAnalytics,
   getStudentSigninAnalytics,
+  getActiveICVisits,
 };
