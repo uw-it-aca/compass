@@ -5,7 +5,7 @@
 from compass.models import (
     AppUser, Student, AccessGroup, Affiliation, Contact,
     ContactType, ContactMethod, ContactTopic, EligibilityType,
-    OMADContactQueue)
+    OMADContactQueue, Visit)
 from compass.dao.group import is_admin_user
 from django.contrib import admin
 from django.http import HttpResponseRedirect
@@ -77,5 +77,6 @@ admin_site.register(ContactMethod, SAMLAdminModel)
 admin_site.register(ContactTopic, SAMLAdminModel)
 admin_site.register(Contact, SAMLAdminModel)
 admin_site.register(OMADContactQueue, SAMLAdminModel)
+admin_site.register(Visit, SAMLAdminModel)
 admin_site.register(TokenProxy, SAMLAdminModel)
 admin_site.register(Session, SessionAdminModel)

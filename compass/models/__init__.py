@@ -427,6 +427,9 @@ class Visit(models.Model):
     visit_type = models.ForeignKey(
         "VisitType", null=True, on_delete=models.SET_NULL
     )
+    tutoring_option = models.ForeignKey(
+        "VisitTutoringOption", null=True, on_delete=models.SET_NULL
+    )
     course_code = models.CharField(max_length=64)
     checkin_date = models.DateTimeField()
     checkout_date = models.DateTimeField()
@@ -437,6 +440,27 @@ class VisitType(BaseAccessGroupContent):
     Type of student visit. These are created for a given access group
     by the access group managers. Examples include IC Drop-In Tutoring and
     and IC Workshop
+
+    ** Kiosk App Changes**
+    These types are now managed via the compass-visits app, new types will
+    automatically added to the VisitType table when visits are synced from
+    the check-in system.
+    """
+
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
+    name = models.CharField(unique=True, max_length=50)
+    slug = models.SlugField(unique=True, max_length=50)
+    editable = models.BooleanField(default=False)
+
+
+class VisitTutoringOption(BaseAccessGroupContent):
+    """
+    Tutoring options for a visit. These are created for a given access group
+    by the access group managers. Examples include In-Person and Online.
+
+    These types are managed by the compass-visits app, new options will
+    automatically added to the VisitTutoringOption table when visits are
+    synced from the check-in system.
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)

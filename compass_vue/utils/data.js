@@ -307,7 +307,12 @@ async function getStudentSigninAnalytics(uwnetid) {
 }
 
 async function getActiveICVisits() {
-  const url = "/api/internal/ic/active_visits/";
+  const url = "/api/internal/visits/active_visits/";
+  return useCustomFetch(url);
+}
+
+async function studentVisitSearch(identifier) {
+  const url = "/api/internal/visits/search/" + identifier + "/";
   return useCustomFetch(url);
 }
 
@@ -348,4 +353,5 @@ export {
   getStudentCourseAnalytics,
   getStudentSigninAnalytics,
   getActiveICVisits,
+  studentVisitSearch,
 };

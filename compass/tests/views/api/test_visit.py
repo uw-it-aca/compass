@@ -2,13 +2,17 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from datetime import datetime
+from datetime import UTC, datetime
 from django.test import Client
 from django.contrib.auth.models import User
 from unittest.mock import MagicMock, patch
 from compass.views.api.visit import VisitOMADView
 from compass.tests import ApiTest
-from compass.models import AccessGroup, VisitType
+from compass.models import (AccessGroup,
+                            VisitType,
+                            Visit,
+                            Student,
+                            VisitTutoringOption)
 from rest_framework.authtoken.models import Token
 
 
@@ -20,7 +24,21 @@ class VisitAPITest(ApiTest):
         user = User.objects.create_user(username='testuser', password='12345')
         ag = AccessGroup(name="OMAD", access_group_id="u_astra_group1")
         ag.save()
-        VisitType(name="IC Drop-In Tutoring", access_group=ag).save()
+        v_type = VisitType(name="IC Drop-In Tutoring", access_group=ag)
+        v_type.save()
+        v_tutoring = VisitTutoringOption(
+            name="Option 1", access_group=ag)
+        v_tutoring.save()
+        stu = Student(system_key="888777333")
+        stu.save()
+        Visit(student=stu,
+              access_group=ag,
+              visit_type=v_type,
+              course_code="CHEM 198",
+              checkin_date=datetime(2022, 9, 19, 6, 15, 4, tzinfo=UTC),
+              checkout_date=datetime(2022, 9, 19, 7, 15, 4, tzinfo=UTC),
+              tutoring_option=v_tutoring).save()
+
         token = Token.objects.create(user=user)
         self.API_TOKEN = token.key
 
@@ -146,3 +164,42 @@ class VisitAPITest(ApiTest):
             len(response.data['by_programarea']['Program Area 2']), 1)
         self.assertEqual(
             len(response.data['by_programarea']['Program Area 3']), 2)
+
+    def test_student_visit_search(self):
+        response = self.get_response('visit_search_view',
+                                     "jadviser",
+                                     kwargs={"identifier": "lisa"})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['student'], 1)
+        self.assertEqual(response.data[0]['visit_type']['name'],
+                         "IC Drop-In Tutoring")
+        self.assertEqual(response.data[0]['course_code'], "CHEM 198")
+        self.assertEqual(response.data[0]['tutoring_option']['name'],
+                         "Option 1")
+        self.assertEqual(response.data[0]['checkin_date'],
+                         "2022-09-19T06:15:04Z")
+        self.assertEqual(response.data[0]['checkout_date'],
+                         "2022-09-19T07:15:04Z")
+
+        no_person_resp = self.get_response('visit_search_view',
+                                           "jadviser",
+                                           kwargs={"identifier": "badnetid"})
+        self.assertEqual(no_person_resp.status_code, 404)
+
+        no_stu_resp = self.get_response('visit_search_view',
+                                        "jadviser",
+                                        kwargs={"identifier": "javerage"})
+        self.assertEqual(no_stu_resp.status_code, 404)
+
+        bad_identifier_resp = self.get_response('visit_search_view',
+                                                "jadviser",
+                                                kwargs={
+                                                    "identifier": "1234bad"})
+        self.assertEqual(bad_identifier_resp.status_code, 400)
+
+        syskey_resp = self.get_response('visit_search_view',
+                                        "jadviser",
+                                        kwargs={"identifier": "1233338"})
+        self.assertEqual(syskey_resp.status_code, 200)
+        self.assertEqual(len(syskey_resp.data), 1)

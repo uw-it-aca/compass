@@ -4,9 +4,15 @@
 from django.conf import settings
 from compass.views.api import BaseAPIView, TokenAPIView
 from compass.models import Visit, Student, AccessGroup, VisitType
-from compass.serializers import VisitReadSerializer, VisitTypeSerializer
-from compass.dao.person import get_appuser_by_uwnetid
+from compass.serializers import VisitReadSerializer
+from compass.dao.person import (get_appuser_by_uwnetid,
+                                valid_student_number,
+                                valid_uwnetid,
+                                get_person_by_student_number,
+                                get_person_by_uwnetid,
+                                PersonNotFoundException)
 from compass.dao.compass_visits import get_admin_visit_list
+from compass.dao.term import current_term
 from rest_framework.response import Response
 from rest_framework import status
 from dateutil import parser
@@ -23,6 +29,7 @@ class VisitView(BaseAPIView):
 
     /api/internal/visit/(visitid)/
     '''
+
     def get(self, request, visitid):
         try:
             visit = Visit.objects.get(id=visitid)
@@ -47,6 +54,7 @@ class VisitOMADView(TokenAPIView):
         "checkout_date": "<TIMESTAMP>",
     }
     '''
+
     def _valid_student(self, netid):
         if netid is None:
             raise ValueError('Missing Student NetID')
@@ -127,6 +135,43 @@ class ActiveICVisitListView(BaseAPIView):
 
     /api/internal/ic/active_visits/
     '''
+
     def get(self, request):
         visits = get_admin_visit_list()
         return self.response_ok(visits)
+
+
+class VisitSearchView(BaseAPIView):
+    '''
+    API endpoint for searching visits by student number or netid
+    /api/internal/visits/search/[identifier]/
+     where identifier is either a student number or a netid
+     (e.g. 12345678 or jsmith)
+    '''
+
+    def get(self, request, identifier):
+        identifier = identifier.strip().lower()
+        try:
+            if valid_uwnetid(identifier):
+                person = get_person_by_uwnetid(identifier)
+            elif valid_student_number(identifier):
+                person = get_person_by_student_number(identifier)
+            else:
+                return self.response_badrequest('Invalid student identifier')
+        except PersonNotFoundException:
+            return self.response_notfound('Student not found')
+
+        system_key = person.system_key
+        try:
+            student = Student.objects.get(system_key=system_key)
+        except Student.DoesNotExist:
+            all_stu = Student.objects.all()
+            return self.response_notfound('Student not found')
+
+        current_qtr_start = current_term().first_day_quarter
+        visits = Visit.objects.filter(student=student,
+                                      checkin_date__gte=current_qtr_start)\
+            .order_by('-checkin_date')
+
+        serializer = VisitReadSerializer(visits, many=True)
+        return self.response_ok(serializer.data)

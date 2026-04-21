@@ -37,7 +37,9 @@ from compass.views.api.contact import (
     ContactView,
     ContactOMADView
 )
-from compass.views.api.visit import VisitOMADView, ActiveICVisitListView
+from compass.views.api.visit import (VisitOMADView,
+                                     ActiveICVisitListView,
+                                     VisitSearchView)
 from compass.views.api.settings import SettingsView
 from compass.views.api.photo import PhotoView
 from compass.views.api.affiliation import AffiliationsView
@@ -224,9 +226,14 @@ urlpatterns += [
         name="user_preference_view",
     ),
     re_path(
-        r"^api/internal/ic/active_visits/$",
+        r"^api/internal/visits/active_visits/$",
         ActiveICVisitListView.as_view(),
         name="active_ic_visit_list",
+    ),
+    re_path(
+        r"^api/internal/visits/search/(?P<identifier>[-@:\w]+)/$",
+        VisitSearchView.as_view(),
+        name="visit_search_view",
     ),
     re_path(
         r"^api/v1/contact/omad/$",
