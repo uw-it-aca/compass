@@ -1,9 +1,11 @@
 // active-visits.vue
 
 <template>
-<visitlist :visits="pendingVerification" list-title="Active IC Visits" />
-<template v-for="programAreaVisits in byProgramearea">
-  <visitlist :visits="programAreaVisits" :list-title="programAreaVisits[0].program_area" />
+  <template v-if="visitsLoaded">
+    <visitlist :visits="pendingVerification" list-title="Active IC Visits" />
+    <template v-for="programAreaVisits in byProgramearea">
+      <visitlist :visits="programAreaVisits" :list-title="programAreaVisits[0].program_area" />
+    </template>
   </template>
 
 </template>
@@ -23,17 +25,19 @@ export default {
     };
   },
   computed: {
+    visitsLoaded() {
+      return this.activeICVisits !== undefined;
+    },
     activeICVisits() {
-      console.log(this.icVisitsStore.activeICVisits);
       return this.icVisitsStore.activeICVisits;
     },
     pendingVerification() {
-      if(this.icVisitsStore.activeICVisits){
+      if (this.icVisitsStore.activeICVisits) {
         return this.icVisitsStore.activeICVisits.pending_verification;
       }
     },
     byProgramearea() {
-      if(this.icVisitsStore.activeICVisits){
+      if (this.icVisitsStore.activeICVisits) {
         return this.icVisitsStore.activeICVisits.by_programarea;
       }
     },

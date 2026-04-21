@@ -4,6 +4,7 @@
   <layout :page-title="pageTitle">
     <template #content>
       <h1>Instructional Center Dashboard</h1>
+      <studentvisitsearch />
       <activeicvisits />
     </template>
   </layout>
@@ -12,12 +13,14 @@
 <script>
 import Layout from "@/layouts/default.vue";
 import ActiveICVisits from "@/components/ic-dashboard/active-visits.vue";
+import StudentVisitSearch from "@/components/ic-dashboard/student-visit-search.vue";
 
 export default {
   name: "ICDashboardPage",
   components: {
     layout: Layout,
     activeicvisits: ActiveICVisits,
+    studentvisitsearch: StudentVisitSearch,
   },
   data() {
     return {
