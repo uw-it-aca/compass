@@ -4,9 +4,19 @@
   <p>Search all students:</p>
   <form @submit.prevent="searchByStudent">
     <div class="input-group">
-      <input v-model="searchValue" type="text" :maxlength="maxLength" class="form-control form-control-sm"
-        placeholder="Student number or UW netid..." aria-label="Student number or UW netid" />
-      <button :disabled="searchValue.length == 0" class="btn btn-sm btn-outline-primary" type="submit">
+      <input
+        v-model="searchValue"
+        type="text"
+        :maxlength="maxLength"
+        class="form-control form-control-sm"
+        placeholder="Student number or UW netid..."
+        aria-label="Student number or UW netid"
+      />
+      <button
+        :disabled="searchValue.length == 0"
+        class="btn btn-sm btn-outline-primary"
+        type="submit"
+      >
         Search
       </button>
     </div>
@@ -14,14 +24,20 @@
       {{ searchError.message }}
     </div>
   </form>
-  <studentmodal v-if="showModal" />
+  <studentmodal v-if="showModal" :student-identifier="modalPersonId" />
 </template>
 
 <script>
 import { useICVisitsStore } from "@/stores/ic-visits";
+import { getStudentBySearch } from "@/utils/data";
 import StudentModal from "@/components/ic-dashboard/student-modal.vue";
 
 export default {
+  setup: function () {
+    return {
+      getStudentBySearch,
+    };
+  },
   name: "StudentVisitSearch",
   components: {
     studentmodal: StudentModal,
@@ -29,10 +45,12 @@ export default {
   data() {
     return {
       icVisitsStore: useICVisitsStore(),
-      searchValue: "",
+      searchValue: "javerage",
       maxLength: 32,
       searchError: null,
       showModal: false,
+      studentProfileData: null,
+      modalPersonId: null,
     };
   },
   computed: {
@@ -52,18 +70,29 @@ export default {
       this.searchError = null;
       this.searchValue = this.searchValue.trim().toLowerCase();
       if (this.validQuery(this.searchValue)) {
-        this.icVisitsStore.fetchStudentVisit(this.searchValue).then((req) => {
-          console.log('Student visit data fetched successfully', this.icVisitsStore.getStudentVisitData(this.searchValue));
-          // TODO: Fire off modal init here
-          this.showModal = true;
-        }).catch((err) => {
-          this.searchError = { message: "Error fetching student visit data" };
-          console.error('Error fetching student visit data', err);
-        });
+        this.getStudentBySearch(this.searchValue)
+          .then((response) => {
+            this.showModal = true;
+            this.modalPersonId = this.searchValue;
+          })
+          .catch((err) => {
+            this.searchError = { message: "Error fetching student data" };
+            console.error("Error fetching student data", err);
+            this.modalPersonId = null;
+          });
+
+        // this.icVisitsStore.fetchStudentVisit(this.searchValue).then((req) => {
+        //   console.log('Student visit data fetched successfully', this.icVisitsStore.getStudentVisitData(this.searchValue));
+        //   // TODO: Fire off modal init here
+        //   this.showModal = true;
+        // }).catch((err) => {
+        //   this.searchError = { message: "Error fetching student visit data" };
+        //   console.error('Error fetching student visit data', err);
+        // });
       } else {
         this.searchError = { message: "Invalid student identifier" };
       }
-    }
+    },
   },
 };
 </script>
