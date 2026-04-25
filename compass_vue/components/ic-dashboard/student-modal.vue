@@ -1,14 +1,15 @@
 // student-modal.vue
 
 <template>
-  <div :v-if="!isLoading"class="modal-dialog modal-dialog-centered modal-lg">
+  <div :v-if="!isLoading" class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="student-bio p-4" v-if="!isLoading && person">
         <div
-          class="rounded-circle border border-light-subtle border-3 mb-3"
+          v-lazyload
+          class="mb-3"
         >
           <img
-            data-url="/api/internal/photo/9136CCB8F66711D5BE060004AC494FFE/96LV54HIIFUPEZG4/"
+            :data-url="person.photo_url"
             :alt="person.display_name + ' profile picture'"
             class="img-profile rounded-circle border border-3"
             @error="$event.target.src = '/static/compass/img/placeholder.png'"
@@ -28,12 +29,16 @@
 
 <script>
 import { getStudentDetail } from "@/utils/data";
+import LazyLoad from "@/directives/lazyload";
 
 export default {
   setup() {
     return {
       getStudentDetail,
     };
+  },
+  directives: {
+    lazyload: LazyLoad,
   },
   name: "StudentModal",
   props: {
@@ -60,7 +65,6 @@ export default {
         .then((response) => {
           if (response) {
             this.person = response;
-            console.log("Student data loaded successfully", response);
             this.errorResponse = null;
           }
         })
@@ -69,7 +73,6 @@ export default {
         })
         .finally(() => {
           this.isLoading = false;
-          console.log('done ')
         });
     },
   },

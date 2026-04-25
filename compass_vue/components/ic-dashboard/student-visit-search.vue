@@ -77,18 +77,8 @@ export default {
           })
           .catch((err) => {
             this.searchError = { message: "Error fetching student data" };
-            console.error("Error fetching student data", err);
             this.modalPersonId = null;
           });
-
-        // this.icVisitsStore.fetchStudentVisit(this.searchValue).then((req) => {
-        //   console.log('Student visit data fetched successfully', this.icVisitsStore.getStudentVisitData(this.searchValue));
-        //   // TODO: Fire off modal init here
-        //   this.showModal = true;
-        // }).catch((err) => {
-        //   this.searchError = { message: "Error fetching student visit data" };
-        //   console.error('Error fetching student visit data', err);
-        // });
       } else {
         this.searchError = { message: "Invalid student identifier" };
       }
