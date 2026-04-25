@@ -90,6 +90,9 @@ class BaseAPIView(GenericAPIView):
     def response_notfound(self, content="Not found"):
         return Response(content, status=status.HTTP_404_NOT_FOUND)
 
+    def response_error(self, content="Error processing request"):
+        return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 class TokenAPIView(GenericAPIView):
     authentication_classes = [TokenAuthentication]

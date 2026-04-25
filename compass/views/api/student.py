@@ -388,6 +388,9 @@ class StudentVisitsView(BaseAPIView):
     API endpoint returning a list of visits for a student
 
     /api/internal/student/[systemkey]/visits/
+
+    Optional parameters:
+    - current_qtr_only: if true, only returns visits for the current quarter
     '''
     def get(self, request, systemkey):
         try:
@@ -401,6 +404,12 @@ class StudentVisitsView(BaseAPIView):
         queryset = Visit.objects.filter(
             student__system_key=systemkey,
             visit_type__access_group=access_group).order_by('-checkin_date')
+        if request.GET.get('current_qtr_only', 'false').lower() == 'true':
+            try:
+                qtr_start = get_current_term().first_day_quarter
+                queryset = queryset.filter(checkin_date__gte=qtr_start)
+            except DataFailureException:
+                return self.response_error("Can't get current quarter")
         serializer = VisitReadSerializer(queryset, many=True)
         return self.response_ok(serializer.data)
 

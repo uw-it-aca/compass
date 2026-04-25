@@ -4,7 +4,8 @@
 
 from compass.tests import ApiTest, User
 from compass.models import (AccessGroup, Contact, ContactType, Student,
-                            EligibilityType, StudentEligibility)
+                            EligibilityType, StudentEligibility, Visit,
+                            VisitType, VisitTutoringOption)
 from compass.models.rad_data import StudentAlertStatus
 from uw_pws.util import fdao_pws_override
 from uw_sws.util import fdao_sws_override
@@ -12,6 +13,7 @@ from mock import patch
 from django.test import Client
 from rest_framework.authtoken.models import Token
 import json
+from restclients_core.exceptions import DataFailureException
 
 
 class StudentAPITest(ApiTest):
@@ -145,6 +147,26 @@ class StudentVisitsAPITest(ApiTest):
         ag = AccessGroup.objects.create(
             name="Test Group", access_group_id="u_astra_group1")
 
+        student = Student.objects.create(system_key="532353230")
+        visit_type = VisitType.objects.create(name="Test Visit Type",
+                                              access_group=ag)
+        tutoring_option = VisitTutoringOption.objects.create(
+            name="Test Tutoring Option", access_group=ag)
+        Visit.objects.create(student=student,
+                             access_group=ag,
+                             visit_type=visit_type,
+                             tutoring_option=tutoring_option,
+                             course_code="TEST 101",
+                             checkin_date="2013-03-19T06:15:04Z",
+                             checkout_date="2013-03-19T07:15:04Z")
+        Visit.objects.create(student=student,
+                             access_group=ag,
+                             visit_type=visit_type,
+                             tutoring_option=tutoring_option,
+                             course_code="TEST 102",
+                             checkin_date="2023-04-19T06:15:04Z",
+                             checkout_date="2023-04-19T07:15:04Z")
+
     @patch('compass.dao.group.is_member_of_group')
     def test_get(self, mock_is_member):
         mock_is_member.return_value = True
@@ -152,13 +174,35 @@ class StudentVisitsAPITest(ApiTest):
                                      "jadviser",
                                      kwargs={"systemkey": "532353230"})
         self.assertEqual(response.status_code, 200, "OK")
-        self.assertEqual(len(response.data), 0)
+        self.assertEqual(len(response.data), 2)
 
         mock_is_member.return_value = False
         response = self.get_response("student_visits_view",
                                      "jadviser",
                                      kwargs={"systemkey": "532353230"})
         self.assertEqual(response.status_code, 401, "Unauthorized")
+
+    @patch('compass.dao.group.is_member_of_group')
+    def test_get_current_qtr_only(self, mock_is_member):
+        mock_is_member.return_value = True
+        response = self.get_response("student_visits_view",
+                                     "jadviser",
+                                     get_args={"current_qtr_only": "true"},
+                                     kwargs={"systemkey": "532353230"})
+        self.assertEqual(response.status_code, 200, "OK")
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]["course_code"], "TEST 102")
+
+        with patch('compass.views.api.student.get_current_term') as mock_term:
+            mock_term.side_effect = DataFailureException(status=404,
+                                                         msg="err",
+                                                         url="/term/current")
+            response = self.get_response("student_visits_view",
+                                         "jadviser",
+                                         get_args={"current_qtr_only": "true"},
+                                         kwargs={"systemkey": "532353230"})
+            self.assertEqual(response.status_code, 500)
+            self.assertEqual(response.data, "Can't get current quarter")
 
 
 class StudentAffiliationsAPITest(ApiTest):
