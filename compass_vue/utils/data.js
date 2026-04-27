@@ -206,8 +206,11 @@ async function getStudentAffiliations(systemkey, affiliation_id) {
   return useCustomFetch(url);
 }
 
-async function getStudentVisits(systemkey) {
-  const url = "/api/internal/student/" + systemkey + "/visits/";
+async function getStudentVisits(systemkey,current_qtr_only=false) {
+  let url = "/api/internal/student/" + systemkey + "/visits/";
+  if (current_qtr_only === true) {
+    url += "?current_qtr_only=true";
+  }
   return useCustomFetch(url);
 }
 
