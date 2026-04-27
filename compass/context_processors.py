@@ -61,3 +61,8 @@ def user_preferences(request):
     netid = us.get_user()
     user_prefs = get_user_preferences(netid)
     return {'user_preferences': user_prefs if user_prefs else {}}
+
+
+def ic_visits_eligibility_slug(request):
+    slug = getattr(settings, "COMPASS_VISITS_ELIGIBILITY_SLUG", None)
+    return {'ic_visits_eligibility_slug': slug}

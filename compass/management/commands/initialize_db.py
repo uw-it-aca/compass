@@ -52,3 +52,4 @@ class Command(BaseCommand):
         call_command('loaddata', 'initial_data/visit.json')
         call_command('loaddata', 'initial_data/eligibility-types.json')
         call_command('loaddata', 'initial_data/specialprogram.json')
+        call_command('loaddata', 'initial_data/student-eligibility.json')

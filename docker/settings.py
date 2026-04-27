@@ -39,6 +39,7 @@ TEMPLATES = [
                 "compass.context_processors.django_debug",
                 "compass.context_processors.auth_user",
                 "compass.context_processors.user_preferences",
+                "compass.context_processors.ic_visits_eligibility_slug",
             ],
         },
     }

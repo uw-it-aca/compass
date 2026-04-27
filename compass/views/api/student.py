@@ -478,7 +478,7 @@ class StudentEligibilityView(BaseAPIView):
             s_e.save()
 
             serializer = StudentEligibilitySerializer(s_e)
-            logger.info(f"StudentEligibility for {system_key} saved: "
+            logger.info(f"StudentEligibility for {systemkey} saved: "
                         f"{serializer.data}")
             return self.response_ok(serializer.data)
         except Student.DoesNotExist:
