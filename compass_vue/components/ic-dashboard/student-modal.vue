@@ -24,17 +24,16 @@
           </p>
         </div>
         <div class="col">
-          <div v-if="showVisits">
+          <div v-if="displayMode === 'visits'">
             <studenvisitsummary :studentVisits="studentVisitData" />
           </div>
-          <div v-else>
-            <div :v-if="!ICEligible">
-              This student is not eligible for IC visits.
-              <button class="btn btn-primary ms-3" @click="addICEligibility()">
-                Approve
-              </button>
-            </div>
+          <div v-else-if="displayMode === 'not_eligible'">
+            This student is not eligible for IC visits.
+            <button class="btn btn-primary ms-3" @click="addICEligibility()">
+              Approve
+            </button>
           </div>
+          <div v-else-if="displayMode === 'checkin'">Checking in...</div>
         </div>
       </div>
     </div>
@@ -84,6 +83,7 @@ export default {
       isLoadingStudent: true,
       isLoadingVisits: true,
       isLoadingEligibility: true,
+      creatingCheckin: false,
     };
   },
   computed: {
@@ -108,6 +108,15 @@ export default {
         this.studentVisitData &&
         this.isICEligible
       );
+    },
+    displayMode() {
+      if (this.person && !this.isICEligible) {
+        return "not_eligible";
+      } else if (this.creatingCheckin) {
+        return "checkin";
+      } else {
+        return "visits";
+      }
     },
   },
   mounted() {
