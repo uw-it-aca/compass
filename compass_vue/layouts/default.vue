@@ -40,6 +40,7 @@
 
       <div class="d-flex justify-content-between">
         <!-- user comp here -->
+        <SColorMode color-class="text-white" class="ms-2" />
         <SUser
           :user-netid="userName"
           :user-override="userOverride !== userName ? userOverride : null"
@@ -62,7 +63,6 @@
             >
           </template>
         </SUser>
-        <SColorMode color-class="text-white" class="ms-2" />
       </div>
     </template>
     <template #main>

@@ -117,9 +117,8 @@ constring.txt
 node_modules/
 package-lock.json
 
-# vite bundle
-assets/
-manifest.json
+# django + vite static bundle
+compass/static/
 
 # cypress image snapshots diffs
 screenshots/

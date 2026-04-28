@@ -1,4 +1,4 @@
-import { fileURLToPath, URL } from "url";
+import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 
@@ -12,7 +12,7 @@ export default defineConfig({
   // vite manifest prefaces all files with the path 'app_name/assets/xxxx'
   build: {
     manifest: true,
-    rollupOptions: {
+    rolldownOptions: {
       input: [
         // list all entry points
         "./compass_vue/main.js",
@@ -20,8 +20,9 @@ export default defineConfig({
     },
     outDir: "./compass/static/", // relative path to django's static directory
     assetsDir: "compass/assets", // default ('assets')... this is the namespaced subdirectory of outDir that vite uses
-    emptyOutDir: false, // set to false to ensure favicon is not overwritten
+    emptyOutDir: true,
   },
+  publicDir: "compass_vue/public", // Vite will copy contents to outDir (/static/compass/img/)
   base: "/static/", // allows for proper css url path creation during the build process
 
   // MARK: standard vite/vue plugin and resolver config
