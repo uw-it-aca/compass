@@ -71,7 +71,34 @@
                 Approve
               </button>
             </div>
-            <div v-else-if="displayMode === 'checkin'">Checking in...</div>
+            <div v-else-if="displayMode === 'checkin'">
+              <form>
+              Program Area*
+              <select class="form-select mb-3" required v-model="checkInData.programArea">
+                <option value="" disabled selected>Select a program area</option>
+                <option value="general">General</option>
+                <option value="disability">Disability Resources for Students</option>
+                <option value="undocumented">Undocumented Student Services</option>
+                <option value="veterans">Veterans Services</option>
+              </select>
+              Tutoring Options*
+              <select class="form-select mb-3" required v-model="checkInData.tutoringOption">
+                <option value="" disabled selected>Select a tutoring option</option>
+                <option value="math">Math</option>
+                <option value="writing">Writing</option>
+                <option value="science">Science</option>
+                <option value="other">Other</option>
+              </select>
+              Coruse or Other Writing Services*
+              <select class="form-select mb-3" required v-model="checkInData.courseOrWritingService">
+                <option value="" disabled selected>Select a course or writing service</option>
+                <option value="course1">Course 1</option>
+                <option value="course2">Course 2</option>
+                <option value="course3">Course 3</option>
+                <option value="writing">Writing Services</option>
+              </select>
+              </form>
+            </div>
           </div>
 
           <button
@@ -136,6 +163,11 @@ export default {
       studentEligibility: null,
       errorResponse: null,
       isLoadingVisits: true,
+      checkInData: {
+        programArea: "",
+        tutoringOption: "",
+        courseOrWritingService: "",
+      }
     };
   },
   computed: {

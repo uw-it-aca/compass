@@ -11,7 +11,7 @@ from compass.dao.person import (get_appuser_by_uwnetid,
                                 get_person_by_student_number,
                                 get_person_by_uwnetid,
                                 PersonNotFoundException)
-from compass.dao.compass_visits import get_admin_visit_list
+from compass.dao.compass_visits import get_admin_visit_list, get_visit_options
 from compass.dao.term import current_term
 from rest_framework.response import Response
 from rest_framework import status
@@ -175,3 +175,14 @@ class VisitSearchView(BaseAPIView):
 
         serializer = VisitReadSerializer(visits, many=True)
         return self.response_ok(serializer.data)
+
+
+class ICVisitOptionsView(BaseAPIView):
+    '''
+    API endpoint for retrieving IC visit options
+    /api/internal/ic/visit_options/
+    '''
+
+    def get(self, request):
+        visit_options = get_visit_options()
+        return self.response_ok(visit_options)

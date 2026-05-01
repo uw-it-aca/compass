@@ -203,3 +203,10 @@ class VisitAPITest(ApiTest):
                                         kwargs={"identifier": "1233338"})
         self.assertEqual(syskey_resp.status_code, 200)
         self.assertEqual(len(syskey_resp.data), 1)
+
+    def test_get_ic_visit_options(self):
+        response = self.get_response('ic_visit_options_view', "jadviser")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data['program_areas']), 4)
+        self.assertEqual(len(response.data['tutoring_options']), 3)
+        self.assertEqual(len(response.data['writing_services']), 2)

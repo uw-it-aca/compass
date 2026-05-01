@@ -49,6 +49,7 @@ def get_visit_options():
     Returns a list of visit options.
     """
     options = []
+    # TODO: Get course list for student and append to visit options
     try:
         options = CompassVisits().get_visit_options()
     except DataFailureException as ex:

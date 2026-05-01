@@ -319,6 +319,11 @@ async function studentVisitSearch(identifier) {
   return useCustomFetch(url);
 }
 
+async function getICVisitOptions() {
+  const url = "/api/internal/ic/visit_options/";
+  return useCustomFetch(url);
+}
+
 export {
   getStudentBySearch,
   getStudentDetail,
@@ -357,4 +362,5 @@ export {
   getStudentSigninAnalytics,
   getActiveICVisits,
   studentVisitSearch,
+  getICVisitOptions
 };
