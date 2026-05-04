@@ -1,5 +1,6 @@
 from .base_settings import *
 from google.oauth2 import service_account
+import os
 
 INSTALLED_APPS += [
     "compass.apps.CompassFilesConfig",
@@ -13,6 +14,7 @@ INSTALLED_APPS += [
     "persistent_message",
     "rest_framework",
     "rest_framework.authtoken",
+    "django.contrib.postgres",
 ]
 
 INSTALLED_APPS.remove("django.contrib.staticfiles")
@@ -55,19 +57,13 @@ if os.getenv("ENV") == "localdev":
     RESTCLIENTS_DAO_CACHE_CLASS = None
     CURRENT_DATETIME_OVERRIDE = "2020-10-15 00:00:00"
 
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(
-                os.path.join(BASE_DIR, "compass"), "db.sqlite3"
-            ),
-        }
-    }
-
     MIGRATION_MODULES = {
         "uw_person_client": "uw_person_client.test_migrations",
     }
-    FIXTURE_DIRS = ["uw_person_client/fixtures", "compass/fixtures/uw_person"]
+    FIXTURE_DIRS = (
+        os.path.join(BASE_DIR, "uw_person_client", "fixtures"),
+        os.path.join(BASE_DIR, "compass", "fixtures", "uw_person"),
+    )
     TEST_ACCESS_GROUP = "u_test_group"
     COMPASS_ADMIN_GROUP = TEST_ACCESS_GROUP
     COMPASS_SUPPORT_GROUP = TEST_ACCESS_GROUP
@@ -119,7 +115,6 @@ else:
         "/gcs/credentials.json"
     )
 
-
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
 
 # Where the back link should go, and how it's labeled.
@@ -145,9 +140,15 @@ DATABASES["uw_person"] = {
     "NAME": os.getenv("UW_PERSON_DB_NAME", "postgres"),
     "USER": os.getenv("UW_PERSON_DB_USER", "postgres"),
     "PASSWORD": os.getenv("UW_PERSON_DB_PASSWORD", "postgres"),
+    "OPTIONS": {
+        "pool": {
+            "min_size": int(os.getenv("UW_PERSON_DB_POOL_MIN", 1)),
+            "max_size": int(os.getenv("UW_PERSON_DB_POOL_MAX", 4)),
+        },
+    },
 }
 
-DATABASE_ROUTERS = ["compass.routers.UWPersonRouter"]
+DATABASE_ROUTERS = ["uw_person_client.routers.UWPersonRouter"]
 
 TZINFOS = {"PDT": -7 * 3600}
 
