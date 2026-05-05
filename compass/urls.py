@@ -40,7 +40,9 @@ from compass.views.api.contact import (
 from compass.views.api.visit import (VisitOMADView,
                                      ActiveICVisitListView,
                                      VisitSearchView,
-                                     ICVisitOptionsView)
+                                     ICVisitOptionsView,
+                                     ICVisitCreateView,
+                                     ICVisitUpdateView)
 from compass.views.api.settings import SettingsView
 from compass.views.api.photo import PhotoView
 from compass.views.api.affiliation import AffiliationsView
@@ -240,6 +242,16 @@ urlpatterns += [
         r'^api/internal/visit_options/(?P<uwregid>[a-fA-F0-9]{32})/$',
         ICVisitOptionsView.as_view(),
         name='ic_visit_options_view'
+    ),
+    re_path(
+        r"^api/internal/visits/create/$",
+        ICVisitCreateView.as_view(),
+        name="ic_visit_create_view"
+    ),
+    re_path(
+        r"^api/internal/visits/update/(?P<visit_id>[\w]+)/$",
+        ICVisitUpdateView.as_view(),
+        name="ic_visit_update_view"
     ),
     re_path(
         r"^api/v1/contact/omad/$",

@@ -215,3 +215,50 @@ class VisitAPITest(ApiTest):
         self.assertEqual(len(response.data['program_areas']), 4)
         self.assertEqual(len(response.data['tutoring_options']), 3)
         self.assertEqual(len(response.data['writing_services']), 2)
+
+    @patch('uw_compass_visits.CompassVisits.admin_create_visit')
+    def test_create_visit(self, mock_admin_create_visit):
+        from compass.dao import compass_visits
+        data = {
+            "student_syskey": "000043870",
+            "program_area": 1,
+            "tutoring_option": 1,
+            "writing_service": 1,
+        }
+        compass_visits.admin_create_visit(data)
+        # Check the Visit object passed to CompassVisits.admin_create_visit
+        args, kwargs = mock_admin_create_visit.call_args
+        visit_arg = args[0]
+        assert visit_arg.student_syskey == data["student_syskey"]
+        assert visit_arg.program_area == data["program_area"]
+        assert visit_arg.tutoring_option == data["tutoring_option"]
+        assert visit_arg.writing_service == data["writing_service"]
+        # course is not in data, should be None
+        assert getattr(visit_arg, "course", None) is None
+
+    def test_update_visit(self):
+        visit_id = 1
+        update_param = {
+            "is_verified": True,
+            "is_checked_out": True
+        }
+        update_response = self.patch_response('ic_visit_update_view',
+                                              "jadviser",
+                                              body=update_param,
+                                              kwargs={"visit_id": visit_id})
+        self.assertEqual(update_response.status_code, 200)
+        self.assertEqual(update_response.data['is_verified'], True)
+        self.assertIsNotNone(update_response.data['check_out_date'])
+        self.assertEqual(update_response.data['program_area'],
+                         "Program Area 1")
+
+    def test_delete_visit(self):
+        delete_response = self.delete_response('ic_visit_update_view',
+                                               "jadviser",
+                                               kwargs={"visit_id": 1})
+        self.assertEqual(delete_response.status_code, 204)
+
+        delete_response = self.delete_response('ic_visit_update_view',
+                                               "jadviser",
+                                               kwargs={"visit_id": 99})
+        self.assertEqual(delete_response.status_code, 404)

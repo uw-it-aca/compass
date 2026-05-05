@@ -49,14 +49,15 @@ class CompassVisitsDaoTest(CompassTestCase):
                          'Program Area 1')
 
     def test_admin_create_visit(self):
-        visit = Visit(id=6,
-                      student_netid="jnewvisit",
-                      program_area="Program Area 1",
-                      check_in_date=datetime.datetime(2022, 9, 19, 6, 15, 4),
-                      is_verified=False)
+        visit_data = {
+            "student_syskey": "000043870",
+            "program_area": "1",
+            "tutoring_option": "1",
+            "writing_service": "1"
+        }
         with self.assertRaises(DataFailureException):
             # will fail because the mock dao doesn't support creating visits
-            admin_create_visit(visit)
+            admin_create_visit(visit_data)
 
     def test_admin_update_visit(self):
         visit = admin_update_visit(1)

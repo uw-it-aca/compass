@@ -37,7 +37,7 @@ setup(
         'uw-restclients-sws~=2.5',
         'uw-restclients-gws~=2.3',
         'uw-restclients-pws~=2.1',
-        'uw-restclients-compass-visits~=0.3',
+        'uw-restclients-compass-visits~=0.4',
         'uw-restclients-django-utils~=2.3',
         'uw-django-saml2~=1.8',
         'uw-memcached-clients~=1.0',

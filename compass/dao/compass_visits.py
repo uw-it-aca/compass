@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from uw_compass_visits import CompassVisits
+from uw_compass_visits.models import Visit
 from restclients_core.exceptions import DataFailureException
 
 
@@ -61,7 +62,14 @@ def admin_create_visit(visit_data):
     """
     Creates a visit with the given visit data.
     """
-    return CompassVisits().admin_create_visit(visit_data)
+    visit = Visit(
+        student_syskey=visit_data.get('student_syskey'),
+        program_area=visit_data.get('program_area'),
+        tutoring_option=visit_data.get('tutoring_option'),
+        writing_service=visit_data.get('writing_service'),
+        course=visit_data.get('course'),
+    )
+    return CompassVisits().admin_create_visit(visit)
 
 
 def admin_update_visit(visit_id, is_verified=False, is_checked_out=False):

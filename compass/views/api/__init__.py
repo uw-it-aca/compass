@@ -78,6 +78,9 @@ class BaseAPIView(GenericAPIView):
     def response_accepted(self, content):
         return Response(content, status=status.HTTP_202_ACCEPTED)
 
+    def response_deleted(self, content="Deleted"):
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
     def response_badrequest(self, content="Missing parameters"):
         return Response(content, status=status.HTTP_400_BAD_REQUEST)
 

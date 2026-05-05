@@ -47,6 +47,13 @@ class ApiTest(CompassTestCase):
                                data=body,
                                content_type="application/json")
 
+    def patch_response(self, url_name, netid=None, body=None, **kwargs):
+        self._set_user(netid)
+        url = reverse(url_name, **kwargs)
+        return self.client.patch(url,
+                                 data=body,
+                                 content_type="application/json")
+
     def delete_response(self, url_name, netid=None, **kwargs):
         self._set_user(netid)
         url = reverse(url_name, **kwargs)

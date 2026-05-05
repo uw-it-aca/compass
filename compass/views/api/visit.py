@@ -11,7 +11,12 @@ from compass.dao.person import (get_appuser_by_uwnetid,
                                 get_person_by_student_number,
                                 get_person_by_uwnetid,
                                 PersonNotFoundException)
-from compass.dao.compass_visits import get_admin_visit_list, get_visit_options
+from compass.dao.compass_visits import (DataFailureException,
+                                        admin_create_visit,
+                                        admin_delete_visit,
+                                        admin_update_visit,
+                                        get_admin_visit_list,
+                                        get_visit_options)
 from compass.dao.term import current_term
 from rest_framework.response import Response
 from rest_framework import status
@@ -165,7 +170,6 @@ class VisitSearchView(BaseAPIView):
         try:
             student = Student.objects.get(system_key=system_key)
         except Student.DoesNotExist:
-            all_stu = Student.objects.all()
             return self.response_notfound('Student not found')
 
         current_qtr_start = current_term().first_day_quarter
@@ -187,3 +191,50 @@ class ICVisitOptionsView(BaseAPIView):
     def get(self, request, uwregid):
         visit_options = get_visit_options(uwregid)
         return self.response_ok(visit_options)
+
+
+class ICVisitCreateView(BaseAPIView):
+    '''
+    API endpoint for creating or updating IC visits
+    /api/internal/create_visit
+    '''
+
+    def post(self, request):
+        visit_data = request.data
+        try:
+            visit = admin_create_visit(visit_data)
+            return self.response_ok(visit)
+        except DataFailureException as e:
+            logger.error(f"Error creating IC visit: {e}")
+            return self.response_badrequest(f"Error creating IC visit: {e}")
+
+
+class ICVisitUpdateView(BaseAPIView):
+    '''
+    API endpoint for updating IC visits
+    /api/internal/update_visit/[visit_id]
+    '''
+
+    def patch(self, request, visit_id):
+        is_verified = request.data.get('is_verified', False)
+        is_checked_out = request.data.get('is_checked_out', False)
+        try:
+            visit = admin_update_visit(visit_id, is_verified, is_checked_out)
+            return self.response_ok(visit.json_data())
+        except DataFailureException as e:
+            logger.error(f"IC visit not found: {e}")
+            return self.response_notfound(f"IC visit not found: {e}")
+        except Exception as e:
+            logger.error(f"Error updating IC visit: {e}")
+            return self.response_badrequest(f"Error updating IC visit: {e}")
+
+    def delete(self, request, visit_id):
+        try:
+            admin_delete_visit(visit_id)
+            return self.response_deleted()
+        except DataFailureException as e:
+            logger.error(f"IC visit not found: {e}")
+            return self.response_notfound(f"IC visit not found: {e}")
+        except Exception as e:
+            logger.error(f"Error deleting IC visit: {e}")
+            return self.response_badrequest(f"Error deleting IC visit: {e}")
