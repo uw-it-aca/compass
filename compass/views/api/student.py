@@ -444,14 +444,12 @@ class StudentEligibilityView(BaseAPIView):
             return self.response_badrequest('Invalid systemkey')
 
         eligibilities = []
-        try:
-            student = StudentEligibility.objects.get(
-                student__system_key=systemkey)
+        student = StudentEligibility.objects.filter(
+            student__system_key=systemkey).first()
+        if student:
             for e in student.eligibility.all():
                 if e.access_group == access_group:
                     eligibilities.append(EligibilityTypeSerializer(e).data)
-        except StudentEligibility.DoesNotExist:
-            pass
 
         return self.response_ok(eligibilities)
 
