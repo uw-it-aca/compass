@@ -36,7 +36,7 @@ class CompassVisitsDaoTest(CompassTestCase):
         self.assertEqual(len(visits['by_programarea']['Program Area 3']), 2)
 
     def test_get_visit_options(self):
-        options = get_visit_options()
+        options = get_visit_options('9136CCB8F66711D5BE060004AC494FFE')
         self.assertIsNotNone(options)
         self.assertIn('program_areas', options)
         self.assertIn('tutoring_options', options)

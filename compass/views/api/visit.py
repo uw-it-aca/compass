@@ -180,9 +180,10 @@ class VisitSearchView(BaseAPIView):
 class ICVisitOptionsView(BaseAPIView):
     '''
     API endpoint for retrieving IC visit options
-    /api/internal/ic/visit_options/
+    /api/internal/ic/visit_options/[uwregid]
+    where [uwregid] is the UW regid of the student
     '''
 
-    def get(self, request):
-        visit_options = get_visit_options()
+    def get(self, request, uwregid):
+        visit_options = get_visit_options(uwregid)
         return self.response_ok(visit_options)

@@ -205,7 +205,12 @@ class VisitAPITest(ApiTest):
         self.assertEqual(len(syskey_resp.data), 1)
 
     def test_get_ic_visit_options(self):
-        response = self.get_response('ic_visit_options_view', "jadviser")
+        param = {
+            "uwregid": "9136CCB8F66711D5BE060004AC494FFE"
+        }
+        response = self.get_response('ic_visit_options_view',
+                                     "jadviser",
+                                     kwargs=param)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.data['program_areas']), 4)
         self.assertEqual(len(response.data['tutoring_options']), 3)

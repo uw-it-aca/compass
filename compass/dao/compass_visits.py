@@ -44,14 +44,13 @@ def get_admin_visit_list():
     return visit_resp
 
 
-def get_visit_options():
+def get_visit_options(uwregid):
     """
-    Returns a list of visit options.
+    Returns a list of visit options for the given UW regid.
     """
     options = []
-    # TODO: Get course list for student and append to visit options
     try:
-        options = CompassVisits().get_visit_options()
+        options = CompassVisits().get_visit_options(uwregid)
     except DataFailureException as ex:
         # If there are no visit options, return an empty list
         options = []
