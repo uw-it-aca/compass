@@ -18,9 +18,6 @@
 </template>
 
 <script>
-/* sample studentVisits data:
-[ { "id": 1, "student": 2, "visit_type": { "id": 4, "access_group": { "id": 1, "name": "OMAD", "access_group_id": "u_astra_group1" }, "name": "IC-Tutoring (Drop-In)", "slug": "ic-tutoring-drop-in", "editable": false }, "tutoring_option": null, "course_code": "ESS 203", "checkin_date": "2023-05-26T18:45:00Z", "checkout_date": "2023-05-26T19:17:00Z" }, { "id": 2, "student": 2, "visit_type": { "id": 2, "access_group": { "id": 1, "name": "OMAD", "access_group_id": "u_astra_group1" }, "name": "IC-Exam Prep (Drop-In)", "slug": "ic-exam-prep-drop-in", "editable": false }, "tutoring_option": null, "course_code": "MATH 123", "checkin_date": "2022-11-06T14:22:00Z", "checkout_date": "2022-11-06T15:34:00Z" } ]
-*/
 
 export default {
   name: "StudentVisitSummary",

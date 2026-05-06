@@ -18,16 +18,27 @@
         <td>{{ visit.tutoring_option }}</td>
         <td>{{ getCourseString(visit) }}</td>
         <td>{{ getVisitDuration(visit) }}</td>
-        <td>{{ getActionString(visit) }}</td>
+        <td v-if="!visit.is_verified">
+          <button @click="verifyVisit(visit.id)">Verify</button>
+        </td>
+        <td v-else>
+          <button @click="checkOutVisit(visit.id)">Check Out</button>
+        </td>
       </tr>
     </tbody>
   </table>
 </template>
 
 <script>
+import { updateICVisit } from '@/utils/data';
 
 export default {
   name: "VisitList",
+    setup: function () {
+    return {
+      updateICVisit,
+    };
+  },
   props: {
     visits: {
       type: Array,
@@ -65,7 +76,20 @@ export default {
         return "Check Out";
       }
     },
-  },
-
+    checkOutVisit(visit_id) {
+      this.updateICVisit(visit_id, {
+        is_checked_out: true,
+      }).then(() => {
+        this.$emit('visit-updated');
+      });
+    },
+    verifyVisit(visit_id) {
+      this.updateICVisit(visit_id, {
+        is_verified: true,
+      }).then(() => {
+        this.$emit('visit-updated');
+      });
+    },
+  }
 };
 </script>
