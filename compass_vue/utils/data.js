@@ -319,9 +319,38 @@ async function studentVisitSearch(identifier) {
   return useCustomFetch(url);
 }
 
-async function getICVisitOptions() {
-  const url = "/api/internal/ic/visit_options/";
+async function getICVisitOptions(uwregid) {
+  const url = "/api/internal/visit_options/" + uwregid + "/";
   return useCustomFetch(url);
+}
+
+async function createICVisit(data) {
+  const url = "/api/internal/visits/create/";
+  return useCustomFetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify(data),
+  });
+}
+
+async function updateICVisit(visitId, data) {
+  const url = "/api/internal/visits/update/" + visitId + "/";
+  return useCustomFetch(url, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify(data),
+  });
+}
+
+async function deleteICVisit(visitId) {
+  const url = "/api/internal/visits/delete/" + visitId + "/";
+  return useCustomFetch(url, {
+    method: "DELETE",
+  });
 }
 
 export {
@@ -362,5 +391,8 @@ export {
   getStudentSigninAnalytics,
   getActiveICVisits,
   studentVisitSearch,
-  getICVisitOptions
+  getICVisitOptions,
+  createICVisit,
+  updateICVisit,
+  deleteICVisit
 };

@@ -72,31 +72,85 @@
               </button>
             </div>
             <div v-else-if="displayMode === 'checkin'">
-              <form>
-              Program Area*
-              <select class="form-select mb-3" required v-model="checkInData.programArea">
-                <option value="" disabled selected>Select a program area</option>
-                <option value="general">General</option>
-                <option value="disability">Disability Resources for Students</option>
-                <option value="undocumented">Undocumented Student Services</option>
-                <option value="veterans">Veterans Services</option>
-              </select>
-              Tutoring Options*
-              <select class="form-select mb-3" required v-model="checkInData.tutoringOption">
-                <option value="" disabled selected>Select a tutoring option</option>
-                <option value="math">Math</option>
-                <option value="writing">Writing</option>
-                <option value="science">Science</option>
-                <option value="other">Other</option>
-              </select>
-              Coruse or Other Writing Services*
-              <select class="form-select mb-3" required v-model="checkInData.courseOrWritingService">
-                <option value="" disabled selected>Select a course or writing service</option>
-                <option value="course1">Course 1</option>
-                <option value="course2">Course 2</option>
-                <option value="course3">Course 3</option>
-                <option value="writing">Writing Services</option>
-              </select>
+              <form v-if="!isLoadingOptions">
+                Program Area*
+                <select
+                  class="form-select mb-3"
+                  required
+                  v-model="checkInData.programArea"
+                >
+                  <option value="" disabled selected>
+                    Select a program area
+                  </option>
+                  <option
+                    v-for="option in visitOptions.program_areas"
+                    :key="option.id"
+                    :value="option.id"
+                  >
+                    {{ option.name }}
+                  </option>
+                </select>
+                Tutoring Options*
+                <select
+                  class="form-select mb-3"
+                  required
+                  v-model="checkInData.tutoringOption"
+                >
+                  <option value="" disabled selected>
+                    Select a tutoring option
+                  </option>
+                  <option
+                    v-for="option in visitOptions.tutoring_options"
+                    :key="option.id"
+                    :value="option.id"
+                  >
+                    {{ option.name }}
+                  </option>
+                </select>
+                Course or Other Writing Services*
+                <select
+                  class="form-select mb-3"
+                  required
+                  v-model="checkInData.courseOrWritingService"
+                >
+                  <optgroup label="Writing Services">
+                    <option value="" disabled selected>
+                      Select a course or writing service
+                    </option>
+                    <option
+                      v-for="option in visitOptions.writing_services"
+                      :key="option.id"
+                      :value="option.id"
+                    >
+                      {{ option.name }}
+                    </option>
+                  </optgroup>
+                  <optgroup
+                    v-if="
+                      visitOptions.courses && visitOptions.courses.length > 0
+                    "
+                    label="Courses"
+                  >
+                    <option
+                      v-for="option in visitOptions.courses"
+                      :key="option.id"
+                      :value="option.id"
+                    >
+                      {{ option.name }}
+                    </option>
+                  </optgroup>
+                </select>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  :disabled="!allCreateFieldsSelected"
+                  @click="createVisit()"
+                  >
+                  Create Check In
+                  </button>
+                  <div v-if="createError" class="alert alert-danger mt-3">
+                    {{ createError.message || "Error creating visit." }}
+                  </div>
               </form>
             </div>
           </div>
@@ -129,6 +183,8 @@ import {
   getStudentEligibility,
   getEligibilities,
   setStudentEligibility,
+  getICVisitOptions,
+  createICVisit,
 } from "@/utils/data";
 import StudentVisitSummary from "./student-visit-summary.vue";
 import LazyLoad from "@/directives/lazyload";
@@ -142,6 +198,8 @@ export default {
       getStudentEligibility,
       getEligibilities,
       setStudentEligibility,
+      getICVisitOptions,
+      createICVisit,
     };
   },
   name: "StudentVisitSearch",
@@ -163,11 +221,14 @@ export default {
       studentEligibility: null,
       errorResponse: null,
       isLoadingVisits: true,
+      isLoadingOptions: false,
+      visitOptions: null,
       checkInData: {
         programArea: "",
         tutoringOption: "",
         courseOrWritingService: "",
-      }
+      },
+      createError: null,
     };
   },
   computed: {
@@ -209,6 +270,23 @@ export default {
         return "visits";
       }
     },
+    allCreateFieldsSelected() {
+      return (
+        this.checkInData.programArea &&
+        this.checkInData.tutoringOption &&
+        this.checkInData.courseOrWritingService
+      );
+    },
+    selectedCourse() {
+      return this.visitOptions.courses.find(
+        (course) => course.id === this.checkInData.courseOrWritingService
+      );
+    },
+    selectedWritingService() {
+      return this.visitOptions.writing_services.find(
+        (service) => service.id === this.checkInData.courseOrWritingService
+      );
+    },
   },
   mounted() {
     this.$refs.studentSearchModal.addEventListener(
@@ -231,7 +309,9 @@ export default {
   },
   methods: {
     setCheckinMode: function () {
+      this.isLoadingOptions = true;
       this.creatingCheckin = true;
+      this.loadStudentVisitOptions();
     },
     resetForm: function () {
       this.searchValue = "";
@@ -317,6 +397,39 @@ export default {
         .catch((error) => {
           this.errorResponse = error.data || error.message;
         });
+    },
+    loadStudentVisitOptions: function () {
+      getICVisitOptions(this.person.uwregid)
+        .then((response) => {
+          if (response) {
+            this.visitOptions = response;
+            this.errorResponse = null;
+          }
+        })
+        .catch((error) => {
+          this.errorResponse = error.data;
+        })
+        .finally(() => {
+          this.isLoadingOptions = false;
+        });
+    },
+    createVisit() {
+      if (this.allCreateFieldsSelected) {
+        this.createICVisit({
+          program_area: this.checkInData.programArea,
+          tutoring_option: this.checkInData.tutoringOption,
+          course: this.selectedCourse ? this.selectedCourse.id : null,
+          writing_service: this.selectedWritingService
+            ? this.selectedWritingService.id
+            : null,
+        })
+          .then(() => {
+            this.creatingCheckin = false;
+          })
+          .catch((error) => {
+            this.createError = error.data;
+          });
+      }
     },
   },
 };
