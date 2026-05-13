@@ -18,6 +18,7 @@ from compass.dao.compass_visits import (DataFailureException,
                                         get_admin_visit_list,
                                         get_visit_options)
 from compass.dao.term import current_term
+from compass.dao.visit_file import validate_visit_upload_file
 from rest_framework.response import Response
 from rest_framework import status
 from dateutil import parser
@@ -238,3 +239,25 @@ class ICVisitUpdateView(BaseAPIView):
         except Exception as e:
             logger.error(f"Error deleting IC visit: {e}")
             return self.response_badrequest(f"Error deleting IC visit: {e}")
+
+
+class ICVisitFileView(BaseAPIView):
+    '''
+    API endpoint for handling IC visit uploads and exports
+    /api/internal/visit/file/
+    POST: upload visit data from file
+    GET: export visit data to file
+    '''
+    def post(self, request):
+        file = request.FILES.get('file')
+        if not file:
+            return self.response_badrequest('No file uploaded')
+        is_valid, error_message = validate_visit_upload_file(file)
+        if not is_valid:
+            return self.response_badrequest(error_message)
+
+        return self.response_ok("File upload handling not implemented yet")
+
+    def get(self, request):
+        # TODO: implement file export handling
+        return self.response_ok("File export handling not implemented yet")
