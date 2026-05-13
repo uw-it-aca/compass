@@ -1,9 +1,18 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from uw_compass_visits import CompassVisits
 from uw_compass_visits.models import Visit
 from restclients_core.exceptions import DataFailureException
+from compass.models import AccessGroup
+
+
+"""
+This module provides functions for interacting with the Compass Visits
+application via the CompassVisits restclient.
+"""
 
 
 def get_visits_for_student(netid):
@@ -63,6 +72,7 @@ def admin_create_visit(visit_data):
     Creates a visit with the given visit data.
     """
     visit = Visit(
+        access_group=get_compass_visits_access_group(),
         student_syskey=visit_data.get('student_syskey'),
         program_area=visit_data.get('program_area'),
         tutoring_option=visit_data.get('tutoring_option'),
@@ -86,3 +96,23 @@ def admin_delete_visit(visit_id):
     Deletes a visit with the given visit id.
     """
     return CompassVisits().admin_delete_visit(visit_id)
+
+
+def get_compass_visits_access_group():
+    """
+    Returns the AccessGroup object for Compass Visits.  Currently only
+    OMAD has access to Compass Visits.
+    """
+    try:
+        access_group_name = settings.COMPASS_VISITS_ACCESS_GROUP_NAME
+    except AttributeError:
+        raise ImproperlyConfigured(
+            "COMPASS_VISITS_ACCESS_GROUP_NAME is not configured in settings."
+        )
+    try:
+        return AccessGroup.objects.get(name=access_group_name)
+    except AccessGroup.DoesNotExist:
+        raise ImproperlyConfigured(
+            f"Access group matching "
+            f"'{access_group_name}' not found. "
+        )

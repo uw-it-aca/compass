@@ -2,12 +2,14 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.test import TestCase
-from compass.dao.visit_file import validate_visit_upload_file
+from compass.tests import CompassTestCase
+from compass.dao.visit_file import (validate_visit_upload_file,
+                                    _get_datetimes,
+                                    _get_student_by_student_number)
 from io import BytesIO
 
 
-class VisitFileDAOFunctionsTest(TestCase):
+class VisitFileDAOFunctionsTest(CompassTestCase):
     def test_validate_visit_upload_file_valid(self):
         csv_content = (
             "student_number,course_name,duration_minutes\n"
@@ -62,3 +64,19 @@ class VisitFileDAOFunctionsTest(TestCase):
         is_valid, error_message = validate_visit_upload_file(file)
         self.assertFalse(is_valid)
         self.assertIn('Negative duration_minutes in row', error_message)
+
+    def test_get_datetimes(self):
+        duration_minutes = 90
+        date = "2024-01-01"
+        start_datetime, end_datetime = _get_datetimes(duration_minutes, date)
+        self.assertEqual(start_datetime.isoformat(),
+                         "2024-01-01T00:00:00")
+        self.assertEqual(end_datetime.isoformat(),
+                         "2024-01-01T01:30:00")
+
+    def test_get_student_by_student_number(self):
+        student = _get_student_by_student_number("1033334")
+        self.assertIsNotNone(student)
+        self.assertEqual(student.system_key, "532353230")
+        with self.assertRaises(ValueError):
+            _get_student_by_student_number("9999999")

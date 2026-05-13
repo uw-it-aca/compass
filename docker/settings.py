@@ -240,3 +240,6 @@ COMPASS_VISITS_TOKEN_USER = "compass-visits-api"
 # Configure which eligibility type slug (configured in the DB)
 # controls compass-visits eligibility for the Instructional Center.
 COMPASS_VISITS_ELIGIBILITY_SLUG = "instructional-center"
+
+# Associate Compass Visits with the OMAD access group
+COMPASS_VISITS_ACCESS_GROUP_NAME = "OMAD"

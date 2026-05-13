@@ -3,6 +3,10 @@
 
 import csv
 from io import StringIO
+from datetime import datetime, timedelta
+from compass.models import Visit, Student, AccessGroup
+from compass.dao.person import get_person_by_student_number
+from compass.dao.compass_visits import get_compass_visits_access_group
 
 
 def validate_visit_upload_file(file):
@@ -34,3 +38,52 @@ def validate_visit_upload_file(file):
     except Exception as e:
         return (False, f'Error processing file: {str(e)}')
     return (True, '')
+
+
+def create_visits_from_file(file, visit_type, tutoring_option, date):
+    """
+    Creates Visit records from the validated file.
+
+    """
+    access_group = get_compass_visits_access_group()
+    decoded_file = file.read().decode('utf-8')
+    csv_file = StringIO(decoded_file)
+    reader = csv.DictReader(csv_file)
+    visit_objects = []
+    for row in reader:
+        student = _get_student_by_student_number(row['student_number'])
+        start_datetime, end_datetime = _get_datetimes(
+            int(row['duration_minutes']), date)
+        visit = Visit(
+            student=student,
+            access_group=access_group,
+            visit_type=visit_type,
+            tutoring_option=tutoring_option,
+            course_code=row['course_name'],
+            checkin_date=start_datetime,
+            checkout_date=end_datetime
+        )
+        visit_objects.append(visit)
+
+    Visit.objects.bulk_create(visit_objects)
+
+
+def _get_datetimes(duration_minutes, date):
+    """
+    Calculate start and end datetimes based on duration and date string.
+    """
+
+    start_datetime = datetime.strptime(date, "%Y-%m-%d")
+    end_datetime = start_datetime + timedelta(minutes=duration_minutes)
+    return start_datetime, end_datetime
+
+
+def _get_student_by_student_number(student_number):
+    try:
+        person = get_person_by_student_number(student_number)
+        student = Student.objects.get_or_create(
+            system_key=person.system_key)[0]
+        return student
+    except Exception as e:
+        raise ValueError(f'Error retrieving student'
+                         f' with number {student_number}: {e}')

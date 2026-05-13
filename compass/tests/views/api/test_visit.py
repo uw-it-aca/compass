@@ -18,12 +18,14 @@ from rest_framework.authtoken.models import Token
 
 class VisitAPITest(ApiTest):
     API_TOKEN = None
+    ACCESS_GROUP = None
 
     def setUp(self):
         super(VisitAPITest, self).setUp()
         user = User.objects.create_user(username='testuser', password='12345')
         ag = AccessGroup(name="OMAD", access_group_id="u_astra_group1")
         ag.save()
+        self.ACCESS_GROUP = ag
         v_type = VisitType(name="IC Drop-In Tutoring", access_group=ag)
         v_type.save()
         v_tutoring = VisitTutoringOption(
