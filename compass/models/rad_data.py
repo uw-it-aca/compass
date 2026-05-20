@@ -186,14 +186,16 @@ class CourseAnalyticsScores(models.Model):
 
     @classmethod
     def get_course_alert_status(cls, netid, year, quarter, week, course_id):
-        try:
-            scores = cls.objects.get(uwnetid=netid,
-                                     week__year=year,
-                                     week__quarter=quarter,
-                                     week__week=week,
-                                     course=course_id)
+        scores = cls.objects.filter(uwnetid=netid,
+                                    week__year=year,
+                                    week__quarter=quarter,
+                                    course=course_id)\
+            .order_by('-week__week')\
+            .first()
+
+        if scores is not None:
             return scores.is_alert_status()
-        except cls.DoesNotExist:
+        else:
             return False
 
     @classmethod

@@ -283,7 +283,6 @@ class CourseAnalyticsScoresTest(CompassTestCase):
             prediction_score=1
         )
 
-
         schedules = {
             "2024": {
                 'year': 2024,
