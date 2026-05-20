@@ -353,6 +353,21 @@ async function deleteICVisit(visitId) {
   });
 }
 
+async function uploadVisitFile(importOptions) {
+  const url = "/api/internal/visits/file/";
+  let formData = new FormData();
+  formData.append("file", importOptions.file);
+  formData.append("visit_type", importOptions.visit_type);
+  formData.append("tutoring_option", importOptions.tutoring_option);
+  formData.append("date", importOptions.date);
+
+  // Do not send a Content-Type header
+  return useCustomFetch(url, {
+    method: "POST",
+    body: formData,
+  });
+}
+
 export {
   getStudentBySearch,
   getStudentDetail,
@@ -394,5 +409,6 @@ export {
   getICVisitOptions,
   createICVisit,
   updateICVisit,
-  deleteICVisit
+  deleteICVisit,
+  uploadVisitFile
 };

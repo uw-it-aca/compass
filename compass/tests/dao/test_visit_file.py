@@ -5,11 +5,23 @@
 from compass.tests import CompassTestCase
 from compass.dao.visit_file import (validate_visit_upload_file,
                                     _get_datetimes,
-                                    _get_student_by_student_number)
+                                    _get_student_by_student_number,
+                                    create_visits_from_file)
+from compass.models import AccessGroup, VisitType, VisitTutoringOption
 from io import BytesIO
 
 
 class VisitFileDAOFunctionsTest(CompassTestCase):
+
+    def setUp(self):
+        super(VisitFileDAOFunctionsTest, self).setUp()
+        ag = AccessGroup(name="OMAD", access_group_id="omad_group")
+        ag.save()
+        vt = VisitType(name="IC Drop-In Tutoring", access_group=ag)
+        vt.save()
+        to = VisitTutoringOption(name="Option 1", access_group=ag)
+        to.save()
+
     def test_validate_visit_upload_file_valid(self):
         csv_content = (
             "student_number,course_name,duration_minutes\n"
@@ -80,3 +92,48 @@ class VisitFileDAOFunctionsTest(CompassTestCase):
         self.assertEqual(student.system_key, "532353230")
         with self.assertRaises(ValueError):
             _get_student_by_student_number("9999999")
+
+    def test_create_visits_from_file(self):
+        csv_content = (
+            "student_number,course_name,duration_minutes\n"
+            "1033334,Math 101,60\n"
+            "1033334,History 201,45"
+        )
+        file = BytesIO(csv_content.encode('utf-8'))
+        num_visits_created = create_visits_from_file(
+            file, "IC Drop-In Tutoring", "Option 1", "2024-01-01")
+        self.assertEqual(num_visits_created, 2)
+
+    def create_visits_missing_visit_type(self):
+        csv_content = (
+            "student_number,course_name,duration_minutes\n"
+            "1033334,Math 101,60\n"
+            "1033334,History 201,45"
+        )
+        file = BytesIO(csv_content.encode('utf-8'))
+        with self.assertRaises(ValueError):
+            create_visits_from_file(
+                file, "Nonexistent Visit Type", "Option 1", "2024-01-01")
+
+    def create_visits_missing_tutoring_option(self):
+        csv_content = (
+            "student_number,course_name,duration_minutes\n"
+            "1033334,Math 101,60\n"
+            "1033334,History 201,45"
+        )
+        file = BytesIO(csv_content.encode('utf-8'))
+        with self.assertRaises(ValueError):
+            create_visits_from_file(
+                file, "IC Drop-In Tutoring", "Nonexistent Tutoring Option",
+                "2024-01-01")
+
+    def test_bad_student_number(self):
+        csv_content = (
+            "student_number,course_name,duration_minutes\n"
+            "9999999,Math 101,60\n"
+            "1033334,History 201,45"
+        )
+        file = BytesIO(csv_content.encode('utf-8'))
+        with self.assertRaises(ValueError):
+            create_visits_from_file(
+                file, "IC Drop-In Tutoring", "Option 1", "2024-01-01")

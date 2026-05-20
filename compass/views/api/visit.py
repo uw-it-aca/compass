@@ -18,7 +18,8 @@ from compass.dao.compass_visits import (DataFailureException,
                                         get_admin_visit_list,
                                         get_visit_options)
 from compass.dao.term import current_term
-from compass.dao.visit_file import validate_visit_upload_file
+from compass.dao.visit_file import (validate_visit_upload_file,
+                                    create_visits_from_file)
 from rest_framework.response import Response
 from rest_framework import status
 from dateutil import parser
@@ -194,6 +195,17 @@ class ICVisitOptionsView(BaseAPIView):
         return self.response_ok(visit_options)
 
 
+class ICGenericVisitOptionsView(BaseAPIView):
+    '''
+    API endpoint for retrieving non-student specific IC visit options
+    /api/internal/ic/visit_options/
+    '''
+
+    def get(self, request):
+        visit_options = get_generic_visit_options()
+        return self.response_ok(visit_options)
+
+
 class ICVisitCreateView(BaseAPIView):
     '''
     API endpoint for creating or updating IC visits
@@ -248,6 +260,7 @@ class ICVisitFileView(BaseAPIView):
     POST: upload visit data from file
     GET: export visit data to file
     '''
+
     def post(self, request):
         file = request.FILES.get('file')
         if not file:
@@ -255,8 +268,22 @@ class ICVisitFileView(BaseAPIView):
         is_valid, error_message = validate_visit_upload_file(file)
         if not is_valid:
             return self.response_badrequest(error_message)
+        file.seek(0)
+        visit_type = request.data.get('visit_type')
+        tutoring_option = request.data.get('tutoring_option')
+        date = request.data.get('date')
+        if not visit_type or not tutoring_option or not date:
+            return self.response_badrequest(
+                'Missing visit_type, tutoring_option, or date')
+        try:
+            count_created = create_visits_from_file(file,
+                                                    visit_type,
+                                                    tutoring_option,
+                                                    date)
+        except ValueError as e:
+            return self.response_badrequest(str(e))
 
-        return self.response_ok("File upload handling not implemented yet")
+        return self.response_ok({'count_created': count_created})
 
     def get(self, request):
         # TODO: implement file export handling

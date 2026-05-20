@@ -4,7 +4,12 @@
 import csv
 from io import StringIO
 from datetime import datetime, timedelta
-from compass.models import Visit, Student, AccessGroup
+
+from compass.models import (Visit,
+                            Student,
+                            VisitTutoringOption,
+                            VisitType)
+
 from compass.dao.person import get_person_by_student_number
 from compass.dao.compass_visits import get_compass_visits_access_group
 
@@ -43,13 +48,26 @@ def validate_visit_upload_file(file):
 def create_visits_from_file(file, visit_type, tutoring_option, date):
     """
     Creates Visit records from the validated file.
+    Returns the number of visits created.
 
     """
     access_group = get_compass_visits_access_group()
-    decoded_file = file.read().decode('utf-8')
-    csv_file = StringIO(decoded_file)
-    reader = csv.DictReader(csv_file)
+    csv_file = file.read().decode('utf-8')
+    reader = csv.DictReader(StringIO(csv_file))
+    try:
+        visit_type_obj = VisitType.objects.get(name=visit_type,
+                                               access_group=access_group)
+        tutoring_option_obj = VisitTutoringOption.objects.get(
+            name=tutoring_option, access_group=access_group)
+    except VisitType.DoesNotExist:
+        raise ValueError(f'VisitType "{visit_type}" does not exist for'
+                         f' access group "{access_group.name}"')
+    except VisitTutoringOption.DoesNotExist:
+        raise ValueError(f'VisitTutoringOption "{tutoring_option}" does not'
+                         f' exist for access group "{access_group.name}"')
+
     visit_objects = []
+
     for row in reader:
         student = _get_student_by_student_number(row['student_number'])
         start_datetime, end_datetime = _get_datetimes(
@@ -57,20 +75,21 @@ def create_visits_from_file(file, visit_type, tutoring_option, date):
         visit = Visit(
             student=student,
             access_group=access_group,
-            visit_type=visit_type,
-            tutoring_option=tutoring_option,
+            visit_type=visit_type_obj,
+            tutoring_option=tutoring_option_obj,
             course_code=row['course_name'],
             checkin_date=start_datetime,
             checkout_date=end_datetime
         )
         visit_objects.append(visit)
-
     Visit.objects.bulk_create(visit_objects)
+    return len(visit_objects)
 
 
 def _get_datetimes(duration_minutes, date):
     """
     Calculate start and end datetimes based on duration and date string.
+    Returns a tuple of (start_datetime, end_datetime)
     """
 
     start_datetime = datetime.strptime(date, "%Y-%m-%d")

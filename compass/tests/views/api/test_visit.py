@@ -3,6 +3,8 @@
 
 
 from datetime import UTC, datetime
+from io import BytesIO
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client
 from django.contrib.auth.models import User
 from unittest.mock import MagicMock, patch
@@ -264,3 +266,118 @@ class VisitAPITest(ApiTest):
                                                "jadviser",
                                                kwargs={"visit_id": 99})
         self.assertEqual(delete_response.status_code, 404)
+
+    def test_IC_visit_file_upload(self):
+        # create a sample CSV file
+        csv_content = "student_number,course_name,duration_minutes\n"
+        csv_content += "1033334,CHEM 198,60\n"
+        file = SimpleUploadedFile("visits.csv",
+                                  csv_content.encode('utf-8'),
+                                  content_type="text/csv")
+        form_data = {
+            "file": file,
+            "visit_type": "IC Drop-In Tutoring",
+            "tutoring_option": "Option 1",
+            "date": "2022-09-19",
+        }
+        response = self.post_multipart_response('ic_visit_file_view',
+                                                "jadviser",
+                                                body=form_data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['count_created'], 1)
+        file = SimpleUploadedFile("visits.csv",
+                                  csv_content.encode('utf-8'),
+                                  content_type="text/csv")
+
+        bad_visit_type_response = self.post_multipart_response(
+            'ic_visit_file_view',
+            "jadviser",
+            body={
+                **form_data,
+                "visit_type": "Nonexistent Visit Type",
+                "file": file
+            })
+        self.assertEqual(bad_visit_type_response.status_code, 400)
+        self.assertIn('does not exist for access group',
+                      bad_visit_type_response.data)
+
+    def test_IC_visit_file_upload_missing_file(self):
+        response = self.post_multipart_response(
+            'ic_visit_file_view',
+            "jadviser",
+            body={
+                "visit_type": "IC Drop-In Tutoring",
+                "tutoring_option": "Option 1",
+                "date": "2022-09-19",
+            })
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data, 'No file uploaded')
+
+    @patch('compass.views.api.visit.validate_visit_upload_file')
+    def test_IC_visit_file_upload_invalid_file(self,
+                                               mock_validate_upload_file):
+        mock_validate_upload_file.return_value = (False, 'Invalid file')
+
+        file = SimpleUploadedFile("visits.csv",
+                                  b"not,a,valid,file\n",
+                                  content_type="text/csv")
+        response = self.post_multipart_response(
+            'ic_visit_file_view',
+            "jadviser",
+            body={
+                "file": file,
+                "visit_type": "IC Drop-In Tutoring",
+                "tutoring_option": "Option 1",
+                "date": "2022-09-19",
+            })
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data, 'Invalid file')
+
+    def test_IC_visit_file_upload_missing_required_fields(self):
+        csv_content = "student_number,course_name,duration_minutes\n"
+        csv_content += "1033334,CHEM 198,60\n"
+        file = SimpleUploadedFile("visits.csv",
+                                  csv_content.encode('utf-8'),
+                                  content_type="text/csv")
+        response = self.post_multipart_response(
+            'ic_visit_file_view',
+            "jadviser",
+            body={
+                "file": file,
+                "visit_type": "IC Drop-In Tutoring",
+                "date": "2022-09-19",
+            })
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data,
+                         'Missing visit_type, tutoring_option, or date')
+
+    @patch('compass.views.api.visit.create_visits_from_file')
+    def test_IC_visit_file_upload_create_visits_value_error(
+            self, mock_create_visits_from_file):
+        mock_create_visits_from_file.side_effect = ValueError(
+            'Unable to create visits')
+
+        csv_content = "student_number,course_name,duration_minutes\n"
+        csv_content += "1033334,CHEM 198,60\n"
+        file = SimpleUploadedFile("visits.csv",
+                                  csv_content.encode('utf-8'),
+                                  content_type="text/csv")
+        response = self.post_multipart_response(
+            'ic_visit_file_view',
+            "jadviser",
+            body={
+                "file": file,
+                "visit_type": "IC Drop-In Tutoring",
+                "tutoring_option": "Option 1",
+                "date": "2022-09-19",
+            })
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.data, 'Unable to create visits')
+
+    def test_IC_visit_file_download(self):
+        pass

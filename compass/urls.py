@@ -240,7 +240,7 @@ urlpatterns += [
         name="visit_search_view",
     ),
     re_path(
-        r'^api/internal/visit_options/(?P<uwregid>[a-fA-F0-9]{32})/$',
+        r'^api/internal/visit_options/(?P<uwregid>[\w]+)/$',
         ICVisitOptionsView.as_view(),
         name='ic_visit_options_view'
     ),
