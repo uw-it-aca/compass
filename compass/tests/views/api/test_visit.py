@@ -380,4 +380,15 @@ class VisitAPITest(ApiTest):
         self.assertEqual(response.data, 'Unable to create visits')
 
     def test_IC_visit_file_download(self):
-        pass
+        response = self.get_response('ic_visit_file_view', "jadviser")
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Content-Type'], 'text/csv')
+        self.assertIn('attachment; filename="visit_export.csv"',
+                      response['Content-Disposition'])
+        self.assertEqual(response.data.replace('\r\n', '\n'),
+                         "student_syskey,checkin_date,checkout_date,"
+                         "duration_minutes,"
+                         "visit_type,tutoring_option,course_code\n"
+                         "888777333,2022-09-19T06:15:04+00:00,"
+                         "2022-09-19T07:15:04+00:00,60,"
+                         "IC Drop-In Tutoring,Option 1,CHEM 198\n")

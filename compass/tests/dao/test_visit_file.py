@@ -6,8 +6,14 @@ from compass.tests import CompassTestCase
 from compass.dao.visit_file import (validate_visit_upload_file,
                                     _get_datetimes,
                                     _get_student_by_student_number,
-                                    create_visits_from_file)
-from compass.models import AccessGroup, VisitType, VisitTutoringOption
+                                    create_visits_from_file,
+                                    get_visit_export)
+from compass.models import (AccessGroup,
+                            VisitType,
+                            VisitTutoringOption,
+                            Student,
+                            Visit)
+from datetime import datetime, timezone
 from io import BytesIO
 
 
@@ -137,3 +143,33 @@ class VisitFileDAOFunctionsTest(CompassTestCase):
         with self.assertRaises(ValueError):
             create_visits_from_file(
                 file, "IC Drop-In Tutoring", "Option 1", "2024-01-01")
+
+    def test_visit_export(self):
+
+        student = Student.objects.get_or_create(system_key="12345")[0]
+        visit_type = VisitType.objects.get(name="IC Drop-In Tutoring")
+        tutoring_option = VisitTutoringOption.objects.get(name="Option 1")
+
+        checkin = datetime(2026, 5, 22, 10, 0, 0, tzinfo=timezone.utc)
+        checkout = datetime(2026, 5, 22, 11, 0, 0, tzinfo=timezone.utc)
+
+        Visit.objects.create(
+            student=student,
+            access_group=visit_type.access_group,
+            visit_type=visit_type,
+            tutoring_option=tutoring_option,
+            course_code="Math 101",
+            checkin_date=checkin,
+            checkout_date=checkout
+        )
+
+        csv_output = get_visit_export()
+
+        expected_csv = (
+            "student_syskey,checkin_date,checkout_date,duration_minutes,"
+            "visit_type,tutoring_option,course_code\r\n"
+            f"12345,{checkin.isoformat()},{checkout.isoformat()},"
+            "60,IC Drop-In Tutoring,Option 1,Math 101\r\n"
+        )
+
+        self.assertEqual(csv_output, expected_csv)

@@ -106,3 +106,26 @@ def _get_student_by_student_number(student_number):
     except Exception as e:
         raise ValueError(f'Error retrieving student'
                          f' with number {student_number}: {e}')
+
+
+def get_visit_export():
+    visits = Visit.objects.select_related(
+        'student', 'visit_type', 'tutoring_option').all()
+    output = StringIO()
+    writer = csv.writer(output)
+    writer.writerow(['student_syskey', 'checkin_date', 'checkout_date',
+                     'duration_minutes', 'visit_type', 'tutoring_option',
+                     'course_code'])
+    for visit in visits:
+        duration_minutes = int((visit.checkout_date -
+                                visit.checkin_date).total_seconds() / 60)
+        writer.writerow([
+            visit.student.system_key,
+            visit.checkin_date.isoformat(),
+            visit.checkout_date.isoformat(),
+            duration_minutes,
+            visit.visit_type.name,
+            visit.tutoring_option.name,
+            visit.course_code
+        ])
+    return output.getvalue()

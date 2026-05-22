@@ -19,7 +19,8 @@ from compass.dao.compass_visits import (DataFailureException,
                                         get_visit_options)
 from compass.dao.term import current_term
 from compass.dao.visit_file import (validate_visit_upload_file,
-                                    create_visits_from_file)
+                                    create_visits_from_file,
+                                    get_visit_export)
 from rest_framework.response import Response
 from rest_framework import status
 from dateutil import parser
@@ -286,5 +287,9 @@ class ICVisitFileView(BaseAPIView):
         return self.response_ok({'count_created': count_created})
 
     def get(self, request):
-        # TODO: implement file export handling
-        return self.response_ok("File export handling not implemented yet")
+        export_file = get_visit_export()
+        response = Response(export_file,
+                            content_type='text/csv')
+        response['Content-Disposition'] = \
+            'attachment; filename="visit_export.csv"'
+        return response
