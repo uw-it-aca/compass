@@ -33,7 +33,7 @@ setup(
         'django-persistent-message~=1.3',
         'django-storages[google]>=1.10',
         'djangorestframework~=3.12',
-        'django-person-client~=2.0',
+        'django-person-client~=2.1',
         'uw-restclients-sws~=2.5',
         'uw-restclients-gws~=2.3',
         'uw-restclients-pws~=2.1',
