@@ -124,8 +124,8 @@ def get_visit_export():
             visit.checkin_date.isoformat(),
             visit.checkout_date.isoformat(),
             duration_minutes,
-            visit.visit_type.name,
-            visit.tutoring_option.name,
+            visit.visit_type.name if visit.visit_type else '',
+            visit.tutoring_option.name if visit.tutoring_option else '',
             visit.course_code
         ])
     return output.getvalue()

@@ -7,7 +7,9 @@
   >
     Import Data
   </button>
-  <button>Export Data</button>
+  <button class="btn btn-sm btn-outline-primary" @click="handleDownload">
+    Export Data
+  </button>
 
   <!-- Modal for importing data -->
   <div
@@ -22,10 +24,13 @@
         <div class="modal-header">
           <h5 class="modal-title">Instructional Center Data Upload</h5>
         </div>
-        <form
-        v-if="!isLoadingOptions"
-        @submit.prevent="handleUpload"
-        >
+        <div v-if="isUploading" class="d-flex justify-content-center my-5">
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Uploading...</span>
+          </div>
+        </div>
+        <div v-else >
+        <form v-if="!isLoadingOptions" @submit.prevent="handleUpload">
           Program Area*
           <select
             class="form-select mb-3"
@@ -74,13 +79,43 @@
           </button>
           <button type="submit" class="btn btn-primary">Upload</button>
         </form>
+        </div>
+        <!-- Upload Error -->
+        <div
+          v-if="uploadErrorResponse"
+          class="alert alert-danger mt-3"
+          role="alert"
+        >
+          {{ uploadErrorResponse }}
+        </div>
       </div>
     </div>
   </div>
+  <! -- End of Modal -->
+
+  <!-- Download Error -->
+  <div v-if="downloadErrorResponse" class="alert alert-danger mt-3" role="alert">
+    {{ downloadErrorResponse }}
+  </div>
+  <!-- End of Download Error -->
+  <!-- Downloading spinner -->
+  <div v-if="isDownloading" class="d-flex my-5">
+    Downloading Visits
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Downloading...</span>
+    </div>
+  </div>
+  <!-- End of downloading spinner -->
 </template>
 
 <script>
-import { uploadVisitFile, getICVisitOptions } from "@/utils/data";
+import {
+  uploadVisitFile,
+  getICVisitOptions,
+  downloadVisitFile,
+} from "@/utils/data";
+
+import { Modal } from "bootstrap";
 
 export default {
   name: "VisitFileOperations",
@@ -88,18 +123,23 @@ export default {
     return {
       uploadVisitFile,
       getICVisitOptions,
+      downloadVisitFile,
     };
   },
   data() {
     return {
       importOptions: {
         file: null,
-        visit_type: "Program Area 1",
-        tutoring_option: "Tutoring Option 2",
-        date: "2026-05-14",
+        visit_type: "",
+        tutoring_option: "",
+        date: "",
       },
       isLoadingOptions: true,
       visitOptions: null,
+      downloadErrorResponse: null,
+      isDownloading: false,
+      uploadErrorResponse: null,
+      isUploading: false,
     };
   },
   mounted() {
@@ -141,6 +181,8 @@ export default {
       };
       this.visitOptions = null;
       this.isLoadingOptions = true;
+      this.uploadErrorResponse = null;
+      this.isUploading = false;
     },
     handleUpload: function () {
       if (
@@ -149,20 +191,45 @@ export default {
         this.importOptions.tutoring_option &&
         this.importOptions.date
       ) {
-        console.log("Uploading file with options:", this.importOptions);
+        this.isUploading = true;
         this.uploadVisitFile(this.importOptions)
           .then((response) => {
-            // Handle successful upload, maybe show a success message
-            console.log("Upload successful:", response);
+            this.resetForm();
+            var modalElement = Modal.getInstance(this.$refs.importDataModal);
+            modalElement.hide();
+
           })
           .catch((error) => {
-            // Handle upload error, maybe show an error message
-            console.error("Upload failed:", error);
+            this.isUploading = false;
+            this.uploadErrorResponse = error.data.message;
           });
       } else {
         // Handle form validation error, maybe show a warning message
-        console.warn("Please fill in all required fields.");
+        this.uploadErrorResponse =
+        "Please fill in all required fields and select a file.";
       }
+    },
+    handleDownload: function () {
+      this.isDownloading = true;
+      this.downloadVisitFile()
+        .then((response) => {
+          const blob = new Blob([response], { type: "text/csv" });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = "compass_visit_data.csv";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(url);
+          this.downloadErrorResponse = null;
+          this.isDownloading = false;
+        })
+        .catch((error) => {
+          // Handle download error, maybe show an error message
+          this.downloadErrorResponse = error.data.message;
+          this.isDownloading = false;
+        });
     },
   },
 };
