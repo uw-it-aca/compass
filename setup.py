@@ -14,7 +14,7 @@ VERSION = VERSION.replace("\n", "")
 # allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
-url = "https://github.com/uw-it-aca/compass"
+url = "https://github.com/uw-it-aca/compass-visits"
 setup(
     name="Compass",
     version=VERSION,
@@ -42,9 +42,10 @@ setup(
         'uw-memcached-clients~=1.0',
         'python-dateutil',
         'chardet',
+        'psycopg[c]',
     ],
     license="Apache License, Version 2.0",
-    description="A application for managing student advising information.",
+    description="An application for managing student advising information.",
     long_description=README,
     url=url,
     classifiers=[
