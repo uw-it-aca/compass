@@ -260,6 +260,67 @@ class CourseAnalyticsScoresTest(CompassTestCase):
         self.assertEqual(data['javerage'], [0, 1])
         self.assertEqual(data['jbelowaverage'], [1, 1])
 
+    def test_add_alert_status_to_schedules(self):
+        w1 = RADWeek.get_or_create_week(year=2024, quarter='spring', week=3)
+        w2 = RADWeek.get_or_create_week(year=2025, quarter='spring', week=3)
+
+        CourseAnalyticsScores.objects.create(
+            uwnetid="lisa",
+            course="CSE 142 A",
+            week=w1,
+            activity_score=4,
+            assignment_score=5,
+            grade_score=3,
+            prediction_score=0
+        )
+        CourseAnalyticsScores.objects.create(
+            uwnetid="lisa",
+            course="CSE 144 B",
+            week=w2,
+            activity_score=4,
+            assignment_score=5,
+            grade_score=3,
+            prediction_score=1
+        )
+
+        schedules = {
+            "2024": {
+                'year': 2024,
+                'quarter': 'spring',
+                'sections': [
+                    {
+                        'curriculum_abbr': 'CSE',
+                        'course_number': '142',
+                        'section_id': 'A',
+                    }
+                ],
+                'uwnetid': 'lisa',
+                'course': 'CSE 142 A'
+            },
+            "2025": {
+                'year': 2025,
+                'quarter': 'spring',
+                'sections': [
+                    {
+                        'curriculum_abbr': 'CSE',
+                        'course_number': '144',
+                        'section_id': 'B',
+                    }
+                ],
+                'uwnetid': 'lisa',
+                'course': 'CSE 144 B'
+            }
+        }
+        schedules_with_status = CourseAnalyticsScores.\
+            add_alert_status_to_schedules(schedules,
+                                          "5432AAB8B36701E5BE06100432496AAA")
+        self.assertEqual(
+            schedules_with_status['2024']['sections'][0]['alert_status'],
+            False)
+        self.assertEqual(
+            schedules_with_status['2025']['sections'][0]['alert_status'],
+            True)
+
 
 class StudentAlertStatusTest(CompassTestCase):
     RAD_WEEK = None
