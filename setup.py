@@ -45,9 +45,7 @@ setup(
         'psycopg[c]',
     ],
     license="Apache License, Version 2.0",
-    description=(
-        "An application for managing advising center checkins for Compass."
-    ),
+    description="An application for managing student advising information.",
     long_description=README,
     url=url,
     classifiers=[
