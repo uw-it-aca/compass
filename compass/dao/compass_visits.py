@@ -41,9 +41,12 @@ def get_admin_visit_list():
         visits = CompassVisits().get_visit_admin_list()
         for visit in visits['pending_verification']:
             visit_resp['pending_verification'].append(visit.json_data())
-        for visit in visits['verified']:
+        for visit in visits['pending_checkout']:
             if visit.program_area not in visit_resp['by_programarea']:
                 visit_resp['by_programarea'][visit.program_area] = []
+                visit_resp['by_programarea'][visit.program_area].append(
+                    visit.json_data())
+            else:
                 visit_resp['by_programarea'][visit.program_area].append(
                     visit.json_data())
 
