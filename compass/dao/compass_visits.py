@@ -7,6 +7,7 @@ from uw_compass_visits import CompassVisits
 from uw_compass_visits.models import Visit
 from restclients_core.exceptions import DataFailureException
 from compass.models import AccessGroup
+from compass.dao.person import get_students_by_system_keys
 
 
 """
@@ -39,16 +40,24 @@ def get_admin_visit_list():
     }
     try:
         visits = CompassVisits().get_visit_admin_list()
+        student_syskeys = [visit.student_syskey for visit in
+                           visits['pending_verification']]
+        student_syskeys += [visit.student_syskey for visit in
+                            visits['pending_checkout']]
+        student_syskeys = list(set(student_syskeys))
+        students_dict = get_students_by_system_keys(student_syskeys)
+
         for visit in visits['pending_verification']:
-            visit_resp['pending_verification'].append(visit.json_data())
+            student = students_dict.get(visit.student_syskey)
+            visit_json = visit.json_data()
+            visit_json['student'] = student if student else None
+            visit_resp['pending_verification'].append(visit_json)
         for visit in visits['pending_checkout']:
-            if visit.program_area not in visit_resp['by_programarea']:
-                visit_resp['by_programarea'][visit.program_area] = []
-                visit_resp['by_programarea'][visit.program_area].append(
-                    visit.json_data())
-            else:
-                visit_resp['by_programarea'][visit.program_area].append(
-                    visit.json_data())
+            visit_json = visit.json_data()
+            student = students_dict.get(visit.student_syskey)
+            visit_json['student'] = student if student else None
+            visit_resp['by_programarea'].setdefault(
+                visit.program_area, []).append(visit_json)
 
     except DataFailureException as ex:
         # If there are no visits, return an empty response

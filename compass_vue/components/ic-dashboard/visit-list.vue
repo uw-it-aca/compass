@@ -14,7 +14,12 @@
     </thead>
     <tbody>
       <tr v-for="visit in visits" :key="visit.id">
-        <td>{{ visit.student_netid }}</td>
+        <td>
+          <template v-if="visit.student">
+            <profile-mini :person="visit.student"></profile-mini>
+          </template>
+          <template v-else> Student data not found </template>
+        </td>
         <td>{{ visit.tutoring_option }}</td>
         <td>{{ getCourseString(visit) }}</td>
         <td>{{ getVisitDuration(visit) }}</td>
@@ -30,11 +35,15 @@
 </template>
 
 <script>
-import { updateICVisit } from '@/utils/data';
+import { updateICVisit } from "@/utils/data";
+import ProfileMini from "@/components/student/profile-mini.vue";
 
 export default {
   name: "VisitList",
-    setup: function () {
+  components: {
+    ProfileMini,
+  },
+  setup: function () {
     return {
       updateICVisit,
     };
@@ -50,8 +59,7 @@ export default {
     },
   },
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     getCourseString(visit) {
@@ -80,16 +88,16 @@ export default {
       this.updateICVisit(visit_id, {
         is_checked_out: true,
       }).then(() => {
-        this.$emit('visit-updated');
+        this.$emit("visit-updated");
       });
     },
     verifyVisit(visit_id) {
       this.updateICVisit(visit_id, {
         is_verified: true,
       }).then(() => {
-        this.$emit('visit-updated');
+        this.$emit("visit-updated");
       });
     },
-  }
+  },
 };
 </script>
