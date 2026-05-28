@@ -217,7 +217,7 @@ class ICVisitCreateView(BaseAPIView):
         visit_data = request.data
         try:
             visit = admin_create_visit(visit_data)
-            return self.response_ok(visit)
+            return self.response_ok(visit.json_data())
         except DataFailureException as e:
             logger.error(f"Error creating IC visit: {e}")
             return self.response_badrequest(f"Error creating IC visit: {e}")

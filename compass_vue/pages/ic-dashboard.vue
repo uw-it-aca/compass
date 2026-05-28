@@ -4,9 +4,9 @@
   <layout :page-title="pageTitle">
     <template #content>
       <h1>Instructional Center Dashboard</h1>
-      <studentvisitsearch />
+      <studentvisitsearch @visit-created="handleVisitCreated"/>
       <visitfileoperations />
-      <activeicvisits />
+      <activeicvisits ref="activeVisitsComp"/>
     </template>
   </layout>
 </template>
@@ -30,6 +30,12 @@ export default {
       pageTitle: "Instructional Center Dashboard",
       isLoading: true,
     };
+  },
+  methods: {
+    handleVisitCreated() {
+      // Refresh the active visits list when a new visit is created
+      this.$refs.activeVisitsComp.handleVisitUpdated();
+    },
   },
 };
 </script>

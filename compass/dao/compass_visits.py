@@ -71,7 +71,8 @@ def get_visit_options(uwregid):
 
 def admin_create_visit(visit_data):
     """
-    Creates a visit with the given visit data.
+    Creates a visit with the given visit data.  Automatically verify as it is
+    created by an admin user.
     """
     visit = Visit(
         access_group=get_compass_visits_access_group(),
@@ -80,6 +81,7 @@ def admin_create_visit(visit_data):
         tutoring_option=visit_data.get('tutoring_option'),
         writing_service=visit_data.get('writing_service'),
         course=visit_data.get('course'),
+        is_verified=True,
     )
     return CompassVisits().admin_create_visit(visit)
 

@@ -416,6 +416,7 @@ export default {
     createVisit() {
       if (this.allCreateFieldsSelected) {
         this.createICVisit({
+          student_syskey: this.person.system_key,
           program_area: this.checkInData.programArea,
           tutoring_option: this.checkInData.tutoringOption,
           course: this.selectedCourse ? this.selectedCourse.id : null,
@@ -425,6 +426,7 @@ export default {
         })
           .then(() => {
             this.creatingCheckin = false;
+            this.$emit("visit-created");
           })
           .catch((error) => {
             this.createError = error.data;
