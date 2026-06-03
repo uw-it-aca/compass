@@ -9,6 +9,7 @@ from django.utils.text import slugify
 from simple_history.models import HistoricalRecords
 from compass.dao.person import get_appuser_by_uwnetid, PersonNotFoundException
 from compass.dao.group import is_group_member
+from compass.dao.term import current_term
 from compass.dao import current_datetime
 from compass.utils import weekdays_before
 from datetime import datetime, timedelta, timezone
@@ -433,6 +434,15 @@ class Visit(models.Model):
     course_code = models.CharField(max_length=64)
     checkin_date = models.DateTimeField()
     checkout_date = models.DateTimeField()
+
+    def get_current_quarter_visits_by_student_syskey(student_syskey):
+        student = Student.objects.get(system_key=student_syskey)
+        term = current_term()
+        current_quarter_visits = Visit.objects.filter(
+            student=student,
+            checkin_date__gte=term.first_day_quarter
+        )
+        return current_quarter_visits
 
 
 class VisitType(BaseAccessGroupContent):

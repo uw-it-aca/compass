@@ -25,7 +25,6 @@ class CompassVisitsDaoTest(CompassTestCase):
 
     def test_visits_for_student(self):
         visits = get_visits_for_student("javerage")
-        print(visits[0])
         self.assertIsNotNone(visits)
         self.assertEqual(len(visits), 2)
         self.assertEqual(visits[0].id, 1)
