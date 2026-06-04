@@ -1,7 +1,9 @@
 // student-visit-search.vue
 
 <template>
-  <p>Search all students:</p>
+  <label for="validationCustom02" class="form-label fw-bold">
+    Search all students
+  </label>
   <form onsubmit="return false;">
     <div class="input-group">
       <input
@@ -9,7 +11,6 @@
         type="text"
         :maxlength="maxLength"
         class="form-control form-control-sm"
-        placeholder="Student number or UW netid..."
         aria-label="Student number or UW netid"
       />
       <button
@@ -20,6 +21,7 @@
       >
         Search
       </button>
+      <div id="" class="form-text">Enter a student number or UW Netid</div>
     </div>
   </form>
 
@@ -32,7 +34,6 @@
   >
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content container">
-        <h1>Instructional Center Check In</h1>
         <div v-if="!validQuery">Invalid student identifier</div>
         <div v-else class="row">
           <!-- left column -->

@@ -3,12 +3,12 @@
   <button
     data-bs-toggle="modal"
     data-bs-target="#importDataModal"
-    class="btn btn-sm btn-outline-primary"
+    class="btn btn-sm btn-subdued-primary me-3"
   >
-    Import Data
+    <i class="bi bi-upload me-2"></i>Import Data
   </button>
-  <button class="btn btn-sm btn-outline-primary" @click="handleDownload">
-    Export Data
+  <button class="btn btn-sm btn-subdued-primary" @click="handleDownload">
+    <i class="bi bi-download me-2"></i>Export Data
   </button>
 
   <!-- Modal for importing data -->
@@ -19,67 +19,112 @@
     tabindex="-1"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content container">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Instructional Center Data Upload</h5>
+          <h5 id="contactModalLabel" class="modal-title fw-bold">
+          Instructional Center Data Upload
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
         <div v-if="isUploading" class="d-flex justify-content-center my-5">
           <div class="spinner-border" role="status">
             <span class="visually-hidden">Uploading...</span>
           </div>
         </div>
-        <div v-else >
-        <form v-if="!isLoadingOptions" @submit.prevent="handleUpload">
-          Program Area*
-          <select
-            class="form-select mb-3"
-            required
-            v-model="importOptions.visit_type"
-          >
-            <option value="" disabled selected>Select a program area</option>
-            <option
-              v-for="option in visitOptions.program_areas"
-              :key="option.id"
-              :value="option.name"
-            >
-              {{ option.name }}
-            </option>
-          </select>
-          Tutoring Options*
-          <select
-            class="form-select mb-3"
-            required
-            v-model="importOptions.tutoring_option"
-          >
-            <option value="" disabled selected>Select a tutoring option</option>
-            <option
-              v-for="option in visitOptions.tutoring_options"
-              :key="option.id"
-              :value="option.name"
-            >
-              {{ option.name }}
-            </option>
-          </select>
-          Student File*
-          <input
-            class="form-control mb-3"
-            type="file"
-            accept=".csv,"
-            @change="addFile"
-            required
-          />
-          <input id="checkin_date" v-model="importOptions.date" type="date" />
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Cancel
-          </button>
-          <button type="submit" class="btn btn-primary">Upload</button>
-        </form>
+        <div v-else  class="modal-body">
+          <form v-if="!isLoadingOptions" @submit.prevent="handleUpload">
+            <div class="row mb-3">
+              <div class="col">
+                <label for="validationCustom02" class="form-label fw-bold">
+                  Program Area*
+                </label>
+                <select
+                  class="form-select"
+                  required
+                  v-model="importOptions.visit_type"
+                >
+                <option value="" disabled selected>Select a program area</option>
+                <option
+                    v-for="option in visitOptions.program_areas"
+                    :key="option.id"
+                    :value="option.name"
+                >
+                    {{ option.name }}
+                </option>
+                </select>
+              </div>
+
+              <div class="col">
+                <label for="validationCustom02" class="form-label fw-bold">
+                  Tutoring Options *
+                </label>
+                <select
+                  class="form-select"
+                  required
+                  v-model="importOptions.tutoring_option"
+                >
+                  <option value="" disabled selected>Select a tutoring option
+                  </option>
+                  <option
+                    v-for="option in visitOptions.tutoring_options"
+                    :key="option.id"
+                    :value="option.name"
+                  >
+                    {{ option.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col">
+                <label for="validationCustom02" class="form-label fw-bold">
+                  Date*
+                </label>
+
+                <input
+                  id="checkin_date"
+                  v-model="importOptions.date"
+                  type="date"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="col">
+                <label for="validationCustom02" class="form-label fw-bold">
+                  Student File*
+                </label>
+                <input
+                  class="form-control"
+                  type="file"
+                  accept=".csv,"
+                  @change="addFile"
+                  required
+                />
+              </div>
+            </div>
+          </form>
         </div>
+        <div class="modal-footer">
+              <button
+                type="button"
+                 class="btn btn-sm btn-outline-primary rounded-3 py-2"
+                data-bs-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="btn btn-sm btn-primary rounded-3 py-2">
+                Upload
+              </button>
+            </div>
         <!-- Upload Error -->
         <div
           v-if="uploadErrorResponse"

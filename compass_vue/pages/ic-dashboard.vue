@@ -3,9 +3,21 @@
 <template>
   <layout :page-title="pageTitle">
     <template #content>
-      <h1>Instructional Center Dashboard</h1>
-      <studentvisitsearch @visit-created="handleVisitCreated"/>
-      <visitfileoperations />
+      <h1 class= "display-5 fw-bold ff-encode-sans pt-2">
+      Instructional Center Dashboard
+      </h1>
+      <div class= "card border-0 bg-body-tertiary rounded-3">
+        <div class= "row justify-content-between align-items-center m-2 py-2 ">
+          <div class="col-3">
+            <div>
+              <studentvisitsearch @visit-created="handleVisitCreated"/>
+            </div>
+          </div>
+          <div class="col-auto">
+            <visitfileoperations />
+          </div>
+        </div>
+      </div>
       <activeicvisits ref="activeVisitsComp"/>
     </template>
   </layout>
