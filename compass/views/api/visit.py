@@ -149,7 +149,50 @@ class ActiveICVisitListView(BaseAPIView):
         return self.response_ok(visits)
 
 
-class VisitSearchView(BaseAPIView):
+class VisitSearchMixin:
+    def _response_ok(self, content):
+        if hasattr(self, 'response_ok'):
+            return self.response_ok(content)
+        return Response(content, status=status.HTTP_200_OK)
+
+    def _response_badrequest(self, content='Missing parameters'):
+        if hasattr(self, 'response_badrequest'):
+            return self.response_badrequest(content)
+        return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
+    def _response_notfound(self, content='Not found'):
+        if hasattr(self, 'response_notfound'):
+            return self.response_notfound(content)
+        return Response(content, status=status.HTTP_404_NOT_FOUND)
+
+    def _visit_search_response(self, identifier):
+        student_identifier = identifier.strip().lower()
+        try:
+            if valid_uwnetid(student_identifier):
+                person = get_person_by_uwnetid(student_identifier)
+            elif valid_student_number(student_identifier):
+                person = get_person_by_student_number(student_identifier)
+            else:
+                return self._response_badrequest('Invalid student identifier')
+        except PersonNotFoundException:
+            return self._response_notfound('Student not found')
+
+        system_key = person.system_key
+        try:
+            student = Student.objects.get(system_key=system_key)
+        except Student.DoesNotExist:
+            return self._response_notfound('Student not found')
+
+        current_qtr_start = current_term().first_day_quarter
+        visits = Visit.objects.filter(
+            student=student,
+            checkin_date__gte=current_qtr_start).order_by('-checkin_date')
+
+        serializer = VisitReadSerializer(visits, many=True)
+        return self._response_ok(serializer.data)
+
+
+class VisitSearchView(VisitSearchMixin, BaseAPIView):
     '''
     API endpoint for searching visits by student number or netid
     /api/internal/visits/search/[identifier]/
@@ -158,30 +201,7 @@ class VisitSearchView(BaseAPIView):
     '''
 
     def get(self, request, identifier):
-        identifier = identifier.strip().lower()
-        try:
-            if valid_uwnetid(identifier):
-                person = get_person_by_uwnetid(identifier)
-            elif valid_student_number(identifier):
-                person = get_person_by_student_number(identifier)
-            else:
-                return self.response_badrequest('Invalid student identifier')
-        except PersonNotFoundException:
-            return self.response_notfound('Student not found')
-
-        system_key = person.system_key
-        try:
-            student = Student.objects.get(system_key=system_key)
-        except Student.DoesNotExist:
-            return self.response_notfound('Student not found')
-
-        current_qtr_start = current_term().first_day_quarter
-        visits = Visit.objects.filter(student=student,
-                                      checkin_date__gte=current_qtr_start)\
-            .order_by('-checkin_date')
-
-        serializer = VisitReadSerializer(visits, many=True)
-        return self.response_ok(serializer.data)
+        return self._visit_search_response(identifier)
 
 
 class ICVisitOptionsView(BaseAPIView):
@@ -293,3 +313,16 @@ class ICVisitFileView(BaseAPIView):
         response['Content-Disposition'] = \
             'attachment; filename="visit_export.csv"'
         return response
+
+
+class ExternalStudentVisitView(VisitSearchMixin, TokenAPIView):
+    '''
+    API endpoint for retrieving visits for a student by student number or
+    netid, to be used by Compass Visits
+    '''
+
+    def get(self, request, identifier):
+        if settings.COMPASS_VISITS_TOKEN_USER != request.user.username:
+            return Response("Unauthorized",
+                            status=status.HTTP_401_UNAUTHORIZED)
+        return self._visit_search_response(identifier)

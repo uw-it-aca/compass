@@ -435,6 +435,7 @@ class Visit(models.Model):
     checkin_date = models.DateTimeField()
     checkout_date = models.DateTimeField()
 
+    @staticmethod
     def get_current_quarter_visits_by_student_syskey(student_syskey):
         student = Student.objects.get(system_key=student_syskey)
         term = current_term()

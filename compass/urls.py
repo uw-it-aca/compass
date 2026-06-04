@@ -43,7 +43,8 @@ from compass.views.api.visit import (VisitOMADView,
                                      ICVisitOptionsView,
                                      ICVisitCreateView,
                                      ICVisitUpdateView,
-                                     ICVisitFileView)
+                                     ICVisitFileView,
+                                     ExternalStudentVisitView)
 from compass.views.api.settings import SettingsView
 from compass.views.api.photo import PhotoView
 from compass.views.api.affiliation import AffiliationsView
@@ -273,6 +274,11 @@ urlpatterns += [
         r"^api/v1/visit/eligibility/(?P<systemkey>[\w]+)/$",
         ICEligibilityView.as_view(),
         name="ic_eligibility"
+    ),
+    re_path(
+        r"^api/v1/visit/external_student/(?P<identifier>[\w]+)/$",
+        ExternalStudentVisitView.as_view(),
+        name="external_student_visit_view"
     ),
     re_path(
         r"^api/v1/analytics/predictions/$",
