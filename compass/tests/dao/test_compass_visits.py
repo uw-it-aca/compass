@@ -37,7 +37,7 @@ class CompassVisitsDaoTest(CompassTestCase):
     def test_get_admin_visit_list(self):
         visits = get_admin_visit_list()
         self.assertIsNotNone(visits)
-        self.assertEqual(len(visits['pending_verification']), 2)
+        self.assertEqual(len(visits['pending_verification']), 7)
         self.assertEqual(len(visits['by_programarea']), 2)
         self.assertEqual(len(visits['by_programarea']['Program Area 2']), 1)
         self.assertEqual(len(visits['by_programarea']['Program Area 3']), 2)

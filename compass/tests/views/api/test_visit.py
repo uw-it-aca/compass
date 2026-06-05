@@ -180,7 +180,7 @@ class VisitAPITest(ApiTest):
         self.assertEqual(response.status_code, 200)
         self.assertIn('pending_verification', response.data)
         self.assertIn('by_programarea', response.data)
-        self.assertEqual(len(response.data['pending_verification']), 2)
+        self.assertEqual(len(response.data['pending_verification']), 7)
         self.assertEqual(len(response.data['by_programarea']), 2)
         self.assertEqual(
             len(response.data['by_programarea']['Program Area 2']), 1)
