@@ -185,7 +185,7 @@ class CourseAnalyticsScores(models.Model):
             return []
 
     @classmethod
-    def get_course_alert_status(cls, netid, year, quarter, week, course_id):
+    def get_course_alert_status(cls, netid, year, quarter, course_id):
         scores = cls.objects.filter(uwnetid=netid,
                                     week__year=year,
                                     week__quarter=quarter,
@@ -205,7 +205,6 @@ class CourseAnalyticsScores(models.Model):
         """
         person = get_person_by_uwregid(uwregid)
         netid = person.uwnetid
-        week = current_week()
 
         for index in schedules.keys():
             schedule = schedules[index]
@@ -216,7 +215,6 @@ class CourseAnalyticsScores(models.Model):
                 alert_status = cls.get_course_alert_status(netid,
                                                            schedule['year'],
                                                            schedule['quarter'],
-                                                           week,
                                                            course_id)
                 section['alert_status'] = alert_status
         return schedules
