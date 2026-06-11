@@ -3,7 +3,7 @@
 <template>
   <layout :page-title="pageTitle">
     <template #content>
-      <h1 class= "display-5 fw-bold ff-encode-sans pt-2">
+      <h1 class= "fs-2 fw-semibold ff-encode-sans my-4">
       Instructional Center Dashboard
       </h1>
       <div class= "card border-0 bg-body-tertiary rounded-3">

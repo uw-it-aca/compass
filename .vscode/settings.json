@@ -1,20 +1,23 @@
 {
-  "editor.formatOnSave": false,
-  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
 
   "files.associations": {
-    "*.css": "tailwindcss",
+    "*.css": "tailwindcss"
   },
 
   "[vue]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.rulers": [80],
+    "editor.rulers": [80]
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[html]": {
-    "editor.defaultFormatter": "oxc.oxc-vscode",
-    "editor.rulers": [120],
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.rulers": [120]
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "oxc.oxc-vscode",
-  },
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

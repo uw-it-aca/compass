@@ -4,7 +4,7 @@
   <template v-if="visitsLoaded">
     <visitlist
       :visits="pendingVerification"
-      list-title="Active IC Visits"
+      list-title="Verification Pending"
       @visit-updated="handleVisitUpdated"
     />
     <template v-for="programAreaVisits in byProgramearea">
