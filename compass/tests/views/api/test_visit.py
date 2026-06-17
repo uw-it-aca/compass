@@ -108,6 +108,15 @@ class VisitAPITest(ApiTest):
         student = VisitOMADView()._valid_student("javerage")
         self.assertEqual(student.system_key, "532353230")
 
+    def test_valid_tutoring_option(self):
+        vto = VisitOMADView()._valid_tutoring_option("Option 1",
+                                                     self.ACCESS_GROUP)
+        self.assertEqual(vto.name, "Option 1")
+
+        with self.assertRaises(ValueError):
+            VisitOMADView()._valid_tutoring_option("Nonexistent Option",
+                                                   self.ACCESS_GROUP)
+
     @patch('compass.views.api.visit.Visit')
     @patch('compass.views.api.visit.VisitType')
     @patch('compass.views.api.visit.get_appuser_by_uwnetid')
@@ -139,6 +148,10 @@ class VisitAPITest(ApiTest):
         mock_view._valid_course = MagicMock(
             return_value=mock_course)
 
+        mock_tutoring_option = MagicMock()
+        mock_view._valid_tutoring_option = MagicMock(
+            return_value=mock_tutoring_option)
+
         mock_date = MagicMock()
         mock_view._valid_date = MagicMock(
             return_value=mock_date)
@@ -149,6 +162,7 @@ class VisitAPITest(ApiTest):
         # assertions
         mock_request = MagicMock()
         mock_request.user.username = 'compass-visits-api'
+
         response = mock_view.post(mock_request)
         mock_access_group_cls.objects.by_name.assert_called_once_with("OMAD")
 
@@ -163,6 +177,8 @@ class VisitAPITest(ApiTest):
             mock_request.data.get("checkout_date"))
         mock_view._valid_visit_type.assert_called_once_with(
             mock_request.data.get("visit_type"), mock_omad_access_group)
+        mock_view._valid_tutoring_option.assert_called_once_with(
+            mock_request.data.get("tutoring_option"), mock_omad_access_group)
 
         # assert visit record called correctly
         mock_visit_cls.assert_called_once_with(
@@ -171,7 +187,9 @@ class VisitAPITest(ApiTest):
             course_code=mock_course,
             checkin_date=mock_date,
             defaults={
-                'checkout_date': mock_date, 'visit_type': mock_visit_type})
+                'checkout_date': mock_date,
+                'visit_type': mock_visit_type,
+                'tutoring_option': mock_tutoring_option})
 
         self.assertEqual(response.status_code, 201)
 

@@ -3,7 +3,11 @@
 
 from django.conf import settings
 from compass.views.api import BaseAPIView, TokenAPIView
-from compass.models import Visit, Student, AccessGroup, VisitType
+from compass.models import (Visit,
+                            Student,
+                            AccessGroup,
+                            VisitType,
+                            VisitTutoringOption)
 from compass.serializers import VisitReadSerializer
 from compass.dao.person import (get_appuser_by_uwnetid,
                                 valid_student_number,
@@ -49,7 +53,7 @@ class VisitView(BaseAPIView):
 
 
 class VisitOMADView(TokenAPIView):
-    '''
+    """
     API endpoint for Instructional Center visit recording
 
     /api/v1/visit/omad/
@@ -58,10 +62,11 @@ class VisitOMADView(TokenAPIView):
         "student_netid": "<UW NETID>",
         "visit_type": "<VisitType Name>",
         "course_code": "<Course_Curriculum Course_Number>",
+        "tutoring_option": "<TutoringOption Name>",
         "checkin_date": "<TIMESTAMP>",
         "checkout_date": "<TIMESTAMP>",
     }
-    '''
+    """
 
     def _valid_student(self, netid):
         if netid is None:
@@ -88,6 +93,19 @@ class VisitOMADView(TokenAPIView):
     def _valid_course(self, course_code):
         return course_code or "None"
 
+    def _valid_tutoring_option(self, tutoring_option, access_group):
+        # Don't require a tutoring option until we switch off the Legacy IC
+        if tutoring_option is None:
+            return None
+
+        try:
+            return VisitTutoringOption.objects.get(
+                access_group=access_group,
+                name=tutoring_option)
+        except VisitTutoringOption.DoesNotExist:
+            raise ValueError(f'Unrecognized tutoring option:'
+                             f' {tutoring_option}')
+
     def _valid_date(self, date_str):
         # parse checkin date
         if date_str is None:
@@ -111,6 +129,8 @@ class VisitOMADView(TokenAPIView):
                 'visit_type'), access_group)
             course_code = self._valid_course(request.data.get(
                 'course_code'))
+            tutoring_option = self._valid_tutoring_option(request.data.get(
+                'tutoring_option'), access_group)
             checkin_date = self._valid_date(request.data.get(
                 'checkin_date'))
             checkout_date = self._valid_date(request.data.get(
@@ -129,7 +149,8 @@ class VisitOMADView(TokenAPIView):
             course_code=course_code, checkin_date=checkin_date,
             defaults={
                 'checkout_date': checkout_date,
-                'visit_type': visit_type})
+                'visit_type': visit_type,
+                'tutoring_option': tutoring_option})
 
         logger.info(f"IC Visit {visit.visit_type} added for "
                     f"student {student.system_key}")
