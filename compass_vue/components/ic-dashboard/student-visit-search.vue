@@ -17,7 +17,6 @@
         data-bs-toggle="modal"
         data-bs-target="#studentSearchModal"
         class="btn btn-sm btn-outline-primary"
-        :disabled="!validQuery"
       >
         Search
       </button>
@@ -45,17 +44,29 @@
             aria-label="Close"
           ></button>
         </div>
+
         <div class="modal-body">
-          <div v-if="!validQuery">Invalid student identifier</div>
-          <div v-else class="row">
-            <!-- left column -->
-            <!-- Need to fix error message -->
-            <div v-if="searchError" class="alert alert-danger col">
+          <div
+            v-if="!validQuery || searchError"
+            class="alert alert-danger small m-0"
+            role="alert"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            <div v-if="!validQuery">
+              <i class="bi-exclamation-octagon-fill me-1"></i>Invalid student
+              identifier
+            </div>
+            <div v-else>
+              <i class="bi-exclamation-octagon-fill me-1"></i>
               Could not find a student matching "{{ searchValue }}". Please try
               again.
             </div>
+          </div>
 
-            <div v-else-if="person" class="student-bio col">
+          <div v-else class="row">
+            <!-- left column -->
+            <div v-if="person" class="student-bio col-5">
               <div v-lazyload class="mb-3 text-center">
                 <img
                   :data-url="person.photo_url"
@@ -78,29 +89,32 @@
                   >Not Eligible</span
                 >
               </div>
-              <h4 class="fs-4 fw-semibold ff-encode-sans mb-3 text-center">
+              <h4 class="fs-4 fw-semibold ff-encode-sans mb-2 text-center">
                 {{ person.full_name }}
               </h4>
               <p class="text-center m-0">
                 {{ person.student.student_number }}, {{ person.uwnetid }}
-                <br />
-                {{ person.student.local_phone_number }}
               </p>
             </div>
 
             <!-- right column -->
-            <div v-if="rightColHasData" class="col">
+            <div v-if="rightColHasData" class="col mx-4">
               <!-- IC Eligibility Approval -->
-              <div v-if="displayMode === 'visits'">
+              <div
+                v-if="displayMode === 'visits'"
+                class="d-flex flex-column h-100"
+              >
                 <studenvisitsummary :studentVisits="studentVisitData" />
               </div>
-              <div v-else-if="displayMode === 'not_eligible'">
-                Student is not eligible to use the Instructional Center. Would
-                you like to approve their eligibility?
-                <button
-                  class="btn btn-primary ms-3"
-                  @click="addICEligibility()"
-                >
+              <div
+                v-else-if="displayMode === 'not_eligible'"
+                class="text-center my-5 py-4"
+              >
+                <p class="py-2">
+                  Student is not eligible to use the Instructional Center. Would
+                  you like to approve their eligibility?
+                </p>
+                <button class="btn btn-primary" @click="addICEligibility()">
                   Approve
                 </button>
               </div>
@@ -484,3 +498,12 @@
     },
   };
 </script>
+
+<style lang="scss" scoped>
+  .img-profile {
+    height: 120px;
+    width: 120px;
+    object-fit: cover;
+    object-position: top;
+  }
+</style>

@@ -1,29 +1,34 @@
 // student-visit-summary.vue
 
 <template>
-  <div>
-    <div v-if="studentVisits">
-      <div
-        v-for="(summary, course) in getVisitSummaryByCourseCode()"
-        :key="course"
-        class="row pb-3"
-      >
-        <div class="fw-bold col">{{ course }}:</div>
-        <div class="col">
-          {{ summary.count }} visit
-          {{ summary.count === 1 ? "" : "s" }}
-          {{ Math.round(summary.time) }} minutes
-        </div>
+  <div v-if="studentVisits" class="d-flex flex-column h-100 pt-3">
+    <div
+      v-for="(summary, course) in getVisitSummaryByCourseCode()"
+      :key="course"
+      class="d-flex flex-row mb-3"
+    >
+      <p class="fw-semibold me-auto">{{ course }}:</p>
+      <div class="d-flex flex-row ms-auto">
+        <p class="fw-semibold me-2">{{ summary.count }}</p>
+        <p class="me-2">
+          {{ summary.count === 1 ? "visit" : "visits" }}
+        </p>
+        <p class="fw-semibold me-2">{{ Math.round(summary.time) }}</p>
+        <p class="me-2">min</p>
       </div>
+    </div>
 
-      <div class="row">
-        <div class="fw-bold col">Total:</div>
-        <div class="col">
-          {{ studentVisits.length }} visit{{
-            studentVisits.length === 1 ? "" : "s"
-          }}
-          {{ Math.round(totalVisitTime) }} minutes
-        </div>
+    <div class="d-flex flex-row mt-auto">
+      <p class="fw-semibold lead me-auto">Total:</p>
+      <div class="d-flex flex-row ms-auto align-items-baseline">
+        <p class="fw-semibold lead me-2">
+          {{ studentVisits.length }}
+        </p>
+        <p class="me-2">visit{{ studentVisits.length === 1 ? "" : "s" }}</p>
+        <p class="fw-semibold lead me-2">
+          {{ Math.round(totalVisitTime) }}
+        </p>
+        <p class="me-2">min</p>
       </div>
     </div>
   </div>
