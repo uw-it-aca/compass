@@ -13,6 +13,7 @@ from compass.views.support.retention import (RetentionAdminView,
                                              RetentionReloadAlertsView,
                                              RetentionLoadFromFile)
 from compass.views.api.student import (
+    ICEligibilityView,
     StudentContactsView,
     StudentSchedulesView,
     StudentTranscriptsView,
@@ -231,6 +232,11 @@ urlpatterns += [
         r"^api/v1/visit/omad",
         VisitOMADView.as_view(),
         name="visit_omad"
+    ),
+    re_path(
+        r"^api/v1/visit/eligibility/(?P<systemkey>[\w]+)/$",
+        ICEligibilityView.as_view(),
+        name="ic_eligibility"
     ),
     re_path(
         r"^api/v1/analytics/predictions/$",

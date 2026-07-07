@@ -2,12 +2,15 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from compass.tests import ApiTest
-from compass.models import AccessGroup, Contact, ContactType, Student
+from compass.tests import ApiTest, User
+from compass.models import (AccessGroup, Contact, ContactType, Student,
+                            EligibilityType, StudentEligibility)
 from compass.models.rad_data import StudentAlertStatus
 from uw_pws.util import fdao_pws_override
 from uw_sws.util import fdao_sws_override
 from mock import patch
+from django.test import Client
+from rest_framework.authtoken.models import Token
 import json
 
 
@@ -325,6 +328,76 @@ class StudentEligibilityAPITest(ApiTest):
             body=json.dumps({"eligibility_type_id": "-1"}),
             kwargs={"systemkey": "532353230"})
         self.assertEqual(response.status_code, 400, "Invalid eligibility type")
+
+
+class ICEligibilityAPITest(ApiTest):
+    API_TOKEN = None
+    WRONG_API_TOKEN = None
+
+    def setUp(self):
+        super(ICEligibilityAPITest, self).setUp()
+        AccessGroup(name="OMAD", access_group_id="u_astra_group1").save()
+        user = User.objects.create_user(username='compass-visits-api',
+                                        password='12345')
+        self.API_TOKEN = Token.objects.create(user=user).key
+        other_user = User.objects.create_user(username='foo',
+                                              password='12345')
+        self.WRONG_API_TOKEN = Token.objects.create(user=other_user).key
+
+        stu = Student.objects.create(system_key="532353230")
+        elig_type = EligibilityType.objects.create(
+            name="Instructional Center",
+            slug="instructional-center",
+            access_group=AccessGroup.objects.get(
+                access_group_id="u_astra_group1")
+            )
+        student_elig = StudentEligibility.objects.create(student=stu)
+        student_elig.eligibility.add(elig_type)
+        student_elig.save()
+
+        Student.objects.create(system_key="000000000")
+
+    def test_api_auth(self):
+        token_str = "Token %s" % self.API_TOKEN
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=token_str)
+        response = self.get_response("ic_eligibility",
+                                     kwargs={"systemkey": "532353230"})
+        self.assertEqual(response.status_code, 200, "OK")
+
+        wrong_token_string = "Token %s" % self.WRONG_API_TOKEN
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=wrong_token_string)
+        response = self.get_response("ic_eligibility",
+                                     kwargs={"systemkey": "532353230"})
+        self.assertEqual(response.status_code, 401, "Unauthorized")
+
+    def test_invalid_systemkey(self):
+        token_str = "Token %s" % self.API_TOKEN
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=token_str)
+        response = self.get_response("ic_eligibility",
+                                     kwargs={"systemkey": "invalid"})
+        self.assertEqual(response.status_code, 400, "Invalid systemkey")
+
+    def test_get(self):
+        token_str = "Token %s" % self.API_TOKEN
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=token_str)
+        response = self.get_response("ic_eligibility",
+                                     kwargs={"systemkey": "532353230"})
+        self.assertEqual(response.status_code, 200, "OK")
+        self.assertEqual(response.data, {"eligible": True})
+
+        response = self.get_response("ic_eligibility",
+                                     kwargs={"systemkey": "000000000"})
+        self.assertEqual(response.status_code, 200, "OK")
+        self.assertEqual(response.data, {"eligible": False})
+
+        response = self.get_response("ic_eligibility",
+                                     kwargs={"systemkey": "777777777"})
+        self.assertEqual(response.status_code, 200, "OK")
+        self.assertEqual(response.data, {"eligible": False})
 
 
 class StudentSchedulesAPITest(ApiTest):
