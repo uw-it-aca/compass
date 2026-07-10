@@ -18,5 +18,25 @@
    "slug": "remedial-math-center",
    "editable": true
   }
+ },
+ {
+  "model": "compass.eligibilitytype",
+  "pk": 3,
+  "fields": {
+   "access_group": 2,
+   "name": "Writing Support",
+   "slug": "writing-support",
+   "editable": true
+  }
+ },
+ {
+  "model": "compass.eligibilitytype",
+  "pk": 4,
+  "fields": {
+   "access_group": 2,
+   "name": "Advising Priority",
+   "slug": "advising-priority",
+   "editable": true
+  }
  }
 ]

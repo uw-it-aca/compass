@@ -347,6 +347,18 @@ class Affiliation(BaseAccessGroupContent):
     active = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["access_group", "name"],
+                name="compass_affiliation_ag_name_uniq",
+            ),
+            models.UniqueConstraint(
+                fields=["access_group", "slug"],
+                name="compass_affiliation_ag_slug_uniq",
+            ),
+        ]
+
 
 class Cohort(models.Model):
     start_year = models.SmallIntegerField()
@@ -361,10 +373,22 @@ class ContactType(BaseAccessGroupContent):
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-    slug = models.SlugField(unique=True, max_length=50)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     active = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["access_group", "name"],
+                name="compass_contacttype_ag_name_uniq",
+            ),
+            models.UniqueConstraint(
+                fields=["access_group", "slug"],
+                name="compass_contacttype_ag_slug_uniq",
+            ),
+        ]
 
 
 class ContactMethod(BaseAccessGroupContent):
@@ -375,10 +399,22 @@ class ContactMethod(BaseAccessGroupContent):
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-    slug = models.SlugField(unique=True, max_length=50)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     active = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["access_group", "name"],
+                name="compass_contactmethod_ag_name_uniq",
+            ),
+            models.UniqueConstraint(
+                fields=["access_group", "slug"],
+                name="compass_contactmethod_ag_slug_uniq",
+            ),
+        ]
 
 
 class ContactTopic(BaseAccessGroupContent):
@@ -391,10 +427,22 @@ class ContactTopic(BaseAccessGroupContent):
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-    slug = models.SlugField(unique=True, max_length=50)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     active = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["access_group", "name"],
+                name="compass_contacttopic_ag_name_uniq",
+            ),
+            models.UniqueConstraint(
+                fields=["access_group", "slug"],
+                name="compass_contacttopic_ag_slug_uniq",
+            ),
+        ]
 
 
 class StudentEligibility(models.Model):
@@ -412,9 +460,21 @@ class EligibilityType(BaseAccessGroupContent):
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-    slug = models.SlugField(unique=True, max_length=50)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     editable = models.BooleanField(default=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["access_group", "name"],
+                name="compass_eligibilitytype_ag_name_uniq",
+            ),
+            models.UniqueConstraint(
+                fields=["access_group", "slug"],
+                name="compass_eligibilitytype_ag_slug_uniq",
+            ),
+        ]
 
 
 class Visit(models.Model):
@@ -440,9 +500,21 @@ class VisitType(BaseAccessGroupContent):
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-    slug = models.SlugField(unique=True, max_length=50)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     editable = models.BooleanField(default=False)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["access_group", "name"],
+                name="compass_visittype_ag_name_uniq",
+            ),
+            models.UniqueConstraint(
+                fields=["access_group", "slug"],
+                name="compass_visittype_ag_slug_uniq",
+            ),
+        ]
 
 
 class OMADContactQueue(models.Model):

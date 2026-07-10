@@ -128,5 +128,135 @@
       "slug": "other",
       "active": true
     }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 14,
+    "fields": {
+      "access_group": 2,
+      "name": "Add/Drop a Class",
+      "slug": "adddrop-a-class",
+      "active": true
+    }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 15,
+    "fields": {
+      "access_group": 2,
+      "name": "Join/Affiliate",
+      "slug": "joinaffiliate",
+      "active": true
+    }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 16,
+    "fields": {
+      "access_group": 2,
+      "name": "Academic Difficulties",
+      "slug": "academic-difficulties",
+      "active": true
+    }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 17,
+    "fields": {
+      "access_group": 2,
+      "name": "FQD/CQD",
+      "slug": "fqdcqd",
+      "active": true
+    }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 18,
+    "fields": {
+      "access_group": 2,
+      "name": "S/NS",
+      "slug": "sns",
+      "active": true
+    }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 19,
+    "fields": {
+      "access_group": 2,
+      "name": "Internships, Research, and Career Exploration",
+      "slug": "internships-research-and-career-exploration",
+      "active": true
+    }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 20,
+    "fields": {
+      "access_group": 2,
+      "name": "A&O Appointment",
+      "slug": "ao-appointment",
+      "active": true
+    }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 21,
+    "fields": {
+      "access_group": 2,
+      "name": "Graduate & Professional School",
+      "slug": "graduate-professional-school",
+      "active": true
+    }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 22,
+    "fields": {
+      "access_group": 2,
+      "name": "Study Abroad",
+      "slug": "study-abroad",
+      "active": true
+    }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 23,
+    "fields": {
+      "access_group": 2,
+      "name": "Academic Planning",
+      "slug": "academic-planning",
+      "active": true
+    }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 24,
+    "fields": {
+      "access_group": 2,
+      "name": "Pre-Major Extension",
+      "slug": "premajor-extension",
+      "active": true
+    }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 25,
+    "fields": {
+      "access_group": 2,
+      "name": "None",
+      "slug": "none",
+      "active": true
+    }
+  },
+  {
+    "model": "compass.contacttopic",
+    "pk": 26,
+    "fields": {
+      "access_group": 2,
+      "name": "Other",
+      "slug": "other",
+      "active": true
+    }
   }
 ]
