@@ -127,11 +127,17 @@ class ContactView(BaseAPIView):
             if isinstance(contact_record['contact_type'], str):
                 slug = slugify(contact_record['contact_type'])
                 contact_record['contact_type'] = \
-                    ContactType.objects.get(slug=slug).id
+                    ContactType.objects.get(
+                        access_group=access_group,
+                        slug=slug,
+                    ).id
             if isinstance(contact_record['contact_method'], str):
                 slug = slugify(contact_record['contact_method'])
                 contact_record['contact_method'] = \
-                    ContactMethod.objects.get(slug=slug).id
+                    ContactMethod.objects.get(
+                        access_group=access_group,
+                        slug=slug,
+                    ).id
             if isinstance(contact_record['contact_topics'], list):
                 topics = []
                 for t in contact_record['contact_topics']:
@@ -139,6 +145,7 @@ class ContactView(BaseAPIView):
                         slug = slugify(t)
                         topics.append(
                             ContactTopic.objects.get(
+                                access_group=access_group,
                                 slug=slug).id)
                     else:
                         topics.append(t)

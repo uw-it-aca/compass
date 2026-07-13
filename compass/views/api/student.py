@@ -346,9 +346,15 @@ class StudentAffiliationsImportView(BaseAPIView):
                 UserService().get_user()).id,
             'student': None,
             'access_group': [access_group.id],
-            'contact_type': ContactType.objects.get(slug='admin').id,
-            'contact_method': ContactMethod.objects.get(slug='internal').id,
-            'contact_topics': [ContactTopic.objects.get(slug='other').id],
+            'contact_type': ContactType.objects.get(
+                access_group=access_group,
+                slug='admin').id,
+            'contact_method': ContactMethod.objects.get(
+                access_group=access_group,
+                slug='internal').id,
+            'contact_topics': [ContactTopic.objects.get(
+                access_group=access_group,
+                slug='other').id],
             'checkin_date': current_datetime_utc(),
             'notes': 'Affiliation updated by batch import',
         }
@@ -506,12 +512,26 @@ class ICEligibilityView(TokenAPIView):
                          "configured")
             return Response("Eligibility type configuration is missing",
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        e_type_queryset = EligibilityType.objects.filter(slug=e_type_slug)
+        access_group_id = getattr(settings,
+                                  "COMPASS_VISITS_ACCESS_GROUP_ID", None)
+        if access_group_id:
+            e_type_queryset = e_type_queryset.filter(
+                access_group__access_group_id=access_group_id)
+
         try:
-            e_type = EligibilityType.objects.get(slug=e_type_slug)
+            e_type = e_type_queryset.get()
         except EligibilityType.DoesNotExist:
             logger.error("Cannot find EligibilityType with slug '%s' OR "
                          "settings.COMPASS_VISITS_ELIGIBILITY_SLUG is not "
-                         "configured correctly",
+                         "configured correctly (access_group_id='%s')",
+                         e_type_slug, access_group_id)
+            return Response("Eligibility type configuration is invalid",
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except EligibilityType.MultipleObjectsReturned:
+            logger.error("Multiple EligibilityType rows for slug '%s'; set "
+                         "settings.COMPASS_VISITS_ACCESS_GROUP_ID to "
+                         "disambiguate",
                          e_type_slug)
             return Response("Eligibility type configuration is invalid",
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)

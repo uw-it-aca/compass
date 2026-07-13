@@ -31,5 +31,27 @@
       "date": "2022-03-11",
       "actively_advised": true
     }
+  },
+  {
+    "model": "compass.studentaffiliation",
+    "pk": 4,
+    "fields": {
+      "student": 1,
+      "affiliation": 11,
+      "cohorts": [5],
+      "date": "2024-01-15",
+      "actively_advised": true
+    }
+  },
+  {
+    "model": "compass.studentaffiliation",
+    "pk": 5,
+    "fields": {
+      "student": 2,
+      "affiliation": 10,
+      "cohorts": [4, 5],
+      "date": "2024-01-18",
+      "actively_advised": true
+    }
   }
 ]
