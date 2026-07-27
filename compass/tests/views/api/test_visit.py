@@ -3,20 +3,22 @@
 
 
 from datetime import datetime
-from django.test import Client
-from django.contrib.auth.models import User
 from unittest.mock import MagicMock, patch
-from compass.views.api.visit import VisitOMADView
-from compass.tests import ApiTest
-from compass.models import AccessGroup, VisitType
+
+from django.contrib.auth.models import User
+from django.test import Client
 from rest_framework.authtoken.models import Token
+
+from compass.models import AccessGroup, VisitType
+from compass.tests import ApiTest
+from compass.views.api.visit import VisitOMADView
 
 
 class ViewAPITest(ApiTest):
     API_TOKEN = None
 
     def setUp(self):
-        super(ViewAPITest, self).setUp()
+        super().setUp()
         user = User.objects.create_user(username='testuser', password='12345')
         ag = AccessGroup(name="OMAD", access_group_id="u_astra_group1")
         ag.save()
@@ -33,7 +35,7 @@ class ViewAPITest(ApiTest):
             "checkout_date": "2012-01-19 14:52:00 PDT"
         }
 
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
 

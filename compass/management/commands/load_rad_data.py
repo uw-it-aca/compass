@@ -2,13 +2,14 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.core.management.base import BaseCommand
-from django.core.management import call_command
-from compass.dao.storage import RADStorageDao
-from compass.models.rad_data import RADWeek, RADImport
-from compass.dao.rad_csv import import_data_from_csv
 from logging import getLogger
 
+from django.core.management import call_command
+from django.core.management.base import BaseCommand
+
+from compass.dao.rad_csv import import_data_from_csv
+from compass.dao.storage import RADStorageDao
+from compass.models.rad_data import RADImport, RADWeek
 
 logger = getLogger(__name__)
 
@@ -113,8 +114,8 @@ class Command(BaseCommand):
             except FileNotFoundError:
                 pred_file = None
             import_data_from_csv(rad_week, rad_file, pred_file, reload)
-        except Exception as ex:
-            logger.exception(ex)
+        except Exception:
+            logger.exception("Failed to import RAD data")
             rad_import.import_status = RADImport.FAILURE
             rad_import.save()
             return (f"Failed to import RAD data for"

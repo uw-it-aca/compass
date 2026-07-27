@@ -2,12 +2,25 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.core.management import call_command
-from compass.tests import CompassTestCase
-from compass.models import Contact, Student, StudentAffiliation, \
-    Visit, StudentEligibility, Affiliation, Cohort, AccessGroup, AppUser, \
-    ContactType, ContactMethod, EligibilityType
 from datetime import datetime, timezone
+
+from django.core.management import call_command
+
+from compass.models import (
+    AccessGroup,
+    Affiliation,
+    AppUser,
+    Cohort,
+    Contact,
+    ContactMethod,
+    ContactType,
+    EligibilityType,
+    Student,
+    StudentAffiliation,
+    StudentEligibility,
+    Visit,
+)
+from compass.tests import CompassTestCase
 
 
 class TestFixSyskey(CompassTestCase):

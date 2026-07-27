@@ -1,12 +1,16 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-import random
 from django.db import IntegrityError
+
+from compass.models.rad_data import (
+    CourseAnalyticsScores,
+    RADImport,
+    RADWeek,
+    StudentAlertStatus,
+    convert_score_range,
+)
 from compass.tests import CompassTestCase
-from compass.models.rad_data import (RADWeek, RADImport, CourseAnalyticsScores,
-                                     StudentAlertStatus,
-                                     convert_score_range)
 
 
 class RADDataWeekTest(CompassTestCase):
@@ -68,7 +72,7 @@ class RADDataWeekTest(CompassTestCase):
         self.assertEqual(week, 1)
 
     def test_get_recent_week(self):
-        w2 = RADWeek.get_or_create_week(year=2021,
+        RADWeek.get_or_create_week(year=2021,
                                         quarter='autumn',
                                         week=9)
         recent_week = RADWeek.get_most_recent_week()

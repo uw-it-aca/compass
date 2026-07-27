@@ -2,10 +2,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.test import TestCase
-from uw_sws.util import fdao_sws_override
-from uw_sws.models import Term
 import datetime
+
+from django.test import TestCase
+from uw_sws.models import Term
+from uw_sws.util import fdao_sws_override
+
 from compass.dao.term import *
 
 

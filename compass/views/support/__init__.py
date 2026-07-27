@@ -2,9 +2,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.utils.decorators import method_decorator
 from django.conf import settings
+from django.utils.decorators import method_decorator
 from uw_saml.decorators import group_required
+
 from compass.views.api import BaseAPIView
 
 

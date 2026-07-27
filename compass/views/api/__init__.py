@@ -2,22 +2,25 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from compass.models import AccessGroup, AppUser
-from compass.views.decorators import xhr_login_required
-from compass.exceptions import OverrideNotPermitted
+from logging import getLogger
+from typing import ClassVar
+
 from django.conf import settings
-from django.utils.decorators import method_decorator
 from django.core.exceptions import PermissionDenied
+from django.utils.decorators import method_decorator
+from rest_framework import status
+from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import GenericAPIView
 from rest_framework.negotiation import BaseContentNegotiation
 from rest_framework.parsers import JSONParser
-from rest_framework.renderers import JSONRenderer
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
-from rest_framework import status
 from userservice.user import UserService
-from logging import getLogger
+
+from compass.exceptions import OverrideNotPermitted
+from compass.models import AccessGroup, AppUser
+from compass.views.decorators import xhr_login_required
 
 logger = getLogger(__name__)
 
@@ -31,7 +34,7 @@ class BaseAPIView(GenericAPIView):
             raise OverrideNotPermitted()
 
     def get_access_group(self, request, require_manager=False):
-        access_group, role = AccessGroup.objects.access_group_for_user(
+        access_group, _ = AccessGroup.objects.access_group_for_user(
             request, require_manager=require_manager)
         return access_group
 
@@ -92,8 +95,8 @@ class BaseAPIView(GenericAPIView):
 
 
 class TokenAPIView(GenericAPIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    authentication_classes: ClassVar[list] = [TokenAuthentication]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
     def post(self, request, format=None):
         content = {

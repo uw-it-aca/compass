@@ -1,17 +1,18 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.tests import ApiTest
-from compass.models import AccessGroup, AppUser, EligibilityType
 import json
-from mock import patch
+from unittest.mock import patch
+
+from compass.models import AccessGroup
+from compass.tests import ApiTest
 
 
 class AccessGroupAPITest(ApiTest):
     ag = None
 
     def setUp(self):
-        super(AccessGroupAPITest, self).setUp()
+        super().setUp()
         self.ag = AccessGroup(name="Test Group",
                               access_group_id="u_astra_group1")
         self.ag.save()

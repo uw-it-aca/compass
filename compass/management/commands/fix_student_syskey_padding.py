@@ -4,8 +4,14 @@
 
 from django.core.management.base import BaseCommand
 from django.db.models.functions import Length
-from compass.models import Contact, Student, StudentAffiliation, \
-    Visit, StudentEligibility
+
+from compass.models import (
+    Contact,
+    Student,
+    StudentAffiliation,
+    StudentEligibility,
+    Visit,
+)
 
 
 class Command(BaseCommand):

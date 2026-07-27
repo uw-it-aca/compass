@@ -3,12 +3,9 @@
 
 import csv
 from io import StringIO
-from compass.models.rad_data import (CourseAnalyticsScores,
-                                     StudentSigninAnalytics)
-from django.db import IntegrityError
 from logging import getLogger
 
-from compass.views.api.student import StudentSigninAnalyticsView
+from compass.models.rad_data import CourseAnalyticsScores, StudentSigninAnalytics
 
 logger = getLogger(__name__)
 
@@ -20,8 +17,7 @@ def read_csv(csv_string):
     Yield each row from a CSV string as a dictionary.
     """
     reader = csv.DictReader(StringIO(csv_string))
-    for row in reader:
-        yield row
+    yield from reader
 
 
 def import_data_from_csv(week, csv_string, pred_file, reload=False):

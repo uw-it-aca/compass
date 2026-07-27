@@ -1,17 +1,18 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from django.conf import settings
-from compass.views.api import BaseAPIView, TokenAPIView
-from compass.models import Visit, Student, AccessGroup, VisitType
-from compass.serializers import VisitReadSerializer, VisitTypeSerializer
-from compass.dao.person import get_appuser_by_uwnetid
-from rest_framework.response import Response
-from rest_framework import status
-from dateutil import parser
-from dateutil.tz import UTC
 from logging import getLogger
 
+from dateutil import parser
+from dateutil.tz import UTC
+from django.conf import settings
+from rest_framework import status
+from rest_framework.response import Response
+
+from compass.dao.person import get_appuser_by_uwnetid
+from compass.models import AccessGroup, Student, Visit, VisitType
+from compass.serializers import VisitReadSerializer
+from compass.views.api import BaseAPIView, TokenAPIView
 
 logger = getLogger(__name__)
 
@@ -55,7 +56,7 @@ class VisitOMADView(TokenAPIView):
         except Exception as ex:
             raise ValueError(f'IC Visit Error: {netid}: {ex}')
 
-        student, created = Student.objects.get_or_create(
+        student, _ = Student.objects.get_or_create(
             system_key=person.system_key)
         return student
 
@@ -107,7 +108,7 @@ class VisitOMADView(TokenAPIView):
             return Response("Missing Visit Dates",
                             status=status.HTTP_400_BAD_REQUEST)
 
-        visit, created = Visit.objects.update_or_create(
+        visit, _ = Visit.objects.update_or_create(
             student=student, access_group=access_group,
             course_code=course_code, checkin_date=checkin_date,
             defaults={

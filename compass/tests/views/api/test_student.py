@@ -2,16 +2,24 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from compass.tests import ApiTest, User
-from compass.models import (AccessGroup, Contact, ContactType, Student,
-                            EligibilityType, StudentEligibility)
-from compass.models.rad_data import StudentAlertStatus
-from uw_pws.util import fdao_pws_override
-from uw_sws.util import fdao_sws_override
-from mock import patch
+import json
+from unittest.mock import patch
+
 from django.test import Client
 from rest_framework.authtoken.models import Token
-import json
+from uw_pws.util import fdao_pws_override
+from uw_sws.util import fdao_sws_override
+
+from compass.models import (
+    AccessGroup,
+    Contact,
+    ContactType,
+    EligibilityType,
+    Student,
+    StudentEligibility,
+)
+from compass.models.rad_data import StudentAlertStatus
+from compass.tests import ApiTest, User
 
 
 class StudentAPITest(ApiTest):
@@ -142,7 +150,7 @@ class StudentContactsAPITest(ApiTest):
 class StudentVisitsAPITest(ApiTest):
     def setUp(self):
         super().setUp()
-        ag = AccessGroup.objects.create(
+        AccessGroup.objects.create(
             name="Test Group", access_group_id="u_astra_group1")
 
     @patch('compass.dao.group.is_member_of_group')
@@ -164,7 +172,7 @@ class StudentVisitsAPITest(ApiTest):
 class StudentAffiliationsAPITest(ApiTest):
     def setUp(self):
         super().setUp()
-        ag = AccessGroup.objects.create(
+        AccessGroup.objects.create(
             name="Test Group", access_group_id="u_astra_group1")
 
     @patch('compass.dao.group.is_member_of_group')
@@ -220,7 +228,7 @@ class StudentAffiliationsAPITest(ApiTest):
 class StudentAffiliationsImportAPITest(ApiTest):
     def setUp(self):
         super().setUp()
-        ag = AccessGroup.objects.create(
+        AccessGroup.objects.create(
             name="Test Group", access_group_id="u_astra_group1")
 
     @patch('compass.dao.group.is_member_of_group')
@@ -276,7 +284,7 @@ class StudentTranscriptsAPITest(ApiTest):
 class StudentEligibilityAPITest(ApiTest):
     def setUp(self):
         super().setUp()
-        ag = AccessGroup.objects.create(
+        AccessGroup.objects.create(
             name="Test Group", access_group_id="u_astra_group1")
 
     @patch('compass.dao.group.is_member_of_group')
@@ -335,7 +343,7 @@ class ICEligibilityAPITest(ApiTest):
     WRONG_API_TOKEN = None
 
     def setUp(self):
-        super(ICEligibilityAPITest, self).setUp()
+        super().setUp()
         AccessGroup(name="OMAD", access_group_id="u_astra_group1").save()
         user = User.objects.create_user(username='compass-visits-api',
                                         password='12345')
@@ -358,14 +366,14 @@ class ICEligibilityAPITest(ApiTest):
         Student.objects.create(system_key="000000000")
 
     def test_api_auth(self):
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
         response = self.get_response("ic_eligibility",
                                      kwargs={"systemkey": "532353230"})
         self.assertEqual(response.status_code, 200, "OK")
 
-        wrong_token_string = "Token %s" % self.WRONG_API_TOKEN
+        wrong_token_string = f"Token {self.WRONG_API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=wrong_token_string)
         response = self.get_response("ic_eligibility",
@@ -373,7 +381,7 @@ class ICEligibilityAPITest(ApiTest):
         self.assertEqual(response.status_code, 401, "Unauthorized")
 
     def test_invalid_systemkey(self):
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
         response = self.get_response("ic_eligibility",
@@ -381,7 +389,7 @@ class ICEligibilityAPITest(ApiTest):
         self.assertEqual(response.status_code, 400, "Invalid systemkey")
 
     def test_get(self):
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
         response = self.get_response("ic_eligibility",
@@ -417,7 +425,7 @@ class StudentSchedulesAPITest(ApiTest):
 class StudentCourseAnalyticsAPITest(ApiTest):
     def setUp(self):
         super().setUp()
-        ag = AccessGroup.objects.create(
+        AccessGroup.objects.create(
             name="Test Group", access_group_id="u_astra_group1")
 
     @patch('compass.dao.group.is_member_of_group')
@@ -440,7 +448,7 @@ class StudentCourseAnalyticsAPITest(ApiTest):
 class StudentSigninAnalyticsAPITest(ApiTest):
     def setUp(self):
         super().setUp()
-        ag = AccessGroup.objects.create(
+        AccessGroup.objects.create(
             name="Test Group", access_group_id="u_astra_group1")
 
     @patch('compass.dao.group.is_member_of_group')
