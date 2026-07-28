@@ -13,6 +13,7 @@ function run_test {
     eval $1
 }
 
+
 if [ -d ${DJANGO_APP}/static/${DJANGO_APP}/js ]; then
     run_test "jshint ${DJANGO_APP}/static/${DJANGO_APP}/js --verbose"
 elif [ -d ${DJANGO_APP}/static/js ]; then

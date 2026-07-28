@@ -7,6 +7,10 @@ from django.conf import settings
 from compass.models import AccessGroup, AppUser, ContactType
 
 
+def get_omad_access_group():
+    return AccessGroup.objects.by_name("OMAD")
+
+
 def validate_contact_post_data(contact_dict):
     access_group = AccessGroup.objects.by_name("OMAD")
     # check that adviser netid is defined
