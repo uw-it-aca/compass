@@ -2,14 +2,16 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.test import Client
-from django.contrib.auth.models import User
 from unittest.mock import MagicMock, patch
-from compass.views.api.contact import ContactOMADView
-from compass.tests import ApiTest
-from compass.models import AccessGroup, Contact, AppUser
+
+from django.contrib.auth.models import User
 from django.core.management import call_command
+from django.test import Client
 from rest_framework.authtoken.models import Token
+
+from compass.models import AccessGroup, AppUser, Contact
+from compass.tests import ApiTest
+from compass.views.api.contact import ContactOMADView
 
 
 class ContactAPITest(ApiTest):
@@ -17,7 +19,7 @@ class ContactAPITest(ApiTest):
     WRONG_API_TOKEN = None
 
     def setUp(self):
-        super(ContactAPITest, self).setUp()
+        super().setUp()
         AccessGroup(name="OMAD", access_group_id="u_astra_group1").save()
         user = User.objects.create_user(username='omad-compass-api',
                                         password='12345')
@@ -36,7 +38,7 @@ class ContactAPITest(ApiTest):
             "source": "Compass"
         }
 
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
 
@@ -50,7 +52,7 @@ class ContactAPITest(ApiTest):
                                       test_request)
         self.assertEqual(response.status_code, 401)
 
-        wrong_token_str = "Token %s" % self.WRONG_API_TOKEN
+        wrong_token_str = f"Token {self.WRONG_API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=wrong_token_str)
 
@@ -61,8 +63,8 @@ class ContactAPITest(ApiTest):
     @patch('compass.views.api.contact.Student')
     @patch('compass.views.api.contact.AppUser')
     @patch('compass.views.api.contact.Contact')
-    @patch('compass.views.api.contact.AccessGroup')
-    def test_post(self, mock_access_group_cls, mock_contact_cls,
+    @patch('compass.dao.contact.AccessGroup')
+    def test_post_unit(self, mock_access_group_cls, mock_contact_cls,
                   mock_appuser_cls, mock_student_cls):
         mock_omad_access_group = MagicMock()
         mock_access_group_cls.objects.by_name = MagicMock(
@@ -135,7 +137,7 @@ class ContactAPITest(ApiTest):
             "source": "Compass"
         }
 
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
 
@@ -171,7 +173,7 @@ class ContactAPITest(ApiTest):
             "trans_id": 1234567890
         }
 
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
 
@@ -196,7 +198,7 @@ class ContactAPITest(ApiTest):
             "trans_id": 1234567890
         }
 
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
         self.post_response('contact_omad',
@@ -223,10 +225,10 @@ class ContactAPITest(ApiTest):
             "trans_id": 1234567890
         }
 
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
-        resp = self.post_response('contact_omad',
+        self.post_response('contact_omad',
                                   body=test_checkin)
         call_command('process_omad_contacts')
 

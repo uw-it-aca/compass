@@ -2,21 +2,22 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import datetime
-from django.core.files.storage import default_storage
-from compass.models.rad_data import RADWeek
-from compass.dao.rad_csv import get_pred_csv_from_json
 from logging import getLogger
 
+from django.core.files.storage import default_storage
+
+from compass.dao.rad_csv import get_pred_csv_from_json
+from compass.models.rad_data import RADWeek
 
 logger = getLogger(__name__)
 
 
-class RADStorageDao():
+class RADStorageDao:
     def get_analytics_file_list(self):
         """
         Returns list canvas-analytics compass data files in the bucket.
         """
-        dirs, files = default_storage.listdir("compass_data/")
+        _, files = default_storage.listdir("compass_data/")
 
         filenames = []
         for filename in files:
@@ -31,7 +32,7 @@ class RADStorageDao():
         """
         Returns list of prediction files in the bucket.
         """
-        dirs, files = default_storage.listdir("prediction_data/")
+        _, files = default_storage.listdir("prediction_data/")
 
         filenames = []
         for filename in files:
@@ -67,7 +68,7 @@ class RADStorageDao():
         :param override_datetime: Optional datetime to use for timestamp
         :type override_datetime: datetime.datetime
         """
-        now = override_datetime or datetime.datetime.now()
+        now = override_datetime or datetime.datetime.now(tz=datetime.timezone.utc)
         timestamp = now.strftime("%Y-%m-%d-%H%M%S")
         filename = f"prediction_data/{timestamp}_predictions.csv"
         csv_content = get_pred_csv_from_json(content)
@@ -79,12 +80,12 @@ class RADStorageDao():
         Returns the latest prediction file available in the bucket.
         """
         try:
-            dirs, file_list = default_storage.listdir("prediction_data/")
+            _, file_list = default_storage.listdir("prediction_data/")
             files = []
             for filename in file_list:
                 try:
                     timestamp_str = filename.split("_predictions.csv")[0]
-                    timestamp = datetime.datetime.strptime(
+                    timestamp = datetime.datetime.strptime(  # noqa: DTZ007
                         timestamp_str, "%Y-%m-%d-%H%M%S")
                     data = {"timestamp": timestamp, "gcs_file": filename}
                     files.append(data)

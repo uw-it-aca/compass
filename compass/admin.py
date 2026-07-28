@@ -2,25 +2,36 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from compass.models import (
-    AppUser, Student, AccessGroup, Affiliation, Contact,
-    ContactType, ContactMethod, ContactTopic, EligibilityType,
-    OMADContactQueue)
-from compass.dao.group import is_admin_user
+import pprint
+from typing import ClassVar
+
 from django.contrib import admin
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib.sessions.models import Session
-from rest_framework.authtoken.models import Token, TokenProxy
-import pprint
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from rest_framework.authtoken.models import TokenProxy
+
+from compass.dao.group import is_admin_user
+from compass.models import (
+    AccessGroup,
+    Affiliation,
+    AppUser,
+    Contact,
+    ContactMethod,
+    ContactTopic,
+    ContactType,
+    EligibilityType,
+    OMADContactQueue,
+    Student,
+)
 
 
 class SAMLAdminSite(admin.AdminSite):
     site_header = 'Compass admin'
 
     def __init__(self, *args, **kwargs):
-        super(SAMLAdminSite, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self._registry.update(admin.site._registry)
 
     def has_permission(self, request):
@@ -34,7 +45,7 @@ class SAMLAdminSite(admin.AdminSite):
             return HttpResponseRedirect('/not-authorized/')
 
 
-class AbstractSAMLAdminModel():
+class AbstractSAMLAdminModel:
     def has_add_permission(self, request):
         return is_admin_user(request)
 
@@ -62,8 +73,8 @@ class SessionAdminModel(SAMLAdminModel):
         return pprint.pformat(obj.get_decoded()).replace('\n', '<br>\n')
 
     _session_data.allow_tags = True
-    list_display = ['user', 'session_key', '_session_data', 'expire_date']
-    readonly_fields = ['_session_data']
+    list_display: ClassVar[list[str]] = ['user', 'session_key', '_session_data', 'expire_date']
+    readonly_fields: ClassVar[list[str]] = ['_session_data']
 
 
 admin_site = SAMLAdminSite(name='SAMLAdmin')

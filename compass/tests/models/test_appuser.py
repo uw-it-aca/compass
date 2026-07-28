@@ -1,9 +1,10 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.tests import CompassTestCase
-from compass.models import AppUser, Contact, Student, AccessGroup, ContactType
 from datetime import datetime, timezone
+
+from compass.models import AccessGroup, AppUser, Contact, ContactType, Student
+from compass.tests import CompassTestCase
 
 
 class AppUserTest(CompassTestCase):

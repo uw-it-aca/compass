@@ -2,14 +2,16 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.test import Client
-from django.contrib.auth.models import User
-from django.test.utils import override_settings
-from compass.tests import ApiTest
-from compass.models import AccessGroup
-from compass.dao.storage import RADStorageDao
-from rest_framework.authtoken.models import Token
 import json
+
+from django.contrib.auth.models import User
+from django.test import Client
+from django.test.utils import override_settings
+from rest_framework.authtoken.models import Token
+
+from compass.dao.storage import RADStorageDao
+from compass.models import AccessGroup
+from compass.tests import ApiTest
 
 
 class AnalyticsAPITest(ApiTest):
@@ -17,7 +19,7 @@ class AnalyticsAPITest(ApiTest):
     WRONG_API_TOKEN = None
 
     def setUp(self):
-        super(AnalyticsAPITest, self).setUp()
+        super().setUp()
         AccessGroup(name="OMAD", access_group_id="u_astra_group1").save()
         user = User.objects.create_user(username='era-predictions-api',
                                         password='12345')
@@ -47,7 +49,7 @@ class AnalyticsAPITest(ApiTest):
         }
         test_request = json.dumps(sample_json)
 
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
 
@@ -60,7 +62,7 @@ class AnalyticsAPITest(ApiTest):
         response = self.post_response('prediction_analytics_view',
                                       test_request)
         self.assertEqual(response.status_code, 401)
-        wrong_token_str = "Token %s" % self.WRONG_API_TOKEN
+        wrong_token_str = f"Token {self.WRONG_API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=wrong_token_str)
 
@@ -108,15 +110,15 @@ class AnalyticsAPITest(ApiTest):
         }
         test_request = json.dumps(sample_json)
 
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
-        filename, latest_file = rad_storage.get_latest_pred_file()
+        _, latest_file = rad_storage.get_latest_pred_file()
         self.assertIsNone(latest_file)
         response = self.post_response('prediction_analytics_view',
                                       body=test_request)
         self.assertEqual(response.status_code, 201)
-        filename, latest_file = rad_storage.get_latest_pred_file()
+        _filename, latest_file = rad_storage.get_latest_pred_file()
         self.assertIsNotNone(latest_file)
         expected_rows = [
             "uw_netid,course_code,pred",

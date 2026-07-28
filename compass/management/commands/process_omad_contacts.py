@@ -1,15 +1,16 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from django.core.management.base import BaseCommand
-from compass.models import (
-    AccessGroup, AppUser, Contact, Student, OMADContactQueue)
-from compass.dao.contact import validate_contact_post_data
-from compass.utils import format_system_key
-from datetime import datetime, timezone
 import json
-from logging import getLogger
 import traceback
+from datetime import datetime, timezone
+from logging import getLogger
+
+from django.core.management.base import BaseCommand
+
+from compass.dao.contact import validate_contact_post_data
+from compass.models import AccessGroup, AppUser, Contact, OMADContactQueue, Student
+from compass.utils import format_system_key
 
 logger = getLogger(__name__)
 

@@ -3,15 +3,16 @@
 
 
 from unittest.mock import patch
+
+from compass.models import AppUser, UserPreference
 from compass.tests import ApiTest
-from compass.models import UserPreference, AppUser
 
 
 class UserPrefsAPITest(ApiTest):
     APP_USER = None
 
     def setUp(self):
-        super(UserPrefsAPITest, self).setUp()
+        super().setUp()
         self.APP_USER = AppUser.objects.create(uwnetid="javerage")
 
     @patch('compass.dao.group.is_member_of_group', return_value=True)

@@ -1,0 +1,5 @@
+[tool.ruff.lint]
+ignore = [
+    "BLE001",  # allow broad Exception catches
+    "S110",    # allow try-except-pass for graceful degradation
+]

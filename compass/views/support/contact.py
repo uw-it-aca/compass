@@ -6,6 +6,7 @@ from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 from uw_saml.decorators import group_required
+
 from compass.models import OMADContactQueue
 
 
@@ -15,7 +16,7 @@ class OMADContactAdminView(TemplateView):
     template_name = 'omad_contact_admin.html'
 
     def get_context_data(self, **kwargs):
-        context = super(OMADContactAdminView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         contacts = OMADContactQueue.objects.all()
         context['contacts'] = contacts
         return context

@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.core.management.base import BaseCommand
-from compass.models.rad_data import (RADWeek,
-                                     CourseAnalyticsScores,
-                                     StudentAlertStatus)
 from logging import getLogger
+
+from django.core.management.base import BaseCommand
+
+from compass.models.rad_data import CourseAnalyticsScores, RADWeek, StudentAlertStatus
 
 logger = getLogger(__name__)
 
