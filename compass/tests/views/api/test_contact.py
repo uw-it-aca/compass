@@ -78,6 +78,22 @@ class ContactAPITest(ApiTest):
         mock_validate.assert_called_once_with(mock_request.data)
         self.assertEqual(response.status_code, 201)
 
+    @patch('compass.views.api.contact.validate_contact_post_data')
+    @patch('compass.views.api.contact.OMADContactQueue')
+    def test_omad_post_validation_error_does_not_queue(self, mock_queue_cls,
+                                                      mock_validate):
+        mock_validate.side_effect = ValueError("Missing adviser netid")
+
+        mock_view = ContactOMADView()
+        mock_request = MagicMock()
+        mock_request.data = {}
+        mock_request.user.username = "omad-compass-api"
+
+        response = mock_view.post(mock_request)
+
+        mock_queue_cls.objects.create.assert_not_called()
+        self.assertEqual(response.status_code, 400)
+
     def test_syskey_leading_zero(self):
         test_nopad = {
             "adviser_netid": "javerage",
