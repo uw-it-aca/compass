@@ -263,10 +263,7 @@ class ContactOMADView(TokenAPIView):
                             status=status.HTTP_401_UNAUTHORIZED)
 
         contact_dict = request.data
-        queued_contact = OMADContactQueue.objects.create(
-            json=json.dumps(contact_dict)
-        )
-        logger.info(f"OMAD contact queued, id: {queued_contact.id}")
+        raw_json = json.dumps(contact_dict)
         try:
             validate_contact_post_data(contact_dict)
         except AccessGroup.DoesNotExist as e:
@@ -276,4 +273,6 @@ class ContactOMADView(TokenAPIView):
         except PersonNotFoundException:
             return Response("Person record for adviser not found",
                             status=status.HTTP_400_BAD_REQUEST)
+        queued_contact = OMADContactQueue.objects.create(json=raw_json)
+        logger.info(f"OMAD contact queued, id: {queued_contact.id}")
         return Response(status=status.HTTP_201_CREATED)
