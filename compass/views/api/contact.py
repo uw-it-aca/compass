@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+import json
 from logging import getLogger
 
 from django.conf import settings
@@ -10,26 +11,12 @@ from django.utils.decorators import method_decorator
 from django.utils.text import slugify
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
-from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.response import Response
 from userservice.user import UserService
+from uw_person_client.exceptions import PersonNotFoundException
 
 from compass.dao import current_datetime_utc
-from compass.dao.contact import (
-    get_omad_access_group,
-)
-from compass.dao.contact import (
-    parse_checkin_date_str as _parse_checkin_date_str,
-)
-from compass.dao.contact import (
-    parse_contact_type_str as _parse_contact_type_str,
-)
-from compass.dao.contact import (
-    validate_adviser_netid as _validate_adviser_netid,
-)
-from compass.dao.contact import (
-    validate_student_systemkey as _validate_student_systemkey,
-)
+from compass.dao.contact import validate_contact_post_data
 from compass.models import (
     AccessGroup,
     AppUser,
@@ -37,6 +24,7 @@ from compass.models import (
     ContactMethod,
     ContactTopic,
     ContactType,
+    OMADContactQueue,
     Student,
 )
 from compass.serializers import (
@@ -46,7 +34,6 @@ from compass.serializers import (
     ContactTypeSerializer,
     ContactWriteSerializer,
 )
-from compass.utils import format_system_key
 from compass.views.api import BaseAPIView, JSONClientContentNegotiation, TokenAPIView
 
 logger = getLogger(__name__)
@@ -270,51 +257,23 @@ class ContactOMADView(TokenAPIView):
     # Force JSON so clients aren't required to send ContentType header
     content_negotiation_class = JSONClientContentNegotiation
 
-    def initial(self, request, *args, **kwargs):
-        super().initial(request, *args, **kwargs)
-        if request.user.username != getattr(
-                settings, 'OMAD_CONTACT_TOKEN_USER', None):
-            raise AuthenticationFailed("Unauthorized")
-
-    def validate_adviser_netid(self, adviser_netid):
-        _validate_adviser_netid(adviser_netid)
-
-    def validate_student_systemkey(self, student_systemkey):
-        _validate_student_systemkey(student_systemkey)
-
-    def parse_checkin_date_str(self, checkin_date_str):
-        return _parse_checkin_date_str(checkin_date_str)
-
-    def parse_contact_type_str(self, contact_type_str, access_group):
-        return _parse_contact_type_str(contact_type_str, access_group)
-
     def post(self, request):
-        try:
-            omad_access_group = get_omad_access_group()
-            self.validate_adviser_netid(request.data.get("adviser_netid"))
-            self.validate_student_systemkey(
-                request.data.get("student_systemkey"))
-            request.data["checkin_date"] = self.parse_checkin_date_str(
-                request.data.get("checkin_date"))
-            request.data["contact_type"] = self.parse_contact_type_str(
-                request.data.get("contact_type"), omad_access_group)
-        except (ValueError, AccessGroup.DoesNotExist) as e:
-            return Response(repr(e), status=status.HTTP_400_BAD_REQUEST)
+        if request.user.username != settings.OMAD_CONTACT_TOKEN_USER:
+            return Response("Unauthorized",
+                            status=status.HTTP_401_UNAUTHORIZED)
 
-        app_user = AppUser.objects.upsert_appuser(
-            request.data["adviser_netid"])
-        student, _ = Student.objects.get_or_create(
-            system_key=format_system_key(
-                request.data.get("student_systemkey")))
-        contact = Contact()
-        contact.app_user = app_user
-        contact.student = student
-        contact.contact_type = request.data["contact_type"]
-        contact.checkin_date = request.data["checkin_date"]
+        contact_dict = request.data
+        queued_contact = OMADContactQueue.objects.create(
+            json=json.dumps(contact_dict)
+        )
+        logger.info(f"OMAD contact queued, id: {queued_contact.id}")
         try:
-            contact.trans_id = request.data["trans_id"]
-        except KeyError:
-            pass
-        contact.save()
-        contact.access_group.add(omad_access_group)
+            validate_contact_post_data(contact_dict)
+        except AccessGroup.DoesNotExist as e:
+            return Response(repr(e), status=status.HTTP_501_NOT_IMPLEMENTED)
+        except ValueError as e:
+            return Response(repr(e), status=status.HTTP_400_BAD_REQUEST)
+        except PersonNotFoundException:
+            return Response("Person record for adviser not found",
+                            status=status.HTTP_400_BAD_REQUEST)
         return Response(status=status.HTTP_201_CREATED)

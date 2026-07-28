@@ -60,64 +60,22 @@ class ContactAPITest(ApiTest):
                                       body=test_request)
         self.assertEqual(response.status_code, 401)
 
-    @patch('compass.views.api.contact.Student')
-    @patch('compass.views.api.contact.AppUser')
-    @patch('compass.views.api.contact.Contact')
-    @patch('compass.dao.contact.AccessGroup')
-    def test_post_unit(self, mock_access_group_cls, mock_contact_cls,
-                  mock_appuser_cls, mock_student_cls):
-        mock_omad_access_group = MagicMock()
-        mock_access_group_cls.objects.by_name = MagicMock(
-            return_value=mock_omad_access_group)
-        mock_view = ContactOMADView()
-        # mock parsing/validation methods
-        mock_view.validate_adviser_netid = MagicMock()
-        mock_view.validate_student_systemkey = MagicMock()
-        mock_parsed_checkin_date = MagicMock()
-        mock_view.parse_checkin_date_str = \
-            MagicMock(return_value=mock_parsed_checkin_date)
-        mock_parsed_contact_date = MagicMock()
-        mock_view.parse_contact_type_str = \
-            MagicMock(return_value=mock_parsed_contact_date)
-        # mock getting app user and student record
-        mock_appuser = MagicMock()
-        mock_appuser_cls.objects.upsert_appuser = \
-            MagicMock(return_value=mock_appuser)
-        mock_student = MagicMock()
-        mock_student_cls.objects.get_or_create.return_value = \
-            (mock_student, None)
-        # mock saving contact
-        mock_contact = mock_contact_cls()
-        mock_contact.save = MagicMock()
-        mock_contact.access_group.add = MagicMock()
+    @patch('compass.views.api.contact.validate_contact_post_data')
+    @patch('compass.views.api.contact.OMADContactQueue')
+    def test_omad_post(self, mock_queue_cls, mock_validate):
+        mock_queued = MagicMock()
+        mock_queue_cls.objects.create.return_value = mock_queued
 
-        # assertions
+        mock_view = ContactOMADView()
         mock_request = MagicMock()
+        mock_request.data = {}
+        mock_request.user.username = "omad-compass-api"
         response = mock_view.post(mock_request)
-        mock_access_group_cls.objects.by_name.assert_called_once_with("OMAD")
-        # assert parsing and validating contact
-        mock_view.validate_adviser_netid.assert_called_once_with(
-            mock_request.data.get("adviser_netid"))
-        mock_view.validate_student_systemkey.assert_called_once_with(
-            mock_request.data.get("student_systemkey"))
-        mock_view.parse_checkin_date_str.assert_called_once_with(
-            mock_request.data.get("checkin_date"))
-        mock_view.parse_contact_type_str.assert_called_once_with(
-            mock_request.data.get("contact_type"), mock_omad_access_group)
-        # assert creating student record and app user record
-        mock_appuser_cls.objects.upsert_appuser.assert_called_once_with(
-            mock_request.data["adviser_netid"])
-        mock_student_cls.objects.get_or_create.assert_called_once()
-        # assert creating contact record
-        self.assertEqual(mock_contact.app_user, mock_appuser)
-        self.assertEqual(mock_contact.student, mock_student)
-        self.assertEqual(mock_contact.contact_type,
-                         mock_request.data["contact_type"])
-        self.assertEqual(mock_contact.checkin_date,
-                         mock_request.data["checkin_date"])
-        mock_contact.save.assert_called_once()
-        mock_contact.access_group.add.assert_called_once_with(
-            mock_omad_access_group)
+
+        # assert contact was queued
+        mock_queue_cls.objects.create.assert_called_once()
+        # assert validation was called with the contact data
+        mock_validate.assert_called_once_with(mock_request.data)
         self.assertEqual(response.status_code, 201)
 
     def test_syskey_leading_zero(self):
