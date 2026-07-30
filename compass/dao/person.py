@@ -1,22 +1,28 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from django.db.models import CharField, OuterRef, Subquery, Value, F
-from django.db.models.functions import JSONObject, Concat
-from django.contrib.postgres.aggregates import ArrayAgg
-from django.conf import settings
-from django.core.cache import cache
-from uw_person_client.models import (
-    Person, Adviser, Student, Transcript, Degree, StudentHold)
-from uw_person_client.exceptions import (
-    PersonNotFoundException, AdviserNotFoundException)
-from uw_pws import PWS, InvalidNetID, DataFailureException
-from uw_sws.registration import get_schedule_by_regid_and_term
-from compass.dao.photo import PhotoDAO
-from compass.dao.term import get_term_by_year_and_quarter, TERMS
-from logging import getLogger
 import re
+from logging import getLogger
 
+from django.conf import settings
+from django.contrib.postgres.aggregates import ArrayAgg
+from django.core.cache import cache
+from django.db.models import CharField, F, OuterRef, Subquery, Value
+from django.db.models.functions import Concat, JSONObject
+from uw_person_client.models import (
+    Adviser,
+    Degree,
+    Person,
+    Student,
+    StudentHold,
+    Transcript,
+)
+from uw_pws import PWS, DataFailureException, InvalidNetID
+from uw_sws.registration import get_schedule_by_regid_and_term
+from uw_sws.term import get_term_by_year_and_quarter
+
+from compass.dao.photo import PhotoDAO
+from compass.dao.term import TERMS
 
 logger = getLogger(__name__)
 system_key_re = re.compile(r'^\d{9}$')
@@ -46,15 +52,14 @@ def is_overridable_uwnetid(username):
             if username.lower() == person.uwnetid:
                 error_msg = None
             else:
-                error_msg = "Current UWNetID: {}, Prior UWNetID: ".format(
-                    person.uwnetid)
+                error_msg = f"Current UWNetID: {person.uwnetid}, Prior UWNetID: "
         except InvalidNetID:
             error_msg = "Not a valid UWNetID: "
         except DataFailureException as err:
             if err.status == 404:
                 error_msg = 'UWNetID not found: '
             else:
-                error_msg = "Error ({}) {}: ".format(err.status, err.msg)
+                error_msg = f"Error ({err.status}) {err.msg}: "
     return error_msg
 
 

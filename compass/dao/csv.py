@@ -1,14 +1,17 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.dao.person import (
-    get_students_by_system_keys, get_students_by_student_numbers)
-from compass.utils import format_system_key, format_student_number
-from compass.exceptions import InvalidCSV
-from logging import getLogger
-import chardet
 import csv
-import os
+from logging import getLogger
+
+import chardet
+
+from compass.dao.person import (
+    get_students_by_student_numbers,
+    get_students_by_system_keys,
+)
+from compass.exceptions import InvalidCSV
+from compass.utils import format_student_number, format_system_key
 
 logger = getLogger(__name__)
 
@@ -44,7 +47,7 @@ class InsensitiveDictReader(csv.DictReader):
         return InsensitiveDict(super().__next__())
 
 
-class StudentCSV():
+class StudentCSV:
     def __init__(self):
         self.encoding = None
         self.has_header = False
@@ -119,7 +122,7 @@ class StudentCSV():
                 else:
                     students.append({
                         identifier: sid,
-                        'error': f'Student not found',
+                        'error': 'Student not found',
                     })
 
         return students

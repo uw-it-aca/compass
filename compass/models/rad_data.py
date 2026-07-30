@@ -1,10 +1,12 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+from typing import ClassVar
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
 from compass.dao.person import get_person_by_uwregid
-from compass.dao.term import current_week
 
 
 class RADImport(models.Model):
@@ -85,7 +87,7 @@ class StudentAlertStatus(models.Model):
                                     null=True)
 
     class Meta:
-        indexes = [
+        indexes: ClassVar[list] = [
             models.Index(fields=['uwnetid'])
         ]
 
@@ -206,7 +208,7 @@ class CourseAnalyticsScores(models.Model):
         person = get_person_by_uwregid(uwregid)
         netid = person.uwnetid
 
-        for index in schedules.keys():
+        for index in schedules:
             schedule = schedules[index]
             for section in schedule['sections']:
                 course_id = (f"{section['curriculum_abbr']} "

@@ -48,5 +48,55 @@
      "slug": "internal",
      "active": true
     }
+   },
+   {
+    "model": "compass.contactmethod",
+    "pk": 6,
+    "fields": {
+     "access_group": 2,
+     "name": "In-Person",
+     "slug": "in-person",
+     "active": true
+    }
+   },
+   {
+    "model": "compass.contactmethod",
+    "pk": 7,
+    "fields": {
+     "access_group": 2,
+     "name": "Telephone",
+     "slug": "telephone",
+     "active": true
+    }
+   },
+   {
+    "model": "compass.contactmethod",
+    "pk": 8,
+    "fields": {
+     "access_group": 2,
+     "name": "Video Conference",
+     "slug": "video-conference",
+     "active": true
+    }
+   },
+   {
+    "model": "compass.contactmethod",
+    "pk": 9,
+    "fields": {
+     "access_group": 2,
+     "name": "E-mail",
+     "slug": "e-mail",
+     "active": true
+    }
+   },
+   {
+    "model": "compass.contactmethod",
+    "pk": 10,
+    "fields": {
+     "access_group": 2,
+     "name": "Internal",
+     "slug": "internal",
+     "active": true
+    }
    }
  ]

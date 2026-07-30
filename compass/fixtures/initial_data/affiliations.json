@@ -58,5 +58,55 @@
    "slug": "some-other-affiliation",
    "active": true
   }
+ },
+ {
+  "model": "compass.affiliation",
+  "pk": 7,
+  "fields": {
+   "access_group": 2,
+   "name": "CAMP",
+   "slug": "camp",
+   "active": true
+  }
+ },
+ {
+  "model": "compass.affiliation",
+  "pk": 8,
+  "fields": {
+   "access_group": 2,
+   "name": "TRIO-SSS",
+   "slug": "trio-sss",
+   "active": true
+  }
+ },
+ {
+  "model": "compass.affiliation",
+  "pk": 9,
+  "fields": {
+   "access_group": 2,
+   "name": "Champions",
+   "slug": "champions",
+   "active": true
+  }
+ },
+ {
+  "model": "compass.affiliation",
+  "pk": 10,
+  "fields": {
+   "access_group": 2,
+   "name": "Brotherhood Initiative Scholar",
+   "slug": "brotherhood-initiative",
+   "active": true
+  }
+ },
+ {
+  "model": "compass.affiliation",
+  "pk": 11,
+  "fields": {
+   "access_group": 2,
+   "name": "Dadgar/Kalla Scholar",
+   "slug": "dadgar-kallascholar",
+   "active": true
+  }
  }
 ]

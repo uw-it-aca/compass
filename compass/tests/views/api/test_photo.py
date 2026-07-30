@@ -1,9 +1,9 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.tests import ApiTest
+
 from compass.dao.photo import PhotoDAO
-from mock import patch
+from compass.tests import ApiTest
 
 
 class PhotoAPITest(ApiTest):

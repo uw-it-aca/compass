@@ -2,17 +2,18 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from compass.views.api import BaseAPIView
-from compass.dao.person import valid_system_key
-from compass.dao import current_datetime_utc
-from compass.models import AccessGroup, Student, AppUser, SpecialProgram
-from compass.serializers import SpecialProgramSerializer
-from compass.exceptions import OverrideNotPermitted, InvalidSystemKey
+from datetime import date
+from logging import getLogger
+
 from django.core.exceptions import PermissionDenied
 from django.db.utils import IntegrityError
-import json
-from datetime import datetime
-from logging import getLogger
+
+from compass.dao import current_datetime_utc
+from compass.dao.person import valid_system_key
+from compass.exceptions import InvalidSystemKey, OverrideNotPermitted
+from compass.models import AccessGroup, SpecialProgram, Student
+from compass.serializers import SpecialProgramSerializer
+from compass.views.api import BaseAPIView
 
 logger = getLogger(__name__)
 
@@ -24,7 +25,6 @@ class SpecialProgramView(BaseAPIView):
     /api/internal/student/[systemkey]/special_program/
     '''
     def get(self, request, systemkey):
-        data = {}
         try:
             access_group = self.get_access_group(request)
             student = self._get_student(systemkey)
@@ -51,8 +51,8 @@ class SpecialProgramView(BaseAPIView):
             app_user = self.get_app_user()
 
             special_program = request.data.get('special_program')
-            program_date = datetime.strptime(
-                special_program.get("program_date"), '%Y-%m-%d').date()
+            program_date = date.fromisoformat(
+                special_program.get("program_date"))
 
             ssp = SpecialProgram(
                 access_group=access_group, student=student,
@@ -86,8 +86,8 @@ class SpecialProgramView(BaseAPIView):
             student = Student.objects.get(system_key=systemkey)
 
             special_program = request.data.get('special_program')
-            program_date = datetime.strptime(
-                special_program.get("program_date"), '%Y-%m-%d').date()
+            program_date = date.fromisoformat(
+                special_program.get("program_date"))
 
             ssp = SpecialProgram.objects.get(
                 access_group=access_group, student=student)

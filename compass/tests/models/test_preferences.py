@@ -1,8 +1,8 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.tests import CompassTestCase
 from compass.models import UserPreference
+from compass.tests import CompassTestCase
 
 
 class UserPreferenceTest(CompassTestCase):
