@@ -2,14 +2,16 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+import os
+from typing import ClassVar
+
 from django.apps import AppConfig
 from django.contrib.staticfiles.apps import StaticFilesConfig
 from restclients_core.dao import MockDAO
-import os
 
 
 class CompassFilesConfig(StaticFilesConfig):
-    ignore_patterns = ["CVS", "*~"]
+    ignore_patterns: ClassVar[list[str]] = ["CVS", "*~"]
 
 
 class CompassConfig(AppConfig):

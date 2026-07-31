@@ -1,9 +1,10 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+from unittest.mock import patch
+
+from compass.models import AccessGroup
 from compass.tests import ApiTest
-from compass.models import AccessGroup, Affiliation
-from mock import patch
 
 
 class AffiliationAPITest(ApiTest):

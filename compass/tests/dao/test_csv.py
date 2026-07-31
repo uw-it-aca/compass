@@ -1,11 +1,11 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+import os
+
 from compass.dao.csv import InsensitiveDictReader, StudentCSV
 from compass.exceptions import InvalidCSV
 from compass.tests import CompassTestCase
-import mock
-import os
 
 
 class StudentCSVTest(CompassTestCase):
@@ -18,21 +18,21 @@ class StudentCSVTest(CompassTestCase):
 
         with open(os.path.join(
                 self.resource_path, 'valid_system_key.csv'), 'rb') as fh:
-            r = csv_import.validate(fh)
+            csv_import.validate(fh)
             self.assertEqual(csv_import.has_header, True)
             self.assertEqual(csv_import.dialect.delimiter, ',')
             self.assertEqual(csv_import.student_id_col, 'systemkey')
 
         with open(os.path.join(
                 self.resource_path, 'valid_student_num.csv'), 'rb') as fh:
-            r = csv_import.validate(fh)
+            csv_import.validate(fh)
             self.assertEqual(csv_import.has_header, True)
             self.assertEqual(csv_import.dialect.delimiter, ',')
             self.assertEqual(csv_import.student_id_col, 'studentno')
 
         with open(os.path.join(
                 self.resource_path, 'valid_multiple_ids.csv'), 'rb') as fh:
-            r = csv_import.validate(fh)
+            csv_import.validate(fh)
             self.assertEqual(csv_import.has_header, True)
             self.assertEqual(csv_import.dialect.delimiter, ',')
             self.assertEqual(csv_import.student_id_col, 'systemkey')

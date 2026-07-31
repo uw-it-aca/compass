@@ -49,6 +49,31 @@ View your application using your specified port number in the .env file
 
         Demo: http://localhost:8000/
 
+### Access Group Admin: Copy Settings
+
+In Django Admin, you can copy settings from one Access Group to another.
+
+1. Open Django Admin and go to Access Groups.
+2. Select exactly one target Access Group.
+3. Choose the action `Copy settings from another Access Group`.
+4. Pick the source Access Group and select which settings to copy.
+5. Submit `Copy`.
+
+Supported settings types:
+
+- Affiliations
+- Contact Types
+- Contact Methods
+- Contact Topics
+- Eligibility Types
+- Visit Types
+
+Behavior notes:
+
+- If a target record with the same name already exists, it is skipped.
+- Slug uniqueness conflicts are reported as conflicts.
+- The action shows a summary per setting type (created, skipped, conflicts).
+
 ### Testing (using Vitest)
 
 Run Vitest test scripts and generate coverage report

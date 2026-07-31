@@ -2,11 +2,11 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from compass.views.api import (
-    BaseAPIView)
-from compass.models import (AppUser, UserPreference)
 from userservice.user import UserService
+
 from compass.exceptions import OverrideNotPermitted
+from compass.models import AppUser, UserPreference
+from compass.views.api import BaseAPIView
 
 
 class UserPreferenceView(BaseAPIView):

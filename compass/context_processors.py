@@ -4,13 +4,14 @@
 
 from django.conf import settings
 from django.urls import reverse
-from userservice.user import UserService
-from restclients_core.exceptions import DataFailureException
 from persistent_message.models import Message
-from compass.dao.term import term_context
+from restclients_core.exceptions import DataFailureException
+from userservice.user import UserService
+
 from compass.dao import current_datetime
-from compass.models import AccessGroup
 from compass.dao.preferences import get_user_preferences
+from compass.dao.term import term_context
+from compass.models import AccessGroup
 
 
 def google_analytics(request):

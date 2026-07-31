@@ -1,19 +1,23 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+from datetime import timedelta, timezone
+from typing import ClassVar
+
 from django.conf import settings
 from django.db import models, transaction
 from django.db.models.functions import Cast
 from django.db.utils import IntegrityError
 from django.utils.text import slugify
 from simple_history.models import HistoricalRecords
-from compass.dao.person import get_appuser_by_uwnetid, PersonNotFoundException
-from compass.dao.group import is_group_member
+from uw_person_client.exceptions import PersonNotFoundException
+
+import compass.models.rad_data  # noqa: F401
 from compass.dao.term import current_term
 from compass.dao import current_datetime
+from compass.dao.group import is_group_member
+from compass.dao.person import get_appuser_by_uwnetid
 from compass.utils import weekdays_before
-from datetime import datetime, timedelta, timezone
-import compass.models.rad_data
 
 
 class AppUserManager(models.Manager):
@@ -72,7 +76,7 @@ class AppUser(models.Model):
     # from the app.
 
     class Meta:
-        indexes = [
+        indexes: ClassVar[list] = [
             models.Index(fields=["uwnetid"]),
         ]
 
@@ -101,7 +105,7 @@ class Student(models.Model):
     system_key = models.CharField(unique=True, max_length=50)
 
     class Meta:
-        indexes = [
+        indexes: ClassVar[list] = [
             models.Index(fields=["system_key"]),
         ]
 
@@ -158,7 +162,7 @@ class AccessGroup(models.Model):
     ROLE_MANAGER = "manager"
     ROLE_USER = "user"
     ROLE_STUDENT = "student"
-    ROLES = [ROLE_MANAGER, ROLE_USER, ROLE_STUDENT]
+    ROLES: ClassVar[list[str]] = [ROLE_MANAGER, ROLE_USER, ROLE_STUDENT]
 
     objects = AccessGroupManager()
 
@@ -167,7 +171,7 @@ class AccessGroup(models.Model):
 
     def save(self, *args, **kwargs):
         created = not self.pk
-        super(AccessGroup, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
         if created:
             # set uneditable contact type presets
             uneditable_contact_types = [
@@ -200,7 +204,7 @@ class AccessGroup(models.Model):
                 ContactTopic(access_group=self, name=contact_topic_name).save()
 
     def authz_group_id(self, role):
-        return "{}-{}".format(self.access_group_id, role)
+        return f"{self.access_group_id}-{role}"
 
     def __str__(self):
         return self.name
@@ -348,6 +352,18 @@ class Affiliation(BaseAccessGroupContent):
     active = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
 
+    class Meta:
+        constraints: ClassVar[list] = [
+            models.UniqueConstraint(
+                fields=["access_group", "name"],
+                name="compass_affiliation_ag_name_uniq",
+            ),
+            models.UniqueConstraint(
+                fields=["access_group", "slug"],
+                name="compass_affiliation_ag_slug_uniq",
+            ),
+        ]
+
 
 class Cohort(models.Model):
     start_year = models.SmallIntegerField()
@@ -362,10 +378,22 @@ class ContactType(BaseAccessGroupContent):
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-    slug = models.SlugField(unique=True, max_length=50)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     active = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
+
+    class Meta:
+        constraints: ClassVar[list] = [
+            models.UniqueConstraint(
+                fields=["access_group", "name"],
+                name="compass_contacttype_ag_name_uniq",
+            ),
+            models.UniqueConstraint(
+                fields=["access_group", "slug"],
+                name="compass_contacttype_ag_slug_uniq",
+            ),
+        ]
 
 
 class ContactMethod(BaseAccessGroupContent):
@@ -376,10 +404,22 @@ class ContactMethod(BaseAccessGroupContent):
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-    slug = models.SlugField(unique=True, max_length=50)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     active = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
+
+    class Meta:
+        constraints: ClassVar[list] = [
+            models.UniqueConstraint(
+                fields=["access_group", "name"],
+                name="compass_contactmethod_ag_name_uniq",
+            ),
+            models.UniqueConstraint(
+                fields=["access_group", "slug"],
+                name="compass_contactmethod_ag_slug_uniq",
+            ),
+        ]
 
 
 class ContactTopic(BaseAccessGroupContent):
@@ -392,10 +432,22 @@ class ContactTopic(BaseAccessGroupContent):
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-    slug = models.SlugField(unique=True, max_length=50)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     active = models.BooleanField(default=True)
     editable = models.BooleanField(default=True)
+
+    class Meta:
+        constraints: ClassVar[list] = [
+            models.UniqueConstraint(
+                fields=["access_group", "name"],
+                name="compass_contacttopic_ag_name_uniq",
+            ),
+            models.UniqueConstraint(
+                fields=["access_group", "slug"],
+                name="compass_contacttopic_ag_slug_uniq",
+            ),
+        ]
 
 
 class StudentEligibility(models.Model):
@@ -413,9 +465,21 @@ class EligibilityType(BaseAccessGroupContent):
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-    slug = models.SlugField(unique=True, max_length=50)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     editable = models.BooleanField(default=True)
+
+    class Meta:
+        constraints: ClassVar[list] = [
+            models.UniqueConstraint(
+                fields=["access_group", "name"],
+                name="compass_eligibilitytype_ag_name_uniq",
+            ),
+            models.UniqueConstraint(
+                fields=["access_group", "slug"],
+                name="compass_eligibilitytype_ag_slug_uniq",
+            ),
+        ]
 
 
 class Visit(models.Model):
@@ -475,9 +539,21 @@ class VisitTutoringOption(BaseAccessGroupContent):
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-    slug = models.SlugField(unique=True, max_length=50)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     editable = models.BooleanField(default=False)
+
+    class Meta:
+        constraints: ClassVar[list] = [
+            models.UniqueConstraint(
+                fields=["access_group", "name"],
+                name="compass_visittype_ag_name_uniq",
+            ),
+            models.UniqueConstraint(
+                fields=["access_group", "slug"],
+                name="compass_visittype_ag_slug_uniq",
+            ),
+        ]
 
 
 class OMADContactQueue(models.Model):
@@ -519,7 +595,7 @@ class UserPreference(models.Model):
     """
     User preferences for the app, allowed preferences are defied per component
     """
-    ALLOWED_PREFERENCES = {
+    ALLOWED_PREFERENCES: ClassVar[dict] = {
         "caseload_filters": [
             "class", "campus", "degree", "scholarship", "registered", "holds",
             "alert"],
@@ -538,9 +614,7 @@ class UserPreference(models.Model):
     def validate_preference(cls, component, preference):
         if component not in cls.ALLOWED_PREFERENCES:
             return False
-        if preference not in cls.ALLOWED_PREFERENCES[component]:
-            return False
-        return True
+        return preference in cls.ALLOWED_PREFERENCES[component]
 
     @classmethod
     def update_by_user_component(cls, app_user, pref_dict):

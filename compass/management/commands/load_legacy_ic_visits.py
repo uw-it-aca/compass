@@ -2,17 +2,26 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+import csv
+import re
+import sys
+from datetime import datetime, timezone
+from typing import ClassVar
+
+import pytz
 from django.core.management.base import BaseCommand
 from uw_person_client import UWPersonClient
 from uw_person_client.exceptions import PersonNotFoundException
-from compass.models import (
-    Student, AccessGroup, Visit, VisitType,
-    StudentEligibility, EligibilityType)
-from datetime import datetime
 from uw_sws.dao import SWS_TIMEZONE
-import sys
-import csv
-import re
+
+from compass.models import (
+    AccessGroup,
+    EligibilityType,
+    Student,
+    StudentEligibility,
+    Visit,
+    VisitType,
+)
 
 
 class Command(BaseCommand):
@@ -42,7 +51,7 @@ class Command(BaseCommand):
         #    IC Computer Usage
         #    IC-Computer Lab
         #    IC Workshop
-        ic_re = re.compile('^IC[- ].*', re.I)
+        ic_re = re.compile('^IC[- ].*', re.IGNORECASE)
 
         n = 0
         count = options['count']
@@ -95,11 +104,10 @@ class Command(BaseCommand):
             return
         except PersonNotFoundException:
             self.unknown_student_ids.add(int(apt.student_no))
-            self._error("IC Visit {}: student number {} ({}) not found".format(
-                apt.ID, apt.student_no, student_number))
+            self._error(f"IC Visit {apt.ID}: student number {apt.student_no} ({student_number}) not found")
             return
         except ValueError as ex:
-            self._error("SKIP ID {}: {}".format(apt.ID, ex))
+            self._error(f"SKIP ID {apt.ID}: {ex}")
             return
         except Visit.DoesNotExist:
             # fall through to create new Visit
@@ -128,23 +136,23 @@ class Command(BaseCommand):
             syskey = person.student.system_key
             self.student_syskey[student_number] = syskey
 
-        student, created = Student.objects.get_or_create(system_key=syskey)
+        student, _ = Student.objects.get_or_create(system_key=syskey)
         return student
 
     def _get_checkin_date(self, apt):
-        naive_date = datetime.strptime(apt.Date, '%Y-%m-%d %H:%M:%S.%f')
+        naive_date = datetime.strptime(apt.Date, '%Y-%m-%d %H:%M:%S.%f')  # noqa: DTZ007
         date = naive_date.replace(tzinfo=SWS_TIMEZONE)
-        time = datetime.strptime(apt.Time_In, '%H:%M:%S')
+        time = datetime.strptime(apt.Time_In, '%H:%M:%S')  # noqa: DTZ007
         return date.replace(
             hour=time.hour,
             minute=time.minute,
             second=time.second).astimezone(timezone.utc)
 
     def _get_checkout_date(self, apt):
-        pacific = timezone('US/Pacific')
-        naive_date = datetime.strptime(apt.Date, '%Y-%m-%d %H:%M:%S.%f')
+        pacific = pytz.timezone('US/Pacific')
+        naive_date = datetime.strptime(apt.Date, '%Y-%m-%d %H:%M:%S.%f')  # noqa: DTZ007
         date = pacific.localize(naive_date)
-        time = datetime.strptime(apt.Time_Out, '%H:%M:%S')
+        time = datetime.strptime(apt.Time_Out, '%H:%M:%S')  # noqa: DTZ007
         return date.replace(
             hour=time.hour,
             minute=time.minute,
@@ -157,7 +165,7 @@ class Command(BaseCommand):
         return self._get_visit_type_model(apt.Contact_Type)
 
     def _get_visit_type_model(self, name):
-        visit_type, created = VisitType.objects.get_or_create(
+        visit_type, _ = VisitType.objects.get_or_create(
             access_group=self.access_group, name=name)
 
         return visit_type
@@ -166,8 +174,8 @@ class Command(BaseCommand):
         print(msg, file=sys.stderr)
 
 
-class Appointment(object):
-    APPOINTMENT_COLUMNS = [
+class Appointment:
+    APPOINTMENT_COLUMNS: ClassVar[list[str]] = [
         "ID",
         "student_no",
         "staff_id",

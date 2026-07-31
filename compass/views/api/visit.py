@@ -1,36 +1,45 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from django.conf import settings
-from compass.views.api import BaseAPIView, TokenAPIView
-from compass.models import (Visit,
-                            Student,
-                            AccessGroup,
-                            VisitType,
-                            VisitTutoringOption)
-from compass.serializers import VisitReadSerializer
-from compass.dao.person import (get_appuser_by_uwnetid,
-                                valid_student_number,
-                                valid_uwnetid,
-                                get_person_by_student_number,
-                                get_person_by_uwnetid,
-                                PersonNotFoundException)
-from compass.dao.compass_visits import (DataFailureException,
-                                        admin_create_visit,
-                                        admin_delete_visit,
-                                        admin_update_visit,
-                                        get_admin_visit_list,
-                                        get_visit_options)
-from compass.dao.term import current_term
-from compass.dao.visit_file import (validate_visit_upload_file,
-                                    create_visits_from_file,
-                                    get_visit_export)
-from rest_framework.response import Response
-from rest_framework import status
-from dateutil import parser
-from dateutil.tz import UTC
 from logging import getLogger
 
+from dateutil import parser
+from dateutil.tz import UTC
+from django.conf import settings
+from rest_framework import status
+from rest_framework.response import Response
+
+from compass.dao.compass_visits import (
+    DataFailureException,
+    admin_create_visit,
+    admin_delete_visit,
+    admin_update_visit,
+    get_admin_visit_list,
+    get_visit_options,
+)
+from compass.dao.person import (
+    PersonNotFoundException,
+    get_appuser_by_uwnetid,
+    get_person_by_student_number,
+    get_person_by_uwnetid,
+    valid_student_number,
+    valid_uwnetid,
+)
+from compass.dao.term import current_term
+from compass.dao.visit_file import (
+    create_visits_from_file,
+    get_visit_export,
+    validate_visit_upload_file,
+)
+from compass.models import (
+    AccessGroup,
+    Student,
+    Visit,
+    VisitTutoringOption,
+    VisitType,
+)
+from compass.serializers import VisitReadSerializer
+from compass.views.api import BaseAPIView, TokenAPIView
 
 logger = getLogger(__name__)
 
@@ -77,7 +86,7 @@ class VisitOMADView(TokenAPIView):
         except Exception as ex:
             raise ValueError(f'IC Visit Error: {netid}: {ex}')
 
-        student, created = Student.objects.get_or_create(
+        student, _ = Student.objects.get_or_create(
             system_key=person.system_key)
         return student
 
@@ -144,7 +153,7 @@ class VisitOMADView(TokenAPIView):
             return Response("Missing Visit Dates",
                             status=status.HTTP_400_BAD_REQUEST)
 
-        visit, created = Visit.objects.update_or_create(
+        visit, _ = Visit.objects.update_or_create(
             student=student, access_group=access_group,
             course_code=course_code, checkin_date=checkin_date,
             defaults={

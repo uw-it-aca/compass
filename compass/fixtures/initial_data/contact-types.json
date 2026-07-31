@@ -58,5 +58,65 @@
    "slug": "advisor",
    "active": true
   }
+ },
+ {
+  "model": "compass.contacttype",
+  "pk": 7,
+  "fields": {
+   "access_group": 2,
+   "name": "Quick Question",
+   "slug": "quick-question",
+   "active": true
+  }
+ },
+ {
+  "model": "compass.contacttype",
+  "pk": 8,
+  "fields": {
+   "access_group": 2,
+   "name": "Appointment",
+   "slug": "appointment",
+   "active": true
+  }
+ },
+ {
+  "model": "compass.contacttype",
+  "pk": 9,
+  "fields": {
+   "access_group": 2,
+   "name": "Event/Workshop",
+   "slug": "event-workshop",
+   "active": true
+  }
+ },
+ {
+  "model": "compass.contacttype",
+  "pk": 10,
+  "fields": {
+   "access_group": 2,
+   "name": "Parent",
+   "slug": "parent",
+   "active": true
+  }
+ },
+ {
+  "model": "compass.contacttype",
+  "pk": 11,
+  "fields": {
+   "access_group": 2,
+   "name": "Admin",
+   "slug": "admin",
+   "active": true
+  }
+ },
+ {
+  "model": "compass.contacttype",
+  "pk": 12,
+  "fields": {
+   "access_group": 2,
+   "name": "Advisor",
+   "slug": "advisor",
+   "active": true
+  }
  }
 ]

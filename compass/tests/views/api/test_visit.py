@@ -4,19 +4,23 @@
 
 from datetime import UTC, datetime
 from io import BytesIO
+from unittest.mock import MagicMock, patch, call
+
+from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client
-from django.contrib.auth.models import User
-from unittest.mock import MagicMock, patch, call
-from compass.views.api.visit import VisitOMADView, VisitSearchMixin
-from compass.tests import ApiTest
-from compass.dao.person import PersonNotFoundException
-from compass.models import (AccessGroup,
-                            VisitType,
-                            Visit,
-                            Student,
-                            VisitTutoringOption)
 from rest_framework.authtoken.models import Token
+
+from compass.dao.person import PersonNotFoundException
+from compass.models import (
+    AccessGroup,
+    Student,
+    Visit,
+    VisitTutoringOption,
+    VisitType,
+)
+from compass.tests import ApiTest
+from compass.views.api.visit import VisitOMADView, VisitSearchMixin
 
 
 class VisitAPITest(ApiTest):
@@ -24,9 +28,8 @@ class VisitAPITest(ApiTest):
     ACCESS_GROUP = None
 
     def setUp(self):
-        super(VisitAPITest, self).setUp()
-        user = User.objects.create_user(username='compass-visits-api',
-                                        password='12345')
+        super().setUp()
+        user = User.objects.create_user(username='testuser', password='12345')
         ag = AccessGroup(name="OMAD", access_group_id="u_astra_group1")
         ag.save()
         self.ACCESS_GROUP = ag
@@ -65,7 +68,7 @@ class VisitAPITest(ApiTest):
             "checkout_date": "2012-01-19 14:52:00 PDT"
         }
 
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
 

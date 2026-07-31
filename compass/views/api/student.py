@@ -2,36 +2,61 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.urls import reverse
-from django.conf import settings
-from rest_framework.response import Response
-from rest_framework import status
-from userservice.user import UserService
-from compass.views.api import BaseAPIView, TokenAPIView
-from compass.dao.photo import PhotoDAO
-from compass.dao.person import (
-    valid_uwnetid, valid_uwregid, valid_student_number, valid_system_key,
-    get_person_by_uwnetid, get_person_by_student_number,
-    get_transcripts_by_uwregid, PersonNotFoundException)
-from compass.dao.csv import StudentCSV
-from compass.dao import current_datetime_utc
-from compass.models import (
-    AccessGroup, Student, AppUser, Contact, ContactType, ContactMethod,
-    ContactTopic, StudentAffiliation, Affiliation, Cohort, Visit,
-    EligibilityType, StudentEligibility, SpecialProgram)
-from compass.models.rad_data import (CourseAnalyticsScores,
-                                     StudentAlertStatus,
-                                     StudentSigninAnalytics)
-from compass.serializers import (
-    ContactReadSerializer, ContactWriteSerializer, StudentWriteSerializer,
-    StudentAffiliationReadSerializer, VisitReadSerializer,
-    StudentEligibilitySerializer, EligibilityTypeSerializer,
-    SpecialProgramSerializer)
-from compass.exceptions import OverrideNotPermitted, InvalidCSV
-from restclients_core.exceptions import DataFailureException
-from uw_sws.term import get_current_term, get_next_term, get_term_after
-from uw_sws.registration import get_schedule_by_regid_and_term
 from logging import getLogger
+
+from django.conf import settings
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.response import Response
+from restclients_core.exceptions import DataFailureException
+from userservice.user import UserService
+from uw_person_client.exceptions import PersonNotFoundException
+from uw_sws.registration import get_schedule_by_regid_and_term
+from uw_sws.term import get_current_term, get_next_term, get_term_after
+
+from compass.dao import current_datetime_utc
+from compass.dao.csv import StudentCSV
+from compass.dao.person import (
+    get_person_by_student_number,
+    get_person_by_uwnetid,
+    get_transcripts_by_uwregid,
+    valid_student_number,
+    valid_system_key,
+    valid_uwnetid,
+    valid_uwregid,
+)
+from compass.dao.photo import PhotoDAO
+from compass.exceptions import InvalidCSV, OverrideNotPermitted
+from compass.models import (
+    AccessGroup,
+    Affiliation,
+    AppUser,
+    Cohort,
+    Contact,
+    ContactMethod,
+    ContactTopic,
+    ContactType,
+    EligibilityType,
+    Student,
+    StudentAffiliation,
+    StudentEligibility,
+    Visit,
+)
+from compass.models.rad_data import (
+    CourseAnalyticsScores,
+    StudentAlertStatus,
+    StudentSigninAnalytics,
+)
+from compass.serializers import (
+    ContactReadSerializer,
+    ContactWriteSerializer,
+    EligibilityTypeSerializer,
+    StudentAffiliationReadSerializer,
+    StudentEligibilitySerializer,
+    StudentWriteSerializer,
+    VisitReadSerializer,
+)
+from compass.views.api import BaseAPIView, TokenAPIView
 
 logger = getLogger(__name__)
 
@@ -76,7 +101,7 @@ class StudentView(BaseAPIView):
 
     def post(self, request, identifier=None):
         try:
-            access_group = self.get_access_group(request)
+            self.get_access_group(request)
 
             self.valid_user_override()
 
@@ -346,9 +371,15 @@ class StudentAffiliationsImportView(BaseAPIView):
                 UserService().get_user()).id,
             'student': None,
             'access_group': [access_group.id],
-            'contact_type': ContactType.objects.get(slug='admin').id,
-            'contact_method': ContactMethod.objects.get(slug='internal').id,
-            'contact_topics': [ContactTopic.objects.get(slug='other').id],
+            'contact_type': ContactType.objects.get(
+                access_group=access_group,
+                slug='admin').id,
+            'contact_method': ContactMethod.objects.get(
+                access_group=access_group,
+                slug='internal').id,
+            'contact_topics': [ContactTopic.objects.get(
+                access_group=access_group,
+                slug='other').id],
             'checkin_date': current_datetime_utc(),
             'notes': 'Affiliation updated by batch import',
         }
@@ -423,7 +454,7 @@ class StudentTranscriptsView(BaseAPIView):
     def get(self, request, uwregid):
         try:
             transcript_data = get_transcripts_by_uwregid(uwregid)
-        except PersonNotFoundException as ex:
+        except PersonNotFoundException:
             return self.response_notfound("Unknown student")
         return self.response_ok(transcript_data)
 
@@ -513,12 +544,26 @@ class ICEligibilityView(TokenAPIView):
                          "configured")
             return Response("Eligibility type configuration is missing",
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        e_type_queryset = EligibilityType.objects.filter(slug=e_type_slug)
+        access_group_id = getattr(settings,
+                                  "COMPASS_VISITS_ACCESS_GROUP_ID", None)
+        if access_group_id:
+            e_type_queryset = e_type_queryset.filter(
+                access_group__access_group_id=access_group_id)
+
         try:
-            e_type = EligibilityType.objects.get(slug=e_type_slug)
+            e_type = e_type_queryset.get()
         except EligibilityType.DoesNotExist:
             logger.error("Cannot find EligibilityType with slug '%s' OR "
                          "settings.COMPASS_VISITS_ELIGIBILITY_SLUG is not "
-                         "configured correctly",
+                         "configured correctly (access_group_id='%s')",
+                         e_type_slug, access_group_id)
+            return Response("Eligibility type configuration is invalid",
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except EligibilityType.MultipleObjectsReturned:
+            logger.error("Multiple EligibilityType rows for slug '%s'; set "
+                         "settings.COMPASS_VISITS_ACCESS_GROUP_ID to "
+                         "disambiguate",
                          e_type_slug)
             return Response("Eligibility type configuration is invalid",
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
@@ -538,7 +583,7 @@ class StudentCourseAnalyticsView(BaseAPIView):
     '''
     def get(self, request, uwnetid, year, quarter, course_id):
         try:
-            access_group = self.get_access_group(request)
+            self.get_access_group(request)
         except AccessGroup.DoesNotExist:
             return self.response_unauthorized()
 
@@ -564,7 +609,7 @@ class StudentSigninAnalyticsView(BaseAPIView):
     '''
     def get(self, request, uwnetid):
         try:
-            access_group = self.get_access_group(request)
+            self.get_access_group(request)
         except AccessGroup.DoesNotExist:
             return self.response_unauthorized()
 

@@ -1,10 +1,12 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+from typing import ClassVar
+
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
 from compass.dao.person import get_person_by_uwregid
-from compass.dao.term import current_week
 
 
 class RADImport(models.Model):
@@ -85,7 +87,7 @@ class StudentAlertStatus(models.Model):
                                     null=True)
 
     class Meta:
-        indexes = [
+        indexes: ClassVar[list] = [
             models.Index(fields=['uwnetid'])
         ]
 
@@ -185,15 +187,17 @@ class CourseAnalyticsScores(models.Model):
             return []
 
     @classmethod
-    def get_course_alert_status(cls, netid, year, quarter, week, course_id):
-        try:
-            scores = cls.objects.get(uwnetid=netid,
-                                     week__year=year,
-                                     week__quarter=quarter,
-                                     week__week=week,
-                                     course=course_id)
+    def get_course_alert_status(cls, netid, year, quarter, course_id):
+        scores = cls.objects.filter(uwnetid=netid,
+                                    week__year=year,
+                                    week__quarter=quarter,
+                                    course=course_id)\
+            .order_by('-week__week')\
+            .first()
+
+        if scores is not None:
             return scores.is_alert_status()
-        except cls.DoesNotExist:
+        else:
             return False
 
     @classmethod
@@ -203,9 +207,8 @@ class CourseAnalyticsScores(models.Model):
         """
         person = get_person_by_uwregid(uwregid)
         netid = person.uwnetid
-        week = current_week()
 
-        for index in schedules.keys():
+        for index in schedules:
             schedule = schedules[index]
             for section in schedule['sections']:
                 course_id = (f"{section['curriculum_abbr']} "
@@ -214,7 +217,6 @@ class CourseAnalyticsScores(models.Model):
                 alert_status = cls.get_course_alert_status(netid,
                                                            schedule['year'],
                                                            schedule['quarter'],
-                                                           week,
                                                            course_id)
                 section['alert_status'] = alert_status
         return schedules

@@ -3,6 +3,7 @@
 
 
 from django.test import TestCase
+
 from compass.cache import CompassRestclientCache
 
 

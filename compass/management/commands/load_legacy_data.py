@@ -2,20 +2,28 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+import csv
+import re
+import sys
+from datetime import datetime, timezone
+from typing import ClassVar
+
 from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 from uw_person_client import UWPersonClient
 from uw_person_client.exceptions import PersonNotFoundException
 from uw_pws import PWS
-from compass.models import (
-    Contact, AppUser, AccessGroup, Student,
-    ContactType, ContactMethod, ContactTopic)
-from datetime import datetime, timezone
 from uw_sws.dao import SWS_TIMEZONE
-import argparse
-import sys
-import csv
-import re
+
+from compass.models import (
+    AccessGroup,
+    AppUser,
+    Contact,
+    ContactMethod,
+    ContactTopic,
+    ContactType,
+    Student,
+)
 
 
 class Command(BaseCommand):
@@ -49,7 +57,7 @@ class Command(BaseCommand):
         #    Career Computer Lab
         excluded_re = re.compile('^(IC[- ].*'
                                  '|Classroom Presentation'
-                                 '|Career Computer Lab)', re.I)
+                                 '|Career Computer Lab)', re.IGNORECASE)
 
         n = 0
         count = options['count']
@@ -90,31 +98,29 @@ class Command(BaseCommand):
 
             # add transaction id if not present
             if trans_id and not contact.trans_id:
-                self._error("Contact gets trans_id {}".format(transid))
+                self._error(f"Contact gets trans_id {trans_id}")
                 contact.trans_id = trans_id
                 contact.save()
 
             return
         except PersonNotFoundException:
             self.unknown_student_ids.add(int(apt.student_no))
-            self._error("Appointment {}: student number {} not found".format(
-                apt.ID, student_number))
+            self._error(f"Appointment {apt.ID}: student number {student_number} not found")
             return
         except ValueError as ex:
-            self._error("SKIP ID {}: {}".format(apt.ID, ex))
+            self._error(f"SKIP ID {apt.ID}: {ex}")
             return
         except Contact.DoesNotExist:
             # fall through to create new Contact
             pass
 
-        self._error("Create Contact: {}, {}, {}".format(
-            app_user, student, checkin_date))
+        self._error(f"Create Contact: {app_user}, {student}, {checkin_date}")
 
         contact = Contact(
             app_user=app_user, student=student, checkin_date=checkin_date,
             contact_type=self._get_contact_type(apt.Contact_Type),
             contact_method=self._get_contact_method(apt),
-            noshow=True if apt.NoShow.upper() == 'Y' else False,
+            noshow=apt.NoShow.upper() == 'Y',
             trans_id=trans_id, notes=apt.Notes,
             actions=apt.Actions, source=apt.Source)
 
@@ -135,7 +141,7 @@ class Command(BaseCommand):
             except ValueError:
                 pass
 
-        app_user, created = AppUser.objects.get_or_create(uwnetid=netid)
+        app_user, _ = AppUser.objects.get_or_create(uwnetid=netid)
         return app_user
 
     def _get_student(self, student_number):
@@ -152,13 +158,13 @@ class Command(BaseCommand):
             syskey = person.student.system_key
             self._student_syskey[student_number] = syskey
 
-        student, created = Student.objects.get_or_create(system_key=syskey)
+        student, _ = Student.objects.get_or_create(system_key=syskey)
         return student
 
     def _get_checkin_date(self, apt):
-        naive_date = datetime.strptime(apt.Date, '%Y-%m-%d %H:%M:%S.%f')
+        naive_date = datetime.strptime(apt.Date, '%Y-%m-%d %H:%M:%S.%f')  # noqa: DTZ007
         date = naive_date.replace(tzinfo=SWS_TIMEZONE)
-        time = datetime.strptime(apt.Time_In, '%H:%M:%S')
+        time = datetime.strptime(apt.Time_In, '%H:%M:%S')  # noqa: DTZ007
         return date.replace(
             hour=time.hour,
             minute=time.minute,
@@ -174,15 +180,15 @@ class Command(BaseCommand):
 
     def _get_contact_type(self, contact):
         mapping = [
-            (re.compile('^Appointment$', re.I),
+            (re.compile('^Appointment$', re.IGNORECASE),
              'Appointment'),
-            (re.compile('^Admin Notes$', re.I),
+            (re.compile('^Admin Notes$', re.IGNORECASE),
              'Admin'),
-            (re.compile('^Notes$', re.I),
+            (re.compile('^Notes$', re.IGNORECASE),
              'Advisor'),
             (re.compile('^(Event[/ ]Workshop'
                         '|ECC Meeting or Event'
-                        '|ECC Event)$', re.I),
+                        '|ECC Event)$', re.IGNORECASE),
              'Event/Workshop')]
 
         if contact:
@@ -193,21 +199,21 @@ class Command(BaseCommand):
         return self._get_contact_type_model('Quick Question')
 
     def _get_contact_type_model(self, name):
-        contact_type, created = ContactType.objects.get_or_create(
+        contact_type, _ = ContactType.objects.get_or_create(
             access_group=self.access_group, name=name, slug=slugify(name))
 
         return contact_type
 
     def _get_contact_method(self, apt):
         mapping = [
-            (re.compile('^Telephone$', re.I),
+            (re.compile('^Telephone$', re.IGNORECASE),
              'Telephone'),
-            (re.compile('^Notes$', re.I),
+            (re.compile('^Notes$', re.IGNORECASE),
              'Internal'),
             (re.compile('^(Email Message'
                         '|Mass Email'
                         '|Email'
-                        '|Email Contact)$', re.I),
+                        '|Email Contact)$', re.IGNORECASE),
              'E-mail')]
 
         if apt.Contact_Type:
@@ -222,33 +228,33 @@ class Command(BaseCommand):
         return self._get_contact_method_model('In-Person')
 
     def _get_contact_method_model(self, name):
-        contact_method, created = ContactMethod.objects.get_or_create(
+        contact_method, _ = ContactMethod.objects.get_or_create(
             access_group=self.access_group, name=name, slug=slugify(name))
 
         return contact_method
 
     def _add_contact_topics(self, apt, contact):
         mapping = [
-            (re.compile('(Add/Drop Class|Academic Planning)', re.I),
+            (re.compile('(Add/Drop Class|Academic Planning)', re.IGNORECASE),
              'Academic Planning & Changes'),
-            (re.compile('Join/Affiliate', re.I),
+            (re.compile('Join/Affiliate', re.IGNORECASE),
              'Join/Affiliate'),
-            (re.compile('Academic Difficulties', re.I),
+            (re.compile('Academic Difficulties', re.IGNORECASE),
              'Academic Difficulties'),
-            (re.compile('Hardship Withdrawal', re.I),
+            (re.compile('Hardship Withdrawal', re.IGNORECASE),
              'FQD/CQD & S/NS'),
             (re.compile('(Internships|Research Opportunities'
-                        '|Career Counselling[/]Advising)', re.I),
+                        '|Career Counselling[/]Advising)', re.IGNORECASE),
              'Internships, Research, and Career Exploration'),
-            (re.compile('Graduate[/]Professional School', re.I),
+            (re.compile('Graduate[/]Professional School', re.IGNORECASE),
              'Graduate & Professional School'),
-            (re.compile('Study Abroad', re.I),
+            (re.compile('Study Abroad', re.IGNORECASE),
              'Study Abroad'),
-            (re.compile('PreMajor Extension', re.I),
+            (re.compile('PreMajor Extension', re.IGNORECASE),
              'Pre-major Extension'),
-            (re.compile('Reinstatement', re.I),
+            (re.compile('Reinstatement', re.IGNORECASE),
              'Reinstatement'),
-            (re.compile('Personal Issues', re.I),
+            (re.compile('Personal Issues', re.IGNORECASE),
              'Personal Issues'),
             (re.compile('Financial Aid'),
              'Financial Aid'),
@@ -257,7 +263,7 @@ class Command(BaseCommand):
                         '|General ED Requirements'
                         '|Computer Lab'
                         '|Exit Interview'
-                        '|Other)', re.I),
+                        '|Other)', re.IGNORECASE),
              'Other')]
 
         event_type = apt.Event_Type
@@ -277,7 +283,7 @@ class Command(BaseCommand):
             contact.contact_topics.add(self._get_topic('Other'))
 
     def _get_topic(self, name):
-        topic, created = ContactTopic.objects.get_or_create(
+        topic, _ = ContactTopic.objects.get_or_create(
             access_group=self.access_group, name=name, slug=slugify(name))
 
         return topic
@@ -287,13 +293,13 @@ class Command(BaseCommand):
         for app_user in AppUser.objects.all():
             if not self.uw_pws.valid_uwnetid(app_user.uwnetid):
                 self._error(
-                    "Person {}: invalid netid".format(app_user.uwnetid))
+                    f"Person {app_user.uwnetid}: invalid netid")
                 continue
 
             try:
                 person = self.uw_person.get_person_by_uwnetid(app_user.uwnetid)
             except PersonNotFoundException:
-                self._error("Person {}: not found".format(app_user.uwnetid))
+                self._error(f"Person {app_user.uwnetid}: not found")
                 continue
 
             for prior_netid in person.prior_uwnetids:
@@ -303,8 +309,7 @@ class Command(BaseCommand):
 
                     prior_app_user = AppUser.objects.get(uwnetid=prior_netid)
                     contacts = Contact.objects.filter(app_user=prior_app_user)
-                    self._error("Update {} contacts from {} to {}".format(
-                        contacts.count(), prior_app_user, app_user))
+                    self._error(f"Update {contacts.count()} contacts from {prior_app_user} to {app_user}")
                     contacts.update(app_user=app_user)
                     prior_netids.append(prior_app_user.uwnetid)
                 except AppUser.DoesNotExist:
@@ -312,7 +317,7 @@ class Command(BaseCommand):
 
         for netid in prior_netids:
             app_user = AppUser.objects.get(uwnetid=netid)
-            self._error("Deleting AppUser {}".format(app_user))
+            self._error(f"Deleting AppUser {app_user}")
             app_user.delete()
 
     def _add_access_group(self, contact):
@@ -322,8 +327,8 @@ class Command(BaseCommand):
         print(msg, file=sys.stderr)
 
 
-class Appointment(object):
-    APPOINTMENT_COLUMNS = [
+class Appointment:
+    APPOINTMENT_COLUMNS: ClassVar[list[str]] = [
         "ID",
         "student_no",
         "staff_id",

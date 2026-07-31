@@ -2,26 +2,29 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+from datetime import timezone
+from typing import ClassVar
+
+from rest_framework import serializers
+
 from compass.models import (
-    Student,
-    AppUser,
     AccessGroup,
+    Affiliation,
+    AppUser,
+    Cohort,
     Contact,
+    ContactMethod,
     ContactTopic,
     ContactType,
-    ContactMethod,
-    Affiliation,
-    Cohort,
+    EligibilityType,
+    SpecialProgram,
+    Student,
+    StudentAffiliation,
+    StudentEligibility,
     Visit,
     VisitTutoringOption,
     VisitType,
-    StudentAffiliation,
-    StudentEligibility,
-    EligibilityType,
-    SpecialProgram,
 )
-from rest_framework import serializers
-from datetime import timezone
 
 
 class AppUserSerializer(serializers.ModelSerializer):
@@ -29,8 +32,8 @@ class AppUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AppUser
-        fields = ["id", "uwnetid", "display_name"]
-        extra_kwargs = {
+        fields: ClassVar[list] = ["id", "uwnetid", "display_name"]
+        extra_kwargs: ClassVar[dict] = {
             "uwnetid": {"validators": []},
         }
 
@@ -38,8 +41,8 @@ class AppUserSerializer(serializers.ModelSerializer):
 class AccessGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = AccessGroup
-        fields = ["id", "name", "access_group_id"]
-        extra_kwargs = {
+        fields: ClassVar[list] = ["id", "name", "access_group_id"]
+        extra_kwargs: ClassVar[dict] = {
             "name": {"validators": []},
             "access_group_id": {"validators": []},
         }
@@ -50,8 +53,8 @@ class AffiliationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Affiliation
-        fields = ["id", "access_group", "name", "slug", "active", "editable"]
-        extra_kwargs = {
+        fields: ClassVar[list] = ["id", "access_group", "name", "slug", "active", "editable"]
+        extra_kwargs: ClassVar[dict] = {
             "access_group_id": {"validators": []},
         }
 
@@ -72,7 +75,7 @@ class AffiliationSerializer(serializers.ModelSerializer):
 class CohortReadSerializer(serializers.ModelSerializer):
     class Meta:
         model = Cohort
-        fields = ["start_year", "end_year"]
+        fields: ClassVar[list] = ["start_year", "end_year"]
 
 
 class StudentAffiliationReadSerializer(serializers.ModelSerializer):
@@ -81,7 +84,7 @@ class StudentAffiliationReadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StudentAffiliation
-        fields = [
+        fields: ClassVar[list] = [
             "id",
             "student",
             "affiliation",
@@ -96,8 +99,8 @@ class ContactTopicSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ContactTopic
-        fields = ["id", "access_group", "name", "slug", "active", "editable"]
-        extra_kwargs = {
+        fields: ClassVar[list] = ["id", "access_group", "name", "slug", "active", "editable"]
+        extra_kwargs: ClassVar[dict] = {
             "access_group_id": {"validators": []},
         }
 
@@ -120,8 +123,8 @@ class ContactTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ContactType
-        fields = ["id", "access_group", "name", "slug", "active", "editable"]
-        extra_kwargs = {
+        fields: ClassVar[list] = ["id", "access_group", "name", "slug", "active", "editable"]
+        extra_kwargs: ClassVar[dict] = {
             "access_group_id": {"validators": []},
         }
 
@@ -144,8 +147,8 @@ class ContactMethodSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ContactMethod
-        fields = ["id", "access_group", "name", "slug", "active", "editable"]
-        extra_kwargs = {
+        fields: ClassVar[list] = ["id", "access_group", "name", "slug", "active", "editable"]
+        extra_kwargs: ClassVar[dict] = {
             "access_group_id": {"validators": []},
         }
 
@@ -186,7 +189,7 @@ class ContactReadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Contact
-        fields = [
+        fields: ClassVar[list] = [
             "id",
             "app_user",
             "student",
@@ -206,7 +209,7 @@ class ContactReadSerializer(serializers.ModelSerializer):
 class ContactWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contact
-        fields = [
+        fields: ClassVar[list] = [
             "id",
             "app_user",
             "student",
@@ -253,7 +256,7 @@ class ContactWriteSerializer(serializers.ModelSerializer):
 class StudentWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ["id", "system_key", "programs"]
+        fields: ClassVar[list] = ["id", "system_key", "programs"]
 
     def create(self, validated_data):
         student_programs = validated_data["programs"]
@@ -279,8 +282,8 @@ class VisitTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VisitType
-        fields = ["id", "access_group", "name", "slug", "editable"]
-        extra_kwargs = {
+        fields: ClassVar[list] = ["id", "access_group", "name", "slug", "editable"]
+        extra_kwargs: ClassVar[dict] = {
             "access_group_id": {"validators": []},
         }
 
@@ -329,7 +332,7 @@ class VisitReadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Visit
-        fields = [
+        fields: ClassVar[list] = [
             "id",
             "student",
             "visit_type",
@@ -345,8 +348,8 @@ class EligibilityTypeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = EligibilityType
-        fields = ["id", "access_group", "name", "slug", "editable"]
-        extra_kwargs = {
+        fields: ClassVar[list] = ["id", "access_group", "name", "slug", "editable"]
+        extra_kwargs: ClassVar[dict] = {
             "access_group_id": {"validators": []},
         }
 
@@ -368,7 +371,7 @@ class StudentEligibilitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StudentEligibility
-        fields = ["id", "student", "eligibility"]
+        fields: ClassVar[list] = ["id", "student", "eligibility"]
 
 
 class SpecialProgramSerializer(serializers.ModelSerializer):
@@ -377,12 +380,12 @@ class SpecialProgramSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SpecialProgram
-        fields = [
+        fields: ClassVar[list] = [
             "id",
             "access_group",
             "program_date",
             "modified_by",
             "modified_date"]
-        extra_kwargs = {
+        extra_kwargs: ClassVar[dict] = {
             "access_group_id": {"validators": []},
         }

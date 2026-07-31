@@ -2,55 +2,60 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.urls import re_path
-from compass.admin import admin_site
 from django.conf import settings
+from django.urls import re_path
 from django.views.generic import TemplateView
-from compass.views.pages import LandingView
-from compass.views.support.contact import OMADContactAdminView
-from compass.views.support.retention import (RetentionAdminView,
-                                             RetentionManageView,
-                                             RetentionReloadAlertsView,
-                                             RetentionLoadFromFile)
-from compass.views.api.student import (
-    ICEligibilityView,
-    StudentContactsView,
-    StudentSchedulesView,
-    StudentTranscriptsView,
-    StudentAffiliationsView,
-    StudentAffiliationsImportView,
-    StudentVisitsView,
-    StudentEligibilityView,
-    StudentView,
-    StudentSearchView,
-    StudentCourseAnalyticsView,
-    StudentSigninAnalyticsView
-)
-from compass.views.api.eligibility import EligibilityView
-from compass.views.api.special_program import SpecialProgramView
+
+from compass.admin import admin_site
 from compass.views.api.access_group import AccessGroupView
-from compass.views.api.adviser import AdviserCheckInsView, AdviserCaseloadView
+from compass.views.api.adviser import AdviserCaseloadView, AdviserCheckInsView
+from compass.views.api.affiliation import AffiliationsView
+from compass.views.api.analytics import PredictionAnalytics
 from compass.views.api.contact import (
+    ContactMethodsView,
+    ContactOMADView,
     ContactTopicsView,
     ContactTypesView,
-    ContactMethodsView,
     ContactView,
-    ContactOMADView
 )
-from compass.views.api.visit import (VisitOMADView,
-                                     ActiveICVisitListView,
-                                     VisitSearchView,
-                                     ICVisitOptionsView,
-                                     ICVisitCreateView,
-                                     ICVisitUpdateView,
-                                     ICVisitFileView,
-                                     ExternalStudentVisitView)
-from compass.views.api.settings import SettingsView
+from compass.views.api.eligibility import EligibilityView
 from compass.views.api.photo import PhotoView
-from compass.views.api.affiliation import AffiliationsView
+from compass.views.api.settings import SettingsView
+from compass.views.api.special_program import SpecialProgramView
+from compass.views.api.student import (
+    ICEligibilityView,
+    StudentAffiliationsImportView,
+    StudentAffiliationsView,
+    StudentContactsView,
+    StudentCourseAnalyticsView,
+    StudentEligibilityView,
+    StudentSchedulesView,
+    StudentSearchView,
+    StudentSigninAnalyticsView,
+    StudentTranscriptsView,
+    StudentView,
+    StudentVisitsView,
+)
 from compass.views.api.support import SupportView
 from compass.views.api.user_prefs import UserPreferenceView
-from compass.views.api.analytics import PredictionAnalytics
+from compass.views.api.visit import (
+    ActiveICVisitListView,
+    ExternalStudentVisitView,
+    ICVisitCreateView,
+    ICVisitFileView,
+    ICVisitOptionsView,
+    ICVisitUpdateView,
+    VisitOMADView,
+    VisitSearchView,
+)
+from compass.views.pages import LandingView
+from compass.views.support.contact import OMADContactAdminView
+from compass.views.support.retention import (
+    RetentionAdminView,
+    RetentionLoadFromFile,
+    RetentionManageView,
+    RetentionReloadAlertsView,
+)
 
 # start with an empty url array
 urlpatterns = []
@@ -125,7 +130,7 @@ urlpatterns += [
         name="student_affiliations_view",
     ),
     re_path(
-        r"^api/internal/student/affiliations/(?P<affiliation_id>[\w]+)/import/$",  # noqa
+        r"^api/internal/student/affiliations/(?P<affiliation_id>[\w]+)/import/$",
         StudentAffiliationsImportView.as_view(),
         name="student_affiliations_import_view",
     ),
