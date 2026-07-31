@@ -2,16 +2,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import csv
+from datetime import datetime, timedelta, timezone
 from io import StringIO
-from datetime import datetime, timedelta
 
-from compass.models import (Visit,
-                            Student,
-                            VisitTutoringOption,
-                            VisitType)
-
-from compass.dao.person import get_person_by_student_number
 from compass.dao.compass_visits import get_compass_visits_access_group
+from compass.dao.person import get_person_by_student_number
+from compass.models import Student, Visit, VisitTutoringOption, VisitType
 
 
 def validate_visit_upload_file(file):
@@ -41,7 +37,7 @@ def validate_visit_upload_file(file):
             except ValueError:
                 return (False, f'Invalid duration_minutes in row {i}')
     except Exception as e:
-        return (False, f'Error processing file: {str(e)}')
+        return (False, f'Error processing file: {e!s}')
     return (True, '')
 
 
@@ -92,7 +88,9 @@ def _get_datetimes(duration_minutes, date):
     Returns a tuple of (start_datetime, end_datetime)
     """
 
-    start_datetime = datetime.strptime(date, "%Y-%m-%d")
+    start_datetime = datetime.strptime(date, "%Y-%m-%d").replace(
+        tzinfo=timezone.utc
+    )
     end_datetime = start_datetime + timedelta(minutes=duration_minutes)
     return start_datetime, end_datetime
 

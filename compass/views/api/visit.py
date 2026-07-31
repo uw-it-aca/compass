@@ -15,6 +15,7 @@ from compass.dao.compass_visits import (
     admin_delete_visit,
     admin_update_visit,
     get_admin_visit_list,
+    get_generic_visit_options,
     get_visit_options,
 )
 from compass.dao.person import (

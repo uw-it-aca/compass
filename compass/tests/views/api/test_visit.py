@@ -3,8 +3,7 @@
 
 
 from datetime import UTC, datetime
-from io import BytesIO
-from unittest.mock import MagicMock, patch, call
+from unittest.mock import MagicMock, call, patch
 
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
@@ -271,7 +270,7 @@ class VisitAPITest(ApiTest):
         }
         compass_visits.admin_create_visit(data)
         # Check the Visit object passed to CompassVisits.admin_create_visit
-        args, kwargs = mock_admin_create_visit.call_args
+        args, _kwargs = mock_admin_create_visit.call_args
         visit_arg = args[0]
         assert visit_arg.student_syskey == data["student_syskey"]
         assert visit_arg.program_area == data["program_area"]
@@ -589,7 +588,7 @@ class VisitAPITest(ApiTest):
         mixin.response_ok.assert_called_once_with([{'id': 2}])
 
     def test_external_visit_view(self):
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
         response = self.get_response('external_student_visit_view',

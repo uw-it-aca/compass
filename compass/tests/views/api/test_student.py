@@ -154,7 +154,7 @@ class StudentContactsAPITest(ApiTest):
 class StudentVisitsAPITest(ApiTest):
     def setUp(self):
         super().setUp()
-        AccessGroup.objects.create(
+        ag = AccessGroup.objects.create(
             name="Test Group", access_group_id="u_astra_group1")
 
         student = Student.objects.create(system_key="532353230")

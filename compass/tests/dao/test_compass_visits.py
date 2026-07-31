@@ -2,24 +2,26 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from compass.tests import CompassTestCase
+
 from django.core.exceptions import ImproperlyConfigured
-from compass.dao.compass_visits import (get_visits_for_student,
-                                        get_admin_visit_list,
-                                        get_visit_options,
-                                        admin_create_visit,
-                                        admin_update_visit,
-                                        admin_delete_visit,
-                                        get_compass_visits_access_group)
-from uw_compass_visits.models import Visit
-from compass.models import AccessGroup
 from restclients_core.exceptions import DataFailureException
-import datetime
+
+from compass.dao.compass_visits import (
+    admin_create_visit,
+    admin_delete_visit,
+    admin_update_visit,
+    get_admin_visit_list,
+    get_compass_visits_access_group,
+    get_visit_options,
+    get_visits_for_student,
+)
+from compass.models import AccessGroup
+from compass.tests import CompassTestCase
 
 
 class CompassVisitsDaoTest(CompassTestCase):
     def setUp(self):
-        super(CompassVisitsDaoTest, self).setUp()
+        super().setUp()
         ag = AccessGroup(name="OMAD", access_group_id="u_astra_group1")
         ag.save()
 
@@ -86,9 +88,7 @@ class CompassVisitsDaoTest(CompassTestCase):
         access_group = get_compass_visits_access_group()
         self.assertIsNotNone(access_group)
         self.assertEqual(access_group.name, "OMAD")
-        with self.settings(COMPASS_VISITS_ACCESS_GROUP_NAME=None):
-            with self.assertRaises(ImproperlyConfigured):
-                get_compass_visits_access_group()
-        with self.settings(COMPASS_VISITS_ACCESS_GROUP_NAME="OTHER_GROUP"):
-            with self.assertRaises(ImproperlyConfigured):
-                get_compass_visits_access_group()
+        with self.settings(COMPASS_VISITS_ACCESS_GROUP_NAME=None), self.assertRaises(ImproperlyConfigured):
+            get_compass_visits_access_group()
+        with self.settings(COMPASS_VISITS_ACCESS_GROUP_NAME="OTHER_GROUP"), self.assertRaises(ImproperlyConfigured):
+            get_compass_visits_access_group()

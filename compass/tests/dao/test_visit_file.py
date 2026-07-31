@@ -2,25 +2,24 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from compass.tests import CompassTestCase
-from compass.dao.visit_file import (validate_visit_upload_file,
-                                    _get_datetimes,
-                                    _get_student_by_student_number,
-                                    create_visits_from_file,
-                                    get_visit_export)
-from compass.models import (AccessGroup,
-                            VisitType,
-                            VisitTutoringOption,
-                            Student,
-                            Visit)
 from datetime import datetime, timezone
 from io import BytesIO
+
+from compass.dao.visit_file import (
+    _get_datetimes,
+    _get_student_by_student_number,
+    create_visits_from_file,
+    get_visit_export,
+    validate_visit_upload_file,
+)
+from compass.models import AccessGroup, Student, Visit, VisitTutoringOption, VisitType
+from compass.tests import CompassTestCase
 
 
 class VisitFileDAOFunctionsTest(CompassTestCase):
 
     def setUp(self):
-        super(VisitFileDAOFunctionsTest, self).setUp()
+        super().setUp()
         ag = AccessGroup(name="OMAD", access_group_id="omad_group")
         ag.save()
         vt = VisitType(name="IC Drop-In Tutoring", access_group=ag)

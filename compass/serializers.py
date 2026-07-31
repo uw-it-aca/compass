@@ -305,8 +305,8 @@ class VisitTutoringOptionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = VisitTutoringOption
-        fields = ["id", "access_group", "name", "slug", "editable"]
-        extra_kwargs = {
+        fields: ClassVar[list] = ["id", "access_group", "name", "slug", "editable"]
+        extra_kwargs: ClassVar[dict] = {
             "access_group_id": {"validators": []},
         }
 

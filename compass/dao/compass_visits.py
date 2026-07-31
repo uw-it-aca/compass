@@ -3,12 +3,12 @@
 
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+from restclients_core.exceptions import DataFailureException
 from uw_compass_visits import CompassVisits
 from uw_compass_visits.models import Visit
-from restclients_core.exceptions import DataFailureException
-from compass.models import AccessGroup
-from compass.dao.person import get_students_by_system_keys
 
+from compass.dao.person import get_students_by_system_keys
+from compass.models import AccessGroup
 
 """
 This module provides functions for interacting with the Compass Visits
@@ -24,7 +24,7 @@ def get_visits_for_student(netid):
     visits = None
     try:
         visits = CompassVisits().get_visits_for_student(netid)
-    except DataFailureException as ex:
+    except DataFailureException:
         # If the student doesn't have any visits, return an empty list
         visits = []
     return visits
@@ -59,7 +59,7 @@ def get_admin_visit_list():
             visit_resp['by_programarea'].setdefault(
                 visit.program_area, []).append(visit_json)
 
-    except DataFailureException as ex:
+    except DataFailureException:
         # If there are no visits, return an empty response
         pass
     return visit_resp
@@ -72,8 +72,20 @@ def get_visit_options(uwregid):
     options = []
     try:
         options = CompassVisits().get_visit_options(uwregid)
-    except DataFailureException as ex:
+    except DataFailureException:
         # If there are no visit options, return an empty list
+        options = []
+    return options
+
+
+def get_generic_visit_options():
+    """
+    Returns a list of visit options not specific to a student.
+    """
+    options = []
+    try:
+        options = CompassVisits().get_visit_options()
+    except DataFailureException:
         options = []
     return options
 

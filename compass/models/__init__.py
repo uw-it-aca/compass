@@ -13,10 +13,10 @@ from simple_history.models import HistoricalRecords
 from uw_person_client.exceptions import PersonNotFoundException
 
 import compass.models.rad_data  # noqa: F401
-from compass.dao.term import current_term
 from compass.dao import current_datetime
 from compass.dao.group import is_group_member
 from compass.dao.person import get_appuser_by_uwnetid
+from compass.dao.term import current_term
 from compass.utils import weekdays_before
 
 
