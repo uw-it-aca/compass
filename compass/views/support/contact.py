@@ -2,21 +2,34 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.conf import settings
-from django.utils.decorators import method_decorator
-from django.views.generic import TemplateView
-from uw_saml.decorators import group_required
-
 from compass.models import OMADContactQueue
+from compass.views.support import CompassSupportAPI
 
 
-@method_decorator(group_required(settings.COMPASS_SUPPORT_GROUP),
-                  name='dispatch')
-class OMADContactAdminView(TemplateView):
-    template_name = 'omad_contact_admin.html'
+def build_omad_contact_queue():
+    return [
+        {
+            'id': c.id,
+            'created': c.created.isoformat() if c.created else None,
+            'processing_attempts': c.processing_attempts,
+            'process_attempted_date': (
+                c.process_attempted_date.isoformat()
+                if c.process_attempted_date else None
+            ),
+            'processing_error': c.processing_error,
+            'json': c.json,
+            'stack_trace': c.stack_trace,
+        }
+        for c in OMADContactQueue.objects.all().order_by('created')
+    ]
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        contacts = OMADContactQueue.objects.all()
-        context['contacts'] = contacts
-        return context
+
+class OMADContactQueueView(CompassSupportAPI):
+    '''
+    API endpoint returning queued OMAD contacts for support admins.
+
+    /api/internal/support/omad_contact_queue/
+    '''
+
+    def get(self, request):
+        return self.response_ok(build_omad_contact_queue())

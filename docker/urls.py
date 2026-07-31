@@ -1,6 +1,9 @@
 from .base_urls import *
 from django.conf.urls import include
 from django.urls import re_path
+from supporttools.urls import get_registry_urlpatterns
+
+urlpatterns += get_registry_urlpatterns()
 
 urlpatterns += [
     re_path(r'^', include('compass.urls')),

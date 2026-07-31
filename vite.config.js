@@ -1,6 +1,12 @@
 import { fileURLToPath, URL } from "url";
+import { readdirSync } from "fs";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+
+// Auto-discover all SPA tool entry points under compass_vue/support/
+const supportEntries = readdirSync("./compass_vue/support")
+  .filter((f) => f.endsWith(".js"))
+  .map((f) => `./compass_vue/support/${f}`);
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,8 +20,8 @@ export default defineConfig({
     manifest: true,
     rollupOptions: {
       input: [
-        // list all entry points
         "./compass_vue/main.js",
+        ...supportEntries,
       ],
     },
     outDir: "./compass/static/", // relative path to django's static directory

@@ -18,6 +18,7 @@ from compass.views.api.contact import (
     ContactTypesView,
     ContactView,
 )
+from compass.views.support.contact import OMADContactQueueView
 from compass.views.api.eligibility import EligibilityView
 from compass.views.api.photo import PhotoView
 from compass.views.api.settings import SettingsView
@@ -40,11 +41,10 @@ from compass.views.api.support import SupportView
 from compass.views.api.user_prefs import UserPreferenceView
 from compass.views.api.visit import VisitOMADView
 from compass.views.pages import LandingView
-from compass.views.support.contact import OMADContactAdminView
 from compass.views.support.retention import (
-    RetentionAdminView,
     RetentionLoadFromFile,
     RetentionManageView,
+    RetentionPageDataView,
     RetentionReloadAlertsView,
 )
 
@@ -75,16 +75,6 @@ urlpatterns += [
     re_path(r"^robots\.txt$", TemplateView.as_view(
         template_name="robots.txt", content_type="text/plain")),
     re_path(r"^admin", admin_site.urls),
-    re_path(
-        r"^support/omad_contact/$",
-        OMADContactAdminView.as_view(),
-        name="omad_contact_admin",
-    ),
-    re_path(
-        r"^support/retention_admin/$",
-        RetentionAdminView.as_view(),
-        name="retention_admin",
-    ),
     re_path(
         r"^unauthorized-user$",
         TemplateView.as_view(template_name="unauthorized-user.html"),
@@ -218,8 +208,18 @@ urlpatterns += [
         name="retention_reload_file",
     ),
     re_path(
+        r"^api/internal/support/retention_admin/page_data/$",
+        RetentionPageDataView.as_view(),
+        name="retention_admin_page_data",
+    ),
+    re_path(
         r"^api/internal/support/$",
         SupportView.as_view(),
+    ),
+    re_path(
+        r"^api/internal/support/omad_contact_queue/$",
+        OMADContactQueueView.as_view(),
+        name="omad_contact_queue_view",
     ),
     re_path(
         r"^api/internal/userprefs/$",

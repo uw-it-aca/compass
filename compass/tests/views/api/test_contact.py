@@ -21,6 +21,7 @@ class ContactAPITest(ApiTest):
     def setUp(self):
         super().setUp()
         AccessGroup(name="OMAD", access_group_id="u_astra_group1").save()
+
         user = User.objects.create_user(username='omad-compass-api',
                                         password='12345')
         self.API_TOKEN = Token.objects.create(user=user).key
@@ -276,3 +277,33 @@ class ContactAPITest(ApiTest):
         self.assertEqual(len(contacts), 1)
         self.assertEqual(r.status_code, 201)
         self.assertEqual(contacts[0].notes, "test")
+
+    def test_omad_queue_view(self):
+        token_str = f"Token {self.API_TOKEN}"
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=token_str)
+
+        payload = {
+            "adviser_netid": "javerage",
+            "student_systemkey": "12345",
+            "contact_type": "appointment",
+            "checkin_date": "2012-01-19 17:21:00 PDT",
+            "source": "Compass"
+        }
+
+        post_response = self.post_response('contact_omad', body=payload)
+        self.assertEqual(post_response.status_code, 201)
+
+        # Use support-group session auth for the internal admin endpoint.
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        self._set_user('jadviser')
+        self._set_group('u_test_group')
+
+        response = self.get_response('omad_contact_queue_view')
+        self.assertEqual(response.status_code, 200)
+
+        queue_rows = response.json()
+        self.assertEqual(len(queue_rows), 1)
+        self.assertIn('id', queue_rows[0])
+        self.assertIn('json', queue_rows[0])

@@ -29,7 +29,7 @@ setup(
         'django-user-agents',
         'django-simple-history~=3.11',
         'django-userservice~=3.2',
-        'django-supporttools~=3.6',
+        'Django-SupportTools @ https://github.com/uw-it-aca/django-supporttools/releases/download/4.0.dev1/django_supporttools-4.0.dev1-py3-none-any.whl',
         'django-persistent-message~=1.3',
         'django-storages[google]>=1.10',
         'djangorestframework~=3.12',

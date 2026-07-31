@@ -120,6 +120,34 @@ GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
 # Where the back link should go, and how it's labeled.
 SUPPORTTOOLS_PARENT_APP = "Compass"
 SUPPORTTOOLS_PARENT_APP_URL = "/"
+SUPPORTTOOLS_VUE_ENABLED = True
+SUPPORTTOOLS_DEFAULT_SPA_VIEW = "compass.views.support.base.CompassSpaToolView"
+SUPPORTTOOLS_VIEW_REGISTRY = [
+    {
+        "id": "omad-contact-admin",
+        "section": "application",
+        "order": 10,
+        "label": "OMAD Contact Queue",
+        "url_name": "omad_contact_admin",
+        "mode": "spa",
+        "route": "/support/omad_contact/",
+        "component_key": "omad_contact_admin",
+        "vite_entry": "compass_vue/support/omad-contact-admin.js",
+        "view": "compass.views.support.base.CompassSpaToolView",
+    },
+    {
+        "id": "retention-admin",
+        "section": "application",
+        "order": 20,
+        "label": "Retention Data Admin",
+        "url_name": "retention_admin",
+        "mode": "spa",
+        "route": "/support/retention_admin/",
+        "component_key": "retention_admin",
+        "vite_entry": "compass_vue/support/retention-admin.js",
+        "view": "compass.views.support.base.CompassSpaToolView",
+    },
+]
 
 USERSERVICE_VALIDATION_MODULE = "compass.dao.person.is_overridable_uwnetid"
 USERSERVICE_OVERRIDE_AUTH_MODULE = "compass.dao.group.can_override_user"
