@@ -87,9 +87,9 @@ class VisitFileDAOFunctionsTest(CompassTestCase):
         date = "2024-01-01"
         start_datetime, end_datetime = _get_datetimes(duration_minutes, date)
         self.assertEqual(start_datetime.isoformat(),
-                         "2024-01-01T00:00:00")
+                         "2024-01-01T00:00:00+00:00")
         self.assertEqual(end_datetime.isoformat(),
-                         "2024-01-01T01:30:00")
+                         "2024-01-01T01:30:00+00:00")
 
     def test_get_student_by_student_number(self):
         student = _get_student_by_student_number("1033334")

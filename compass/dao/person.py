@@ -9,6 +9,7 @@ from django.contrib.postgres.aggregates import ArrayAgg
 from django.core.cache import cache
 from django.db.models import CharField, F, OuterRef, Subquery, Value
 from django.db.models.functions import Concat, JSONObject
+from uw_person_client.exceptions import PersonNotFoundException  # noqa: F401
 from uw_person_client.models import (
     Adviser,
     Degree,

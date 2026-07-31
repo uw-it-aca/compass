@@ -28,7 +28,8 @@ class VisitAPITest(ApiTest):
 
     def setUp(self):
         super().setUp()
-        user = User.objects.create_user(username='testuser', password='12345')
+        user = User.objects.create_user(username='compass-visits-api',
+                                        password='12345')
         ag = AccessGroup(name="OMAD", access_group_id="u_astra_group1")
         ag.save()
         self.ACCESS_GROUP = ag
