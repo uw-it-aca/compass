@@ -523,22 +523,6 @@ class VisitType(BaseAccessGroupContent):
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-    slug = models.SlugField(unique=True, max_length=50)
-    editable = models.BooleanField(default=False)
-
-
-class VisitTutoringOption(BaseAccessGroupContent):
-    """
-    Tutoring options for a visit. These are created for a given access group
-    by the access group managers. Examples include In-Person and Online.
-
-    These types are managed by the compass-visits app, new options will
-    automatically added to the VisitTutoringOption table when visits are
-    synced from the check-in system.
-    """
-
-    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50)
     editable = models.BooleanField(default=False)
@@ -554,6 +538,22 @@ class VisitTutoringOption(BaseAccessGroupContent):
                 name="compass_visittype_ag_slug_uniq",
             ),
         ]
+
+
+class VisitTutoringOption(BaseAccessGroupContent):
+    """
+    Tutoring options for a visit. These are created for a given access group
+    by the access group managers. Examples include In-Person and Online.
+
+    These types are managed by the compass-visits app, new options will
+    automatically added to the VisitTutoringOption table when visits are
+    synced from the check-in system.
+    """
+
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
+    name = models.CharField(unique=True, max_length=50)
+    slug = models.SlugField(unique=True)
+    editable = models.BooleanField(default=False)
 
 
 class OMADContactQueue(models.Model):
