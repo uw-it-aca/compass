@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('compass', '0022_radimport_prediction_filename'),
+        ('compass', '0023_access_group_scoped_uniqueness'),
     ]
 
     operations = [
