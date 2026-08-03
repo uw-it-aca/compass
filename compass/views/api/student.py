@@ -544,32 +544,27 @@ class ICEligibilityView(TokenAPIView):
                          "configured")
             return Response("Eligibility type configuration is missing",
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        e_type_queryset = EligibilityType.objects.filter(slug=e_type_slug)
-        access_group_id = getattr(settings,
-                                  "COMPASS_VISITS_ACCESS_GROUP_ID", None)
-        if access_group_id:
-            e_type_queryset = e_type_queryset.filter(
-                access_group__access_group_id=access_group_id)
 
-        try:
-            e_type = e_type_queryset.get()
-        except EligibilityType.DoesNotExist:
+        e_type_queryset = EligibilityType.objects.filter(slug=e_type_slug)
+
+        # Prefer access group name to match current settings usage.
+        access_group_name = getattr(settings,
+                                    "COMPASS_VISITS_ACCESS_GROUP_NAME", None)
+        if access_group_name:
+            e_type_queryset = e_type_queryset.filter(
+                access_group__name=access_group_name)
+
+        if not e_type_queryset.exists():
             logger.error("Cannot find EligibilityType with slug '%s' OR "
                          "settings.COMPASS_VISITS_ELIGIBILITY_SLUG is not "
-                         "configured correctly (access_group_id='%s')",
-                         e_type_slug, access_group_id)
-            return Response("Eligibility type configuration is invalid",
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        except EligibilityType.MultipleObjectsReturned:
-            logger.error("Multiple EligibilityType rows for slug '%s'; set "
-                         "settings.COMPASS_VISITS_ACCESS_GROUP_ID to "
-                         "disambiguate",
-                         e_type_slug)
+                         "configured correctly (access_group_name='%s')",
+                         e_type_slug, access_group_name)
             return Response("Eligibility type configuration is invalid",
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         student_is_eligible = StudentEligibility.objects.filter(
-            student__system_key=systemkey, eligibility=e_type).exists()
+            student__system_key=systemkey,
+            eligibility__in=e_type_queryset).exists()
         return Response({"eligible": student_is_eligible},
                         status=status.HTTP_200_OK)
 
