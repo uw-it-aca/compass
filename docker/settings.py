@@ -1,6 +1,8 @@
-from .base_settings import *
-from google.oauth2 import service_account
 import os
+
+from google.oauth2 import service_account
+
+from .base_settings import *
 
 INSTALLED_APPS += [
     "compass.apps.CompassFilesConfig",
@@ -114,6 +116,14 @@ else:
     GS_LOCATION = os.getenv("STORAGE_LOCATION", "")
     GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
         "/gcs/credentials.json"
+    )
+
+    RESTCLIENTS_COMPASS_VISITS_DAO_CLASS = "Live"
+    RESTCLIENTS_COMPASS_VISITS_HOST = os.getenv(
+        "RESTCLIENTS_COMPASS_VISITS_HOST", ""
+    )
+    RESTCLIENTS_COMPASS_VISITS_AUTH_TOKEN = os.getenv(
+        "RESTCLIENTS_COMPASS_VISITS_AUTH_TOKEN", ""
     )
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
@@ -231,6 +241,7 @@ LOGGING = {
 OMAD_CONTACT_TOKEN_USER = "omad-compass-api"
 PRED_ANALYTICS_TOKEN_USER = "era-predictions-api"
 COMPASS_VISITS_TOKEN_USER = "compass-visits-api"
+
 
 # Configure which eligibility type slug (configured in the DB)
 # controls compass-visits eligibility for the Instructional Center.

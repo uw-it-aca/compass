@@ -343,6 +343,32 @@ class VisitReadSerializer(serializers.ModelSerializer):
         ]
 
 
+class ExternalVisitSerializer(serializers.ModelSerializer):
+    """Flat serializer for the compass-visits consumer (ExternalStudentVisitView).
+
+    Outputs visit_type and tutoring_option as name strings so that
+    compass-visits can construct CompassVisitModel without nested-dict issues.
+    """
+
+    visit_type = serializers.SlugRelatedField(slug_field='name',
+                                              read_only=True)
+    tutoring_option = serializers.SlugRelatedField(slug_field='name',
+                                                   read_only=True,
+                                                   allow_null=True)
+    checkin_date = serializers.DateTimeField(default_timezone=timezone.utc)
+    checkout_date = serializers.DateTimeField(default_timezone=timezone.utc)
+
+    class Meta:
+        model = Visit
+        fields: ClassVar[list] = [
+            "visit_type",
+            "tutoring_option",
+            "course_code",
+            "checkin_date",
+            "checkout_date",
+        ]
+
+
 class EligibilityTypeSerializer(serializers.ModelSerializer):
     access_group = AccessGroupSerializer(many=False, read_only=False)
 

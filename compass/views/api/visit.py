@@ -39,7 +39,7 @@ from compass.models import (
     VisitTutoringOption,
     VisitType,
 )
-from compass.serializers import VisitReadSerializer
+from compass.serializers import ExternalVisitSerializer, VisitReadSerializer
 from compass.views.api import BaseAPIView, TokenAPIView
 
 logger = getLogger(__name__)
@@ -196,7 +196,12 @@ class VisitSearchMixin:
             return self.response_notfound(content)
         return Response(content, status=status.HTTP_404_NOT_FOUND)
 
-    def _visit_search_response(self, identifier):
+    def _lookup_visits(self, identifier):
+        """
+        Resolves an identifier to a student and returns the current-quarter
+        visits queryset. Returns (visits, None) on success or (None, error_response)
+        if the identifier is invalid or the student does not exist.
+        """
         student_identifier = identifier.strip().lower()
         try:
             if valid_uwnetid(student_identifier):
@@ -204,21 +209,27 @@ class VisitSearchMixin:
             elif valid_student_number(student_identifier):
                 person = get_person_by_student_number(student_identifier)
             else:
-                return self._response_badrequest('Invalid student identifier')
+                return None, self._response_badrequest(
+                    'Invalid student identifier')
         except PersonNotFoundException:
-            return self._response_notfound('Student not found')
+            return None, self._response_notfound('Student not found')
 
         system_key = person.system_key
         try:
             student = Student.objects.get(system_key=system_key)
         except Student.DoesNotExist:
-            return self._response_notfound('Student not found')
+            return None, self._response_notfound('Student not found')
 
         current_qtr_start = current_term().first_day_quarter
         visits = Visit.objects.filter(
             student=student,
             checkin_date__gte=current_qtr_start).order_by('-checkin_date')
+        return visits, None
 
+    def _visit_search_response(self, identifier):
+        visits, error = self._lookup_visits(identifier)
+        if error is not None:
+            return error
         serializer = VisitReadSerializer(visits, many=True)
         return self._response_ok(serializer.data)
 
@@ -356,4 +367,8 @@ class ExternalStudentVisitView(VisitSearchMixin, TokenAPIView):
         if settings.COMPASS_VISITS_TOKEN_USER != request.user.username:
             return Response("Unauthorized",
                             status=status.HTTP_401_UNAUTHORIZED)
-        return self._visit_search_response(identifier)
+        visits, error = self._lookup_visits(identifier)
+        if error is not None:
+            return error
+        serializer = ExternalVisitSerializer(visits, many=True)
+        return Response(serializer.data)

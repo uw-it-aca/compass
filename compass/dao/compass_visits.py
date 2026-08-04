@@ -84,7 +84,7 @@ def get_generic_visit_options():
     """
     options = []
     try:
-        options = CompassVisits().get_visit_options()
+        options = CompassVisits().get_visit_options('')
     except DataFailureException:
         options = []
     return options

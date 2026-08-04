@@ -597,12 +597,9 @@ class VisitAPITest(ApiTest):
         self.assertEqual(response.status_code, 200)
 
         self.assertEqual(len(response.data), 1)
-        self.assertEqual(response.data[0]['student'], 2)
-        self.assertEqual(response.data[0]['visit_type']['name'],
-                         "IC Drop-In Tutoring")
+        self.assertEqual(response.data[0]['visit_type'], "IC Drop-In Tutoring")
         self.assertEqual(response.data[0]['course_code'], "MATH 124")
-        self.assertEqual(response.data[0]['tutoring_option']['name'],
-                         "Option 1")
+        self.assertEqual(response.data[0]['tutoring_option'], "Option 1")
         self.assertEqual(response.data[0]['checkin_date'],
                          "2022-09-20T06:15:04Z")
         self.assertEqual(response.data[0]['checkout_date'],
