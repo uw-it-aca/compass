@@ -220,11 +220,11 @@ environmentVariablesSecrets:
     secretKey: storage-project-id
   compassVisitsHost:
     name: RESTCLIENTS_COMPASS_VISITS_HOST
-    secretName: test.compass.uw.edu-shared-secrets
+    secretName: test.compass.uw.edu-secrets
     secretKey: compass-visits-host
   compassVisitsAuthToken:
     name: RESTCLIENTS_COMPASS_VISITS_AUTH_TOKEN
-    secretName: test.compass.uw.edu-shared-secrets
+    secretName: test.compass.uw.edu-secrets
     secretKey: compass-visits-auth-token
 
 daemon:

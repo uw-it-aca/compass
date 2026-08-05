@@ -227,11 +227,11 @@ environmentVariablesSecrets:
     secretKey: storage-project-id
   compassVisitsHost:
     name: RESTCLIENTS_COMPASS_VISITS_HOST
-    secretName: compass.uw.edu-shared-secrets
+    secretName: compass.uw.edu-secrets
     secretKey: compass-visits-host
   compassVisitsAuthToken:
     name: RESTCLIENTS_COMPASS_VISITS_AUTH_TOKEN
-    secretName: compass.uw.edu-shared-secrets
+    secretName: compass.uw.edu-secrets
     secretKey: compass-visits-auth-token
 
 daemon:
