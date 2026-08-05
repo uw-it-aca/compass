@@ -115,6 +115,10 @@ externalSecrets:
           property: google-analytics-key
         - name: storage-bucket-name
           property: storage-bucket-name
+        - name: compass-visits-host
+          property: compass-visits-host
+        - name: compass-visits-auth-token
+          property: compass-visits-auth-token
     - name: test.compass.uw.edu-sql-secrets
       externalKey: compass/shared/sql-secrets
       data:
@@ -137,10 +141,6 @@ externalSecrets:
           property: person-db-database
         - name: storage-project-id
           property: storage-project-id
-        - name: compass-visits-host
-          property: compass-visits-host
-        - name: compass-visits-auth-token
-          property: compass-visits-auth-token
 
     - name: test.compass.uw.edu-gcs-credentials
       externalKey: compass/shared/gcs-credentials
