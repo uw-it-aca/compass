@@ -32,6 +32,7 @@ then
     specialprogram.json \
     student.json \
     student-affiliations.json \
+    student-eligibility.json \
     visit.json \
     visit-types.json
   do

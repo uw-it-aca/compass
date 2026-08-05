@@ -38,7 +38,16 @@ from compass.views.api.student import (
 )
 from compass.views.api.support import SupportView
 from compass.views.api.user_prefs import UserPreferenceView
-from compass.views.api.visit import VisitOMADView
+from compass.views.api.visit import (
+    ActiveICVisitListView,
+    ExternalStudentVisitView,
+    ICVisitCreateView,
+    ICVisitFileView,
+    ICVisitOptionsView,
+    ICVisitUpdateView,
+    VisitOMADView,
+    VisitSearchView,
+)
 from compass.views.pages import LandingView
 from compass.views.support.contact import OMADContactAdminView
 from compass.views.support.retention import (
@@ -227,6 +236,36 @@ urlpatterns += [
         name="user_preference_view",
     ),
     re_path(
+        r"^api/internal/visits/active_visits/$",
+        ActiveICVisitListView.as_view(),
+        name="active_ic_visit_list",
+    ),
+    re_path(
+        r"^api/internal/visits/search/(?P<identifier>[-@:\w]+)/$",
+        VisitSearchView.as_view(),
+        name="visit_search_view",
+    ),
+    re_path(
+        r'^api/internal/visit_options/(?P<uwregid>[\w]+)/$',
+        ICVisitOptionsView.as_view(),
+        name='ic_visit_options_view'
+    ),
+    re_path(
+        r"^api/internal/visits/create/$",
+        ICVisitCreateView.as_view(),
+        name="ic_visit_create_view"
+    ),
+    re_path(
+        r"^api/internal/visits/update/(?P<visit_id>[\w]+)/$",
+        ICVisitUpdateView.as_view(),
+        name="ic_visit_update_view"
+    ),
+    re_path(
+        r"^api/internal/visits/file/$",
+        ICVisitFileView.as_view(),
+        name="ic_visit_file_view"
+    ),
+    re_path(
         r"^api/v1/contact/omad/$",
         ContactOMADView.as_view(),
         name="contact_omad"
@@ -242,13 +281,18 @@ urlpatterns += [
         name="ic_eligibility"
     ),
     re_path(
+        r"^api/v1/visit/external_student/(?P<identifier>[-@:\w]+)/$",
+        ExternalStudentVisitView.as_view(),
+        name="external_student_visit_view"
+    ),
+    re_path(
         r"^api/v1/analytics/predictions/$",
         PredictionAnalytics.as_view(),
         name="prediction_analytics_view"
     ),
     # vue-router paths
     re_path(
-        r"^(checkins|student|caseload|reports|affiliations).*$",
+        r"^(checkins|student|caseload|reports|affiliations|ic-dashboard).*$",
         LandingView.as_view()
     ),
     # default landing

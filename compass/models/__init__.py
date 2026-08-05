@@ -16,6 +16,7 @@ import compass.models.rad_data  # noqa: F401
 from compass.dao import current_datetime
 from compass.dao.group import is_group_member
 from compass.dao.person import get_appuser_by_uwnetid
+from compass.dao.term import current_term
 from compass.utils import weekdays_before
 
 
@@ -491,9 +492,22 @@ class Visit(models.Model):
     visit_type = models.ForeignKey(
         "VisitType", null=True, on_delete=models.SET_NULL
     )
+    tutoring_option = models.ForeignKey(
+        "VisitTutoringOption", null=True, on_delete=models.SET_NULL
+    )
     course_code = models.CharField(max_length=64)
     checkin_date = models.DateTimeField()
     checkout_date = models.DateTimeField()
+
+    @staticmethod
+    def get_current_quarter_visits_by_student_syskey(student_syskey):
+        student = Student.objects.get(system_key=student_syskey)
+        term = current_term()
+        current_quarter_visits = Visit.objects.filter(
+            student=student,
+            checkin_date__gte=term.first_day_quarter
+        )
+        return current_quarter_visits
 
 
 class VisitType(BaseAccessGroupContent):
@@ -501,6 +515,11 @@ class VisitType(BaseAccessGroupContent):
     Type of student visit. These are created for a given access group
     by the access group managers. Examples include IC Drop-In Tutoring and
     and IC Workshop
+
+    ** Kiosk App Changes**
+    These types are now managed via the compass-visits app, new types will
+    automatically added to the VisitType table when visits are synced from
+    the check-in system.
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
@@ -517,6 +536,34 @@ class VisitType(BaseAccessGroupContent):
             models.UniqueConstraint(
                 fields=["access_group", "slug"],
                 name="compass_visittype_ag_slug_uniq",
+            ),
+        ]
+
+
+class VisitTutoringOption(BaseAccessGroupContent):
+    """
+    Tutoring options for a visit. These are created for a given access group
+    by the access group managers. Examples include In-Person and Online.
+
+    These types are managed by the compass-visits app, new options will
+    automatically added to the VisitTutoringOption table when visits are
+    synced from the check-in system.
+    """
+
+    access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
+    editable = models.BooleanField(default=False)
+
+    class Meta:
+        constraints: ClassVar[list] = [
+            models.UniqueConstraint(
+                fields=["access_group", "name"],
+                name="compass_visittutoringoption_ag_name_uniq",
+            ),
+            models.UniqueConstraint(
+                fields=["access_group", "slug"],
+                name="compass_visittutoringoption_ag_slug_uniq",
             ),
         ]
 

@@ -1,6 +1,8 @@
-from .base_settings import *
-from google.oauth2 import service_account
 import os
+
+from google.oauth2 import service_account
+
+from .base_settings import *
 
 INSTALLED_APPS += [
     "compass.apps.CompassFilesConfig",
@@ -41,6 +43,7 @@ TEMPLATES = [
                 "compass.context_processors.django_debug",
                 "compass.context_processors.auth_user",
                 "compass.context_processors.user_preferences",
+                "compass.context_processors.ic_visits_eligibility_slug",
             ],
         },
     }
@@ -113,6 +116,14 @@ else:
     GS_LOCATION = os.getenv("STORAGE_LOCATION", "")
     GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
         "/gcs/credentials.json"
+    )
+
+    RESTCLIENTS_COMPASS_VISITS_DAO_CLASS = "Live"
+    RESTCLIENTS_COMPASS_VISITS_HOST = os.getenv(
+        "RESTCLIENTS_COMPASS_VISITS_HOST", ""
+    )
+    RESTCLIENTS_COMPASS_VISITS_AUTH_TOKEN = os.getenv(
+        "RESTCLIENTS_COMPASS_VISITS_AUTH_TOKEN", ""
     )
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
@@ -231,6 +242,10 @@ OMAD_CONTACT_TOKEN_USER = "omad-compass-api"
 PRED_ANALYTICS_TOKEN_USER = "era-predictions-api"
 COMPASS_VISITS_TOKEN_USER = "compass-visits-api"
 
+
 # Configure which eligibility type slug (configured in the DB)
 # controls compass-visits eligibility for the Instructional Center.
 COMPASS_VISITS_ELIGIBILITY_SLUG = "instructional-center"
+
+# Associate Compass Visits with the OMAD access group
+COMPASS_VISITS_ACCESS_GROUP_NAME = "OMAD"

@@ -22,6 +22,7 @@ from compass.models import (
     StudentAffiliation,
     StudentEligibility,
     Visit,
+    VisitTutoringOption,
     VisitType,
 )
 
@@ -299,8 +300,33 @@ class VisitTypeSerializer(serializers.ModelSerializer):
         return instance
 
 
+class VisitTutoringOptionSerializer(serializers.ModelSerializer):
+    access_group = AccessGroupSerializer(many=False, read_only=False)
+
+    class Meta:
+        model = VisitTutoringOption
+        fields: ClassVar[list] = ["id", "access_group", "name", "slug", "editable"]
+        extra_kwargs: ClassVar[dict] = {
+            "access_group_id": {"validators": []},
+        }
+
+    def create(self, validated_data):
+        access_group = AccessGroup.objects.get(
+            access_group_id=validated_data["access_group"]["access_group_id"]
+        )
+        validated_data["access_group"] = access_group
+        return VisitTutoringOption.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get("name", instance.name)
+        instance.save()
+        return instance
+
+
 class VisitReadSerializer(serializers.ModelSerializer):
     visit_type = VisitTypeSerializer(many=False, read_only=False)
+    tutoring_option = VisitTutoringOptionSerializer(many=False,
+                                                    read_only=False)
     checkin_date = serializers.DateTimeField(default_timezone=timezone.utc)
     checkout_date = serializers.DateTimeField(default_timezone=timezone.utc)
 
@@ -310,6 +336,33 @@ class VisitReadSerializer(serializers.ModelSerializer):
             "id",
             "student",
             "visit_type",
+            "tutoring_option",
+            "course_code",
+            "checkin_date",
+            "checkout_date",
+        ]
+
+
+class ExternalVisitSerializer(serializers.ModelSerializer):
+    """Flat serializer for the compass-visits consumer (ExternalStudentVisitView).
+
+    Outputs visit_type and tutoring_option as name strings so that
+    compass-visits can construct CompassVisitModel without nested-dict issues.
+    """
+
+    visit_type = serializers.SlugRelatedField(slug_field='name',
+                                              read_only=True)
+    tutoring_option = serializers.SlugRelatedField(slug_field='name',
+                                                   read_only=True,
+                                                   allow_null=True)
+    checkin_date = serializers.DateTimeField(default_timezone=timezone.utc)
+    checkout_date = serializers.DateTimeField(default_timezone=timezone.utc)
+
+    class Meta:
+        model = Visit
+        fields: ClassVar[list] = [
+            "visit_type",
+            "tutoring_option",
             "course_code",
             "checkin_date",
             "checkout_date",

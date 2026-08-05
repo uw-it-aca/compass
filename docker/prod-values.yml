@@ -150,6 +150,10 @@ externalSecrets:
           property: person-db-database
         - name: storage-project-id
           property: storage-project-id
+        - name: compass-visits-host
+          property: compass-visits-host
+        - name: compass-visits-auth-token
+          property: compass-visits-auth-token
     - name: compass.uw.edu-gcs-credentials
       externalKey: compass/shared/gcs-credentials
       data:
@@ -221,6 +225,14 @@ environmentVariablesSecrets:
     name: STORAGE_PROJECT_ID
     secretName: compass.uw.edu-shared-secrets
     secretKey: storage-project-id
+  compassVisitsHost:
+    name: RESTCLIENTS_COMPASS_VISITS_HOST
+    secretName: compass.uw.edu-shared-secrets
+    secretKey: compass-visits-host
+  compassVisitsAuthToken:
+    name: RESTCLIENTS_COMPASS_VISITS_AUTH_TOKEN
+    secretName: compass.uw.edu-shared-secrets
+    secretKey: compass-visits-auth-token
 
 daemon:
   enabled: true

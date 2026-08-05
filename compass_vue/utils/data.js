@@ -206,8 +206,11 @@ async function getStudentAffiliations(systemkey, affiliation_id) {
   return useCustomFetch(url);
 }
 
-async function getStudentVisits(systemkey) {
-  const url = "/api/internal/student/" + systemkey + "/visits/";
+async function getStudentVisits(systemkey,current_qtr_only=false) {
+  let url = "/api/internal/student/" + systemkey + "/visits/";
+  if (current_qtr_only === true) {
+    url += "?current_qtr_only=true";
+  }
   return useCustomFetch(url);
 }
 
@@ -306,6 +309,72 @@ async function getStudentSigninAnalytics(uwnetid) {
   return useCustomFetch(url);
 }
 
+async function getActiveICVisits() {
+  const url = "/api/internal/visits/active_visits/";
+  return useCustomFetch(url);
+}
+
+async function studentVisitSearch(identifier) {
+  const url = "/api/internal/visits/search/" + identifier + "/";
+  return useCustomFetch(url);
+}
+
+async function getICVisitOptions(uwregid) {
+  const url = "/api/internal/visit_options/" + uwregid + "/";
+  return useCustomFetch(url);
+}
+
+async function createICVisit(data) {
+  const url = "/api/internal/visits/create/";
+  return useCustomFetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify(data),
+  });
+}
+
+async function updateICVisit(visitId, data) {
+  const url = "/api/internal/visits/update/" + visitId + "/";
+  return useCustomFetch(url, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json;charset=UTF-8",
+    },
+    body: JSON.stringify(data),
+  });
+}
+
+async function deleteICVisit(visitId) {
+  const url = "/api/internal/visits/update/" + visitId + "/";
+  return useCustomFetch(url, {
+    method: "DELETE",
+  });
+}
+
+async function uploadVisitFile(importOptions) {
+  const url = "/api/internal/visits/file/";
+  let formData = new FormData();
+  formData.append("file", importOptions.file);
+  formData.append("visit_type", importOptions.visit_type);
+  formData.append("tutoring_option", importOptions.tutoring_option);
+  formData.append("date", importOptions.date);
+
+  // Do not send a Content-Type header
+  return useCustomFetch(url, {
+    method: "POST",
+    body: formData,
+  });
+}
+
+async function downloadVisitFile() {
+  const url = "/api/internal/visits/file/";
+  return useCustomFetch(url, {
+    method: "GET",
+  });
+}
+
 export {
   getStudentBySearch,
   getStudentDetail,
@@ -342,4 +411,12 @@ export {
   savePreferences,
   getStudentCourseAnalytics,
   getStudentSigninAnalytics,
+  getActiveICVisits,
+  studentVisitSearch,
+  getICVisitOptions,
+  createICVisit,
+  updateICVisit,
+  deleteICVisit,
+  uploadVisitFile,
+  downloadVisitFile,
 };

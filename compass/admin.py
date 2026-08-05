@@ -1,7 +1,6 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-
 import pprint
 
 from django.contrib import admin
@@ -26,6 +25,9 @@ from compass.models import (
     EligibilityType,
     OMADContactQueue,
     Student,
+    StudentEligibility,
+    Visit,
+    VisitTutoringOption,
     VisitType,
 )
 
@@ -257,5 +259,9 @@ admin_site.register(ContactMethod, AccessGroupActiveContentAdminModel)
 admin_site.register(ContactTopic, AccessGroupActiveContentAdminModel)
 admin_site.register(Contact, ContactAdminModel)
 admin_site.register(OMADContactQueue, SAMLAdminModel)
+admin_site.register(Visit, SAMLAdminModel)
 admin_site.register(TokenProxy, SAMLAdminModel)
 admin_site.register(Session, SessionAdminModel)
+admin_site.register(StudentEligibility, SAMLAdminModel)
+admin_site.register(VisitTutoringOption, SAMLAdminModel)
+admin_site.register(VisitType, SAMLAdminModel)

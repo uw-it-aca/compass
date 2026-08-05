@@ -86,6 +86,17 @@ class BaseAPIViewTest(ApiTest):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(response.data, {"data": []})
 
+    def test_response_error(self):
+        response = self.view.response_error()
+        self.assertEqual(response.status_code,
+                         status.HTTP_500_INTERNAL_SERVER_ERROR)
+        self.assertEqual(response.data, "Error processing request")
+
+        response = self.view.response_error({"data": []})
+        self.assertEqual(response.status_code,
+                         status.HTTP_500_INTERNAL_SERVER_ERROR)
+        self.assertEqual(response.data, {"data": []})
+
     @patch('compass.models.is_group_member', return_value=True)
     @patch.object(BaseAPIView, 'valid_user_override')
     def test_access_group(self, mock_is_member, mock_is_override):

@@ -169,11 +169,11 @@ export default {
   mounted() {
     this.$refs.addAffiliationsModal.addEventListener(
       "shown.bs.modal",
-      this.clearFormErrors
+      this.clearFormErrors,
     );
     this.$refs.addAffiliationsModal.addEventListener(
       "hidden.bs.modal",
-      this.resetForm
+      this.resetForm,
     );
   },
   methods: {
@@ -196,7 +196,7 @@ export default {
       event.preventDefault();
       this.saveStudentAffiliation(
         this.person.student.system_key,
-        affiliationData
+        affiliationData,
       )
         .then((response) => {
           this.saveStudentContact(this.person.student.system_key, {
@@ -236,7 +236,7 @@ export default {
     },
     hideModal() {
       var addAffiliationsModal = Modal.getInstance(
-        document.getElementById("addAffiliationsModal")
+        document.getElementById("addAffiliationsModal"),
       );
 
       addAffiliationsModal.hide();

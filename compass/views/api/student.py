@@ -419,6 +419,9 @@ class StudentVisitsView(BaseAPIView):
     API endpoint returning a list of visits for a student
 
     /api/internal/student/[systemkey]/visits/
+
+    Optional parameters:
+    - current_qtr_only: if true, only returns visits for the current quarter
     '''
     def get(self, request, systemkey):
         try:
@@ -432,6 +435,12 @@ class StudentVisitsView(BaseAPIView):
         queryset = Visit.objects.filter(
             student__system_key=systemkey,
             visit_type__access_group=access_group).order_by('-checkin_date')
+        if request.GET.get('current_qtr_only', 'false').lower() == 'true':
+            try:
+                qtr_start = get_current_term().first_day_quarter
+                queryset = queryset.filter(checkin_date__gte=qtr_start)
+            except DataFailureException:
+                return self.response_error("Can't get current quarter")
         serializer = VisitReadSerializer(queryset, many=True)
         return self.response_ok(serializer.data)
 
@@ -466,14 +475,12 @@ class StudentEligibilityView(BaseAPIView):
             return self.response_badrequest('Invalid systemkey')
 
         eligibilities = []
-        try:
-            student = StudentEligibility.objects.get(
-                student__system_key=systemkey)
+        student = StudentEligibility.objects.filter(
+            student__system_key=systemkey).first()
+        if student:
             for e in student.eligibility.all():
                 if e.access_group == access_group:
                     eligibilities.append(EligibilityTypeSerializer(e).data)
-        except StudentEligibility.DoesNotExist:
-            pass
 
         return self.response_ok(eligibilities)
 
@@ -537,32 +544,30 @@ class ICEligibilityView(TokenAPIView):
                          "configured")
             return Response("Eligibility type configuration is missing",
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        e_type_queryset = EligibilityType.objects.filter(slug=e_type_slug)
-        access_group_id = getattr(settings,
-                                  "COMPASS_VISITS_ACCESS_GROUP_ID", None)
-        if access_group_id:
-            e_type_queryset = e_type_queryset.filter(
-                access_group__access_group_id=access_group_id)
 
-        try:
-            e_type = e_type_queryset.get()
-        except EligibilityType.DoesNotExist:
+        access_group_name = str(getattr(
+            settings, "COMPASS_VISITS_ACCESS_GROUP_NAME", "")).strip()
+        if not access_group_name:
+            logger.error("settings.COMPASS_VISITS_ACCESS_GROUP_NAME is not "
+                         "configured")
+            return Response("Eligibility type configuration is missing",
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        e_type_queryset = EligibilityType.objects.filter(
+            slug=e_type_slug,
+            access_group__name=access_group_name)
+
+        if not e_type_queryset.exists():
             logger.error("Cannot find EligibilityType with slug '%s' OR "
                          "settings.COMPASS_VISITS_ELIGIBILITY_SLUG is not "
-                         "configured correctly (access_group_id='%s')",
-                         e_type_slug, access_group_id)
-            return Response("Eligibility type configuration is invalid",
-                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        except EligibilityType.MultipleObjectsReturned:
-            logger.error("Multiple EligibilityType rows for slug '%s'; set "
-                         "settings.COMPASS_VISITS_ACCESS_GROUP_ID to "
-                         "disambiguate",
-                         e_type_slug)
+                         "configured correctly (access_group_name='%s')",
+                         e_type_slug, access_group_name)
             return Response("Eligibility type configuration is invalid",
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         student_is_eligible = StudentEligibility.objects.filter(
-            student__system_key=systemkey, eligibility=e_type).exists()
+            student__system_key=systemkey,
+            eligibility__in=e_type_queryset).exists()
         return Response({"eligible": student_is_eligible},
                         status=status.HTTP_200_OK)
 

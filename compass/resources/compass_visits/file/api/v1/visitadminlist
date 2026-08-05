@@ -1,0 +1,116 @@
+{
+  "pending_verification": [
+    {
+      "id": 1,
+      "student_syskey": "532353230",
+      "program_area": "Program Area 1",
+      "tutoring_option": "Tutoring Option 1",
+      "writing_service": "Writing Service 1",
+      "course": "Course 1",
+      "check_in_date": "2024-01-01T00:00:00",
+      "check_out_date": null,
+      "is_verified": false
+    },
+    {
+      "id": 4,
+      "student_syskey": "888777333",
+      "program_area": "Program Area 3",
+      "tutoring_option": "Tutoring Option 4",
+      "writing_service": "Writing Service 4",
+      "course": "Course 4",
+      "check_in_date": "2024-01-04T00:00:00",
+      "check_out_date": null,
+      "is_verified": false
+    },
+    {
+      "id": 6,
+      "student_syskey": "888777334",
+      "program_area": "Program Area 3",
+      "tutoring_option": "Tutoring Option 6",
+      "writing_service": "Writing Service 6",
+      "course": "Course 6",
+      "check_in_date": "2024-01-06T00:00:00",
+      "check_out_date": null,
+      "is_verified": false
+    },
+    {
+      "id": 7,
+      "student_syskey": "888777335",
+      "program_area": "Program Area 3",
+      "tutoring_option": "Tutoring Option 7",
+      "writing_service": "Writing Service 7",
+      "course": "Course 7",
+      "check_in_date": "2024-01-07T00:00:00",
+      "check_out_date": null,
+      "is_verified": false
+    },
+    {
+      "id": 8,
+      "student_syskey": "888777336",
+      "program_area": "Program Area 3",
+      "tutoring_option": "Tutoring Option 8",
+      "writing_service": "Writing Service 8",
+      "course": "Course 8",
+      "check_in_date": "2024-01-08T00:00:00",
+      "check_out_date": null,
+      "is_verified": false
+    },
+    {
+      "id": 9,
+      "student_syskey": "888777337",
+      "program_area": "Program Area 3",
+      "tutoring_option": "Tutoring Option 9",
+      "writing_service": "Writing Service 9",
+      "course": "Course 9",
+      "check_in_date": "2024-01-09T00:00:00",
+      "check_out_date": null,
+      "is_verified": false
+    },
+    {
+      "id": 10,
+      "student_syskey": "888777338",
+      "program_area": "Program Area 3",
+      "tutoring_option": "Tutoring Option 10",
+      "writing_service": "Writing Service 10",
+      "course": "Course 10",
+      "check_in_date": "2024-01-10T00:00:00",
+      "check_out_date": null,
+      "is_verified": false
+    }
+  ],
+  "pending_checkout": [
+    {
+      "id": 2,
+      "student_syskey": "532353230",
+      "program_area": "Program Area 2",
+      "tutoring_option": "Tutoring Option 2",
+      "writing_service": "Writing Service 2",
+      "course": "Course 2",
+      "check_in_date": "2024-01-02T00:00:00",
+      "check_out_date": null,
+      "is_verified": true
+    },
+    {
+      "id": 3,
+      "student_syskey": "532353230",
+      "program_area": "Program Area 3",
+      "tutoring_option": "Tutoring Option 3",
+      "writing_service": "Writing Service 3",
+      "course": "Course 3",
+      "check_in_date": "2024-01-03T00:00:00",
+      "check_out_date": null,
+      "is_verified": true
+    },
+    {
+      "id": 5,
+      "student_syskey": "820582050",
+      "program_area": "Program Area 3",
+      "tutoring_option": "Tutoring Option 5",
+      "writing_service": "Writing Service 5",
+      "course": "Course 5",
+      "check_in_date": "2024-01-05T00:00:00",
+      "check_out_date": null,
+      "is_verified": true
+    }
+  ]
+}

@@ -10,6 +10,7 @@ import Caseload from "@/pages/caseload.vue";
 import Student from "@/pages/student.vue";
 import Reports from "@/pages/reports.vue";
 import Affiliations from "@/pages/affiliations.vue";
+import IcDashboard from "@/pages/ic-dashboard.vue";
 
 const routes = [
   {
@@ -49,6 +50,14 @@ const routes = [
     path: "/affiliations",
     name: "affiliations",
     component: Affiliations,
+    meta: { authorize: [Role.Manager] },
+    pathToRegexpOptions: { strict: true },
+    props: true,
+  },
+  {
+    path: "/ic-dashboard",
+    name: "ic-dashboard",
+    component: IcDashboard,
     meta: { authorize: [Role.Manager] },
     pathToRegexpOptions: { strict: true },
     props: true,
