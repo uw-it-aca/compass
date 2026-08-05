@@ -67,26 +67,36 @@ def get_admin_visit_list():
 
 def get_visit_options(uwregid):
     """
-    Returns a list of visit options for the given UW regid.
+    Returns visit options for the given UW regid.
     """
-    options = []
+    options = {
+        'program_areas': [],
+        'tutoring_options': [],
+        'writing_services': [],
+        'courses': [],
+    }
     try:
         options = CompassVisits().get_visit_options(uwregid)
     except DataFailureException:
-        # If there are no visit options, return an empty list
-        options = []
+        # If there are no visit options, return an empty options payload.
+        pass
     return options
 
 
 def get_generic_visit_options():
     """
-    Returns a list of visit options not specific to a student.
+    Returns visit options not specific to a student.
     """
-    options = []
+    options = {
+        'program_areas': [],
+        'tutoring_options': [],
+        'writing_services': [],
+        'courses': [],
+    }
     try:
         options = CompassVisits().get_visit_options('')
     except DataFailureException:
-        options = []
+        pass
     return options
 
 

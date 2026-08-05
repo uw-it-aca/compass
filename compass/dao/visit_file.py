@@ -107,8 +107,10 @@ def _get_student_by_student_number(student_number):
 
 
 def get_visit_export():
+    access_group = get_compass_visits_access_group()
     visits = Visit.objects.select_related(
-        'student', 'visit_type', 'tutoring_option').all()
+        'student', 'visit_type', 'tutoring_option').filter(
+            access_group=access_group).order_by('checkin_date', 'id')
     output = StringIO()
     writer = csv.writer(output)
     writer.writerow(['student_syskey', 'checkin_date', 'checkout_date',

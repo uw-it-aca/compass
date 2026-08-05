@@ -545,14 +545,17 @@ class ICEligibilityView(TokenAPIView):
             return Response("Eligibility type configuration is missing",
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        e_type_queryset = EligibilityType.objects.filter(slug=e_type_slug)
+        access_group_name = str(getattr(
+            settings, "COMPASS_VISITS_ACCESS_GROUP_NAME", "")).strip()
+        if not access_group_name:
+            logger.error("settings.COMPASS_VISITS_ACCESS_GROUP_NAME is not "
+                         "configured")
+            return Response("Eligibility type configuration is missing",
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        # Prefer access group name to match current settings usage.
-        access_group_name = getattr(settings,
-                                    "COMPASS_VISITS_ACCESS_GROUP_NAME", None)
-        if access_group_name:
-            e_type_queryset = e_type_queryset.filter(
-                access_group__name=access_group_name)
+        e_type_queryset = EligibilityType.objects.filter(
+            slug=e_type_slug,
+            access_group__name=access_group_name)
 
         if not e_type_queryset.exists():
             logger.error("Cannot find EligibilityType with slug '%s' OR "

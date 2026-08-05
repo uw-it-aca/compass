@@ -551,9 +551,21 @@ class VisitTutoringOption(BaseAccessGroupContent):
     """
 
     access_group = models.ForeignKey("AccessGroup", on_delete=models.CASCADE)
-    name = models.CharField(unique=True, max_length=50)
-    slug = models.SlugField(unique=True)
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(max_length=50)
     editable = models.BooleanField(default=False)
+
+    class Meta:
+        constraints: ClassVar[list] = [
+            models.UniqueConstraint(
+                fields=["access_group", "name"],
+                name="compass_visittutoringoption_ag_name_uniq",
+            ),
+            models.UniqueConstraint(
+                fields=["access_group", "slug"],
+                name="compass_visittutoringoption_ag_slug_uniq",
+            ),
+        ]
 
 
 class OMADContactQueue(models.Model):

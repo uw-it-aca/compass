@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client
 from rest_framework.authtoken.models import Token
+from restclients_core.exceptions import DataFailureException
 
 from compass.dao.person import PersonNotFoundException
 from compass.models import (
@@ -259,6 +260,22 @@ class VisitAPITest(ApiTest):
         self.assertEqual(len(response.data['program_areas']), 4)
         self.assertEqual(len(response.data['tutoring_options']), 3)
         self.assertEqual(len(response.data['writing_services']), 2)
+
+    @patch('compass.dao.compass_visits.CompassVisits.get_visit_options')
+    def test_get_ic_visit_options_datafailure(self, mock_get_visit_options):
+        mock_get_visit_options.side_effect = DataFailureException(
+            'compass-visits', 404, 'Not Found')
+
+        response = self.get_response(
+            'ic_visit_options_view',
+            'jadviser',
+            kwargs={"uwregid": "BADREGID"})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['program_areas'], [])
+        self.assertEqual(response.data['tutoring_options'], [])
+        self.assertEqual(response.data['writing_services'], [])
+        self.assertEqual(response.data['courses'], [])
 
     @patch('uw_compass_visits.CompassVisits.admin_create_visit')
     def test_create_visit(self, mock_admin_create_visit):

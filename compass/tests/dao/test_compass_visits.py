@@ -3,6 +3,8 @@
 
 
 
+from unittest.mock import patch
+
 from django.core.exceptions import ImproperlyConfigured
 from restclients_core.exceptions import DataFailureException
 
@@ -56,6 +58,18 @@ class CompassVisitsDaoTest(CompassTestCase):
         self.assertEqual(options['program_areas'][0]['id'], 1)
         self.assertEqual(options['program_areas'][0]['name'],
                          'Program Area 1')
+
+    @patch('compass.dao.compass_visits.CompassVisits.get_visit_options')
+    def test_get_visit_options_datafailure(self, mock_get_visit_options):
+        mock_get_visit_options.side_effect = DataFailureException(
+            'compass-visits', 404, 'Not Found')
+        options = get_visit_options('any-regid')
+
+        self.assertIsNotNone(options)
+        self.assertEqual(options['program_areas'], [])
+        self.assertEqual(options['tutoring_options'], [])
+        self.assertEqual(options['writing_services'], [])
+        self.assertEqual(options['courses'], [])
 
     def test_admin_create_visit(self):
         visit_data = {

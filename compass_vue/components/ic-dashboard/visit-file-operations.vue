@@ -91,7 +91,7 @@
       </div>
     </div>
   </div>
-  <! -- End of Modal -->
+  <!-- End of Modal -->
 
   <!-- Download Error -->
   <div v-if="downloadErrorResponse" class="alert alert-danger mt-3" role="alert">
@@ -145,7 +145,7 @@ export default {
   mounted() {
     this.$refs.importDataModal.addEventListener(
       "shown.bs.modal",
-      this.loadSVisitOptions,
+      this.loadvisitoptions,
     );
     this.$refs.importDataModal.addEventListener(
       "hidden.bs.modal",
@@ -156,17 +156,17 @@ export default {
     addFile(e) {
       this.importOptions.file = e.target.files[0];
     },
-    loadSVisitOptions: function () {
+    loadvisitoptions: function () {
       // Use a bad regid so courses are empty, other options should still load
       getICVisitOptions("NOCOURSESREGID")
         .then((response) => {
           if (response) {
             this.visitOptions = response;
-            this.errorResponse = null;
+            this.uploadErrorResponse = null;
           }
         })
         .catch((error) => {
-          this.errorResponse = error.data;
+          this.uploadErrorResponse = error.data;
         })
         .finally(() => {
           this.isLoadingOptions = false;

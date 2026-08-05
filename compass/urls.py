@@ -281,7 +281,7 @@ urlpatterns += [
         name="ic_eligibility"
     ),
     re_path(
-        r"^api/v1/visit/external_student/(?P<identifier>[\w]+)/$",
+        r"^api/v1/visit/external_student/(?P<identifier>[-@:\w]+)/$",
         ExternalStudentVisitView.as_view(),
         name="external_student_visit_view"
     ),
