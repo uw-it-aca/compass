@@ -83,23 +83,6 @@ def get_visit_options(uwregid):
     return options
 
 
-def get_generic_visit_options():
-    """
-    Returns visit options not specific to a student.
-    """
-    options = {
-        'program_areas': [],
-        'tutoring_options': [],
-        'writing_services': [],
-        'courses': [],
-    }
-    try:
-        options = CompassVisits().get_visit_options('')
-    except DataFailureException:
-        pass
-    return options
-
-
 def admin_create_visit(visit_data):
     """
     Creates a visit with the given visit data.  Automatically verify as it is

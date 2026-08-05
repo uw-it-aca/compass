@@ -15,7 +15,6 @@ from compass.dao.compass_visits import (
     admin_delete_visit,
     admin_update_visit,
     get_admin_visit_list,
-    get_generic_visit_options,
     get_visit_options,
 )
 from compass.dao.person import (
@@ -249,23 +248,12 @@ class VisitSearchView(VisitSearchMixin, BaseAPIView):
 class ICVisitOptionsView(BaseAPIView):
     '''
     API endpoint for retrieving IC visit options
-    /api/internal/ic/visit_options/[uwregid]
+    /api/internal/visit_options/[uwregid]/
     where [uwregid] is the UW regid of the student
     '''
 
     def get(self, request, uwregid):
         visit_options = get_visit_options(uwregid)
-        return self.response_ok(visit_options)
-
-
-class ICGenericVisitOptionsView(BaseAPIView):
-    '''
-    API endpoint for retrieving non-student specific IC visit options
-    /api/internal/ic/visit_options/
-    '''
-
-    def get(self, request):
-        visit_options = get_generic_visit_options()
         return self.response_ok(visit_options)
 
 
