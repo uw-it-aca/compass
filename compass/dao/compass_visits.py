@@ -88,9 +88,16 @@ def admin_create_visit(visit_data):
     Creates a visit with the given visit data.  Automatically verify as it is
     created by an admin user.
     """
+    student_syskey = visit_data.get('student_syskey')
+    if student_syskey and _student_has_active_visit(student_syskey):
+        raise DataFailureException(
+            'compass-visits',
+            400,
+            'Student already has an active visit')
+
     visit = Visit(
         access_group=get_compass_visits_access_group(),
-        student_syskey=visit_data.get('student_syskey'),
+        student_syskey=student_syskey,
         program_area=visit_data.get('program_area'),
         tutoring_option=visit_data.get('tutoring_option'),
         writing_service=visit_data.get('writing_service'),
@@ -98,6 +105,24 @@ def admin_create_visit(visit_data):
         is_verified=True,
     )
     return CompassVisits().admin_create_visit(visit)
+
+
+def _student_has_active_visit(student_syskey):
+    """
+    Returns True when the student appears in pending verification or
+    pending checkout visit lists.
+    """
+    try:
+        visits = CompassVisits().get_visit_admin_list()
+    except DataFailureException:
+        return False
+
+    pending_verification = visits.get('pending_verification', [])
+    pending_checkout = visits.get('pending_checkout', [])
+    for visit in pending_verification + pending_checkout:
+        if visit.student_syskey == student_syskey:
+            return True
+    return False
 
 
 def admin_update_visit(visit_id, is_verified=False, is_checked_out=False):

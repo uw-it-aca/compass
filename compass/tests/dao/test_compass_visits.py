@@ -82,6 +82,31 @@ class CompassVisitsDaoTest(CompassTestCase):
             # will fail because the mock dao doesn't support creating visits
             admin_create_visit(visit_data)
 
+    @patch('compass.dao.compass_visits.CompassVisits.get_visit_admin_list')
+    @patch('compass.dao.compass_visits.CompassVisits.admin_create_visit')
+    def test_admin_create_visit_with_active_visit(
+            self,
+            mock_admin_create_visit,
+            mock_get_visit_admin_list):
+        active_visit = type('VisitMock', (), {'student_syskey': '000043870'})
+        mock_get_visit_admin_list.return_value = {
+            'pending_verification': [active_visit],
+            'pending_checkout': [],
+        }
+
+        visit_data = {
+            "student_syskey": "000043870",
+            "program_area": "1",
+            "tutoring_option": "1",
+            "writing_service": "1"
+        }
+
+        with self.assertRaises(DataFailureException) as ex:
+            admin_create_visit(visit_data)
+
+        self.assertIn('Student already has an active visit', str(ex.exception))
+        mock_admin_create_visit.assert_not_called()
+
     def test_admin_update_visit(self):
         visit = admin_update_visit(1)
         self.assertIsNotNone(visit)
