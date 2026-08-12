@@ -21,5 +21,7 @@ class CompassRestclientCache(RestclientPymemcacheClient):
             return ONE_DAY
         elif 'gws' == service:
             return ONE_MINUTE * 15
+        elif 'compass_visits' == service:
+            return None
 
         return ONE_HOUR
