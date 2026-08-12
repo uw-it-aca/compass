@@ -297,6 +297,24 @@ class VisitAPITest(ApiTest):
         # course is not in data, should be None
         assert getattr(visit_arg, "course", None) is None
 
+    @patch('compass.views.api.visit.admin_create_visit')
+    def test_create_visit_with_active_visit(self, mock_admin_create_visit):
+        mock_admin_create_visit.side_effect = DataFailureException(
+            'compass-visits', 400, 'Student already has an active visit')
+        data = {
+            "student_syskey": "000043870",
+            "program_area": 1,
+            "tutoring_option": 1,
+            "writing_service": 1,
+        }
+
+        response = self.post_response('ic_visit_create_view',
+                                      'jadviser',
+                                      body=data)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('Student already has an active visit', response.data)
+
     def test_update_visit(self):
         visit_id = 1
         update_param = {

@@ -27,5 +27,9 @@ class TestCache(TestCase):
         gws_time = self.cache.get_cache_expiration_time('gws', '/group/')
         self.assertEqual(gws_time, 900)
 
+        compass_visits_time = self.cache.get_cache_expiration_time(
+            'compass_visits', '/api/v1/visitadminlist')
+        self.assertIsNone(compass_visits_time)
+
         other_time = self.cache.get_cache_expiration_time('other', '/other/')
         self.assertEqual(other_time, 3600)
