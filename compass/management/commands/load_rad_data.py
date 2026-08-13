@@ -2,8 +2,10 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+from datetime import datetime, timezone
 from logging import getLogger
 
+from django.conf import settings
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
@@ -118,6 +120,14 @@ class Command(BaseCommand):
                                 f"{rad_import.prediction_filename}")
             except FileNotFoundError:
                 pred_file = None
+            if pred_file is None:
+                logger.warning(
+                    f"No prediction file available for "
+                    f"{year}-{quarter}-week-{week_id}; "
+                    f"prediction scores will be NULL")
+            elif rad_import.prediction_filename:
+                self._warn_if_prediction_stale(
+                    rad_import.prediction_filename)
             import_data_from_csv(rad_week, rad_file, pred_file, reload)
         except Exception:
             logger.exception("Failed to import RAD data")
@@ -130,6 +140,22 @@ class Command(BaseCommand):
         rad_import.save()
         logger.info(f"successfully imported RAD data for "
                     f"{year}-{quarter}-week-{week_id}")
+
+    def _warn_if_prediction_stale(self, filename):
+        threshold = getattr(settings, 'STALE_PREDICTION_THRESHOLD_DAYS', 9)
+        try:
+            timestamp_str = filename.split("_predictions.csv")[0]
+            pred_time = datetime.strptime(
+                timestamp_str, "%Y-%m-%d-%H%M%S"
+            ).replace(tzinfo=timezone.utc)
+            age = datetime.now(timezone.utc) - pred_time
+            if age.days >= threshold:
+                logger.warning(
+                    f"Prediction file {filename} is {age.days} days old "
+                    f"(threshold: {threshold} days); predictions may be stale")
+        except ValueError:
+            logger.warning(
+                f"Unable to parse prediction file timestamp: {filename}")
 
     def _load_all_data(self, reload):
         files = RADStorageDao().get_analytics_file_list()
