@@ -44,27 +44,27 @@ class Command(BaseCommand):
                 year, quarter, _, week_id = options['week'].split('-')
                 if not all([year, quarter, week_id]):
                     raise ValueError(f"Invalid week: {options['week']}")
+                pred_filename = options.get('pred_filename')
+                response = self._load_week_by_year_quarter_week(
+                    year, quarter, week_id,
+                    options['reload'], pred_filename)
+                if response is not None:
+                    return response
             else:
-                try:
-                    # Has a previous import in DB, getting following week
-                    year, quarter, week_id = RADImport.get_next_import_week()
-                except RADImport.DoesNotExist:
-                    # No previous import in DB, get most recent week in bucket
-                    latest_file = RADStorageDao().get_latest_analytics_file()
-                    year, quarter, week_id = (
-                        RADStorageDao.get_year_quarter_week_from_filename(
-                            latest_file)
-                    )
-            pred_filename = options.get('pred_filename')
-            response = self._load_week_by_year_quarter_week(year,
-                                                            quarter,
-                                                            week_id,
-                                                            options['reload'],
-                                                            pred_filename)
-            if response is not None:
-                return response
-
-            # Prebuild alert status for users
+                weeks = RADStorageDao().get_unimported_weeks_from_bucket()
+                if not weeks:
+                    logger.info("No new canvas-analytics data to import")
+                    return
+                pred_filename = options.get('pred_filename')
+                errors = []
+                for year, quarter, week_id in weeks:
+                    response = self._load_week_by_year_quarter_week(
+                        year, quarter, week_id,
+                        options['reload'], pred_filename)
+                    if response is not None:
+                        errors.append(response)
+                if errors:
+                    return "\n".join(errors)
             call_command('generate_alert_status')
 
     def _load_week_by_year_quarter_week(self, year, quarter, week_id, reload,

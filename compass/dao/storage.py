@@ -129,6 +129,42 @@ class RADStorageDao:
     def compass_data_url_key(year, quarter, week):
         return f"compass_data/{year}-{quarter}-week-{week}-compass-data.csv"
 
+    def get_unimported_weeks_from_bucket(self, max_age_days=None):
+        """
+        Returns sorted list of (year, quarter, week) for all bucket files
+        that have no SUCCESS import and were created within max_age_days.
+        """
+        from compass.models.rad_data import RADImport, RADWeek
+        if max_age_days is None:
+            from django.conf import settings
+            max_age_days = getattr(settings, 'RAD_DATA_MAX_AGE_DAYS', 42)
+        cutoff = (datetime.datetime.now(tz=datetime.timezone.utc)
+                  - datetime.timedelta(days=max_age_days))
+        imported_keys = set(
+            RADImport.objects.filter(import_status=RADImport.SUCCESS)
+            .values_list('week__key', flat=True)
+        )
+        candidates = []
+        for filename in self.get_analytics_file_list():
+            try:
+                year, quarter, week = (
+                    self.get_year_quarter_week_from_filename(filename))
+                key = RADWeek.build_week_key(year, quarter, week)
+                if key in imported_keys:
+                    continue
+                url_key = f"compass_data/{filename}"
+                try:
+                    created = default_storage.get_created_time(url_key)
+                    if created < cutoff:
+                        continue
+                except Exception:
+                    pass  # include file if metadata unavailable
+                candidates.append((key, year, quarter, week))
+            except ValueError:
+                continue
+        candidates.sort()
+        return [(year, quarter, week) for _, year, quarter, week in candidates]
+
     @staticmethod
     def download_from_bucket(url_key):
         """
