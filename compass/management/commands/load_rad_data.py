@@ -70,6 +70,11 @@ class Command(BaseCommand):
     def _load_week_by_year_quarter_week(self, year, quarter, week_id, reload,
                                         pred_filename=None):
         logger.info(f"Loading RAD data for {year}-{quarter}-week-{week_id}")
+        url_key = RADStorageDao.compass_data_url_key(year, quarter, week_id)
+        if not RADStorageDao.file_exists(url_key):
+            logger.info(f"canvas-analytics file not yet available for "
+                        f"{year}-{quarter}-week-{week_id}")
+            return None
         rad_week = RADWeek.get_or_create_week(year=year,
                                               quarter=quarter,
                                               week=week_id)

@@ -122,6 +122,14 @@ class RADStorageDao:
         return files[0]["gcs_file"]
 
     @staticmethod
+    def file_exists(url_key):
+        return default_storage.exists(url_key)
+
+    @staticmethod
+    def compass_data_url_key(year, quarter, week):
+        return f"compass_data/{year}-{quarter}-week-{week}-compass-data.csv"
+
+    @staticmethod
     def download_from_bucket(url_key):
         """
         Downloads file a given url_key path from the configured bucket.
