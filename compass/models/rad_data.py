@@ -1,8 +1,10 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+from datetime import datetime, timedelta, timezone
 from typing import ClassVar
 
+from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -65,8 +67,13 @@ class RADImport(models.Model):
     def create_job(rad_week, reload=False):
         rad_import, created = (RADImport.objects.get_or_create(week=rad_week))
         if not created and not reload:
-            if rad_import.import_status in (RADImport.SUCCESS,
-                                            RADImport.STARTED):
+            if rad_import.import_status == RADImport.STARTED:
+                threshold = getattr(settings, 'STALE_JOB_THRESHOLD_HOURS', 2)
+                age = datetime.now(timezone.utc) - rad_import.created_date
+                if age < timedelta(hours=threshold):
+                    raise ValueError(f"Import already in progress for"
+                                     f" {rad_week}")
+            elif rad_import.import_status == RADImport.SUCCESS:
                 raise ValueError(f"RAD data already imported for"
                                  f" {rad_week}")
         rad_import.import_status = RADImport.STARTED
