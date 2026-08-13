@@ -20,6 +20,25 @@ def read_csv(csv_string):
     yield from reader
 
 
+def update_prediction_scores(week, pred_file):
+    """
+    Update only prediction_score for existing CourseAnalyticsScores rows
+    for the given week without re-importing canvas analytics data.
+    """
+    pred_dict = _get_prediction_dict(pred_file)
+    rows = list(CourseAnalyticsScores.objects.filter(week=week))
+    for row in rows:
+        row.prediction_score = pred_dict.get(
+            f"{row.uwnetid}_{row.course}", None)
+    updated = 0
+    for i in range(0, len(rows), BULK_CREATE_BUCKET_SIZE):
+        batch = rows[i:i + BULK_CREATE_BUCKET_SIZE]
+        CourseAnalyticsScores.objects.bulk_update(batch, ['prediction_score'])
+        updated += len(batch)
+    logger.info(
+        f"Updated prediction scores for {updated} rows in week {week}")
+
+
 def import_data_from_csv(week, csv_string, pred_file, reload=False):
     """
     Import data from CSV string into RADImport model.

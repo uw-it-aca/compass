@@ -9,7 +9,7 @@ from django.conf import settings
 from django.core.management import call_command
 from django.core.management.base import BaseCommand
 
-from compass.dao.rad_csv import import_data_from_csv
+from compass.dao.rad_csv import import_data_from_csv, update_prediction_scores
 from compass.dao.storage import RADStorageDao
 from compass.models.rad_data import RADImport, RADWeek
 
@@ -34,8 +34,13 @@ class Command(BaseCommand):
         parser.add_argument('--loadall',
                             action='store_true',
                             help="load all data found in bucket")
+        parser.add_argument('--update-predictions',
+                            action='store_true',
+                            help="update only prediction scores for a week")
 
     def handle(self, *args, **options):
+        if options['update_predictions']:
+            return self._handle_update_predictions(options)
         if options['loadall']:
             file_status = self._load_all_data(options['reload'])
             call_command('generate_alert_status')
@@ -140,6 +145,43 @@ class Command(BaseCommand):
         rad_import.save()
         logger.info(f"successfully imported RAD data for "
                     f"{year}-{quarter}-week-{week_id}")
+
+    def _handle_update_predictions(self, options):
+        if options['week']:
+            year, quarter, _, week_id = options['week'].split('-')
+        else:
+            last = (RADImport.objects
+                    .filter(import_status=RADImport.SUCCESS)
+                    .order_by('-week__key').first())
+            if last is None:
+                logger.error("No successful imports found; "
+                             "cannot update predictions")
+                return
+            year, quarter, week_id = (
+                last.week.year, last.week.quarter, last.week.week)
+        rad_week = RADWeek.get_or_create_week(
+            year=year, quarter=quarter, week=week_id)
+        pred_filename = options.get('pred_filename')
+        rad_store = RADStorageDao()
+        if pred_filename:
+            pred_file = rad_store.download_from_bucket(
+                f"prediction_data/{pred_filename}")
+        else:
+            pred_filename, pred_file = rad_store.get_latest_pred_file()
+        if pred_file is None:
+            logger.warning("No prediction file available; "
+                           "cannot update prediction scores")
+            return
+        self._warn_if_prediction_stale(pred_filename)
+        update_prediction_scores(rad_week, pred_file)
+        try:
+            rad_import = RADImport.objects.get(week=rad_week)
+            rad_import.prediction_filename = pred_filename
+            rad_import.save(update_fields=['prediction_filename',
+                                           'processed_date'])
+        except RADImport.DoesNotExist:
+            pass
+        call_command('generate_alert_status')
 
     def _warn_if_prediction_stale(self, filename):
         threshold = getattr(settings, 'STALE_PREDICTION_THRESHOLD_DAYS', 9)
