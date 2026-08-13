@@ -65,11 +65,12 @@ class RADImport(models.Model):
     def create_job(rad_week, reload=False):
         rad_import, created = (RADImport.objects.get_or_create(week=rad_week))
         if not created and not reload:
-            raise ValueError(f"RAD data already imported for"
-                             f" {rad_week}")
-        else:
-            rad_import.import_status = RADImport.STARTED
-            rad_import.save()
+            if rad_import.import_status in (RADImport.SUCCESS,
+                                            RADImport.STARTED):
+                raise ValueError(f"RAD data already imported for"
+                                 f" {rad_week}")
+        rad_import.import_status = RADImport.STARTED
+        rad_import.save()
         return rad_import
 
 
