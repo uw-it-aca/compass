@@ -57,7 +57,7 @@
               ><i class="bi bi-x-circle me-2"></i>Clear override</a
             >
 
-            <a v-else :href="signoutUrl" class="link-quiet-danger"
+            <a v-else :href="signOutUrl" class="link-quiet-danger"
               ><i class="bi bi-box-arrow-left me-2"></i>Sign out</a
             >
           </template>
