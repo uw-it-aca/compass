@@ -45,6 +45,7 @@ from compass.views.api.visit import (
     ICVisitFileView,
     ICVisitOptionsView,
     ICVisitUpdateView,
+    VisitCatalogView,
     VisitOMADView,
     VisitSearchView,
 )
@@ -274,6 +275,11 @@ urlpatterns += [
         r"^api/v1/visit/omad",
         VisitOMADView.as_view(),
         name="visit_omad"
+    ),
+    re_path(
+        r"^api/v1/visit/catalog/?$",
+        VisitCatalogView.as_view(),
+        name="visit_catalog"
     ),
     re_path(
         r"^api/v1/visit/eligibility/(?P<systemkey>[\w]+)/$",
