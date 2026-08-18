@@ -89,6 +89,9 @@ class VisitAPITest(ApiTest):
         self.assertEqual(search_resp.status_code, 401)
 
     def test_visit_catalog(self):
+        self.client = Client(
+            HTTP_USER_AGENT='Mozilla/5.0',
+            HTTP_AUTHORIZATION=f"Token {self.API_TOKEN}")
         response = self.get_response('visit_catalog')
 
         self.assertEqual(response.status_code, 200)
