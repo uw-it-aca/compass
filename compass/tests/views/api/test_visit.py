@@ -102,6 +102,16 @@ class VisitAPITest(ApiTest):
         self.assertEqual(response.data['visit_types'][0]['name'],
                          'IC Drop-In Tutoring')
 
+    def test_visit_catalog_access_group_not_configured(self):
+        self.client = Client(
+            HTTP_USER_AGENT='Mozilla/5.0',
+            HTTP_AUTHORIZATION=f"Token {self.API_TOKEN}")
+
+        with self.settings(COMPASS_VISITS_ACCESS_GROUP_NAME="MISSING"):
+            response = self.get_response('visit_catalog')
+
+        self.assertEqual(response.status_code, 501)
+
     def test_date_parse(self):
         # no checkin date specified
         self.assertIsNone(VisitOMADView()._valid_date(None))
@@ -126,10 +136,28 @@ class VisitAPITest(ApiTest):
         student = VisitOMADView()._valid_student("javerage")
         self.assertEqual(student.system_key, "532353230")
 
+    def test_valid_visit_type(self):
+        visit_type = VisitType.objects.get(name="IC Drop-In Tutoring")
+
+        self.assertEqual(
+            VisitOMADView()._valid_visit_type(
+                "ic-drop-in-tutoring", self.ACCESS_GROUP),
+            visit_type)
+        self.assertEqual(
+            VisitOMADView()._valid_visit_type(
+                "IC Drop-In Tutoring", self.ACCESS_GROUP),
+            visit_type)
+
     def test_valid_tutoring_option(self):
+        tutoring_option = VisitTutoringOption.objects.get(name="Option 1")
+
+        self.assertEqual(
+            VisitOMADView()._valid_tutoring_option(
+                "option-1", self.ACCESS_GROUP),
+            tutoring_option)
         vto = VisitOMADView()._valid_tutoring_option("Option 1",
                                                      self.ACCESS_GROUP)
-        self.assertEqual(vto.name, "Option 1")
+        self.assertEqual(vto, tutoring_option)
 
         with self.assertRaises(ValueError):
             VisitOMADView()._valid_tutoring_option("Nonexistent Option",

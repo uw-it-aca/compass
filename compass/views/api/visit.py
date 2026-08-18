@@ -138,7 +138,8 @@ class VisitOMADView(TokenAPIView):
 
     def post(self, request, contactid=None):
         try:
-            access_group = AccessGroup.objects.by_name("OMAD")
+            access_group = AccessGroup.objects.by_name(
+                settings.COMPASS_VISITS_ACCESS_GROUP_NAME)
             student = self._valid_student(request.data.get(
                 'student_netid'))
             visit_type = self._valid_visit_type(request.data.get(
@@ -177,7 +178,13 @@ class VisitCatalogView(TokenAPIView):
     """Return the Compass-owned OMAD visit catalog."""
 
     def get(self, request):
-        access_group = AccessGroup.objects.by_name("OMAD")
+        try:
+            access_group = AccessGroup.objects.by_name(
+                settings.COMPASS_VISITS_ACCESS_GROUP_NAME)
+        except AccessGroup.DoesNotExist as e:
+            return Response(repr(e),
+                            status=status.HTTP_501_NOT_IMPLEMENTED)
+
         return Response({
             "visit_types": list(
                 VisitType.objects.filter(access_group=access_group)
