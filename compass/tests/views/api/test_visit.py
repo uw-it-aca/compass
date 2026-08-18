@@ -88,6 +88,17 @@ class VisitAPITest(ApiTest):
                                         kwargs={"identifier": "javerage"})
         self.assertEqual(search_resp.status_code, 401)
 
+    def test_visit_catalog(self):
+        response = self.get_response('visit_catalog')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('visit_types', response.data)
+        self.assertIn('tutoring_options', response.data)
+        self.assertTrue(response.data['visit_types'])
+        self.assertTrue(response.data['tutoring_options'])
+        self.assertEqual(response.data['visit_types'][0]['name'],
+                         'IC Drop-In Tutoring')
+
     def test_date_parse(self):
         # no checkin date specified
         self.assertIsNone(VisitOMADView()._valid_date(None))

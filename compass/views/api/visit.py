@@ -90,30 +90,37 @@ class VisitOMADView(TokenAPIView):
             system_key=person.system_key)
         return student
 
-    def _valid_visit_type(self, name, access_group):
-        if name is None:
+    def _valid_visit_type(self, value, access_group):
+        if value is None:
             raise ValueError('Missing Visit Type')
 
         try:
-            return VisitType.objects.get(access_group=access_group, name=name)
+            return VisitType.objects.get(access_group=access_group,
+                                         slug=value)
         except VisitType.DoesNotExist:
-            raise ValueError(f'Unrecognized visit type: {name}')
+            try:
+                return VisitType.objects.get(access_group=access_group,
+                                             name=value)
+            except VisitType.DoesNotExist:
+                raise ValueError(f'Unrecognized visit type: {value}')
 
     def _valid_course(self, course_code):
         return course_code or "None"
 
-    def _valid_tutoring_option(self, tutoring_option, access_group):
+    def _valid_tutoring_option(self, value, access_group):
         # Don't require a tutoring option until we switch off the Legacy IC
-        if tutoring_option is None:
+        if value is None:
             return None
 
         try:
             return VisitTutoringOption.objects.get(
-                access_group=access_group,
-                name=tutoring_option)
+                access_group=access_group, slug=value)
         except VisitTutoringOption.DoesNotExist:
-            raise ValueError(f'Unrecognized tutoring option:'
-                             f' {tutoring_option}')
+            try:
+                return VisitTutoringOption.objects.get(
+                    access_group=access_group, name=value)
+            except VisitTutoringOption.DoesNotExist:
+                raise ValueError(f'Unrecognized tutoring option: {value}')
 
     def _valid_date(self, date_str):
         # parse checkin date
@@ -124,7 +131,7 @@ class VisitOMADView(TokenAPIView):
             dt = parser.parse(date_str,
                               tzinfos=getattr(settings, "TZINFOS", {}))
             if dt.tzinfo is None:
-                raise ValueError("Invalid check-in date, missing timezone")
+                raise ValueError("Invalid check-in date, missing timezone")-
             return dt.astimezone(UTC)
         except parser.ParserError as e:
             raise ValueError(f"Invalid check-in date: {e}")
@@ -164,6 +171,25 @@ class VisitOMADView(TokenAPIView):
         logger.info(f"IC Visit {visit.visit_type} added for "
                     f"student {student.system_key}")
         return Response(status=status.HTTP_201_CREATED)
+
+
+class VisitCatalogView(TokenAPIView):
+    """Return the Compass-owned OMAD visit catalog."""
+
+    def get(self, request):
+        access_group = AccessGroup.objects.by_name("OMAD")
+        return Response({
+            "visit_types": list(
+                VisitType.objects.filter(access_group=access_group)
+                .order_by("id")
+                .values("id", "name", "slug")
+            ),
+            "tutoring_options": list(
+                VisitTutoringOption.objects.filter(access_group=access_group)
+                .order_by("id")
+                .values("id", "name", "slug")
+            ),
+        })
 
 
 class ActiveICVisitListView(BaseAPIView):
