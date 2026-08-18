@@ -131,7 +131,7 @@ class VisitOMADView(TokenAPIView):
             dt = parser.parse(date_str,
                               tzinfos=getattr(settings, "TZINFOS", {}))
             if dt.tzinfo is None:
-                raise ValueError("Invalid check-in date, missing timezone")-
+                raise ValueError("Invalid check-in date, missing timezone")
             return dt.astimezone(UTC)
         except parser.ParserError as e:
             raise ValueError(f"Invalid check-in date: {e}")

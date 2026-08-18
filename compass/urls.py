@@ -44,8 +44,8 @@ from compass.views.api.visit import (
     ICVisitCreateView,
     ICVisitFileView,
     ICVisitOptionsView,
-    VisitCatalogView,
     ICVisitUpdateView,
+    VisitCatalogView,
     VisitOMADView,
     VisitSearchView,
 )
