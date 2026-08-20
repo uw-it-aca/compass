@@ -8,7 +8,7 @@ from uw_compass_visits import CompassVisits
 from uw_compass_visits.models import Visit
 
 from compass.dao.person import get_students_by_system_keys
-from compass.models import AccessGroup
+from compass.models import AccessGroup, VisitTutoringOption, VisitType
 
 """
 This module provides functions for interacting with the Compass Visits
@@ -40,6 +40,18 @@ def get_admin_visit_list():
     }
     try:
         visits = CompassVisits().get_visit_admin_list()
+        access_group = get_compass_visits_access_group()
+        program_area_names = dict(
+            VisitType.objects.filter(
+                access_group=access_group,
+                is_compass_visits_program_area=True,
+            ).values_list('slug', 'name')
+        )
+        tutoring_option_names = dict(
+            VisitTutoringOption.objects.filter(
+                access_group=access_group
+            ).values_list('slug', 'name')
+        )
         student_syskeys = [visit.student_syskey for visit in
                            visits['pending_verification']]
         student_syskeys += [visit.student_syskey for visit in
@@ -50,14 +62,23 @@ def get_admin_visit_list():
         for visit in visits['pending_verification']:
             student = students_dict.get(visit.student_syskey)
             visit_json = visit.json_data()
+            visit_json['program_area'] = program_area_names.get(
+                visit.program_area, visit.program_area)
+            visit_json['tutoring_option'] = tutoring_option_names.get(
+                visit.tutoring_option, visit.tutoring_option)
             visit_json['student'] = student if student else None
             visit_resp['pending_verification'].append(visit_json)
         for visit in visits['pending_checkout']:
             visit_json = visit.json_data()
+            program_area = program_area_names.get(
+                visit.program_area, visit.program_area)
+            visit_json['program_area'] = program_area
+            visit_json['tutoring_option'] = tutoring_option_names.get(
+                visit.tutoring_option, visit.tutoring_option)
             student = students_dict.get(visit.student_syskey)
             visit_json['student'] = student if student else None
             visit_resp['by_programarea'].setdefault(
-                visit.program_area, []).append(visit_json)
+                program_area, []).append(visit_json)
 
     except DataFailureException:
         # If there are no visits, return an empty response
