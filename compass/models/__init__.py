@@ -526,6 +526,7 @@ class VisitType(BaseAccessGroupContent):
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50)
     editable = models.BooleanField(default=False)
+    is_compass_visits_program_area = models.BooleanField(default=False)
 
     class Meta:
         constraints: ClassVar[list] = [
