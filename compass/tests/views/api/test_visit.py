@@ -36,6 +36,11 @@ class VisitAPITest(ApiTest):
         self.ACCESS_GROUP = ag
         v_type = VisitType(name="IC Drop-In Tutoring", access_group=ag)
         v_type.save()
+        program_area = VisitType(
+            name="Biology",
+            access_group=ag,
+            is_compass_visits_program_area=True)
+        program_area.save()
         v_tutoring = VisitTutoringOption(
             name="Option 1", access_group=ag)
         v_tutoring.save()
@@ -64,7 +69,7 @@ class VisitAPITest(ApiTest):
     def test_api_auth(self):
         test_request = {
             "student_netid": "javerage",
-            "visit_type": "IC Drop-In Tutoring", "course_code": "CHEM 198",
+            "visit_type": "Biology", "course_code": "CHEM 198",
             "checkin_date": "2012-01-19 13:21:00 PDT",
             "checkout_date": "2012-01-19 14:52:00 PDT"
         }
@@ -97,10 +102,10 @@ class VisitAPITest(ApiTest):
         self.assertEqual(response.status_code, 200)
         self.assertIn('visit_types', response.data)
         self.assertIn('tutoring_options', response.data)
-        self.assertTrue(response.data['visit_types'])
+        self.assertEqual(len(response.data['visit_types']), 1)
         self.assertTrue(response.data['tutoring_options'])
         self.assertEqual(response.data['visit_types'][0]['name'],
-                         'IC Drop-In Tutoring')
+                 'Biology')
 
     def test_visit_catalog_access_group_not_configured(self):
         self.client = Client(
@@ -137,16 +142,20 @@ class VisitAPITest(ApiTest):
         self.assertEqual(student.system_key, "532353230")
 
     def test_valid_visit_type(self):
-        visit_type = VisitType.objects.get(name="IC Drop-In Tutoring")
+        visit_type = VisitType.objects.get(name="Biology")
 
         self.assertEqual(
             VisitOMADView()._valid_visit_type(
-                "ic-drop-in-tutoring", self.ACCESS_GROUP),
+                "biology", self.ACCESS_GROUP),
             visit_type)
         self.assertEqual(
             VisitOMADView()._valid_visit_type(
-                "IC Drop-In Tutoring", self.ACCESS_GROUP),
+                "Biology", self.ACCESS_GROUP),
             visit_type)
+
+        with self.assertRaises(ValueError):
+            VisitOMADView()._valid_visit_type(
+                "IC Drop-In Tutoring", self.ACCESS_GROUP)
 
     def test_valid_tutoring_option(self):
         tutoring_option = VisitTutoringOption.objects.get(name="Option 1")

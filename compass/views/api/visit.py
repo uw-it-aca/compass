@@ -95,12 +95,16 @@ class VisitOMADView(TokenAPIView):
             raise ValueError('Missing Visit Type')
 
         try:
-            return VisitType.objects.get(access_group=access_group,
-                                         slug=value)
+            return VisitType.objects.get(
+                access_group=access_group,
+                slug=value,
+                is_compass_visits_program_area=True)
         except VisitType.DoesNotExist:
             try:
-                return VisitType.objects.get(access_group=access_group,
-                                             name=value)
+                return VisitType.objects.get(
+                    access_group=access_group,
+                    name=value,
+                    is_compass_visits_program_area=True)
             except VisitType.DoesNotExist:
                 raise ValueError(f'Unrecognized visit type: {value}')
 
@@ -187,7 +191,9 @@ class VisitCatalogView(TokenAPIView):
 
         return Response({
             "visit_types": list(
-                VisitType.objects.filter(access_group=access_group)
+                VisitType.objects.filter(
+                    access_group=access_group,
+                    is_compass_visits_program_area=True)
                 .order_by("id")
                 .values("id", "name", "slug")
             ),
