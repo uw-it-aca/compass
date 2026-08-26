@@ -28,6 +28,11 @@ ingress:
     nginx.ingress.kubernetes.io/client-body-buffer-size: "16K"
     nginx.ingress.kubernetes.io/proxy-body-size: "20M"
 
+gateway:
+  hostnames:
+    - test.compass.uw.edu
+  maxRequestSize: 20Mi
+
 lifecycle:
   enabled: true
   preStop:

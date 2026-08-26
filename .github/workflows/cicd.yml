@@ -66,6 +66,14 @@ jobs:
 
     needs: context
 
+    permissions:
+      contents: read
+      security-events: write
+      # Coveralls may or may not need the following permissions
+      # pull-requests: write    # For PR comments
+      # statuses: write        # For commit status updates
+      # checks: write          # For check runs
+
     services:
       postgres:
         image: postgres:17
@@ -147,6 +155,13 @@ jobs:
           coverage combine
           coveralls
         continue-on-error: true
+
+      - name: Run vulnerability scan
+        id: vuln-scan
+        uses: uw-it-aca/actions/container-vuln-scan@main
+        with:
+          image_tag: ${{ needs.context.outputs.image_tag }}
+          severity: 'HIGH,CRITICAL'
 
       - name: Push Image to Repository
         if: github.event_name == 'push'

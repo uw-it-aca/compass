@@ -11,6 +11,15 @@ resources:
     memory: 256Mi
 targetAverageUtilization: 100
 
+gateway:
+  hostnames:
+    - compass.uw.edu
+  maxRequestSize: 20Mi
+  rateLimit:
+    tokens: 750
+    tokensPerFill: 500
+    fillInterval: 1s
+
 ingress:
   enabled: true
   tls:
