@@ -69,9 +69,9 @@ gcsCredentials:
 
 certs:
   mounted: true
-  certPath: /certs/compass.uw.edu-ic.cert
-  keyPath: /certs/compass.uw.edu-ic.key
-  secretName: compass.uw.edu-ic-certs
+  certPath: /certs/compass.uw.edu-uwca.cert
+  keyPath: /certs/compass.uw.edu-uwca.key
+  secretName: compass.uw.edu-uwca-certs
 
 cronjob:
   enabled: true
@@ -159,13 +159,13 @@ externalSecrets:
       data:
         - name: credentials.json
           property: credentials.json
-    - name: compass.uw.edu-ic-certs
-      externalKey: compass/prod/ic-certs
+    - name: compass.uw.edu-uwca-certs
+      externalKey: compass/prod/uwca-certs
       data:
-        - name: compass.uw.edu-ic.cert
-          property: compass.uw.edu-ic.cert
-        - name: compass.uw.edu-ic.key
-          property: compass.uw.edu-ic.key
+        - name: compass.uw.edu-uwca.cert
+          property: compass.uw.edu-uwca.cert
+        - name: compass.uw.edu-uwca.key
+          property: compass.uw.edu-uwca.key
     - name: compass.uw.edu-uw-idp-cert
       externalKey: idp-cert
       data:
@@ -191,8 +191,8 @@ environmentVariablesSecrets:
     secretKey: google-analytics-key
   samlSPCert:
     name: SP_CERT
-    secretName: compass.uw.edu-ic-certs
-    secretKey: compass.uw.edu-ic.cert
+    secretName: compass.uw.edu-uwca-certs
+    secretKey: compass.uw.edu-uwca.cert
   samlIDPCert:
     name: IDP_CERT
     secretName: compass.uw.edu-uw-idp-cert
