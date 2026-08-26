@@ -68,8 +68,8 @@ gcsCredentials:
 
 certs:
   mounted: true
-  certPath: /certs/test.compass.uw.edu-uwca.cert
-  keyPath: /certs/test.compass.uw.edu-uwca.key
+  certPath: /certs/compass.uw.edu-uwca.cert
+  keyPath: /certs/compass.uw.edu-uwca.key
   secretName: test.compass.uw.edu-uwca-certs
 
 mountedSecrets:
@@ -151,12 +151,12 @@ externalSecrets:
         - name: credentials.json
           property: credentials.json
     - name: test.compass.uw.edu-uwca-certs
-      externalKey: compass/test/uwca-certs
+      externalKey: compass/prod/uwca-certs
       data:
-        - name: test.compass.uw.edu-uwca.cert
-          property: test.compass.uw.edu-uwca.cert
-        - name: test.compass.uw.edu-uwca.key
-          property: test.compass.uw.edu-uwca.key
+        - name: compass.uw.edu-uwca.cert
+          property: compass.uw.edu-uwca.cert
+        - name: compass.uw.edu-uwca.key
+          property: compass.uw.edu-uwca.key
     - name: test.compass.uw.edu-sp-cert
       externalKey: compass/test/ic-certs
       data:
