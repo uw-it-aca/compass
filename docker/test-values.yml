@@ -70,11 +70,19 @@ certs:
   mounted: true
   certPath: /certs/test.compass.uw.edu-uwca.cert
   keyPath: /certs/test.compass.uw.edu-uwca.key
-  secretName: test.compass.uw.edu-ic-certs
+  secretName: test.compass.uw.edu-uwca-certs
+
+mountedSecrets:
+  enabled: true
+  mountPath: /ssl
+  secretName: test.compass.uw.edu-openssl-conf
 
 environmentVariables:
   - name: ENV
     value: test
+
+  - name: OPENSSL_CONF
+    value: /ssl/openssl.cnf
 
   - name: SWS_ENV
     value: PROD
@@ -147,7 +155,7 @@ externalSecrets:
       data:
         - name: credentials.json
           property: credentials.json
-    - name: test.compass.uw.edu-ic-certs
+    - name: test.compass.uw.edu-uwca-certs
       externalKey: compass/test/uwca-certs
       data:
         - name: test.compass.uw.edu-uwca.cert
@@ -164,6 +172,11 @@ externalSecrets:
       data:
         - name: uw-idp-cert
           property: cert
+    - name: test.compass.uw.edu-openssl-conf
+      externalKey: openssl-conf
+      data:
+        - name: openssl.cnf
+          property: openssl.cnf
 
 environmentVariablesSecrets:
   djangoSecret:
