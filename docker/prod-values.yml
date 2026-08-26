@@ -73,6 +73,11 @@ certs:
   keyPath: /certs/compass.uw.edu-uwca.key
   secretName: compass.uw.edu-uwca-certs
 
+mountedSecrets:
+  enabled: true
+  mountPath: /ssl
+  secretName: compass.uw.edu-openssl-conf
+
 cronjob:
   enabled: true
   jobs:
@@ -84,6 +89,9 @@ cronjob:
 environmentVariables:
   - name: ENV
     value: prod
+
+  - name: OPENSSL_CONF
+    value: /ssl/openssl.cnf
 
   - name: SWS_ENV
     value: PROD
@@ -167,6 +175,11 @@ externalSecrets:
       data:
         - name: uw-idp-cert
           property: cert
+    - name: compass.uw.edu-openssl-conf
+      externalKey: openssl-conf
+      data:
+        - name: openssl.cnf
+          property: openssl.cnf
 
 environmentVariablesSecrets:
   djangoSecret:
