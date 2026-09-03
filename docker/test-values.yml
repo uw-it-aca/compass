@@ -29,6 +29,7 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-body-size: "20M"
 
 gateway:
+  enabled: true
   hostnames:
     - test.compass.uw.edu
   maxRequestSize: 20Mi

@@ -12,6 +12,7 @@ resources:
 targetAverageUtilization: 100
 
 gateway:
+  enabled: true
   hostnames:
     - compass.uw.edu
   maxRequestSize: 20Mi
