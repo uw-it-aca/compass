@@ -13,12 +13,17 @@ ONE_DAY = ONE_HOUR * 24
 
 class CompassRestclientCache(RestclientPymemcacheClient):
     def get_cache_expiration_time(self, service, url, status=None):
+        if status and status != 200:
+            return ONE_MINUTE * 7
+
         if 'pws' == service:
             if re.match(r'^/idcard/v1/photo', url):
                 return ONE_DAY * 5
             return ONE_HOUR * 4
         elif 'sws' == service:
-            return ONE_DAY
+            if re.match(r'^/student/v5/term/', url):
+                return ONE_DAY
+            return ONE_MINUTE * 15
         elif 'gws' == service:
             return ONE_MINUTE * 15
 
