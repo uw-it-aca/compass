@@ -85,7 +85,7 @@
                   <option
                     v-for="option in visitOptions.program_areas"
                     :key="option.id"
-                    :value="option.id"
+                    :value="option.slug"
                   >
                     {{ option.name }}
                   </option>
@@ -102,7 +102,7 @@
                   <option
                     v-for="option in visitOptions.tutoring_options"
                     :key="option.id"
-                    :value="option.id"
+                    :value="option.slug"
                   >
                     {{ option.name }}
                   </option>
