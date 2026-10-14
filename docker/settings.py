@@ -234,3 +234,6 @@ COMPASS_VISITS_TOKEN_USER = "compass-visits-api"
 # Configure which eligibility type slug (configured in the DB)
 # controls compass-visits eligibility for the Instructional Center.
 COMPASS_VISITS_ELIGIBILITY_SLUG = "instructional-center"
+
+# Match the gateway's 20 MiB request-body limit.
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024
