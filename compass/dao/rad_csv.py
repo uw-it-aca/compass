@@ -107,7 +107,7 @@ def validate_prediction_json(pred_json):
         raise ValueError("Prediction JSON body is empty")
     for row in rows:
         if not isinstance(row, dict):
-            raise ValueError("Prediction JSON rows must be objects")
+            raise TypeError("Prediction JSON rows must be objects")
         missing = required_fields - row.keys()
         if missing:
             raise ValueError(f"Missing fields in prediction JSON:"
@@ -117,7 +117,7 @@ def validate_prediction_json(pred_json):
 def _get_prediction_rows(pred_json):
     rows = pred_json.get('body', []) if isinstance(pred_json, dict) else pred_json
     if not isinstance(rows, list):
-        raise ValueError("Prediction JSON must contain a list of rows")
+        raise TypeError("Prediction JSON must contain a list of rows")
     return rows
 
 
