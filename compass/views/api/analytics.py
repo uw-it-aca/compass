@@ -32,7 +32,7 @@ class PredictionAnalytics(TokenAPIView):
                             status=status.HTTP_401_UNAUTHORIZED)
         try:
             validate_prediction_json(request.data)
-        except ValueError as e:
+        except (TypeError, ValueError) as e:
             return Response(repr(e), status=status.HTTP_400_BAD_REQUEST)
         RADStorageDao().write_pred_file(request.data)
         return Response(status=status.HTTP_201_CREATED)

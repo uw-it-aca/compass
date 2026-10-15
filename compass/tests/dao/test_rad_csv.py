@@ -108,12 +108,18 @@ class TestRadCsv(TestCase):
                 self.assertEqual(get_pred_csv_from_json(payload), expected_csv)
 
     def test_prediction_json_invalid_format(self):
-        for payload in ([], None, "invalid", 1, {"body": None},
-                        {"body": {}}, [None], ["invalid"],
-                        [{"uw_netid": "netid123", "pred": "False"}]):
-            with self.subTest(payload=payload):
-                with self.assertRaises(ValueError):
-                    validate_prediction_json(payload)
+        for payload, expected_error in (
+                ([], ValueError),
+                (None, TypeError),
+                ("invalid", TypeError),
+                (1, TypeError),
+                ({"body": None}, TypeError),
+                ({"body": {}}, TypeError),
+                ([None], TypeError),
+                (["invalid"], TypeError),
+                ([{"uw_netid": "netid123", "pred": "False"}], ValueError)):
+            with self.subTest(payload=payload), self.assertRaises(expected_error):
+                validate_prediction_json(payload)
 
     def test_validate_prediction_json(self):
         valid_json = {
