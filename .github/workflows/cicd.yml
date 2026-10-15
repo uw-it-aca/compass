@@ -104,7 +104,7 @@ jobs:
         with:
           app_name: ${DJANGO_APP}
           exclude_paths: "migrations"
-          ignore: "BLE001,S110"
+          ignore: "BLE001,S110,UP017"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4

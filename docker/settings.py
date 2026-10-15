@@ -249,3 +249,6 @@ COMPASS_VISITS_ELIGIBILITY_SLUG = "instructional-center"
 
 # Associate Compass Visits with the OMAD access group
 COMPASS_VISITS_ACCESS_GROUP_NAME = "OMAD"
+
+# Match the gateway's 20 MiB request-body limit.
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024
