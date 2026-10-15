@@ -64,7 +64,7 @@ class RADStorageDao:
         File name set to current timestamp yyyy-mm-dd-HHMMSS_predictions.csv
 
         :param content: Content to upload
-        :type content: dict
+        :type content: list or dict
         :param override_datetime: Optional datetime to use for timestamp
         :type override_datetime: datetime.datetime
         """

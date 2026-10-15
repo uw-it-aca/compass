@@ -18,20 +18,14 @@ class PredictionAnalytics(TokenAPIView):
         """
         Endpoint to accept prediction analytics JSON
         Sample payload:
-        {
-            "body": [
-                {
-                    "": "0",
-                    "system_key": "12345",
-                    "student_no": "54321",
-                    "uw_netid": "netid123",
-                    "yrq": "20261",
-                    "course_code": "MATH 101 A",
-                    "pred": "False"
-                },
-
-            ]
-        }
+        [
+            {
+                "uw_netid": "netid123",
+                "course_code": "MATH 101 A",
+                "pred": "False"
+            }
+        ]
+        The legacy {"body": [...]} wrapper is also accepted.
         """
         if settings.PRED_ANALYTICS_TOKEN_USER != request.user.username:
             return Response("Unauthorized",

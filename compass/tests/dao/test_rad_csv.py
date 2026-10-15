@@ -92,6 +92,29 @@ class TestRadCsv(TestCase):
 
         self.assertEqual(csv_output, expected_csv)
 
+    def test_prediction_json_reduced_format(self):
+        rows = [
+            {"uw_netid": "netid123", "course_code": "MATH 101 A",
+             "pred": "False"},
+            {"uw_netid": "netid456", "course_code": "CHEM 142 B",
+             "pred": "True"},
+        ]
+        expected_csv = ("uw_netid,course_code,pred\r\n"
+                        "netid123,MATH 101 A,False\r\n"
+                        "netid456,CHEM 142 B,True\r\n")
+        for payload in (rows, {"body": rows}):
+            with self.subTest(payload=payload):
+                validate_prediction_json(payload)
+                self.assertEqual(get_pred_csv_from_json(payload), expected_csv)
+
+    def test_prediction_json_invalid_format(self):
+        for payload in ([], None, "invalid", 1, {"body": None},
+                        {"body": {}}, [None], ["invalid"],
+                        [{"uw_netid": "netid123", "pred": "False"}]):
+            with self.subTest(payload=payload):
+                with self.assertRaises(ValueError):
+                    validate_prediction_json(payload)
+
     def test_validate_prediction_json(self):
         valid_json = {
             "body": [
