@@ -102,14 +102,23 @@ def validate_prediction_json(pred_json):
     Validate prediction JSON structure.
     """
     required_fields = {'uw_netid', 'course_code', 'pred'}
-    rows = pred_json.get('body', [])
+    rows = _get_prediction_rows(pred_json)
     if not rows:
         raise ValueError("Prediction JSON body is empty")
     for row in rows:
+        if not isinstance(row, dict):
+            raise TypeError("Prediction JSON rows must be objects")
         missing = required_fields - row.keys()
         if missing:
             raise ValueError(f"Missing fields in prediction JSON:"
                              f" {', '.join(missing)}")
+
+
+def _get_prediction_rows(pred_json):
+    rows = pred_json.get('body', []) if isinstance(pred_json, dict) else pred_json
+    if not isinstance(rows, list):
+        raise TypeError("Prediction JSON must contain a list of rows")
+    return rows
 
 
 def get_pred_csv_from_json(pred_json):
@@ -122,7 +131,7 @@ def get_pred_csv_from_json(pred_json):
                                         'course_code',
                                         'pred'])
     writer.writeheader()
-    for row in pred_json.get('body', []):
+    for row in _get_prediction_rows(pred_json):
         writer.writerow({
             'uw_netid': row['uw_netid'],
             'course_code': row['course_code'],
