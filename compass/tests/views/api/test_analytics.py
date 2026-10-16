@@ -75,6 +75,42 @@ class AnalyticsAPITest(ApiTest):
             'BACKEND': 'django.core.files.storage.memory.InMemoryStorage',
         }
     })
+    def test_upload_reduced_format(self):
+        sample_json = [
+            {"uw_netid": "netid123", "course_code": "MATH 101 A",
+             "pred": "False"},
+            {"uw_netid": "netid456", "course_code": "CHEM 142 B",
+             "pred": "True"},
+        ]
+        token_str = f"Token {self.API_TOKEN}"
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=token_str)
+        response = self.post_response('prediction_analytics_view',
+                                      body=json.dumps(sample_json))
+        self.assertEqual(response.status_code, 201)
+        _, latest_file = RADStorageDao().get_latest_pred_file()
+        self.assertEqual(latest_file.splitlines(), [
+            "uw_netid,course_code,pred",
+            "netid123,MATH 101 A,False",
+            "netid456,CHEM 142 B,True",
+        ])
+
+    def test_invalid_prediction_payload(self):
+        token_str = f"Token {self.API_TOKEN}"
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=token_str)
+        for payload in ([], [None], {"body": "invalid"},
+                        [{"uw_netid": "netid123", "pred": "False"}]):
+            with self.subTest(payload=payload):
+                response = self.post_response('prediction_analytics_view',
+                                              body=json.dumps(payload))
+                self.assertEqual(response.status_code, 400)
+
+    @override_settings(STORAGES={
+        'default': {
+            'BACKEND': 'django.core.files.storage.memory.InMemoryStorage',
+        }
+    })
     def test_upload(self):
         rad_storage = RADStorageDao()
         sample_json = {
