@@ -3,12 +3,16 @@
 
 
 from django.test import TestCase
-from compass.dao.rad_csv import (read_csv, import_data_from_csv,
-                                 _parse_score,
-                                 get_pred_csv_from_json,
-                                 validate_prediction_json)
-from compass.models.rad_data import CourseAnalyticsScores, RADWeek
+
+from compass.dao.rad_csv import (
+    _parse_score,
+    get_pred_csv_from_json,
+    import_data_from_csv,
+    read_csv,
+    validate_prediction_json,
+)
 from compass.dao.storage import RADStorageDao
+from compass.models.rad_data import CourseAnalyticsScores, RADWeek
 
 
 class TestRadCsv(TestCase):
@@ -30,7 +34,7 @@ class TestRadCsv(TestCase):
             week = RADWeek.get_or_create_week(year=2024,
                                               quarter='spring',
                                               week=6)
-            filename, pred_file = RADStorageDao().get_latest_pred_file()
+            _, pred_file = RADStorageDao().get_latest_pred_file()
             import_data_from_csv(week, csv_string, pred_file)
             self.assertEqual(CourseAnalyticsScores.objects.count(), 4)
             self.assertEqual(CourseAnalyticsScores.objects.first().week,
@@ -87,6 +91,35 @@ class TestRadCsv(TestCase):
         expected_csv = "\r\n".join(expected_rows) + "\r\n"
 
         self.assertEqual(csv_output, expected_csv)
+
+    def test_prediction_json_reduced_format(self):
+        rows = [
+            {"uw_netid": "netid123", "course_code": "MATH 101 A",
+             "pred": "False"},
+            {"uw_netid": "netid456", "course_code": "CHEM 142 B",
+             "pred": "True"},
+        ]
+        expected_csv = ("uw_netid,course_code,pred\r\n"
+                        "netid123,MATH 101 A,False\r\n"
+                        "netid456,CHEM 142 B,True\r\n")
+        for payload in (rows, {"body": rows}):
+            with self.subTest(payload=payload):
+                validate_prediction_json(payload)
+                self.assertEqual(get_pred_csv_from_json(payload), expected_csv)
+
+    def test_prediction_json_invalid_format(self):
+        for payload, expected_error in (
+                ([], ValueError),
+                (None, TypeError),
+                ("invalid", TypeError),
+                (1, TypeError),
+                ({"body": None}, TypeError),
+                ({"body": {}}, TypeError),
+                ([None], TypeError),
+                (["invalid"], TypeError),
+                ([{"uw_netid": "netid123", "pred": "False"}], ValueError)):
+            with self.subTest(payload=payload), self.assertRaises(expected_error):
+                validate_prediction_json(payload)
 
     def test_validate_prediction_json(self):
         valid_json = {

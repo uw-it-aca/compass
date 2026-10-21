@@ -137,7 +137,7 @@
       </div>
     </div>
   </div>
-  <! -- End of Modal -->
+  <!-- End of Modal -->
 
   <!-- Download Error -->
   <div
@@ -159,13 +159,13 @@
 </template>
 
 <script>
-  import {
-    uploadVisitFile,
-    getICVisitOptions,
-    downloadVisitFile,
-  } from "@/utils/data";
+    import {
+      uploadVisitFile,
+      getICVisitOptions,
+      downloadVisitFile,
+    } from "@/utils/data";
 
-  import { Modal } from "bootstrap";
+    import { Modal } from "bootstrap";
 
   export default {
     name: "VisitFileOperations",
@@ -195,7 +195,7 @@
     mounted() {
       this.$refs.importDataModal.addEventListener(
         "shown.bs.modal",
-        this.loadSVisitOptions,
+        this.loadvisitoptions,
       );
       this.$refs.importDataModal.addEventListener(
         "hidden.bs.modal",
@@ -206,17 +206,17 @@
       addFile(e) {
         this.importOptions.file = e.target.files[0];
       },
-      loadSVisitOptions: function () {
+      loadvisitoptions: function () {
         // Use a bad regid so courses are empty, other options should still load
         getICVisitOptions("NOCOURSESREGID")
           .then((response) => {
             if (response) {
               this.visitOptions = response;
-              this.errorResponse = null;
+              this.uploadErrorResponse = null;
             }
           })
           .catch((error) => {
-            this.errorResponse = error.data;
+            this.uploadErrorResponse = error.data;
           })
           .finally(() => {
             this.isLoadingOptions = false;
@@ -229,57 +229,111 @@
           tutoring_option: null,
           date: null,
         };
-        this.visitOptions = null;
-        this.isLoadingOptions = true;
-        this.uploadErrorResponse = null;
-        this.isUploading = false;
       },
-      handleUpload: function () {
-        if (
-          this.importOptions.file &&
-          this.importOptions.visit_type &&
-          this.importOptions.tutoring_option &&
-          this.importOptions.date
-        ) {
-          this.isUploading = true;
-          this.uploadVisitFile(this.importOptions)
+      data() {
+        return {
+          importOptions: {
+            file: null,
+            visit_type: "",
+            tutoring_option: "",
+            date: "",
+          },
+          isLoadingOptions: true,
+          visitOptions: null,
+          downloadErrorResponse: null,
+          isDownloading: false,
+          uploadErrorResponse: null,
+          isUploading: false,
+        };
+      },
+      mounted() {
+        this.$refs.importDataModal.addEventListener(
+          "shown.bs.modal",
+          this.loadSVisitOptions,
+        );
+        this.$refs.importDataModal.addEventListener(
+          "hidden.bs.modal",
+          this.resetForm,
+        );
+      },
+      methods: {
+        addFile(e) {
+          this.importOptions.file = e.target.files[0];
+        },
+        loadSVisitOptions: function () {
+          // Use a bad regid so courses are empty, other options should still load
+          getICVisitOptions("NOCOURSESREGID")
             .then((response) => {
-              this.resetForm();
-              var modalElement = Modal.getInstance(this.$refs.importDataModal);
-              modalElement.hide();
+              if (response) {
+                this.visitOptions = response;
+                this.errorResponse = null;
+              }
             })
             .catch((error) => {
-              this.isUploading = false;
-              this.uploadErrorResponse = error.data.message;
+              this.errorResponse = error.data;
+            })
+            .finally(() => {
+              this.isLoadingOptions = false;
             });
-        } else {
-          // Handle form validation error, maybe show a warning message
-          this.uploadErrorResponse =
-            "Please fill in all required fields and select a file.";
-        }
+        },
+        resetForm: function () {
+          this.importOptions = {
+            file: null,
+            visit_type: null,
+            tutoring_option: null,
+            date: null,
+          };
+          this.visitOptions = null;
+          this.isLoadingOptions = true;
+          this.uploadErrorResponse = null;
+          this.isUploading = false;
+        },
+        handleUpload: function () {
+          if (
+            this.importOptions.file &&
+            this.importOptions.visit_type &&
+            this.importOptions.tutoring_option &&
+            this.importOptions.date
+          ) {
+            this.isUploading = true;
+            this.uploadVisitFile(this.importOptions)
+              .then((response) => {
+                this.resetForm();
+                var modalElement = Modal.getInstance(this.$refs.importDataModal);
+                modalElement.hide();
+              })
+              .catch((error) => {
+                this.isUploading = false;
+                this.uploadErrorResponse = error.data.message;
+              });
+          } else {
+            // Handle form validation error, maybe show a warning message
+            this.uploadErrorResponse =
+              "Please fill in all required fields and select a file.";
+          }
+        },
+        handleDownload: function () {
+          this.isDownloading = true;
+          this.downloadVisitFile()
+            .then((response) => {
+              const blob = new Blob([response], { type: "text/csv" });
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = url;
+              a.download = "compass_visit_data.csv";
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              URL.revokeObjectURL(url);
+              this.downloadErrorResponse = null;
+              this.isDownloading = false;
+            })
+            .catch((error) => {
+              // Handle download error, maybe show an error message
+              this.downloadErrorResponse = error.data.message;
+              this.isDownloading = false;
+            });
+        },
       },
-      handleDownload: function () {
-        this.isDownloading = true;
-        this.downloadVisitFile()
-          .then((response) => {
-            const blob = new Blob([response], { type: "text/csv" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = "compass_visit_data.csv";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            this.downloadErrorResponse = null;
-            this.isDownloading = false;
-          })
-          .catch((error) => {
-            // Handle download error, maybe show an error message
-            this.downloadErrorResponse = error.data.message;
-            this.isDownloading = false;
-          });
-      },
-    },
-  };
+    };
 </script>

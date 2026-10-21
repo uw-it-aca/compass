@@ -2,28 +2,39 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from compass.dao import current_datetime_utc
-from compass.views.api import (
-    BaseAPIView, JSONClientContentNegotiation, TokenAPIView)
-from compass.models import (
-    AccessGroup, AppUser, Contact, ContactTopic, ContactType, ContactMethod,
-    Student, OMADContactQueue)
-from compass.serializers import (
-    ContactReadSerializer, ContactWriteSerializer, ContactTopicSerializer,
-    ContactTypeSerializer, ContactMethodSerializer)
-from django.utils.text import slugify
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
-from django.core.exceptions import PermissionDenied
-from django.conf import settings
-from rest_framework.response import Response
-from rest_framework import status
-from userservice.user import UserService
-from logging import getLogger
 import json
-from compass.dao.contact import validate_contact_post_data
+from logging import getLogger
+
+from django.conf import settings
+from django.core.exceptions import PermissionDenied
+from django.utils.decorators import method_decorator
+from django.utils.text import slugify
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status
+from rest_framework.response import Response
+from userservice.user import UserService
 from uw_person_client.exceptions import PersonNotFoundException
 
+from compass.dao import current_datetime_utc
+from compass.dao.contact import validate_contact_post_data
+from compass.models import (
+    AccessGroup,
+    AppUser,
+    Contact,
+    ContactMethod,
+    ContactTopic,
+    ContactType,
+    OMADContactQueue,
+    Student,
+)
+from compass.serializers import (
+    ContactMethodSerializer,
+    ContactReadSerializer,
+    ContactTopicSerializer,
+    ContactTypeSerializer,
+    ContactWriteSerializer,
+)
+from compass.views.api import BaseAPIView, JSONClientContentNegotiation, TokenAPIView
 
 logger = getLogger(__name__)
 
@@ -59,7 +70,7 @@ class ContactView(BaseAPIView):
             return self.response_unauthorized()
 
         contact.delete()
-        logger.info("Contact deleted: %s" % contactid)
+        logger.info(f"Contact deleted: {contactid}")
         return self.response_ok({})
 
     def put(self, request, contactid):
@@ -127,11 +138,17 @@ class ContactView(BaseAPIView):
             if isinstance(contact_record['contact_type'], str):
                 slug = slugify(contact_record['contact_type'])
                 contact_record['contact_type'] = \
-                    ContactType.objects.get(slug=slug).id
+                    ContactType.objects.get(
+                        access_group=access_group,
+                        slug=slug,
+                    ).id
             if isinstance(contact_record['contact_method'], str):
                 slug = slugify(contact_record['contact_method'])
                 contact_record['contact_method'] = \
-                    ContactMethod.objects.get(slug=slug).id
+                    ContactMethod.objects.get(
+                        access_group=access_group,
+                        slug=slug,
+                    ).id
             if isinstance(contact_record['contact_topics'], list):
                 topics = []
                 for t in contact_record['contact_topics']:
@@ -139,6 +156,7 @@ class ContactView(BaseAPIView):
                         slug = slugify(t)
                         topics.append(
                             ContactTopic.objects.get(
+                                access_group=access_group,
                                 slug=slug).id)
                     else:
                         topics.append(t)
@@ -245,17 +263,16 @@ class ContactOMADView(TokenAPIView):
                             status=status.HTTP_401_UNAUTHORIZED)
 
         contact_dict = request.data
-        queued_contact = OMADContactQueue.objects.create(
-            json=json.dumps(contact_dict)
-        )
-        logger.info(f"OMAD contact queued, id: {queued_contact.id}")
+        raw_json = json.dumps(contact_dict)
         try:
             validate_contact_post_data(contact_dict)
         except AccessGroup.DoesNotExist as e:
             return Response(repr(e), status=status.HTTP_501_NOT_IMPLEMENTED)
         except ValueError as e:
             return Response(repr(e), status=status.HTTP_400_BAD_REQUEST)
-        except PersonNotFoundException as e:
+        except PersonNotFoundException:
             return Response("Person record for adviser not found",
                             status=status.HTTP_400_BAD_REQUEST)
+        queued_contact = OMADContactQueue.objects.create(json=raw_json)
+        logger.info(f"OMAD contact queued, id: {queued_contact.id}")
         return Response(status=status.HTTP_201_CREATED)

@@ -42,5 +42,115 @@
             "uwregid": "5432AAB8B36701E5BE06100432CCC123",
             "whitepages_publish": true
         }
+    },
+    {
+        "model": "uw_person_client.Person",
+        "pk": 104,
+        "fields": {
+            "is_active_employee": false,
+            "is_active_student": true,
+            "display_name": "Jordan Rivera",
+            "first_name": "Jordan",
+            "full_name": "Jordan Rivera",
+            "preferred_first_name": "Jordan",
+            "preferred_middle_name": null,
+            "preferred_surname": "Rivera",
+            "prior_uwnetids": [],
+            "prior_uwregids": [],
+            "pronouns": "they/them/theirs",
+            "surname": "Rivera",
+            "system_key": "888777334",
+            "uwnetid": "student334",
+            "uwregid": "5432AAB8B36701E5BE06100432496AAB",
+            "whitepages_publish": true
+        }
+    },
+    {
+        "model": "uw_person_client.Person",
+        "pk": 105,
+        "fields": {
+            "is_active_employee": false,
+            "is_active_student": true,
+            "display_name": "Maya Chen",
+            "first_name": "Maya",
+            "full_name": "Maya Chen",
+            "preferred_first_name": "Maya",
+            "preferred_middle_name": null,
+            "preferred_surname": "Chen",
+            "prior_uwnetids": [],
+            "prior_uwregids": [],
+            "pronouns": "they/them/theirs",
+            "surname": "Chen",
+            "system_key": "888777335",
+            "uwnetid": "student335",
+            "uwregid": "5432AAB8B36701E5BE06100432496AAC",
+            "whitepages_publish": true
+        }
+    },
+    {
+        "model": "uw_person_client.Person",
+        "pk": 106,
+        "fields": {
+            "is_active_employee": false,
+            "is_active_student": true,
+            "display_name": "Ethan Patel",
+            "first_name": "Ethan",
+            "full_name": "Ethan Patel",
+            "preferred_first_name": "Ethan",
+            "preferred_middle_name": null,
+            "preferred_surname": "Patel",
+            "prior_uwnetids": [],
+            "prior_uwregids": [],
+            "pronouns": "they/them/theirs",
+            "surname": "Patel",
+            "system_key": "888777336",
+            "uwnetid": "student336",
+            "uwregid": "5432AAB8B36701E5BE06100432496AAD",
+            "whitepages_publish": true
+        }
+    },
+    {
+        "model": "uw_person_client.Person",
+        "pk": 107,
+        "fields": {
+            "is_active_employee": false,
+            "is_active_student": true,
+            "display_name": "Sofia Martinez",
+            "first_name": "Sofia",
+            "full_name": "Sofia Martinez",
+            "preferred_first_name": "Sofia",
+            "preferred_middle_name": null,
+            "preferred_surname": "Martinez",
+            "prior_uwnetids": [],
+            "prior_uwregids": [],
+            "pronouns": "they/them/theirs",
+            "surname": "Martinez",
+            "system_key": "888777337",
+            "uwnetid": "student337",
+            "uwregid": "5432AAB8B36701E5BE06100432496AAE",
+            "whitepages_publish": true
+        }
+    },
+    {
+        "model": "uw_person_client.Person",
+        "pk": 108,
+        "fields": {
+            "is_active_employee": false,
+            "is_active_student": true,
+            "display_name": "Noah Brooks",
+            "first_name": "Noah",
+            "full_name": "Noah Brooks",
+            "preferred_first_name": "Noah",
+            "preferred_middle_name": null,
+            "preferred_surname": "Brooks",
+            "prior_uwnetids": [],
+            "prior_uwregids": [],
+            "pronouns": "they/them/theirs",
+            "surname": "Brooks",
+            "system_key": "888777338",
+            "uwnetid": "student338",
+            "uwregid": "5432AAB8B36701E5BE06100432496AAF",
+            "whitepages_publish": true
+        }
     }
 ]

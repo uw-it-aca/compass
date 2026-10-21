@@ -1,0 +1,41 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+  <h1>Copy settings into {{ target_group.name }}</h1>
+  <p>Select a source Access Group and the settings types to copy.</p>
+
+  <form method="post">{% csrf_token %}
+    {% for obj in queryset %}
+      <input type="hidden" name="_selected_action" value="{{ obj.pk }}" />
+    {% endfor %}
+    <input type="hidden" name="action" value="{{ action_name }}" />
+    <input type="hidden" name="apply" value="1" />
+
+    <fieldset class="module aligned">
+      <div class="form-row">
+        <label for="source_access_group"><strong>Source Access Group</strong></label>
+        <select name="source_access_group" id="source_access_group" required>
+          <option value="">---------</option>
+          {% for group in source_group_choices %}
+            <option value="{{ group.id }}">{{ group.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </fieldset>
+
+    <fieldset class="module aligned">
+      <h2>Settings to copy</h2>
+      <div class="form-row"><label><input type="checkbox" name="copy_affiliations" checked /> Affiliations</label></div>
+      <div class="form-row"><label><input type="checkbox" name="copy_contact_types" checked /> Contact Types</label></div>
+      <div class="form-row"><label><input type="checkbox" name="copy_contact_methods" checked /> Contact Methods</label></div>
+      <div class="form-row"><label><input type="checkbox" name="copy_contact_topics" checked /> Contact Topics</label></div>
+      <div class="form-row"><label><input type="checkbox" name="copy_eligibility_types" checked /> Eligibility Types</label></div>
+      <div class="form-row"><label><input type="checkbox" name="copy_visit_types" checked /> Visit Types</label></div>
+    </fieldset>
+
+    <div class="submit-row">
+      <input type="submit" class="default" value="Copy" />
+      <a href="../">Cancel</a>
+    </div>
+  </form>
+{% endblock %}

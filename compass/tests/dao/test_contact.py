@@ -3,9 +3,13 @@
 
 
 from datetime import datetime
-from compass.tests import CompassTestCase
+
 from compass.dao.contact import (
-    parse_checkin_date_str, validate_adviser_netid, validate_student_systemkey)
+    parse_checkin_date_str,
+    validate_adviser_netid,
+    validate_student_systemkey,
+)
+from compass.tests import CompassTestCase
 
 
 class ContactDaoTest(CompassTestCase):

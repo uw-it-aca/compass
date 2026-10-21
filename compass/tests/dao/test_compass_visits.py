@@ -1,25 +1,28 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+from unittest.mock import patch
 
-from compass.tests import CompassTestCase
 from django.core.exceptions import ImproperlyConfigured
-from compass.dao.compass_visits import (get_visits_for_student,
-                                        get_admin_visit_list,
-                                        get_visit_options,
-                                        admin_create_visit,
-                                        admin_update_visit,
-                                        admin_delete_visit,
-                                        get_compass_visits_access_group)
-from uw_compass_visits.models import Visit
-from compass.models import AccessGroup
 from restclients_core.exceptions import DataFailureException
-import datetime
+from uw_compass_visits.models import Visit
+
+from compass.dao.compass_visits import (
+    admin_create_visit,
+    admin_delete_visit,
+    admin_update_visit,
+    get_admin_visit_list,
+    get_compass_visits_access_group,
+    get_visit_options,
+    get_visits_for_student,
+)
+from compass.models import AccessGroup, VisitTutoringOption, VisitType
+from compass.tests import CompassTestCase
 
 
 class CompassVisitsDaoTest(CompassTestCase):
     def setUp(self):
-        super(CompassVisitsDaoTest, self).setUp()
+        super().setUp()
         ag = AccessGroup(name="OMAD", access_group_id="u_astra_group1")
         ag.save()
 
@@ -37,10 +40,43 @@ class CompassVisitsDaoTest(CompassTestCase):
     def test_get_admin_visit_list(self):
         visits = get_admin_visit_list()
         self.assertIsNotNone(visits)
-        self.assertEqual(len(visits['pending_verification']), 2)
+        self.assertEqual(len(visits['pending_verification']), 7)
         self.assertEqual(len(visits['by_programarea']), 2)
         self.assertEqual(len(visits['by_programarea']['Program Area 2']), 1)
         self.assertEqual(len(visits['by_programarea']['Program Area 3']), 2)
+
+    @patch('compass.dao.compass_visits.get_students_by_system_keys')
+    @patch('compass.dao.compass_visits.CompassVisits.get_visit_admin_list')
+    def test_get_admin_visit_list_resolves_catalog_names(
+            self, mock_get_visit_admin_list, mock_get_students):
+        access_group = AccessGroup.objects.get(name='OMAD')
+        visit_type = VisitType.objects.create(
+            access_group=access_group,
+            name='Updated Program Area',
+            slug='program-area',
+            is_compass_visits_program_area=True)
+        tutoring_option = VisitTutoringOption.objects.create(
+            access_group=access_group,
+            name='Updated Tutoring Type',
+            slug='tutoring-type')
+        visit = Visit(
+            id=1,
+            student_syskey='123456789',
+            program_area=visit_type.slug,
+            tutoring_option=tutoring_option.slug)
+        mock_get_visit_admin_list.return_value = {
+            'pending_verification': [],
+            'pending_checkout': [visit],
+        }
+        mock_get_students.return_value = {}
+
+        visits = get_admin_visit_list()
+
+        visit_data = visits['by_programarea']['Updated Program Area'][0]
+        self.assertEqual(visit_data['program_area'],
+                         'Updated Program Area')
+        self.assertEqual(visit_data['tutoring_option'],
+                         'Updated Tutoring Type')
 
     def test_get_visit_options(self):
         options = get_visit_options('9136CCB8F66711D5BE060004AC494FFE')
@@ -55,6 +91,18 @@ class CompassVisitsDaoTest(CompassTestCase):
         self.assertEqual(options['program_areas'][0]['name'],
                          'Program Area 1')
 
+    @patch('compass.dao.compass_visits.CompassVisits.get_visit_options')
+    def test_get_visit_options_datafailure(self, mock_get_visit_options):
+        mock_get_visit_options.side_effect = DataFailureException(
+            'compass-visits', 404, 'Not Found')
+        options = get_visit_options('any-regid')
+
+        self.assertIsNotNone(options)
+        self.assertEqual(options['program_areas'], [])
+        self.assertEqual(options['tutoring_options'], [])
+        self.assertEqual(options['writing_services'], [])
+        self.assertEqual(options['courses'], [])
+
     def test_admin_create_visit(self):
         visit_data = {
             "student_syskey": "000043870",
@@ -65,6 +113,31 @@ class CompassVisitsDaoTest(CompassTestCase):
         with self.assertRaises(DataFailureException):
             # will fail because the mock dao doesn't support creating visits
             admin_create_visit(visit_data)
+
+    @patch('compass.dao.compass_visits.CompassVisits.get_visit_admin_list')
+    @patch('compass.dao.compass_visits.CompassVisits.admin_create_visit')
+    def test_admin_create_visit_with_active_visit(
+            self,
+            mock_admin_create_visit,
+            mock_get_visit_admin_list):
+        active_visit = type('VisitMock', (), {'student_syskey': '000043870'})
+        mock_get_visit_admin_list.return_value = {
+            'pending_verification': [active_visit],
+            'pending_checkout': [],
+        }
+
+        visit_data = {
+            "student_syskey": "000043870",
+            "program_area": "1",
+            "tutoring_option": "1",
+            "writing_service": "1"
+        }
+
+        with self.assertRaises(DataFailureException) as ex:
+            admin_create_visit(visit_data)
+
+        self.assertIn('Student already has an active visit', str(ex.exception))
+        mock_admin_create_visit.assert_not_called()
 
     def test_admin_update_visit(self):
         visit = admin_update_visit(1)
@@ -86,9 +159,13 @@ class CompassVisitsDaoTest(CompassTestCase):
         access_group = get_compass_visits_access_group()
         self.assertIsNotNone(access_group)
         self.assertEqual(access_group.name, "OMAD")
-        with self.settings(COMPASS_VISITS_ACCESS_GROUP_NAME=None):
-            with self.assertRaises(ImproperlyConfigured):
-                get_compass_visits_access_group()
-        with self.settings(COMPASS_VISITS_ACCESS_GROUP_NAME="OTHER_GROUP"):
-            with self.assertRaises(ImproperlyConfigured):
-                get_compass_visits_access_group()
+        with (
+            self.settings(COMPASS_VISITS_ACCESS_GROUP_NAME=None),
+            self.assertRaises(ImproperlyConfigured),
+        ):
+            get_compass_visits_access_group()
+        with (
+            self.settings(COMPASS_VISITS_ACCESS_GROUP_NAME="OTHER_GROUP"),
+            self.assertRaises(ImproperlyConfigured),
+        ):
+            get_compass_visits_access_group()

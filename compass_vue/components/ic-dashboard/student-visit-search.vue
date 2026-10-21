@@ -61,6 +61,107 @@
               <i class="bi-exclamation-octagon-fill me-1"></i>
               Could not find a student matching "{{ searchValue }}". Please try
               again.
+            <span v-if="isICEligible">IC Eligible</span>
+            <span v-else>Not Eligible</span>
+            <h2>{{ person.full_name }}</h2>
+            <p>
+              {{ person.student.student_number }}, {{ person.uwnetid }}
+              <br />
+              {{ person.student.local_phone_number }}
+            </p>
+          </div>
+          <!-- right column -->
+          <div v-if="rightColHasData" class="col">
+            <div v-if="displayMode === 'visits'">
+              <studenvisitsummary :studentVisits="studentVisitData" />
+            </div>
+            <div v-else-if="displayMode === 'not_eligible'">
+              This student is not eligible for IC visits.
+              <button class="btn btn-primary ms-3" @click="addICEligibility()">
+                Approve
+              </button>
+            </div>
+            <div v-else-if="displayMode === 'checkin'">
+              <form v-if="!isLoadingOptions">
+                Program Area*
+                <select
+                  class="form-select mb-3"
+                  required
+                  v-model="checkInData.programArea"
+                >
+                  <option value="" disabled selected>
+                    Select a program area
+                  </option>
+                  <option
+                    v-for="option in visitOptions.program_areas"
+                    :key="option.id"
+                    :value="option.slug"
+                  >
+                    {{ option.name }}
+                  </option>
+                </select>
+                Tutoring Options*
+                <select
+                  class="form-select mb-3"
+                  required
+                  v-model="checkInData.tutoringOption"
+                >
+                  <option value="" disabled selected>
+                    Select a tutoring option
+                  </option>
+                  <option
+                    v-for="option in visitOptions.tutoring_options"
+                    :key="option.id"
+                    :value="option.slug"
+                  >
+                    {{ option.name }}
+                  </option>
+                </select>
+                Course or Other Writing Services*
+                <select
+                  class="form-select mb-3"
+                  required
+                  v-model="checkInData.courseOrWritingService"
+                >
+                  <optgroup label="Writing Services">
+                    <option value="" disabled selected>
+                      Select a course or writing service
+                    </option>
+                    <option
+                      v-for="option in visitOptions.writing_services"
+                      :key="option.id"
+                      :value="option.id"
+                    >
+                      {{ option.name }}
+                    </option>
+                  </optgroup>
+                  <optgroup
+                    v-if="
+                      visitOptions.courses && visitOptions.courses.length > 0
+                    "
+                    label="Courses"
+                  >
+                    <option
+                      v-for="option in visitOptions.courses"
+                      :key="option.id"
+                      :value="option.id"
+                    >
+                      {{ option.name }}
+                    </option>
+                  </optgroup>
+                </select>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  :disabled="!allCreateFieldsSelected"
+                  @click="createVisit()"
+                  >
+                  Create Check In
+                  </button>
+                  <div v-if="createError" class="alert alert-danger mt-3">
+                    {{ createError.message || "Error creating visit." }}
+                  </div>
+              </form>
             </div>
           </div>
 

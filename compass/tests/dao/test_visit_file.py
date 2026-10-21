@@ -2,25 +2,26 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from compass.tests import CompassTestCase
-from compass.dao.visit_file import (validate_visit_upload_file,
-                                    _get_datetimes,
-                                    _get_student_by_student_number,
-                                    create_visits_from_file,
-                                    get_visit_export)
-from compass.models import (AccessGroup,
-                            VisitType,
-                            VisitTutoringOption,
-                            Student,
-                            Visit)
 from datetime import datetime, timezone
 from io import BytesIO
+
+from django.conf import settings
+
+from compass.dao.visit_file import (
+    _get_datetimes,
+    _get_student_by_student_number,
+    create_visits_from_file,
+    get_visit_export,
+    validate_visit_upload_file,
+)
+from compass.models import AccessGroup, Student, Visit, VisitTutoringOption, VisitType
+from compass.tests import CompassTestCase
 
 
 class VisitFileDAOFunctionsTest(CompassTestCase):
 
     def setUp(self):
-        super(VisitFileDAOFunctionsTest, self).setUp()
+        super().setUp()
         ag = AccessGroup(name="OMAD", access_group_id="omad_group")
         ag.save()
         vt = VisitType(name="IC Drop-In Tutoring", access_group=ag)
@@ -88,9 +89,9 @@ class VisitFileDAOFunctionsTest(CompassTestCase):
         date = "2024-01-01"
         start_datetime, end_datetime = _get_datetimes(duration_minutes, date)
         self.assertEqual(start_datetime.isoformat(),
-                         "2024-01-01T00:00:00")
+                         "2024-01-01T00:00:00+00:00")
         self.assertEqual(end_datetime.isoformat(),
-                         "2024-01-01T01:30:00")
+                         "2024-01-01T01:30:00+00:00")
 
     def test_get_student_by_student_number(self):
         student = _get_student_by_student_number("1033334")
@@ -110,7 +111,7 @@ class VisitFileDAOFunctionsTest(CompassTestCase):
             file, "IC Drop-In Tutoring", "Option 1", "2024-01-01")
         self.assertEqual(num_visits_created, 2)
 
-    def create_visits_missing_visit_type(self):
+    def test_create_visits_missing_visit_type(self):
         csv_content = (
             "student_number,course_name,duration_minutes\n"
             "1033334,Math 101,60\n"
@@ -121,7 +122,7 @@ class VisitFileDAOFunctionsTest(CompassTestCase):
             create_visits_from_file(
                 file, "Nonexistent Visit Type", "Option 1", "2024-01-01")
 
-    def create_visits_missing_tutoring_option(self):
+    def test_create_visits_missing_tutoring_option(self):
         csv_content = (
             "student_number,course_name,duration_minutes\n"
             "1033334,Math 101,60\n"
@@ -149,18 +150,49 @@ class VisitFileDAOFunctionsTest(CompassTestCase):
         student = Student.objects.get_or_create(system_key="12345")[0]
         visit_type = VisitType.objects.get(name="IC Drop-In Tutoring")
         tutoring_option = VisitTutoringOption.objects.get(name="Option 1")
+        compass_access_group_name = settings.COMPASS_VISITS_ACCESS_GROUP_NAME
+        compass_access_group = AccessGroup.objects.get(
+            name=compass_access_group_name)
 
-        checkin = datetime(2026, 5, 22, 10, 0, 0, tzinfo=timezone.utc)
-        checkout = datetime(2026, 5, 22, 11, 0, 0, tzinfo=timezone.utc)
+        checkin_2 = datetime(2026, 5, 22, 10, 0, 0, tzinfo=timezone.utc)
+        checkout_2 = datetime(2026, 5, 22, 11, 0, 0, tzinfo=timezone.utc)
+        checkin_1 = datetime(2026, 5, 21, 10, 0, 0, tzinfo=timezone.utc)
+        checkout_1 = datetime(2026, 5, 21, 10, 30, 0, tzinfo=timezone.utc)
 
         Visit.objects.create(
             student=student,
-            access_group=visit_type.access_group,
+            access_group=compass_access_group,
+            visit_type=visit_type,
+            tutoring_option=tutoring_option,
+            course_code="Math 100",
+            checkin_date=checkin_1,
+            checkout_date=checkout_1
+        )
+
+        Visit.objects.create(
+            student=student,
+            access_group=compass_access_group,
             visit_type=visit_type,
             tutoring_option=tutoring_option,
             course_code="Math 101",
-            checkin_date=checkin,
-            checkout_date=checkout
+            checkin_date=checkin_2,
+            checkout_date=checkout_2
+        )
+
+        other_ag = AccessGroup.objects.create(
+            name="Other Group", access_group_id="other_group")
+        other_visit_type = VisitType.objects.create(
+            name="Other Visit Type", access_group=other_ag)
+        other_tutoring_option = VisitTutoringOption.objects.create(
+            name="Other Option", access_group=other_ag)
+        Visit.objects.create(
+            student=student,
+            access_group=other_ag,
+            visit_type=other_visit_type,
+            tutoring_option=other_tutoring_option,
+            course_code="Should Not Export",
+            checkin_date=datetime(2026, 5, 20, 10, 0, 0, tzinfo=timezone.utc),
+            checkout_date=datetime(2026, 5, 20, 11, 0, 0, tzinfo=timezone.utc)
         )
 
         csv_output = get_visit_export()
@@ -168,7 +200,9 @@ class VisitFileDAOFunctionsTest(CompassTestCase):
         expected_csv = (
             "student_syskey,checkin_date,checkout_date,duration_minutes,"
             "visit_type,tutoring_option,course_code\r\n"
-            f"12345,{checkin.isoformat()},{checkout.isoformat()},"
+            f"12345,{checkin_1.isoformat()},{checkout_1.isoformat()},"
+            "30,IC Drop-In Tutoring,Option 1,Math 100\r\n"
+            f"12345,{checkin_2.isoformat()},{checkout_2.isoformat()},"
             "60,IC Drop-In Tutoring,Option 1,Math 101\r\n"
         )
 

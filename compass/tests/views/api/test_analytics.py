@@ -2,14 +2,16 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.test import Client
-from django.contrib.auth.models import User
-from django.test.utils import override_settings
-from compass.tests import ApiTest
-from compass.models import AccessGroup
-from compass.dao.storage import RADStorageDao
-from rest_framework.authtoken.models import Token
 import json
+
+from django.contrib.auth.models import User
+from django.test import Client
+from django.test.utils import override_settings
+from rest_framework.authtoken.models import Token
+
+from compass.dao.storage import RADStorageDao
+from compass.models import AccessGroup
+from compass.tests import ApiTest
 
 
 class AnalyticsAPITest(ApiTest):
@@ -17,7 +19,7 @@ class AnalyticsAPITest(ApiTest):
     WRONG_API_TOKEN = None
 
     def setUp(self):
-        super(AnalyticsAPITest, self).setUp()
+        super().setUp()
         AccessGroup(name="OMAD", access_group_id="u_astra_group1").save()
         user = User.objects.create_user(username='era-predictions-api',
                                         password='12345')
@@ -47,7 +49,7 @@ class AnalyticsAPITest(ApiTest):
         }
         test_request = json.dumps(sample_json)
 
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
 
@@ -60,13 +62,49 @@ class AnalyticsAPITest(ApiTest):
         response = self.post_response('prediction_analytics_view',
                                       test_request)
         self.assertEqual(response.status_code, 401)
-        wrong_token_str = "Token %s" % self.WRONG_API_TOKEN
+        wrong_token_str = f"Token {self.WRONG_API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=wrong_token_str)
 
         response = self.post_response('prediction_analytics_view',
                                       body=test_request)
         self.assertEqual(response.status_code, 401)
+
+    @override_settings(STORAGES={
+        'default': {
+            'BACKEND': 'django.core.files.storage.memory.InMemoryStorage',
+        }
+    })
+    def test_upload_reduced_format(self):
+        sample_json = [
+            {"uw_netid": "netid123", "course_code": "MATH 101 A",
+             "pred": "False"},
+            {"uw_netid": "netid456", "course_code": "CHEM 142 B",
+             "pred": "True"},
+        ]
+        token_str = f"Token {self.API_TOKEN}"
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=token_str)
+        response = self.post_response('prediction_analytics_view',
+                                      body=json.dumps(sample_json))
+        self.assertEqual(response.status_code, 201)
+        _, latest_file = RADStorageDao().get_latest_pred_file()
+        self.assertEqual(latest_file.splitlines(), [
+            "uw_netid,course_code,pred",
+            "netid123,MATH 101 A,False",
+            "netid456,CHEM 142 B,True",
+        ])
+
+    def test_invalid_prediction_payload(self):
+        token_str = f"Token {self.API_TOKEN}"
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=token_str)
+        for payload in ([], [None], {"body": "invalid"},
+                        [{"uw_netid": "netid123", "pred": "False"}]):
+            with self.subTest(payload=payload):
+                response = self.post_response('prediction_analytics_view',
+                                              body=json.dumps(payload))
+                self.assertEqual(response.status_code, 400)
 
     @override_settings(STORAGES={
         'default': {
@@ -108,15 +146,15 @@ class AnalyticsAPITest(ApiTest):
         }
         test_request = json.dumps(sample_json)
 
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
-        filename, latest_file = rad_storage.get_latest_pred_file()
+        _, latest_file = rad_storage.get_latest_pred_file()
         self.assertIsNone(latest_file)
         response = self.post_response('prediction_analytics_view',
                                       body=test_request)
         self.assertEqual(response.status_code, 201)
-        filename, latest_file = rad_storage.get_latest_pred_file()
+        _filename, latest_file = rad_storage.get_latest_pred_file()
         self.assertIsNotNone(latest_file)
         expected_rows = [
             "uw_netid,course_code,pred",

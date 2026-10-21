@@ -2,21 +2,21 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from userservice.user import UserService
-from compass.tests import ApiTest
-from compass.models import AccessGroup, AppUser
+from typing import ClassVar
 from unittest.mock import patch
+
+from compass.tests import ApiTest
 
 
 class SpecialProgramAPITest(ApiTest):
-    fixtures = [
+    fixtures: ClassVar[list[str]] = [
         'initial_data/access-groups.json',
         'initial_data/app-user.json',
         'initial_data/student.json',
         'initial_data/specialprogram.json',
     ]
-    url_kwargs1 = {'systemkey': '532353230'}
-    url_kwargs2 = {'systemkey': '123123123'}
+    url_kwargs1: ClassVar[dict] = {'systemkey': '532353230'}
+    url_kwargs2: ClassVar[dict] = {'systemkey': '123123123'}
 
     @patch('compass.dao.group.is_member_of_group', return_value=True)
     def test_get(self, mock_is_member):

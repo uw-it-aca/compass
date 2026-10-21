@@ -3,16 +3,17 @@
 
 import random
 import string
+from urllib.parse import urlparse, urlunparse
+
 from django.conf import settings
 from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
 from uw_pws import PWS
-from urllib.parse import urlparse, urlunparse
 
 
-class PhotoDAO():
+class PhotoDAO:
     def cache_key(self, key):
-        return 'idphoto-key-{}'.format(key)
+        return f'idphoto-key-{key}'
 
     def generate_photo_key(self, image_size='medium'):
         photo_key = ''.join(random.SystemRandom().choice(
@@ -37,6 +38,6 @@ class PhotoDAO():
         url_parts = urlparse(url)
         if 'gravatar.com' in url_parts.netloc:
             new_parts = url_parts._replace(
-                query='s={}&d=mm'.format(image_size))
+                query=f's={image_size}&d=mm')
             return urlunparse(new_parts)
         return url

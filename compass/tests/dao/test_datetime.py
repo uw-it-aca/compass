@@ -3,6 +3,7 @@
 
 
 from django.test import TestCase
+
 from compass.dao import current_datetime, current_datetime_utc, sws_now
 
 

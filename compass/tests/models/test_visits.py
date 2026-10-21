@@ -1,13 +1,10 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.tests import CompassTestCase
-from compass.models import (Student,
-                            Visit,
-                            VisitType,
-                            VisitTutoringOption,
-                            AccessGroup)
 from datetime import datetime, timezone
+
+from compass.models import AccessGroup, Student, Visit, VisitTutoringOption, VisitType
+from compass.tests import CompassTestCase
 
 
 class VisitModelTest(CompassTestCase):

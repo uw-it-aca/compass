@@ -28,6 +28,12 @@ ingress:
     nginx.ingress.kubernetes.io/client-body-buffer-size: "16K"
     nginx.ingress.kubernetes.io/proxy-body-size: "20M"
 
+gateway:
+  enabled: true
+  hostnames:
+    - test.compass.uw.edu
+  maxRequestSize: 20Mi
+
 lifecycle:
   enabled: true
   preStop:
@@ -68,13 +74,21 @@ gcsCredentials:
 
 certs:
   mounted: true
-  certPath: /certs/compass.uw.edu-ic.cert
-  keyPath: /certs/compass.uw.edu-ic.key
-  secretName: test.compass.uw.edu-ic-certs
+  certPath: /certs/compass.uw.edu-uwca.cert
+  keyPath: /certs/compass.uw.edu-uwca.key
+  secretName: test.compass.uw.edu-uwca-certs
+
+mountedSecrets:
+  enabled: true
+  mountPath: /ssl
+  secretName: test.compass.uw.edu-openssl-conf
 
 environmentVariables:
   - name: ENV
     value: test
+
+  - name: OPENSSL_CONF
+    value: /ssl/openssl.cnf
 
   - name: SWS_ENV
     value: PROD
@@ -115,6 +129,10 @@ externalSecrets:
           property: google-analytics-key
         - name: storage-bucket-name
           property: storage-bucket-name
+        - name: compass-visits-host
+          property: compass-visits-host
+        - name: compass-visits-auth-token
+          property: compass-visits-auth-token
     - name: test.compass.uw.edu-sql-secrets
       externalKey: compass/shared/sql-secrets
       data:
@@ -137,18 +155,19 @@ externalSecrets:
           property: person-db-database
         - name: storage-project-id
           property: storage-project-id
+
     - name: test.compass.uw.edu-gcs-credentials
       externalKey: compass/shared/gcs-credentials
       data:
         - name: credentials.json
           property: credentials.json
-    - name: test.compass.uw.edu-ic-certs
-      externalKey: compass/prod/ic-certs
+    - name: test.compass.uw.edu-uwca-certs
+      externalKey: compass/prod/uwca-certs
       data:
-        - name: compass.uw.edu-ic.cert
-          property: compass.uw.edu-ic.cert
-        - name: compass.uw.edu-ic.key
-          property: compass.uw.edu-ic.key
+        - name: compass.uw.edu-uwca.cert
+          property: compass.uw.edu-uwca.cert
+        - name: compass.uw.edu-uwca.key
+          property: compass.uw.edu-uwca.key
     - name: test.compass.uw.edu-sp-cert
       externalKey: compass/test/ic-certs
       data:
@@ -159,6 +178,11 @@ externalSecrets:
       data:
         - name: uw-idp-cert
           property: cert
+    - name: test.compass.uw.edu-openssl-conf
+      externalKey: openssl-conf
+      data:
+        - name: openssl.cnf
+          property: openssl.cnf
 
 environmentVariablesSecrets:
   djangoSecret:
@@ -213,6 +237,14 @@ environmentVariablesSecrets:
     name: STORAGE_PROJECT_ID
     secretName: test.compass.uw.edu-shared-secrets
     secretKey: storage-project-id
+  compassVisitsHost:
+    name: RESTCLIENTS_COMPASS_VISITS_HOST
+    secretName: test.compass.uw.edu-secrets
+    secretKey: compass-visits-host
+  compassVisitsAuthToken:
+    name: RESTCLIENTS_COMPASS_VISITS_AUTH_TOKEN
+    secretName: test.compass.uw.edu-secrets
+    secretKey: compass-visits-auth-token
 
 daemon:
   enabled: true

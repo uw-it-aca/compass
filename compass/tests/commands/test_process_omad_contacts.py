@@ -2,19 +2,21 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from django.core.management import call_command
-from compass.tests import CompassTestCase
-from compass.models import OMADContactQueue, Contact, AccessGroup
 import json
-from rest_framework.authtoken.models import Token
+
 from django.contrib.auth.models import User
+from django.core.management import call_command
+from rest_framework.authtoken.models import Token
+
+from compass.models import AccessGroup, Contact, OMADContactQueue
+from compass.tests import CompassTestCase
 
 
 class TestOMADContactProcessing(CompassTestCase):
     API_TOKEN = None
 
     def setUp(self):
-        super(TestOMADContactProcessing, self).setUp()
+        super().setUp()
         AccessGroup(name="OMAD", access_group_id="u_astra_group1").save()
         user = User.objects.create_user(username='testuser', password='12345')
         token = Token.objects.create(user=user)

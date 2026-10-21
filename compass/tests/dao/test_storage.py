@@ -3,8 +3,10 @@
 
 
 import datetime
+
 from django.test import TestCase
 from django.test.utils import override_settings
+
 from compass.dao.storage import RADStorageDao
 
 
@@ -54,7 +56,7 @@ class TestStorage(TestCase):
         }
     })
     def test_upload_prediction(self):
-        test_datetime = datetime.datetime(2024, 5, 1, 12, 10, 32)
+        test_datetime = datetime.datetime(2024, 5, 1, 12, 10, 32, tzinfo=datetime.timezone.utc)
         dao = RADStorageDao()
         sample_json = {
             "body": [
@@ -81,7 +83,7 @@ class TestStorage(TestCase):
 
     def test_get_latest_prediction(self):
         dao = RADStorageDao()
-        filename, content = dao.get_latest_pred_file()
+        _, content = dao.get_latest_pred_file()
         self.assertIsNotNone(content)
         with open('compass/fixtures/storage/prediction_data'
                   '/2025-05-01-121033_predictions.csv') as f:

@@ -1,5 +1,8 @@
-from .base_settings import *
+import os
+
 from google.oauth2 import service_account
+
+from .base_settings import *
 
 INSTALLED_APPS += [
     "compass.apps.CompassFilesConfig",
@@ -13,6 +16,7 @@ INSTALLED_APPS += [
     "persistent_message",
     "rest_framework",
     "rest_framework.authtoken",
+    "django.contrib.postgres",
 ]
 
 INSTALLED_APPS.remove("django.contrib.staticfiles")
@@ -56,19 +60,13 @@ if os.getenv("ENV") == "localdev":
     RESTCLIENTS_DAO_CACHE_CLASS = None
     CURRENT_DATETIME_OVERRIDE = "2020-10-15 00:00:00"
 
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(
-                os.path.join(BASE_DIR, "compass"), "db.sqlite3"
-            ),
-        }
-    }
-
     MIGRATION_MODULES = {
         "uw_person_client": "uw_person_client.test_migrations",
     }
-    FIXTURE_DIRS = ["uw_person_client/fixtures", "compass/fixtures/uw_person"]
+    FIXTURE_DIRS = (
+        os.path.join(BASE_DIR, "uw_person_client", "fixtures"),
+        os.path.join(BASE_DIR, "compass", "fixtures", "uw_person"),
+    )
     TEST_ACCESS_GROUP = "u_test_group"
     COMPASS_ADMIN_GROUP = TEST_ACCESS_GROUP
     COMPASS_SUPPORT_GROUP = TEST_ACCESS_GROUP
@@ -120,6 +118,13 @@ else:
         "/gcs/credentials.json"
     )
 
+    RESTCLIENTS_COMPASS_VISITS_DAO_CLASS = "Live"
+    RESTCLIENTS_COMPASS_VISITS_HOST = os.getenv(
+        "RESTCLIENTS_COMPASS_VISITS_HOST", ""
+    )
+    RESTCLIENTS_COMPASS_VISITS_AUTH_TOKEN = os.getenv(
+        "RESTCLIENTS_COMPASS_VISITS_AUTH_TOKEN", ""
+    )
 
 GOOGLE_ANALYTICS_KEY = os.getenv("GOOGLE_ANALYTICS_KEY", default="")
 
@@ -148,7 +153,7 @@ DATABASES["uw_person"] = {
     "PASSWORD": os.getenv("UW_PERSON_DB_PASSWORD", "postgres"),
 }
 
-DATABASE_ROUTERS = ["compass.routers.UWPersonRouter"]
+DATABASE_ROUTERS = ["uw_person_client.routers.UWPersonRouter"]
 
 TZINFOS = {"PDT": -7 * 3600}
 
@@ -237,9 +242,13 @@ OMAD_CONTACT_TOKEN_USER = "omad-compass-api"
 PRED_ANALYTICS_TOKEN_USER = "era-predictions-api"
 COMPASS_VISITS_TOKEN_USER = "compass-visits-api"
 
+
 # Configure which eligibility type slug (configured in the DB)
 # controls compass-visits eligibility for the Instructional Center.
 COMPASS_VISITS_ELIGIBILITY_SLUG = "instructional-center"
 
 # Associate Compass Visits with the OMAD access group
 COMPASS_VISITS_ACCESS_GROUP_NAME = "OMAD"
+
+# Match the gateway's 20 MiB request-body limit.
+DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024

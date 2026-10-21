@@ -2,15 +2,23 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from compass.models import (
-    AccessGroup, ContactTopic, ContactType, ContactMethod, Affiliation)
-from compass.serializers import (
-    AffiliationSerializer, ContactTopicSerializer,
-    ContactTypeSerializer, ContactMethodSerializer)
-from compass.views.api import BaseAPIView
-from compass.exceptions import OverrideNotPermitted
-from userservice.user import UserService
 from logging import getLogger
+
+from compass.exceptions import OverrideNotPermitted
+from compass.models import (
+    AccessGroup,
+    Affiliation,
+    ContactMethod,
+    ContactTopic,
+    ContactType,
+)
+from compass.serializers import (
+    AffiliationSerializer,
+    ContactMethodSerializer,
+    ContactTopicSerializer,
+    ContactTypeSerializer,
+)
+from compass.views.api import BaseAPIView
 
 logger = getLogger(__name__)
 
@@ -69,7 +77,6 @@ class SettingsView(BaseAPIView):
 
         /api/internal/accessgroup/[access_group_id]/settings/[setting_type]/
         """
-        us = UserService()
         try:
             # User must belong to the specified access group, with
             # the appropriate role

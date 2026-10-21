@@ -347,7 +347,7 @@ async function updateICVisit(visitId, data) {
 }
 
 async function deleteICVisit(visitId) {
-  const url = "/api/internal/visits/delete/" + visitId + "/";
+  const url = "/api/internal/visits/update/" + visitId + "/";
   return useCustomFetch(url, {
     method: "DELETE",
   });

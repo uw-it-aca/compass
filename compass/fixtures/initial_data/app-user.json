@@ -5,5 +5,12 @@
     "fields": {
         "uwnetid": "jadviser"
     }
+},
+{
+    "model": "compass.appuser",
+    "pk": 2,
+    "fields": {
+        "uwnetid": "badvisor"
+    }
 }
 ]

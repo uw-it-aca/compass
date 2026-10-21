@@ -1,9 +1,14 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from django.conf import settings
-from compass.models import ContactType, AccessGroup, AppUser
 from dateutil import parser
+from django.conf import settings
+
+from compass.models import AccessGroup, AppUser, ContactType
+
+
+def get_omad_access_group():
+    return AccessGroup.objects.by_name("OMAD")
 
 
 def validate_contact_post_data(contact_dict):
@@ -23,7 +28,7 @@ def validate_contact_post_data(contact_dict):
     # if the adviser is a member of the omad group and the contact record
     # was successfully parsed, create an app-user and a student record for
     # them if one doesn't already exist
-    app_user = AppUser.objects.upsert_appuser(
+    AppUser.objects.upsert_appuser(
         contact_dict["adviser_netid"])
 
 

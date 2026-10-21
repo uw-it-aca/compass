@@ -2,19 +2,16 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from datetime import datetime
-from django.test import Client
+from unittest.mock import patch
+
 from django.core.exceptions import PermissionDenied
 from django.test.client import RequestFactory
-from django.contrib.auth.models import User
-from unittest.mock import MagicMock, patch
-from compass.views.api import BaseAPIView
-from compass.views.api.visit import VisitOMADView
-from compass.tests import ApiTest
-from compass.models import AccessGroup, VisitType
-from compass.exceptions import OverrideNotPermitted
-from rest_framework.authtoken.models import Token
 from rest_framework import status
+
+from compass.exceptions import OverrideNotPermitted
+from compass.models import AccessGroup
+from compass.tests import ApiTest
+from compass.views.api import BaseAPIView
 
 
 class BaseAPIViewTest(ApiTest):

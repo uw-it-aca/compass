@@ -1,0 +1,7 @@
+[tool.ruff.lint]
+extend-select = ["DTZ001", "DTZ007"]
+ignore = [
+    "BLE001",  # allow broad Exception catches
+    "S110",    # allow try-except-pass for graceful degradation
+    "UP017",   # defer UTC alias modernization
+]

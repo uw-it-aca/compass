@@ -3,12 +3,12 @@
 
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
+from restclients_core.exceptions import DataFailureException
 from uw_compass_visits import CompassVisits
 from uw_compass_visits.models import Visit
-from restclients_core.exceptions import DataFailureException
-from compass.models import AccessGroup
-from compass.dao.person import get_students_by_system_keys
 
+from compass.dao.person import get_students_by_system_keys
+from compass.models import AccessGroup, VisitTutoringOption, VisitType
 
 """
 This module provides functions for interacting with the Compass Visits
@@ -24,7 +24,7 @@ def get_visits_for_student(netid):
     visits = None
     try:
         visits = CompassVisits().get_visits_for_student(netid)
-    except DataFailureException as ex:
+    except DataFailureException:
         # If the student doesn't have any visits, return an empty list
         visits = []
     return visits
@@ -40,6 +40,18 @@ def get_admin_visit_list():
     }
     try:
         visits = CompassVisits().get_visit_admin_list()
+        access_group = get_compass_visits_access_group()
+        program_area_names = dict(
+            VisitType.objects.filter(
+                access_group=access_group,
+                is_compass_visits_program_area=True,
+            ).values_list('slug', 'name')
+        )
+        tutoring_option_names = dict(
+            VisitTutoringOption.objects.filter(
+                access_group=access_group
+            ).values_list('slug', 'name')
+        )
         student_syskeys = [visit.student_syskey for visit in
                            visits['pending_verification']]
         student_syskeys += [visit.student_syskey for visit in
@@ -50,16 +62,25 @@ def get_admin_visit_list():
         for visit in visits['pending_verification']:
             student = students_dict.get(visit.student_syskey)
             visit_json = visit.json_data()
+            visit_json['program_area'] = program_area_names.get(
+                visit.program_area, visit.program_area)
+            visit_json['tutoring_option'] = tutoring_option_names.get(
+                visit.tutoring_option, visit.tutoring_option)
             visit_json['student'] = student if student else None
             visit_resp['pending_verification'].append(visit_json)
         for visit in visits['pending_checkout']:
             visit_json = visit.json_data()
+            program_area = program_area_names.get(
+                visit.program_area, visit.program_area)
+            visit_json['program_area'] = program_area
+            visit_json['tutoring_option'] = tutoring_option_names.get(
+                visit.tutoring_option, visit.tutoring_option)
             student = students_dict.get(visit.student_syskey)
             visit_json['student'] = student if student else None
             visit_resp['by_programarea'].setdefault(
-                visit.program_area, []).append(visit_json)
+                program_area, []).append(visit_json)
 
-    except DataFailureException as ex:
+    except DataFailureException:
         # If there are no visits, return an empty response
         pass
     return visit_resp
@@ -67,14 +88,19 @@ def get_admin_visit_list():
 
 def get_visit_options(uwregid):
     """
-    Returns a list of visit options for the given UW regid.
+    Returns visit options for the given UW regid.
     """
-    options = []
+    options = {
+        'program_areas': [],
+        'tutoring_options': [],
+        'writing_services': [],
+        'courses': [],
+    }
     try:
         options = CompassVisits().get_visit_options(uwregid)
-    except DataFailureException as ex:
-        # If there are no visit options, return an empty list
-        options = []
+    except DataFailureException:
+        # If there are no visit options, return an empty options payload.
+        pass
     return options
 
 
@@ -83,9 +109,16 @@ def admin_create_visit(visit_data):
     Creates a visit with the given visit data.  Automatically verify as it is
     created by an admin user.
     """
+    student_syskey = visit_data.get('student_syskey')
+    if student_syskey and _student_has_active_visit(student_syskey):
+        raise DataFailureException(
+            'compass-visits',
+            400,
+            'Student already has an active visit')
+
     visit = Visit(
         access_group=get_compass_visits_access_group(),
-        student_syskey=visit_data.get('student_syskey'),
+        student_syskey=student_syskey,
         program_area=visit_data.get('program_area'),
         tutoring_option=visit_data.get('tutoring_option'),
         writing_service=visit_data.get('writing_service'),
@@ -93,6 +126,24 @@ def admin_create_visit(visit_data):
         is_verified=True,
     )
     return CompassVisits().admin_create_visit(visit)
+
+
+def _student_has_active_visit(student_syskey):
+    """
+    Returns True when the student appears in pending verification or
+    pending checkout visit lists.
+    """
+    try:
+        visits = CompassVisits().get_visit_admin_list()
+    except DataFailureException:
+        return False
+
+    pending_verification = visits.get('pending_verification', [])
+    pending_checkout = visits.get('pending_checkout', [])
+    for visit in pending_verification + pending_checkout:
+        if visit.student_syskey == student_syskey:
+            return True
+    return False
 
 
 def admin_update_visit(visit_id, is_verified=False, is_checked_out=False):

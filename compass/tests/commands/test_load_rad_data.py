@@ -3,10 +3,11 @@
 
 
 from io import StringIO
-from unittest.mock import patch
+
 from django.core.management import call_command
+
+from compass.models.rad_data import CourseAnalyticsScores, RADImport, RADWeek
 from compass.tests import CompassTestCase
-from compass.models.rad_data import RADWeek, RADImport, CourseAnalyticsScores
 
 
 class TestLoadRadData(CompassTestCase):

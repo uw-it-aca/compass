@@ -1,10 +1,11 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+import base64
+
 from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand
 from rest_framework.authtoken.models import Token
-import base64
 
 
 class Command(BaseCommand):

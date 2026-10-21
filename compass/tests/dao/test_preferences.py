@@ -3,6 +3,7 @@
 
 
 from django.test import TestCase
+
 from compass.dao.preferences import get_user_preferences
 from compass.models import AppUser, UserPreference
 

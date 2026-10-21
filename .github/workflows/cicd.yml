@@ -66,6 +66,15 @@ jobs:
 
     needs: context
 
+    permissions:
+      contents: read
+      actions: write
+      security-events: write
+      # Coveralls may or may not need the following permissions
+      # pull-requests: write    # For PR comments
+      # statuses: write        # For commit status updates
+      # checks: write          # For check runs
+
     services:
       postgres:
         image: postgres:17
@@ -83,24 +92,25 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
-          python-version: "3.10"
+          python-version: "3.12"
 
       - name: Run Python Linters
         uses: uw-it-aca/actions/python-linters@main
         with:
           app_name: ${DJANGO_APP}
           exclude_paths: "migrations"
+          ignore: "BLE001,S110,UP017"
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Cache Docker layers
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-$(echo ${{ hashFiles('Dockerfile') }} | head -c 16)
@@ -108,7 +118,7 @@ jobs:
             ${{ runner.os }}-buildx-
 
       - name: Build App Image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           target: app-container
@@ -119,7 +129,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache
 
       - name: Build Test Image
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           target: app-test-container
           tags: app-test-container
@@ -147,6 +157,13 @@ jobs:
           coveralls
         continue-on-error: true
 
+      - name: Run vulnerability scan
+        id: vuln-scan
+        uses: uw-it-aca/actions/container-vuln-scan@main
+        with:
+          image_tag: ${{ needs.context.outputs.image_tag }}
+          severity: 'HIGH,CRITICAL'
+
       - name: Push Image to Repository
         if: github.event_name == 'push'
         uses: uw-it-aca/actions/gcr-push@main
@@ -166,7 +183,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Deployment Pipeline
         if: >-

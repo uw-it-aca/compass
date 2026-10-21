@@ -3,12 +3,9 @@
 
 import csv
 from io import StringIO
-from compass.models.rad_data import (CourseAnalyticsScores,
-                                     StudentSigninAnalytics)
-from django.db import IntegrityError
 from logging import getLogger
 
-from compass.views.api.student import StudentSigninAnalyticsView
+from compass.models.rad_data import CourseAnalyticsScores, StudentSigninAnalytics
 
 logger = getLogger(__name__)
 
@@ -20,8 +17,7 @@ def read_csv(csv_string):
     Yield each row from a CSV string as a dictionary.
     """
     reader = csv.DictReader(StringIO(csv_string))
-    for row in reader:
-        yield row
+    yield from reader
 
 
 def import_data_from_csv(week, csv_string, pred_file, reload=False):
@@ -106,14 +102,23 @@ def validate_prediction_json(pred_json):
     Validate prediction JSON structure.
     """
     required_fields = {'uw_netid', 'course_code', 'pred'}
-    rows = pred_json.get('body', [])
+    rows = _get_prediction_rows(pred_json)
     if not rows:
         raise ValueError("Prediction JSON body is empty")
     for row in rows:
+        if not isinstance(row, dict):
+            raise TypeError("Prediction JSON rows must be objects")
         missing = required_fields - row.keys()
         if missing:
             raise ValueError(f"Missing fields in prediction JSON:"
                              f" {', '.join(missing)}")
+
+
+def _get_prediction_rows(pred_json):
+    rows = pred_json.get('body', []) if isinstance(pred_json, dict) else pred_json
+    if not isinstance(rows, list):
+        raise TypeError("Prediction JSON must contain a list of rows")
+    return rows
 
 
 def get_pred_csv_from_json(pred_json):
@@ -126,7 +131,7 @@ def get_pred_csv_from_json(pred_json):
                                         'course_code',
                                         'pred'])
     writer.writeheader()
-    for row in pred_json.get('body', []):
+    for row in _get_prediction_rows(pred_json):
         writer.writerow({
             'uw_netid': row['uw_netid'],
             'course_code': row['course_code'],

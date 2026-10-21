@@ -2,9 +2,9 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from compass.views.api import BaseAPIView
 from compass.models import AccessGroup, EligibilityType
 from compass.serializers import EligibilityTypeSerializer
+from compass.views.api import BaseAPIView
 
 
 class EligibilityView(BaseAPIView):

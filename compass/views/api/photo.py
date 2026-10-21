@@ -1,12 +1,14 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from compass.views.api import BaseAPIView
-from compass.dao.photo import PhotoDAO
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, StreamingHttpResponse
 from restclients_core.exceptions import DataFailureException
+
+from compass.dao.photo import PhotoDAO
+from compass.views.api import BaseAPIView
 
 
 class PhotoView(BaseAPIView):
@@ -16,13 +18,12 @@ class PhotoView(BaseAPIView):
     def get(self, request, *args, **kwargs):
         uwregid = kwargs.get('uwregid')
         photo_key = kwargs.get('photo_key')
-        now = datetime.utcnow()
+        now = datetime.now(tz=timezone.utc)
         expires = now + timedelta(seconds=self.cache_time)
         try:
             photo = PhotoDAO().get_photo(uwregid, photo_key)
             response = StreamingHttpResponse(photo, content_type='image/jpeg')
-            response['Cache-Control'] = 'public,max-age={}'.format(
-                self.cache_time)
+            response['Cache-Control'] = f'public,max-age={self.cache_time}'
             response['Expires'] = expires.strftime(self.date_format)
             response['Last-Modified'] = now.strftime(self.date_format)
             return response

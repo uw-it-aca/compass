@@ -3,19 +3,24 @@
 
 
 from datetime import UTC, datetime
-from io import BytesIO
+from unittest.mock import MagicMock, call, patch
+
+from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client
-from django.contrib.auth.models import User
-from unittest.mock import MagicMock, patch
-from compass.views.api.visit import VisitOMADView
-from compass.tests import ApiTest
-from compass.models import (AccessGroup,
-                            VisitType,
-                            Visit,
-                            Student,
-                            VisitTutoringOption)
 from rest_framework.authtoken.models import Token
+from restclients_core.exceptions import DataFailureException
+
+from compass.dao.person import PersonNotFoundException
+from compass.models import (
+    AccessGroup,
+    Student,
+    Visit,
+    VisitTutoringOption,
+    VisitType,
+)
+from compass.tests import ApiTest
+from compass.views.api.visit import VisitOMADView, VisitSearchMixin
 
 
 class VisitAPITest(ApiTest):
@@ -23,24 +28,39 @@ class VisitAPITest(ApiTest):
     ACCESS_GROUP = None
 
     def setUp(self):
-        super(VisitAPITest, self).setUp()
-        user = User.objects.create_user(username='testuser', password='12345')
+        super().setUp()
+        user = User.objects.create_user(username='compass-visits-api',
+                                        password='12345')
         ag = AccessGroup(name="OMAD", access_group_id="u_astra_group1")
         ag.save()
         self.ACCESS_GROUP = ag
         v_type = VisitType(name="IC Drop-In Tutoring", access_group=ag)
         v_type.save()
+        program_area = VisitType(
+            name="Biology",
+            access_group=ag,
+            is_compass_visits_program_area=True)
+        program_area.save()
         v_tutoring = VisitTutoringOption(
             name="Option 1", access_group=ag)
         v_tutoring.save()
         stu = Student(system_key="888777333")
         stu.save()
+        stu2 = Student(system_key="532353230")
+        stu2.save()
         Visit(student=stu,
               access_group=ag,
               visit_type=v_type,
               course_code="CHEM 198",
               checkin_date=datetime(2022, 9, 19, 6, 15, 4, tzinfo=UTC),
               checkout_date=datetime(2022, 9, 19, 7, 15, 4, tzinfo=UTC),
+              tutoring_option=v_tutoring).save()
+        Visit(student=stu2,
+              access_group=ag,
+              visit_type=v_type,
+              course_code="MATH 124",
+              checkin_date=datetime(2022, 9, 20, 6, 15, 4, tzinfo=UTC),
+              checkout_date=datetime(2022, 9, 20, 7, 15, 4, tzinfo=UTC),
               tutoring_option=v_tutoring).save()
 
         token = Token.objects.create(user=user)
@@ -49,23 +69,53 @@ class VisitAPITest(ApiTest):
     def test_api_auth(self):
         test_request = {
             "student_netid": "javerage",
-            "visit_type": "IC Drop-In Tutoring",
-            "course_code": "CHEM 198",
+            "visit_type": "Biology", "course_code": "CHEM 198",
             "checkin_date": "2012-01-19 13:21:00 PDT",
             "checkout_date": "2012-01-19 14:52:00 PDT"
         }
 
-        token_str = "Token %s" % self.API_TOKEN
+        token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION=token_str)
 
         response = self.post_response('visit_omad', body=test_request)
         self.assertEqual(response.status_code, 201)
+        search_resp = self.get_response('external_student_visit_view',
+                                        kwargs={"identifier": "javerage"})
+        self.assertEqual(search_resp.status_code, 200)
+
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
                              HTTP_AUTHORIZATION="BAD TOKEN")
 
         response = self.post_response('visit_omad', test_request)
         self.assertEqual(response.status_code, 401)
+        search_resp = self.get_response('external_student_visit_view',
+                                        kwargs={"identifier": "javerage"})
+        self.assertEqual(search_resp.status_code, 401)
+
+    def test_visit_catalog(self):
+        self.client = Client(
+            HTTP_USER_AGENT='Mozilla/5.0',
+            HTTP_AUTHORIZATION=f"Token {self.API_TOKEN}")
+        response = self.get_response('visit_catalog')
+
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('visit_types', response.data)
+        self.assertIn('tutoring_options', response.data)
+        self.assertEqual(len(response.data['visit_types']), 1)
+        self.assertTrue(response.data['tutoring_options'])
+        self.assertEqual(response.data['visit_types'][0]['name'],
+                 'Biology')
+
+    def test_visit_catalog_access_group_not_configured(self):
+        self.client = Client(
+            HTTP_USER_AGENT='Mozilla/5.0',
+            HTTP_AUTHORIZATION=f"Token {self.API_TOKEN}")
+
+        with self.settings(COMPASS_VISITS_ACCESS_GROUP_NAME="MISSING"):
+            response = self.get_response('visit_catalog')
+
+        self.assertEqual(response.status_code, 501)
 
     def test_date_parse(self):
         # no checkin date specified
@@ -90,6 +140,37 @@ class VisitAPITest(ApiTest):
 
         student = VisitOMADView()._valid_student("javerage")
         self.assertEqual(student.system_key, "532353230")
+
+    def test_valid_visit_type(self):
+        visit_type = VisitType.objects.get(name="Biology")
+
+        self.assertEqual(
+            VisitOMADView()._valid_visit_type(
+                "biology", self.ACCESS_GROUP),
+            visit_type)
+        self.assertEqual(
+            VisitOMADView()._valid_visit_type(
+                "Biology", self.ACCESS_GROUP),
+            visit_type)
+
+        with self.assertRaises(ValueError):
+            VisitOMADView()._valid_visit_type(
+                "IC Drop-In Tutoring", self.ACCESS_GROUP)
+
+    def test_valid_tutoring_option(self):
+        tutoring_option = VisitTutoringOption.objects.get(name="Option 1")
+
+        self.assertEqual(
+            VisitOMADView()._valid_tutoring_option(
+                "option-1", self.ACCESS_GROUP),
+            tutoring_option)
+        vto = VisitOMADView()._valid_tutoring_option("Option 1",
+                                                     self.ACCESS_GROUP)
+        self.assertEqual(vto, tutoring_option)
+
+        with self.assertRaises(ValueError):
+            VisitOMADView()._valid_tutoring_option("Nonexistent Option",
+                                                   self.ACCESS_GROUP)
 
     @patch('compass.views.api.visit.Visit')
     @patch('compass.views.api.visit.VisitType')
@@ -122,6 +203,10 @@ class VisitAPITest(ApiTest):
         mock_view._valid_course = MagicMock(
             return_value=mock_course)
 
+        mock_tutoring_option = MagicMock()
+        mock_view._valid_tutoring_option = MagicMock(
+            return_value=mock_tutoring_option)
+
         mock_date = MagicMock()
         mock_view._valid_date = MagicMock(
             return_value=mock_date)
@@ -131,6 +216,8 @@ class VisitAPITest(ApiTest):
 
         # assertions
         mock_request = MagicMock()
+        mock_request.user.username = 'compass-visits-api'
+
         response = mock_view.post(mock_request)
         mock_access_group_cls.objects.by_name.assert_called_once_with("OMAD")
 
@@ -145,6 +232,8 @@ class VisitAPITest(ApiTest):
             mock_request.data.get("checkout_date"))
         mock_view._valid_visit_type.assert_called_once_with(
             mock_request.data.get("visit_type"), mock_omad_access_group)
+        mock_view._valid_tutoring_option.assert_called_once_with(
+            mock_request.data.get("tutoring_option"), mock_omad_access_group)
 
         # assert visit record called correctly
         mock_visit_cls.assert_called_once_with(
@@ -153,7 +242,9 @@ class VisitAPITest(ApiTest):
             course_code=mock_course,
             checkin_date=mock_date,
             defaults={
-                'checkout_date': mock_date, 'visit_type': mock_visit_type})
+                'checkout_date': mock_date,
+                'visit_type': mock_visit_type,
+                'tutoring_option': mock_tutoring_option})
 
         self.assertEqual(response.status_code, 201)
 
@@ -162,7 +253,7 @@ class VisitAPITest(ApiTest):
         self.assertEqual(response.status_code, 200)
         self.assertIn('pending_verification', response.data)
         self.assertIn('by_programarea', response.data)
-        self.assertEqual(len(response.data['pending_verification']), 2)
+        self.assertEqual(len(response.data['pending_verification']), 7)
         self.assertEqual(len(response.data['by_programarea']), 2)
         self.assertEqual(
             len(response.data['by_programarea']['Program Area 2']), 1)
@@ -193,7 +284,8 @@ class VisitAPITest(ApiTest):
 
         no_stu_resp = self.get_response('visit_search_view',
                                         "jadviser",
-                                        kwargs={"identifier": "javerage"})
+                                        kwargs={"identifier": "jnewstudent"})
+
         self.assertEqual(no_stu_resp.status_code, 404)
 
         bad_identifier_resp = self.get_response('visit_search_view',
@@ -220,6 +312,22 @@ class VisitAPITest(ApiTest):
         self.assertEqual(len(response.data['tutoring_options']), 3)
         self.assertEqual(len(response.data['writing_services']), 2)
 
+    @patch('compass.dao.compass_visits.CompassVisits.get_visit_options')
+    def test_get_ic_visit_options_datafailure(self, mock_get_visit_options):
+        mock_get_visit_options.side_effect = DataFailureException(
+            'compass-visits', 404, 'Not Found')
+
+        response = self.get_response(
+            'ic_visit_options_view',
+            'jadviser',
+            kwargs={"uwregid": "BADREGID"})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data['program_areas'], [])
+        self.assertEqual(response.data['tutoring_options'], [])
+        self.assertEqual(response.data['writing_services'], [])
+        self.assertEqual(response.data['courses'], [])
+
     @patch('uw_compass_visits.CompassVisits.admin_create_visit')
     def test_create_visit(self, mock_admin_create_visit):
         from compass.dao import compass_visits
@@ -231,7 +339,7 @@ class VisitAPITest(ApiTest):
         }
         compass_visits.admin_create_visit(data)
         # Check the Visit object passed to CompassVisits.admin_create_visit
-        args, kwargs = mock_admin_create_visit.call_args
+        args, _kwargs = mock_admin_create_visit.call_args
         visit_arg = args[0]
         assert visit_arg.student_syskey == data["student_syskey"]
         assert visit_arg.program_area == data["program_area"]
@@ -239,6 +347,24 @@ class VisitAPITest(ApiTest):
         assert visit_arg.writing_service == data["writing_service"]
         # course is not in data, should be None
         assert getattr(visit_arg, "course", None) is None
+
+    @patch('compass.views.api.visit.admin_create_visit')
+    def test_create_visit_with_active_visit(self, mock_admin_create_visit):
+        mock_admin_create_visit.side_effect = DataFailureException(
+            'compass-visits', 400, 'Student already has an active visit')
+        data = {
+            "student_syskey": "000043870",
+            "program_area": 1,
+            "tutoring_option": 1,
+            "writing_service": 1,
+        }
+
+        response = self.post_response('ic_visit_create_view',
+                                      'jadviser',
+                                      body=data)
+
+        self.assertEqual(response.status_code, 400)
+        self.assertIn('Student already has an active visit', response.data)
 
     def test_update_visit(self):
         visit_id = 1
@@ -391,4 +517,176 @@ class VisitAPITest(ApiTest):
                          "visit_type,tutoring_option,course_code\n"
                          "888777333,2022-09-19T06:15:04+00:00,"
                          "2022-09-19T07:15:04+00:00,60,"
-                         "IC Drop-In Tutoring,Option 1,CHEM 198\n")
+                         "IC Drop-In Tutoring,Option 1,CHEM 198\n"
+                         "532353230,2022-09-20T06:15:04+00:00,"
+                         "2022-09-20T07:15:04+00:00,60,"
+                         "IC Drop-In Tutoring,Option 1,MATH 124\n")
+
+    def test_visit_search_mixin_invalid_student_identifier(self):
+        mixin = VisitSearchMixin()
+        mixin.response_badrequest = MagicMock(return_value='bad request')
+
+        with patch('compass.views.api.visit.valid_uwnetid',
+                   return_value=False), \
+                patch('compass.views.api.visit.valid_student_number',
+                      return_value=False), \
+                patch('compass.views.api.visit.get_person_by_uwnetid') \
+                as mock_get_person_by_uwnetid, \
+                patch('compass.views.api.visit.get_person_by_student_number') \
+                as mock_get_person_by_student_number:
+            response = mixin._visit_search_response('1234bad')
+
+        self.assertEqual(response, 'bad request')
+        mixin.response_badrequest.assert_called_once_with(
+            'Invalid student identifier')
+        mock_get_person_by_uwnetid.assert_not_called()
+        mock_get_person_by_student_number.assert_not_called()
+
+    def test_visit_search_mixin_person_not_found(self):
+        mixin = VisitSearchMixin()
+        mixin.response_notfound = MagicMock(return_value='not found')
+
+        with patch('compass.views.api.visit.valid_uwnetid',
+                   return_value=True), \
+                patch('compass.views.api.visit.get_person_by_uwnetid',
+                      side_effect=PersonNotFoundException):
+            response = mixin._visit_search_response('lisa')
+
+        self.assertEqual(response, 'not found')
+        mixin.response_notfound.assert_called_once_with('Student not found')
+
+    def test_visit_search_mixin_student_not_found(self):
+        mixin = VisitSearchMixin()
+        mixin.response_notfound = MagicMock(return_value='not found')
+        mock_person = MagicMock(system_key='000123456')
+
+        with patch('compass.views.api.visit.valid_uwnetid',
+                   return_value=True), \
+                patch('compass.views.api.visit.get_person_by_uwnetid',
+                      return_value=mock_person), \
+                patch('compass.views.api.visit.Student.objects.get',
+                      side_effect=Student.DoesNotExist):
+            response = mixin._visit_search_response('lisa')
+
+        self.assertEqual(response, 'not found')
+        mixin.response_notfound.assert_called_once_with('Student not found')
+
+    @patch('compass.views.api.visit.VisitReadSerializer')
+    @patch('compass.views.api.visit.Visit.objects.filter')
+    @patch('compass.views.api.visit.current_term')
+    @patch('compass.views.api.visit.Student.objects.get')
+    @patch('compass.views.api.visit.get_person_by_student_number')
+    @patch('compass.views.api.visit.valid_student_number')
+    @patch('compass.views.api.visit.valid_uwnetid')
+    def test_visit_search_mixin_success_by_student_number(
+            self,
+            mock_valid_uwnetid,
+            mock_valid_student_number,
+            mock_get_person_by_student_number,
+            mock_student_get,
+            mock_current_term,
+            mock_visit_filter,
+            mock_serializer):
+        mixin = VisitSearchMixin()
+        mixin.response_ok = MagicMock(return_value='ok')
+
+        mock_valid_uwnetid.return_value = False
+        mock_valid_student_number.return_value = True
+        mock_person = MagicMock(system_key='000123456')
+        mock_get_person_by_student_number.return_value = mock_person
+
+        mock_student = MagicMock()
+        mock_student_get.return_value = mock_student
+
+        quarter_start = datetime(2026, 3, 25, tzinfo=UTC)
+        mock_current_term.return_value = MagicMock(
+            first_day_quarter=quarter_start)
+
+        mock_ordered_visits = MagicMock(name='ordered_visits')
+        mock_visit_filter.return_value.order_by.return_value = \
+            mock_ordered_visits
+        mock_serializer.return_value = MagicMock(data=[{'id': 1}])
+
+        response = mixin._visit_search_response(' 1233338 ')
+
+        self.assertEqual(response, 'ok')
+        mock_valid_uwnetid.assert_called_once_with('1233338')
+        mock_valid_student_number.assert_called_once_with('1233338')
+        mock_get_person_by_student_number.assert_called_once_with('1233338')
+        mock_student_get.assert_called_once_with(system_key='000123456')
+        mock_visit_filter.assert_called_once_with(
+            student=mock_student,
+            checkin_date__gte=quarter_start)
+        mock_visit_filter.return_value.order_by.assert_called_once_with(
+            '-checkin_date')
+        mock_serializer.assert_called_once_with(mock_ordered_visits, many=True)
+        mixin.response_ok.assert_called_once_with([{'id': 1}])
+
+    @patch('compass.views.api.visit.VisitReadSerializer')
+    @patch('compass.views.api.visit.Visit.objects.filter')
+    @patch('compass.views.api.visit.current_term')
+    @patch('compass.views.api.visit.Student.objects.get')
+    @patch('compass.views.api.visit.get_person_by_uwnetid')
+    @patch('compass.views.api.visit.valid_student_number')
+    @patch('compass.views.api.visit.valid_uwnetid')
+    def test_visit_search_mixin_success_by_uwnetid(
+            self,
+            mock_valid_uwnetid,
+            mock_valid_student_number,
+            mock_get_person_by_uwnetid,
+            mock_student_get,
+            mock_current_term,
+            mock_visit_filter,
+            mock_serializer):
+        mixin = VisitSearchMixin()
+        mixin.response_ok = MagicMock(return_value='ok')
+
+        mock_valid_uwnetid.return_value = True
+        mock_valid_student_number.return_value = False
+        mock_person = MagicMock(system_key='532353230')
+        mock_get_person_by_uwnetid.return_value = mock_person
+
+        mock_student = MagicMock()
+        mock_student_get.return_value = mock_student
+
+        quarter_start = datetime(2026, 3, 25, tzinfo=UTC)
+        mock_current_term.return_value = MagicMock(
+            first_day_quarter=quarter_start)
+
+        mock_ordered_visits = MagicMock(name='ordered_visits')
+        mock_visit_filter.return_value.order_by.return_value = \
+            mock_ordered_visits
+        mock_serializer.return_value = MagicMock(data=[{'id': 2}])
+
+        response = mixin._visit_search_response(' Lisa ')
+
+        self.assertEqual(response, 'ok')
+        self.assertEqual(mock_valid_uwnetid.call_args_list,
+                         [call('lisa')])
+        mock_valid_student_number.assert_not_called()
+        mock_get_person_by_uwnetid.assert_called_once_with('lisa')
+        mock_student_get.assert_called_once_with(system_key='532353230')
+        mock_visit_filter.assert_called_once_with(
+            student=mock_student,
+            checkin_date__gte=quarter_start)
+        mock_visit_filter.return_value.order_by.assert_called_once_with(
+            '-checkin_date')
+        mock_serializer.assert_called_once_with(mock_ordered_visits, many=True)
+        mixin.response_ok.assert_called_once_with([{'id': 2}])
+
+    def test_external_visit_view(self):
+        token_str = f"Token {self.API_TOKEN}"
+        self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',
+                             HTTP_AUTHORIZATION=token_str)
+        response = self.get_response('external_student_visit_view',
+                                     kwargs={"identifier": "javerage"})
+        self.assertEqual(response.status_code, 200)
+
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['visit_type'], "IC Drop-In Tutoring")
+        self.assertEqual(response.data[0]['course_code'], "MATH 124")
+        self.assertEqual(response.data[0]['tutoring_option'], "Option 1")
+        self.assertEqual(response.data[0]['checkin_date'],
+                         "2022-09-20T06:15:04Z")
+        self.assertEqual(response.data[0]['checkout_date'],
+                         "2022-09-20T07:15:04Z")

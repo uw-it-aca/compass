@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('compass', '0022_radimport_prediction_filename'),
+        ('compass', '0023_access_group_scoped_uniqueness'),
     ]
 
     operations = [
@@ -15,13 +15,17 @@ class Migration(migrations.Migration):
             name='VisitTutoringOption',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, unique=True)),
-                ('slug', models.SlugField(unique=True)),
+                ('name', models.CharField(max_length=50)),
+                ('slug', models.SlugField(max_length=50)),
                 ('editable', models.BooleanField(default=False)),
                 ('access_group', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='compass.accessgroup')),
             ],
             options={
                 'abstract': False,
+                'constraints': [
+                    models.UniqueConstraint(fields=('access_group', 'name'), name='compass_visittutoringoption_ag_name_uniq'),
+                    models.UniqueConstraint(fields=('access_group', 'slug'), name='compass_visittutoringoption_ag_slug_uniq'),
+                ],
             },
         ),
         migrations.AddField(

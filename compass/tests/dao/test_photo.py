@@ -3,6 +3,7 @@
 
 
 from django.test import TestCase
+
 from compass.dao.photo import PhotoDAO
 
 

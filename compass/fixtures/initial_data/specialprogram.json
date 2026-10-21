@@ -31,5 +31,27 @@
       "modified_by": null,
       "modified_date": null
     }
+  },
+  {
+    "model": "compass.specialprogram",
+    "pk": 4,
+    "fields": {
+      "student": 1,
+      "access_group": 2,
+      "program_date": "2024-01-15",
+      "modified_by": 2,
+      "modified_date": "2024-01-20T12:00:00Z"
+    }
+  },
+  {
+    "model": "compass.specialprogram",
+    "pk": 5,
+    "fields": {
+      "student": 2,
+      "access_group": 2,
+      "program_date": "2024-02-01",
+      "modified_by": 2,
+      "modified_date": "2024-02-05T18:30:00Z"
+    }
   }
 ]

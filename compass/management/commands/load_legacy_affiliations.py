@@ -2,17 +2,18 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+import csv
+import re
+import string
+import sys
+from datetime import datetime
+from typing import ClassVar
+
 from django.core.management.base import BaseCommand
 from uw_person_client import UWPersonClient
 from uw_person_client.exceptions import PersonNotFoundException
-from compass.models import (
-    AccessGroup, Student, StudentAffiliation, Affiliation, Cohort)
-from datetime import datetime
-import string
-import argparse
-import sys
-import csv
-import re
+
+from compass.models import AccessGroup, Affiliation, Cohort, Student, StudentAffiliation
 
 
 class UnknownLegacyAssociation(Exception):
@@ -97,8 +98,7 @@ class Command(BaseCommand):
             if self._normal(affiliation) in legacy:
                 return name, active
 
-        raise UnknownLegacyAssociation("{} ({})".format(
-            affiliation, self._normal(affiliation)))
+        raise UnknownLegacyAssociation(f"{affiliation} ({self._normal(affiliation)})")
 
     def load_affiliation_table(self, filename):
 
@@ -114,10 +114,10 @@ class Command(BaseCommand):
                         affiliation.save()
                 except UnknownLegacyAssociation as ex:
                     self._error(
-                        'Unknown legacy affiliation: {}'.format(ex))
+                        f'Unknown legacy affiliation: {ex}')
 
     def _get_affiliation(self, affiliation):
-        affiliation, created = Affiliation.objects.get_or_create(
+        affiliation, _ = Affiliation.objects.get_or_create(
             access_group=self.access_group, name=affiliation)
         return affiliation
 
@@ -129,7 +129,7 @@ class Command(BaseCommand):
                 student_number = a.student_number.zfill(7)
                 try:
                     student = self._get_student(student_number)
-                    name, active = self._get_affiliation_name(a.affiliation)
+                    name, _ = self._get_affiliation_name(a.affiliation)
                     affiliation = self._get_affiliation(name)
                     sa = self._get_student_affiliation(student, affiliation)
                     sa.actively_advised = (a.active.lower() in ['yes', ''])
@@ -138,11 +138,11 @@ class Command(BaseCommand):
                     date = a.date_modified if a.date_modified else a.date
                     if date:
                         try:
-                            sa.date = datetime.strptime(
+                            sa.date = datetime.strptime(  # noqa: DTZ007
                                 date, '%m/%d/%Y').date()
                         except ValueError:
                             try:
-                                sa.date = datetime.strptime(
+                                sa.date = datetime.strptime(  # noqa: DTZ007
                                     date, '%m/%d/%y').date()
                             except ValueError:
                                 pass
@@ -151,16 +151,14 @@ class Command(BaseCommand):
                     self._set_cohorts(sa, a.cohort)
                 except PersonNotFoundException:
                     self._error(
-                        "Person Not Found affiliation {}: {}".format(
-                            a.ID, student_number))
+                        f"Person Not Found affiliation {a.ID}: {student_number}")
                 except UnknownLegacyAssociation as ex:
                     self._error(
-                        'Unknown legacy affiliation: {}'.format(ex))
+                        f'Unknown legacy affiliation: {ex}')
 
     def _set_cohorts(self, student_affiliation, cohorts_list):
         cohort_re = re.compile('^([0-9]+)-([0-9]+)')
         for cohort_string in cohorts_list.split(','):
-            cohorts = []
             m = cohort_re.search(cohort_string)
             if m:
                 start_year = int('20' + m.group(1) if (
@@ -172,7 +170,7 @@ class Command(BaseCommand):
                 student_affiliation.save()
 
     def _get_student_affiliation(self, student, affiliation):
-        sa, created = StudentAffiliation.objects.get_or_create(
+        sa, _ = StudentAffiliation.objects.get_or_create(
             student=student, affiliation=affiliation)
         return sa
 
@@ -183,12 +181,12 @@ class Command(BaseCommand):
             include_student_sports=False, include_student_advisers=False,
             include_student_majors=False, include_student_pending_majors=False,
             include_student_holds=False, include_student_degrees=False)
-        student, created = Student.objects.get_or_create(
+        student, _ = Student.objects.get_or_create(
             system_key=person.student.system_key)
         return student
 
     def _get_cohort(self, start_year, end_year):
-        cohort, created = Cohort.objects.get_or_create(
+        cohort, _ = Cohort.objects.get_or_create(
             start_year=start_year, end_year=end_year)
         return cohort
 
@@ -200,16 +198,16 @@ class Command(BaseCommand):
         print(msg, file=sys.stderr)
 
 
-class LegacyAffiliation(object):
-    AFFILIATION_COLUMNS = ["affilationID", "affiliation"]
+class LegacyAffiliation:
+    AFFILIATION_COLUMNS: ClassVar[list[str]] = ["affilationID", "affiliation"]
 
     def __init__(self, row):
         for i, k in enumerate(self.AFFILIATION_COLUMNS):
             setattr(self, k, row[i].strip())
 
 
-class Association(object):
-    ASSOCIATION_COLUMNS = [
+class Association:
+    ASSOCIATION_COLUMNS: ClassVar[list[str]] = [
         "ID", "student_number", "affiliation", "cohort",
         "date", "date_modified", "active"]
 

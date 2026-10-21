@@ -1,12 +1,14 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
-from django.test import override_settings
-from unittest.mock import patch
-from compass.tests import ApiTest
-from compass.models import AccessGroup, Contact, AppUser, Student, ContactType
-from datetime import datetime, timezone
 import json
+from datetime import datetime, timezone
+from unittest.mock import patch
+
+from django.test import override_settings
+
+from compass.models import AccessGroup, AppUser, Contact, ContactType, Student
+from compass.tests import ApiTest
 
 
 class AdviserCheckInsAPITest(ApiTest):
@@ -47,38 +49,38 @@ class AdviserCheckInsAPITest(ApiTest):
 
     @patch("compass.views.api.adviser.Contact")
     def test_days_param(self, mock_contact_cls):
-        response = self.get_response("adviser_checkins",
-                                     "jadviser",
-                                     kwargs={"adviser_netid": "jadviser"},
-                                     get_args={"days": "14"})
+        self.get_response("adviser_checkins",
+                          "jadviser",
+                          kwargs={"adviser_netid": "jadviser"},
+                          get_args={"days": "14"})
         mock_contact_cls.objects.by_adviser.assert_called_with(
             "jadviser", from_days=14)
 
-        response = self.get_response("adviser_checkins",
-                                     "jadviser",
-                                     kwargs={"adviser_netid": "jadviser"},
-                                     get_args={"days": ""})
+        self.get_response("adviser_checkins",
+                          "jadviser",
+                          kwargs={"adviser_netid": "jadviser"},
+                          get_args={"days": ""})
         mock_contact_cls.objects.by_adviser.assert_called_with(
             "jadviser", from_days=3)
 
-        response = self.get_response("adviser_checkins",
-                                     "jadviser",
-                                     kwargs={"adviser_netid": "jadviser"},
-                                     get_args={"days": "seven"})
+        self.get_response("adviser_checkins",
+                          "jadviser",
+                          kwargs={"adviser_netid": "jadviser"},
+                          get_args={"days": "seven"})
         mock_contact_cls.objects.by_adviser.assert_called_with(
             "jadviser", from_days=3)
 
-        response = self.get_response("adviser_checkins",
-                                     "jadviser",
-                                     kwargs={"adviser_netid": "jadviser"},
-                                     get_args={"days": "2"})
+        self.get_response("adviser_checkins",
+                          "jadviser",
+                          kwargs={"adviser_netid": "jadviser"},
+                          get_args={"days": "2"})
         mock_contact_cls.objects.by_adviser.assert_called_with(
             "jadviser", from_days=3)
 
-        response = self.get_response("adviser_checkins",
-                                     "jadviser",
-                                     kwargs={"adviser_netid": "jadviser"},
-                                     get_args={"days": "92"})
+        self.get_response("adviser_checkins",
+                          "jadviser",
+                          kwargs={"adviser_netid": "jadviser"},
+                          get_args={"days": "92"})
         mock_contact_cls.objects.by_adviser.assert_called_with(
             "jadviser", from_days=3)
 
@@ -121,7 +123,7 @@ class ContactAPITest(ApiTest):
     contact_type = None
 
     def setUp(self):
-        super(ContactAPITest, self).setUp()
+        super().setUp()
         self.ag = AccessGroup(name="Test OMAD Group",
                               access_group_id="u_astra_group1")
         self.ag.save()

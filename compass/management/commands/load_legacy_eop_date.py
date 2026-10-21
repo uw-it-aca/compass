@@ -2,17 +2,18 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+import csv
+import string
+import sys
+from datetime import datetime, timezone
+from typing import ClassVar
+
 from django.core.management.base import BaseCommand
 from uw_person_client import UWPersonClient
 from uw_person_client.exceptions import PersonNotFoundException
-from compass.models import AccessGroup, Student, SpecialProgram
-from datetime import datetime, date, timezone
 from uw_sws.dao import SWS_TIMEZONE
-import string
-import argparse
-import sys
-import csv
-import re
+
+from compass.models import AccessGroup, SpecialProgram, Student
 
 
 class Command(BaseCommand):
@@ -51,18 +52,17 @@ class Command(BaseCommand):
                     self._error(
                         f"No pds record for student id {student_number}")
 
-                if not a.EOP_Date or len(a.EOP_Date) == 0:
-                    if seen[student_number] > 1:
-                        self._error(f"{student_number} (seen "
-                                    f"{seen[student_number]} times) "
-                                    f"missing EOP_Date {a.date_modified}")
+                if (not a.EOP_Date or len(a.EOP_Date) == 0) and seen[student_number] > 1:
+                    self._error(f"{student_number} (seen "
+                                f"{seen[student_number]} times) "
+                                f"missing EOP_Date {a.date_modified}")
 
                 if not a.date_modified or len(a.date_modified) == 0:
                     self._error(f"{student_number} (seen "
                                 f"{seen[student_number]} times) "
                                 f"missing modified date")
 
-                date = datetime.strptime(a.EOP_Date, '%Y-%m-%d').date() if (
+                date = datetime.strptime(a.EOP_Date, '%Y-%m-%d').date() if (  # noqa: DTZ007
                     a.EOP_Date and len(a.EOP_Date)) else None
 
                 if (a.date_modified and len(a.date_modified) > 1):
@@ -72,7 +72,7 @@ class Command(BaseCommand):
                 else:
                     modified_date = None
 
-                sp, created = SpecialProgram.objects.update_or_create(
+                _, created = SpecialProgram.objects.update_or_create(
                     student=student, access_group=self.access_group,
                     program_code=program_code, defaults={
                         'program_date': date, 'modified_date': modified_date})
@@ -88,7 +88,7 @@ class Command(BaseCommand):
             include_student_sports=False, include_student_advisers=False,
             include_student_majors=False, include_student_pending_majors=False,
             include_student_holds=False, include_student_degrees=False)
-        student, created = Student.objects.get_or_create(
+        student, _ = Student.objects.get_or_create(
             system_key=person.student.system_key)
         return student, person.student
 
@@ -100,8 +100,8 @@ class Command(BaseCommand):
         print(msg, file=sys.stderr)
 
 
-class EOP_Type(object):
-    ASSOCIATION_COLUMNS = [
+class EOP_Type:
+    ASSOCIATION_COLUMNS: ClassVar[list[str]] = [
         "student_number", "Is_EOP", "EOP_Date", "EOP_Name", "date_modified"]
 
     def __init__(self, row):

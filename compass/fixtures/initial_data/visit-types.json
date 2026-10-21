@@ -48,5 +48,55 @@
    "slug": "ic-workshop",
    "editable": false
   }
+ },
+ {
+  "model": "compass.visittype",
+  "pk": 6,
+  "fields": {
+   "access_group": 2,
+   "name": "IC Drop-In Tutoring",
+   "slug": "ic-drop-in-tutoring",
+   "editable": false
+  }
+ },
+ {
+  "model": "compass.visittype",
+  "pk": 7,
+  "fields": {
+   "access_group": 2,
+   "name": "IC-Exam Prep (Drop-In)",
+   "slug": "ic-exam-prep-drop-in",
+   "editable": false
+  }
+ },
+ {
+  "model": "compass.visittype",
+  "pk": 8,
+  "fields": {
+   "access_group": 2,
+   "name": "IC Writing Assistance",
+   "slug": "ic-writing-assistance",
+   "editable": false
+  }
+ },
+ {
+  "model": "compass.visittype",
+  "pk": 9,
+  "fields": {
+   "access_group": 2,
+   "name": "IC-Tutoring (Drop-In)",
+   "slug": "ic-tutoring-drop-in",
+   "editable": false
+  }
+ },
+ {
+  "model": "compass.visittype",
+  "pk": 10,
+  "fields": {
+   "access_group": 2,
+   "name": "IC Workshop",
+   "slug": "ic-workshop",
+   "editable": false
+  }
  }
 ]

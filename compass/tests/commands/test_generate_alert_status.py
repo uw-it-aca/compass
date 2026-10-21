@@ -2,10 +2,9 @@
 # SPDX-License-Identifier: Apache-2.0
 
 from django.core.management import call_command
+
+from compass.models.rad_data import CourseAnalyticsScores, RADWeek, StudentAlertStatus
 from compass.tests import CompassTestCase
-from compass.models.rad_data import (RADWeek,
-                                     StudentAlertStatus,
-                                     CourseAnalyticsScores)
 
 
 class TestGenerateAlertStatus(CompassTestCase):
@@ -68,7 +67,6 @@ class TestGenerateAlertStatus(CompassTestCase):
             grade_score=3,
             prediction_score=None
         )
-        pass
 
     def test_gen(self):
         call_command('generate_alert_status')

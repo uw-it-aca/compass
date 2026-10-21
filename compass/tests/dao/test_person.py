@@ -2,12 +2,18 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
+from unittest import mock
+
 from django.urls import reverse
-from compass.tests import CompassTestCase
-from compass.dao.person import *
+from uw_person_client.exceptions import (
+    AdviserNotFoundException,
+    PersonNotFoundException,
+)
 from uw_pws.util import fdao_pws_override
 from uw_sws.util import fdao_sws_override
-import mock
+
+from compass.dao.person import *
+from compass.tests import CompassTestCase
 
 
 @fdao_pws_override
