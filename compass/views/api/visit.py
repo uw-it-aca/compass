@@ -6,6 +6,7 @@ from logging import getLogger
 from dateutil import parser
 from dateutil.tz import UTC
 from django.conf import settings
+from django.http import StreamingHttpResponse
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -376,11 +377,12 @@ class ICVisitFileView(BaseAPIView):
         return self.response_ok({'count_created': count_created})
 
     def get(self, request):
-        export_file = get_visit_export()
-        response = Response(export_file,
-                            content_type='text/csv')
+        response = StreamingHttpResponse(get_visit_export(),
+                                         content_type='text/csv')
         response['Content-Disposition'] = \
             'attachment; filename="visit_export.csv"'
+        # let nginx pass rows through as they are generated
+        response['X-Accel-Buffering'] = 'no'
         return response
 
 

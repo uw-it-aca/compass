@@ -195,7 +195,7 @@ class VisitFileDAOFunctionsTest(CompassTestCase):
             checkout_date=datetime(2026, 5, 20, 11, 0, 0, tzinfo=timezone.utc)
         )
 
-        csv_output = get_visit_export()
+        csv_output = ''.join(get_visit_export())
 
         expected_csv = (
             "student_syskey,checkin_date,checkout_date,duration_minutes,"

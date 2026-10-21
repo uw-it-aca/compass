@@ -106,26 +106,39 @@ def _get_student_by_student_number(student_number):
                          f' with number {student_number}: {e}')
 
 
+class _Echo:
+    def write(self, value):
+        return value
+
+
 def get_visit_export():
+    """
+    Returns a generator yielding the visit export as CSV lines.
+    """
     access_group = get_compass_visits_access_group()
-    visits = Visit.objects.select_related(
-        'student', 'visit_type', 'tutoring_option').filter(
-            access_group=access_group).order_by('checkin_date', 'id')
-    output = StringIO()
-    writer = csv.writer(output)
-    writer.writerow(['student_syskey', 'checkin_date', 'checkout_date',
-                     'duration_minutes', 'visit_type', 'tutoring_option',
-                     'course_code'])
-    for visit in visits:
-        duration_minutes = int((visit.checkout_date -
-                                visit.checkin_date).total_seconds() / 60)
-        writer.writerow([
-            visit.student.system_key,
-            visit.checkin_date.isoformat(),
-            visit.checkout_date.isoformat(),
+    rows = Visit.objects.filter(
+        access_group=access_group).order_by(
+            'checkin_date', 'id').values_list(
+                'student__system_key', 'checkin_date', 'checkout_date',
+                'visit_type__name', 'tutoring_option__name', 'course_code')
+    return _visit_export_lines(rows)
+
+
+def _visit_export_lines(rows):
+    writer = csv.writer(_Echo())
+    yield writer.writerow(['student_syskey', 'checkin_date', 'checkout_date',
+                           'duration_minutes', 'visit_type',
+                           'tutoring_option', 'course_code'])
+    for (system_key, checkin_date, checkout_date, visit_type,
+         tutoring_option, course_code) in rows.iterator(chunk_size=2000):
+        duration_minutes = int(
+            (checkout_date - checkin_date).total_seconds() / 60)
+        yield writer.writerow([
+            system_key,
+            checkin_date.isoformat(),
+            checkout_date.isoformat(),
             duration_minutes,
-            visit.visit_type.name if visit.visit_type else '',
-            visit.tutoring_option.name if visit.tutoring_option else '',
-            visit.course_code
+            visit_type or '',
+            tutoring_option or '',
+            course_code
         ])
-    return output.getvalue()
