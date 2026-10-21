@@ -107,16 +107,16 @@
                     {{ option.name }}
                   </option>
                 </select>
-                Course or Other Writing Services*
+                Course or Writing Service*
                 <select
                   class="form-select mb-3"
                   required
                   v-model="checkInData.courseOrWritingService"
                 >
-                  <optgroup label="Writing Services">
-                    <option value="" disabled selected>
-                      Select a course or writing service
-                    </option>
+                  <option value="" disabled>
+                    {{ isWritingProgramArea ? "Select a writing service" : "Select a course" }}
+                  </option>
+                  <optgroup v-if="isWritingProgramArea" label="Writing Services">
                     <option
                       v-for="option in visitOptions.writing_services"
                       :key="option.id"
@@ -127,6 +127,7 @@
                   </optgroup>
                   <optgroup
                     v-if="
+                      !isWritingProgramArea &&
                       visitOptions.courses && visitOptions.courses.length > 0
                     "
                     label="Courses"
@@ -274,16 +275,31 @@ export default {
       return (
         this.checkInData.programArea &&
         this.checkInData.tutoringOption &&
-        this.checkInData.courseOrWritingService
+        (this.selectedCourse || this.selectedWritingService)
+      );
+    },
+    isWritingProgramArea() {
+      const writingProgramArea = (this.visitOptions?.program_areas || []).find(
+        (area) => String(area.slug || "").includes("writing"),
+      );
+      return Boolean(
+        writingProgramArea &&
+        this.checkInData.programArea === writingProgramArea.slug,
       );
     },
     selectedCourse() {
-      return this.visitOptions.courses.find(
+      if (this.isWritingProgramArea) {
+        return undefined;
+      }
+      return (this.visitOptions?.courses || []).find(
         (course) => course.id === this.checkInData.courseOrWritingService
       );
     },
     selectedWritingService() {
-      return this.visitOptions.writing_services.find(
+      if (!this.isWritingProgramArea) {
+        return undefined;
+      }
+      return (this.visitOptions?.writing_services || []).find(
         (service) => service.id === this.checkInData.courseOrWritingService
       );
     },
@@ -299,6 +315,9 @@ export default {
     );
   },
   watch: {
+    "checkInData.programArea"() {
+      this.checkInData.courseOrWritingService = "";
+    },
     validSyskey(newSyskey) {
       if (newSyskey) {
         this.loadStudent();

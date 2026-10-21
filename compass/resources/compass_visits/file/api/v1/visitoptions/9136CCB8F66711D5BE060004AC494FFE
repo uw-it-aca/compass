@@ -1,0 +1,21 @@
+{
+    "program_areas": [
+        {"id": 1, "name": "Program Area 1", "slug": "ic-drop-in-tutoring"},
+        {"id": 2, "name": "IC Exam Prep", "slug": "ic-exam-prep-drop-in"},
+        {"id": 3, "name": "IC Writing Assistance", "slug": "ic-writing-assistance"},
+        {"id": 4, "name": "IC Workshop", "slug": "ic-workshop"}
+    ],
+    "tutoring_options": [
+        {"id": 1, "name": "Individual", "slug": "individual"},
+        {"id": 2, "name": "Group", "slug": "group"},
+        {"id": 3, "name": "Workshop", "slug": "workshop"}
+    ],
+    "writing_services": [
+        {"id": 1, "name": "Application"},
+        {"id": 2, "name": "Personal Statement"}
+    ],
+    "courses": [
+        {"id": "ENGL 131", "name": "ENGL 131"},
+        {"id": "MATH 124", "name": "MATH 124"}
+    ]
+}
