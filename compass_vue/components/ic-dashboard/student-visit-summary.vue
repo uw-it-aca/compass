@@ -76,3 +76,12 @@
     },
   };
 </script>
+
+<style lang="scss" scoped>
+  .img-profile {
+    height: 120px;
+    width: 120px;
+    object-fit: cover;
+    object-position: top;
+  }
+</style>

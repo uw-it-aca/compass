@@ -17,6 +17,7 @@
         data-bs-toggle="modal"
         data-bs-target="#studentSearchModal"
         class="btn btn-sm btn-outline-primary"
+        :disabled="!validQuery"
       >
         Search
       </button>
@@ -61,107 +62,6 @@
               <i class="bi-exclamation-octagon-fill me-1"></i>
               Could not find a student matching "{{ searchValue }}". Please try
               again.
-            <span v-if="isICEligible">IC Eligible</span>
-            <span v-else>Not Eligible</span>
-            <h2>{{ person.full_name }}</h2>
-            <p>
-              {{ person.student.student_number }}, {{ person.uwnetid }}
-              <br />
-              {{ person.student.local_phone_number }}
-            </p>
-          </div>
-          <!-- right column -->
-          <div v-if="rightColHasData" class="col">
-            <div v-if="displayMode === 'visits'">
-              <studenvisitsummary :studentVisits="studentVisitData" />
-            </div>
-            <div v-else-if="displayMode === 'not_eligible'">
-              This student is not eligible for IC visits.
-              <button class="btn btn-primary ms-3" @click="addICEligibility()">
-                Approve
-              </button>
-            </div>
-            <div v-else-if="displayMode === 'checkin'">
-              <form v-if="!isLoadingOptions">
-                Program Area*
-                <select
-                  class="form-select mb-3"
-                  required
-                  v-model="checkInData.programArea"
-                >
-                  <option value="" disabled selected>
-                    Select a program area
-                  </option>
-                  <option
-                    v-for="option in visitOptions.program_areas"
-                    :key="option.id"
-                    :value="option.slug"
-                  >
-                    {{ option.name }}
-                  </option>
-                </select>
-                Tutoring Options*
-                <select
-                  class="form-select mb-3"
-                  required
-                  v-model="checkInData.tutoringOption"
-                >
-                  <option value="" disabled selected>
-                    Select a tutoring option
-                  </option>
-                  <option
-                    v-for="option in visitOptions.tutoring_options"
-                    :key="option.id"
-                    :value="option.slug"
-                  >
-                    {{ option.name }}
-                  </option>
-                </select>
-                Course or Other Writing Services*
-                <select
-                  class="form-select mb-3"
-                  required
-                  v-model="checkInData.courseOrWritingService"
-                >
-                  <optgroup label="Writing Services">
-                    <option value="" disabled selected>
-                      Select a course or writing service
-                    </option>
-                    <option
-                      v-for="option in visitOptions.writing_services"
-                      :key="option.id"
-                      :value="option.id"
-                    >
-                      {{ option.name }}
-                    </option>
-                  </optgroup>
-                  <optgroup
-                    v-if="
-                      visitOptions.courses && visitOptions.courses.length > 0
-                    "
-                    label="Courses"
-                  >
-                    <option
-                      v-for="option in visitOptions.courses"
-                      :key="option.id"
-                      :value="option.id"
-                    >
-                      {{ option.name }}
-                    </option>
-                  </optgroup>
-                </select>
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  :disabled="!allCreateFieldsSelected"
-                  @click="createVisit()"
-                  >
-                  Create Check In
-                  </button>
-                  <div v-if="createError" class="alert alert-danger mt-3">
-                    {{ createError.message || "Error creating visit." }}
-                  </div>
-              </form>
             </div>
           </div>
 
@@ -178,7 +78,7 @@
                   "
                 />
               </div>
-              <div class="text-center mb-3">
+              <div class="mb-3 text-center">
                 <span
                   v-if="isICEligible"
                   class="badge text-bg-secondary text-success-emphasis bg-success-subtle rounded-pill fw-semibold me-1"
@@ -193,8 +93,10 @@
               <h4 class="fs-4 fw-semibold ff-encode-sans mb-2 text-center">
                 {{ person.full_name }}
               </h4>
-              <p class="text-center m-0">
+              <p class="m-0 text-center">
                 {{ person.student.student_number }}, {{ person.uwnetid }}
+                <br />
+                {{ person.student.local_phone_number }}
               </p>
             </div>
 
@@ -209,7 +111,7 @@
               </div>
               <div
                 v-else-if="displayMode === 'not_eligible'"
-                class="text-center my-5 py-4"
+                class="my-5 py-4 text-center"
               >
                 <p class="py-2">
                   Student is not eligible to use the Instructional Center. Would
@@ -224,7 +126,7 @@
               <div v-else-if="displayMode === 'checkin'">
                 <form v-if="!isLoadingOptions">
                   <label for="validationCustom02" class="form-label fw-bold">
-                    Program Area *
+                    Program Area <span style="color: red">*</span>
                   </label>
                   <select
                     class="form-select mb-3"
@@ -244,7 +146,7 @@
                   </select>
 
                   <label for="validationCustom02" class="form-label fw-bold">
-                    Tutoring Options *
+                    Tutoring Options <span style="color: red">*</span>
                   </label>
                   <select
                     class="form-select mb-3"
@@ -264,7 +166,8 @@
                   </select>
 
                   <label for="validationCustom02" class="form-label fw-bold">
-                    Course or Other Writing Services *
+                    Course or Other Writing Services
+                    <span style="color: red">*</span>
                   </label>
                   <select
                     class="form-select mb-3"

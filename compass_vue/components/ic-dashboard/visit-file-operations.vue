@@ -22,9 +22,9 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h3 id="contactModalLabel" class="fs-5 fw-bold ff-open-sans m-0">
+          <h5 id="contactModalLabel" class="modal-title fw-bold">
             Instructional Center Data Upload
-          </h3>
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -37,12 +37,12 @@
             <span class="visually-hidden">Uploading...</span>
           </div>
         </div>
-        <div v-else class="modal-body p-4">
+        <div v-else class="modal-body">
           <form v-if="!isLoadingOptions" @submit.prevent="handleUpload">
-            <div class="row pb-4">
+            <div class="row mb-3">
               <div class="col">
                 <label for="validationCustom02" class="form-label fw-bold">
-                  Program Area *
+                  Program Area <span style="color: red">*</span>
                 </label>
                 <select
                   class="form-select"
@@ -64,7 +64,7 @@
 
               <div class="col">
                 <label for="validationCustom02" class="form-label fw-bold">
-                  Tutoring Options *
+                  Tutoring Options <span style="color: red">*</span>
                 </label>
                 <select
                   class="form-select"
@@ -85,10 +85,10 @@
               </div>
             </div>
 
-            <div class="row">
+            <div class="row mb-3">
               <div class="col">
                 <label for="validationCustom02" class="form-label fw-bold">
-                  Date *
+                  Date <span style="color: red">*</span>
                 </label>
 
                 <input
@@ -101,7 +101,7 @@
 
               <div class="col">
                 <label for="validationCustom02" class="form-label fw-bold">
-                  Student File *
+                  Student File <span style="color: red">*</span>
                 </label>
                 <input
                   class="form-control"
@@ -117,22 +117,25 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-outline-primary rounded-3 mx-2"
+            class="btn btn-sm btn-outline-primary rounded-3 py-2"
             data-bs-dismiss="modal"
           >
             Cancel
           </button>
-          <button type="submit" class="btn btn-primary rounded-3 mx-2">
+          <button type="submit" class="btn btn-sm btn-primary rounded-3 py-2">
             Upload
           </button>
         </div>
         <!-- Upload Error -->
         <div
           v-if="uploadErrorResponse"
-          class="alert alert-danger mt-3"
+          class="alert alert-danger small m-0"
           role="alert"
+          aria-live="polite"
+          aria-atomic="true"
         >
-          {{ uploadErrorResponse }}
+          <i class="bi-exclamation-octagon-fill me-1"></i
+          >{{ uploadErrorResponse }}
         </div>
       </div>
     </div>
@@ -159,13 +162,13 @@
 </template>
 
 <script>
-    import {
-      uploadVisitFile,
-      getICVisitOptions,
-      downloadVisitFile,
-    } from "@/utils/data";
+  import {
+    uploadVisitFile,
+    getICVisitOptions,
+    downloadVisitFile,
+  } from "@/utils/data";
 
-    import { Modal } from "bootstrap";
+  import { Modal } from "bootstrap";
 
   export default {
     name: "VisitFileOperations",
@@ -229,111 +232,57 @@
           tutoring_option: null,
           date: null,
         };
+        this.visitOptions = null;
+        this.isLoadingOptions = true;
+        this.uploadErrorResponse = null;
+        this.isUploading = false;
       },
-      data() {
-        return {
-          importOptions: {
-            file: null,
-            visit_type: "",
-            tutoring_option: "",
-            date: "",
-          },
-          isLoadingOptions: true,
-          visitOptions: null,
-          downloadErrorResponse: null,
-          isDownloading: false,
-          uploadErrorResponse: null,
-          isUploading: false,
-        };
-      },
-      mounted() {
-        this.$refs.importDataModal.addEventListener(
-          "shown.bs.modal",
-          this.loadSVisitOptions,
-        );
-        this.$refs.importDataModal.addEventListener(
-          "hidden.bs.modal",
-          this.resetForm,
-        );
-      },
-      methods: {
-        addFile(e) {
-          this.importOptions.file = e.target.files[0];
-        },
-        loadSVisitOptions: function () {
-          // Use a bad regid so courses are empty, other options should still load
-          getICVisitOptions("NOCOURSESREGID")
+      handleUpload: function () {
+        if (
+          this.importOptions.file &&
+          this.importOptions.visit_type &&
+          this.importOptions.tutoring_option &&
+          this.importOptions.date
+        ) {
+          this.isUploading = true;
+          this.uploadVisitFile(this.importOptions)
             .then((response) => {
-              if (response) {
-                this.visitOptions = response;
-                this.errorResponse = null;
-              }
+              this.resetForm();
+              var modalElement = Modal.getInstance(this.$refs.importDataModal);
+              modalElement.hide();
             })
             .catch((error) => {
-              this.errorResponse = error.data;
-            })
-            .finally(() => {
-              this.isLoadingOptions = false;
+              this.isUploading = false;
+              this.uploadErrorResponse = error.data.message;
             });
-        },
-        resetForm: function () {
-          this.importOptions = {
-            file: null,
-            visit_type: null,
-            tutoring_option: null,
-            date: null,
-          };
-          this.visitOptions = null;
-          this.isLoadingOptions = true;
-          this.uploadErrorResponse = null;
-          this.isUploading = false;
-        },
-        handleUpload: function () {
-          if (
-            this.importOptions.file &&
-            this.importOptions.visit_type &&
-            this.importOptions.tutoring_option &&
-            this.importOptions.date
-          ) {
-            this.isUploading = true;
-            this.uploadVisitFile(this.importOptions)
-              .then((response) => {
-                this.resetForm();
-                var modalElement = Modal.getInstance(this.$refs.importDataModal);
-                modalElement.hide();
-              })
-              .catch((error) => {
-                this.isUploading = false;
-                this.uploadErrorResponse = error.data.message;
-              });
-          } else {
-            // Handle form validation error, maybe show a warning message
-            this.uploadErrorResponse =
-              "Please fill in all required fields and select a file.";
-          }
-        },
-        handleDownload: function () {
-          this.isDownloading = true;
-          this.downloadVisitFile()
-            .then((response) => {
-              const blob = new Blob([response], { type: "text/csv" });
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              a.href = url;
-              a.download = "compass_visit_data.csv";
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
-              URL.revokeObjectURL(url);
-              this.downloadErrorResponse = null;
-              this.isDownloading = false;
-            })
-            .catch((error) => {
-              // Handle download error, maybe show an error message
-              this.downloadErrorResponse = error.data.message;
-              this.isDownloading = false;
-            });
-        },
+        } else {
+          // Handle form validation error, maybe show a warning message
+          this.uploadErrorResponse =
+            "Please fill in all required fields and select a file.";
+        }
       },
-    };
+      handleDownload: function () {
+        this.isDownloading = true;
+        this.downloadVisitFile()
+          .then((response) => {
+            const blob = new Blob([response], { type: "text/csv" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "compass_visit_data.csv";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            this.downloadErrorResponse = null;
+            this.isDownloading = false;
+          })
+          .catch((error) => {
+            // Handle download error, maybe show an error message
+            this.downloadErrorResponse = error.data.message;
+            this.isDownloading = false;
+          });
+      },
+    },
+  };
 </script>
