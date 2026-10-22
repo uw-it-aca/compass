@@ -368,13 +368,6 @@ async function uploadVisitFile(importOptions) {
   });
 }
 
-async function downloadVisitFile() {
-  const url = "/api/internal/visits/file/";
-  return useCustomFetch(url, {
-    method: "GET",
-  });
-}
-
 export {
   getStudentBySearch,
   getStudentDetail,
@@ -418,5 +411,4 @@ export {
   updateICVisit,
   deleteICVisit,
   uploadVisitFile,
-  downloadVisitFile,
 };

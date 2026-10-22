@@ -511,7 +511,9 @@ class VisitAPITest(ApiTest):
         self.assertEqual(response['Content-Type'], 'text/csv')
         self.assertIn('attachment; filename="visit_export.csv"',
                       response['Content-Disposition'])
-        self.assertEqual(response.data.replace('\r\n', '\n'),
+        self.assertEqual(
+            b''.join(response.streaming_content).decode().replace(
+                '\r\n', '\n'),
                          "student_syskey,checkin_date,checkout_date,"
                          "duration_minutes,"
                          "visit_type,tutoring_option,course_code\n"

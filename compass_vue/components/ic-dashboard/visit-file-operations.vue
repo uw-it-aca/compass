@@ -7,9 +7,13 @@
   >
     Import Data
   </button>
-  <button class="btn btn-sm btn-outline-primary" @click="handleDownload">
+  <a
+    href="/api/internal/visits/file/"
+    download="compass_visit_data.csv"
+    class="btn btn-sm btn-outline-primary"
+  >
     Export Data
-  </button>
+  </a>
 
   <!-- Modal for importing data -->
   <div
@@ -92,28 +96,10 @@
     </div>
   </div>
   <!-- End of Modal -->
-
-  <!-- Download Error -->
-  <div v-if="downloadErrorResponse" class="alert alert-danger mt-3" role="alert">
-    {{ downloadErrorResponse }}
-  </div>
-  <!-- End of Download Error -->
-  <!-- Downloading spinner -->
-  <div v-if="isDownloading" class="d-flex my-5">
-    Downloading Visits
-    <div class="spinner-border" role="status">
-      <span class="visually-hidden">Downloading...</span>
-    </div>
-  </div>
-  <!-- End of downloading spinner -->
 </template>
 
 <script>
-import {
-  uploadVisitFile,
-  getICVisitOptions,
-  downloadVisitFile,
-} from "@/utils/data";
+import { uploadVisitFile, getICVisitOptions } from "@/utils/data";
 
 import { Modal } from "bootstrap";
 
@@ -123,7 +109,6 @@ export default {
     return {
       uploadVisitFile,
       getICVisitOptions,
-      downloadVisitFile,
     };
   },
   data() {
@@ -136,8 +121,6 @@ export default {
       },
       isLoadingOptions: true,
       visitOptions: null,
-      downloadErrorResponse: null,
-      isDownloading: false,
       uploadErrorResponse: null,
       isUploading: false,
     };
@@ -208,28 +191,6 @@ export default {
         this.uploadErrorResponse =
         "Please fill in all required fields and select a file.";
       }
-    },
-    handleDownload: function () {
-      this.isDownloading = true;
-      this.downloadVisitFile()
-        .then((response) => {
-          const blob = new Blob([response], { type: "text/csv" });
-          const url = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = url;
-          a.download = "compass_visit_data.csv";
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          URL.revokeObjectURL(url);
-          this.downloadErrorResponse = null;
-          this.isDownloading = false;
-        })
-        .catch((error) => {
-          // Handle download error, maybe show an error message
-          this.downloadErrorResponse = error.data.message;
-          this.isDownloading = false;
-        });
     },
   },
 };
