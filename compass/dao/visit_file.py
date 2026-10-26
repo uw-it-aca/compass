@@ -5,6 +5,8 @@ import csv
 from datetime import datetime, timedelta, timezone
 from io import StringIO
 
+from django.utils import timezone as django_timezone
+
 from compass.dao.compass_visits import get_compass_visits_access_group
 from compass.dao.person import get_person_by_student_number
 from compass.models import Student, Visit, VisitTutoringOption, VisitType
@@ -89,8 +91,8 @@ def _get_datetimes(duration_minutes, date):
     """
 
     start_datetime = datetime.strptime(date, "%Y-%m-%d").replace(
-        tzinfo=timezone.utc
-    )
+        tzinfo=django_timezone.get_current_timezone()
+    ).astimezone(timezone.utc)
     end_datetime = start_datetime + timedelta(minutes=duration_minutes)
     return start_datetime, end_datetime
 
@@ -111,13 +113,21 @@ class _Echo:
         return value
 
 
-def get_visit_export():
+def get_visit_export(start_date=None, end_date=None):
     """
     Returns a generator yielding the visit export as CSV lines.
     """
     access_group = get_compass_visits_access_group()
-    rows = Visit.objects.filter(
-        access_group=access_group).order_by(
+    visits = Visit.objects.filter(access_group=access_group)
+    if start_date is not None:
+        start = django_timezone.make_aware(
+            datetime.combine(start_date, datetime.min.time()))
+        visits = visits.filter(checkin_date__gte=start)
+    if end_date is not None:
+        end = django_timezone.make_aware(datetime.combine(
+            end_date + timedelta(days=1), datetime.min.time()))
+        visits = visits.filter(checkin_date__lt=end)
+    rows = visits.order_by(
             'checkin_date', 'id').values_list(
                 'student__system_key', 'checkin_date', 'checkout_date',
                 'visit_type__name', 'tutoring_option__name', 'course_code')
