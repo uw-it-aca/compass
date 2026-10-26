@@ -754,6 +754,43 @@ class VisitAPITest(ApiTest):
         mock_serializer.assert_called_once_with(mock_ordered_visits, many=True)
         mixin.response_ok.assert_called_once_with([{'id': 2}])
 
+    def test_external_visit_view_by_system_key(self):
+        self.client = Client(
+            HTTP_USER_AGENT='Mozilla/5.0',
+            HTTP_AUTHORIZATION=f"Token {self.API_TOKEN}")
+        response = self.get_response(
+            'external_student_visit_view',
+            kwargs={"identifier": "532353230"})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['course_code'], "MATH 124")
+
+    def test_external_visit_view_unknown_system_key(self):
+        self.client = Client(
+            HTTP_USER_AGENT='Mozilla/5.0',
+            HTTP_AUTHORIZATION=f"Token {self.API_TOKEN}")
+        response = self.get_response(
+            'external_student_visit_view',
+            kwargs={"identifier": "000000000"})
+
+        self.assertEqual(response.status_code, 404)
+
+    @patch('compass.views.api.visit.current_term')
+    def test_external_system_key_excludes_previous_quarter(
+            self, mock_current_term):
+        mock_current_term.return_value = MagicMock(
+            first_day_quarter=datetime(2022, 9, 20, tzinfo=UTC))
+        self.client = Client(
+            HTTP_USER_AGENT='Mozilla/5.0',
+            HTTP_AUTHORIZATION=f"Token {self.API_TOKEN}")
+        response = self.get_response(
+            'external_student_visit_view',
+            kwargs={"identifier": "888777333"})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, [])
+
     def test_external_visit_view(self):
         token_str = f"Token {self.API_TOKEN}"
         self.client = Client(HTTP_USER_AGENT='Mozilla/5.0',

@@ -26,6 +26,7 @@ from compass.dao.person import (
     get_person_by_student_number,
     get_person_by_uwnetid,
     valid_student_number,
+    valid_system_key,
     valid_uwnetid,
 )
 from compass.dao.term import current_term
@@ -237,7 +238,7 @@ class VisitSearchMixin:
             return self.response_notfound(content)
         return Response(content, status=status.HTTP_404_NOT_FOUND)
 
-    def _lookup_visits(self, identifier):
+    def _lookup_visits(self, identifier, allow_system_key=False):
         """
         Resolves an identifier to a student and returns the current-quarter
         visits queryset. Returns (visits, None) on success or (None, error_response)
@@ -245,17 +246,20 @@ class VisitSearchMixin:
         """
         student_identifier = identifier.strip().lower()
         try:
-            if valid_uwnetid(student_identifier):
-                person = get_person_by_uwnetid(student_identifier)
+            if allow_system_key and valid_system_key(student_identifier):
+                system_key = student_identifier
+            elif valid_uwnetid(student_identifier):
+                system_key = get_person_by_uwnetid(
+                    student_identifier).system_key
             elif valid_student_number(student_identifier):
-                person = get_person_by_student_number(student_identifier)
+                system_key = get_person_by_student_number(
+                    student_identifier).system_key
             else:
                 return None, self._response_badrequest(
                     'Invalid student identifier')
         except PersonNotFoundException:
             return None, self._response_notfound('Student not found')
 
-        system_key = person.system_key
         try:
             student = Student.objects.get(system_key=system_key)
         except Student.DoesNotExist:
@@ -429,15 +433,15 @@ class ICVisitFileView(BaseAPIView):
 
 class ExternalStudentVisitView(VisitSearchMixin, TokenAPIView):
     '''
-    API endpoint for retrieving visits for a student by student number or
-    netid, to be used by Compass Visits
+    API endpoint for retrieving visits by student system key, student number,
+    or netid, to be used by Compass Visits
     '''
 
     def get(self, request, identifier):
         if settings.COMPASS_VISITS_TOKEN_USER != request.user.username:
             return Response("Unauthorized",
                             status=status.HTTP_401_UNAUTHORIZED)
-        visits, error = self._lookup_visits(identifier)
+        visits, error = self._lookup_visits(identifier, allow_system_key=True)
         if error is not None:
             return error
         serializer = ExternalVisitSerializer(visits, many=True)
