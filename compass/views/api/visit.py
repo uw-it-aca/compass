@@ -1,12 +1,14 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+from datetime import date
 from logging import getLogger
+from tempfile import SpooledTemporaryFile
 
 from dateutil import parser
 from dateutil.tz import UTC
 from django.conf import settings
-from django.http import StreamingHttpResponse
+from django.http import FileResponse
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -349,8 +351,13 @@ class ICVisitFileView(BaseAPIView):
     API endpoint for handling IC visit uploads and exports
     /api/internal/visit/file/
     POST: upload visit data from file
-    GET: export visit data to file
+    GET: export visits by inclusive check-in start_date and end_date
+    (YYYY-MM-DD in the application timezone; at most 366 days/50,000 visits)
     '''
+
+    MAX_EXPORT_DAYS = 366
+    MAX_EXPORT_VISITS = 50000
+    EARLIEST_EXPORT_DATE = date(2008, 1, 1)
 
     def post(self, request):
         file = request.FILES.get('file')
@@ -377,12 +384,45 @@ class ICVisitFileView(BaseAPIView):
         return self.response_ok({'count_created': count_created})
 
     def get(self, request):
-        response = StreamingHttpResponse(get_visit_export(),
-                                         content_type='text/csv')
-        response['Content-Disposition'] = \
-            'attachment; filename="visit_export.csv"'
-        # let nginx pass rows through as they are generated
-        response['X-Accel-Buffering'] = 'no'
+        try:
+            start_date = date.fromisoformat(
+                request.query_params.get('start_date', ''))
+            end_date = date.fromisoformat(
+                request.query_params.get('end_date', ''))
+        except (TypeError, ValueError):
+            return self.response_badrequest(
+                'start_date and end_date are required in YYYY-MM-DD format')
+        if end_date < start_date or end_date == date.max:
+            return self.response_badrequest('Invalid export date range')
+        if start_date < self.EARLIEST_EXPORT_DATE:
+            return self.response_badrequest(
+                'Visit exports are available from January 1, 2008')
+        if (end_date - start_date).days >= self.MAX_EXPORT_DAYS:
+            return self.response_badrequest(
+                'Export date range cannot exceed 366 days')
+
+        export_file = SpooledTemporaryFile(max_size=5 * 1024 * 1024)
+        try:
+            for row_index, line in enumerate(
+                    get_visit_export(start_date, end_date)):
+                if row_index > self.MAX_EXPORT_VISITS:
+                    export_file.close()
+                    return self.response_badrequest(
+                        'Export exceeds 50,000 visits; select a smaller '
+                        'date range')
+                export_file.write(line.encode('utf-8'))
+            export_file.seek(0)
+        except Exception:
+            export_file.close()
+            logger.exception('Error preparing IC visit export')
+            return Response(
+                'Unable to prepare visit export. Try a smaller date range.',
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        response = FileResponse(export_file, as_attachment=True,
+                                filename='visit_export.csv',
+                                content_type='text/csv')
+        response['Cache-Control'] = 'no-store'
         return response
 
 
