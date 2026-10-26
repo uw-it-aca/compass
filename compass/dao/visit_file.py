@@ -90,8 +90,8 @@ def _get_datetimes(duration_minutes, date):
     Returns a tuple of (start_datetime, end_datetime)
     """
 
-    start_datetime = django_timezone.make_aware(
-        datetime.strptime(date, "%Y-%m-%d")
+    start_datetime = datetime.strptime(date, "%Y-%m-%d").replace(
+        tzinfo=django_timezone.get_current_timezone()
     ).astimezone(timezone.utc)
     end_datetime = start_datetime + timedelta(minutes=duration_minutes)
     return start_datetime, end_datetime

@@ -401,7 +401,8 @@ class ICVisitFileView(BaseAPIView):
             return self.response_badrequest(
                 'Export date range cannot exceed 366 days')
 
-        export_file = SpooledTemporaryFile(max_size=5 * 1024 * 1024)
+        export_file = SpooledTemporaryFile(  # noqa: SIM115 (FileResponse closes it)
+            max_size=5 * 1024 * 1024)
         try:
             for row_index, line in enumerate(
                     get_visit_export(start_date, end_date)):
