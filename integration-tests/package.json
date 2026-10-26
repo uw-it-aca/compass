@@ -4,8 +4,9 @@
   "type": "module",
   "scripts": {
     "auth": "node auth.mjs",
-    "test": "playwright test",
-    "test:headed": "playwright test --headed",
+    "test": "playwright test --project=compass",
+    "test:headed": "playwright test --project=compass --headed",
+    "test:visits": "playwright test --project=visit-lifecycle",
     "check": "node --test checks/*.check.mjs"
   },
   "devDependencies": {

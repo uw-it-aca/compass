@@ -17,12 +17,19 @@ export default defineConfig({
     screenshot: "off",
     video: "off",
   },
-  projects: Object.keys(targets).map((name) => ({
+  projects: [...Object.keys(targets).map((name) => ({
     name,
     testMatch: `**/${name}.pw.mjs`,
     use: {
       baseURL: getTarget(name).origin,
       storageState: getTarget(name).statePath,
     },
-  })),
+  })), {
+    name: "visit-lifecycle",
+    testMatch: "**/visit-lifecycle.pw.mjs",
+    use: {
+      baseURL: getTarget().origin,
+      storageState: getTarget().statePath,
+    },
+  }],
 });

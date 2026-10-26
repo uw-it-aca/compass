@@ -4,9 +4,10 @@ Standalone Playwright runner for deployed Compass test, not local builds.
 Each app owns its suite. Visits UI tests and its verification workflow belong
 to the Compass Visits repository, including any Compass staff interaction needed
 to complete that workflow. Other apps are normally treated as data sources.
-No browser requests, APIs, databases, or GCS are mocked. The initial read-only
-smoke tests establish authenticated UI/API access; they do not yet prove a
-cross-app round trip or exercise every upstream service, including GCS.
+No browser requests, APIs, databases, or GCS are mocked. The default read-only
+smoke test establishes authenticated UI/API access. The opt-in staff visit test
+exercises the Compass-to-Visits lifecycle through the Compass UI; neither test
+exercises every upstream service, including GCS.
 
 ## Setup
 
@@ -49,6 +50,41 @@ npm test -- --list
 
 Only the Compass test host is an initial navigation target. Normal SAML
 redirects are allowed. Tests run serially without retries.
+
+## Staff Visit Lifecycle
+
+Run the opt-in mutation scenario against deployed Compass test:
+
+```bash
+npm run test:visits -- --headed
+```
+
+This uses `/ic-dashboard` (the current IC visits UI route) and requires an
+authorized manager session with write access, without a read-only user override.
+Ordinary `npm test` and `npm run test:headed` still run only the read-only smoke.
+Running bare `npx playwright test` runs all projects, including this mutation.
+
+The student is configured in ignored `local-settings.json` beside this guide,
+using the key `visitStudentNetid`. The designated synthetic student has already
+been configured locally. Do not commit the file or move its value into a test.
+On a new machine create this file with your approved synthetic student's NetID.
+
+The test searches through the UI, requires existing IC eligibility and no active
+or pending visit, selects a currently offered program/tutoring/course or writing
+service, and creates the check-in through the UI. It checks the returned ID in
+the live active list and checks the student's row is visible. If the deployed
+version requires verification, it clicks Verify on that row first; otherwise it
+proceeds directly to Check Out. It asserts the exact visit leaves the active
+list and has a checkout timestamp. History is retained, not deleted.
+
+If the test fails after creation, it attempts authenticated API verification
+(if needed) and checkout of only the visit it created. Cleanup failure requires
+manual review before retrying. The original workflow error remains the failure.
+A crash or a lost create response may prevent cleanup; never blindly rerun or
+clear another session's active visit. Do not run this workflow concurrently from
+multiple machines for the same student. Prerequisite failures are failures, not
+silent skips. Missing options or eligibility must be resolved outside the test;
+the test never clicks Approve or changes eligibility.
 
 ## Live Data Strategy
 
