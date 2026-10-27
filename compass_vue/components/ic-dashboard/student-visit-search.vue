@@ -67,7 +67,7 @@
 
           <div v-else class="row">
             <!-- left column -->
-            <div v-if="person" class="student-bio col-5 p-0 my-auto">
+            <div v-if="person" class="student-bio col-5">
               <div v-lazyload class="mb-3 text-center">
                 <img
                   :data-url="person.photo_url"
@@ -103,7 +103,10 @@
             <!-- right column -->
             <div v-if="rightColHasData" class="col mx-4">
               <!-- IC Eligibility Approval -->
-              <div v-if="displayMode === 'visits'">
+              <div
+                v-if="displayMode === 'visits'"
+                class="d-flex flex-column h-100"
+              >
                 <studenvisitsummary :studentVisits="studentVisitData" />
               </div>
               <div
@@ -228,14 +231,7 @@
           >
             Check In
           </button>
-          <div
-            v-if="createError"
-            class="alert alert-danger small"
-            role="alert"
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            <i class="bi-exclamation-octagon-fill me-1"></i>
+          <div v-if="createError" class="alert alert-danger mt-3">
             {{ createError.message || "Error creating visit." }}
           </div>
         </div>

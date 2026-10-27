@@ -1,30 +1,34 @@
 // student-visit-summary.vue
 
 <template>
-  <div v-if="studentVisits">
-    <div class="card border-0 bg-body-tertiary rounded-3 p-3 mb-">
-      <h3 class="fs-6 fw-normal">Total:</h3>
-      <p class="fs-1 fw-bold m-0 text-end">
-        {{ Math.round(totalVisitTime) }}
-        <span class="fs-6 fw-normal text-body-secondary"> mins </span>
-        <span class="fs-5 fw-semibold ms-2"> {{ studentVisits.length }} </span>
-        <span class="fs-6 fw-normal text-body-secondary"> visits </span>
-      </p>
+  <div v-if="studentVisits" class="d-flex flex-column h-100 pt-3">
+    <div
+      v-for="(summary, course) in getVisitSummaryByCourseCode()"
+      :key="course"
+      class="d-flex flex-row mb-3"
+    >
+      <p class="fw-semibold me-auto">{{ course }}:</p>
+      <div class="d-flex flex-row ms-auto">
+        <p class="fw-semibold me-2">{{ summary.count }}</p>
+        <p class="me-2">
+          {{ summary.count === 1 ? "visit" : "visits" }}
+        </p>
+        <p class="fw-semibold me-2">{{ Math.round(summary.time) }}</p>
+        <p class="me-2">min</p>
+      </div>
     </div>
 
-    <div class="row row-cols-2 g-2">
-      <div
-        v-for="(summary, course) in getVisitSummaryByCourseCode()"
-        :key="course"
-        class="col"
-      >
-        <div class="card border-0 bg-body-tertiary rounded-3 p-3">
-          <h3 class="fs-6 fw-normal">{{ course }}:</h3>
-          <p class="fs-5 fw-semibold m-0 text-end">
-            {{ Math.round(summary.time) }}
-            <span class="fs-6 fw-normal text-body-secondary"> mins </span>
-          </p>
-        </div>
+    <div class="d-flex flex-row mt-auto">
+      <p class="fw-semibold lead me-auto">Total:</p>
+      <div class="d-flex flex-row ms-auto align-items-baseline">
+        <p class="fw-semibold lead me-2">
+          {{ studentVisits.length }}
+        </p>
+        <p class="me-2">visit{{ studentVisits.length === 1 ? "" : "s" }}</p>
+        <p class="fw-semibold lead me-2">
+          {{ Math.round(totalVisitTime) }}
+        </p>
+        <p class="me-2">min</p>
       </div>
     </div>
   </div>
