@@ -2,10 +2,12 @@
 # SPDX-License-Identifier: Apache-2.0
 
 
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 from io import BytesIO
 
 from django.conf import settings
+from django.test import override_settings
+from django.utils import timezone as django_timezone
 
 from compass.dao.visit_file import (
     _get_datetimes,
@@ -84,6 +86,7 @@ class VisitFileDAOFunctionsTest(CompassTestCase):
         self.assertFalse(is_valid)
         self.assertIn('Negative duration_minutes in row', error_message)
 
+    @override_settings(TIME_ZONE='UTC')
     def test_get_datetimes(self):
         duration_minutes = 90
         date = "2024-01-01"
@@ -92,6 +95,34 @@ class VisitFileDAOFunctionsTest(CompassTestCase):
                          "2024-01-01T00:00:00+00:00")
         self.assertEqual(end_datetime.isoformat(),
                          "2024-01-01T01:30:00+00:00")
+
+    @override_settings(TIME_ZONE='America/Los_Angeles')
+    def test_get_datetimes_preserves_elapsed_duration_across_dst(self):
+        for visit_date in ('2026-03-08', '2026-11-01'):
+            with self.subTest(date=visit_date):
+                start, end = _get_datetimes(180, visit_date)
+                self.assertEqual(
+                    django_timezone.localtime(start).isoformat()[:19],
+                    f'{visit_date}T00:00:00')
+                self.assertEqual((end - start).total_seconds(), 180 * 60)
+
+    @override_settings(TIME_ZONE='America/Los_Angeles')
+    def test_import_exports_on_selected_local_date(self):
+        for visit_date in ('2026-01-01', '2026-10-01'):
+            with self.subTest(date=visit_date):
+                file = BytesIO(
+                    b'student_number,course_name,duration_minutes\n'
+                    b'1033334,Month Boundary,60\n')
+                create_visits_from_file(
+                    file, 'IC Drop-In Tutoring', 'Option 1', visit_date)
+                selected_date = date.fromisoformat(visit_date)
+                output = ''.join(get_visit_export(
+                    selected_date, selected_date))
+                self.assertEqual(len(output.splitlines()), 2)
+                self.assertIn(',60,IC Drop-In Tutoring,Option 1,', output)
+                previous_date = selected_date - timedelta(days=1)
+                self.assertNotIn('Month Boundary', ''.join(
+                    get_visit_export(previous_date, previous_date)))
 
     def test_get_student_by_student_number(self):
         student = _get_student_by_student_number("1033334")
@@ -195,7 +226,7 @@ class VisitFileDAOFunctionsTest(CompassTestCase):
             checkout_date=datetime(2026, 5, 20, 11, 0, 0, tzinfo=timezone.utc)
         )
 
-        csv_output = get_visit_export()
+        csv_output = ''.join(get_visit_export())
 
         expected_csv = (
             "student_syskey,checkin_date,checkout_date,duration_minutes,"
@@ -207,3 +238,11 @@ class VisitFileDAOFunctionsTest(CompassTestCase):
         )
 
         self.assertEqual(csv_output, expected_csv)
+
+        with self.settings(TIME_ZONE='UTC'):
+            filtered_csv = ''.join(get_visit_export(
+                date(2026, 5, 22), date(2026, 5, 22)))
+            self.assertNotIn('Math 100', filtered_csv)
+            self.assertIn('Math 101', filtered_csv)
+            self.assertNotIn('Should Not Export', filtered_csv)
+            self.assertEqual(len(filtered_csv.splitlines()), 2)

@@ -67,7 +67,7 @@
 
           <div v-else class="row">
             <!-- left column -->
-            <div v-if="person" class="student-bio col-5">
+            <div v-if="person" class="student-bio col-5 p-0 my-auto">
               <div v-lazyload class="mb-3 text-center">
                 <img
                   :data-url="person.photo_url"
@@ -90,7 +90,7 @@
                   >Not Eligible</span
                 >
               </div>
-              <h4 class="fs-4 fw-semibold ff-encode-sans mb-2 text-center">
+              <h4 class="fw-bold ff-open-sans text-center">
                 {{ person.full_name }}
               </h4>
               <p class="m-0 text-center">
@@ -102,11 +102,7 @@
 
             <!-- right column -->
             <div v-if="rightColHasData" class="col mx-4">
-              <!-- IC Eligibility Approval -->
-              <div
-                v-if="displayMode === 'visits'"
-                class="d-flex flex-column h-100"
-              >
+              <div v-if="displayMode === 'visits'">
                 <studenvisitsummary :studentVisits="studentVisitData" />
               </div>
               <div
@@ -139,7 +135,7 @@
                     <option
                       v-for="option in visitOptions.program_areas"
                       :key="option.id"
-                      :value="option.id"
+                      :value="option.slug"
                     >
                       {{ option.name }}
                     </option>
@@ -159,7 +155,7 @@
                     <option
                       v-for="option in visitOptions.tutoring_options"
                       :key="option.id"
-                      :value="option.id"
+                      :value="option.slug"
                     >
                       {{ option.name }}
                     </option>
@@ -174,10 +170,17 @@
                     required
                     v-model="checkInData.courseOrWritingService"
                   >
-                    <optgroup label="Writing Services">
-                      <option value="" disabled selected>
-                        Select a course or writing service
-                      </option>
+                    <option value="" disabled>
+                      {{
+                        isWritingProgramArea
+                          ? "Select a writing service"
+                          : "Select a course"
+                      }}
+                    </option>
+                    <optgroup
+                      v-if="isWritingProgramArea"
+                      label="Writing Services"
+                    >
                       <option
                         v-for="option in visitOptions.writing_services"
                         :key="option.id"
@@ -188,7 +191,9 @@
                     </optgroup>
                     <optgroup
                       v-if="
-                        visitOptions.courses && visitOptions.courses.length > 0
+                        !isWritingProgramArea &&
+                        visitOptions.courses &&
+                        visitOptions.courses.length > 0
                       "
                       label="Courses"
                     >
@@ -231,7 +236,14 @@
           >
             Check In
           </button>
-          <div v-if="createError" class="alert alert-danger mt-3">
+          <div
+            v-if="createError"
+            class="alert alert-danger small"
+            role="alert"
+            aria-live="polite"
+            aria-atomic="true"
+          >
+            <i class="bi-exclamation-octagon-fill me-1"></i>
             {{ createError.message || "Error creating visit." }}
           </div>
         </div>
@@ -340,16 +352,31 @@
         return (
           this.checkInData.programArea &&
           this.checkInData.tutoringOption &&
-          this.checkInData.courseOrWritingService
+          (this.selectedCourse || this.selectedWritingService)
+        );
+      },
+      isWritingProgramArea() {
+        const writingProgramArea = (
+          this.visitOptions?.program_areas || []
+        ).find((area) => String(area.slug || "").includes("writing"));
+        return Boolean(
+          writingProgramArea &&
+          this.checkInData.programArea === writingProgramArea.slug,
         );
       },
       selectedCourse() {
-        return this.visitOptions.courses.find(
+        if (this.isWritingProgramArea) {
+          return undefined;
+        }
+        return (this.visitOptions?.courses || []).find(
           (course) => course.id === this.checkInData.courseOrWritingService,
         );
       },
       selectedWritingService() {
-        return this.visitOptions.writing_services.find(
+        if (!this.isWritingProgramArea) {
+          return undefined;
+        }
+        return (this.visitOptions?.writing_services || []).find(
           (service) => service.id === this.checkInData.courseOrWritingService,
         );
       },
@@ -365,6 +392,9 @@
       );
     },
     watch: {
+      "checkInData.programArea"() {
+        this.checkInData.courseOrWritingService = "";
+      },
       validSyskey(newSyskey) {
         if (newSyskey) {
           this.loadStudent();

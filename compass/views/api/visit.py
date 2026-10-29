@@ -1,11 +1,14 @@
 # Copyright 2026 UW-IT, University of Washington
 # SPDX-License-Identifier: Apache-2.0
 
+from datetime import date
 from logging import getLogger
+from tempfile import SpooledTemporaryFile
 
 from dateutil import parser
 from dateutil.tz import UTC
 from django.conf import settings
+from django.http import FileResponse
 from rest_framework import status
 from rest_framework.response import Response
 
@@ -23,6 +26,7 @@ from compass.dao.person import (
     get_person_by_student_number,
     get_person_by_uwnetid,
     valid_student_number,
+    valid_system_key,
     valid_uwnetid,
 )
 from compass.dao.term import current_term
@@ -234,7 +238,7 @@ class VisitSearchMixin:
             return self.response_notfound(content)
         return Response(content, status=status.HTTP_404_NOT_FOUND)
 
-    def _lookup_visits(self, identifier):
+    def _lookup_visits(self, identifier, allow_system_key=False):
         """
         Resolves an identifier to a student and returns the current-quarter
         visits queryset. Returns (visits, None) on success or (None, error_response)
@@ -242,17 +246,20 @@ class VisitSearchMixin:
         """
         student_identifier = identifier.strip().lower()
         try:
-            if valid_uwnetid(student_identifier):
-                person = get_person_by_uwnetid(student_identifier)
+            if allow_system_key and valid_system_key(student_identifier):
+                system_key = student_identifier
+            elif valid_uwnetid(student_identifier):
+                system_key = get_person_by_uwnetid(
+                    student_identifier).system_key
             elif valid_student_number(student_identifier):
-                person = get_person_by_student_number(student_identifier)
+                system_key = get_person_by_student_number(
+                    student_identifier).system_key
             else:
                 return None, self._response_badrequest(
                     'Invalid student identifier')
         except PersonNotFoundException:
             return None, self._response_notfound('Student not found')
 
-        system_key = person.system_key
         try:
             student = Student.objects.get(system_key=system_key)
         except Student.DoesNotExist:
@@ -348,8 +355,13 @@ class ICVisitFileView(BaseAPIView):
     API endpoint for handling IC visit uploads and exports
     /api/internal/visit/file/
     POST: upload visit data from file
-    GET: export visit data to file
+    GET: export visits by inclusive check-in start_date and end_date
+    (YYYY-MM-DD in the application timezone; at most 366 days/50,000 visits)
     '''
+
+    MAX_EXPORT_DAYS = 366
+    MAX_EXPORT_VISITS = 50000
+    EARLIEST_EXPORT_DATE = date(2008, 1, 1)
 
     def post(self, request):
         file = request.FILES.get('file')
@@ -376,25 +388,60 @@ class ICVisitFileView(BaseAPIView):
         return self.response_ok({'count_created': count_created})
 
     def get(self, request):
-        export_file = get_visit_export()
-        response = Response(export_file,
-                            content_type='text/csv')
-        response['Content-Disposition'] = \
-            'attachment; filename="visit_export.csv"'
+        try:
+            start_date = date.fromisoformat(
+                request.query_params.get('start_date', ''))
+            end_date = date.fromisoformat(
+                request.query_params.get('end_date', ''))
+        except (TypeError, ValueError):
+            return self.response_badrequest(
+                'start_date and end_date are required in YYYY-MM-DD format')
+        if end_date < start_date or end_date == date.max:
+            return self.response_badrequest('Invalid export date range')
+        if start_date < self.EARLIEST_EXPORT_DATE:
+            return self.response_badrequest(
+                'Visit exports are available from January 1, 2008')
+        if (end_date - start_date).days >= self.MAX_EXPORT_DAYS:
+            return self.response_badrequest(
+                'Export date range cannot exceed 366 days')
+
+        export_file = SpooledTemporaryFile(  # noqa: SIM115 (FileResponse closes it)
+            max_size=5 * 1024 * 1024)
+        try:
+            for row_index, line in enumerate(
+                    get_visit_export(start_date, end_date)):
+                if row_index > self.MAX_EXPORT_VISITS:
+                    export_file.close()
+                    return self.response_badrequest(
+                        'Export exceeds 50,000 visits; select a smaller '
+                        'date range')
+                export_file.write(line.encode('utf-8'))
+            export_file.seek(0)
+        except Exception:
+            export_file.close()
+            logger.exception('Error preparing IC visit export')
+            return Response(
+                'Unable to prepare visit export. Try a smaller date range.',
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+        response = FileResponse(export_file, as_attachment=True,
+                                filename='visit_export.csv',
+                                content_type='text/csv')
+        response['Cache-Control'] = 'no-store'
         return response
 
 
 class ExternalStudentVisitView(VisitSearchMixin, TokenAPIView):
     '''
-    API endpoint for retrieving visits for a student by student number or
-    netid, to be used by Compass Visits
+    API endpoint for retrieving visits by student system key, student number,
+    or netid, to be used by Compass Visits
     '''
 
     def get(self, request, identifier):
         if settings.COMPASS_VISITS_TOKEN_USER != request.user.username:
             return Response("Unauthorized",
                             status=status.HTTP_401_UNAUTHORIZED)
-        visits, error = self._lookup_visits(identifier)
+        visits, error = self._lookup_visits(identifier, allow_system_key=True)
         if error is not None:
             return error
         serializer = ExternalVisitSerializer(visits, many=True)

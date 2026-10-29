@@ -7,7 +7,7 @@ from unittest.mock import MagicMock, call, patch
 
 from django.contrib.auth.models import User
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import Client
+from django.test import Client, override_settings
 from rest_framework.authtoken.models import Token
 from restclients_core.exceptions import DataFailureException
 
@@ -505,22 +505,102 @@ class VisitAPITest(ApiTest):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.data, 'Unable to create visits')
 
+    @override_settings(TIME_ZONE='UTC')
     def test_IC_visit_file_download(self):
-        response = self.get_response('ic_visit_file_view', "jadviser")
+        response = self.get_response(
+            'ic_visit_file_view', "jadviser",
+            get_args={'start_date': '2022-09-19', 'end_date': '2022-09-20'})
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['Content-Type'], 'text/csv')
         self.assertIn('attachment; filename="visit_export.csv"',
                       response['Content-Disposition'])
-        self.assertEqual(response.data.replace('\r\n', '\n'),
-                         "student_syskey,checkin_date,checkout_date,"
-                         "duration_minutes,"
-                         "visit_type,tutoring_option,course_code\n"
-                         "888777333,2022-09-19T06:15:04+00:00,"
-                         "2022-09-19T07:15:04+00:00,60,"
-                         "IC Drop-In Tutoring,Option 1,CHEM 198\n"
-                         "532353230,2022-09-20T06:15:04+00:00,"
-                         "2022-09-20T07:15:04+00:00,60,"
-                         "IC Drop-In Tutoring,Option 1,MATH 124\n")
+        content = b''.join(response.streaming_content)
+        self.assertEqual(int(response['Content-Length']), len(content))
+        self.assertEqual(response['Cache-Control'], 'no-store')
+        self.assertEqual(
+            content.decode().replace('\r\n', '\n'),
+            "student_syskey,checkin_date,checkout_date,"
+            "duration_minutes,"
+            "visit_type,tutoring_option,course_code\n"
+            "888777333,2022-09-19T06:15:04+00:00,"
+            "2022-09-19T07:15:04+00:00,60,"
+            "IC Drop-In Tutoring,Option 1,CHEM 198\n"
+            "532353230,2022-09-20T06:15:04+00:00,"
+            "2022-09-20T07:15:04+00:00,60,"
+            "IC Drop-In Tutoring,Option 1,MATH 124\n")
+
+    def test_IC_visit_file_download_invalid_dates(self):
+        for dates in [
+                {},
+                {'start_date': 'bad', 'end_date': '2022-09-20'},
+                {'start_date': '2007-12-31', 'end_date': '2008-01-01'},
+                {'start_date': '2022-09-21', 'end_date': '2022-09-20'},
+                {'start_date': '2022-01-01', 'end_date': '2023-01-02'}]:
+            with self.subTest(dates=dates):
+                response = self.get_response(
+                    'ic_visit_file_view', 'jadviser', get_args=dates)
+                self.assertEqual(response.status_code, 400)
+                self.assertNotIn('Content-Disposition', response)
+
+    def test_IC_visit_file_download_earliest_date(self):
+        response = self.get_response(
+            'ic_visit_file_view', 'jadviser',
+            get_args={'start_date': '2008-01-01', 'end_date': '2008-01-31'})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            len(b''.join(response.streaming_content).splitlines()), 1)
+
+    def test_IC_visit_file_download_filters_dates(self):
+        with self.settings(TIME_ZONE='UTC'):
+            response = self.get_response(
+                'ic_visit_file_view', 'jadviser',
+                get_args={'start_date': '2022-09-20',
+                          'end_date': '2022-09-20'})
+        self.assertEqual(response.status_code, 200)
+        content = b''.join(response.streaming_content).decode()
+        self.assertIn('MATH 124', content)
+        self.assertNotIn('CHEM 198', content)
+
+    @override_settings(TIME_ZONE='America/Los_Angeles')
+    def test_IC_visit_file_download_local_date_boundaries(self):
+        response = self.get_response(
+            'ic_visit_file_view', 'jadviser',
+            get_args={'start_date': '2022-09-19', 'end_date': '2022-09-19'})
+        self.assertEqual(response.status_code, 200)
+        content = b''.join(response.streaming_content).decode()
+        self.assertIn('MATH 124', content)
+        self.assertNotIn('CHEM 198', content)
+
+    def test_IC_visit_file_download_empty_range(self):
+        response = self.get_response(
+            'ic_visit_file_view', 'jadviser',
+            get_args={'start_date': '2026-10-01', 'end_date': '2026-10-26'})
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+            len(b''.join(response.streaming_content).splitlines()), 1)
+
+    @override_settings(TIME_ZONE='UTC')
+    @patch('compass.views.api.visit.ICVisitFileView.MAX_EXPORT_VISITS', 1)
+    def test_IC_visit_file_download_row_limit(self):
+        response = self.get_response(
+            'ic_visit_file_view', 'jadviser',
+            get_args={'start_date': '2022-09-19', 'end_date': '2022-09-20'})
+        self.assertEqual(response.status_code, 400)
+        self.assertNotIn('Content-Disposition', response)
+
+    @patch('compass.views.api.visit.get_visit_export')
+    def test_IC_visit_file_download_generation_failure(self, mock_export):
+        def broken_export(*args):
+            yield 'header\r\n'
+            raise RuntimeError('Database failure')
+
+        mock_export.side_effect = broken_export
+        response = self.get_response(
+            'ic_visit_file_view', 'jadviser',
+            get_args={'start_date': '2022-09-19', 'end_date': '2022-09-20'})
+        self.assertEqual(response.status_code, 500)
+        self.assertFalse(response.streaming)
+        self.assertNotIn('Content-Disposition', response)
 
     def test_visit_search_mixin_invalid_student_identifier(self):
         mixin = VisitSearchMixin()
@@ -673,6 +753,43 @@ class VisitAPITest(ApiTest):
             '-checkin_date')
         mock_serializer.assert_called_once_with(mock_ordered_visits, many=True)
         mixin.response_ok.assert_called_once_with([{'id': 2}])
+
+    def test_external_visit_view_by_system_key(self):
+        self.client = Client(
+            HTTP_USER_AGENT='Mozilla/5.0',
+            HTTP_AUTHORIZATION=f"Token {self.API_TOKEN}")
+        response = self.get_response(
+            'external_student_visit_view',
+            kwargs={"identifier": "532353230"})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(response.data), 1)
+        self.assertEqual(response.data[0]['course_code'], "MATH 124")
+
+    def test_external_visit_view_unknown_system_key(self):
+        self.client = Client(
+            HTTP_USER_AGENT='Mozilla/5.0',
+            HTTP_AUTHORIZATION=f"Token {self.API_TOKEN}")
+        response = self.get_response(
+            'external_student_visit_view',
+            kwargs={"identifier": "000000000"})
+
+        self.assertEqual(response.status_code, 404)
+
+    @patch('compass.views.api.visit.current_term')
+    def test_external_system_key_excludes_previous_quarter(
+            self, mock_current_term):
+        mock_current_term.return_value = MagicMock(
+            first_day_quarter=datetime(2022, 9, 20, tzinfo=UTC))
+        self.client = Client(
+            HTTP_USER_AGENT='Mozilla/5.0',
+            HTTP_AUTHORIZATION=f"Token {self.API_TOKEN}")
+        response = self.get_response(
+            'external_student_visit_view',
+            kwargs={"identifier": "888777333"})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.data, [])
 
     def test_external_visit_view(self):
         token_str = f"Token {self.API_TOKEN}"
