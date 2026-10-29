@@ -58,7 +58,7 @@
             <!--custom date range-->
             <STabsPanel :panel-id="'visit-export-range'" :active-panel="true">
               <form class="mt-4" @submit.prevent="handleDownload()">
-                <div class="row g-3 mb-3">
+                <div class="row g-3 pb-3">
                   <div class="col-12 col-sm-6">
                     <label for="visit-export-start" class="form-label fw-bold">
                       Check-in Start Date <span style="color: red">*</span>
@@ -100,61 +100,87 @@
                 <div id="visit-export-range-limit" class="form-text">
                   Maximum date range: 1 year.
                 </div>
-                <button
-                  type="submit"
-                  class="btn btn-primary"
-                  :disabled="isDownloading"
-                >
-                  <span
-                    v-if="activeExport === 'range'"
-                    class="spinner-border spinner-border-sm me-2"
-                    aria-hidden="true"
-                  ></span>
-                  <i v-else class="bi bi-download me-2" aria-hidden="true"></i>
-                  Download CSV
-                </button>
+                <div class="d-flex justify-content-end mt-4">
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    :disabled="isDownloading"
+                  >
+                    <span
+                      v-if="activeExport === 'range'"
+                      class="spinner-border spinner-border-sm me-2"
+                      aria-hidden="true"
+                    ></span>
+                    Download CSV
+                  </button>
+                </div>
               </form>
             </STabsPanel>
 
             <!--monthly Export-->
             <STabsPanel :panel-id="'visit-export-month'">
-              <div class="mt-4">
-                <label for="visit-export-year" class="form-label">Year</label>
-                <select
-                  id="visit-export-year"
-                  v-model.number="exportYear"
-                  class="form-select mb-3"
-                  :disabled="isDownloading"
-                >
-                  <option v-for="year in exportYears" :key="year" :value="year">
-                    {{ year }}
-                  </option>
-                </select>
-                <div class="row row-cols-3 row-cols-sm-4 g-2">
-                  <div
-                    v-for="month in exportMonths"
-                    :key="month.index"
-                    class="col"
-                  >
-                    <button
-                      type="button"
-                      class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-between gap-2 py-2"
-                      :disabled="isDownloading || month.isFuture"
-                      :aria-label="`Download ${month.name} ${exportYear}`"
-                      :title="`${month.name} ${exportYear}`"
-                      @click="handleMonthDownload(month.index)"
+              <form
+                class="mt-4"
+                @submit.prevent="handleMonthDownload(exportMonth)"
+              >
+                <div class="row g-3 pb-4">
+                  <div class="col-12 col-sm-6">
+                    <label for="visit-export-year" class="form-label fw-bold">
+                      Year <span style="color: red">*</span>
+                    </label>
+                    <select
+                      id="visit-export-year"
+                      v-model.number="exportYear"
+                      class="form-select w-100"
+                      :disabled="isDownloading"
                     >
-                      {{ month.label }}
-                      <span
-                        v-if="activeExport === `${exportYear}-${month.index}`"
-                        class="spinner-border spinner-border-sm"
-                        aria-hidden="true"
-                      ></span>
-                      <i v-else class="bi bi-download" aria-hidden="true"></i>
-                    </button>
+                      <option
+                        v-for="year in exportYears"
+                        :key="year"
+                        :value="year"
+                      >
+                        {{ year }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <label for="visit-export-month" class="form-label fw-bold">
+                      Month <span style="color: red">*</span>
+                    </label>
+                    <select
+                      id="visit-export-month"
+                      v-model.number="exportMonth"
+                      class="form-select w-100"
+                      :disabled="isDownloading"
+                    >
+                      <option
+                        v-for="month in exportMonths"
+                        :key="month.index"
+                        :value="month.index"
+                        :disabled="month.isFuture"
+                      >
+                        {{ month.name }}
+                      </option>
+                    </select>
                   </div>
                 </div>
-              </div>
+                <div class="d-flex justify-content-end mt-4">
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    :disabled="
+                      isDownloading || exportMonths[exportMonth]?.isFuture
+                    "
+                  >
+                    <span
+                      v-if="activeExport === `${exportYear}-${exportMonth}`"
+                      class="spinner-border spinner-border-sm me-2"
+                      aria-hidden="true"
+                    ></span>
+                    Download CSV
+                  </button>
+                </div>
+              </form>
             </STabsPanel>
           </STabsDisplay>
           <div
@@ -284,14 +310,12 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-sm btn-outline-primary rounded-3 py-2"
+            class="btn btn-outline-primary py-2"
             data-bs-dismiss="modal"
           >
             Cancel
           </button>
-          <button type="submit" class="btn btn-sm btn-primary rounded-3 py-2">
-            Upload
-          </button>
+          <button type="submit" class="btn btn-primary py-2">Upload</button>
           <!-- Upload Error -->
           <div
             v-if="uploadErrorResponse"
@@ -350,6 +374,7 @@
         downloadErrorResponse: null,
         today: dayjs().format("YYYY-MM-DD"),
         exportYear: dayjs().year(),
+        exportMonth: dayjs().month(),
         earliestExportDate: "2008-01-01",
         activeExport: null,
         exportStatus: "",
@@ -382,6 +407,14 @@
             isFuture: month.isAfter(dayjs(this.today), "month"),
           };
         });
+      },
+    },
+    watch: {
+      exportYear() {
+        // If the selected month is in the future for the new year, fall back to the current month
+        if (this.exportMonths[this.exportMonth]?.isFuture) {
+          this.exportMonth = dayjs(this.today).month();
+        }
       },
     },
     mounted() {
