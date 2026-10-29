@@ -24,12 +24,12 @@
     aria-labelledby="visit-export-title"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h2 id="visit-export-title" class="modal-title fs-5">
-            Export Visits
-          </h2>
+          <h5 id="contactModalLabel" class="modal-title fw-bold">
+            Instructional Center Data Export
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -38,104 +38,125 @@
           ></button>
         </div>
         <div class="modal-body" :aria-busy="isDownloading">
-          <form @submit.prevent="handleDownload()">
-            <h3 class="fs-6 mb-3">Custom Date Range</h3>
-            <div class="row g-3 mb-3">
-              <div class="col-12 col-sm-6">
-                <label for="visit-export-start" class="form-label"
-                  >Check-in start date</label
-                >
-                <input
-                  id="visit-export-start"
-                  v-model="exportOptions.start_date"
-                  type="date"
-                  class="form-control w-100"
-                  @change="adjustExportEndDate"
-                  :min="earliestExportDate"
-                  aria-describedby="visit-export-range-limit"
-                  :disabled="isDownloading"
-                  required
-                />
-              </div>
-              <div class="col-12 col-sm-6">
-                <label for="visit-export-end" class="form-label"
-                  >Check-in end date</label
-                >
-                <input
-                  id="visit-export-end"
-                  v-model="exportOptions.end_date"
-                  type="date"
-                  class="form-control w-100"
-                  :min="
-                    exportOptions.start_date &&
-                    exportOptions.start_date > earliestExportDate
-                      ? exportOptions.start_date
-                      : earliestExportDate
-                  "
-                  :max="exportEndMax"
-                  aria-describedby="visit-export-range-limit"
-                  :disabled="isDownloading"
-                  required
-                />
-              </div>
-            </div>
-            <p id="visit-export-range-limit" class="form-text mt-0 mb-3">
-              Maximum date range: 1 year.
-            </p>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              :disabled="isDownloading"
+          <STabsList :tabs-id="'visit-export'">
+            <STabsItem
+              :tabs-id="'visit-export'"
+              :panel-id="'visit-export-range'"
+              :active-tab="true"
             >
-              <span
-                v-if="activeExport === 'range'"
-                class="spinner-border spinner-border-sm me-2"
-                aria-hidden="true"
-              ></span>
-              <i v-else class="bi bi-download me-2" aria-hidden="true"></i>
-              Download CSV
-            </button>
-          </form>
-
-          <section
-            class="border-top mt-4 pt-4"
-            aria-labelledby="visit-export-month-title"
-          >
-            <h3 id="visit-export-month-title" class="fs-6 mb-3">
+              Custom Date Range
+            </STabsItem>
+            <STabsItem
+              :tabs-id="'visit-export'"
+              :panel-id="'visit-export-month'"
+            >
               Monthly Export
-            </h3>
-            <label for="visit-export-year" class="form-label">Year</label>
-            <select
-              id="visit-export-year"
-              v-model.number="exportYear"
-              class="form-select mb-3"
-              :disabled="isDownloading"
-            >
-              <option v-for="year in exportYears" :key="year" :value="year">
-                {{ year }}
-              </option>
-            </select>
-            <div class="row row-cols-3 row-cols-sm-4 g-2">
-              <div v-for="month in exportMonths" :key="month.index" class="col">
+            </STabsItem>
+          </STabsList>
+
+          <STabsDisplay :tabs-id="'visit-export'">
+            <!--custom date range-->
+            <STabsPanel :panel-id="'visit-export-range'" :active-panel="true">
+              <form class="mt-4" @submit.prevent="handleDownload()">
+                <div class="row g-3 mb-3">
+                  <div class="col-12 col-sm-6">
+                    <label for="visit-export-start" class="form-label fw-bold">
+                      Check-in Start Date <span style="color: red">*</span>
+                    </label>
+                    <input
+                      id="visit-export-start"
+                      v-model="exportOptions.start_date"
+                      type="date"
+                      class="form-control w-100"
+                      @change="adjustExportEndDate"
+                      :min="earliestExportDate"
+                      aria-describedby="visit-export-range-limit"
+                      :disabled="isDownloading"
+                      required
+                    />
+                  </div>
+                  <div class="col-12 col-sm-6">
+                    <label for="visit-export-end" class="form-label fw-bold">
+                      Check-in End Date <span style="color: red">*</span>
+                    </label>
+                    <input
+                      id="visit-export-end"
+                      v-model="exportOptions.end_date"
+                      type="date"
+                      class="form-control w-100"
+                      :min="
+                        exportOptions.start_date &&
+                        exportOptions.start_date > earliestExportDate
+                          ? exportOptions.start_date
+                          : earliestExportDate
+                      "
+                      :max="exportEndMax"
+                      aria-describedby="visit-export-range-limit"
+                      :disabled="isDownloading"
+                      required
+                    />
+                  </div>
+                </div>
+                <div id="visit-export-range-limit" class="form-text">
+                  Maximum date range: 1 year.
+                </div>
                 <button
-                  type="button"
-                  class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-between gap-2 py-2"
-                  :disabled="isDownloading || month.isFuture"
-                  :aria-label="`Download ${month.name} ${exportYear}`"
-                  :title="`${month.name} ${exportYear}`"
-                  @click="handleMonthDownload(month.index)"
+                  type="submit"
+                  class="btn btn-primary"
+                  :disabled="isDownloading"
                 >
-                  {{ month.label }}
                   <span
-                    v-if="activeExport === `${exportYear}-${month.index}`"
-                    class="spinner-border spinner-border-sm"
+                    v-if="activeExport === 'range'"
+                    class="spinner-border spinner-border-sm me-2"
                     aria-hidden="true"
                   ></span>
-                  <i v-else class="bi bi-download" aria-hidden="true"></i>
+                  <i v-else class="bi bi-download me-2" aria-hidden="true"></i>
+                  Download CSV
                 </button>
+              </form>
+            </STabsPanel>
+
+            <!--monthly Export-->
+            <STabsPanel :panel-id="'visit-export-month'">
+              <div class="mt-4">
+                <label for="visit-export-year" class="form-label">Year</label>
+                <select
+                  id="visit-export-year"
+                  v-model.number="exportYear"
+                  class="form-select mb-3"
+                  :disabled="isDownloading"
+                >
+                  <option v-for="year in exportYears" :key="year" :value="year">
+                    {{ year }}
+                  </option>
+                </select>
+                <div class="row row-cols-3 row-cols-sm-4 g-2">
+                  <div
+                    v-for="month in exportMonths"
+                    :key="month.index"
+                    class="col"
+                  >
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-between gap-2 py-2"
+                      :disabled="isDownloading || month.isFuture"
+                      :aria-label="`Download ${month.name} ${exportYear}`"
+                      :title="`${month.name} ${exportYear}`"
+                      @click="handleMonthDownload(month.index)"
+                    >
+                      {{ month.label }}
+                      <span
+                        v-if="activeExport === `${exportYear}-${month.index}`"
+                        class="spinner-border spinner-border-sm"
+                        aria-hidden="true"
+                      ></span>
+                      <i v-else class="bi bi-download" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
               </div>
-            </div>
-          </section>
+            </STabsPanel>
+          </STabsDisplay>
           <div
             v-if="downloadErrorResponse"
             class="alert alert-danger mt-3 mb-0"
@@ -293,9 +314,16 @@
 
   import { Modal } from "bootstrap";
   import dayjs from "dayjs";
+  import { STabsDisplay, STabsPanel, STabsList, STabsItem } from "solstice-vue";
 
   export default {
     name: "VisitFileOperations",
+    components: {
+      STabsDisplay,
+      STabsPanel,
+      STabsList,
+      STabsItem,
+    },
     setup: function () {
       return {
         uploadVisitFile,
