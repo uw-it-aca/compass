@@ -1,8 +1,0 @@
-[run]
-source = compass
-parallel = True
-
-[paths]
-source =
-  compass/
-  /app/compass/
