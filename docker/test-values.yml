@@ -11,23 +11,6 @@ resources:
     memory: 128Mi
 targetAverageUtilization: 100
 
-ingress:
-  enabled: true
-  tls:
-    compass:
-      secretName: test.compass.uw.edu-ingress-cert
-      hosts:
-        - test.compass.uw.edu
-  hosts:
-    compass:
-      host: test.compass.uw.edu
-      paths:
-        - "/"
-  annotations:
-    cert-manager.io/cluster-issuer: letsencrypt
-    nginx.ingress.kubernetes.io/client-body-buffer-size: "16K"
-    nginx.ingress.kubernetes.io/proxy-body-size: "20M"
-
 gateway:
   enabled: true
   hostnames:
