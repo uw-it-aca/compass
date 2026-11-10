@@ -3,12 +3,12 @@
 <template>
   <div v-if="studentVisits">
     <div class="card border-0 bg-body-tertiary rounded-3 p-3 mb-3">
-      <h3 class="fs-6 fw-normal">Total:</h3>
-      <p class="fs-1 fw-bold m-0 text-end">
+      <h3 class="fw-bold ff-open-sans h6">Total</h3>
+      <p class="fs-1 fw-normal m-0 text-end">
         {{ Math.round(totalVisitTime) }}
-        <span class="fs-6 fw-normal text-body-secondary"> mins </span>
-        <span class="fs-5 fw-semibold ms-2"> {{ studentVisits.length }} </span>
-        <span class="fs-6 fw-normal text-body-secondary"> visits </span>
+        <span class="fs-6 text-body-secondary"> mins </span>
+        <span class="fs-5 ms-2"> {{ studentVisits.length }} </span>
+        <span class="fs-6 text-body-secondary"> visits </span>
       </p>
     </div>
 
@@ -19,8 +19,8 @@
         class="col"
       >
         <div class="card border-0 bg-body-tertiary rounded-3 p-3">
-          <h3 class="fs-6 fw-normal">{{ course }}:</h3>
-          <p class="fs-5 fw-semibold m-0 text-end">
+          <h3 class="fs-6 fw-bold ff-open-sans">{{ course }}</h3>
+          <p class="fs-5 m-0 pt-2 text-end">
             {{ Math.round(summary.time) }}
             <span class="fs-6 fw-normal text-body-secondary"> mins </span>
           </p>

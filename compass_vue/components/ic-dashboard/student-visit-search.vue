@@ -107,15 +107,12 @@
               </div>
               <div
                 v-else-if="displayMode === 'not_eligible'"
-                class="my-5 py-4 text-center"
+                class="my-5 py-5 text-center"
               >
-                <p class="py-2">
+                <p>
                   Student is not eligible to use the Instructional Center. Would
                   you like to approve their eligibility?
                 </p>
-                <button class="btn btn-primary" @click="addICEligibility()">
-                  Approve
-                </button>
               </div>
 
               <!-- IC Check In -->
@@ -214,14 +211,14 @@
         <div class="modal-footer">
           <button
             type="button"
-            class="btn btn-outline-primary rounded-3 mx-2"
+            class="btn btn-outline-primary"
             data-bs-dismiss="modal"
           >
             Cancel
           </button>
           <button
             v-if="showCheckinButton"
-            class="btn btn-primary rounded-3 mx-2"
+            class="btn btn-primary"
             @click="setCheckinMode()"
           >
             Continue
@@ -236,6 +233,15 @@
           >
             Check In
           </button>
+
+          <button
+            v-else-if="displayMode === 'not_eligible'"
+            class="btn btn-primary"
+            @click="addICEligibility()"
+          >
+            Approve
+          </button>
+
           <div
             v-if="createError"
             class="alert alert-danger small"

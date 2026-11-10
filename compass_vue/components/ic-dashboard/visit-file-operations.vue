@@ -44,13 +44,13 @@
               :panel-id="'visit-export-range'"
               :active-tab="true"
             >
-              Custom Date Range
+              Custom Range
             </STabsItem>
             <STabsItem
               :tabs-id="'visit-export'"
               :panel-id="'visit-export-month'"
             >
-              Monthly Export
+              Monthly
             </STabsItem>
           </STabsList>
 
@@ -58,7 +58,7 @@
             <!--custom date range-->
             <STabsPanel :panel-id="'visit-export-range'" :active-panel="true">
               <form class="mt-4" @submit.prevent="handleDownload()">
-                <div class="row g-3 pb-3">
+                <div class="row g-3 pb-2">
                   <div class="col-12 col-sm-6">
                     <label for="visit-export-start" class="form-label fw-bold">
                       Check-in Start Date <span style="color: red">*</span>
@@ -100,7 +100,7 @@
                 <div id="visit-export-range-limit" class="form-text">
                   Maximum date range: 1 year.
                 </div>
-                <div class="d-flex justify-content-end mt-4">
+                <div class="d-flex justify-content-end my-2 pt-2">
                   <button
                     type="submit"
                     class="btn btn-primary"
@@ -123,7 +123,7 @@
                 class="mt-4"
                 @submit.prevent="handleMonthDownload(exportMonth)"
               >
-                <div class="row g-3 pb-4">
+                <div class="row g-3 pb-2">
                   <div class="col-12 col-sm-6">
                     <label for="visit-export-year" class="form-label fw-bold">
                       Year <span style="color: red">*</span>
@@ -164,7 +164,10 @@
                     </select>
                   </div>
                 </div>
-                <div class="d-flex justify-content-end mt-4">
+                <div id="visit-export-range-limit" class="form-text">
+                  Monthly data download.
+                </div>
+                <div class="d-flex justify-content-end my-2 pt-2">
                   <button
                     type="submit"
                     class="btn btn-primary"
