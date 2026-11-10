@@ -385,7 +385,7 @@
       exportEndMax() {
         if (!this.exportOptions.start_date) return this.today;
         const yearLimit = dayjs(this.exportOptions.start_date)
-          .add(365, "day")
+          .add(364, "day")
           .format("YYYY-MM-DD");
         return yearLimit < this.today ? yearLimit : this.today;
       },
