@@ -1,47 +1,59 @@
 // student-visit-summary.vue
 
 <template>
-  <div>
-    <div v-if="studentVisits">
-        <div
-          v-for="(summary, course) in getVisitSummaryByCourseCode()"
-          :key="course"
-        >
-          {{ course }}: {{ summary.count }} visit{{ summary.count === 1 ? '' : 's' }} {{ Math.round(summary.time) }} minutes
-        </div>
-      <div>
-        Total: {{ studentVisits.length }} visit{{ studentVisits.length === 1 ? '' : 's' }} {{ Math.round(totalVisitTime) }} minutes
-      </div>
+  <div v-if="studentVisits">
+    <div class="card border-0 bg-body-tertiary rounded-3 p-3 mb-3">
+      <h3 class="fw-bold ff-open-sans h6">Total</h3>
+      <p class="fs-1 fw-normal m-0 text-end">
+        {{ Math.round(totalVisitTime) }}
+        <span class="fs-6 text-body-secondary"> mins </span>
+        <span class="fs-5 ms-2"> {{ studentVisits.length }} </span>
+        <span class="fs-6 text-body-secondary"> visits </span>
+      </p>
+    </div>
 
+    <div class="row row-cols-2 g-2">
+      <div
+        v-for="(summary, course) in getVisitSummaryByCourseCode()"
+        :key="course"
+        class="col"
+      >
+        <div class="card border-0 bg-body-tertiary rounded-3 p-3">
+          <h3 class="fs-6 fw-bold ff-open-sans">{{ course }}</h3>
+          <p class="fs-5 m-0 pt-2 text-end">
+            {{ Math.round(summary.time) }}
+            <span class="fs-6 fw-normal text-body-secondary"> mins </span>
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-
-export default {
-  name: "StudentVisitSummary",
-  props: {
-    studentVisits: {
-      type: Array,
-      required: true,
+  export default {
+    name: "StudentVisitSummary",
+    props: {
+      studentVisits: {
+        type: Array,
+        required: true,
+      },
     },
-  },
-  data() {
-    return {};
-  },
-  computed: {
-    totalVisitTime() {
-      return this.studentVisits.reduce((total, visit) => {
-        const checkinTime = new Date(visit.checkin_date);
-        const checkoutTime = new Date(visit.checkout_date);
-        const visitDuration = (checkoutTime - checkinTime) / 60000; // duration in minutes
-        return total + visitDuration;
-      }, 0);
+    data() {
+      return {};
     },
-  },
-  mounted() {},
-  methods: {
+    computed: {
+      totalVisitTime() {
+        return this.studentVisits.reduce((total, visit) => {
+          const checkinTime = new Date(visit.checkin_date);
+          const checkoutTime = new Date(visit.checkout_date);
+          const visitDuration = (checkoutTime - checkinTime) / 60000; // duration in minutes
+          return total + visitDuration;
+        }, 0);
+      },
+    },
+    mounted() {},
+    methods: {
       getVisitSummaryByCourseCode() {
         const summaryByCourse = {};
         this.studentVisits.forEach((visit) => {
@@ -57,6 +69,15 @@ export default {
         });
         return summaryByCourse;
       },
-  },
-};
+    },
+  };
 </script>
+
+<style lang="scss" scoped>
+  .img-profile {
+    height: 120px;
+    width: 120px;
+    object-fit: cover;
+    object-position: top;
+  }
+</style>

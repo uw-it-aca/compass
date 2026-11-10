@@ -127,3 +127,13 @@ __diff_output__/
 
 # coverage
 coverage
+
+# VS Code settings (local)
+.vscode/settings.json
+
+# Prettier configuration (local)
+.prettierrc
+.prettierignore
+
+# Local component (visitadminlist)
+compass_vue/components/ic-dashboard/visit-admin-list.vue

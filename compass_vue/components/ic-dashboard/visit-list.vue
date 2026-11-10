@@ -1,11 +1,18 @@
 // visit-list.vue
 
 <template>
-  <h2>{{ listTitle }}</h2>
-  <table>
-    <thead>
+  <h2 class="fs-3 fw-light ff-encode-sans py-2 mt-4">{{ listTitle }}</h2>
+  <table class="table table-striped">
+    <colgroup>
+      <col style="width: 30%">
+      <col style="width: 22.5%">
+      <col style="width: 22.5%">
+      <col style="width: 15%">
+      <col style="width: 10%">
+    </colgroup>
+    <thead class="table-light">
       <tr>
-        <th>Student</th>
+        <th class="ps-4">Student</th>
         <th>Type</th>
         <th>Course</th>
         <th>Time</th>
@@ -13,8 +20,13 @@
       </tr>
     </thead>
     <tbody>
+      <tr v-if="visits.length === 0">
+        <td colspan="6" class="text-center text-muted py-4">
+          No students in this category.
+        </td>
+      </tr>
       <tr v-for="visit in visits" :key="visit.id">
-        <td>
+        <td class="ps-4">
           <template v-if="visit.student">
             <profile-mini :person="visit.student"></profile-mini>
           </template>
@@ -24,10 +36,18 @@
         <td>{{ getCourseString(visit) }}</td>
         <td>{{ getVisitDuration(visit) }}</td>
         <td v-if="!visit.is_verified">
-          <button @click="verifyVisit(visit.id)">Verify</button>
+          <button
+            class="btn btn-outline-primary btn-sm" type="button"
+            @click="verifyVisit(visit.id)"
+            >Verify
+          </button>
         </td>
         <td v-else>
-          <button @click="checkOutVisit(visit.id)">Check Out</button>
+          <button
+            class="btn btn-outline-primary btn-sm" type="button"
+            @click="checkOutVisit(visit.id)"
+            >Check Out
+          </button>
         </td>
       </tr>
     </tbody>
@@ -101,3 +121,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.visit-table {
+  table-layout: fixed;
+}
+</style>
